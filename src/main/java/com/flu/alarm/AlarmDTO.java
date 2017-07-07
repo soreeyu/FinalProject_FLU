@@ -1,8 +1,8 @@
-package com.flu.alaram;
+package com.flu.alarm;
 
 import java.sql.Date;
 
-public class AlaramDTO {
+public class AlarmDTO {
 	private String email;
 	private String contents;
 	private Date reg_date;

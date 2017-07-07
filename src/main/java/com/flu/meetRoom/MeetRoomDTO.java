@@ -9,6 +9,7 @@ public class MeetRoomDTO extends RoomDTO{
 	private String addr_main;
 	private String addr_detail;
 	private String homePage;
+	
 	public String getHoliday() {
 		return holiday;
 	}
