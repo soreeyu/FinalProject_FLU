@@ -27,8 +27,9 @@ public class MeetRoomController {
 	}
 	
 	@RequestMapping(value="meetInsert",method=RequestMethod.GET)
-	public void meetInsert(MeetRoomDTO meetRoomDTO){
-		meetRoomServiceImpl.insert(meetRoomDTO, multi, realPath);
+	public void meetInsert(MeetRoomDTO meetRoomDTO, MultipartHttpServletRequest multi, HttpSession session){
+		
+		
 	}
 	
 	@RequestMapping(value="meetInsert",method=RequestMethod.POST)

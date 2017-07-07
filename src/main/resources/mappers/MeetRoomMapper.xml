@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   
-  <mapper>
-  	<insert id="RoomInsert" parameterType="com.flu.meetRoom.meetRoomDTO">
-  		insert into meetroom values (meetroom_seq.nextval, #{name}, #{contents}, #{time}, #{fname},#{oname}, #{holiday}, #{addr_num},#{addr_main},#{addr_detail}, #{homepage} )
-  	</insert>
+  <mapper namespace="MeetRoomMapper">
+  	
   
   </mapper>
