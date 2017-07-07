@@ -22,7 +22,20 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.flu.home" />
-	
-	
+	<context:component-scan base-package="com.flu.alarm"/>
+	<context:component-scan base-package="com.flu.client"/>
+	<context:component-scan base-package="com.flu.controller"/>
+	<context:component-scan base-package="com.flu.eachRoom"/>
+	<context:component-scan base-package="com.flu.file"/>
+	<context:component-scan base-package="com.flu.freelancer"/>
+	<context:component-scan base-package="com.flu.meetRoom"/>
+	<context:component-scan base-package="com.flu.member"/>
+	<context:component-scan base-package="com.flu.notice"/>
+	<context:component-scan base-package="com.flu.project"/>
+	<context:component-scan base-package="com.flu.reply"/>
+	<context:component-scan base-package="com.flu.reservation"/>
+	<context:component-scan base-package="com.flu.schedule"/>
+	<context:component-scan base-package="com.flu.room"/>
+	<context:component-scan base-package="com.flu.util"/>
 	
 </beans:beans>
