@@ -1,4 +1,4 @@
-package com.flu.alaram;
+package com.flu.alarm;
 
 import java.util.List;
 
@@ -9,19 +9,19 @@ import org.springframework.stereotype.Repository;
 import com.flu.util.ListInfo;
 
 @Repository
-public class AlaramDAO {
+public class AlarmDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
 	private final String NAMESPACE="AlaramMapper.";
 	
 	//알람 INSERT
-	public int alaramInsert(AlaramDTO alaramDTO){
+	public int alaramInsert(AlarmDTO alaramDTO){
 		return 0;
 	}
 	
 	//알람 LIST
-	public List<AlaramDTO> alaramList(ListInfo listInfo){
+	public List<AlarmDTO> alaramList(ListInfo listInfo){
 		return null;
 	}
 	

@@ -1,4 +1,4 @@
-package com.flu.alaram;
+package com.flu.alarm;
 
 import java.util.List;
 
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 public class AlaramService {
 
 	@Autowired
-	private AlaramDAO alaramDAO;
+	private AlarmDAO alaramDAO;
 	
 	//알람 INSERT
-	public int alaramInsert(AlaramDTO alaramDTO){
+	public int alaramInsert(AlarmDTO alaramDTO){
 		return 0;
 	}
 	
 	//알람 LIST
-	public List<AlaramDTO> alaramList(){
+	public List<AlarmDTO> alaramList(){
 		return null;
 	}
 	
