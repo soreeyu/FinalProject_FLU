@@ -2,17 +2,21 @@ package com.flu.project;
 
 import java.util.List;
 
-import com.flu.util.ListInfo;
-import com.flu.util.RowMaker;
+import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+import com.flu.util.ListInfo;
+
+@Service
 public class ProjectService {
 
-	
+	@Inject
 	private ProjectDAO projectDAO;
 	
 	//project write
 	public int projectWrite(ProjectDTO projectDTO){
-		return 0;
+		return projectDAO.projectWrite(projectDTO);
 	}
 	
 	//project update
