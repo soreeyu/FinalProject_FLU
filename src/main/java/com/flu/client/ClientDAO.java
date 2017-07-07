@@ -2,11 +2,20 @@ package com.flu.client;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
 import com.flu.member.MemberDAO;
 import com.flu.member.MemberDTO;
 import com.flu.util.RowMaker;
 
+@Repository
 public class ClientDAO implements MemberDAO{
+	
+	@Inject
+	private SqlSession sqlsession;
 
 	@Override
 	public int memberInsert(MemberDTO memberDTO) {

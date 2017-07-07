@@ -1,9 +1,8 @@
-package com.flu.controller;
+package com.flu.schedule;
 
 import java.util.List;
 
 import com.flu.member.MemberDTO;
-import com.flu.schedule.ScheduleService;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
