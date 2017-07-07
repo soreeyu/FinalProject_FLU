@@ -6,7 +6,6 @@ import com.flu.project.ProjectService;
 
 /*@Controller*/
 public class ProjectController {
-
 	
 	private ProjectService projectService;
 }
