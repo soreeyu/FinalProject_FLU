@@ -30,7 +30,7 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	@Override
 	public int insert(RoomDTO room) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert(NAMESPACE+"RoomInsert", room);
 	}
 
 	@Override
