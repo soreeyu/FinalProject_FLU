@@ -8,6 +8,7 @@ public class RoomDTO {
 	private String time;
 	private String fname;
 	private String oname;
+	
 	public Integer getNum() {
 		return num;
 	}
