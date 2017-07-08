@@ -13,7 +13,7 @@ public class AlarmDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	private final String NAMESPACE="AlaramMapper.";
+	private final String NAMESPACE="AlarmMapper.";
 	
 	//알람 INSERT
 	public int alaramInsert(AlarmDTO alaramDTO){
