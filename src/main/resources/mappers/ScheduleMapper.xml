@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ScheduleMapper">
+  	<select id="addS" statementType="CALLABLE" parameterType="java.util.Map">
+		{ call add_schedule(#{projectNum,mode=IN},#{result, mode=OUT, javaType=java.lang.Integer, resultMap=java.lang.Integer}) } 
+	</select>
+  	
+  	
+  </mapper>

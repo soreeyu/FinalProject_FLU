@@ -1,14 +1,24 @@
 package com.flu.schedule;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
+@Repository
 public class ScheduleDAO {
 	
+	@Autowired
+	private SqlSession sqlSession;
+	private final String namespace = "ScheduleMapper.";
 	
 
 	//참여하고 있는 프리랜서 목록 가져오기 
@@ -33,8 +43,19 @@ public class ScheduleDAO {
 	//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
 	public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
 		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-		return 0;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNum", scheduleMainDTO.getProjectNum());
+
+		sqlSession.selectOne(namespace+"addS", map); 
+		//여기서는 굳이 list 안해도된다 우리는 map 하나를 꺼내오는 것이기 때문 //대부분 One으로 통일해준다
+
+		int result = (Integer)map.get("result");
+		System.out.println("insertMainSchedule결과 = "+ result);
+		return result;
 	}
+	
+	
 	
 	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 	public int insertPart(SchedulePartDTO schedulePartDTO){
