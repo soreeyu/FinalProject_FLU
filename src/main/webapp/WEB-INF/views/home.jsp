@@ -12,6 +12,8 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-
+<h1>
+	<a href="./schedule/create?projectNum=4000">스케줄 생성하기</a> 
+</h1>
 </body>
 </html>

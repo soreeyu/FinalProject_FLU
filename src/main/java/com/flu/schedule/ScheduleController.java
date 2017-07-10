@@ -2,14 +2,25 @@ package com.flu.schedule;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
+@Controller
+@RequestMapping(value="/schedule/**")
 public class ScheduleController {
 	
-	private ScheduleService scheduleService;
+		@Autowired
+		private ScheduleService scheduleService;
 	
 	   //참여하고 있는 프리랜서 목록 가져오기 
 		public List<MemberDTO> getUsers(int projectNum){ //재식친구의 DTO 리스트
@@ -31,14 +42,41 @@ public class ScheduleController {
 		
 		
 		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
-		public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
-			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			return 0;
+		@RequestMapping(value="create", method=RequestMethod.GET)
+		public String insertMainSchedule(Integer projectNum, Model model){ //넘어온 projectNum 이 저장되어있다 
+			model.addAttribute("projectNum", projectNum);
+			return "schedule/mainInsertForm";
 		}
 		
+		
+		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
+		@RequestMapping(value="create", method=RequestMethod.POST)
+		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,Model model){ //넘어온 projectNum 이 저장되어있다 
+			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
+			int result =  scheduleService.insertMainSchedule(scheduleMainDTO);
+			System.out.println("Controller에서insertMainS result = " + result);
+			if(result > 0){
+				model.addAttribute("scheduleNum", result);
+				return "schedule/partInsertForm";
+			}else{
+				return "home";
+			}
+		}
+
+		
 		//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
-		public int insertPart(SchedulePartDTO schedulePartDTO){
-			return 0;
+		@RequestMapping(value="addPart", method=RequestMethod.POST)
+		public String insertPart(SchedulePartDTO schedulePartDTO){
+			for(int i=0;i<schedulePartDTO.getPartName().length;i++){
+				System.out.println("schedulePartDTO names = "+schedulePartDTO.getPartName()[i]); //같은이름여러개면 ~~,~~,~~ 로 넘어가짐
+				System.out.println("startDates = "+schedulePartDTO.getPartStartDate()[i]); //마지막꺼만 들어와집니다..
+			}
+				/*for(int i=0;i<list.size();i++){
+				System.out.println("파트이름뿌리기 = "+list.get(i).getPartName());
+			}*/ //리스트로는 안받아 집니다 //해봄
+			
+			//int result =  scheduleService.insertPart(schedulePartDTO);
+			return "schedule/main";
 		}
 		
 		

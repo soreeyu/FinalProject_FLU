@@ -2,13 +2,18 @@ package com.flu.schedule;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
+@Service
 public class ScheduleService {
 	
+	@Autowired
 	private ScheduleDAO scheduleDAO;
 	
 	//참여하고 있는 프리랜서 목록 가져오기 
@@ -32,12 +37,16 @@ public class ScheduleService {
 		
 		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
 		public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
-			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			return 0;
+			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
+			int result = scheduleDAO.insertMainSchedule(scheduleMainDTO);
+			return result;
 		}
 		
 		//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 		public int insertPart(SchedulePartDTO schedulePartDTO){
+			//여러개의 값이 올수가 있습니다 
+			//파싱필요합니다
+			
 			return 0;
 		}
 		
