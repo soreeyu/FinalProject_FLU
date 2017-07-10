@@ -3,7 +3,7 @@ package com.flu.meetRoom;
 import com.flu.room.RoomDTO;
 
 public class MeetRoomDTO extends RoomDTO{
-		
+
 	private String holiday;
 	private String addr_num;
 	private String addr_main;

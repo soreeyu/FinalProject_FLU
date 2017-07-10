@@ -4,5 +4,22 @@
   
   <mapper namespace="MeetRoomMapper">
   	
-  
+  	<!-- 업체 등록  -->
+  	<insert id="MeetInsert" parameterType="com.flu.meetRoom.MeetRoomDTO" >
+  		insert into meetroom values (meetroom_seq.nextval, #{name}, #{contents}, #{time}, #{fname}, #{oname}, #{holiday}, #{addr_num}, #{addr_main}, #{addr_detail}, #{homePage})
+  	</insert>
+  	
+  	<!-- 업체 리스트  -->
+  	<select id="MeetList" resultType="com.flu.meetRoom.MeetRoomDTO" parameterType="com.flu.util.ListInfo">
+  		select * from
+  		(select rownum R, M.* from
+  		(select * from meetroom order by num desc) M)
+  		where R between #{startRow} and #{lastRow}
+  	</select>
+
+	<!-- 업체 하나 보기  -->
+	<select id="MeetView" parameterType="java.lang.Integer" resultType="com.flu.meetRoom.MeetRoomDTO">
+		select * from meetroom where num=#{num}
+	</select>
+	
   </mapper>
