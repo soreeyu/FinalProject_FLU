@@ -7,8 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<input type="text">
-
+	<h1>INSERT</h1>
+	
+	<form action="meetInsert"  method="post" enctype="multipart/form-data">
+	<input type="file" name="f1" >
+	<button>전송</button>
+	</form>
 </body>
 </html>

@@ -2,12 +2,14 @@ package com.flu.controller;
 
 import com.flu.util.ListInfo;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.flu.meetRoom.MeetRoomDTO;
@@ -23,18 +25,18 @@ public class MeetRoomController {
 	
 	@RequestMapping(value="meetList")
 	public void meetList(ListInfo listInfo){
+		System.out.println("meet");
 		
 	}
 	
-	@RequestMapping(value="meetInsert",method=RequestMethod.GET)
-	public void meetInsert(MeetRoomDTO meetRoomDTO, MultipartHttpServletRequest multi, HttpSession session){
-		
-		
-	}
 	
 	@RequestMapping(value="meetInsert",method=RequestMethod.POST)
-	public void meetInsert(RoomDTO room,MultipartHttpServletRequest request,HttpSession session){
+	public void meetInsert(RoomDTO room, MultipartHttpServletRequest request, HttpSession session){
+		System.out.println("meetInsert");
 		
+		MultipartFile fm =request.getFile("f1");
+		
+		System.out.println(fm.getOriginalFilename());
 	}
 	
 	@RequestMapping(value="meetUpdate",method=RequestMethod.GET)
