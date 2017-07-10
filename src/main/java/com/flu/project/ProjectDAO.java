@@ -24,27 +24,27 @@ public class ProjectDAO {
 		
 		//project update
 		public int projectUpdate(ProjectDTO projectDTO){
-			return 0;
+			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
 		//project delete
 		public int projectDelete(int num){
-			return 0;
+			return sqlSession.delete(NAMESPACE+"delete", num);
 		}
 		
 		//project View
 		public ProjectDTO projectView(int num){
-			return null;
+			return sqlSession.selectOne(NAMESPACE+"view", num);
 		}
 		
 		//project List
 		public List<ProjectDTO> projectList(ListInfo listInfo){
-			return null;
+			return sqlSession.selectList(NAMESPACE+"list", listInfo);
 		}
 		
 		//project Count
 		public int projectCount(ListInfo listInfo){
-			return 0;
+			return sqlSession.selectOne(NAMESPACE+"count", listInfo);
 		}
 		
 		

@@ -21,26 +21,26 @@ public class ProjectService {
 	
 	//project update
 	public int projectUpdate(ProjectDTO projectDTO){
-		return 0;
+		return projectDAO.projectUpdate(projectDTO);
 	}
 	
 	//project delete
 	public int projectDelete(int num){
-		return 0;
+		return projectDAO.projectDelete(num);
 	}
 	
 	//project View
 	public ProjectDTO projectView(int num){
-		return null;
+		return projectDAO.projectView(num);
 	}
 	
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo){
-		return null;
+		return projectDAO.projectList(listInfo);
 	}
 	
 	//project Count
 	public int projectCount(ListInfo listInfo){
-		return 0;
+		return projectDAO.projectCount(listInfo);
 	}
 }
