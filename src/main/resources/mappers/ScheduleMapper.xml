@@ -5,8 +5,10 @@
   
   <mapper namespace="ScheduleMapper">
   	<select id="addS" statementType="CALLABLE" parameterType="java.util.Map">
-		{ call add_schedule(#{projectNum,mode=IN},#{result, mode=OUT, javaType=java.lang.Integer, resultMap=java.lang.Integer}) } 
+		{ call add_schedule(#{projectNum,mode=IN},#{result, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer}) } 
 	</select>
   	
-  	
+  	<select id="addcheck" parameterType="com.flu.schedule.client.ScheduleMainDTO" resultType="com.flu.project.ProjectDTO">
+		select * from project where state='진행중' and projectNum=#{projectNum}
+	</select>
   </mapper>

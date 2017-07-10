@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.flu.member.MemberDTO;
+import com.flu.project.ProjectDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
@@ -18,7 +19,7 @@ public class ScheduleDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	private final String namespace = "ScheduleMapper.";
+	private static final String NAMESPACE = "ScheduleMapper.";
 	
 
 	//참여하고 있는 프리랜서 목록 가져오기 
@@ -47,12 +48,17 @@ public class ScheduleDAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNum", scheduleMainDTO.getProjectNum());
 
-		sqlSession.selectOne(namespace+"addS", map); 
+		sqlSession.selectOne(NAMESPACE+"addS", map); 
 		//여기서는 굳이 list 안해도된다 우리는 map 하나를 꺼내오는 것이기 때문 //대부분 One으로 통일해준다
+		//ProjectDTO dto = sqlSession.selectOne(NAMESPACE+"addcheck",scheduleMainDTO);
 
 		int result = (Integer)map.get("result");
 		System.out.println("insertMainSchedule결과 = "+ result);
 		return result;
+		
+		//System.out.println("상태= "+dto.getPlanState()+" 이름="+dto.getName());
+		
+		//return dto.getProjectNum();
 	}
 	
 	
