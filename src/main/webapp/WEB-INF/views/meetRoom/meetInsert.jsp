@@ -14,7 +14,7 @@
 	<input type="text" name="name" placeholder="업체이름">
 	<input type="text" name="contents">
 	<input type="text" name="time">
-	<input type="file" name="f1">
+	<input type="file" name="file">
 	<input type="text" name="holiday">
 	<input type="text" name="addr_num">
 	<input type="text" name="addr_main">

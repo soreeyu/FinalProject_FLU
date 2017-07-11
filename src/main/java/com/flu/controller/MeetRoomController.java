@@ -46,7 +46,7 @@ public class MeetRoomController {
 	public void meetInsert(MeetRoomDTO meetRoomDTO, HttpSession session, MultipartHttpServletRequest request) throws Exception{
 		System.out.println("meetInsert");
 		FileSaver fileSaver = new FileSaver();
-		MultipartFile mpf = request.getFile("f1");
+		MultipartFile mpf = request.getFile("file");
 		String realPath = session.getServletContext().getRealPath("resources/upload");
 		meetRoomDTO.setFname(fileSaver.fileSave(realPath, mpf));
 		meetRoomDTO.setOname(mpf.getOriginalFilename());

@@ -12,7 +12,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<a href="meetRoom/meetList">ddd</a>
+<a href="meetRoom/meetList">LIST</a>
 
 </body>
 </html>
