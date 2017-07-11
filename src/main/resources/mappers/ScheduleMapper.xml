@@ -6,22 +6,79 @@
   <mapper namespace="ScheduleMapper">
   
   	<select id="createS" statementType="CALLABLE" parameterType="java.util.Map">
-		{ call add_schedule(#{projectNum,mode=IN},#{startDate,mode=IN},#{finishDate,mode=IN},#{result, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer},#{scheduleNum, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer}) } 
+	 { call add_schedule(#{projectNum,mode=IN},#{startDate,mode=IN},#{finishDate,mode=IN},#{result, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer},#{scheduleNum, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer}) } 
 	</select>
 	
+	
+  
+    <!-- 제대로 가져와졌으면 있는거고 없으면 없는거지  -->
+  	<select id="checkS" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.ScheduleMainDTO">
+		select * from scheduleMain where projectnum=#{projectNum}
+	</select>
+	
+	
+	
+	
+	
+  
+  	<select id="onePart" resultType="com.flu.schedule.client.SchedulePartDTO">
+  		select * from schedulepart where chedulenum=#{scheduleNum} and partnum=#{partNum}
+  	</select>
+  
+	<select id="listPart" resultType="com.clu.schedule.client.ScheduleUnitDTO">
+		select * from schedulepart
+	</select>
+
+	
 	<insert id="addPart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		insert into part (schedulenum, name, startdate, finishdate, partnum) values 
+		insert into schedulepart (schedulenum, name, startdate, finishdate, partnum) values 
 		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, #{partNum})
 	</insert>
 	
 	<update id="updatePart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		update part set name=#{partName}, startdate=#{partStartDate}, finishdate=#{partFinishDate} 
+		update schedulepart set name=#{partName}, startdate=#{partStartDate}, finishdate=#{partFinishDate} 
 		where schedulenum=#{scheduleNum} and partnum=#{partNum}
 	</update>
 	
 	<delete id="deletePart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		delete * part where schedulenum=#{scheduleNum} and partnum=#{partNum}
+		delete * schedulepart where schedulenum=#{scheduleNum} and partnum=#{partNum}
 	</delete>
+	
+	
+	
+	
+	
+	
+	
+	<select id="oneUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO" resultType="com.clu.schedule.client.ScheduleUnitDTO">
+		select * from scheduleunit where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+	</select>
+	
+	<select id="listUnit" resultType="com.clu.schedule.client.ScheduleUnitDTO">
+		select * from scheduleunit
+	</select>
+	
+	
+	<insert id="addUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO">
+		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe, unitfinishdate, unitdescfileO, unitdescfileF, partName, email, unitstate)
+		values (#{scheduleNum}, #{unitNum}, #{unitName}, #{unitDescribe}, #{unitFinishDate}, #{unitDescFileO}, #{unitDescFileF}, #{partName}, #{email}, #{unitState})
+	</insert>
+	
+	<update id="updateUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO">
+		update scheduleunit set 
+		unitname=#{unitName}, unitdescribe=#{unitDescribe}, unitfinishdate=#{unitFinishDate}, 
+		unitdescfileO=#{unitDescFileO}, unitdescfileF=#{unitDescFileF}, partName=#{partName}, 
+		email=#{email}, unitstate=#{unitState}
+		where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+	</update>
+	
+	<delete id="deleteUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO">
+		delete * from scheduleunit where where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+	</delete>
+	
+	
+	
+	
   	
 
   </mapper>
