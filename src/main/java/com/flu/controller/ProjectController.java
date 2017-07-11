@@ -1,5 +1,8 @@
 package com.flu.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/project/**")
@@ -21,14 +25,28 @@ public class ProjectController {
 	
 	//list
 	@RequestMapping(value="projectList")
-	public void projectList(){
+	public String projectList(Model model, ListInfo listInfo){
 		
+		List<ProjectDTO> ar = projectService.projectList(listInfo);
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		
+		return "project/projectList";
 	}
 	
 	//view
-	@RequestMapping(value="projectView")
-	public void projectView(int num){
+	@RequestMapping(value="projectView", method=RequestMethod.GET)
+	public void projectView(Integer projectNum, Model model){
+		if(projectNum==null){
+			projectNum=1;
+		}
 		
+		ProjectDTO projectDTO = projectService.projectView(projectNum);
+		System.out.println(projectDTO.getProjectNum());
+		System.out.println(projectDTO.getName());
+		System.out.println(projectDTO.getSkill());
+		model.addAttribute("dto", projectDTO);
 	}
 	
 	
@@ -54,7 +72,6 @@ public class ProjectController {
 		
 		if(result==1){
 			message = "success";
-			System.out.println("success");
 		}
 		
 		rd.addFlashAttribute("message", message);
@@ -65,26 +82,37 @@ public class ProjectController {
 	
 	//update form (write form 공유)
 	@RequestMapping(value="projectUpdate", method=RequestMethod.GET)
-	public String projectUpdate(Model model){
+	public String projectUpdate(Model model, ProjectDTO projectDTO){
 		
 		model.addAttribute("type", "update");
+		model.addAttribute("dto", projectDTO);
 		
 		return "project/projectWrite";
 	}
 	
 	@RequestMapping(value="projectUpdate", method=RequestMethod.POST)
-	public String projectUpdate(){
+	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd){
 		System.out.println("projectUpdate");
-		return "";
+		
+		int result = projectService.projectUpdate(projectDTO);
+		System.out.println(result);
+		String message = "fail";
+		if(result==1){
+			message = "success";
+			System.out.println("update success");
+		}
+		rd.addAttribute("message", message);
+		
+		return "redirect:/project/projectList";
 	}
 	
 	
 	//delete
-	//@RequestMapping(value="projectDelete")
-	/*public String projectDelete(int num, RedirectAttributes rd){
+	@RequestMapping(value="projectDelete")
+	public String projectDelete(int projectNum, RedirectAttributes rd){
 		System.out.println("projectDelete");
 		
-		int result =projectService.projectDelete(num);
+		int result =projectService.projectDelete(projectNum);
 		
 		String message="Delete fail";
 		if(result==1){
@@ -94,7 +122,7 @@ public class ProjectController {
 		rd.addAttribute("message", message);
 		
 		return "redirect:/project/projectList";
-	}*/
+	}
 
 	
 }

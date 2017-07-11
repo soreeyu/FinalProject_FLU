@@ -13,9 +13,7 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 
-
+<a href="project/projectList">List</a>
 <a href="project/projectWrite">write</a>
-<a href="project/projectUpdate">update</a>
-<a href="project/projectDelete">delete</a>
 </body>
 </html>

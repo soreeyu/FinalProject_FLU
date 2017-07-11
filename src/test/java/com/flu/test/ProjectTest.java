@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.flu.project.ProjectDAO;
 import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
 
 public class ProjectTest extends MyAbstractTest {
@@ -25,8 +26,8 @@ public class ProjectTest extends MyAbstractTest {
 		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 		
 		
-
-		projectDTO.setCategory("aa");
+		projectDTO.setProjectNum(1);
+		projectDTO.setCategory("ca");
 		projectDTO.setDetailCategory("aaa");
 		projectDTO.setName("name");
 		projectDTO.setPeriod("123");
@@ -48,7 +49,7 @@ public class ProjectTest extends MyAbstractTest {
 		projectDTO.setAddr_num("addr_num");
 		projectDTO.setReg_date(sDate);
 		
-		int result = projectDAO.projectWrite(projectDTO);
+		int result = projectDAO.projectUpdate(projectDTO);
 		
 		assertEquals(1, result);
 		

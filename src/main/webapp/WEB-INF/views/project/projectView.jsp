@@ -9,5 +9,13 @@
 <body>
 <h2>project View</h2>
 
+${dto.projectNum}
+${dto.name}
+${dto.skill}
+
+<p>
+<a href="projectUpdate?projectNum=${dto.projectNum}">Update</a>
+<a href="projectDelete?projectNum=${dto.projectNum}">Delete</a>
+</p>
 </body>
 </html>

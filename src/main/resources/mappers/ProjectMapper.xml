@@ -7,7 +7,7 @@
   
   <!-- 검색도 넣기 -->
   
-  <sql id="search">
+  <!-- <sql id="search">
   	<trim prefix="where" prefixOverrides="and || or">
 		<if test="search=='name'">
 			writer like '%' || #{find} || '%'
@@ -16,7 +16,7 @@
 			contents like '%' || #{find} || '%'
 		</if> 
 		</trim>
-  </sql>
+  </sql> -->
   
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
   <!-- where가 들어가는 상황이면 where가 추가되고, and가 나올상황이면 알아서 지워주는 where태그  -->
@@ -25,19 +25,22 @@
   
   <select id="count" parameterType="com.flu.util.ListInfo" resultType="int">
   	select count(nvl(projectNum,0)) from project
-  	<include refid="search"></include>
+  	<!-- <include refid="search"></include> -->
   </select>
     
     
   <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO"> 
-  	select * from 
+		select * from project order by projectNum asc
+		
+  	<!-- select * from 
 		(select rownum R, N.* from
 		(select * from project 
 		
 		<include refid="search"></include>
 		
 		 order by projectNum desc) N)
-		where R between #{startRow} and #{lastRow}
+		where R between #{startRow} and #{lastRow} -->
+		
   	</select>
 
 
