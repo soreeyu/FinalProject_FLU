@@ -1,8 +1,8 @@
-package com.flu.schedule;
+package com.flu.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flu.member.MemberDTO;
+import com.flu.schedule.ScheduleService;
 import com.flu.schedule.client.ScheduleMainDTO;
+import com.flu.schedule.client.SchedulePartArrayDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
@@ -23,18 +25,45 @@ public class ScheduleController {
 		private ScheduleService scheduleService;
 	
 	   //참여하고 있는 프리랜서 목록 가져오기 
-		public List<MemberDTO> getUsers(int projectNum){ //재식친구의 DTO 리스트
-			return null;
-		} 
-		//저장된 part들 가져오기 //세부사항 등록시 필요
-		public List<SchedulePartDTO> getParts(int scheduleNum){
-			return null;
+		public void userList(int projectNum){ //재식친구의 DTO 리스트
+			//List<MemberDTO> 
 		} 
 		
+		public void userOne(){}
+		
+		
+		
+		
+		
+		
+		
+		
+		//저장된 part들 가져오기 //세부사항 등록시 필요
+		public void partList(int scheduleNum){
+			//List<SchedulePartDTO>
+		} 
+		
+		public void partOne(){}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//할일 리스트 뿌려주기 
-		public List<ScheduleUnitDTO> getUnitList(int scheduleNum){ 
-			return null;
+		public void unitList(int scheduleNum){ 
+			//List<ScheduleUnitDTO>
 		}
+		
+		public void unitOne(){}
+		
+		
+		
+		
 		
 		
 		
@@ -66,16 +95,11 @@ public class ScheduleController {
 		
 		//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 		@RequestMapping(value="addPart", method=RequestMethod.POST)
-		public String insertPart(SchedulePartDTO schedulePartDTO){
-			for(int i=0;i<schedulePartDTO.getPartName().length;i++){
-				System.out.println("schedulePartDTO names = "+schedulePartDTO.getPartName()[i]); //같은이름여러개면 ~~,~~,~~ 로 넘어가짐
-				System.out.println("startDates = "+schedulePartDTO.getPartStartDate()[i]); //마지막꺼만 들어와집니다..
-			}
-				/*for(int i=0;i<list.size();i++){
-				System.out.println("파트이름뿌리기 = "+list.get(i).getPartName());
-			}*/ //리스트로는 안받아 집니다 //해봄
+		public String insertPart(SchedulePartArrayDTO schedulePartArrayDTO){
+			int result =  scheduleService.insertPart(schedulePartArrayDTO);
 			
-			//int result =  scheduleService.insertPart(schedulePartDTO);
+			System.out.println("part등록 Controller result = "+result);
+			
 			return "schedule/main";
 		}
 		

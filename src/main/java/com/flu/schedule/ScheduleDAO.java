@@ -50,7 +50,7 @@ public class ScheduleDAO {
 		map.put("startDate", scheduleMainDTO.getStartDate());
 		map.put("finishDate", scheduleMainDTO.getFinishDate());
 
-		sqlSession.selectOne(NAMESPACE+"addS", map); 
+		sqlSession.selectOne(NAMESPACE+"createS", map); 
 		//여기서는 굳이 list 안해도된다 우리는 map 하나를 꺼내오는 것이기 때문 //대부분 One으로 통일해준다
 
 
@@ -65,21 +65,7 @@ public class ScheduleDAO {
 
 	}
 	
-	
-	
-	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
-	public int insertPart(SchedulePartDTO schedulePartDTO){
-		//insertMainSchedule 에서 스케줄넘이 생성되었음
-		//그 스케줄 넘으로 하나씩 입력하기 
-		
-		
-		return 0;
-	}
-	
-	
-	
-	
-	
+
 	//main스케줄 수정하기 //시작 날짜, 마감날짜가 바뀐다 
 	public int updateMainSchedule(ScheduleMainDTO scheduleMainDTO){
 		return 0;
@@ -88,13 +74,26 @@ public class ScheduleDAO {
 	
 	
 	
+	
+	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
+	public int insertPart(SchedulePartDTO schedulePartDTO){
+		return sqlSession.insert(NAMESPACE+"addPart", schedulePartDTO); 
+	}
+	
+	
+
+	
 	//part수정하기 //진행중에 part 수정하는 경우에는 DB에서 part와 clientSchedule 의 part도 같이 수정되어야한다
-	public int updatePart(ScheduleMainDTO scheduleMainDTO){
-		return 0;
+	public int updatePart(SchedulePartDTO schedulePartDTO){
+		return sqlSession.insert(NAMESPACE+"addPart", schedulePartDTO); 
 	}
 	
 	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
-	public void deletePart(){}
+	public int deletePart(SchedulePartDTO schedulePartDTO){
+		return sqlSession.insert(NAMESPACE+"addPart", schedulePartDTO); 
+	}
+	
+	
 	
 	
 	//세부항목
