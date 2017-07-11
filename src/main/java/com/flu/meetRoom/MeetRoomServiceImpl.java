@@ -20,13 +20,15 @@ public class MeetRoomServiceImpl implements RoomService{
 	@Override
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		listInfo.makeRow();
+		
+		return meetRoomDAO.list(listInfo);
 	}
 
 	@Override
 	public int insert(RoomDTO room,MultipartFile multi,String realPath) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return meetRoomDAO.insert(room );
 	}
 
 	@Override
@@ -36,9 +38,9 @@ public class MeetRoomServiceImpl implements RoomService{
 	}
 
 	@Override
-	public RoomDTO view(RoomDTO room) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public RoomDTO view(int num) throws Exception {
+		
+		return meetRoomDAO.view(num);
 	}
 
 	@Override

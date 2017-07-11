@@ -24,14 +24,16 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	@Override
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NAMESPACE+"MeetList", listInfo);
 	}
-
+	
+	
 	@Override
 	public int insert(RoomDTO room) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.insert(NAMESPACE+"RoomInsert", room);
+		//업체 등록하는 메서드
+		return sqlSession.insert(NAMESPACE+"MeetInsert", room);
 	}
+	
 
 	@Override
 	public int update(RoomDTO room) throws Exception {
@@ -42,7 +44,7 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	@Override
 	public RoomDTO view(int num) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne(NAMESPACE+"MeetView", num);
 	}
 
 	@Override

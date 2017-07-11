@@ -36,7 +36,7 @@ public class EachRoomServiceImpl implements RoomService{
 	}
 
 	@Override
-	public RoomDTO view(RoomDTO room) throws Exception {
+	public RoomDTO view(int num) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
