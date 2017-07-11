@@ -21,8 +21,10 @@ public class MemberDTO {
 	private String account;
 	private String accountNumber;
 	private String AuthenticState;
+	private String alarmstate;
+	private String emailcheck;
 	
-	private TypeInfo typeInfo;
+	
 	
 	
 	public String getKind() {
@@ -127,12 +129,20 @@ public class MemberDTO {
 	public void setAuthenticState(String authenticState) {
 		AuthenticState = authenticState;
 	}
-	public TypeInfo getTypeInfo() {
-		return typeInfo;
+	
+	public String getEmailcheck() {
+		return emailcheck;
 	}
-	public void setTypeInfo(TypeInfo typeInfo) {
-		this.typeInfo = typeInfo;
+	public void setEmailcheck(String emailcheck) {
+		this.emailcheck = emailcheck;
 	}
+	public String getAlarmstate() {
+		return alarmstate;
+	}
+	public void setAlarmstate(String alarmstate) {
+		this.alarmstate = alarmstate;
+	}
+	
 	
 	
 	

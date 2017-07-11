@@ -17,10 +17,15 @@ public class QnaDAOTest extends MyAbstractTest{
 
 	@Inject
 	private SqlSession sqlSession;
+	private final String NAMESPACE = "MemberMapper.";
 	
-	@Test
 	public void test(){
 		assertNotNull(sqlSession);
+	}
+	
+	@Test
+	public void emailTest(){
+		sqlSession.selectOne(NAMESPACE+"memberEmail", "jk930@naver.com");
 	}
 	
 }

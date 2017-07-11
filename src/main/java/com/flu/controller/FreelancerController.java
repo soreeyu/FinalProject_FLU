@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flu.freelancer.FreelancerDTO;
-import com.flu.freelancer.FreelancerService;
+import com.flu.freelancer.FreelancerServiceImpl;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
 import com.flu.profile.Evaluation;
@@ -23,7 +23,7 @@ import com.flu.profile.Skill;
 public class FreelancerController {
 
 	@Inject
-	private FreelancerService freelancerService;
+	private FreelancerServiceImpl freelancerService;
 
 	//프리랜서 등록
 	@RequestMapping(value="freeInsert", method=RequestMethod.POST)

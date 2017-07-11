@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.member.MemberDTO;
+import com.flu.member.MemberService;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
 import com.flu.profile.Evaluation;
@@ -16,11 +18,22 @@ import com.flu.profile.Skill;
 import com.flu.profile.TypeInfo;
 
 @Service
-public class FreelancerService {
+public class FreelancerServiceImpl implements MemberService{
 
+	
+	
 	@Inject
-	private FreelancerDAO freelancerDAO;
+	private FreelancerDAOImpl freelancerDAO;
 
+	@Override
+	//이메일 인증
+	public void EmailAccess(String email, String num) {
+		// TODO Auto-generated method stub
+		
+		
+	}
+	
+	
 	//프리랜서 등록
 	public int freelancerInsert(FreelancerDTO freelancerDTO){
 		return 0;
@@ -210,6 +223,8 @@ public class FreelancerService {
 
 		return 0;
 	}
+
+	
 
 
 }
