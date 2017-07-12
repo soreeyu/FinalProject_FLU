@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.flu.member.CheckMemberDTO;
+
 import com.flu.member.MemberDAO;
 import com.flu.member.MemberDTO;
 import com.flu.profile.Academic;
@@ -203,8 +203,5 @@ public class FreelancerDAO implements MemberDAO{
 		return 0;
 	}
 	/************************** Authentic *******************************/
-	//신원확인
-	public int authenticInsert(CheckMemberDTO checkMemberDTO){
-		return 0;
-	}
+
 }
