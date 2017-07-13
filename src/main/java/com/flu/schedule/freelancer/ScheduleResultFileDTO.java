@@ -2,16 +2,17 @@ package com.flu.schedule.freelancer;
 
 public class ScheduleResultFileDTO {
 	
-	private int doResultFileNum;
+	private int unitResultFileNum;
 	private String resultFName;
 	private String resultOName;
 	private int resultFileSeq; // 해당 doResultFileNum(고유번호임)에서의 순서 
 	
-	public int getDoResultFileNum() {
-		return doResultFileNum;
+	
+	public int getUnitResultFileNum() {
+		return unitResultFileNum;
 	}
-	public void setDoResultFileNum(int doResultFileNum) {
-		this.doResultFileNum = doResultFileNum;
+	public void setUnitResultFileNum(int unitResultFileNum) {
+		this.unitResultFileNum = unitResultFileNum;
 	}
 	public String getResultFName() {
 		return resultFName;

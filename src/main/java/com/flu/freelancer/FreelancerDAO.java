@@ -7,15 +7,12 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.flu.checkMember.CheckMemberDTO;
-import com.flu.member.MemberDTO;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
 import com.flu.profile.Evaluation;
 import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.Skill;
-import com.flu.util.RowMaker;
 
 @Repository
 public class FreelancerDAO{
@@ -175,5 +172,5 @@ public class FreelancerDAO{
 		return 0;
 	}
 	/************************** Authentic *******************************/
-	
+
 }

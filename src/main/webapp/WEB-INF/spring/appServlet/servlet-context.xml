@@ -19,11 +19,21 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
 	</beans:bean>
+	
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" /><!-- 제일 먼저 실행 시킴 -->
+	</beans:bean>
+	
+	<beans:bean class="com.flu.file.Download" id="download">
+	</beans:bean>
+	
 	
 	<context:component-scan base-package="com.flu.home" />
 	<context:component-scan base-package="com.flu.alarm"/>
 	<context:component-scan base-package="com.flu.client"/>
+	<context:component-scan base-package="com.flu.checkMember"/>
 	<context:component-scan base-package="com.flu.controller"/>
 	<context:component-scan base-package="com.flu.eachRoom"/>
 	<context:component-scan base-package="com.flu.file"/>

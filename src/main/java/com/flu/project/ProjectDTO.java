@@ -5,8 +5,8 @@ import java.sql.Date;
 public class ProjectDTO {
 
 	private int projectNum;
-	private String category;		//큰분야
-	private String detailCategory;	//세부분야
+	private String category;		
+	private String detailCategory;	
 	private String name;
 	private String period;
 	private Date startDate;
@@ -17,15 +17,15 @@ public class ProjectDTO {
 	private String skill;
 	private String meetKind;
 	private String exp;
-	private String state;			//검수전/모집중/모집실패/진행중/완료/판매중
+	private String state;			
 	private String email;
-	private int quick;				//급구여부
-	private String fName;			//검수할 파일
-	private String oName;			//검수할 파일
-	private String addr_num;		//우편번호
-	private String addr_main;		//메인주소
+	private int quick;				
+	private String fName;			
+	private String oName;			
+	private String addr_num;		
+	private String addr_main;		
 	private String addr_detail;
-	private Date reg_date;			//프로젝트 등록날짜
+	private Date reg_date;			
 	
 	
 	public int getProjectNum() {

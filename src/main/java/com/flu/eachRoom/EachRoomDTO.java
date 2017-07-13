@@ -9,6 +9,7 @@ public class EachRoomDTO extends RoomDTO{
 	private String convenience;
 	private Integer price;
 	private Integer snum;
+	
 	public String getType() {
 		return type;
 	}

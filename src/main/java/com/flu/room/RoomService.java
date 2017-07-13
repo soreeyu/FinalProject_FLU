@@ -17,7 +17,7 @@ public interface RoomService {
 	public int update(RoomDTO room,MultipartFile multi,String realPath) throws Exception;
 
 	//view
-	public RoomDTO view(RoomDTO room) throws Exception;
+	public RoomDTO view(int num) throws Exception;
 	
 	//delete
 	public int delete(int num) throws Exception;

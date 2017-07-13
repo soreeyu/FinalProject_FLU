@@ -23,10 +23,6 @@ public class MemberDTO {
 	private String authenticState;
 	private String alarmstate;
 	private String emailcheck;
-	
-	
-	
-	
 	public String getKind() {
 		return kind;
 	}
@@ -129,20 +125,20 @@ public class MemberDTO {
 	public void setAuthenticState(String authenticState) {
 		this.authenticState = authenticState;
 	}
-	
-	public String getEmailcheck() {
-		return emailcheck;
-	}
-	public void setEmailcheck(String emailcheck) {
-		this.emailcheck = emailcheck;
-	}
 	public String getAlarmstate() {
 		return alarmstate;
 	}
 	public void setAlarmstate(String alarmstate) {
 		this.alarmstate = alarmstate;
 	}
+	public String getEmailcheck() {
+		return emailcheck;
+	}
+	public void setEmailcheck(String emailcheck) {
+		this.emailcheck = emailcheck;
+	}
 	
+
 	
 	
 	

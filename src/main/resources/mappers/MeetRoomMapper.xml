@@ -4,5 +4,41 @@
   
   <mapper namespace="MeetRoomMapper">
   	
-  
+  	<!-- 업체 등록  -->
+  	<insert id="MeetInsert" parameterType="com.flu.meetRoom.MeetRoomDTO" >
+  		insert into meetroom values (meetroom_seq.nextval, #{name}, #{contents}, #{time}, #{fname}, #{oname}, #{holiday}, #{addr_num}, #{addr_main}, #{addr_detail}, #{homePage})
+  	</insert>
+  	
+  	<!-- 업체 리스트  -->
+  	<select id="MeetList" resultType="com.flu.meetRoom.MeetRoomDTO" parameterType="com.flu.util.ListInfo">
+  		select * from
+  		(select rownum R, M.* from
+  		(select * from meetroom order by num desc) M)
+  		where R between #{startRow} and #{lastRow}
+  	</select>
+
+	<!-- 업체 하나 보기  -->
+	<select id="MeetView" parameterType="java.lang.Integer" resultType="com.flu.meetRoom.MeetRoomDTO">
+		select * from meetroom where num=#{num}
+	</select>
+	
+	<!-- 업체 정보 삭제 -->
+	<delete id="MeetDelete" parameterType="java.lang.Integer">	
+		delete meetroom where num=#{num}
+	</delete>
+	<!-- 업체 정보를 삭제 할때 등록된 세부공간이 있다면 아래의 sql문을 한번 실행한다. -->
+	<select id="MeetDelete_eachRoom" parameterType="java.lang.Integer" resultType="com.flu.eachRoom.EachRoomDTO">
+		select * from eachroom where snum=#{num}
+	</select>
+	<!-- 업체정보 수정 -->
+	<update id="MeetUpdate" parameterType="com.flu.meetRoom.MeetRoomDTO">
+		update meetroom set name=#{name}, contents=#{contents}, time=#{time}, fname=#{fname}, oname=#{oname}, holiday=#{holiday}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail}, homepage=#{homePage} where num=#{num}
+	
+	</update>
+	
+	<!-- 업체 정보 삭제시, 세부공간 자동 삭제  -->
+	<delete id="EachDelete" parameterType="java.lang.Integer">
+		delete eachroom where snum=#{num}
+	</delete>
+	
   </mapper>

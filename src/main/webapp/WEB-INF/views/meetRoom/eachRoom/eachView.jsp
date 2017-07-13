@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<input type="text">
-
+	<h1>eachView</h1>
 </body>
 </html>

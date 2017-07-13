@@ -3,10 +3,10 @@ package com.flu.project.sell;
 public class PjSellDTO {
 	
 	private int projectNum;
-	private String name;			//판매할 프로젝트 이름
+	private String name;			
 	private int price;
-	private String contents;		//판매할 프로젝트 설명
-	private String email;			//판매자(클라이언트) 이메일
+	private String contents;		
+	private String email;			
 	
 	
 	

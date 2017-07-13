@@ -2,49 +2,43 @@ package com.flu.schedule;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
+@Repository
 public class ScheduleDAO {
+	
+	@Autowired
+	private SqlSession sqlSession;
+	private static final String NAMESPACE = "ScheduleMapper.";
+	
+	//주어진 projectNum에 대한 schedule이 존재하는지 확인
+	public ScheduleMainDTO checkSchedule(Integer projectNum){
+		return sqlSession.selectOne(NAMESPACE+"checkS", projectNum);
+	}
+
+	
+	
+    //projectNum, 프로젝트 시작일 , 마감일 , scheduleNum 이 등록된다
+	public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
+		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
+		return sqlSession.insert(NAMESPACE+"addMainS", scheduleMainDTO); //스케줄 등록
+
+	}
+	
+	//등록되어져잇는 scheduleNum 을 가져온다
+	public int getScheduleNum(Integer projectNum){
+		return sqlSession.selectOne(NAMESPACE+"getSNum", projectNum);
+	}
 	
 	
 
-	//참여하고 있는 프리랜서 목록 가져오기 
-	public List<MemberDTO> getUsers(int projectNum){ //재식친구의 DTO 리스트
-		return null;
-	} 
-	//저장된 part들 가져오기 //세부사항 등록시 필요
-	public List<SchedulePartDTO> getParts(int scheduleNum){
-		return null;
-	} 
-	
-	//할일 리스트 뿌려주기 
-	public List<ScheduleUnitDTO> getUnitList(int scheduleNum){ 
-		return null;
-	}
-	
-	
-	
-	
-	
-	
-	//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
-	public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
-		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-		return 0;
-	}
-	
-	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
-	public int insertPart(SchedulePartDTO schedulePartDTO){
-		return 0;
-	}
-	
-	
-	
-	
-	
 	//main스케줄 수정하기 //시작 날짜, 마감날짜가 바뀐다 
 	public int updateMainSchedule(ScheduleMainDTO scheduleMainDTO){
 		return 0;
@@ -53,13 +47,26 @@ public class ScheduleDAO {
 	
 	
 	
+	
+	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
+	public int insertPart(SchedulePartDTO schedulePartDTO){
+		return sqlSession.insert(NAMESPACE+"addPart", schedulePartDTO); 
+	}
+	
+	
+
+	
 	//part수정하기 //진행중에 part 수정하는 경우에는 DB에서 part와 clientSchedule 의 part도 같이 수정되어야한다
-	public int updatePart(ScheduleMainDTO scheduleMainDTO){
-		return 0;
+	public int updatePart(SchedulePartDTO schedulePartDTO){
+		return sqlSession.insert(NAMESPACE+"", schedulePartDTO); 
 	}
 	
 	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
-	public void deletePart(){}
+	public int deletePart(SchedulePartDTO schedulePartDTO){
+		return sqlSession.insert(NAMESPACE+"", schedulePartDTO); 
+	}
+	
+	
 	
 	
 	//세부항목

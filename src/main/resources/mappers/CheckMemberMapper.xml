@@ -4,7 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="CheckMemberMapper">
+	<select id="view" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
+		select * from member where email=#{email}
+	</select>
+	
+  	<insert id="insert" parameterType="com.flu.checkMember.CheckMemberDTO">
+  		insert into checkmember values(#{email},#{fname},#{oname},#{name},sysdate)
+  	</insert>
   	
+  	<select id="list" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.util.ListInfo">
+  		select * from checkmember A, member B where A.email=B.email order by reg_date asc
+  	</select>
+  	
+  	<update id="checkUpdate" parameterType="com.flu.member.MemberDTO">
+  		update member set authenticstate= #{authenticState} where email= #{email}
+  	</update>
+  	
+  	<select id="checkView" parameterType="java.lang.String" resultType="com.flu.checkMember.CheckMemberViewDTO">
+  		select * from member A,checkmember B where A.email=B.email and A.email=#{email}
+  	</select>
   
+  	<delete id="delete" parameterType="java.lang.String">
+  		delete from checkmember where email=#{email}
+  	</delete>
+
+  
+  	<!-- 임시 로그인 -->
+  	<select id="loginTest" resultType="com.flu.member.MemberDTO" parameterType="com.flu.member.MemberDTO">
+  		select * from member where email=#{email} and pw=#{pw}	
+  	</select>
   
   </mapper>
