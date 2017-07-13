@@ -14,9 +14,13 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 
+
 <a href="member/MemberJoin">MemberJoinForm</a>
 
 <a href="meetRoom/meetList">LIST</a>
+
+
+<a href="member/memberTest">MemberTest</a>
 
 </body>
 </html>

@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.flu.checkMember.CheckMemberDTO;
-import com.flu.member.MemberDAO;
 import com.flu.member.MemberDTO;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
@@ -19,41 +18,13 @@ import com.flu.profile.Skill;
 import com.flu.util.RowMaker;
 
 @Repository
-public class FreelancerDAOImpl implements MemberDAO{
+public class FreelancerDAOImpl{
 
 	
 	@Inject
 	private SqlSession sqlSession;
 	
-	@Override
-	public int memberInsert(MemberDTO memberDTO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int memberUpdate(MemberDTO memberDTO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public MemberDTO memberView(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<MemberDTO> memberList(RowMaker rowmaker) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int memberDelete(String email) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 	
 	//프리랜서 정보 입력(추가로 입력 Update)
 	public int freelancerInsert(FreelancerDTO freelancerDTO){
