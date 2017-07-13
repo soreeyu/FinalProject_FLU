@@ -44,6 +44,7 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
+
 <p><a href="./checkMember/checkMemberList">관리자가 신원확인 해주는 곳</a> </p>
 
 <a href="./checkMember/checkMemberInsert?email=${member.email}">신원확인 신청하기</a> <!-- email파라미터로 Session아이디 가져와야함 -->
@@ -62,6 +63,11 @@
 
 
 <a href="member/memberTest">MemberTest</a>
+
+
+<h1>
+	<a href="./schedule/create?projectNum=6000">스케줄 생성하기</a> 
+</h1>
 
 </body>
 </html>
