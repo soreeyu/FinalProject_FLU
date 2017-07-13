@@ -12,11 +12,12 @@
 		
 		$("#addPartBtn").click(function(){
 			partNum++;
-			alert('part 추가');
-			alert($("#partSection").html());
+			//alert('part 추가');
+			//alert($("#partSection").html());
 			var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
 			partDOM = partDOM + ' part 시작일:<input type="date" class="partStartDate" name="partStartDate">'; 
 			partDOM = partDOM + ' part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">';
+			partDOM = partDOM + ' part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">';
 			partDOM = partDOM + ' <span class="partDel">X</span></div>';
 			$("#partSection").append(partDOM);
 		});
@@ -31,7 +32,7 @@
 </head>
 <body>
 
-<form action="./create" method="POST">
+<form action="./create" method="POST"  enctype="multipart/form-data">
 	<input type="hidden" name="projectNum" value="${projectNum}">
 	<div>
 		프로젝트 시작일:<input type="date" name="startDate" value=""> 
@@ -46,9 +47,8 @@
 			part 이름 : <input type="text" class="partName" name="partName">
 			part 시작일:<input type="date" class="partStartDate" name="partStartDate"> 
 			part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">
-			part 설명첨부파일:<input type >
-			<span class="partDel">X</span></div>
-			
+			part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">
+			<span class="partDel">X</span>
 		</div>
 	</div>
 	<input type="button" id="addPartBtn" value="part추가">

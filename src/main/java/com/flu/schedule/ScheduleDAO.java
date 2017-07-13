@@ -46,9 +46,20 @@ public class ScheduleDAO {
 	
 	
 	
+	//저장된 part들 가져오기 //세부사항 등록시 필요
+	public List<SchedulePartDTO> partList(int scheduleNum){
+		List<SchedulePartDTO> ar = sqlSession.selectList(NAMESPACE+"listPart", scheduleNum);
+		System.out.println("가져와졌나요 "+ar.get(0).getPartName());
+		return sqlSession.selectList(NAMESPACE+"listPart", scheduleNum); 	
+	} 
+	
+	//파트 하나 가져오기 
+	public SchedulePartDTO partOne(int scheduleNum, int partNum){
+		return null;
+	}
 	
 	
-	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
+	//파트 저장
 	public int insertPart(SchedulePartDTO schedulePartDTO){
 		return sqlSession.insert(NAMESPACE+"addPart", schedulePartDTO); 
 	}
@@ -63,7 +74,7 @@ public class ScheduleDAO {
 	
 	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
 	public int deletePart(SchedulePartDTO schedulePartDTO){
-		return sqlSession.insert(NAMESPACE+"", schedulePartDTO); 
+		return sqlSession.insert(NAMESPACE+"deletePart", schedulePartDTO); 
 	}
 	
 	

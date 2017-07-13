@@ -38,18 +38,19 @@
   		select * from schedulepart where chedulenum=#{scheduleNum} and partnum=#{partNum}
   	</select>
   
-	<select id="listPart" resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select * from schedulepart
+	<select id="listPart" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.SchedulePartDTO">
+		select * from schedulepart where schedulenum=#{scheduleNum} order by partnum asc
 	</select>
 
 	
 	<insert id="addPart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		insert into schedulepart (schedulenum, name, startdate, finishdate, partnum) values 
-		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, #{partNum})
+		insert into schedulepart (schedulenum, partname, partstartdate, partfinishdate, partnum ,partdescfileo, partdescfilef) values 
+		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, #{partNum}, #{partDescFileO}, #{partDescFileF})
 	</insert>
 	
 	<update id="updatePart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		update schedulepart set name=#{partName}, startdate=#{partStartDate}, finishdate=#{partFinishDate} 
+		update schedulepart set partname=#{partName}, partstartdate=#{partStartDate}, partfinishdate=#{partFinishDate},
+		partdescfileO=#{partDescFileO}, partdescfileF=#{partDescFileF}
 		where schedulenum=#{scheduleNum} and partnum=#{partNum}
 	</update>
 	

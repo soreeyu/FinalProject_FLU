@@ -1,14 +1,21 @@
 package com.flu.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.flu.file.FileService;
 import com.flu.schedule.ScheduleService;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
+import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
 @Controller
@@ -17,6 +24,39 @@ public class ScheduleController {
 	
 		@Autowired
 		private ScheduleService scheduleService;
+		
+		
+		
+		//main스케줄인서트로 바로가기  테스트 
+		@RequestMapping(value="createT", method=RequestMethod.GET)
+		public String insertMainScheduleT(){ //넘어온 projectNum 이 저장되어있다 
+			return "schedule/mainInsertForm";
+		}
+		
+
+		//테스트
+		//넘어온 파일 확인하기 
+		@RequestMapping(value="createT", method=RequestMethod.POST)
+		public String insertMainScheduleT(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
+			FileService fileService = new FileService();
+			
+			for(int i=0;i<schedulePartArrayDTO.getPartDescFileO().length;i++){
+				System.out.println(i+1+"번째 파일 이름 = "+ (schedulePartArrayDTO.getPartDescFile())[i].getOriginalFilename());
+				
+				String fileNameF = fileService.fileSave((schedulePartArrayDTO.getPartDescFile())[i], session);
+			}
+			
+			
+
+			return "";
+
+		}
+		
+		
+		
+		
+		
+		
 		
 		
 		// 프로젝트에 생성된 스케줄이 있는지 확인
@@ -38,30 +78,35 @@ public class ScheduleController {
 			
 		}
 		
+
 		
-		
-		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
+		//진행중인 스케줄이 없을때 넘어오는 창으로 main, part, 첨부파일을 받는다  //진짜
 		@RequestMapping(value="create", method=RequestMethod.POST)
-		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model){ //넘어온 projectNum 이 저장되어있다 
-			
-			
+		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
+			System.out.println("컨트롤러");
 			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO);
+			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
 			System.out.println("Controller insertMainS result = " + result);
-			
+
 			if(result > 0){
-				
+
 				model.addAttribute("scheduleNum", result);
 				return "schedule/main";
-				
+
 			}else{
 				return "redirect:/";
 			}
-			
+
 		}
+		
+		
+		
+		
+		
 
 		
 		
+
 
 		
 		//main스케줄 수정하기 //시작 날짜, 마감날짜가 바뀐다 
@@ -76,10 +121,18 @@ public class ScheduleController {
 
 		
 		
-		//저장된 part들 가져오기 //세부사항 등록시 필요
-		public void partList(int scheduleNum){
-			//List<SchedulePartDTO>
+		//저장된 partList 가져오기 //세부사항 등록시 필요
+		@RequestMapping(value="partView",method=RequestMethod.GET)
+		public String partList(int scheduleNum, Model model){
+			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
+			System.out.println("컨트롤러 에서 part리스트"+partList);
+			model.addAttribute("partList",partList);
+			model.addAttribute("scheduleNum",scheduleNum);
+			
+			return "schedule/partView";
 		} 
+		
+		
 		
 		public void partOne(){}
 		
@@ -91,12 +144,20 @@ public class ScheduleController {
 
 			System.out.println("part등록 Controller result = "+result);
 
-			return "schedule/main";
+			return "schedule/main"; 
 		}
 		
-		public void partUpdate(){}
+		@RequestMapping(value="partUpdate", method=RequestMethod.GET)
+		public void partUpdate(SchedulePartDTO schedulePartDTO){
+			
+		}
 		
-		public void partDelete(){}
+		@RequestMapping(value="partDelete", method=RequestMethod.POST)
+		public String partDelete(SchedulePartDTO schedulePartDTO){
+			System.out.println("ScheduleNum="+schedulePartDTO.getScheduleNum()+", partNum="+schedulePartDTO.getPartNum());
+			int result = scheduleService.deletePart(schedulePartDTO);
+			return "schedule/partView";
+		}
 		
 		
 		

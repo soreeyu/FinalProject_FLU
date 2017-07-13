@@ -2,9 +2,14 @@ package com.flu.schedule;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.flu.file.FileService;
 import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
@@ -25,31 +30,54 @@ public class ScheduleService {
 	
 	
 	
+	//저장된 part들 가져오기 //세부사항 등록시 필요
+	public List<SchedulePartDTO> partList(int scheduleNum){
+		return scheduleDAO.partList(scheduleNum);
+	} 
 	
 	
+	
+
 	//참여하고 있는 프리랜서 목록 가져오기 
-		public List<MemberDTO> getUsers(int projectNum){ //재식친구의 DTO 리스트
-			return null;
-		} 
-		//저장된 part들 가져오기 //세부사항 등록시 필요
-		public List<SchedulePartDTO> getParts(int scheduleNum){
-			return null;
-		} 
-		
-		//할일 리스트 뿌려주기 
-		public List<ScheduleUnitDTO> getUnitList(int scheduleNum){ 
-			return null;
-		}
-		
+	public List<MemberDTO> userList(int projectNum){ //재식친구의 DTO 리스트
+		return null;
+	} 
+
+	
+
+	//할일 리스트 뿌려주기 
+	public List<ScheduleUnitDTO> unitList(int scheduleNum){ 
+		return null;
+	}
+
 		
 		
 		
 		
 		
 		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
-		public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO, SchedulePartArrayDTO schedulePartArrayDTO){ //넘어온 projectNum 이 저장되어있다 
+		public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO, SchedulePartArrayDTO schedulePartArrayDTO ,HttpSession session) throws Exception{ 
+			System.out.println("서비스");
+			
 			System.out.println("받아온 main "+scheduleMainDTO.getProjectNum());
 			System.out.println("받아온 part array "+schedulePartArrayDTO.getPartName()[0]);
+			FileService fileService = new FileService();
+			int partCount = schedulePartArrayDTO.getPartDescFile().length;
+			String [] partDescFileO = new String[partCount];
+			String [] partDescFileF = new String[partCount];
+			
+			for(int i=0;i<partCount;i++){
+				System.out.println(i+1+"번째 파일 이름 = "+ (schedulePartArrayDTO.getPartDescFile())[i].getOriginalFilename());
+				String fileNameF = fileService.fileSave((schedulePartArrayDTO.getPartDescFile())[i], session); //upload파일에 저장하기 
+				System.out.println("생성된 이름 = " + fileNameF);
+				partDescFileO[i] = schedulePartArrayDTO.getPartDescFile()[i].getOriginalFilename();
+				partDescFileF[i] = fileNameF;
+			}
+			
+			
+			schedulePartArrayDTO.setPartDescFileO(partDescFileO);
+			schedulePartArrayDTO.setPartDescFileF(partDescFileF);
+			
 			
 			int scheduleNum = 0;
 			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
@@ -85,6 +113,8 @@ public class ScheduleService {
 					schedulePartDTO.setPartFinishDate(schedulePartArrayDTO.getPartFinishDate()[i]);
 					schedulePartDTO.setPartName(schedulePartArrayDTO.getPartName()[i]);
 					schedulePartDTO.setPartNum(i);
+					schedulePartDTO.setPartDescFileF(schedulePartArrayDTO.getPartDescFileF()[i]);
+					schedulePartDTO.setPartDescFileO(schedulePartArrayDTO.getPartDescFileO()[i]);
 					result = scheduleDAO.insertPart(schedulePartDTO); 
 					System.out.println("잘들어갔나요 서비스 에서 반복문"+i+" 결과 "+result);
 				}
@@ -111,7 +141,9 @@ public class ScheduleService {
 		}
 		
 		//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
-		public void deletePart(){}
+		public int deletePart(SchedulePartDTO schedulePartDTO){
+			return scheduleDAO.deletePart(schedulePartDTO);
+		}
 		
 		
 		//세부항목
