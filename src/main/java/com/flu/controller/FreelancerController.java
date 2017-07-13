@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +19,14 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.Skill;
 
-/*@Controller
-@RequestMapping(value="/member/**")*/
+@Controller
+@RequestMapping(value="/member/**")
 public class FreelancerController {
 
 	@Inject
 	private FreelancerServiceImpl freelancerService;
 
-	//프리랜서 등록
-	@RequestMapping(value="freeInsert", method=RequestMethod.POST)
-	public int freelancerInsert(FreelancerDTO freelancerDTO){
-		return 0;
-	}
+	
 
 	//프리랜서 리스트
 	@RequestMapping(value="freeList", method=RequestMethod.GET)
@@ -37,34 +34,6 @@ public class FreelancerController {
 		return null;
 	}
 
-	//프리랜서 뷰
-	@RequestMapping(value="freeView", method=RequestMethod.GET)
-	public Map<String, Object> freelancerView(){
-
-		/* 전부 있어야함
-			FreelancerDTO;
-			TypeInfo;
-			PortFolio;
-			Skill;
-			Carrer;
-			Academic;
-			License;
-			Evaluation;*/
-
-		return null;
-	}
-
-	//프리랜서 수정
-	@RequestMapping(value="freeUpdate", method=RequestMethod.POST)
-	public int freelancerUpdate(){
-		return 0;
-	}
-
-	//프리랜서 삭제
-	@RequestMapping(value="freeDelete", method=RequestMethod.GET)
-	public int freelancerDelete(){
-		return 0;
-	}
 
 
 
@@ -76,172 +45,182 @@ public class FreelancerController {
 
 		return 0;
 	}
+	
+	/************************** Intro **********************************/
+	//자기소개 등록 폼
+	@RequestMapping(value="introInsert", method=RequestMethod.GET)
+	public void introInsert(){
+		
+	}
+	//자기소개 등록
+	@RequestMapping(value="introInsert", method=RequestMethod.POST)
+	public void introInsert(FreelancerDTO freelancerDTO){
+		
+	}
+	//자기소개 뷰
+	@RequestMapping(value="introView")
+	public String introView(HttpSession session){
+		return "/member/freelancer/intro";
+	}
+	//자기소개 수정
+	@RequestMapping(value="introUpdate")
+	public void introUpdate(HttpSession session){
+		
+	}
+	
 	/************************** PortFolio *******************************/
 	//포트폴리오 등록
 	@RequestMapping(value="portfolioInsert", method=RequestMethod.POST)
-	public int portfolioInsert(PortFolio portFolio){
+	public void portfolioInsert(PortFolio portFolio){
 
-		return 0;
 	}
 
 	//포트폴리오 뷰
 	@RequestMapping(value="portfolioView", method=RequestMethod.GET)
-	public PortFolio portfolioView(String email){
-
-		return null;
+	public String portfolioView(String email){
+		return "/member/freelancer/portfolio";
 	}
 	//포트폴리오 리스트
 	@RequestMapping(value="portfolioList", method=RequestMethod.GET)
-	public List<PortFolio> portfolioList(){
+	public void portfolioList(){
 
-		return null;
 	}
 	//포트폴리오 수정
 	@RequestMapping(value="portfolioUpdate", method=RequestMethod.POST)
-	public int portfolioUpdate(PortFolio portFolio){
+	public void portfolioUpdate(PortFolio portFolio){
 
-		return 0;
 	}
 	//포트폴리오 삭제
 	@RequestMapping(value="portfolioDelete", method=RequestMethod.POST)
-	public int portfolioDelete(String email){
+	public void portfolioDelete(String email){
 
-		return 0;
 	}
 	/************************** Skill *******************************/
 	//보유기술 등록
 	@RequestMapping(value="skillInsert", method=RequestMethod.POST)
-	public int skillInsert(Skill skill){
+	public void skillInsert(Skill skill){
 
-		return 0;
 	}
 
 	//보유기술 뷰
 	@RequestMapping(value="skillView", method=RequestMethod.POST)
-	public Skill skillView(String email){
-
-		return null;
+	public String skillView(String email){
+		return "/member/freelancer/skill";
 	}
 	//보유기술 리스트
 	@RequestMapping(value="skillList", method=RequestMethod.GET)
-	public List<Skill> skillList(){
+	public void skillList(){
 
-		return null;
 	}
 	//보유기술 수정
 	@RequestMapping(value="skillUpdate", method=RequestMethod.POST)
-	public int skillUpdate(Skill skill){
+	public void skillUpdate(Skill skill){
 
-		return 0;
 	}
 	//보유기술 삭제
 	@RequestMapping(value="skillDelete", method=RequestMethod.GET)
-	public int skillDelete(String email){
+	public void skillDelete(String email){
 
-		return 0;
 	}
 	/************************** Carrer *******************************/
+	//경력, 학력, 자격증
+	@RequestMapping(value="carrer", method=RequestMethod.GET)
+	public String carrer(String email){
+		return "/member/freelancer/carrer";
+	}
 	//경력 등록
 	@RequestMapping(value="carrerInsert", method=RequestMethod.POST)
-	public int carrerInsert(Carrer carrer){
+	public void carrerInsert(Carrer carrer){
 
-		return 0;
 	}
 
 	//경력 뷰
 	@RequestMapping(value="carrerView", method=RequestMethod.GET)
-	public Carrer carrerView(String email){
-
-		return null;
+	public void carrerView(String email){
+		
 	}
 	//경력 수정
 	@RequestMapping(value="carrerUpdate", method=RequestMethod.POST)
-	public int carrerUpdate(Carrer carrer){
+	public void carrerUpdate(Carrer carrer){
 
-		return 0;
 	}
 	//경력 삭제
 	@RequestMapping(value="carrerDelete", method=RequestMethod.GET)
-	public int carrerDelete(String email){
+	public void carrerDelete(String email){
 
-		return 0;
 	}
 	/************************** Academic *******************************/
 	//학력 등록
-	@RequestMapping(value="carrerInsert", method=RequestMethod.POST)
-	public int academicInsert(Academic academic){
+	@RequestMapping(value="academicInsert", method=RequestMethod.POST)
+	public void academicInsert(Academic academic){
 
-		return 0;
 	}
 
 	//학력 뷰
-	@RequestMapping(value="carrerView", method=RequestMethod.GET)
-	public Academic academicView(String email){
+	@RequestMapping(value="academicView", method=RequestMethod.GET)
+	public void academicView(String email){
 
-		return null;
 	}
 	//학력 수정
-	@RequestMapping(value="carrerUpdate", method=RequestMethod.POST)
-	public int academicUpdate(Academic academic){
+	@RequestMapping(value="academicUpdate", method=RequestMethod.POST)
+	public void academicUpdate(Academic academic){
 
-		return 0;
 	}
 	//학력 삭제
-	@RequestMapping(value="carrerDelete", method=RequestMethod.GET)
-	public int academicDelete(String email){
+	@RequestMapping(value="academicDelete", method=RequestMethod.GET)
+	public void academicDelete(String email){
 
-		return 0;
 	}
 	/************************** License *******************************/
 	//자격증 증록
 	@RequestMapping(value="licenseInsert", method=RequestMethod.POST)
-	public int licenseInsert(License license){
+	public void licenseInsert(License license){
 
-		return 0;
 	}
 
 	//자격증 뷰
 	@RequestMapping(value="licenseView", method=RequestMethod.POST)
-	public License licenseView(String email){
+	public void licenseView(String email){
 
-		return null;
 	}
 	//자격증 수정
 	@RequestMapping(value="licenseUpdate", method=RequestMethod.GET)
-	public int licenseUpdate(License license){
+	public void licenseUpdate(License license){
 
-		return 0;
 	}
 	//자격증 삭제
 	@RequestMapping(value="licenseDelete", method=RequestMethod.GET)
-	public int licenseDelete(String email){
+	public void licenseDelete(String email){
 
-		return 0;
 	}
 	/************************** Evaluation *******************************/
 	//평가 정보 등록
 	@RequestMapping(value="evaluationInsert", method=RequestMethod.POST)
-	public int evaluationInsert(Evaluation evaluation){
+	public void evaluationInsert(Evaluation evaluation){
 
-		return 0;
 	}
 
 	//평가 정보 뷰
 	@RequestMapping(value="evaluationView", method=RequestMethod.GET)
-	public Evaluation evaluationView(String email){
-
-		return null;
+	public String evaluationView(String email){
+		return "/member/freelancer/evaluation";
 	}
 	//평가 정보 수정
 	@RequestMapping(value="evaluationUpdate", method=RequestMethod.POST)
-	public int evaluationUpdate(Evaluation evaluation){
+	public void evaluationUpdate(Evaluation evaluation){
 
-		return 0;
 	}
 	//평가 정보 삭제
 	@RequestMapping(value="evaluationDelete", method=RequestMethod.GET)
-	public int evaluationDelete(String email){
+	public void evaluationDelete(String email){
 
-		return 0;
 	}
+	/************************* myproject *******************************/
+	
+	//내가 FLU 에서 진행한 프로젝트
+	@RequestMapping(value="myproject")
+	public String myproject(){
+		return "/member/freelancer/myproject";
+	}
+	
 }

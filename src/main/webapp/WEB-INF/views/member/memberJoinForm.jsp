@@ -20,7 +20,7 @@
 
 	<h1>MemberJoinForm</h1>
 	<div>
-	<form action="MemberJoin" method="post">
+	<form id ="form" action="MemberJoin" method="post">
 		<p> 클라이언트 : <input type="radio" class="kind" name="kind" value="client"> 프리랜서 : <input type="radio" class="kind" name="kind" value="freelancer"></p>
 		<p class="p_label" id="p_kind"></p>
 		<p>E-mail : <input type="text" id="email" name="email" required="required"></p>
@@ -49,16 +49,11 @@ $("#btn_member").click(function() {
 	var check3 = 0;
 	var check4 = 0;
 	var check5 = 0;
-	 /* $.ajax({
-		url:"jungbokCK",
-		type:"post",
-		data:{
-			email:email
-		},
-		success:function(data){
-			alert(data);
-		}
-	})  */
+	
+	var jungbokEmail = "";
+	
+	
+	
 	
 	if(kind == undefined){
 		$("#p_kind").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>둘 중에 한 항목을 선택해 주세요.</label>");
@@ -72,8 +67,13 @@ $("#btn_member").click(function() {
 		$("#p_email").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>유효한 E-mail을 입력해 주세요</label>");
 		check2 = 0;
 	}else{
-		$("#p_email").html("");
-		check2 = 1;
+		if(jungbokEmail == email){
+			
+		}else{
+			$("#p_email").html("");
+			check2 = 1;
+		}
+			
 	}
 	
 	if(nickName.length < 6){
@@ -103,9 +103,25 @@ $("#btn_member").click(function() {
 		check4 = 0;
 		
 	}
-	
 	if(check1 == 1 && check2 == 1 && check3 ==1 && check4 ==1){
-		alert("회원가입 성공!");
+		$.ajax({
+			url:"jungbokCK",
+			type:"post",
+			data:{
+				email:email
+			},
+			success:function(data){
+				
+				if(data == email){
+					$("#p_email").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>입력하신 E-mail은 이미 사용중 입니다.</label>");
+					
+				}else{
+					$("#form").submit();
+				}
+			}
+		});
+	}else{
+		alert("실패");
 	}
 	
 });

@@ -20,7 +20,7 @@ public class MemberDTO {
 	private String bank;
 	private String account;
 	private String accountNumber;
-	private String AuthenticState;
+	private String authenticState;
 	private String alarmstate;
 	private String emailcheck;
 	
@@ -124,10 +124,10 @@ public class MemberDTO {
 		this.accountNumber = accountNumber;
 	}
 	public String getAuthenticState() {
-		return AuthenticState;
+		return authenticState;
 	}
 	public void setAuthenticState(String authenticState) {
-		AuthenticState = authenticState;
+		this.authenticState = authenticState;
 	}
 	
 	public String getEmailcheck() {
