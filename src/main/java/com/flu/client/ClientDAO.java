@@ -11,7 +11,7 @@ import com.flu.member.MemberDTO;
 import com.flu.util.RowMaker;
 
 @Repository
-public class ClientDAOImpl{
+public class ClientDAO{
 	
 	@Inject
 	private SqlSession sqlsession;
