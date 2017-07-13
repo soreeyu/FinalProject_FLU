@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flu.freelancer.FreelancerDTO;
-import com.flu.freelancer.FreelancerServiceImpl;
+import com.flu.freelancer.FreelancerService;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
 import com.flu.profile.Evaluation;
@@ -24,7 +24,7 @@ import com.flu.profile.Skill;
 public class FreelancerController {
 
 	@Inject
-	private FreelancerServiceImpl freelancerService;
+	private FreelancerService freelancerService;
 
 	
 

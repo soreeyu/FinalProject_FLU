@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 import com.flu.member.MemberDTO;
 
 @Service
-public class ClientServiceImpl{
+public class ClientService{
 
 	@Inject
-	private ClientDAOImpl clientDAO;
+	private ClientDAO clientDAO;
 
 	
 	

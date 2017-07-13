@@ -1,8 +1,8 @@
-package com.flu.member;
+package com.flu.checkMember;
 
 import com.flu.profile.TypeInfo;
 
-public class MemberDTO {
+public class CheckMemberViewDTO{
 	
 	private String kind;
 	private String email;
@@ -21,8 +21,12 @@ public class MemberDTO {
 	private String account;
 	private String accountNumber;
 	private String authenticState;
-	private String alarmstate;
-	private String emailcheck;
+	private TypeInfo typeInfo;
+	
+	private String fname;
+	private String oname;
+	private String name;
+	
 	public String getKind() {
 		return kind;
 	}
@@ -125,22 +129,33 @@ public class MemberDTO {
 	public void setAuthenticState(String authenticState) {
 		this.authenticState = authenticState;
 	}
-	public String getAlarmstate() {
-		return alarmstate;
+	public TypeInfo getTypeInfo() {
+		return typeInfo;
 	}
-	public void setAlarmstate(String alarmstate) {
-		this.alarmstate = alarmstate;
+	public void setTypeInfo(TypeInfo typeInfo) {
+		this.typeInfo = typeInfo;
 	}
-	public String getEmailcheck() {
-		return emailcheck;
+	public String getFname() {
+		return fname;
 	}
-	public void setEmailcheck(String emailcheck) {
-		this.emailcheck = emailcheck;
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
-	
+	public String getOname() {
+		return oname;
+	}
+	public void setOname(String oname) {
+		this.oname = oname;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	
 	
 	
-
+	
 }

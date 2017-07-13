@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flu.client.ClientDTO;
-import com.flu.client.ClientServiceImpl;
+import com.flu.client.ClientService;
 import com.flu.member.MemberDTO;
 import com.flu.util.RowMaker;
 
@@ -22,7 +22,7 @@ import com.flu.util.RowMaker;
 public class ClientController {
 
 	@Inject
-	private ClientServiceImpl clientService;
+	private ClientService clientService;
 	
 	
 	
