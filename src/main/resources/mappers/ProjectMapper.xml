@@ -7,31 +7,68 @@
   
   <!-- 검색도 넣기 -->
   
-  <select id="count" parameterType="com.flu.util.ListInfo" resultType="java.lang.Integer">
-  	select count(nvl(num,0)) from project
+  <!-- <sql id="search">
+  	<trim prefix="where" prefixOverrides="and || or">
+		<if test="search=='name'">
+			writer like '%' || #{find} || '%'
+		</if>
+		<if test="search=='skill'">
+			contents like '%' || #{find} || '%'
+		</if> 
+		</trim>
+  </sql> -->
+  
+   <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
+  <!-- where가 들어가는 상황이면 where가 추가되고, and가 나올상황이면 알아서 지워주는 where태그  -->
+  <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
+  
+  
+  <select id="count" parameterType="com.flu.util.ListInfo" resultType="int">
+  	select count(nvl(projectNum,0)) from project
+  	<!-- <include refid="search"></include> -->
   </select>
     
     
   <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO"> 
-  </select>
+		select * from project order by projectNum asc
+		
+  	<!-- select * from 
+		(select rownum R, N.* from
+		(select * from project 
+		
+		<include refid="search"></include>
+		
+		 order by projectNum desc) N)
+		where R between #{startRow} and #{lastRow} -->
+		
+  	</select>
+
+
   
   
   <insert id="write" parameterType="com.flu.project.ProjectDTO">
   	insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
-  	meetKind, exp, state, email, quick, fname, oname, addr_num, addr_main, addr_detail, reg_date) 
-  	values (1, 'a',)
+  	meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date) 
+  	values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 
+  	#{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate)
   </insert>
   
   
   <select id="view" parameterType="java.lang.Integer" resultType="com.flu.project.ProjectDTO">
+  	select * from project where projectNum=#{projectNum}
   </select>
   
-  
+  <!-- email은 변경불가 -->
   <update id="update" parameterType="com.flu.project.ProjectDTO">
+  	update project set category=#{category}, detailCategory=#{detailCategory}, name=#{name}, period=#{period}, startDate=#{startDate}, budget=#{budget},
+  	planState=#{planState}, contents=#{contents}, skill=#{skill}, finishDate=#{finishDate}, meetKind=#{meetKind}, exp=#{exp}, state=#{state},
+  	quick=#{quick}, fName=#{fName}, oName=#{oName}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail} 
+  	where projectNum=#{projectNum}
   </update>
   
   
   <delete id="delete" parameterType="java.lang.Integer">
+  	delete project where projectNum=#{projectNum}
   </delete>
  
   
