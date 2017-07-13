@@ -2,17 +2,17 @@ package com.flu.room;
 
 public class RoomDTO {
 	
-	private Integer num;
+	private int num;
 	private String name;
 	private String contents;
 	private String time;
 	private String fname;
 	private String oname;
 	
-	public Integer getNum() {
+	public int getNum() {
 		return num;
 	}
-	public void setNum(Integer num) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 	public String getName() {

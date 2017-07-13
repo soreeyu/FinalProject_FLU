@@ -12,7 +12,7 @@ import org.junit.Test;
 
 
 
-public class QnaDAOTest extends MyAbstractTest{
+public class QnaDAOTest extends MyAbstract{
 
 
 	@Inject
