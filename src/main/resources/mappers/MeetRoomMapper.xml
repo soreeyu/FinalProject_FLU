@@ -22,4 +22,23 @@
 		select * from meetroom where num=#{num}
 	</select>
 	
+	<!-- 업체 정보 삭제 -->
+	<delete id="MeetDelete" parameterType="java.lang.Integer">	
+		delete meetroom where num=#{num}
+	</delete>
+	<!-- 업체 정보를 삭제 할때 등록된 세부공간이 있다면 아래의 sql문을 한번 실행한다. -->
+	<select id="MeetDelete_eachRoom" parameterType="java.lang.Integer" resultType="com.flu.eachRoom.EachRoomDTO">
+		select * from eachroom where snum=#{num}
+	</select>
+	<!-- 업체정보 수정 -->
+	<update id="MeetUpdate" parameterType="com.flu.meetRoom.MeetRoomDTO">
+		update meetroom set name=#{name}, contents=#{contents}, time=#{time}, fname=#{fname}, oname=#{oname}, holiday=#{holiday}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail}, homepage=#{homePage} where num=#{num}
+	
+	</update>
+	
+	<!-- 업체 정보 삭제시, 세부공간 자동 삭제  -->
+	<delete id="EachDelete" parameterType="java.lang.Integer">
+		delete eachroom where snum=#{num}
+	</delete>
+	
   </mapper>

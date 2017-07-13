@@ -17,34 +17,40 @@ public class EachRoomServiceImpl implements RoomService{
 	@Inject
 	private EachRoomDAOImpl eachRoomDAO;
 	
-	@Override
-	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
+	
+	public List<RoomDTO> list(int num) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return eachRoomDAO.list(num);
 	}
 
 	@Override
 	public int insert(RoomDTO room,MultipartFile multi,String realPath) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return eachRoomDAO.insert(room);
 	}
 
 	@Override
 	public int update(RoomDTO room,MultipartFile multi,String realPath) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return eachRoomDAO.update(room);
 	}
 
 	@Override
 	public RoomDTO view(int num) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return eachRoomDAO.view(num);
 	}
 
 	@Override
 	public int delete(int num) throws Exception {
+		
+		return eachRoomDAO.delete(num);
+	}
+	
+	@Override
+	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	

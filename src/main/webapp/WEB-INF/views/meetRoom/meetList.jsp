@@ -6,13 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+	
+
 </head>
 <body>
 
 	<h1>LIST</h1>
-	
 	<c:forEach items="${list}" var="i">
-		<a href="meetView?num=${i.num}"> <h2> ${i.name} </h2> </a>
+		<a href="meetView?num=${i.num}"><h2> ${i.name}</h2></a>
 		<h2>${i.fname}</h2>
 		<h2>${i.time}</h2>
 		<h2>${i.holiday}</h2>

@@ -34,7 +34,7 @@ public class MeetRoomServiceImpl implements RoomService{
 	@Override
 	public int update(RoomDTO room,MultipartFile multi,String realPath) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return meetRoomDAO.update(room);
 	}
 
 	@Override
@@ -46,12 +46,19 @@ public class MeetRoomServiceImpl implements RoomService{
 	@Override
 	public int delete(int num) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return meetRoomDAO.delete(num);
 	}
-
+	
+	public List<RoomDTO> eachSelect(int num) throws Exception{
+		return meetRoomDAO.eachSelect(num);
+	}
 	public int count(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public int delete2(int num) throws Exception {
+		return meetRoomDAO.delete2(num);
 	}
 	
 }

@@ -38,7 +38,7 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	@Override
 	public int update(RoomDTO room) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update(NAMESPACE+"MeetUpdate", room);
 	}
 
 	@Override
@@ -50,13 +50,21 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	@Override
 	public int delete(int num) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete(NAMESPACE+"MeetDelete", num);
 	}
 	
+	public List<RoomDTO> eachSelect(int num) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"MeetDelete_eachRoom", num);
+	}
+	public int delete2(int num) throws Exception{
+		// 업체 삭제시 자동으로 업체에 속해있는 방들을 삭제
+		return sqlSession.delete(NAMESPACE+"EachDelete", num);
+	}
 	public int count(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 	
 	
 	
