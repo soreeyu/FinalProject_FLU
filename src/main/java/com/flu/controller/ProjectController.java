@@ -1,6 +1,5 @@
 package com.flu.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,7 +23,7 @@ public class ProjectController {
 	
 	
 	//list
-	@RequestMapping(value="projectList")
+	@RequestMapping(value="projectList", method=RequestMethod.GET)
 	public String projectList(Model model, ListInfo listInfo){
 		
 		List<ProjectDTO> ar = projectService.projectList(listInfo);
@@ -32,6 +31,7 @@ public class ProjectController {
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
 		
+		model.addAttribute("listInfo", listInfo);		
 		return "project/projectList";
 	}
 	
@@ -51,10 +51,10 @@ public class ProjectController {
 	
 	
 	
-	//projectInsert Form
+	//projectWrite Form
 	@RequestMapping(value="projectWrite", method=RequestMethod.GET)
 	public String projectWrite(Model model){
-		
+		System.out.println("projectWriteForm");
 		model.addAttribute("type", "write");
 		
 		return "project/projectWrite"; 
@@ -90,6 +90,7 @@ public class ProjectController {
 		return "project/projectWrite";
 	}
 	
+	//update
 	@RequestMapping(value="projectUpdate", method=RequestMethod.POST)
 	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd){
 		System.out.println("projectUpdate");

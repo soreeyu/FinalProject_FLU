@@ -26,7 +26,7 @@ public class ListInfo {
 		//1. totalCount
 		//2. totalPage
 		int totalPage = 0;
-
+		int perBlock=5;
 
 		if(totalCount%this.getPerPage()==0){
 			totalPage=totalCount/this.getPerPage();
