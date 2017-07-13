@@ -43,9 +43,19 @@
 	<section class="profile_section">
 		<div class="profile_div">
 			<ul>
+			<c:choose>
+			<c:when test='${member.kind=="admin"}'>
+				<li><a href="#">대금 관리</a></li>
+				<li><a href="../checkProject/checkProjectList">프로젝트 관리</a></li>
+				<li><a href="../checkMember/checkMemberList">회원 관리</a></li>
+			</c:when>
+			<c:otherwise>
 				<li><a href="#">내프로필</a></li>
 				<li><a href="#">내커리어</a></li>
 				<li><a href="#">프로젝트 관리</a></li>
+			</c:otherwise>
+			</c:choose>
+			
 			</ul>
 		</div>
 	</section>

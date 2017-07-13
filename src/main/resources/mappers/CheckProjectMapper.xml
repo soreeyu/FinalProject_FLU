@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="CheckProjectMapper">
+  
+  		<select id="list" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  			select * from project where state = 'check' or state = 'done' order by reg_date asc
+  		</select>
+  		
+  		<update id="update" parameterType="com.flu.project.ProjectDTO">
+  			update project set 
+  				<if test="state=='check'">
+  				state='done' where projectNum=#{projectNum}
+  				</if>
+  				<if test="state=='done'">
+  				state='ing' where projectNum=#{projectNum}
+  				</if>
+  		
+  		</update>
+  		
+  </mapper>

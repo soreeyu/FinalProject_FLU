@@ -46,8 +46,6 @@
 
 
 
-<p><a href="./checkMember/checkMemberList">관리자가 신원확인 해주는 곳</a> </p>
-
 <a href="./checkMember/checkMemberInsert?email=${member.email}">신원확인 신청하기</a> <!-- email파라미터로 Session아이디 가져와야함 -->
 
 <c:if test="${empty member.email}">
