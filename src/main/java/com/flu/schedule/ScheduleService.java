@@ -17,6 +17,16 @@ public class ScheduleService {
 	@Autowired
 	private ScheduleDAO scheduleDAO;
 	
+	
+	
+	public ScheduleMainDTO checkSchedule(Integer projectNum){
+		return scheduleDAO.checkSchedule(projectNum);
+	}
+	
+	
+	
+	
+	
 	//참여하고 있는 프리랜서 목록 가져오기 
 		public List<MemberDTO> getUsers(int projectNum){ //재식친구의 DTO 리스트
 			return null;
@@ -37,27 +47,47 @@ public class ScheduleService {
 		
 		
 		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
-		public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
+		public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO, SchedulePartArrayDTO schedulePartArrayDTO){ //넘어온 projectNum 이 저장되어있다 
+			System.out.println("받아온 main "+scheduleMainDTO.getProjectNum());
+			System.out.println("받아온 part array "+schedulePartArrayDTO.getPartName()[0]);
+			
+			int scheduleNum = 0;
 			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
-			int result = scheduleDAO.insertMainSchedule(scheduleMainDTO);
-			return result;
+			int result = scheduleDAO.insertMainSchedule(scheduleMainDTO); //main DB 
+			if(result > 0){
+				scheduleNum = scheduleDAO.getScheduleNum(scheduleMainDTO.getProjectNum()); //성공하면 result는 schedulenum임
+				if(scheduleNum > 0){
+					schedulePartArrayDTO.setScheduleNum(scheduleNum);
+					result = this.insertPart(schedulePartArrayDTO); // part 추가
+					
+					if(result < 1){
+						scheduleNum = 0; 
+						//여기서 트랜잭션..롤백하면 좋은뒙 
+					}
+				}
+			}
+			
+			
+			return scheduleNum; //실패하면 0 성공하면 스케줄 넘
 		}
 		
 		//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 		public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO){
-			int result = 1;
+			int result = 0;
 			//여러개의 값이 올수가 있습니다 
-			for(int i=0;i<schedulePartArrayDTO.getPartName().length;i++){
-				System.out.println("schedulePartDTO names = "+schedulePartArrayDTO.getPartName()[i]); //같은이름여러개면 ~~,~~,~~ 로 넘어가짐
-				System.out.println("startDates = "+schedulePartArrayDTO.getPartStartDate()[i]); //마지막꺼만 들어와집니다..
-				SchedulePartDTO schedulePartDTO = new SchedulePartDTO();
-				schedulePartDTO.setScheduleNum(schedulePartArrayDTO.getScheduleNum());
-				schedulePartDTO.setPartStartDate(schedulePartArrayDTO.getPartStartDate()[i]);
-				schedulePartDTO.setPartFinishDate(schedulePartArrayDTO.getPartFinishDate()[i]);
-				schedulePartDTO.setPartName(schedulePartArrayDTO.getPartName()[i]);
-				schedulePartDTO.setScheduleNum(i);
-				result = scheduleDAO.insertPart(schedulePartDTO);
-				System.out.println("잘들어갔나요 서비스 에서 반복문"+i+" 결과 "+result);
+			if(schedulePartArrayDTO != null){
+				for(int i=0;i<schedulePartArrayDTO.getPartName().length;i++){
+					System.out.println("schedulePartDTO names = "+schedulePartArrayDTO.getPartName()[i]); //같은이름여러개면 ~~,~~,~~ 로 넘어가짐
+					System.out.println("startDates = "+schedulePartArrayDTO.getPartStartDate()[i]); //마지막꺼만 들어와집니다..
+					SchedulePartDTO schedulePartDTO = new SchedulePartDTO();
+					schedulePartDTO.setScheduleNum(schedulePartArrayDTO.getScheduleNum());
+					schedulePartDTO.setPartStartDate(schedulePartArrayDTO.getPartStartDate()[i]);
+					schedulePartDTO.setPartFinishDate(schedulePartArrayDTO.getPartFinishDate()[i]);
+					schedulePartDTO.setPartName(schedulePartArrayDTO.getPartName()[i]);
+					schedulePartDTO.setPartNum(i);
+					result = scheduleDAO.insertPart(schedulePartDTO); 
+					System.out.println("잘들어갔나요 서비스 에서 반복문"+i+" 결과 "+result);
+				}
 			}
 			
 			return result;

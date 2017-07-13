@@ -8,7 +8,22 @@ public class SchedulePartArrayDTO {
 	private String[] partName; // DB, JAVA, 기획 , 뭐시기뭐시기
 	private Date[] partStartDate;
 	private Date[] partFinishDate;
+	private String[] partDescFileO;
+	private String[] partDescFileF;
 	
+	
+	public String[] getPartDescFileO() {
+		return partDescFileO;
+	}
+	public void setPartDescFileO(String[] partDescFileO) {
+		this.partDescFileO = partDescFileO;
+	}
+	public String[] getPartDescFileF() {
+		return partDescFileF;
+	}
+	public void setPartDescFileF(String[] partDescFileF) {
+		this.partDescFileF = partDescFileF;
+	}
 	public int getScheduleNum() {
 		return scheduleNum;
 	}

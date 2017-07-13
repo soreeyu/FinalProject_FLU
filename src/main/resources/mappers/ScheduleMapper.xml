@@ -11,12 +11,25 @@
 	
 	
   
-    <!-- 제대로 가져와졌으면 있는거고 없으면 없는거지  -->
+    <!-- 제대로 가져와졌으면 스케줄 존재, null이면 해당프로젝트에 스케줄 없음  -->
   	<select id="checkS" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.ScheduleMainDTO">
 		select * from scheduleMain where projectnum=#{projectNum}
 	</select>
 	
 	
+	<insert id="addMainS" parameterType="com.flu.schedule.client.ScheduleMainDTO">
+		insert into schedulemain (schedulenum,  startdate, finishdate, projectnum) values 
+		(schedule_seq.nextval, #{startDate},#{finishDate}, #{projectNum})
+	</insert>
+	
+	<select id="getSNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select schedulenum from schedulemain where projectnum=#{projectNum}
+	</select>
+	
+	
+	<select id="projectInfo" parameterType="java.lang.Integer" resultType="com.flu.project.ProjectDTO">
+		select * from scheduleMain where projectnum=#{projectNum}
+	</select>
 	
 	
 	
@@ -25,7 +38,7 @@
   		select * from schedulepart where chedulenum=#{scheduleNum} and partnum=#{partNum}
   	</select>
   
-	<select id="listPart" resultType="com.clu.schedule.client.ScheduleUnitDTO">
+	<select id="listPart" resultType="com.flu.schedule.client.ScheduleUnitDTO">
 		select * from schedulepart
 	</select>
 
@@ -50,21 +63,21 @@
 	
 	
 	
-	<select id="oneUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO" resultType="com.clu.schedule.client.ScheduleUnitDTO">
+	<select id="oneUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO" resultType="com.flu.schedule.client.ScheduleUnitDTO">
 		select * from scheduleunit where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</select>
 	
-	<select id="listUnit" resultType="com.clu.schedule.client.ScheduleUnitDTO">
+	<select id="listUnit" resultType="com.flu.schedule.client.ScheduleUnitDTO">
 		select * from scheduleunit
 	</select>
 	
 	
-	<insert id="addUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO">
+	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe, unitfinishdate, unitdescfileO, unitdescfileF, partName, email, unitstate)
 		values (#{scheduleNum}, #{unitNum}, #{unitName}, #{unitDescribe}, #{unitFinishDate}, #{unitDescFileO}, #{unitDescFileF}, #{partName}, #{email}, #{unitState})
 	</insert>
 	
-	<update id="updateUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO">
+	<update id="updateUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		update scheduleunit set 
 		unitname=#{unitName}, unitdescribe=#{unitDescribe}, unitfinishdate=#{unitFinishDate}, 
 		unitdescfileO=#{unitDescFileO}, unitdescfileF=#{unitDescFileF}, partName=#{partName}, 
@@ -72,7 +85,7 @@
 		where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</update>
 	
-	<delete id="deleteUnit" parameterType="com.clu.schedule.client.ScheduleUnitDTO">
+	<delete id="deleteUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		delete * from scheduleunit where where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</delete>
 	

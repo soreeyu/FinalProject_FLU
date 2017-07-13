@@ -15,13 +15,15 @@
 <body>
 	<h1>SCHEDULE MAIN</h1>
 	<h3>${scheduleNum}</h3>
-	<c:forEach items="partList" var="part" varStatus="i">
-	 	<h4>${i.index}</h4>
-		<h5>${part.partName}</h5>
-		<h5>${part.partStartDate}</h5>
-		<h5>${part.partName}</h5>
-		<h5>${part.partFinishDate}</h5>
-		<h5>${part.partNum}</h5>
-	</c:forEach>
+	<c:catch>
+		<c:forEach items="partList" var="part" varStatus="i">
+		 	<h4>${i}</h4>
+			<h5>${part.partName}</h5>
+			<h5>${part.partStartDate}</h5>
+			<h5>${part.partName}</h5>
+			<h5>${part.partFinishDate}</h5>
+			<h5>${part.partNum}</h5>
+		</c:forEach>
+	</c:catch>
 </body>
 </html>

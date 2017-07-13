@@ -16,7 +16,7 @@ public class ScheduleDAOTest extends MyAbstractTest{
 	@Autowired
 	private ScheduleDAO scheduleDAO;
 
-	@Test
+	
 	public void test() {
 		
 		/*
@@ -50,5 +50,19 @@ public class ScheduleDAOTest extends MyAbstractTest{
 		assertNotEquals(0, result);
 		System.out.println("Test MainS insert result = "+result);
 	}
+	
+	@Test
+	public void testCheck() {
+		
+		ScheduleMainDTO dto = scheduleDAO.checkSchedule(5000);
+		//assertNotNull(dto);
+		assertNull(dto);
+		//System.out.println("scheduleNum= "+dto.getScheduleNum());
+		
+	}
+	
+	
+	
+	
 
 }

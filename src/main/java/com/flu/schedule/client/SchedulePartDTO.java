@@ -9,8 +9,24 @@ public class SchedulePartDTO {
 	private String partName; 
 	private Date partStartDate;
 	private Date partFinishDate;
+	private String partDescFileO;
+	private String partDescFileF;
 	private Integer partNum; // 동일한 스케줄내에서 part에 접근하기 위한 변수 
 	
+	
+	
+	public String getPartDescFileO() {
+		return partDescFileO;
+	}
+	public void setPartDescFileO(String partDescFileO) {
+		this.partDescFileO = partDescFileO;
+	}
+	public String getPartDescFileF() {
+		return partDescFileF;
+	}
+	public void setPartDescFileF(String partDescFileF) {
+		this.partDescFileF = partDescFileF;
+	}
 	public Integer getPartNum() {
 		return partNum;
 	}
