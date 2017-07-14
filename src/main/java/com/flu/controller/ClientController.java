@@ -4,6 +4,7 @@ package com.flu.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +25,6 @@ public class ClientController {
 	@Inject
 	private ClientService clientService;
 	
-	
-	
-	
-	
-	
 	//클라이언트 정보 추가등록(소개,홈페이지 Update)
 	@RequestMapping(value="clientInsert2" , method=RequestMethod.POST)
 	public int clientInsert2(ClientDTO clientDTO){
@@ -41,4 +37,14 @@ public class ClientController {
 
 		return 0;
 	}
+	
+	@RequestMapping(value="clientInfo")
+	public void view(){
+		
+	}
+	
+	
+	
+	
+	
 }

@@ -1,23 +1,18 @@
 package com.flu.client;
 
-import java.util.List;
+
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.flu.member.MemberDTO;
-import com.flu.util.RowMaker;
-
 @Repository
 public class ClientDAO{
 	
 	@Inject
 	private SqlSession sqlsession;
-	
-
-
+	private final String NAMESPACE = "ClientMapper.";
 	
 	//클라이언트 정보 추가등록(소개,홈페이지 Update)
 	public int clientInsert2(ClientDTO clientDTO){
@@ -29,6 +24,11 @@ public class ClientDAO{
 		
 		return 0;
 	}
+	
+	public ClientDTO clientView(String email){
+		return sqlsession.selectOne(NAMESPACE+"view",email);
+	}
+
 	
 	
 	

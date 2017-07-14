@@ -13,7 +13,7 @@
 <tr>
 <td>분야</td>
 <td>프로젝트명</td>
-<td>작성자</td>
+<td>담당자</td>
 <td>상태</td>
 </tr>
 
@@ -21,11 +21,19 @@
 <c:forEach items="${list}" var="i">
 <tr>
 <td>${i.category}</td>
-<td><a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a></td>
+<td>
+<c:if test="${i.state=='check' or 'done'}">
+<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
+</c:if>
+<c:if test="${i.state=='finish'}">
+<a href="../checkProject/checkCashView?projectNum=${i.projectNum}">${i.name }</a>
+</c:if>
+</td>
 <td>${i.email }</td>
 <td>
 <c:if test="${i.state=='check'}">검수 단계</c:if>
 <c:if test="${i.state=='done'}">입금 대기중</c:if>
+<c:if test="${i.state=='finish'}">프로젝트 종료</c:if>
 </td>
 </tr>
 </c:forEach>

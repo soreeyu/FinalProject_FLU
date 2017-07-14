@@ -22,8 +22,6 @@ public class ClientService{
 	@Inject
 	private ClientDAO clientDAO;
 
-	
-	
 	//??
 	public List<ClientDTO> clientList(){
 		return null;
@@ -49,5 +47,17 @@ public class ClientService{
 
 		return 0;
 	}
+	
+	public ClientDTO clientView(String email){
+		return clientDAO.clientView(email);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

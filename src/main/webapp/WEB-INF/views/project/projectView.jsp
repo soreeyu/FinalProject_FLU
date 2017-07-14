@@ -8,7 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>project View</h2>
+<p>project View &emsp;
+<c:if test="${dto.state=='ing'}">
+진행중
+</c:if>
+</p>
 
 <p>${dto.projectNum}</p>
 <p>${dto.name}</p>

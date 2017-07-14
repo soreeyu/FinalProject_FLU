@@ -17,12 +17,28 @@ public class CheckProjectDAO {
 	private SqlSession sqlSession;
 	private final String NAMESPACE = "CheckProjectMapper.";
 	
-	public List<ProjectDTO> list(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"list",listInfo);
+	//**********프로젝트 검수 관리**************
+	
+	//검수 전 프로젝트 리스트 들고오기
+	public List<ProjectDTO> listCheck(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"listCheck",listInfo);
 	}
 	
 	public int update(ProjectDTO projectDTO){
 		return sqlSession.update(NAMESPACE+"update",projectDTO);
 	}
+
+	
+	
+	//**************대금관리**************
+	
+	//대금 관리를 위한 프로젝트 리스트 들고오기
+	public List<ProjectDTO> listCash(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"listCash",listInfo);
+	}
+	
+	
+	//담당자 정보 들고오는 view
+	
 	
 }
