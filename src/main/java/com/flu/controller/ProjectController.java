@@ -3,13 +3,17 @@ package com.flu.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.file.FileSaver;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
@@ -25,8 +29,11 @@ public class ProjectController {
 	//list
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
 	public String projectList(Model model, ListInfo listInfo){
-		
+	
 		List<ProjectDTO> ar = projectService.projectList(listInfo);
+		
+		int totalCount = projectService.projectCount(listInfo);
+		listInfo.makePage(totalCount);
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
@@ -63,9 +70,23 @@ public class ProjectController {
 	
 	//project Write
 	@RequestMapping(value="projectWrite", method=RequestMethod.POST)
-	public String projectWrite(ProjectDTO projectDTO, RedirectAttributes rd){
+	public String projectWrite(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
 		
 		System.out.println("projectWrite");
+		
+
+		
+		//MultipartFile multi = multipartHttpServletRequest.getFile("fName");
+		
+		String realPath = session.getServletContext().getRealPath("resources/upload");
+		
+		FileSaver fileSaver = new FileSaver();
+		String fname = fileSaver.fileSave(realPath, projectDTO.getFileName());
+		
+		projectDTO.setfName(fname);
+		projectDTO.setoName(projectDTO.getFileName().getOriginalFilename());
+	
+
 		int result = projectService.projectWrite(projectDTO);
 		
 		String message = "fail";

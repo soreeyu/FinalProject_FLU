@@ -5,13 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">
 .main_section{
-	width: 200px;
+	width: 1000px;
 	padding: 30px;
-	background-color: yellow;
+	background-color: gray;
 }
 </style>
 <script type="text/javascript">
@@ -44,7 +45,7 @@ $(function() {
 </script>
 </head>
 <body>
-<h2>project ${type}</h2>
+<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 <section class="main_section">
 
 <form action="" id="frm">
@@ -73,20 +74,20 @@ $(function() {
 </table>
 
 
-<%-- <c:if test="${listInfo.curBlock>1 }"> --%>
+ <c:if test="${listInfo.curBlock>1 }"> -
 		<span id="preview">[이전]</span>
 		<%-- <a href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}">[이전]</a> --%>
-<%-- 	</c:if>
-	 --%>
+	</c:if>
+
 	<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
 		<span class="num" id="${i}" >${i}</span>
 		<%-- <a href="${board}List?curPage=${i}&search=${listInfo.search}&find=${listInfo.find}">${i}</a> --%>		
 	</c:forEach>
 	
-<%-- 	<c:if test="${listInfo.curBlock<listInfo.totalBlock }"> --%>
+	<c:if test="${listInfo.curBlock<listInfo.totalBlock }"> 
 		<span id="nextview">[다음]</span>
 		<%-- <a href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}">[다음]</a> --%>
-<%-- 	</c:if> --%>
+ 	</c:if> 
 
 <div>
 
@@ -101,6 +102,6 @@ $(function() {
 
 </section>
 
-
+<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 </html>
