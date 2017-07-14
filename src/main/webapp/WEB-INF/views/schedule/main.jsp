@@ -7,14 +7,19 @@
 
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 
+<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
+
+<%-- 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="${pageContext.request.contextPath}/resources/schedule/SE/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
-<%-- <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script> --%>
+<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/lib/niee-canvas-chart003.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/lib/ajaxfileupload.js"></script>
@@ -27,6 +32,7 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
+ --%>
 
 
 
@@ -38,12 +44,53 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		
+		
 	    $('#calendar').fullCalendar({
-	    	 dayClick: function() {
-	    	        alert('a day has been clicked!');
-	    	    }
-	        
-	    })
+	    	
+	    	header: {
+				left: ' ',
+				center: 'prev title next',
+				
+				//right: 'today,month,basicWeek,basicDay'
+			},
+			titleFormat: {
+				month: 'yyyy년 MMMM',
+				week: "yyyy년 MMMM d[yyyy]{'일 ~ '[mmm] dd일'}",
+				day: "yyyy년 MMM d dddd"
+			},
+			monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			monthNamesShort : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			dayNames : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+			dayNamesShort : ['일','월','화','수','목','금','토'],
+			allDayText : '금일일정',
+			minTime : 9,
+			maxTime : 19,
+			axisFormat : "HH:mm",
+			editable: false,
+			events: function(start, end, callback) {
+		       
+		    },
+		    eventClick: function(calEvent, jsEvent, view) {
+		    	
+		    },
+		    dayClick: function(date) {
+
+    	        alert('a day has been clicked!');
+				scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
+				$('#title').val(scheduleParam.title);
+				$('#contents').val(scheduleParam.contents);
+				spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				$('#etcYn').attr('checked',false);
+				writeModal.show();
+				editorInit('contents');
+		    }
+		});
+
+	    
+	    
 	});
 
 </script>
@@ -302,7 +349,7 @@ div{
 	</section>
 	
 	
-	
+
 
 
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
