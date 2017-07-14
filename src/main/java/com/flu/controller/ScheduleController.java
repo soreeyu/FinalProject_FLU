@@ -28,9 +28,9 @@ public class ScheduleController {
 		
 		
 		//main스케줄인서트로 바로가기  테스트 
-		@RequestMapping(value="createT", method=RequestMethod.GET)
+		@RequestMapping(value="test", method=RequestMethod.GET)
 		public String insertMainScheduleT(){ //넘어온 projectNum 이 저장되어있다 
-			return "schedule/mainInsertForm";
+			return "schedule/main";
 		}
 		
 
