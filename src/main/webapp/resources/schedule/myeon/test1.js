@@ -1,21 +1,16 @@
+/**
+ * 
+ */
+
 var modal;
 var sviewModal;
 var writeModal;
-var passwdModal;
-var gameModal;
-var mailModal;
-var userModal;
-var fileModal;
-var chartModal;
-var searchCombo;
-var userArticle;
-var userRadio;
-var fileArticle;
 var datepicker;
 var spicker;
 var epicker;
 var userPaging;
 var userTree;
+
 
 /**
  * JUI 영역
@@ -25,26 +20,21 @@ jui.ready(function(ui, uix, _) {
 	
 	modal = ui.modal("#modal", {
 		color: "black",
-		target: ".main-container"
+		target: ".main_section"
 	});
-	
-	
 	
 	
 	writeModal = ui.modal("#writeModal", {
 		color: "black",
-		target: ".main-container"
+		target: ".main_section"
 	});
-	
-	
-
 	
 	datepicker = ui.datepicker("#datepicker", {
 	    titleFormat: "yyyy년 MM월",
 	    format: "yyyy/MM/dd",
 	    event: {
 	       select: function(date, e) {
-	    	   refrashRow(scheduleArticle,{url: getContextPath()+'/home/scheduleArticle.do', param:{page : 1, today : date}});
+	    	   //refrashRow(scheduleArticle,{url: getContextPath()+'/home/scheduleArticle.do', param:{page : 1, today : date}});
 	       },
 	       prev: function(e) {
 	       },
@@ -101,12 +91,7 @@ jui.ready(function(ui, uix, _) {
 	    }
 	});
 	
-	userArticle = uix.table("#userArticle", {
-    	animate: true
-    });
-	
-	fileArticle = uix.table("#fileArticle", {
-    	animate: true
-    });
-	
 });
+
+
+

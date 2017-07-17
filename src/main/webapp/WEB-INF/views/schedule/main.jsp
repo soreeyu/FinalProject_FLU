@@ -7,17 +7,12 @@
 
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
-
-<%-- 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src="${pageContext.request.contextPath}/resources/schedule/SE/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
@@ -32,7 +27,8 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
- --%>
+
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test1.js" type="text/javascript" charset="utf-8"></script>
 
 
 
@@ -44,37 +40,10 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
-		
-		
+				
 	    $('#calendar').fullCalendar({
 	    	
-	    	header: {
-				left: ' ',
-				center: 'prev title next',
-				
-				//right: 'today,month,basicWeek,basicDay'
-			},
-			titleFormat: {
-				month: 'yyyy년 MMMM',
-				week: "yyyy년 MMMM d[yyyy]{'일 ~ '[mmm] dd일'}",
-				day: "yyyy년 MMM d dddd"
-			},
-			monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-			monthNamesShort : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-			dayNames : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
-			dayNamesShort : ['일','월','화','수','목','금','토'],
-			allDayText : '금일일정',
-			minTime : 9,
-			maxTime : 19,
-			axisFormat : "HH:mm",
-			editable: false,
-			events: function(start, end, callback) {
-		       
-		    },
-		    eventClick: function(calEvent, jsEvent, view) {
-		    	
-		    },
+	    
 		    dayClick: function(date) {
 
     	        alert('a day has been clicked!');
@@ -85,14 +54,25 @@
 				epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 				$('#etcYn').attr('checked',false);
 				writeModal.show();
-				editorInit('contents');
+				//editorInit('contents');
 		    }
-		});
+	    
+		}); //fullCal
+		
+	    
+	    $("#addUnitBtn").click(function(){
+	    	alert("할일 등록하기");
+	    	location.href = "./testUnit";
+	    });
+	    
+	    
 
 	    
 	    
 	});
 
+	
+	
 </script>
 
 
@@ -172,8 +152,112 @@ div{
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
-	<section class="main_section">
-	<div id="schedule_section">
+		<section class="main_section jui">
+		
+		<!-- 스케줄등록모달 -->
+		<div id="writeModal" class="msgbox" style="display: none; background:white;">
+			<div class="head">
+				<span>등록 폼</span>
+		    </div>
+			<div class="body">
+				<table>
+					<tr>
+						<td>
+							<input class="input input-rect" id="title" name="title" style="width: 612px" maxlength="100" placeholder="제목"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="schedulePicker">
+							<div style="float: left;">
+								<input class="input input-rect" id="starttime" name="starttime" style="width: 192px" placeholder="시작일" readonly="readonly"/>
+								<div id="spicker" class="datepicker">
+								    <div class="head">
+								        <div class="prev"></div>
+								        <div class="title"></div>
+								        <div class="next"></div>
+								    </div>
+								    <table class="body">
+								        <tr>
+								            <th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th>
+								        </tr>
+								    </table>
+								</div>
+							</div>
+							<div style="float: left;margin-top: 100px;margin-left: 100px;">
+								<a class="btn btn-gray btn-small"><i class="icon-chevron-right"></i></a>
+							</div>
+							<div style="float: right;">
+							<input class="input input-rect" id="endtime" name="endtime" style="width: 192px" placeholder="종료일" readonly="readonly"/>
+							<script data-jui="#spicker" data-tpl="dates" type="text/template">
+    						<tr>
+        						<! for(var i = 0; i < dates.length; i++) { !>
+        						<td><!= dates[i] !></td>
+        						<! } !>
+    						</tr>
+							</script>
+							<div id="epicker" class="datepicker">
+							    <div class="head">
+							        <div class="prev"></div>
+							        <div class="title"></div>
+							        <div class="next"></div>
+							    </div>
+							    <table class="body">
+							        <tr>
+							            <th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th>
+							        </tr>
+							    </table>
+							</div>
+							<script data-jui="#epicker" data-tpl="dates" type="text/template">
+    						<tr>
+        						<! for(var i = 0; i < dates.length; i++) { !>
+        						<td><!= dates[i] !></td>
+        						<! } !>
+    						</tr>
+							</script>
+							</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-spacing: 0px;border-collapse: 0px;border: 1px solid #BEBeBe;">
+							<span id="schedulefileName"></span>
+							<div id="scheduleFiles">
+								<input type="file" name="schedulefile" id="schedulefile"><br>
+								<a href="#" id="scheduleFileAddBtn" class="btn btn-gray btn-small">파일등록</a>(파일선택 후 등록해야 글 저장시 함께 등록 됩니다.)
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
+							<input type="radio" name="users" value="">사용자1
+							<input type="radio" name="users" value="">사용자2
+							<input type="radio" name="users" value="">사용자3
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<textarea class="input" id="contents" name="contents" style="width: 610px;height: 300px;" placeholder="내용"></textarea>
+						</td>
+					</tr>
+				</table>
+				<div style="text-align: center;">
+					<a href="#" id="writeBtn" class="btn btn-gray btn-small">저장</a>
+					<a href="#" id="writeClose" class="btn btn-gray btn-small">Close</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<!-- 스케줄등록모달 끝 -->
+		
+		
+		
+		
+		
+		
+		<div id="schedule_section">
 		<h1>SCHEDULE MAIN</h1>
 		<h3>${scheduleNum}</h3>
 		
@@ -184,6 +268,7 @@ div{
 			</div>
 			
 			<div id="cklist_section">
+				<input type="button" id="addUnitBtn" value="할일 등록하기">
 				<table id="cklist_table">
 					<tr>
 						<th id="task">할일</th>
@@ -235,115 +320,6 @@ div{
 		
 		
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- 스케줄등록모달 -->
-	<div id="writeModal" class="msgbox" style="display: block;">
-		<div class="head">
-			<span>등록 폼</span>
-	    </div>
-		<div class="body">
-			<table>
-				<tr>
-					<td>
-						<input class="input input-rect" id="title" name="title" style="width: 612px" maxlength="100" placeholder="제목"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div id="schedulePicker">
-						<div style="float: left;">
-							<input class="input input-rect" id="starttime" name="starttime" style="width: 192px" placeholder="시작일" readonly="readonly"/>
-							<div id="spicker" class="datepicker">
-							    <div class="head">
-							        <div class="prev"></div>
-							        <div class="title"></div>
-							        <div class="next"></div>
-							    </div>
-							    <table class="body">
-							        <tr>
-							            <th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th>
-							        </tr>
-							    </table>
-							</div>
-						</div>
-						<div style="float: left;margin-top: 100px;margin-left: 100px;">
-							<a class="btn btn-gray btn-small"><i class="icon-chevron-right"></i></a>
-						</div>
-						<div style="float: right;">
-						<input class="input input-rect" id="endtime" name="endtime" style="width: 192px" placeholder="종료일" readonly="readonly"/>
-						<script data-jui="#spicker" data-tpl="dates" type="text/template">
-    						<tr>
-        						<! for(var i = 0; i < dates.length; i++) { !>
-        						<td><!= dates[i] !></td>
-        						<! } !>
-    						</tr>
-						</script>
-						<div id="epicker" class="datepicker">
-						    <div class="head">
-						        <div class="prev"></div>
-						        <div class="title"></div>
-						        <div class="next"></div>
-						    </div>
-						    <table class="body">
-						        <tr>
-						            <th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th>
-						        </tr>
-						    </table>
-						</div>
-						<script data-jui="#epicker" data-tpl="dates" type="text/template">
-    						<tr>
-        						<! for(var i = 0; i < dates.length; i++) { !>
-        						<td><!= dates[i] !></td>
-        						<! } !>
-    						</tr>
-						</script>
-						</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td style="border-spacing: 0px;border-collapse: 0px;border: 1px solid #BEBeBe;">
-						<span id="schedulefileName"></span>
-						<div id="scheduleFiles">
-							<input type="file" name="schedulefile" id="schedulefile"><br>
-							<a href="#" id="scheduleFileAddBtn" class="btn btn-gray btn-small">파일등록</a>(파일선택 후 등록해야 글 저장시 함께 등록 됩니다.)
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
-						공유 여부 : <input type="checkbox" id="etcYn"><font color="red">(체크시 Etc 에 표시 되지 않습니다.)</font>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<textarea class="input" id="contents" name="contents" style="width: 610px;height: 300px;" placeholder="내용"></textarea>
-					</td>
-				</tr>
-			</table>
-			<div style="text-align: center;">
-				<a href="#" id="writeBtn" class="btn btn-gray btn-small">저장</a>
-				<a href="#" id="writeClose" class="btn btn-gray btn-small">Close</a>
-			</div>
-		</div>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	
 	</section>

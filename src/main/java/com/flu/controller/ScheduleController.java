@@ -33,6 +33,12 @@ public class ScheduleController {
 			return "schedule/main";
 		}
 		
+		//상세파일 등록 테스트
+		@RequestMapping(value="testUnit", method=RequestMethod.GET)
+		public String insertUnitScheduleT(){ //넘어온 projectNum 이 저장되어있다 
+			return "schedule/testInsertUnit";
+		}
+		
 
 		//테스트
 		//넘어온 파일 확인하기 
