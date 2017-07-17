@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.flu.file.FileService;
 import com.flu.schedule.ScheduleService;
@@ -159,7 +160,7 @@ public class ScheduleController {
 		}
 		
 		@RequestMapping(value="partDelete", method=RequestMethod.POST)
-		public String partDelete(SchedulePartDTO schedulePartDTO){
+		public String partDelete(@ResponseBody SchedulePartDTO schedulePartDTO){
 			System.out.println("ScheduleNum="+schedulePartDTO.getScheduleNum()+", partNum="+schedulePartDTO.getPartNum());
 			int result = scheduleService.deletePart(schedulePartDTO);
 			return "schedule/partView";
@@ -178,10 +179,23 @@ public class ScheduleController {
 		
 		public void unitOne(){}
 		
+		@RequestMapping(value="unitWrite", method=RequestMethod.GET)
+		public String unitWrite(){
+			System.out.println("unit 등록하러옴 ");
+			return "index";
+		}
 		
-		public void unitWrite(){}
+		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
+		public String unitWrite(ScheduleUnitDTO scheduleParam){
+			System.out.println("unit 등록하러옴 내용가지고");
+			return "schedule/main";
+		}
 		
-		public void unitUpdate(){}
+		@RequestMapping(value="unitUpdate", method=RequestMethod.POST)
+		public String unitUpdate(ScheduleUnitDTO scheduleUnitDTO){
+			System.out.println("unit 수정하러옴");
+			return "schedule/main";
+		}
 		
 		public void unitDelete(){}
 		

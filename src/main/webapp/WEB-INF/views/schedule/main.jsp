@@ -28,7 +28,6 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test1.js" type="text/javascript" charset="utf-8"></script>
 
 
 
@@ -40,8 +39,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-				
-	    $('#calendar').fullCalendar({
+		/* 		
+	    $('#schcalendar').fullCalendar({
 	    	
 	    
 		    dayClick: function(date) {
@@ -58,7 +57,7 @@
 		    }
 	    
 		}); //fullCal
-		
+		 */
 	    
 	    $("#addUnitBtn").click(function(){
 	    	alert("할일 등록하기");
@@ -160,17 +159,18 @@ div{
 				<span>등록 폼</span>
 		    </div>
 			<div class="body">
+			<!-- <form id="unitFrm" action="" method="POST"> -->
 				<table>
 					<tr>
 						<td>
-							<input class="input input-rect" id="title" name="title" style="width: 612px" maxlength="100" placeholder="제목"/>
+							<input class="input input-rect" id="unitName" name="unitName" style="width: 612px" maxlength="100" placeholder="제목"/>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<div id="schedulePicker">
 							<div style="float: left;">
-								<input class="input input-rect" id="starttime" name="starttime" style="width: 192px" placeholder="시작일" readonly="readonly"/>
+								<input class="input input-rect" id="starttime" name="unitStartDate" style="width: 192px" placeholder="시작일" readonly="readonly"/>
 								<div id="spicker" class="datepicker">
 								    <div class="head">
 								        <div class="prev"></div>
@@ -188,7 +188,7 @@ div{
 								<a class="btn btn-gray btn-small"><i class="icon-chevron-right"></i></a>
 							</div>
 							<div style="float: right;">
-							<input class="input input-rect" id="endtime" name="endtime" style="width: 192px" placeholder="종료일" readonly="readonly"/>
+							<input class="input input-rect" id="endtime" name="unitFinishDate" style="width: 192px" placeholder="종료일" readonly="readonly"/>
 							<script data-jui="#spicker" data-tpl="dates" type="text/template">
     						<tr>
         						<! for(var i = 0; i < dates.length; i++) { !>
@@ -230,14 +230,21 @@ div{
 					</tr>
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
-							<input type="radio" name="users" value="">사용자1
-							<input type="radio" name="users" value="">사용자2
-							<input type="radio" name="users" value="">사용자3
+							<input type="radio" class="email" name="email" value="test@test.com">사용자1
+							<input type="radio" class="email" name="email" value="test@test.com">사용자2
+							<input type="radio" class="email" name="email" value="test@test.com">사용자3
+						</td>
+					</tr>
+					<tr>
+						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
+							<input type="radio" class="partName" name="partName" value="part1">part1
+							<input type="radio" class="partName" name="partName" value="part2">part2
+							<input type="radio" class="partName" name="partName" value="part3">part3
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<textarea class="input" id="contents" name="contents" style="width: 610px;height: 300px;" placeholder="내용"></textarea>
+							<textarea class="input" id="contents" name="unitDescribe" style="width: 610px;height: 300px;" placeholder="내용"></textarea>
 						</td>
 					</tr>
 				</table>
@@ -245,6 +252,7 @@ div{
 					<a href="#" id="writeBtn" class="btn btn-gray btn-small">저장</a>
 					<a href="#" id="writeClose" class="btn btn-gray btn-small">Close</a>
 				</div>
+				<!-- </form> -->
 			</div>
 		</div>
 		
@@ -317,6 +325,16 @@ div{
 		</div>
 		
 		
+		<!-- Schedule_View -->
+		<div id="main_View" style="display: block;">
+			<div class="group" >
+				<a class="left btn btn-mini btn-gray-black" id="sview-refresh"><span>새로고침</span>&nbsp;<i class="icon-refresh"></i></a>
+				(날짜의 빈공간을 클릭하면 스케줄을 등록 할 수 있습니다.)
+			</div>
+			<div id='schcalendar'></div>
+		</div>
+		
+		
 		
 		
 	</div>
@@ -329,5 +347,21 @@ div{
 
 
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
+<script type="text/javascript">
+function getContextPath(){
+//alert('${pageContext.request.contextPath}');
+   var context = '${pageContext.request.contextPath}';
+   return context;
+}
+
+</script>
+
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_FUNCTION.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_JUI.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_JQUERY.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_DATE.js" type="text/javascript" charset="utf-8"></script>
+
+
+
 </body>
 </html>

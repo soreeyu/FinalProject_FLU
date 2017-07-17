@@ -26,7 +26,7 @@
 		</div>
 		<div class="project_quantity_div">
 			등록된 프로젝트 갯수
-			<p><a href="./schedule/create?projectNum=5000">스케줄 생성하기</a></p>
+			<p><a href="./schedule/create?projectNum=4000">스케줄 생성하기</a></p>
 			<p><a href="./schedule/partView?scheduleNum=66">66번 파트 보기</a></p>
 			<p><a href="./schedule/test">달력view </a></p>
 		</div>

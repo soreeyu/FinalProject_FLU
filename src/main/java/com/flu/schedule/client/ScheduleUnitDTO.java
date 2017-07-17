@@ -11,6 +11,7 @@ public class ScheduleUnitDTO {
 	private String unitDescFileO;
 	private String unitDescFileF;
 	private String partName; // Part들 중에 무조건 속해잇어야함
+	private Date unitStartDate; //시작일
 	private Date unitFinishDate; //마감일
 	private String email; // 해당 일을 맡은 사용자 등록 
 	private String unitState; //해당 할일에 대한 상태 //할일, 진행중, 완료
@@ -59,6 +60,13 @@ public class ScheduleUnitDTO {
 	}
 	public Date getUnitFinishDate() {
 		return unitFinishDate;
+	}
+	
+	public Date getUnitStartDate() {
+		return unitStartDate;
+	}
+	public void setUnitStartDate(Date unitStartDate) {
+		this.unitStartDate = unitStartDate;
 	}
 	public void setUnitFinishDate(Date unitFinishDate) {
 		this.unitFinishDate = unitFinishDate;
