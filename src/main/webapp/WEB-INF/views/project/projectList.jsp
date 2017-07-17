@@ -1,107 +1,556 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <style type="text/css">
-.main_section{
-	width: 1000px;
+.main_section {
+	min-width: 1160px;
+	width: 1160px;
+	height: 2700px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+
+.project_header {
+	height:122px;
 	padding: 30px;
-	background-color: gray;
+	margin-bottom: 20px;
+	border: 1px solid #e6e6e6;
+	margin-bottom: 30px;
+	background-color: white;
+}
+
+#header_ttt {
+	font-size: x-large;
+	font-weight: bolder;
+	margin-bottom: 10px;
+}
+
+#header_tt {
+	font-size: small;
+	font-weight: lighter;
+}
+
+.contents {
+	width: 1260;
+	height: 2700px;
+}
+
+.clean{
+	background-color: #f2f2f2;
+	height: 15px;
+	width: 100%;
+}
+.contents_sub {
+	width: 250px;
+	height: 1000px;
+	display: block;
+	float: left;
+}
+
+.search-part{
+	float: right;
+}
+
+.contents_main {
+	width: 900px;
+	height: 1000px;
+	display: block;
+	float: right;
+	padding: 30px;
+	background-color: white;
+}
+.project-sort-box{
+	width: 100%;
+	height: 120px;
+	border: 1px solid #dedede;
+	border-radius: 3px;
+	border-bottom-width: 2px;
+	background-color: white;
+}
+.project-sort-text{
+	height: 40px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #eeeeee;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+	text-align: center;
+	line-height: 40px;
+}
+.left-sort-box{
+	height: 60px;
+	width: 45%;
+	float: left;
+	margin-left: 10px;
+	padding-right: 10px;
+	border-right: 1px #dedede solid;
+}
+.right-sort-box{
+	height: 60px;
+	width: 40%;
+	float: right;
+	margin-right: 10px;
+}
+.sort-button{
+	color: #666;
+	font-size: 13px;
+	cursor: pointer;
+	margin-top: 5px;
+	text-align: center;
+}
+.category-filter-box{
+	height: 600px;
+	border: 1px solid #dedede;
+	border-radius: 3px;
+	border-bottom-width: 2px;
+	background-color: white;
+}
+.category-select-both{
+	margin-left: 20px;
+	height: 560px;
+	background-image: url("${pageContext.request.contextPath}/resources/img/select.png");
+	background-repeat: no-repeat;
+}
+.category-select-list{
+	height: 230px;
+	display: block;
+	/* background-color: yellow;  */
+}
+.cate-skipper{
+	height: 17px;
+	float: left;
+	cursor: pointer;
+	display: block;
+	margin-left: 20px;
+}
+.cate-chk{
+	width: 13px;
+	height: 13px;
+	float: left;
+	display: block;
+	margin-left: 20px;
+}
+.cate-list input[type="checkbox"]{
+	width: 13px;
+	height: 13px;
+	float: left;
+	display: block;
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+.cate-label{
+	font-weight: blod;
+	display: block;
+	margin-left: 20px;
+	margin-bottom: 5px;
+	width: 70px;
+}
+.cate-list li{
+	display: block;
+}
+.cate-list li label{
+	font-size: 12px;
+	font-weight: normal;
+	margin-left: 10px;
+	display: block;
+	width: 120px;
+	margin-bottom: 10px;
+}
+.place-sort-box{
+	height: 65px;
+	width: 250px;
+}
+.place-selectbox{
+	line-height: 65px;
+	margin: 0 auto;
+}
+.address-select-btn{
+	margin-left: 60px;
+	width: 130px;
+	text-align: center;
+	border: 1px solid #dedede;
+	border-radius: 5px;
+	background-color: #ffffff;
+}
+.dropdown-selecter{
+	background-color: blue;
+	margin-left:60px;
+	height: 200px;
+	width: 130px;
+	display: block;
+	overflow: auto;
+	visibility: hidden;
+}
+.project-unit{
+	padding: 25px;
+	background-color: aqua;
+	height: 200px;
+	margin-bottom: 5px;
+}
+.project-head{
+	height: 27px;
+	background-color: yellow;
+	margin-bottom: 5px;
+}
+.project-title{
+	color: #2099bb;
+	font-size: 15px;
+	font-weight: bold;
 }
 </style>
 <script type="text/javascript">
-$(function() {
-	
-	
-	$("#preview").click(function() {
-		alert("preview");
-		//location.href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}";
-	});
-	$(".num").click(function() {
+
+
+	$(function() {
+
+		$("#preview").click(function() { 
+			alert("preview");
+			//location.href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}";
+		});
+		$(".num").click(function() {
+
+				var num = $(this).prop("id");
+				alert(num);
+				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&find=${listInfo.find}";
+							//form을 사용하는 방법
+							/* document.frm.curPage.value=$(this).attr("id");
+							document.frm.search.value='${listInfo.search}';
+							document.frm.find.value='${listInfo.find}';
+							document.frm.submit; */
+							//
+							//location을 이용하는 방법
+						});
+		$("#nextview").click(function() {
+			alert("nextview")
+			//location.href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}";
+		});
 		
-		//form을 사용하는 방법
-		/* document.frm.curPage.value=$(this).attr("id");
-		document.frm.search.value='${listInfo.search}';
-		document.frm.find.value='${listInfo.find}';
-		document.frm.submit; */
-		//
 		
-		//location을 이용하는 방법
-		 var num = $(this).prop("id");
-		alert(num);
-		//location.href="${board}List?curPage="+num+"&search=${listInfo.search}&find=${listInfo.find}"; 
+		}
 	});
-	$("#nextview").click(function() {
-		alert("nextview")
-		//location.href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}";
-	});
-});
 </script>
 </head>
 <body>
-<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
-<section class="main_section">
+	<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
+	<section class="main_section">
 
-<form action="" id="frm">
-
-
-<input type="hidden" name="curPage"> 
-		<select name="search">
-			<option value="title">TITLE</option>
-			<option value="writer">WRITER</option>
-			<option value="contents">CONTENTS</option>
-		</select>
-		<input type="text" name="find">
-		<input type="submit" value="SEARCH">
-
-</form>
-<table>
-	<tr>
-		<td>num</td><td>name</td><td>contents</td><td>reg_date</td>
-	</tr>
-<c:forEach items="${list}" var="dto">
-	<tr>
-		<td>${dto.projectNum}</td><td><a href="projectView?projectNum=${dto.projectNum}">${dto.name}</a></td><td>${dto.contents}</td><td>${dto.reg_date}</td>
-	</tr>
-</c:forEach>
-
-</table>
+		<div class="project_header">
+			<div class="header_text">
+				<p id="header_ttt">프로젝트 찾기</p>
+				<p id="header_tt">${pjcount}개의 프로젝트가 있습니다.</p>
+				
+				<div class="search-part">
+				
+				<form action="" id="frm">
 
 
- <c:if test="${listInfo.curBlock>1 }"> -
+					<input type="hidden" name="curPage"> 
+					<select name="search">
+						<option value="title">TITLE</option>
+						<option value="writer">WRITER</option>
+						<option value="contents">CONTENTS</option>
+					</select> 
+					<input type="text" name="find"> <input type="submit" value="SEARCH">
+
+				</form>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="contents">
+		
+		<!-- 프로젝트 찾기처리  -->
+		<section class="contents_sub">
+			<div class="project-sort-box">
+				<div class="project-sort-text">프로젝트 정렬</div>
+				<div class="left-sort-box">
+					<div class="sort-button">금액 높은 순</div>
+					<div class="sort-button">금액 낮은 순</div>
+				</div>
+				<div class="right-sort-box">
+					<div class="sort-button">최신 등록 순</div>
+					<div class="sort-button">마감 임박 순</div>
+				</div>
+			</div>
+			<div class="clean"></div>
+			
+			<div class="category-filter-box">
+				<div class="project-sort-text">프로젝트 카테고리</div>
+				<div class="category-select-both">
+					<div class="category-select-list">
+					
+					<!-- 클릭시 trigger 적용하자 -->
+						<div class="cate-skipper">
+							<input id="dev" class="cate-chk" name="category" type="checkbox">
+							<label for="dev" class="cate-label">개발</label>
+							<ul class="cate-list">
+								<li>
+									<input id="dev-1" name="detailCategory" type="checkbox">
+									<label class="cate-label">웹</label>
+								</li>
+								<li>
+									<input id="dev-2" name="detailCategory" type="checkbox">
+									<label class="cate-label">애플리케이션</label>
+								</li>
+								<li>
+									<input id="dev-3" name="detailCategory" type="checkbox">
+									<label class="cate-label">워드프레스</label>
+								</li>
+								<li>
+									<input id="dev-4" name="detailCategory" type="checkbox">
+									<label class="cate-label">퍼블리싱</label>
+								</li>
+								<li>
+									<input id="dev-5" name="detailCategory" type="checkbox">
+									<label class="cate-label">일반 소프트웨어</label>
+								</li>
+								<li>
+									<input id="dev-6" name="detailCategory" type="checkbox">
+									<label class="cate-label">커머스, 쇼핑몰</label>
+								</li>
+								<li>
+									<input id="dev-7" name="detailCategory" type="checkbox">
+									<label class="cate-label">게임</label>
+								</li>
+								<li>
+									<input id="dev-8" name="detailCategory" type="checkbox">
+									<label class="cate-label">임베디드</label>
+								</li>
+								<li>
+									<input id="dev-9" name="detailCategory" type="checkbox">
+									<label class="cate-label">기타</label>
+								</li>
+							</ul>
+						</div>
+						
+					</div>
+					<div class="category-select-list">
+						<div class="cate-skipper">
+							<input id="design" class="cate-chk" name="category" type="checkbox">
+							<label for="design" class="cate-label">디자인</label>
+							<ul class="cate-list">
+								<li>
+									<input id="design-1" name="detailCategory" type="checkbox">
+									<label class="cate-label">웹</label>
+								</li>
+								<li>
+									<input id="design-2" name="detailCategory" type="checkbox">
+									<label class="cate-label">애플리케이션</label>
+								</li>
+								<li>
+									<input id="design-3" name="detailCategory" type="checkbox">
+									<label class="cate-label">제품</label>
+								</li>
+								<li>
+									<input id="design-4" name="detailCategory" type="checkbox">
+									<label class="cate-label">프레젠테이션</label>
+								</li>
+								<li>
+									<input id="design-5" name="detailCategory" type="checkbox">
+									<label class="cate-label">인쇄물</label>
+								</li>
+								<li>
+									<input id="design-6" name="detailCategory" type="checkbox">
+									<label class="cate-label">커머스, 쇼핑몰</label>
+								</li>
+								<li>
+									<input id="design-7" name="detailCategory" type="checkbox">
+									<label class="cate-label">로고</label>
+								</li>
+								<li>
+									<input id="design-8" name="detailCategory" type="checkbox">
+									<label class="cate-label">그래픽</label>
+								</li>
+								<li>
+									<input id="design-9" name="detailCategory" type="checkbox">
+									<label class="cate-label">영상</label>
+								</li>
+								<li>
+									<input id="design-10" name="detailCategory" type="checkbox">
+									<label class="cate-label">게임</label>
+								</li>
+								<li>
+									<input id="design-11" name="detailCategory" type="checkbox">
+									<label class="cate-label">기타</label>
+								</li>
+							</ul>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+				
+			<div class="clean"></div>
+			
+			<div class="project-sort-box">
+				<div class="project-sort-text">미팅진행 지역</div>
+				<div class="place-sort-box">
+				
+				<button class="btn btn-default address-select-btn" data-on="off">
+					<span>전체 선택</span>
+					<span class="fa fa-sort"></span>
+				</button>
+				
+				<ul class="dropdown-selecter" id="addr_list">
+					<li class="dropdown-scroll">
+						<input name="address" type="checkbox">
+						<!-- 전체 선택해주는 전체선택  -->
+						<label class="address-select-label" for="address">전체 선택</label>
+						<ul class="address-list">
+							<li>
+								<input type="checkbox" name="addr_main" id="address-1">
+								<label class="address-select-label" for="address-1">서울시</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-2">
+								<label class="address-select-label" for="address-2">경기도</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-3">
+								<label class="address-select-label" for="address-3">인천</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-4">
+								<label class="address-select-label" for="address-4">부산</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-5">
+								<label class="address-select-label" for="address-5">대구</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-6">
+								<label class="address-select-label" for="address-6">광주</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-7">
+								<label class="address-select-label" for="address-7">대전</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-8">
+								<label class="address-select-label" for="address-8">울산</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-9">
+								<label class="address-select-label" for="address-9">세종</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-10">
+								<label class="address-select-label" for="address-10">강원도</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-11">
+								<label class="address-select-label" for="address-11">충북</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-12">
+								<label class="address-select-label" for="address-12">충남</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-13">
+								<label class="address-select-label" for="address-13">전북</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-14">
+								<label class="address-select-label" for="address-14">전남</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-15">
+								<label class="address-select-label" for="address-15">경북</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-16">
+								<label class="address-select-label" for="address-16">경남</label>
+							</li>
+							<li>
+								<input type="checkbox" name="addr_main" id="address-17">
+								<label class="address-select-label" for="address-17">제주도</label>
+							</li>
+						
+						</ul>
+				</ul>
+			
+				</div>
+			</div>
+				
+		</section>
+
+		
+		
+		<!-- 프로젝트 리스트 뿌려주는부분  -->
+			<section class="contents_main">
+			
+			<c:forEach items="${list}" var="dto">
+			
+				<div class="project-unit">
+					<div class="project-head">
+						<div class="project-title"><a href="#">${dto.name}</div>
+					</div>
+					<div class="project-body">
+						<div class="project-info">${dto.budget},기간,${dto.reg_date }</div>
+						<div class="project-contents">${dto.contents }</div>
+						<div class="project-contents-right">마감기한,지원자수</div>
+						<div class="project-bottom"></div>
+					</div>
+				</div>	
+			</c:forEach>
+
+			
+
+
+				<c:if test="${listInfo.curBlock>1 }"> -
 		<span id="preview">[이전]</span>
-		<%-- <a href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}">[이전]</a> --%>
-	</c:if>
+					<%-- <a href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}">[이전]</a> --%>
+				</c:if>
 
-	<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
-		<span class="num" id="${i}" >${i}</span>
-		<%-- <a href="${board}List?curPage=${i}&search=${listInfo.search}&find=${listInfo.find}">${i}</a> --%>		
-	</c:forEach>
-	
-	<c:if test="${listInfo.curBlock<listInfo.totalBlock }"> 
-		<span id="nextview">[다음]</span>
-		<%-- <a href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}">[다음]</a> --%>
- 	</c:if> 
+				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
+					var="i">
+					<span class="num" id="${i}">${i}</span>
+					<%-- <a href="${board}List?curPage=${i}&search=${listInfo.search}&find=${listInfo.find}">${i}</a> --%>
+				</c:forEach>
 
-<div>
+				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
+					<span id="nextview">[다음]</span>
+					<%-- <a href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}">[다음]</a> --%>
+				</c:if>
 
-	<p>curPage : ${listInfo.curPage }</p>
-	<p>search : ${listInfo.search}</p>
-	<p>find : ${listInfo.find }</p>
-	<p>startNum : ${listInfo.startNum}</p>
-	<p>lastNum : ${listInfo.lastNum}</p>
-	<p>curBlock : ${listInfo.curBlock }</p>
-</div>
+				<div>
+
+					<p>curPage : ${listInfo.curPage }</p>
+					<p>search : ${listInfo.search}</p>
+					<p>find : ${listInfo.find }</p>
+					<p>startNum : ${listInfo.startNum}</p>
+					<p>lastNum : ${listInfo.lastNum}</p>
+					<p>curBlock : ${listInfo.curBlock }</p>
+					<p>perPage : ${listInfo.perPage}</p>
+				</div>
 
 
-</section>
+			</section>
+		</div>
+	</section>
+<script type="text/javascript">
+$(".address-select-btn").click(function() {
+	alert("btn");
+	if($(".address-select-btn").attr("data-on")=="off"){
+		$("#addr_list").css("visibility", "visible");			
+		$(".address-select-btn").attr("data-on", "on");
+	}else if($(".address-select-btn").attr("data-on")=="on"){
+		$("#addr_list").css("visibility", "hidden");
+		$(".address-select-btn").attr("data-on", "off");
+	}
+	});
 
-<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
+</script>
+	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 </html>

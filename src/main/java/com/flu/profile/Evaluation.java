@@ -5,7 +5,7 @@ public class Evaluation {
 	private int projectNum;
 	private String fromEmail;
 	private String toEmail;
-	private int professionnality;
+	private int professional;
 	private int satisfy;
 	private int communication;
 	private int schedule;
@@ -28,11 +28,12 @@ public class Evaluation {
 	public void setToEmail(String toEmail) {
 		this.toEmail = toEmail;
 	}
-	public int getProfessionnality() {
-		return professionnality;
+	
+	public int getProfessional() {
+		return professional;
 	}
-	public void setProfessionnality(int professionnality) {
-		this.professionnality = professionnality;
+	public void setProfessional(int professional) {
+		this.professional = professional;
 	}
 	public int getSatisfy() {
 		return satisfy;

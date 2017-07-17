@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.file.FileSaver;
+import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
@@ -34,9 +35,11 @@ public class ProjectController {
 		
 		int totalCount = projectService.projectCount(listInfo);
 		listInfo.makePage(totalCount);
+		int pjcount = projectService.projectCount(listInfo);
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", pjcount);
 		
 		model.addAttribute("listInfo", listInfo);		
 		return "project/projectList";
@@ -60,9 +63,13 @@ public class ProjectController {
 	
 	//projectWrite Form
 	@RequestMapping(value="projectWrite", method=RequestMethod.GET)
-	public String projectWrite(Model model){
+	public String projectWrite(Model model, HttpSession session, MemberDTO memberDTO){
 		System.out.println("projectWriteForm");
 		model.addAttribute("type", "write");
+		
+		memberDTO = (MemberDTO) session.getAttribute("member");
+		System.out.println("email=="+memberDTO.getEmail());
+		
 		
 		return "project/projectWrite"; 
 	}

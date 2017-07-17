@@ -180,6 +180,11 @@ label{
 				
 				<!-- state는 프로젝트 등록시 검수중(check)으로 넘어가므로 hidden으로 값을 넘겨줌 -->
 						<input type="hidden" name="state" value="check">
+						
+				<!-- email은 로그인한 클라이언트 email 땡겨오기 -->
+						<input type="hidden" name="email" value="${member.email}">
+					
+		
 				
 				
 				
@@ -543,13 +548,7 @@ label{
 					</div>
 				</div>
 
-				<!-- mail은 클라이언트 email 받아오기  -->
-				<div class="control-wrapper">
-					<label><span>*</span>메일</label>
-					<div class="category-wrapper">
-						<input type="text" name="email">
-					</div>
-				</div>
+				
 
 				<div class="control-wrapper">
 					<label><span>*</span>급구 여부</label>
