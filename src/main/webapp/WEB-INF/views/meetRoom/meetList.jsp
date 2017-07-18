@@ -5,25 +5,72 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<c:import url="../temp/bootstrap.jsp"/>
 <title>Insert title here</title>
-
+<style type="text/css">
+section {
+	min-width : 1152px;
+	width : 70%;
+	margin : 0 auto;
+	height: 1000px;
 	
+}
+.Room{
+	width : 30%;
+	float: left;
+	position: relative;
+	padding: 13px;
+	
+}
 
+
+.Room_Img {
+	display: block;
+    position: relative;
+    overflow: hidden;
+}
+.Room_Img > img {
+	width : 100%;
+	height: 100%;
+}
+.InfoArea{
+	position: relative;
+    padding: 18px 20px 14px;
+    background-color: #fff;
+	text-overflow : ellipsis;
+    white-space: nowrap;
+    
+}
+
+.info {
+	padding-bottom: 10px;
+}
+
+</style>
 </head>
 <body>
+	<c:import url="../temp/header.jsp"/>
+	<section>
 
-	<h1>LIST</h1>
 	<c:forEach items="${list}" var="i">
-		<a href="meetView?num=${i.num}"><h2> ${i.name}</h2></a>
-		<h2>${i.fname}</h2>
-		<h2>${i.time}</h2>
-		<h2>${i.holiday}</h2>
-		<h2>${i.addr_num}</h2>
-		<h2>${i.addr_main}</h2>
-		<h2>${i.addr_detail}</h2>
-		<h2>${i.homePage}</h2>
+	<div class="Room">
+		<div class="Room_Img" >
+		<img alt="" src="${pageContext.request.contextPath}/resources/upload/${i.fname}">
+		</div>
+		<div class="InfoArea">
+		<a href="meetView?num=${i.num}" class="info">${i.name}</a><br>
+		<img alt="" src="${pageContext.request.contextPath}/resources/img/meetroom/location.png">
+		<span class="info">${i.addr_main}</span>
+		</div>
+	</div>
 	</c:forEach>
-	<a href="meetInsert">업체등록</a>
-
+	
+	
+	
+	<c:if test="${kind eq admin}">
+	<a href="meetInsert" style="float: left;">업체등록</a>	
+	</c:if>
+	</section>
+	<c:import url="../temp/footer.jsp"/>
 </body>
 </html>

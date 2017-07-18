@@ -6,8 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<c:import url="../temp/bootstrap.jsp"/>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=cde07d5e2e22a53124fd5730df8d372b&libraries=services"></script>
+<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function() {
 		/*해당 업체가 보유하고 있는 방의 리스트를 뿌려주는 스크립트  */
@@ -24,6 +26,8 @@
 		 
 		 /*해당 업체가 보유하고 있는 방 하나를 삭제하는 스크립트  */
 		$("#eachRoom").on("click", ".del", function() {
+			var result = confirm("정말로 삭제하시겠습니까?");
+			if(result){
 			var num = $(this).attr("id");
 			
 			$.ajax({
@@ -35,6 +39,7 @@
 					location.href="../meetRoom/meetView?num=${dto.num}";
 				}
 			})
+			}
 		});
 		/*해당 업체가 보유하고 있는 방 하나를 삭제하는 스크립트  */
 		
@@ -52,45 +57,40 @@
 			});
 		 /* 해당 업체가 보유하고 있는 방 하나의 정보를 수정하는 스크립트 */
 		
+		 
+		 //예약하기 버튼을 눌렀을떄
+		 $("#reservation_btn").click(function() {
+			//선택한 방의 넘버를 가져온다.
+			var reservation_num = $("#eachRoom_num").val();
+			var meetroom_num = $("#snum").val();
+			var reservation_check  = $("input:radio[name='eachRoom']:checked").val();
+			
+			if(reservation_check == undefined){
+				alert("세부 공간을 선택해주세요");
+			}else {
+				location.href="reservation/reserveInsert?num="+reservation_num+"&snum="+meetroom_num;
+			}
+			
+			
+		});
+		
+		 
 	})
 
 </script>
- <script type="text/javascript">$(function(){
-    //전역변수선언
-    var editor_object = [];
-     
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: editor_object,
-        elPlaceHolder: "smarteditor",
-        sSkinURI: "${pageContext.request.contextPath}/resources/SE2/SmartEditor2Skin.html", 
-        htParams : {
-            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseToolbar : true,             
-            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseVerticalResizer : true,     
-            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseModeChanger : true, 
-        }
-    });
-     
-    //전송버튼 클릭이벤트
-    $("#savebutton").click(function(){
-        //id가 smarteditor인 textarea에 에디터에서 대입
-        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-         
-        // 이부분에 에디터 validation 검증
-         
-        //폼 submit
-        $("#frm").submit();
-    })
-    
-    //업체 등록 성공시에
-   
-})
-</script>
+<style type="text/css">
+section {
+	min-width : 1152px;
+	width : 70%;
+	margin : 0 auto;
+}
+</style>
 </head>
 <body>
-	<h1>view</h1>
+	<c:import url="../temp/header.jsp"/>
+	<section>
+		<h1>view</h1>
+		<input type="hidden" value="${dto.num}" id="snum">
 		<h2>업체 이름 : ${dto.name}</h2>
 		<input type="hidden" id="mak" value="${dto.name}">		
 		<h2>운영 시간 : ${dto.time}</h2>
@@ -108,12 +108,14 @@
 		<h2>세부공간 리스트</h2>
 		<div id="eachRoom">
 		</div>
+		<input type="button" id="reservation_btn" value="예약하기">
 		<hr>
 		<a href="meetDelete?num=${dto.num}">업체 삭제</a>
 		<a href="meetUpdate?num=${dto.num}">업체 수정</a>
+		</section>
 
 
-
+		<c:import url="../temp/footer.jsp"/>
 		
 <!-- 주소를 가져와 지도에 표시하는 API  -->
 <script>
@@ -154,6 +156,7 @@ geocoder.addr2coord(address, function(status, result) {
         map.setCenter(coords);
     } 
 });    
-</script>		
+</script>	
+	
 </body>
 </html>

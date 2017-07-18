@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.flu.schedule.ScheduleDAO;
 import com.flu.schedule.client.ScheduleMainDTO;
 
-public class ScheduleDAOTest extends MyAbstractTest{
+public class ScheduleDAOTest extends MyAbstract{
 	
 	@Autowired
 	private ScheduleDAO scheduleDAO;

@@ -8,5 +8,8 @@
 </head>
 <body>
 	<h1>eachView</h1>
+	
+	
+	
 </body>
 </html>

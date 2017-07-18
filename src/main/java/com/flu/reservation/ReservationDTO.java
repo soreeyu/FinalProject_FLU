@@ -12,6 +12,14 @@ public class ReservationDTO {
 	private Integer human;
 	private String email;
 	private Integer snum;
+	private String phone;
+	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public String getName() {
 		return name;
 	}

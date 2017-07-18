@@ -1,5 +1,7 @@
 package com.flu.reservation;
 
+import com.flu.eachRoom.EachRoomDTO;
+import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.util.ListInfo;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class ReservationDAO {
 	
 	public int insert(ReservationDTO reserve) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete(NAMESPACE+"ReservePay", reserve);
 	}
 
 	public int update(ReservationDTO reserve) throws Exception {
@@ -47,5 +49,16 @@ public class ReservationDAO {
 		return 0;
 	}
 	
-	
+	//방정보 불러오기
+	public EachRoomDTO eachView(int num) throws Exception{
+		return sqlSession.selectOne("EachRoomMapper.EachView", num);
+	}
+	//예약 가능 시간 불러오기
+	public MeetRoomDTO accessTime(int snum) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"Reserve_accessTime", snum);
+	}
+	//예약되어있는 시간 불러오기
+	public ReservationDTO reservedTime(ReservationDTO reservationDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"Reserved_time", reservationDTO);
+	}
 }

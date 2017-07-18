@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.room.RoomDTO;
 import com.flu.room.RoomService;
 
@@ -52,6 +53,10 @@ public class EachRoomServiceImpl implements RoomService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public MeetRoomDTO time(int num) throws Exception{
+		return eachRoomDAO.time(num);
+	}
+	
 	
 }

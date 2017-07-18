@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.flu.eachRoom.EachRoomDTO;
+import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.room.RoomDTO;
 
 @Service
@@ -25,7 +27,7 @@ public class ReservationService {
 
 	public int insert(ReservationDTO reserve) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return reservationDAO.insert(reserve);
 	}
 
 
@@ -35,7 +37,7 @@ public class ReservationService {
 	}
 
 
-	public ReservationDTO view(ReservationDTO reserve) throws Exception {
+	public ReservationDTO view(int num) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -50,4 +52,18 @@ public class ReservationService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	//방정보 불러오기
+	public EachRoomDTO eachView (int num) throws Exception{
+		return reservationDAO.eachView(num);
+	}
+	//예약 가능 시간 불러오기
+	public MeetRoomDTO accessTime(int snum) throws Exception{
+		return reservationDAO.accessTime(snum);
+	}
+	//예약 되어이쓴ㄴ 시간 불러오기
+	public ReservationDTO reservedTime(ReservationDTO reservationDTO) throws Exception{
+		return reservationDAO.reservedTime(reservationDTO);
+	}
+	
 }
