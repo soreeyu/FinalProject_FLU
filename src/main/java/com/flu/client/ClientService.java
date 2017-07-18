@@ -15,6 +15,7 @@ import javax.mail.internet.MimeUtility;
 import org.springframework.stereotype.Service;
 
 import com.flu.member.MemberDTO;
+import com.flu.profile.Evaluation;
 
 @Service
 public class ClientService{
@@ -48,15 +49,22 @@ public class ClientService{
 		return 0;
 	}
 	
+	
+	
+	
+	
+	//대금관리에서 클라이언트 정보 조회
+	public MemberDTO memberView(String email){
+		return clientDAO.memberView(email);
+	}
+	
 	public ClientDTO clientView(String email){
 		return clientDAO.clientView(email);
 	}
 	
-	
-	
-	
-	
-	
+	public Evaluation evaluationView(String email){
+		return clientDAO.evaluationView(email);
+	}
 	
 	
 	

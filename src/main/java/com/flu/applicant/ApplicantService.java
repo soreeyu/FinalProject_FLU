@@ -12,11 +12,16 @@ public class ApplicantService {
 	@Inject
 	private ApplicantDAO applicantDAO;
 	
+	//applicant List
 	public List<ApplicantDTO> list(int projectNum){
-		System.out.println("프로젝트넘:"+projectNum);
 	
 		return applicantDAO.list(projectNum);
 	}
 	
+	
+	// state update
+	public int appUpdate(String email){
+		return applicantDAO.appUpdate(email);
+	}
 	
 }

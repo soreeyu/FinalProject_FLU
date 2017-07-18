@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ClientMapper">
+  	<select id="clientView" resultType="com.flu.client.ClientDTO" parameterType="java.lang.String">
+  		select * from client where email=#{email}
+  	</select>
+  
+    <select id="memberView" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
+  		select * from member where email=#{email}
+  	</select>
+  	
+  	  <select id="evaluationView" resultType="com.flu.profile.Evaluation" parameterType="java.lang.String">
+  		select avg(professional) professional,avg(satisfy) satisfy,avg(communication) communication,avg(schedule) schedule,avg(passion) passion from evaluation where toemail=#{email}
+  	</select>
+  	
+  	
+  
+  </mapper>

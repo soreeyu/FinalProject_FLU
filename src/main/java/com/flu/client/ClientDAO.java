@@ -7,6 +7,9 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.member.MemberDTO;
+import com.flu.profile.Evaluation;
+
 @Repository
 public class ClientDAO{
 	
@@ -25,10 +28,22 @@ public class ClientDAO{
 		return 0;
 	}
 	
-	public ClientDTO clientView(String email){
-		return sqlsession.selectOne(NAMESPACE+"view",email);
+	
+	
+	
+	//대금관리에서 클라이언트 정보 가지고오기
+	
+	public MemberDTO memberView(String email){
+		return sqlsession.selectOne(NAMESPACE+"memberView",email);
 	}
 
+	public ClientDTO clientView(String email){
+		return sqlsession.selectOne(NAMESPACE+"clientView",email);
+	}
+	
+	public Evaluation evaluationView(String email){
+		return sqlsession.selectOne(NAMESPACE+"evaluationView",email);
+	}
 	
 	
 	

@@ -101,4 +101,8 @@ public class MemberService {
 	public MemberDTO memberView(String email){
 		return memberDAO.memberView(email);
 	}
+	
+	
+	
+	
 }

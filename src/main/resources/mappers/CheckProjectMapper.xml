@@ -6,7 +6,31 @@
   <mapper namespace="CheckProjectMapper">
   
   		<select id="listCheck" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
-  			select * from project where state = 'check' or state = 'done' order by reg_date asc
+  			select * from project
+  			
+  			<choose>
+  				<when test="category==null and detailCategory==null">
+  					where state in('check','done') order by reg_date asc
+  				</when>
+				<when test="category!=null and detailCategory!=null">
+  					where state in('check','done') and category=#{category} and detailcategory=#{detailCategory} and
+  				
+	  				<if test="kind == 'name'">
+	  					name like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'email'">
+	  					email like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'contents'">
+	  					contents like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				order by reg_date asc
+				</when>
+
+  			</choose>
   		</select>
   		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">

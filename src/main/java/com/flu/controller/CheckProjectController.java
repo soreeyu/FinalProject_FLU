@@ -15,7 +15,11 @@ import com.flu.applicant.ApplicantDAO;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.checkProject.CheckProjectService;
+import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
+import com.flu.member.MemberDTO;
+import com.flu.member.MemberService;
+import com.flu.profile.Evaluation;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
@@ -32,11 +36,18 @@ public class CheckProjectController {
 	private ApplicantService applicantService;
 	@Inject
 	private ClientService clientService;
+	@Inject
+	private MemberService memberService;
 	
 	
 	//검수전, 진행전 프로젝트 리스트 불러오기
 	@RequestMapping(value="checkProjectList")
 	public String listCheck(ListInfo listInfo,Model model){
+		System.out.println(listInfo.getCategory());
+		System.out.println(listInfo.getDetailCategory());
+		System.out.println(listInfo.getSearch());
+		System.out.println(listInfo.getKind());
+		
 		List<ProjectDTO> list = checkProjectService.listCheck(listInfo);
 		model.addAttribute("list", list);
 		return "checkProject/checkProjectList";
@@ -61,7 +72,6 @@ public class CheckProjectController {
 	@RequestMapping(value="checkCashView")
 	public String viewCash(Integer projectNum,Model model){
 		
-		System.out.println("여기 들어왔니?");
 		//지원자 리스트 들고오기
 		model.addAttribute("applicant", applicantService.list(projectNum));
 		//프로젝트 리스트 들고오기
@@ -70,5 +80,34 @@ public class CheckProjectController {
 		return "checkProject/checkCashView";
 	}
 
+	//클라이언트 이름으로 3개의 테이블에서 정보 들고오기 window.open
+	@RequestMapping(value="clientInfo")
+	public void clientInfo(String email,Model model){
+		
+		ClientDTO client = clientService.clientView(email);
+		Evaluation evaluation = clientService.evaluationView(email);
+		MemberDTO member = clientService.memberView(email);
+		
+		model.addAttribute("client", client);
+		model.addAttribute("evaluation", evaluation);
+		model.addAttribute("member", member);
+	
+	}
+	
+	//Ajax로 프리랜서 보여주기 member Table만 view 해오는 것
+	@RequestMapping(value="memberInfo",method=RequestMethod.GET)
+	public void memberCash(String email,Integer pay,Model model){
+		
+		model.addAttribute("memberDTO", memberService.memberView(email));
+		model.addAttribute("pay", pay*0.9);
+	}
+	
+	//지원자의 상태 업데이트 (돈을 지급했다고 payFinish로 변경)
+	@RequestMapping(value="appUpdate")
+	public String appUpdate(String email,Integer projectNum){
+		int result = applicantService.appUpdate(email);
+		
+		return "redirect:/checkProject/checkCashView?projectNum="+projectNum;
+	}
 	
 }

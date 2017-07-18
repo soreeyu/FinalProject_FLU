@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +13,46 @@
 
 $(function() {
 	
-	var email = '${project.email }';
+	var pemail = '${project.email }';
+	
 	
 	$('#client').click(function() {
 		
-		window.open("../member/clientInfo", "check", "width=450, height=300, top=200, left=200");
+		window.open("./clientInfo?email="+pemail, "check", "width=600, height=400, top=100, left=300");
+		
+	});
+	
+	
+	
+	$('.btn').click(function() {
+		
+		var remail = $(this).attr('lang');
+		var count = $(this).attr('title');
+		var pay = $("."+count).attr("title");
+
+		
+		
+	 	$.ajax({
+			
+			url: "./memberInfo",
+			type: "GET",
+			data: {email:remail,pay:pay},
+			success:function(data){
+				data = data.trim();
+				$('#'+count).html(data);
+			}
+			
+		}) 
+		
+		var projectNum = ${project.projectNum};
+		
+		$('#'+count).on("click",".btn2", function() {
+			var email = $(this).attr('id');
+			location.href = "./appUpdate?email="+email+"&projectNum="+projectNum;
+			
+		}) 
+	
+	
 		
 	});
 	
@@ -25,7 +61,24 @@ $(function() {
 	
 });
 
+
+
+
+
+
 </script>
+<style type="text/css">
+	
+#client:HOVER {
+	
+	cursor: pointer;
+}
+	
+	
+	
+}
+
+</style>
 </head>
 <body>
 
@@ -34,7 +87,6 @@ PROJECT
 <p>${project.name}</p>
 <p>${project.category }</p>
 <p>${project.detailCategory}</p>
-<p>${project.name}</p>
 <p>${project.period}</p>
 <p>${project.startDate}</p>
 <p>${project.budget }</p>
@@ -53,11 +105,24 @@ PROJECT
 
 <hr>
 
-<c:forEach items="${applicant }" var="a">
-<p>${a.projectNum}</p>
-<p>${a.email}</p>
-<p>${a.state}</p>
-<p>${a.pay}</p>
+<c:forEach items="${applicant }" var="a" varStatus="i">
+<p>프로젝트넘: ${a.projectNum}</p>
+
+<p class="${i.index }" title="${a.pay }">
+지원자 : ${a.email} 지급액: ${a.pay}
+<c:if test="${a.state=='payFinish'}">
+지급완료
+</c:if>
+<c:if test="${a.state=='finish'}">
+<input type="button" value="지급하기" lang="${a.email}" class="btn" title="${i.index}">
+</c:if>
+</p>
+
+<div id="${i.index}">
+
+</div>
+
+
 </c:forEach>
 
 

@@ -38,10 +38,7 @@ public class ClientController {
 		return 0;
 	}
 	
-	@RequestMapping(value="clientInfo")
-	public void view(){
-		
-	}
+
 	
 	
 	

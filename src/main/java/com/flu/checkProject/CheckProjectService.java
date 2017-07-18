@@ -6,6 +6,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.client.ClientDAO;
+import com.flu.client.ClientDTO;
+import com.flu.member.MemberDTO;
+import com.flu.profile.Evaluation;
 import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 
@@ -26,5 +30,8 @@ public class CheckProjectService {
 	public List<ProjectDTO> listCash(ListInfo listInfo){
 		return checkProjectDAO.listCash(listInfo);
 	}
+	
+
+	
 	
 }
