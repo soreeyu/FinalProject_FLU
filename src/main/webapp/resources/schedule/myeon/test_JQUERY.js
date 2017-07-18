@@ -17,6 +17,9 @@ $(function(){
 		var endtime = $('#endtime').val();
 		var email = $('.email').val();
 		var partName = $('.partName').val();
+		var formData = new FormData();
+		 //첫번째 파일태그
+		formData.append("schedulefile",$("input[name=schedulefile]")[0].files[0]);
 		alert(title+contents+starttime+endtime+email+partName);
 		//빈칸 등록해야함
 		if(trim(title) == '' || trim(title) == '<p>&nbsp;</p>'){
@@ -63,13 +66,16 @@ $(function(){
 				//dataType: 'JSON',
 			    //data:  scheduleParam,
 			    //contentType:"application/json; charset=UTF-8",
+				processData: false,
+				contentType: false,
 				data: {
 					unitName:title,
 					unitDescribe:contents,
 					unitStartDate:starttimeStr,
 					unitFinishDate:endtimeStr,
 					email:email,
-					partName:partName
+					partName:partName,
+					schedulefile:formData
 					
 				},
 				
@@ -95,11 +101,18 @@ $(function(){
 		//$("#unitFrm").submit();
 	});
 	
+	
+	$('#writeClose').click(function(){
+		//$('#schedulefileName').html('');
+		writeModal.hide();
+		//$('iframe[id!=scheduleFrame]').remove();
+	});
+	
 	$('#schcalendar').fullCalendar({
 		header: {
 			left: ' ',
 			center: 'prev title next',
-			right: 'today,month,basicWeek,basicDay'
+			right: 'today,month'//'today,month,basicWeek,basicDay'
 		},
 		titleFormat: {
 			month: 'yyyy년 MMMM',
@@ -115,119 +128,59 @@ $(function(){
 		maxTime : 19,
 		axisFormat : "HH:mm",
 		editable: false,
-		events: function(start, end, callback) {
-	       /* $.ajax({
-	            url: getContextPath()+"/schedule/test",
-	            dataType: 'json',
-	            data: {
-	            	syear:start.getFullYear(),
-		        	smonth:start.getMonth()+1,
-		        	eyear:end.getFullYear(),
-		        	emonth:end.getMonth()+1
-	            },
-	            success: function(response) {
-	            	getPayDay();
-	                var events = [];
-	                for(var i = 0 ; i < response.length ; i ++){
-	                	var color;
-	                	var textColor;
-	                	var borderColor;
-	                	events.push({
-	                        title: response[i].title,
-	                        start: new Date(response[i].starttime),
-	                        end : new Date(response[i].endtime),
-	                        seq : response[i].seq,
-	                        allDay: (new Date(response[i].starttime).getHours()<8 || new Date(response[i].end).getHours()>19),
-	                        color : color,
-	                        textColor : textColor,
-	                        borderColor:borderColor
-	                    });
-	                }
-	                callback(events);
-	            },
-	            error : function(response,txt){
-	            	location.href = "";//getContextPath()+"/common/error.do?error="+txt;
-	            }
-	        });*/
-	    },
-	    eventClick: function(calEvent, jsEvent, view) {/*
-	    	if(calEvent.seq != null){
-	    		
-	    		$.getJSON(getContextPath()+"/home/scheduleFiles.do",{seq:calEvent.seq},function(response){
-	    			var files;
-	    			files = response;
-	    		
-			    	$.getJSON(getContextPath()+"/home/getSchedule.do",{seq:calEvent.seq},function(response){
-			    		var article = response;
-				    	var sdate = new Date(article.starttime);
-						var stime = sdate.getFullYear() + "년 " + (sdate.getMonth()+1) + "월 " + sdate.getDate() + "일";
-						var edate = new Date(article.endtime);
-						var etime = edate.getFullYear() + "년 " + (edate.getMonth()+1) + "월 " + edate.getDate() + "일";
-						var fileHtml = '<div class="notify" style="margin-top:5px;">';
-						for(var i = 0 ; i < files.length ; i ++){
-							fileHtml += '&nbsp;&nbsp;<a href="javascript:scheduleFileDown('+files[i].seq+')">' + files[i].realname +'</a>&nbsp;&nbsp;';
-						}
-						fileHtml += '</div>';
-						$("#modal-contents").html('<div class="label label-red" style="min-width:300px;">' + stime + ' ~ ' + etime + '</div><br><div class="notify contents-view" style="margin-top:5px;">' + article.contents +'</div>'+fileHtml);
-						if(article.isWriter == 'true'){
-							scheduleParam = {seq : article.seq,title : article.title, contents : article.contents, starttime : article.starttime, endtime : article.endtime, etcYn : article.etcYn, files:files};
-							var updateBtn = $('<a/>', {
-											    href: '#',
-											    name: 'updateBtn',
-											    id: 'updateBtn',
-											    html: '수정',
-											    addClass : 'btn btn-gray btn-small',
-											    onclick: 'javascript:contentsUpdate();'
-											});
-							var deleteBtn = $('<a/>', {
-											    href: '#',
-											    name: 'deleteBtn',
-											    id: 'deleteBtn',
-											    html: '삭제',
-											    addClass : 'btn btn-gray btn-small',
-											    onclick: 'javascript:contentsDelete('+article.seq+');'
-											});
-							var closeBtn = $('<a/>', {
-											    href: '#',
-											    name: 'closeBtn',
-											    id: 'closeBtn',
-											    html: 'Close',
-											    addClass : 'btn btn-gray btn-small',
-											    onclick: 'javascript:modal.hide();'
-											});
-							
-							$('#contentsBtn').html( updateBtn[0].outerHTML +  deleteBtn[0].outerHTML +  closeBtn[0].outerHTML);
-						}else{
-							var closeBtn = $('<a/>', {
-							    href: '#',
-							    name: 'closeBtn',
-							    id: 'closeBtn',
-							    html: 'Close',
-							    addClass : 'btn btn-gray btn-small',
-							    onclick: 'javascript:modal.hide();'
-							});
-			
-							$('#contentsBtn').html( closeBtn[0].outerHTML);
-						}
-						$("#modal-title").html(article.title + '<span style="float:right;">'+article.writer+'</span>');
-						modal.show();
-			    	}).fail(function(jqxhr, textStatus, error){
-						 var err = textStatus + ", " + error;
-						 console.log( "Request Failed: " + err );
-						 location.href=getContextPath()+'/common/error.do?code='+textStatus;
-					});
-	    		});
-	    	}*/
+		events: [{
+	        id: 'All Day Event',
+	        title: 'All Day Event',
+	        start: new Date()
+	    }, {
+	        id: 'popo',
+	        title: 'popo',
+	        start: new Date('2017-07-20'),
+	        //end:   '2014-11-05T12:30:00',
+	        description: 'This is a cool event 테슷흐',
+	        color: 'rgb(142, 67, 163)',
+	        textColor: 'orange'
+	    }, {
+	        id: 'test2',
+	        title: 'test2',
+	        url: 'http://google.com/',
+	        start: new Date('2017-07-30'),
+	    }],
+	   eventClick: function(calEvent, jsEvent, view) {
+
+	        alert('Event: ' + calEvent.title);
+	        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY); // 화면 좌표인듯
+	        alert('View: ' + view.name);
+
+	        // change the border color just for fun
+	        $(this).css('border-color', 'red');
+	        
+	        
+	        if(event.url) {
+                alert(event.title + "\n" + event.url, "wicked", "width=700,height=600");
+                window.open(event.url);
+                return false;
+            }
+
+
 	    },
 	    dayClick: function(date) {
-			scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
-			$('#title').val(scheduleParam.title);
-			$('#contents').val(scheduleParam.contents);
+			//scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
+			//$('#title').val(scheduleParam.title);
+			//$('#contents').val(scheduleParam.contents);
 			spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 			epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-			$('#etcYn').attr('checked',false);
+			//$('#etcYn').attr('checked',false);
 			writeModal.show();
 			//editorInit('contents');
 	    }
 	});
+	
+	getPartList(66);
+    $('#schcalendar').fullCalendar('addEventSource',[{
+        id: '젠장젠장',
+        title: '제발좀 되라',
+        start: new Date('2017-07-30'),
+        end: new Date('2017-08-12')
+    }]);
 });

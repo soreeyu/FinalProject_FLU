@@ -7,9 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.flu.file.FileService;
 import com.flu.schedule.ScheduleService;
@@ -128,14 +128,17 @@ public class ScheduleController {
 		
 		
 		//저장된 partList 가져오기 //세부사항 등록시 필요
-		@RequestMapping(value="partView",method=RequestMethod.GET)
-		public String partList(int scheduleNum, Model model){
+		@ResponseBody
+		@RequestMapping(value="partList",method=RequestMethod.GET)
+		public List<SchedulePartDTO> partList(int scheduleNum, Model model){
+		//public String partList(int scheduleNum, Model model){
 			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
 			System.out.println("컨트롤러 에서 part리스트"+partList);
-			model.addAttribute("partList",partList);
-			model.addAttribute("scheduleNum",scheduleNum);
+			//model.addAttribute("partList",partList);
+			//model.addAttribute("scheduleNum",scheduleNum);
 			
-			return "schedule/partView";
+			//return "schedule/partView";
+			return partList;
 		} 
 		
 		
@@ -188,10 +191,10 @@ public class ScheduleController {
 		
 		//@ResponseBody //이건 리턴을 json으로 해주는애임
 		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
-		//public String unitWrite(String unitName,Model model){
 		public String unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model){
 			System.out.println("scheduleUnit "+scheduleUnitDTO.getUnitName());
 			System.out.println("unit 등록하러옴 내용가지고");
+			System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
 			model.addAttribute("message", "힘들다");
 			model.addAttribute("path", "/flu/schedule/main");
 			return "common/result";

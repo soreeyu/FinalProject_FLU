@@ -37,69 +37,7 @@
 
 <title>ScheduleMain</title>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		/* 		
-	    $('#schcalendar').fullCalendar({
-	    	
-	    
-		    dayClick: function(date) {
 
-    	        alert('a day has been clicked!');
-				scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
-				$('#title').val(scheduleParam.title);
-				$('#contents').val(scheduleParam.contents);
-				spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-				epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-				$('#etcYn').attr('checked',false);
-				writeModal.show();
-				//editorInit('contents');
-		    }
-	    
-		}); //fullCal
-		 */
-	    
-	    $("#addUnitBtn").click(function(){
-	    	alert("할일 등록하기");
-	    	location.href = "./testUnit";
-	    });
-	    
-		/* 
-		$("#writeBtn").click(function(){
-			alert("글좀 써져라");
-			var title = $('#title').val();
-		    $.ajax({
-				url : '/flu/schedule/unitWrite',
-				type : 'POST',
-				data: {
-					unitName:title
-					
-				},
-				
-				success : function(response){
-					alert(response);
-				},
-				error: function(request,status,error){
-					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
-				}
-			});
-		    
-			
-		
-		});
-		
-		 */
-		
-		
-		
-
-	    
-	    
-	});
-
-	
-	
-</script>
 
 
 <style type="text/css">
@@ -113,6 +51,13 @@ div{
 	width: 100%;
 	height: auto;
 	background-color: aqua;
+}
+
+.testData{
+	width: 1152px;
+	height: auto;
+	background: lime;
+	margin: 0 auto;
 }
 
 #schedule_section{
@@ -157,7 +102,7 @@ div{
 	line-height: 30px;
 }
 
-#calendar{
+#schcalendar{
 	width: auto;
 }
 
@@ -174,11 +119,149 @@ div{
 
 
 </style>
+
+
+<script type="text/javascript">
+	
+var partsJson = new Object();
+var partsJsonArray = new Array(); 
+
+	$(document).ready(function() {
+		
+		/* 		
+	    $('#schcalendar').fullCalendar({
+	    	
+	    
+		    dayClick: function(date) {
+
+    	        alert('a day has been clicked!');
+				scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
+				$('#title').val(scheduleParam.title);
+				$('#contents').val(scheduleParam.contents);
+				spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				$('#etcYn').attr('checked',false);
+				writeModal.show();
+				//editorInit('contents');
+		    }
+	    
+		}); //fullCal
+		 */
+	    
+	    $("#addUnitBtn").click(function(){
+	    	alert("할일 등록하기");
+	    	location.href = "./testUnit";
+	    });
+
+	    
+		
+		
+	    
+		
+		
+		
+		
+	}); // $(function)끝
+
+	
+	function getPartList(scheduleNum){
+
+		
+		$.ajax({
+			url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
+			type: "GET",
+			async:false,
+			success:function(data){
+				//alert(data);
+				var i=0;
+				
+				var result="<table>";
+				$(data).each(function(){
+					result = result + "<tr>";
+					result = result + "<td>"+ this.partName + "</td>";
+					result = result + "<td>"+ this.partStartDate + "</td>";
+					result = result + "<td>"+ this.partFinishDate + "</td>";
+					result = result + "<td>"+ this.partNum + "</td>";
+					result = result + "<td>"+ this.partDescFileO + "</td>";
+					result = result + "</tr>";
+					
+					partsJson = new Object();
+					partsJson.id = this.scheduleNum+this.partName+this.partNum;
+					partsJson.title = this.partName;
+					partsJson.start =  this.partStartDate; 
+					partsJson.end =  this.partFinishDate; 
+					partsJson.description =  this.partDescFileO; 
+					alert(JSON.stringify(partsJson));
+					partsJson.color =  'blue'; 
+					partsJson.textColor =  'white'; 
+					partsJsonArray.push(partsJson);
+					alert(JSON.stringify(partsJsonArray));
+					
+				});
+				result = result + "</table>";
+				//alert(JSON.stringify(partsJSONArray));
+
+				
+				
+				$("#partsDiv").html(result);
+				
+				/* 
+				 for(var i=0; i<Object.keys(partsJsonArray).length; i++){
+				        $('#schcalendar').fullCalendar('addEventSource', [{
+				            id:          partsJsonArray[i].id,
+				            title:       partsJsonArray[i].title,
+				            start:       partsJsonArray[i].start,
+				            end:         partsJsonArray[i].end,
+				            //description: partsJsonArray[i].description, 
+				            color:       partsJsonArray[i].color,
+				            textColor:   partsJsonArray[i].textColor
+				        }]);
+				        console.log('ok');
+				    } 
+				*/
+				for(var i=0; i<Object.keys(data).length; i++){
+			        $('#schcalendar').fullCalendar('addEventSource', [{
+			            id:          data[i].scheduleNum+data[i].partName+data[i].partNum,
+			            title:       data[i].partName,
+			            start:       data[i].partStartDate,
+			            end:         data[i].partFinishDate,
+			            //description: partsJsonArray[i].description, 
+			            color:       'orange',
+			            textColor:   'white',
+			            url: 'https://www.github.com'
+			        }]);
+			        console.log('ok');
+			    } 
+			}
+		});
+		
+		
+		
+	}
+	
+</script>
+
+
+
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 		<section class="main_section jui">
+		
+		<div class="testData">
+		이곳에 스케줄넘,해당 스케줄에 대한 파트/클라이언트/사용자,  현재 로그인된 세션 이 필요함  
+		
+			<div id="partsDiv">
+			
+			</div>
+			<div id="clientDiv">
+			
+			</div>
+			<div id="usersDiv">
+			
+			</div>
+		</div>
 		
 		<!-- 스케줄등록모달 -->
 		<div id="writeModal" class="msgbox" style="display: none; background:white;">
@@ -299,7 +382,15 @@ div{
 		<!----------------- 달력&체크리스트 --------------->
 		<div id="part1"> 
 			<div id="cal_section">
-				<div id='calendar'></div>
+				<!-- Schedule_View -->
+					<div id="main_View" style="display: block;">
+						<div class="group">
+							<a class="left btn btn-mini btn-gray-black" id="sview-refresh"><span>새로고침</span>&nbsp;<i
+								class="icon-refresh"></i></a> (날짜의 빈공간을 클릭하면 스케줄을 등록 할 수 있습니다.)
+						</div>
+						<div id='schcalendar'></div>
+					</div>
+					<!-- <div id='calendar'></div> -->
 			</div>
 			
 			<div id="cklist_section">
@@ -352,14 +443,7 @@ div{
 		</div>
 		
 		
-		<!-- Schedule_View -->
-		<div id="main_View" style="display: block;">
-			<div class="group" >
-				<a class="left btn btn-mini btn-gray-black" id="sview-refresh"><span>새로고침</span>&nbsp;<i class="icon-refresh"></i></a>
-				(날짜의 빈공간을 클릭하면 스케줄을 등록 할 수 있습니다.)
-			</div>
-			<div id='schcalendar'></div>
-		</div>
+		
 		
 		
 		
