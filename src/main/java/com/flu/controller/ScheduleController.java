@@ -7,12 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.flu.file.FileService;
 import com.flu.schedule.ScheduleService;
@@ -190,12 +187,17 @@ public class ScheduleController {
 		*/
 		
 		//@ResponseBody //이건 리턴을 json으로 해주는애임
-		@RequestMapping(value="unitWrite", method=RequestMethod.GET)
-		public void unitWrite(ScheduleUnitDTO scheduleUnitDTO){
-			System.out.println("scheduleUnit "+scheduleUnitDTO.getPartName());
+		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
+		//public String unitWrite(String unitName,Model model){
+		public String unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model){
+			System.out.println("scheduleUnit "+scheduleUnitDTO.getUnitName());
 			System.out.println("unit 등록하러옴 내용가지고");
-			//return "schedule/main";
+			model.addAttribute("message", "힘들다");
+			model.addAttribute("path", "/flu/schedule/main");
+			return "common/result";
 		}
+		
+		
 		
 		@RequestMapping(value="unitUpdate", method=RequestMethod.POST)
 		public String unitUpdate(ScheduleUnitDTO scheduleUnitDTO){

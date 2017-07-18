@@ -2,20 +2,31 @@ package com.flu.schedule.client;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ScheduleUnitDTO {
 	
 	private Integer scheduleNum;
 	private Integer unitNum;//스케줄에 대한 할일 고유번호
 	private String unitName; //할일 제목
 	private String unitDescribe; //할일 설명
+	private MultipartFile unitDescFile;
 	private String unitDescFileO;
 	private String unitDescFileF;
 	private String partName; // Part들 중에 무조건 속해잇어야함
-	private Date unitStartDate; //시작일
-	private Date unitFinishDate; //마감일
+	private String unitStartDate; //시작일
+	private String unitFinishDate; //마감일
 	private String email; // 해당 일을 맡은 사용자 등록 
 	private String unitState; //해당 할일에 대한 상태 //할일, 진행중, 완료
 	
+	
+	
+	public MultipartFile getUnitDescFile() {
+		return unitDescFile;
+	}
+	public void setUnitDescFile(MultipartFile unitDescFile) {
+		this.unitDescFile = unitDescFile;
+	}
 	public Integer getScheduleNum() {
 		return scheduleNum;
 	}
@@ -58,17 +69,17 @@ public class ScheduleUnitDTO {
 	public void setPartName(String partName) {
 		this.partName = partName;
 	}
-	public Date getUnitFinishDate() {
-		return unitFinishDate;
-	}
 	
-	public Date getUnitStartDate() {
+	public String getUnitStartDate() {
 		return unitStartDate;
 	}
-	public void setUnitStartDate(Date unitStartDate) {
+	public void setUnitStartDate(String unitStartDate) {
 		this.unitStartDate = unitStartDate;
 	}
-	public void setUnitFinishDate(Date unitFinishDate) {
+	public String getUnitFinishDate() {
+		return unitFinishDate;
+	}
+	public void setUnitFinishDate(String unitFinishDate) {
 		this.unitFinishDate = unitFinishDate;
 	}
 	public String getEmail() {

@@ -64,7 +64,34 @@
 	    	location.href = "./testUnit";
 	    });
 	    
-	    
+		/* 
+		$("#writeBtn").click(function(){
+			alert("글좀 써져라");
+			var title = $('#title').val();
+		    $.ajax({
+				url : '/flu/schedule/unitWrite',
+				type : 'POST',
+				data: {
+					unitName:title
+					
+				},
+				
+				success : function(response){
+					alert(response);
+				},
+				error: function(request,status,error){
+					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
+				}
+			});
+		    
+			
+		
+		});
+		
+		 */
+		
+		
+		
 
 	    
 	    
@@ -163,7 +190,7 @@ div{
 				<table>
 					<tr>
 						<td>
-							<input class="input input-rect" id="unitName" name="unitName" style="width: 612px" maxlength="100" placeholder="제목"/>
+							<input class="input input-rect" id="title" name="unitName" style="width: 612px" maxlength="100" placeholder="제목"/>
 						</td>
 					</tr>
 					<tr>
@@ -354,13 +381,14 @@ function getContextPath(){
    return context;
 }
 
+
+
 </script>
 
 <script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_FUNCTION.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_JUI.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_JQUERY.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_DATE.js" type="text/javascript" charset="utf-8"></script>
-
 
 
 </body>

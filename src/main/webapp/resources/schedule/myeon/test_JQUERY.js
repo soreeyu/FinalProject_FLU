@@ -17,7 +17,7 @@ $(function(){
 		var endtime = $('#endtime').val();
 		var email = $('.email').val();
 		var partName = $('.partName').val();
-		
+		alert(title+contents+starttime+endtime+email+partName);
 		//빈칸 등록해야함
 		if(trim(title) == '' || trim(title) == '<p>&nbsp;</p>'){
 			alert('제목을 입력하세요');
@@ -55,6 +55,8 @@ $(function(){
 			//scheduleParam.realnames = realnames;
 			//scheduleParam.subnames = subnames;
 			//alert('url= '+url);
+			var starttimeStr=starttime.toString();
+			var endtimeStr=endtime.toString();
 			$.ajax({
 				url : '/flu/schedule/unitWrite',
 				type : 'POST',
@@ -64,8 +66,8 @@ $(function(){
 				data: {
 					unitName:title,
 					unitDescribe:contents,
-					unitStartDate:starttime,
-					unitFinishDate:endtime,
+					unitStartDate:starttimeStr,
+					unitFinishDate:endtimeStr,
 					email:email,
 					partName:partName
 					
@@ -73,15 +75,15 @@ $(function(){
 				
 				success : function(response){
 					alert(response);
-					writeModal.hide();
+					//writeModal.hide();
 					//$('iframe[id!=scheduleFrame]').remove();
 					//$('#title').val('');
 					//$('#contents').val('');
 					//$('#schcalendar').fullCalendar('refetchEvents');
 					//$('#schedulefileName').html('');
-					var date = new Date();
-		    		spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-		    		epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+					//var date = new Date();
+		    		//spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+		    		//epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 				},
 				error: function(request,status,error){
 					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
