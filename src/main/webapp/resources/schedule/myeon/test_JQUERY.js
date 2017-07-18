@@ -9,6 +9,7 @@ $(function(){
 	
 	
 	$('#writeBtn').click(function(){
+		alert('글쓰기클릭');
 		//oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
 		var title = $('#title').val();
 		var contents = $('#contents').val();
@@ -18,7 +19,7 @@ $(function(){
 		var partName = $('.partName').val();
 		
 		//빈칸 등록해야함
-		if(trim(title) == '' || trim(title) == ''){
+		if(trim(title) == '' || trim(title) == '<p>&nbsp;</p>'){
 			alert('제목을 입력하세요');
 			$('#title').val('');
 			$('#title').focus();
@@ -46,6 +47,7 @@ $(function(){
 			scheduleParam.unitDescribe=contents;
 			scheduleParam.unitStartDate = starttime;
 			scheduleParam.unitFinishDate = endtime;
+			
 			var url = getContextPath()+'/schedule/unitWrite';
 			//if(scheduleParam.seq > 0){
 			//	url = getContextPath()+'/schedule/unitUpdate';
@@ -54,10 +56,21 @@ $(function(){
 			//scheduleParam.subnames = subnames;
 			//alert('url= '+url);
 			$.ajax({
-				url : url,
-				dataType: 'json',
-				data : scheduleParam,
-				type : 'post',
+				url : '/flu/schedule/unitWrite',
+				type : 'POST',
+				//dataType: 'JSON',
+			    //data:  scheduleParam,
+			    //contentType:"application/json; charset=UTF-8",
+				data: {
+					unitName:title,
+					unitDescribe:contents,
+					unitStartDate:starttime,
+					unitFinishDate:endtime,
+					email:email,
+					partName:partName
+					
+				},
+				
 				success : function(response){
 					alert(response);
 					writeModal.hide();
@@ -70,8 +83,8 @@ $(function(){
 		    		spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 		    		epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 				},
-				error: function(e){
-					alert('에러 부들');
+				error: function(request,status,error){
+					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
 				}
 			});
 		}

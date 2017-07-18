@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.flu.file.FileService;
@@ -160,7 +162,7 @@ public class ScheduleController {
 		}
 		
 		@RequestMapping(value="partDelete", method=RequestMethod.POST)
-		public String partDelete(@ResponseBody SchedulePartDTO schedulePartDTO){
+		public String partDelete(SchedulePartDTO schedulePartDTO){
 			System.out.println("ScheduleNum="+schedulePartDTO.getScheduleNum()+", partNum="+schedulePartDTO.getPartNum());
 			int result = scheduleService.deletePart(schedulePartDTO);
 			return "schedule/partView";
@@ -179,16 +181,20 @@ public class ScheduleController {
 		
 		public void unitOne(){}
 		
+		/*
 		@RequestMapping(value="unitWrite", method=RequestMethod.GET)
 		public String unitWrite(){
 			System.out.println("unit 등록하러옴 ");
 			return "index";
 		}
+		*/
 		
-		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
-		public String unitWrite(ScheduleUnitDTO scheduleParam){
+		//@ResponseBody //이건 리턴을 json으로 해주는애임
+		@RequestMapping(value="unitWrite", method=RequestMethod.GET)
+		public void unitWrite(ScheduleUnitDTO scheduleUnitDTO){
+			System.out.println("scheduleUnit "+scheduleUnitDTO.getPartName());
 			System.out.println("unit 등록하러옴 내용가지고");
-			return "schedule/main";
+			//return "schedule/main";
 		}
 		
 		@RequestMapping(value="unitUpdate", method=RequestMethod.POST)
