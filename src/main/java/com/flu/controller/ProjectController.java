@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,11 +38,15 @@ public class ProjectController {
 		listInfo.makePage(totalCount);
 		int pjcount = projectService.projectCount(listInfo);
 		
+		
+		
+		
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
 		model.addAttribute("pjcount", pjcount);
+		model.addAttribute("listInfo", listInfo);
 		
-		model.addAttribute("listInfo", listInfo);		
+		
 		return "project/projectList";
 	}
 	
@@ -70,8 +75,17 @@ public class ProjectController {
 		memberDTO = (MemberDTO) session.getAttribute("member");
 		System.out.println("email=="+memberDTO.getEmail());
 		
-		
+		System.out.println(memberDTO.getKind());	
+		/*if(memberDTO.getKind().equals("client")){
+			System.out.println("client다");
+		}else if(memberDTO.equals(null)){
+			System.out.println("null");
+			return "index";
+		}else{
+			
+		}*/
 		return "project/projectWrite"; 
+		
 	}
 	
 	

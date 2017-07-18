@@ -202,9 +202,83 @@
 	margin-bottom: 5px;
 }
 .project-title{
-	color: #2099bb;
+	color: blue;
 	font-size: 15px;
 	font-weight: bold;
+}
+.project-body{
+	width: 100%;
+	height: 120px;
+	background-color: green;
+}
+.project-info{
+	width: 100%;
+	margin-bottom: 10px;
+}
+.fa{
+	padding-right: 10px;
+	padding-left: 10px;
+	border-right: 1px solid #dedede;
+	font-size: 14px;
+	font-weight: bold;
+}
+.fa-reg_date{
+	padding-left: 10px;
+	font-size: small;
+	color: #ccc;
+	font-size: 12px;
+	display: inline-block;
+}
+.project-contents{
+	width: 630px;
+	color: #999;
+	font-size: 13px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-height: 60px;
+	float: left;
+	height: 60px;
+	background-color: red;
+}
+.project-contents-right{
+	font-size: 13px;
+	width: 150px;
+	float: right;
+	height: 54px;
+	line-height: 13px;
+	background-color: gray;
+}
+.right-contents-sub{
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 5px;
+	height: 20px;
+}
+.project-bottom{
+	margin-top: 10px;
+	line-height: 18px;
+	background-color: white;
+}
+.main-cate{
+	color: #999;
+}
+.sub-cate{
+	border-right: 1px solid #dedede;
+	color: #666;
+	margin-right: 10px;
+	padding-right: 10px;
+}
+.skill-box{
+	display: inline-block;
+}
+.skill-title{
+	margin-left: 10px;
+	color: #666;
+}
+.skill-name{
+	background-color: #a1a7ad;
+}
+.skill-box span{
+	color: #999;
 }
 </style>
 <script type="text/javascript">
@@ -233,9 +307,36 @@
 			alert("nextview")
 			//location.href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}";
 		});
+
+/* 		var list = "${list}";
+		alert(list);
+		alert(list.length); */
+			
+		$("#test").click(function() {
+			
+			var count = "${pjcount}";
+			alert(count);
+			
+			  for(var j=0;j<count;j++){ 
+				  var list = '${list}'.split(",");
+				  alert(list);
+				  
 		
-		
-		}
+				  var skill = list.skill;
+					alert(skill);
+			  }  
+		});
+				
+				//C#, CSS, JAVA
+			  
+				/* var sk = skill.split(",");
+				alert(sk.length); //3
+				for(i=0;i<sk.length;i++){
+					$(".skill-name-"+i).text(sk[i]);	
+				}  */
+				
+			
+			
 	});
 </script>
 </head>
@@ -260,7 +361,7 @@
 						<option value="contents">CONTENTS</option>
 					</select> 
 					<input type="text" name="find"> <input type="submit" value="SEARCH">
-
+					<input type="button" id="test" value="test">
 				</form>
 				</div>
 			</div>
@@ -489,17 +590,45 @@
 		<!-- 프로젝트 리스트 뿌려주는부분  -->
 			<section class="contents_main">
 			
+			
+		<!-- 프로젝트 각각 -->	
 			<c:forEach items="${list}" var="dto">
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title"><a href="#">${dto.name}</div>
+						<div class="project-title"><a href="#">${dto.name}</a></div>
 					</div>
 					<div class="project-body">
-						<div class="project-info">${dto.budget},기간,${dto.reg_date }</div>
+						<div class="project-info">
+							<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
+							<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
+							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
+						</div>
 						<div class="project-contents">${dto.contents }</div>
-						<div class="project-contents-right">마감기한,지원자수</div>
-						<div class="project-bottom"></div>
+						<div class="project-contents-right">
+							<div class="right-contents-sub">
+							<img src="${pageContext.request.contextPath}/resources/img/clock-closed.png">
+							마감<strong>${dto.finishDate}</strong></div>
+							<div class="right-contents-sub">
+							<img src="${pageContext.request.contextPath}/resources/img/proposal-user.png">
+							총지원 <strong>몇명</strong></div>
+						</div>
+						
+						<div style="clear: both;"></div>
+						
+						<div class="project-bottom">
+							<span class="main-cate">개발</span>
+							<span class="sub-cate">애플리케이션</span>
+							<div class="skill-box">
+								<span class="skill-main">요구기술</span>
+								<span class="skill-name-0"></span>
+								<span class="skill-name-1"></span>
+								<span class="skill-name-2"></span>
+								<span class="skill-name-3"></span>
+								<span class="skill-name-4"></span>
+							
+							</div>
+						</div>
 					</div>
 				</div>	
 			</c:forEach>
