@@ -29,8 +29,10 @@ public class ProjectController {
 	
 	
 	//list
+	
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
 	public String projectList(Model model, ListInfo listInfo){
+		
 	
 		List<ProjectDTO> ar = projectService.projectList(listInfo);
 		
@@ -38,8 +40,7 @@ public class ProjectController {
 		listInfo.makePage(totalCount);
 		int pjcount = projectService.projectCount(listInfo);
 		
-		
-		
+	
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
@@ -48,6 +49,7 @@ public class ProjectController {
 		
 		
 		return "project/projectList";
+
 	}
 	
 	//view

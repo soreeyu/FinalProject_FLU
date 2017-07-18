@@ -59,11 +59,30 @@ font-family: -webkit-body;
 	background-color: red;
 	float: right;
 }
+.main-wrapper{
+	display: block;
+	background-color: blue;
+	float: left;
+	margin-right: 20px;
+}
+.sub-wrapper{
+	display:block;
+	background-color: yellow;
+	float: left;
+}
+
+.cate-select{
+	background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center;
+	width: 250px;
+	height: 30px;
+}
 span{
 	color: #f48023;
     font-weight: bold
 }
-
+input{
+	border: 1px solid #e6e6e6;
+}
 .control-wrapper{
 	width: 100%;
 	height: 55px;
@@ -128,6 +147,7 @@ label{
 .skill-wrapper{
 	width: 100%;
 	height: 270px;
+	
 }
 .skill-li{
 	width: 140px;
@@ -193,12 +213,62 @@ label{
 					<label><span>*</span>카테고리</label>
 					<div class="category-wrapper">
 						<div class="main-wrapper">
-						<input type="text" name="category">
-						<input type="text" name="detailCategory">
-						</div>
+								<select class="cate-select" id="category" name="category" required="required"
+									onchange="categoryChange()">
+									<option>카테고리</option>
+									<option class="main_opt" value="개발">개발</option>
+									<option class="main_opt" value="디자인">디자인</option>
+								</select>
+							</div>
+							
+							
+					<div class="sub-wrapper" id="wrapper-first">
+						<select class="cate-select"  name="detailCategory">
+							<option>카테고리를 선택하세요</option>
+						</select>
+					</div>		
+					<div class="sub-wrapper" id="wrapper-program">
+						<div>
+						<select class="cate-select"  name="detailCategory" required="required" >
+							<option>개발 카테고리</option>
+							<option class="sub_opt" value="web">웹</option>
+							<option class="sub_opt" value="application">애플리케이션</option>
+							<option class="sub_opt" value="wordpress">워드프레스</option>
+							<option class="sub_opt" value="publishing">퍼블리싱</option>
+							<option class="sub_opt" value="software">일반 소프트웨어</option>
+							<option class="sub_opt" value="shoppingMall">쇼핑몰</option>
+							<option class="sub_opt" value="game">게임</option>
+							<option class="sub_opt" value="embedded">임베디드</option>
+							<option class="sub_opt" value="program_etc">기타</option>
+						</select>
+						</div>		
+					</div>
+					<div class="sub-wrapper"  id="wrapper-design">
+						<div>
+						<select class="cate-select"  name="detailCategory" required="required">
+							<option>디자인 카테고리</option>
+							<option class="sub_opt" value="design_web">웹</option>
+							<option class="sub_opt" value="design_application">애플리케이션</option>
+							<option class="sub_opt" value="product">제품</option>
+							<option class="sub_opt" value="presentation">프레젠테이션</option>
+							<option class="sub_opt" value="printing">인쇄물</option>
+							<option class="sub_opt" value="shoppingMall"> 쇼핑몰</option>
+							<option class="sub_opt" value="logo">로고</option>
+							<option class="sub_opt" value="graphic">그래픽</option>
+							<option class="sub_opt" value="video">영상</option>
+							<option class="sub_opt" value="game">게임</option>
+							<option class="sub_opt" value="design_etc">기타</option>							
+						</select> 
+					</div>
+
+							</div>
+					<br>
 					<span id="detail">프로젝트를 선택해 주세요</span>
 					</div>
 				</div>
+				
+				
+				
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 제목</label>
 					<div class="category-wrapper">
@@ -557,64 +627,7 @@ label{
 							type="radio" name="quick" value="0">아니오
 					</div>
 				</div>
-				
-				<%-- <div>	
-					<label><span>*</span>카테고리</label>
-					<!-- <input type="text" name="category"> -->
 
-					<div class="control-wrapper">
-						<div class="category-wrapper">
-							<div class="main-wrapper">
-								<select id="category" name="category" required="required"
-									onchange="mainCategory">
-									<option>카테고리</option>
-									<option class="main_opt" value="program">개발</option>
-									<option class="main_opt" value="design">디자인</option>
-								</select>
-
-								<p id="demo"></p>
-								<input type="text">
-
-							</div>
-							<div class="sub-wrapper">
-								<c:if test="">
-						<select name="detailCategory" required="required">
-							<option>세부 카테고리</option>
-							<option class="sub_opt" value="web">웹</option>
-							<option class="sub_opt" value="application">애플리케이션</option>
-							<option class="sub_opt" value="wordpress">워드프레스</option>
-							<option class="sub_opt" value="publishing">퍼블리싱</option>
-							<option class="sub_opt" value="software">일반 소프트웨어</option>
-							<option class="sub_opt" value="commerce">커머스, 쇼핑몰</option>
-							<option class="sub_opt" value="game">게임</option>
-							<option class="sub_opt" value="embedded">임베디드</option>
-							<option class="sub_opt" value="program_etc">기타</option>
-						</select>
-					</c:if>
-					<c:if test="${categoru eq design }">
-						<select name="detailCategory" required="required">
-							<option class="sub_opt" value="design_web">웹</option>
-							<option class="sub_opt" value="design_application">애플리케이션</option>
-							<option class="sub_opt" value="product">제품</option>
-							<option class="sub_opt" value="presentation">프레젠테이션</option>
-							<option class="sub_opt" value="printing">인쇄물</option>
-							<option class="sub_opt" value="design_commerce">커머스, 쇼핑몰</option>
-							<option class="sub_opt" value="logo">로고</option>
-							<option class="sub_opt" value="graphic">그래픽</option>
-							<option class="sub_opt" value="video">영상</option>
-							<option class="sub_opt" value="game">게임</option>
-							<option class="sub_opt" value="design_etc">기타</option>							
-						</select> 
-					</c:if>
-
-							</div>
-						</div>
-
-						프로젝트 카테고리를 선택해 주세요.
-					</div>
-
-				</div>
---%>
 
 				
 				<button class="btn btn-default" type="submit">등록</button> 
@@ -622,7 +635,7 @@ label{
 			</section>
 			<section class="contents_sub">
 				
-				
+				<!-- 옆구리 CSS껴넣기 사진들 -->
 			</section>
 		</div>
 
@@ -631,6 +644,42 @@ label{
 
 <script type="text/javascript">
 
+
+$("#wrapper-first").css("visibility", "visible");
+$("#wrapper-program").css("display", "none");
+$("#wrapper-design").css("display", "none");
+
+function categoryChange() {
+	
+	var main_cate = $("#category").val();
+	alert(main_cate);
+	if(main_cate=="개발"){
+		alert("program");
+		$("#wrapper-first").css("display", "none");
+		$("#wrapper-program").css("display", "block");
+		$("#wrapper-program").css("visibility", "visible");
+		$("#wrapper-design").css("display", "none");
+	}
+	if(main_cate=="디자인"){
+		alert("design");
+		$("#wrapper-first").css("display", "none");
+		$("#wrapper-design").css("display", "block");
+		$("#wrapper-design").css("visibility", "visible");
+		$("#wrapper-program").css("display", "none");
+	}
+	if(main_cate=="카테고리"){
+		$("#wrapper-first").css("display", "block");
+		$("#wrapper-first").css("visibility", "visible");
+		$("#wrapper-program").css("display", "none");
+		$("#wrapper-design").css("display", "none");
+	}
+
+}
+
+
+
+
+/* 주소 불러오는 부분 */
 function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {

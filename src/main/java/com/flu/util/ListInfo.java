@@ -7,8 +7,8 @@ public class ListInfo {
 
 
 	//row
-	private String search; 
-	private String find;
+	private String kind; //contents인지
+	private String search;//입력한값
 	private int startRow;
 	private int lastRow;
 
@@ -115,11 +115,16 @@ public class ListInfo {
 	public void setSearch(String search) {
 		this.search = search;
 	}
-	public String getFind() {
-		return find;
+
+
+	public String getKind() {
+		return kind;
 	}
-	public void setFind(String find) {
-		this.find = find;
+
+
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
+
 
 }

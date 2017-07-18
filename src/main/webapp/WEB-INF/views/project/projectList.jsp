@@ -288,31 +288,28 @@
 
 		$("#preview").click(function() { 
 			alert("preview");
-			//location.href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}";
+			
 		});
 		$(".num").click(function() {
 
 				var num = $(this).prop("id");
 				alert(num);
-				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&find=${listInfo.find}";
+				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}";
 							//form을 사용하는 방법
 							/* document.frm.curPage.value=$(this).attr("id");
 							document.frm.search.value='${listInfo.search}';
-							document.frm.find.value='${listInfo.find}';
+							document.frm.kind.value='${listInfo.kind}';
 							document.frm.submit; */
 							//
 							//location을 이용하는 방법
 						});
 		$("#nextview").click(function() {
 			alert("nextview")
-			//location.href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}";
+			
 		});
 
-/* 		var list = "${list}";
-		alert(list);
-		alert(list.length); */
-			
-		$("#test").click(function() {
+		
+		/* $("#test").click(function() {
 			
 			var count = "${pjcount}";
 			alert(count);
@@ -325,8 +322,11 @@
 				  var skill = list.skill;
 					alert(skill);
 			  }  
-		});
+		}); */
 				
+		
+		
+		
 				//C#, CSS, JAVA
 			  
 				/* var sk = skill.split(",");
@@ -355,12 +355,12 @@
 
 
 					<input type="hidden" name="curPage"> 
-					<select name="search">
+					<select name="kind">
 						<option value="title">TITLE</option>
 						<option value="writer">WRITER</option>
 						<option value="contents">CONTENTS</option>
 					</select> 
-					<input type="text" name="find"> <input type="submit" value="SEARCH">
+					<input type="text" name="search"> <input type="submit" value="SEARCH">
 					<input type="button" id="test" value="test">
 				</form>
 				</div>
@@ -638,25 +638,25 @@
 
 				<c:if test="${listInfo.curBlock>1 }"> -
 		<span id="preview">[이전]</span>
-					<%-- <a href="${board}List?curPage=${listInfo.startNum-listInfo.perBlock}&search=${listInfo.search}&find=${listInfo.find}">[이전]</a> --%>
+					
 				</c:if>
 
 				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
 					var="i">
 					<span class="num" id="${i}">${i}</span>
-					<%-- <a href="${board}List?curPage=${i}&search=${listInfo.search}&find=${listInfo.find}">${i}</a> --%>
+					
 				</c:forEach>
 
 				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
 					<span id="nextview">[다음]</span>
-					<%-- <a href="${board}List?curPage=${listInfo.lastNum+1}&search=${listInfo.search}&find=${listInfo.find}">[다음]</a> --%>
+					
 				</c:if>
 
 				<div>
 
 					<p>curPage : ${listInfo.curPage }</p>
 					<p>search : ${listInfo.search}</p>
-					<p>find : ${listInfo.find }</p>
+					<p>kind : ${listInfo.kind }</p>
 					<p>startNum : ${listInfo.startNum}</p>
 					<p>lastNum : ${listInfo.lastNum}</p>
 					<p>curBlock : ${listInfo.curBlock }</p>

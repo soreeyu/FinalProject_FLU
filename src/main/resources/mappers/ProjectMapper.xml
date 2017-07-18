@@ -30,7 +30,7 @@
     
     
   <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO"> 
-		select * from project order by projectNum asc
+		select * from project order by projectNum desc
 		
   	<!-- select * from 
 		(select rownum R, N.* from
