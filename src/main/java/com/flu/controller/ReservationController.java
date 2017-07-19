@@ -39,12 +39,13 @@ public class ReservationController {
 		System.out.println(reservationDTO.getName());
 		EachRoomDTO eachRoomDTO =  reservaionService.eachView(num);
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());
-		List<ReservationDTO> ar= reservaionService.reservedTime(reservationDTO);
-		String [] reserved = null;
+		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);
+		String [] reserved_time = null;
 		for(int i=0; i<ar.size();i++){
-			reserved = ar.get(i).getTime().split(",");
+			reserved_time = ar.get(i).getTime().split(",");
 		}
-		model.addAttribute("reserved", reserved);
+		model.addAttribute("reserved", ar);
+		model.addAttribute("reserved_time", reserved_time);
 		model.addAttribute("each", eachRoomDTO);
 		String [] access = meetRoomDTO.getTime().split(",");
 		model.addAttribute("access",access );

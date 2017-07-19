@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<c:import url="../../temp/bootstrap.jsp"/>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">$(function(){
@@ -51,8 +53,18 @@
     })
 })
 </script>
+<style type="text/css">
+section {
+	min-width : 1152px;
+	width : 60%;
+	margin : 0 auto;
+}
+</style>
 </head>
 <body>
+	<c:import url="../../temp/header.jsp"/>
+	
+	<section>
 	<h1>세부공간등록</h1>
 	<form action="eachInsert" method="post" enctype="multipart/form-data" id="frm">
 	<p>방 이름  <input type="text" name="name" class="eachRoomInfo"> </p>
@@ -67,7 +79,8 @@
 	<input type="hidden" name="snum" value="${num}">
 	<input type="button" id="savebutton" value="방 등록">
 	</form>
+	</section>
 	
-	
+	<c:import url="../../temp/footer.jsp"/>
 </body>
 </html>

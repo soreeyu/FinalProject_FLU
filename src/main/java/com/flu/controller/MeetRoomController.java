@@ -130,8 +130,9 @@ public class MeetRoomController {
 		System.out.println(num);
 		
 		MeetRoomDTO meetRoomDTO = (MeetRoomDTO) meetRoomServiceImpl.view(num);
-		
+		String [] time = meetRoomDTO.getTime().split(",");
 		model.addAttribute("dto", meetRoomDTO);
+		model.addAttribute("time", time);
 		
 	}
 	

@@ -30,7 +30,7 @@
         var check=0;
     	var index1=0;
     	var index2=0;
-    	var name = '${reserved.name}';
+    	var name=$("#reserved_name").val();
     	var snum = '${each.snum}';
         $("#datepicker").datepicker({
         	altField : "#day",
@@ -223,6 +223,9 @@ font-size:14px;
 	<section>
 	<h1>예약</h1>
 	<form action="reserveInsert" method="post" id="frm" name="frm_check">
+	<c:forEach items="${reserved}" var="r">
+	<input type="hidden" id="reserved_name" value="${r.name}">
+	</c:forEach>
 	<input type="hidden" name="name" value="${each.name}" id="name">
 	<input type="hidden" name="reserve_date" id="day" class="reserve_Info"> 
 	<input type="hidden" name="price" id="rprice">

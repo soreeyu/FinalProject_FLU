@@ -10,7 +10,7 @@
 <style type="text/css">
 section {
 	min-width : 1152px;
-	width : 70%;
+	width : 60%;
 	margin : 0 auto;
 	height: 1000px;
 	

@@ -82,27 +82,98 @@
 <style type="text/css">
 section {
 	min-width : 1152px;
-	width : 70%;
+	width : 60%;
 	margin : 0 auto;
 }
+p {
+	font-family: sans-serif;
+}
+#meetView_header {
+	margin-top: 50px;
+}
+
+#photo_wrap {
+	width: 40%;
+	height: 50%;
+}
+#photo_wrap > img{
+	width : 100%;
+	height : 500px;
+}
+#map_box_header{
+	background-color: white;
+	width: 480px;
+	height: 50px;
+	padding: 17px 15px;
+}
+#table {
+	width : 100%;
+	height: 30%;
+}
+
 </style>
 </head>
 <body>
 	<c:import url="../temp/header.jsp"/>
 	<section>
-		<h1>view</h1>
 		<input type="hidden" value="${dto.num}" id="snum">
-		<h2>업체 이름 : ${dto.name}</h2>
-		<input type="hidden" id="mak" value="${dto.name}">		
-		<h2>운영 시간 : ${dto.time}</h2>
-		<h2>업체 후무 : ${dto.holiday}</h2>
-		<h2>주소  : ${dto.addr_main}</h2>
+		<input type="hidden" id="mak" value="${dto.name}">
+		
+		<div id="meetView_header">
+		<p>${dto.name}</p>
+
+		<div id="photo_wrap">
+		<img alt="" src="${pageContext.request.contextPath}/resources/upload/${dto.fname}">	
+		</div>
+		</div>		
+		
+		
+		<div id="contents">
+		<p>공간 소개</p>
 		<div>
 			${dto.contents}
 		</div>
+		</div>
+		
+		
+		<div id="table">
+		<p>추가 정보</p>
+		<table >
+				<tr>
+					<td>
+						운영시간 | 오른 : ${time[0]}시 / 마감 : ${time[1]}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						정기휴무 | ${dto.holiday}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						주소  | ${dto.addr_main}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						홈페이지  | ${dto.homePage}
+					</td>
+				</tr>
+			
+		</table>	
+		</div>
+		
+		<div id="map_box">
+		<div id="map_box_header">
+		<h3>${dto.name}</h3>
+		${dto.addr_main}${dto.addr_detail}
+		</div>
 		<input type="hidden" id="address_main" value="${dto.addr_main}">
-		<div id="map" style="width:500px;height:400px;"></div>
-		<h2>홈페이지 : ${dto.homePage}</h2>
+		<div id="map" style="width:510px;height:400px;"></div>
+		</div>
+	
+		
+		<div id="eachRoomList">
 		<p>세부공간</p>
 		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>
 		<hr>
@@ -112,6 +183,7 @@ section {
 		</div>
 		<input type="button" id="reservation_btn" value="예약하기">
 		<hr>
+		</div>
 		<a href="meetDelete?num=${dto.num}">업체 삭제</a>
 		<a href="meetUpdate?num=${dto.num}">업체 수정</a>
 		</section>
