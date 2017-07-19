@@ -213,55 +213,21 @@ label{
 					<label><span>*</span>카테고리</label>
 					<div class="category-wrapper">
 						<div class="main-wrapper">
-								<select class="cate-select" id="category" name="category" required="required"
-									onchange="categoryChange()">
-									<option>카테고리</option>
-									<option class="main_opt" value="개발">개발</option>
-									<option class="main_opt" value="디자인">디자인</option>
+								<select class="cate-select" id="category" name="category" onChange="changeSelect(value)">
+									 <option>카테고리</option>
+									 <option class="main_opt" value="개발">개발</option>
+									 <option class="main_opt" value="디자인">디자인</option>
 								</select>
 							</div>
-							
-							
-					<div class="sub-wrapper" id="wrapper-first">
-						<select class="cate-select"  name="detailCategory">
-							<option>카테고리를 선택하세요</option>
-						</select>
-					</div>		
+
 					<div class="sub-wrapper" id="wrapper-program">
 						<div>
-						<select class="cate-select"  name="detailCategory" required="required" >
-							<option>개발 카테고리</option>
-							<option class="sub_opt" value="web">웹</option>
-							<option class="sub_opt" value="application">애플리케이션</option>
-							<option class="sub_opt" value="wordpress">워드프레스</option>
-							<option class="sub_opt" value="publishing">퍼블리싱</option>
-							<option class="sub_opt" value="software">일반 소프트웨어</option>
-							<option class="sub_opt" value="shoppingMall">쇼핑몰</option>
-							<option class="sub_opt" value="game">게임</option>
-							<option class="sub_opt" value="embedded">임베디드</option>
-							<option class="sub_opt" value="program_etc">기타</option>
+						<select  class="cate-select"  name="detailCategory">
+							 <option>카테고리를 선택하세요</option>
 						</select>
-						</div>		
-					</div>
-					<div class="sub-wrapper"  id="wrapper-design">
-						<div>
-						<select class="cate-select"  name="detailCategory" required="required">
-							<option>디자인 카테고리</option>
-							<option class="sub_opt" value="design_web">웹</option>
-							<option class="sub_opt" value="design_application">애플리케이션</option>
-							<option class="sub_opt" value="product">제품</option>
-							<option class="sub_opt" value="presentation">프레젠테이션</option>
-							<option class="sub_opt" value="printing">인쇄물</option>
-							<option class="sub_opt" value="shoppingMall"> 쇼핑몰</option>
-							<option class="sub_opt" value="logo">로고</option>
-							<option class="sub_opt" value="graphic">그래픽</option>
-							<option class="sub_opt" value="video">영상</option>
-							<option class="sub_opt" value="game">게임</option>
-							<option class="sub_opt" value="design_etc">기타</option>							
-						</select> 
-					</div>
+						</div>
 
-							</div>
+					</div>
 					<br>
 					<span id="detail">프로젝트를 선택해 주세요</span>
 					</div>
@@ -644,36 +610,25 @@ label{
 
 <script type="text/javascript">
 
+/* 옵션 처리하는 부분 */
 
-$("#wrapper-first").css("visibility", "visible");
-$("#wrapper-program").css("display", "none");
-$("#wrapper-design").css("display", "none");
+pArray = new Array("웹","애플리케이션", "워드프레스", "퍼블리싱", "일반소프트웨어", "쇼핑몰", "게임", "임베디드", "기타");
+dArray = new Array("웹","애플리케이션","제품","프레젠테이션","인쇄물","쇼핑몰","로고","그래픽","영상","게임","기타"); 
 
-function categoryChange() {
-	
-	var main_cate = $("#category").val();
-	alert(main_cate);
-	if(main_cate=="개발"){
-		alert("program");
-		$("#wrapper-first").css("display", "none");
-		$("#wrapper-program").css("display", "block");
-		$("#wrapper-program").css("visibility", "visible");
-		$("#wrapper-design").css("display", "none");
-	}
-	if(main_cate=="디자인"){
-		alert("design");
-		$("#wrapper-first").css("display", "none");
-		$("#wrapper-design").css("display", "block");
-		$("#wrapper-design").css("visibility", "visible");
-		$("#wrapper-program").css("display", "none");
-	}
-	if(main_cate=="카테고리"){
-		$("#wrapper-first").css("display", "block");
-		$("#wrapper-first").css("visibility", "visible");
-		$("#wrapper-program").css("display", "none");
-		$("#wrapper-design").css("display", "none");
-	}
-
+function changeSelect(value) {
+document.all.detailCategory.length=1;
+ if(value == "개발") {
+  for(i=0; i<pArray.length; i++) {
+   option = new Option(pArray[i]);
+   document.all.detailCategory.options[i+1] = option;
+  }
+ }
+ if(value == "디자인") {
+  for(i=0; i<dArray.length; i++) {
+   option = new Option(dArray[i]);
+   document.all.detailCategory.options[i+1] = option;
+  }
+ }
 }
 
 
