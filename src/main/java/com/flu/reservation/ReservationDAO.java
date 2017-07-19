@@ -58,7 +58,11 @@ public class ReservationDAO {
 		return sqlSession.selectOne(NAMESPACE+"Reserve_accessTime", snum);
 	}
 	//예약되어있는 시간 불러오기
-	public ReservationDTO reservedTime(ReservationDTO reservationDTO) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"Reserved_time", reservationDTO);
+	public List<ReservationDTO> reservedTime(ReservationDTO reservationDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"Reserved_time", reservationDTO);
+	}
+	//날짜와 방 이름가지고 시간 가져오기
+	public List<ReservationDTO> reservedTime2(ReservationDTO reservationDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"Reserved_time2", reservationDTO);
 	}
 }

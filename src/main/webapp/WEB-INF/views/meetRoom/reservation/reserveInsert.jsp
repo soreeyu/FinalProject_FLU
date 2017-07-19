@@ -27,10 +27,22 @@
     });
 
     $(function() {
+        var check=0;
+    	var index1=0;
+    	var index2=0;
+    	var name = '${reserved.name}';
+    	var snum = '${each.snum}';
         $("#datepicker").datepicker({
-        	onSelect : function(data){
-        		$("#day").val(data);
-        		
+        	altField : "#day",
+        	
+        	onSelect : function(data){    							//해당 페이지의 방 이름;
+        		$("#day").val(data);// 클릭한 날짜
+        		var reserve_date = $("#day").val();
+
+        		$.post("reservedTime", {reserve_date : reserve_date, name : name, snum:snum}, function(data) {
+					$("#reserve_time").html(data);
+				}) 
+        		//에이작스범위는 여기까지
         	}
         });
        
@@ -43,47 +55,69 @@
     	});     
         
         /* 전체 시간 뿌려주고 검은색 div는 버튼 클릭 비활성화 해준다. */
-        $(".time").each(function(index) {
+       /*  $(".time").each(function(index) {
         	var access1 = '${access[0]}';
         	var access2 = '${access[1]}';
         	if(index<access1*1 && index>access2*1){
         		
         	}
 			
-		});
-        	
-        
-        var check=0;
-    	var index1=0;
-    	var index2=0;
-     	$(".time").each(function(index){
-    		$(this).click(function(){
-    			if(check<2){
-    				check++;
-    				if(check==1){
-    					index1 = $(this).attr("title");			
-    					$(this).css("background-color", "red");
-    					
-    				}
-    				else if(check==2) {
-    					index2 = $(this).attr("title");
-    					$(this).css("background-color", "red");
-    					
-    					sel(index1,index2); 
-    					
-    				
-    				}
-    			}else {
-    				check=0;
-    				$(".time").css("background-color", "yellow");
-    			}
-    			
-    			
-    		});
-     			
-    	});
+		}); */  
+    		$(this).each(function(index){
+    			$("#reserve_time").on("click",".time", function() {
+	    		$(this).click(function(){
+	    			if(check<2){
+	    				check++;
+	    				if(check==1){
+	    					index1 = $(this).attr("title");			
+	    					$(this).css("background-color", "red");
+	    					
+	    				}
+	    				else if(check==2) {
+	    					index2 = $(this).attr("title");
+	    					$(this).css("background-color", "red");
+	    					
+	    					sel(index1,index2); 
+	    					
+	    				
+	    				}
+	    			}else {
+	    				check=0;
+	    				$(".time").css("background-color", "yellow");
+	    			}
+	    			
+	    			
+	    		});
+    			});	
+	    	});	
+	
+	     	$(".time").each(function(index){
+	    		$(this).click(function(){
+	    			if(check<2){
+	    				check++;
+	    				if(check==1){
+	    					index1 = $(this).attr("title");			
+	    					$(this).css("background-color", "red");
+	    					
+	    				}
+	    				else if(check==2) {
+	    					index2 = $(this).attr("title");
+	    					$(this).css("background-color", "red");
+	    					
+	    					sel(index1,index2); 
+	    					
+	    				
+	    				}
+	    			}else {
+	    				check=0;
+	    				$(".time").css("background-color", "yellow");
+	    			}
+	    			
+	    			
+	    		});
+	     			
+	    	});		
      	function sel(index1,index2){
-    		alert('함수안 index1='+index1+" index2="+index2);
     		$(".time").each(function(index){
     			if(index>=index1 && index<=index2){
     				$(this).css("background-color", "red");
@@ -91,9 +125,7 @@
     				$(this).css("background-color", "red");
     			}
     			
-    		});	
-    		
-    		
+    		});	  		
     		if(index1*1>index2*1){
     			alert("index1이 index2보다 큰 경우");
     			$("#in").val(index2);
@@ -225,17 +257,12 @@ font-size:14px;
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr id="result_reserved">
 				<c:forEach begin="0" end="24" var="i" step="1" varStatus="r">
 					<c:choose >
 						<c:when test="${access[0]<=r.index && access[1]>=r.index}" >
 							<td>
 								<div id="reserve${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: yellow; margin-left: 10px;" ></div>
-							</td>							
-						</c:when>
-						<c:when test="${reserved[0]<=r.index && reserved[1]>=r.index}" >
-							<td>
-								<div id="reserve${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: black; margin-left: 10px;" ></div>
 							</td>							
 						</c:when>
 						<c:otherwise>

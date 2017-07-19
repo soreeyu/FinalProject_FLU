@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	
 	<c:forEach items="${each}" var="E">
-		<input  type="radio" name="eachRoom" value="${E.num}" id="eachRoom_${E.num}" class="eachRoom_class" checked="checked">
+		<input  type="radio" name="eachRoom" value="${E.num}" id="eachRoom_${E.num}" class="eachRoom_class" >
+		<input type="hidden" id="eachRoom_name${E.num}" value="${E.name}"> 
 		<p>방이름 : ${E.name}</p>
 		<p>세부내용 : ${E.contents}</p>
 		<p>예약가능시간 : ${E.time}</p>

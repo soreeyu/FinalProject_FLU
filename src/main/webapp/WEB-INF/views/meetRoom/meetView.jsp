@@ -64,11 +64,12 @@
 			var reservation_num = $("#eachRoom_num").val();
 			var meetroom_num = $("#snum").val();
 			var reservation_check  = $("input:radio[name='eachRoom']:checked").val();
-			
+			var eachroom_name = $("input:hidden[id='eachRoom_name"+reservation_check+"']").val();
 			if(reservation_check == undefined){
 				alert("세부 공간을 선택해주세요");
 			}else {
-				location.href="reservation/reserveInsert?num="+reservation_num+"&snum="+meetroom_num;
+				alert(eachroom_name);
+				location.href="reservation/reserveInsert?num="+reservation_num+"&snum="+meetroom_num+"&name="+eachroom_name; 
 			}
 			
 			
@@ -107,6 +108,7 @@ section {
 		<hr>
 		<h2>세부공간 리스트</h2>
 		<div id="eachRoom">
+		
 		</div>
 		<input type="button" id="reservation_btn" value="예약하기">
 		<hr>

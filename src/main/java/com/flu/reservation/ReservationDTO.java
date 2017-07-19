@@ -6,7 +6,7 @@ public class ReservationDTO {
 	
 	private String name;
 	private String time;
-	private Date reserve_date;
+	private String reserve_date;
 	private String reserve_name;
 	private Integer price;
 	private Integer human;
@@ -32,10 +32,10 @@ public class ReservationDTO {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public Date getReserve_date() {
+	public String getReserve_date() {
 		return reserve_date;
 	}
-	public void setReserve_date(Date reserve_date) {
+	public void setReserve_date(String reserve_date) {
 		this.reserve_date = reserve_date;
 	}
 	public String getReserve_name() {
