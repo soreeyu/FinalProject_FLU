@@ -34,17 +34,21 @@ public class ProjectController {
 	public String projectList(Model model, ListInfo listInfo){
 		
 	
-		List<ProjectDTO> ar = projectService.projectList(listInfo);
-		
 		int totalCount = projectService.projectCount(listInfo);
 		listInfo.makePage(totalCount);
-		int pjcount = projectService.projectCount(listInfo);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = projectService.projectList(listInfo);
+		
+		System.out.println("start="+listInfo.getStartRow());
+		System.out.println("last="+listInfo.getLastRow());
+		System.out.println("ar="+ar.get(0).getName());
+		System.out.println("dd="+ar.get(0));
 		
 	
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
-		model.addAttribute("pjcount", pjcount);
+		model.addAttribute("pjcount", totalCount);
 		model.addAttribute("listInfo", listInfo);
 		
 		

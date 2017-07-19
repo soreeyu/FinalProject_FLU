@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <title>Insert title here</title>
@@ -62,10 +62,9 @@
 
 .contents_main {
 	width: 900px;
-	height: 1000px;
+	height: 2100px;
 	display: block;
 	float: right;
-	padding: 30px;
 	background-color: white;
 }
 .project-sort-box{
@@ -182,7 +181,7 @@
 	background-color: #ffffff;
 }
 .dropdown-selecter{
-	background-color: blue;
+background-color: white;
 	margin-left:60px;
 	height: 200px;
 	width: 130px;
@@ -295,13 +294,7 @@
 				var num = $(this).prop("id");
 				alert(num);
 				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}";
-							//form을 사용하는 방법
-							/* document.frm.curPage.value=$(this).attr("id");
-							document.frm.search.value='${listInfo.search}';
-							document.frm.kind.value='${listInfo.kind}';
-							document.frm.submit; */
-							//
-							//location을 이용하는 방법
+						
 						});
 		$("#nextview").click(function() {
 			alert("nextview")
@@ -355,13 +348,10 @@
 
 
 					<input type="hidden" name="curPage"> 
-					<select name="kind">
-						<option value="title">TITLE</option>
-						<option value="writer">WRITER</option>
-						<option value="contents">CONTENTS</option>
-					</select> 
+					
+					<input type="hidden" name="kind" value="total">
 					<input type="text" name="search"> <input type="submit" value="SEARCH">
-					<input type="button" id="test" value="test">
+
 				</form>
 				</div>
 			</div>
@@ -373,14 +363,15 @@
 		<!-- 프로젝트 찾기처리  -->
 		<section class="contents_sub">
 			<div class="project-sort-box">
+			
 				<div class="project-sort-text">프로젝트 정렬</div>
 				<div class="left-sort-box">
-					<div class="sort-button">금액 높은 순</div>
-					<div class="sort-button">금액 낮은 순</div>
+					<div class="sort-button" id="by-price-desc">금액 높은 순</div>
+					<div class="sort-button" id="by-price-asc">금액 낮은 순</div>
 				</div>
 				<div class="right-sort-box">
-					<div class="sort-button">최신 등록 순</div>
-					<div class="sort-button">마감 임박 순</div>
+					<div class="sort-button" id="by-date-curr">최신 등록 순</div>
+					<div class="sort-button" id="by-date-finish">마감 임박 순</div>
 				</div>
 			</div>
 			<div class="clean"></div>
@@ -392,43 +383,43 @@
 					
 					<!-- 클릭시 trigger 적용하자 -->
 						<div class="cate-skipper">
-							<input id="dev" class="cate-chk" name="category" type="checkbox">
+							<input id="dev" class="cate-chk" name="category" type="checkbox" onclick="devClick()">
 							<label for="dev" class="cate-label">개발</label>
 							<ul class="cate-list">
 								<li>
-									<input id="dev-1" name="detailCategory" type="checkbox">
+									<input id="dev-1" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">웹</label>
 								</li>
 								<li>
-									<input id="dev-2" name="detailCategory" type="checkbox">
+									<input id="dev-2" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">애플리케이션</label>
 								</li>
 								<li>
-									<input id="dev-3" name="detailCategory" type="checkbox">
+									<input id="dev-3" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">워드프레스</label>
 								</li>
 								<li>
-									<input id="dev-4" name="detailCategory" type="checkbox">
+									<input id="dev-4" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">퍼블리싱</label>
 								</li>
 								<li>
-									<input id="dev-5" name="detailCategory" type="checkbox">
+									<input id="dev-5" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">일반 소프트웨어</label>
 								</li>
 								<li>
-									<input id="dev-6" name="detailCategory" type="checkbox">
+									<input id="dev-6" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">커머스, 쇼핑몰</label>
 								</li>
 								<li>
-									<input id="dev-7" name="detailCategory" type="checkbox">
+									<input id="dev-7" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">게임</label>
 								</li>
 								<li>
-									<input id="dev-8" name="detailCategory" type="checkbox">
+									<input id="dev-8" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">임베디드</label>
 								</li>
 								<li>
-									<input id="dev-9" name="detailCategory" type="checkbox">
+									<input id="dev-9" name="detailCategory" class="dev-chk" type="checkbox">
 									<label class="cate-label">기타</label>
 								</li>
 							</ul>
@@ -591,8 +582,9 @@
 			<section class="contents_main">
 			
 			
+			
 		<!-- 프로젝트 각각 -->	
-			<c:forEach items="${list}" var="dto">
+			<c:forEach items="${list}"  var="dto">
 			
 				<div class="project-unit">
 					<div class="project-head">
@@ -659,8 +651,11 @@
 					<p>kind : ${listInfo.kind }</p>
 					<p>startNum : ${listInfo.startNum}</p>
 					<p>lastNum : ${listInfo.lastNum}</p>
+					<p>startRow : ${listInfo.startRow}</p>
+					<p>lastRow : ${listInfo.lastRow}</p>
 					<p>curBlock : ${listInfo.curBlock }</p>
 					<p>perPage : ${listInfo.perPage}</p>
+
 				</div>
 
 
@@ -668,6 +663,64 @@
 		</div>
 	</section>
 <script type="text/javascript">
+
+var devCheck = $("input[class='dev-chk']:checked").length;
+
+
+
+function devClick() {
+	
+	alert("g");	
+	alert($(".dev-chk").length);
+	
+	alert(devCheck);
+	if(($(".dev-chk").length)==devCheck){
+		alert("같은갯수");
+		$(".dev-chk").prop("checked", false);
+	}else{
+		$(".dev-chk").prop("checked", true);
+	}
+	
+}
+/* $(".dev-chk").click(function() {
+	
+	if(($(".dev-chk").length)==devCheck){
+		$("#dev").prop("checked", true);
+	}
+}); */
+
+
+
+
+$("#by-price-desc").click(function() {
+	alert("금액높은순"); 
+	
+	
+	
+	/* alert($("#dev").attr("data-on"));
+	if(($("#dev").attr("data-on"))=="off"){
+		$("#dev").attr("data-on", "on");
+		$("#dev").attr("checked", "checked");
+		alert($("#dev").attr("checked"));
+	}else{
+		$("#dev").attr("data-on", "off");
+		$("#dev").removeAttr("checked");
+		alert($("#dev").attr("checked"));
+	} */
+	
+});
+$("#by-price-asc").click(function() {
+	alert("금액낮은순");
+});
+$("#by-date-curr").click(function() {
+	alert("최신등록순");
+});
+$("#by-date-finish").click(function() {
+	alert("마감임박순");
+});
+
+
+/* 왼쪽 주소체크박스 */
 $(".address-select-btn").click(function() {
 	alert("btn");
 	if($(".address-select-btn").attr("data-on")=="off"){
@@ -677,7 +730,7 @@ $(".address-select-btn").click(function() {
 		$("#addr_list").css("visibility", "hidden");
 		$(".address-select-btn").attr("data-on", "off");
 	}
-	});
+});
 
 </script>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>

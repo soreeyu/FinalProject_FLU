@@ -188,11 +188,11 @@ label{
 		<div class="contents">
 			<section class="contents_main">
 				<c:if test="${type eq 'write'}">
-					<form action="projectWrite" method="post" id="frm" enctype="multipart/form-data">
+					<form action="projectWrite" method="post" id="frm" name="frm" enctype="multipart/form-data">
 				</c:if>
 				
 				<c:if test="${type eq 'update'}">
-					<form action="projectUpdate" method="post" id="frm" enctype="multipart/form-data">
+					<form action="projectUpdate" method="post" id="frm" name="frm" enctype="multipart/form-data">
 						<input type="hidden" name="projectNum" value="${dto.projectNum}">
 				</c:if>
 				
@@ -213,7 +213,7 @@ label{
 					<label><span>*</span>카테고리</label>
 					<div class="category-wrapper">
 						<div class="main-wrapper">
-								<select class="cate-select" id="category" name="category" onChange="changeSelect(value)">
+								<select class="cate-select" id="category" name="category" onChange="changeSelect(value)" required="required">
 									 <option>카테고리</option>
 									 <option class="main_opt" value="개발">개발</option>
 									 <option class="main_opt" value="디자인">디자인</option>
@@ -222,8 +222,8 @@ label{
 
 					<div class="sub-wrapper" id="wrapper-program">
 						<div>
-						<select  class="cate-select"  name="detailCategory">
-							 <option>카테고리를 선택하세요</option>
+						<select  class="cate-select"  name="detailCategory" required="required">
+							 <option class="sub_opt">카테고리를 선택하세요</option>
 						</select>
 						</div>
 
@@ -238,7 +238,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 제목</label>
 					<div class="category-wrapper">
-						<input type="text" name="name" style="width: 100%;">
+						<input id="name" type="text" name="name" style="width: 100%;">
 					<span id="detail">프로젝트 이름을 선택해 주세요</span>
 					</div>
 				</div>
@@ -246,7 +246,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>예상 기간</label>
 					<div class="category-wrapper">
-						<input type="text" name="period">일
+						<input id="period" type="text" name="period">일
 						<span id="detail">프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
 					</div>
 				</div>
@@ -254,7 +254,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>지출 가능 예산</label>
 					<div class="category-wrapper">
-						<input type="number" name="budget">원
+						<input id="budget" type="number" name="budget">원
 						<span id="detail">지출 가능한 예산을 입력해 주세요. ( 부가세 별도, 예 : 1,000,000)</span>
 					</div>
 				</div>
@@ -264,21 +264,21 @@ label{
 					<div>
 						<div class="plan-radio">
 						<div id="plan-radio1">
-							<input class="radio-text" type="radio" name="planState" value="idea">
+							<input class="radio-text planState" type="radio" name="planState" value="idea">
 							아이디어만 있습니다. 							
 						</div>
 						</div>
 						
 						<div class="plan-radio">
 						<div id="plan-radio2">
-							<input class="radio-text" type="radio" name="planState" value="simple">
+							<input class="radio-text planState" type="radio" name="planState" value="simple">
 							필요한 내용들을 <br> 간단히 정리해두었습니다. 							
 						</div>
 						</div>
 						
 						<div class="plan-radio">
 						<div id="plan-radio3">
-							<input class="radio-text" type="radio" name="planState" value="detail">
+							<input class="radio-text planState" type="radio" name="planState" value="detail">
 							상세한 기획문서가 <br> 존재합니다.						
 						</div>
 						</div>
@@ -289,7 +289,7 @@ label{
 				<div>
 					<label><span>*</span>프로젝트 내용</label>
 					<div>
-						<textarea rows="30" cols="80" name="contents"></textarea>
+						<textarea rows="30" cols="80" name="contents" ></textarea>
 					</div>
 				</div>
 				
@@ -536,7 +536,7 @@ label{
 				<div class="control-wrapper" style="margin-top: 20px;">
 					<label><span>*</span>기획 관련 파일</label>
 					<div class="category-wrapper">
-						<input type="file" name="fileName">
+						<input type="file" name="fileName" >
 						<span id="detail">프로젝트 등록시 참고문서가 될 수 있습니다.</span>
 					</div>
 				</div>
@@ -552,7 +552,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>사전 미팅</label>
 					<div class="category-wrapper">
-						<select name="meetKind">
+						<select name="meetKind" required="required">
 							<option value="offline">오프라인</option>
 							<option value="online">온라인</option>
 						</select>
@@ -564,15 +564,15 @@ label{
 					<div class="category-wrapper">
 						<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="addr_main" id="sample6_address" placeholder="주소">
-						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소">
+						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required">
+						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required">
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br> 예상 시작일</label>
 					<div class="category-wrapper">
-						<input type="date" name="startDate">
+						<input type="date" name="startDate" required="required">
 					</div>
 				</div>
 
@@ -596,7 +596,7 @@ label{
 
 
 				
-				<button class="btn btn-default" type="submit">등록</button> 
+				<input type="button" class="btn btn-default" onclick="check_submit()" value="등록">
 				</form>
 			</section>
 			<section class="contents_sub">
@@ -609,6 +609,47 @@ label{
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
+alert("type == ${type}");
+
+
+ function check_submit() {
+	
+	alert("btn");
+	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
+		alert("옵션 선택좀");
+	}else if(document.frm.name.value==""){
+		alert("제목을 입력하세요");
+	}else if(document.frm.period.value==""){
+		alert("기간을 입력하세요");
+	}else if(document.frm.budget.value==""){
+		alert("예상금액을 입력하세요");
+	}else if(document.frm.planState.value==""){
+		alert("기획상태를 입력하세요");
+	}else if(document.frm.contents.value==""){
+		alert("내용을 입력하세요");
+	}/* else if(document.frm.skill.value==""){
+		alert("skill을 입력하세요");
+	} */
+	else if(document.frm.fileName.value==""){
+		alert("File을 선택해주세요");
+	}else if(document.frm.finishDate.value==""){
+		alert("마감일을 선택해주세요");
+	}else if(document.frm.addr_main.value==""){
+		alert("주소를 입력해주세요");
+	}else if(document.frm.startDate.value==""){
+		alert("시작일을 선택해주세요");
+	}else if(document.frm.exp.value==""){
+		alert("매니징 경험을 선택해주세요");
+	}else if(document.frm.quick.value==""){
+		alert("급구 여부를 선택해주세요");
+	}else{
+		document.frm.submit();
+	}
+}
+
+
+
+
 
 /* 옵션 처리하는 부분 */
 
