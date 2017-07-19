@@ -29,8 +29,6 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
 
 
-
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
@@ -155,11 +153,11 @@ var partsJsonArray = new Array();
 
 	    
 		
-		
+	   
 	    
 		
 		
-		
+	   
 		
 	}); // $(function)끝
 
@@ -172,7 +170,7 @@ var partsJsonArray = new Array();
 			type: "GET",
 			async:false,
 			success:function(data){
-				//alert(data);
+				//alert(data); 
 				var i=0;
 				
 				var result="<table>";
@@ -191,11 +189,11 @@ var partsJsonArray = new Array();
 					partsJson.start =  this.partStartDate; 
 					partsJson.end =  this.partFinishDate; 
 					partsJson.description =  this.partDescFileO; 
-					alert(JSON.stringify(partsJson));
+					//alert(JSON.stringify(partsJson));
 					partsJson.color =  'blue'; 
 					partsJson.textColor =  'white'; 
 					partsJsonArray.push(partsJson);
-					alert(JSON.stringify(partsJsonArray));
+					//alert(JSON.stringify(partsJsonArray));
 					
 				});
 				result = result + "</table>";
@@ -204,6 +202,7 @@ var partsJsonArray = new Array();
 				
 				
 				$("#partsDiv").html(result);
+				partsJSONArray = data;
 				
 				/* 
 				 for(var i=0; i<Object.keys(partsJsonArray).length; i++){
@@ -218,8 +217,9 @@ var partsJsonArray = new Array();
 				        }]);
 				        console.log('ok');
 				    } 
-				*/
+				*//* 
 				for(var i=0; i<Object.keys(data).length; i++){
+					alert('일정추가되고있는가'+i);
 			        $('#schcalendar').fullCalendar('addEventSource', [{
 			            id:          data[i].scheduleNum+data[i].partName+data[i].partNum,
 			            title:       data[i].partName,
@@ -231,12 +231,30 @@ var partsJsonArray = new Array();
 			            url: 'https://www.github.com'
 			        }]);
 			        console.log('ok');
-			    } 
+			    }  */
 			}
 		});
 		
 		
 		
+	} // getPartList() 끝
+	
+	
+	function addEvents(jsonObj){
+		for(var i=0; i<Object.keys(jsonObj).length; i++){
+			alert('일정추가되고있는가'+i);
+	        $('#schcalendar').fullCalendar('addEventSource', [{
+	            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
+	            title:       jsonObj[i].partName,
+	            start:       jsonObj[i].partStartDate,
+	            end:         jsonObj[i].partFinishDate,
+	            //description: partsJsonArray[i].description, 
+	            color:       'orange',
+	            textColor:   'white',
+	            url: 'https://www.github.com'
+	        }]);
+	        console.log('ok');
+	    } 
 	}
 	
 </script>

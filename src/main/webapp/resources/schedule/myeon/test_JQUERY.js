@@ -17,9 +17,9 @@ $(function(){
 		var endtime = $('#endtime').val();
 		var email = $('.email').val();
 		var partName = $('.partName').val();
-		var formData = new FormData();
+		//var formData = new FormData();
 		 //첫번째 파일태그
-		formData.append("schedulefile",$("input[name=schedulefile]")[0].files[0]);
+		//formData.append("schedulefile",$("input[name=schedulefile]")[0].files[0]);
 		alert(title+contents+starttime+endtime+email+partName);
 		//빈칸 등록해야함
 		if(trim(title) == '' || trim(title) == '<p>&nbsp;</p>'){
@@ -75,7 +75,7 @@ $(function(){
 					unitFinishDate:endtimeStr,
 					email:email,
 					partName:partName,
-					schedulefile:formData
+					//schedulefile:formData
 					
 				},
 				
@@ -176,11 +176,16 @@ $(function(){
 	    }
 	});
 	
-	getPartList(66);
+	
     $('#schcalendar').fullCalendar('addEventSource',[{
         id: '젠장젠장',
         title: '제발좀 되라',
         start: new Date('2017-07-30'),
         end: new Date('2017-08-12')
     }]);
+    
+    
+    getPartList(41);
+    addEvents(partsJSONArray);
+    
 });

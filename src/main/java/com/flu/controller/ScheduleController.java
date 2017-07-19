@@ -126,7 +126,7 @@ public class ScheduleController {
 		
 
 		
-		
+		//json으로 넘어감 //jaskson api
 		//저장된 partList 가져오기 //세부사항 등록시 필요
 		@ResponseBody
 		@RequestMapping(value="partList",method=RequestMethod.GET)
