@@ -232,3 +232,16 @@ function contentsDelete(seq){
 		});
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

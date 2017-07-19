@@ -82,7 +82,7 @@ public class ScheduleDAO {
 	
 	//세부항목
 	public int insertUnit(ScheduleUnitDTO scheduleUnitDTO){
-		return 0;
+		return sqlSession.insert(NAMESPACE+"addUnit", scheduleUnitDTO); 
 	}
 	
 	public int updateUnit(ScheduleUnitDTO scheduleUnitDTO){
@@ -106,6 +106,19 @@ public class ScheduleDAO {
 	public void uploadResult(String file,String contents){ //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
 		
 	}  
+	
+	
+	
+	//우선 안씀
+	public int getProjectNum(int scheduleNum){
+		return sqlSession.selectOne(NAMESPACE+"getPNum", scheduleNum);
+	}
+	
+	
+	//해당 스케줄에(프로젝트에) 참여중이 applicant 의 state가 'ing' 인 프리랜서들의 이메일, 이름, 닉네임을 가져옴
+	public List<MemberDTO> userList(int scheduleNum){
+		return sqlSession.selectList(NAMESPACE+"listUser", scheduleNum);
+	}
 	
 	
 	

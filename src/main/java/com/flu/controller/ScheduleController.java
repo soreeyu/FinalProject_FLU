@@ -1,6 +1,8 @@
 package com.flu.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.flu.file.FileService;
+import com.flu.member.MemberDTO;
 import com.flu.schedule.ScheduleService;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
@@ -60,7 +63,7 @@ public class ScheduleController {
 		
 		
 		
-		
+		/////////////////////////////////////////////
 		
 		
 		
@@ -130,7 +133,7 @@ public class ScheduleController {
 		//저장된 partList 가져오기 //세부사항 등록시 필요
 		@ResponseBody
 		@RequestMapping(value="partList",method=RequestMethod.GET)
-		public List<SchedulePartDTO> partList(int scheduleNum, Model model){
+		public List<SchedulePartDTO> partList(Integer scheduleNum, Model model){
 		//public String partList(int scheduleNum, Model model){
 			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
 			System.out.println("컨트롤러 에서 part리스트"+partList);
@@ -175,8 +178,13 @@ public class ScheduleController {
 		
 		
 		//할일 리스트 뿌려주기 
-		public void unitList(int scheduleNum){ 
-			//List<ScheduleUnitDTO>
+		@ResponseBody
+		@RequestMapping(value="unitList", method=RequestMethod.POST)
+		public List<ScheduleUnitDTO> unitList(SchedulePartDTO schedulePartDTO,String email){ 
+			System.out.println("schduleNum_partNum "+schedulePartDTO.getScheduleNum()+schedulePartDTO.getPartNum());
+			System.out.println("email "+email);
+			List<ScheduleUnitDTO> list = null;
+			return list;
 		}
 		
 		public void unitOne(){}
@@ -189,15 +197,28 @@ public class ScheduleController {
 		}
 		*/
 		
-		//@ResponseBody //이건 리턴을 json으로 해주는애임
+		@ResponseBody //이건 리턴을 json으로 해주는애임
 		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
-		public String unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model){
-			System.out.println("scheduleUnit "+scheduleUnitDTO.getUnitName());
+		public Map<String, Object> unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model){
+			System.out.println("scheduleUnit scheduleNum "+scheduleUnitDTO.getScheduleNum());
+			System.out.println("scheduleUnit unitname "+scheduleUnitDTO.getUnitName());
+			System.out.println("scheduleUnit username"+scheduleUnitDTO.getEmail());
+			System.out.println("scheduleUnit partname"+scheduleUnitDTO.getPartName());
 			System.out.println("unit 등록하러옴 내용가지고");
-			System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
+			//System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
+			
+			int result = scheduleService.insertUnit(scheduleUnitDTO);
+			if(result > 0){
+				
+			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("result", result);
+			return map;
+			/*
 			model.addAttribute("message", "힘들다");
 			model.addAttribute("path", "/flu/schedule/main");
 			return "common/result";
+			*/
 		}
 		
 		
@@ -214,8 +235,12 @@ public class ScheduleController {
 		
 
 		//참여하고 있는 프리랜서 목록 가져오기 
-		public void userList(int projectNum){ //재식친구의 DTO 리스트
-			//List<MemberDTO> 
+		@ResponseBody
+		@RequestMapping(value="userList", method=RequestMethod.GET)
+		public List<MemberDTO> userList(Integer scheduleNum){ 
+			List<MemberDTO> list = scheduleService.userList(scheduleNum);
+			System.out.println("해당 스케줄의 사용자들 데려오기");
+			return list;
 		} 
 
 		public void userOne(){}

@@ -20,12 +20,13 @@ jui.ready(function(ui, uix, _) {
 	
 	modal = ui.modal("#modal", {
 		color: "black",
+		opacity: 0.5,
 		target: ".main_section"
 	});
 	
 	
 	writeModal = ui.modal("#writeModal", {
-		color: "black",
+		color: "white",
 		target: ".main_section"
 	});
 	
@@ -35,6 +36,7 @@ jui.ready(function(ui, uix, _) {
 	    event: {
 	       select: function(date, e) {
 	    	   //refrashRow(scheduleArticle,{url: '/flu/home/scheduleArticle.do', param:{page : 1, today : date}});
+	    	   //alert(date);
 	       },
 	       prev: function(e) {
 	       },
@@ -48,6 +50,7 @@ jui.ready(function(ui, uix, _) {
 	    format: "yyyy/MM/dd",
 	    event: {
 	       select: function(date, e) {
+	    	   
 	    	   if(spicker.getTime() > epicker.getTime()){
 					var sdate = new Date(spicker.getTime());
 		    		epicker.select(sdate.getFullYear(),sdate.getMonth()+1,sdate.getDate());

@@ -121,142 +121,182 @@ div{
 
 <script type="text/javascript">
 	
-var partsJson = new Object();
-var partsJsonArray = new Array(); 
+//var partsJson = new Object();
+//var partsJsonArray = new Array(); 
 
-	$(document).ready(function() {
-		
-		/* 		
-	    $('#schcalendar').fullCalendar({
-	    	
-	    
-		    dayClick: function(date) {
 
-    	        alert('a day has been clicked!');
-				scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
-				$('#title').val(scheduleParam.title);
-				$('#contents').val(scheduleParam.contents);
-				spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-				epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-				$('#etcYn').attr('checked',false);
-				writeModal.show();
-				//editorInit('contents');
-		    }
-	    
-		}); //fullCal
-		 */
-	    
-	    $("#addUnitBtn").click(function(){
-	    	alert("할일 등록하기");
-	    	location.href = "./testUnit";
-	    });
 
-	    
-		
-	   
-	    
-		
-		
-	   
-		
-	}); // $(function)끝
+/**
+ * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
+ */
+function getPartList(scheduleNum){
 
+	var partsJson = new Object();
+	var partsJsonArray = new Array();
 	
-	function getPartList(scheduleNum){
+	$.ajax({
+		url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
+		type: "GET",
+		async:false,
+		success:function(data){ //json 넘어옴 
+			//alert(data); 
+			//var i=0;
+			
+			var result="<table>";
+			$(data).each(function(){
+				result = result + "<tr>";
+				result = result + '<td class="schNum">'+ this.scheduleNum + "</td>";
+				result = result + '<td class="partNum">'+ this.partNum + "</td>";
+				result = result + "<td> "+ this.partName + " </td>";
+				result = result + "<td> "+ this.partStartDate + " </td>";
+				result = result + "<td> "+ this.partFinishDate + " </td>";
+				result = result + "<td> "+ this.partNum + " </td>";
+				result = result + "<td> "+ this.partDescFileO + " </td>";
+				result = result + "</tr>";
+				
+				partsJson = new Object();
+				partsJson.id = this.scheduleNum+this.partName+this.partNum;
+				partsJson.title = this.partName;
+				partsJson.start =  this.partStartDate; 
+				partsJson.end =  this.partFinishDate; 
+				partsJson.description =  this.partDescFileO; 
+				//alert(JSON.stringify(partsJson));
+				partsJson.color =  'blue'; 
+				partsJson.textColor =  'white'; 
+				partsJsonArray.push(partsJson);
+				//alert(JSON.stringify(partsJsonArray));
+				
+			});
+			result = result + "</table>";
+			//alert(JSON.stringify(partsJSONArray));
 
-		
-		$.ajax({
-			url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
-			type: "GET",
-			async:false,
-			success:function(data){
-				//alert(data); 
-				var i=0;
-				
-				var result="<table>";
-				$(data).each(function(){
-					result = result + "<tr>";
-					result = result + "<td>"+ this.partName + "</td>";
-					result = result + "<td>"+ this.partStartDate + "</td>";
-					result = result + "<td>"+ this.partFinishDate + "</td>";
-					result = result + "<td>"+ this.partNum + "</td>";
-					result = result + "<td>"+ this.partDescFileO + "</td>";
-					result = result + "</tr>";
-					
-					partsJson = new Object();
-					partsJson.id = this.scheduleNum+this.partName+this.partNum;
-					partsJson.title = this.partName;
-					partsJson.start =  this.partStartDate; 
-					partsJson.end =  this.partFinishDate; 
-					partsJson.description =  this.partDescFileO; 
-					//alert(JSON.stringify(partsJson));
-					partsJson.color =  'blue'; 
-					partsJson.textColor =  'white'; 
-					partsJsonArray.push(partsJson);
-					//alert(JSON.stringify(partsJsonArray));
-					
-				});
-				result = result + "</table>";
-				//alert(JSON.stringify(partsJSONArray));
-
-				
-				
-				$("#partsDiv").html(result);
-				partsJSONArray = data;
-				
-				/* 
-				 for(var i=0; i<Object.keys(partsJsonArray).length; i++){
-				        $('#schcalendar').fullCalendar('addEventSource', [{
-				            id:          partsJsonArray[i].id,
-				            title:       partsJsonArray[i].title,
-				            start:       partsJsonArray[i].start,
-				            end:         partsJsonArray[i].end,
-				            //description: partsJsonArray[i].description, 
-				            color:       partsJsonArray[i].color,
-				            textColor:   partsJsonArray[i].textColor
-				        }]);
-				        console.log('ok');
-				    } 
-				*//* 
-				for(var i=0; i<Object.keys(data).length; i++){
-					alert('일정추가되고있는가'+i);
+			
+			
+			$("#partsDiv").html(result); //화면에 뿌려주기
+			partsJSONArray = data;
+			
+			/* 
+			 for(var i=0; i<Object.keys(partsJsonArray).length; i++){
 			        $('#schcalendar').fullCalendar('addEventSource', [{
-			            id:          data[i].scheduleNum+data[i].partName+data[i].partNum,
-			            title:       data[i].partName,
-			            start:       data[i].partStartDate,
-			            end:         data[i].partFinishDate,
+			            id:          partsJsonArray[i].id,
+			            title:       partsJsonArray[i].title,
+			            start:       partsJsonArray[i].start,
+			            end:         partsJsonArray[i].end,
 			            //description: partsJsonArray[i].description, 
-			            color:       'orange',
-			            textColor:   'white',
-			            url: 'https://www.github.com'
+			            color:       partsJsonArray[i].color,
+			            textColor:   partsJsonArray[i].textColor
 			        }]);
 			        console.log('ok');
-			    }  */
-			}
-		});
-		
-		
-		
-	} // getPartList() 끝
+			    } 
+			*//* 
+			for(var i=0; i<Object.keys(data).length; i++){
+				alert('일정추가되고있는가'+i);
+		        $('#schcalendar').fullCalendar('addEventSource', [{
+		            id:          data[i].scheduleNum+data[i].partName+data[i].partNum,
+		            title:       data[i].partName,
+		            start:       data[i].partStartDate,
+		            end:         data[i].partFinishDate,
+		            //description: partsJsonArray[i].description, 
+		            color:       'orange',
+		            textColor:   'white',
+		            url: 'https://www.github.com'
+		        }]);
+		        console.log('ok');
+		    }  */
+		    
+			return partsJSONArray;
+		}
+	});
 	
 	
-	function addEvents(jsonObj){
-		for(var i=0; i<Object.keys(jsonObj).length; i++){
-			alert('일정추가되고있는가'+i);
-	        $('#schcalendar').fullCalendar('addEventSource', [{
-	            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
-	            title:       jsonObj[i].partName,
-	            start:       jsonObj[i].partStartDate,
-	            end:         jsonObj[i].partFinishDate,
-	            //description: partsJsonArray[i].description, 
-	            color:       'orange',
-	            textColor:   'white',
-	            url: 'https://www.github.com'
-	        }]);
-	        console.log('ok');
-	    } 
-	}
 	
+} // getPartList() 끝
+
+
+function getUserList(scheduleNum){
+	
+	$.ajax({
+		url: "/flu/schedule/userList?scheduleNum="+scheduleNum,
+		type: "GET",
+		success: function(data){
+			//alert(JSON.stringify(data));
+			
+			var result="<table>";
+			$(data).each(function(){
+				result = result + "<tr>";
+				result = result + "<td> "+ this.email + " </td>";
+				result = result + "<td> "+ this.kind + " </td>";
+				result = result + "<td> "+ this.name+"("+this.nickName+")" + " </td>";
+				result = result + "</tr>";				
+			});
+			result = result + "</table>";
+
+			$("#usersDiv").html(result); //화면에 뿌려주기
+		}
+		
+	});
+	
+}
+
+
+function getUnitList(scheduleNum,partNum,email){
+	
+	$.ajax({
+		url: "/flu/schedule/unitList",
+		type: "POST",
+		data: {
+			scheduleNum:scheduleNum,
+			partNum:partNum,
+			email:email
+		},
+		success: function(data){
+			//alert(JSON.stringify(data));
+			
+			var result="<table>";
+			$(data).each(function(){
+				result = result + "<tr>";
+				result = result + "<td> "+  " </td>";
+				result = result + "<td> "+  " </td>";
+				result = result + "<td> "+  " </td>";
+				result = result + "</tr>";				
+			});
+			result = result + "</table>";
+
+			$("#unitsDiv").html(result); //화면에 뿌려주기
+		}
+		
+	});
+	
+}
+
+
+
+
+
+
+/**
+ * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 
+ */
+function addEvents(jsonObj){
+	for(var i=0; i<Object.keys(jsonObj).length; i++){
+		//alert('일정추가되고있는가'+i);
+        $('#schcalendar').fullCalendar('addEventSource', [{
+            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
+            title:       jsonObj[i].partName,
+            start:       jsonObj[i].partStartDate,
+            end:         jsonObj[i].partFinishDate,
+            //description: partsJsonArray[i].description, 
+            color:       'red',
+            textColor:   'white',
+            //url: 'https://www.github.com'
+        }]);
+        console.log('ok');
+    } 
+}
+
+
+
+
 </script>
 
 
@@ -267,17 +307,40 @@ var partsJsonArray = new Array();
 
 		<section class="main_section jui">
 		
+		
+		<!-- 값 넘어오는거 확인용 -->
 		<div class="testData">
 		이곳에 스케줄넘,해당 스케줄에 대한 파트/클라이언트/사용자,  현재 로그인된 세션 이 필요함  
 		
-			<div id="partsDiv">
+			<div id="partsDiv"></div>
+			<hr>
 			
-			</div>
-			<div id="clientDiv">
+			<div id="unitsDiv"></div>
+			<hr>
 			
-			</div>
-			<div id="usersDiv">
+			<div id="clientDiv"></div>
+			<hr>
 			
+			<div id="usersDiv"></div>
+			<hr>
+			
+			
+			
+		</div>
+		
+		
+		
+		
+		<!-- 스케줄 글보기 모달 -->
+		<div id="modal" class="msgbox" style="display: none;">
+			<div class="head">
+				<span id="modal-title"></span>
+		    </div>
+			<div class="body">
+				<span id="modal-contents"></span>
+				클릭한 파트에 대해서 해당 파트에 대한 할일들과 그 할일들에 대한 사용자, 마감일, 첨부파일등을 뿌려주면 좋겠다
+				<div style="text-align: center; margin-top: 45px;" id="contentsBtn">
+				</div>
 			</div>
 		</div>
 		
@@ -347,7 +410,8 @@ var partsJsonArray = new Array();
 							</div>
 						</td>
 					</tr>
-					<tr>
+					<!-- 상세일정 등록시 파일 첨부튼 formdata를 이용하여 ajax 하면 좋겠다 -->
+					<!-- <tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;border: 1px solid #BEBeBe;">
 							<span id="schedulefileName"></span>
 							<div id="scheduleFiles">
@@ -355,12 +419,13 @@ var partsJsonArray = new Array();
 								<a href="#" id="scheduleFileAddBtn" class="btn btn-gray btn-small">파일등록</a>(파일선택 후 등록해야 글 저장시 함께 등록 됩니다.)
 							</div>
 						</td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
-							<input type="radio" class="email" name="email" value="test@test.com">사용자1
-							<input type="radio" class="email" name="email" value="test@test.com">사용자2
-							<input type="radio" class="email" name="email" value="test@test.com">사용자3
+							여기는 DB에서 불러와야함 해당 스케줄에 참여하는 유저들
+							<input type="radio" class="email" name="email" value="test1@test.com">사용자1
+							<input type="radio" class="email" name="email" value="test2@test.com">사용자2
+							<input type="radio" class="email" name="email" value="test3@test.com">사용자3
 						</td>
 					</tr>
 					<tr>
@@ -377,6 +442,7 @@ var partsJsonArray = new Array();
 					</tr>
 				</table>
 				<div style="text-align: center;">
+					<a href="#" id="writeNextBtn" class="btn btn-gray btn-small">등록후 새로운 일정추가</a>
 					<a href="#" id="writeBtn" class="btn btn-gray btn-small">저장</a>
 					<a href="#" id="writeClose" class="btn btn-gray btn-small">Close</a>
 				</div>

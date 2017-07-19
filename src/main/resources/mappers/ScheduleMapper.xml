@@ -75,7 +75,7 @@
 	
 	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe, unitfinishdate, unitdescfileO, unitdescfileF, partName, email, unitstate)
-		values (#{scheduleNum}, #{unitNum}, #{unitName}, #{unitDescribe}, #{unitFinishDate}, #{unitDescFileO}, #{unitDescFileF}, #{partName}, #{email}, #{unitState})
+		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit where schedulenum=#{scheduleNum}),0), #{unitName}, #{unitDescribe}, #{unitFinishDate}, #{unitDescFileO}, #{unitDescFileF}, #{partName}, #{email}, '할일')
 	</insert>
 	
 	<update id="updateUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
@@ -91,6 +91,13 @@
 	</delete>
 	
 	
+	<select id="getPNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select projectNum from schedulemain where schedulenum=#{scheduleNum}
+	</select>
+	
+	<select id="listUser" parameterType="java.lang.Integer" resultType="com.flu.member.MemberDTO">
+		 select M.*,A.* from member M,applicant A where A.projectNum=(select projectNum from schedulemain where schedulenum=#{scheduleNum}) and A.email=M.email and A.state='ing'
+	</select>
 	
 	
   	

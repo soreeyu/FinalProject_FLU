@@ -15,12 +15,14 @@ $(function(){
 		var contents = $('#contents').val();
 		var starttime = $('#starttime').val();
 		var endtime = $('#endtime').val();
-		var email = $('.email').val();
-		var partName = $('.partName').val();
+		var email = $(':input:radio[name=email]:checked').val();   
+		var partName = $(':input:radio[name=partName]:checked').val();   
+		var scheduleNum = $("#schNum").text()*1;
+		alert('스케줄넘 '+scheduleNum);
 		//var formData = new FormData();
 		 //첫번째 파일태그
 		//formData.append("schedulefile",$("input[name=schedulefile]")[0].files[0]);
-		alert(title+contents+starttime+endtime+email+partName);
+		
 		//빈칸 등록해야함
 		if(trim(title) == '' || trim(title) == '<p>&nbsp;</p>'){
 			alert('제목을 입력하세요');
@@ -51,7 +53,7 @@ $(function(){
 			scheduleParam.unitStartDate = starttime;
 			scheduleParam.unitFinishDate = endtime;
 			
-			var url = getContextPath()+'/schedule/unitWrite';
+			//var url = getContextPath()+'/schedule/unitWrite';
 			//if(scheduleParam.seq > 0){
 			//	url = getContextPath()+'/schedule/unitUpdate';
 			//}
@@ -60,27 +62,33 @@ $(function(){
 			//alert('url= '+url);
 			var starttimeStr=starttime.toString();
 			var endtimeStr=endtime.toString();
+			alert(title+contents+starttime+starttimeStr+endtime+endtimeStr+email+partName);
 			$.ajax({
 				url : '/flu/schedule/unitWrite',
 				type : 'POST',
 				//dataType: 'JSON',
 			    //data:  scheduleParam,
 			    //contentType:"application/json; charset=UTF-8",
-				processData: false,
-				contentType: false,
+				//processData: false,
+				//contentType: false,
 				data: {
+					scheduleNum:scheduleNum,
 					unitName:title,
 					unitDescribe:contents,
 					unitStartDate:starttimeStr,
 					unitFinishDate:endtimeStr,
 					email:email,
 					partName:partName,
-					//schedulefile:formData
-					
 				},
 				
-				success : function(response){
-					alert(response);
+				success : function(response){ //json으로 result 만옴
+					//alert(response.result);
+					if(response.result > 0){
+						alert("등록성공");
+						writeModal.hide();
+					}else{
+						alert("등록실패");
+					}
 					//writeModal.hide();
 					//$('iframe[id!=scheduleFrame]').remove();
 					//$('#title').val('');
@@ -109,9 +117,18 @@ $(function(){
 	});
 	
 	$('#schcalendar').fullCalendar({
+		 customButtons: {
+			 myCustomButton: {
+		            text: 'custom!',
+		            click: function() {
+		                alert('clicked the custom button!');
+		            }
+		        }
+		 },
+		    
 		header: {
-			left: ' ',
-			center: 'prev title next',
+			left: '',
+			center: 'prev title next myCustomButton',
 			right: 'today,month'//'today,month,basicWeek,basicDay'
 		},
 		titleFormat: {
@@ -146,6 +163,7 @@ $(function(){
 	        url: 'http://google.com/',
 	        start: new Date('2017-07-30'),
 	    }],
+	    //등록된 일정을 클릭했을 때 실행하는 함수 
 	   eventClick: function(calEvent, jsEvent, view) {
 
 	        alert('Event: ' + calEvent.title);
@@ -154,27 +172,34 @@ $(function(){
 
 	        // change the border color just for fun
 	        $(this).css('border-color', 'red');
+	        modal.show(); 
 	        
-	        
+	        //일정에 가지고있는 링크를 사용해서 열어준다
+	        /*
 	        if(event.url) {
                 alert(event.title + "\n" + event.url, "wicked", "width=700,height=600");
-                window.open(event.url);
+                window.open(event.url,"_blank");
                 return false;
             }
-
+	        */
 
 	    },
+	    // 달력의 빈칸을 클릭했을때 실행되는 함수
 	    dayClick: function(date) {
 			//scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
 			//$('#title').val(scheduleParam.title);
 			//$('#contents').val(scheduleParam.contents);
-			spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-			epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-			//$('#etcYn').attr('checked',false);
-			writeModal.show();
-			//editorInit('contents');
+			spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
+			epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
+			writeModal.show(); 
+			
 	    }
 	});
+	
+    $("#addUnitBtn").click(function(){
+    	alert("할일 등록하기");
+    	location.href = "./testUnit";
+    });
 	
 	
     $('#schcalendar').fullCalendar('addEventSource',[{
@@ -185,7 +210,18 @@ $(function(){
     }]);
     
     
-    getPartList(41);
-    addEvents(partsJSONArray);
+    var partsJsonArray = getPartList(81); 
+    addEvents(partsJSONArray); //가져온 json 데이터를 partsJsonArray에 담아두고  fullcalendar에 저장 
+    //addEvents(getPartList(81)); //이렇게 안됨..
     
-});
+    getUserList(81);
+    
+    //getUnitList(81,1,"myeon04@flu.com"); 우선 part데려오고 고민좀 해봅시다
+    
+    
+    $('#sview-refresh').click(function(){
+    	alert("새로고침누름");
+		$('#schcalendar').fullCalendar('refetchEvents'); // 일정 리로딩
+	});
+    
+}); // 끝

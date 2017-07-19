@@ -1,7 +1,5 @@
 package com.flu.schedule.client;
 
-import java.sql.Date;
-
 import org.springframework.web.multipart.MultipartFile;
 
 public class ScheduleUnitDTO {
@@ -19,7 +17,7 @@ public class ScheduleUnitDTO {
 	private String email; // 해당 일을 맡은 사용자 등록 
 	private String unitState; //해당 할일에 대한 상태 //할일, 진행중, 완료
 	
-	
+
 	
 	public MultipartFile getUnitDescFile() {
 		return unitDescFile;
