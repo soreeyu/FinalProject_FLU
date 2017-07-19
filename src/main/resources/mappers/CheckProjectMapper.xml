@@ -13,7 +13,7 @@
   					where state in('check','done') order by reg_date asc
   				</when>
 				<when test="category!=null and detailCategory!=null">
-  					where state in('check','done') and category=#{category} and detailcategory=#{detailCategory} and
+  					where state in('check','done') and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
   				
 	  				<if test="kind == 'name'">
 	  					name like '%' || #{search} || '%'
@@ -44,7 +44,35 @@
   		</update>
   		
   		<select id="listCash" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
-  			select * from project where state = 'finish' order by reg_date asc
+	
+  			select * from project
+  			
+  			<choose>
+  				<when test="category==null and detailCategory==null">
+  					where state = 'finish' order by reg_date asc
+  				</when>
+				<when test="category!=null and detailCategory!=null">
+  					where state = 'finish' and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
+  				
+	  				<if test="kind == 'name'">
+	  					name like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'email'">
+	  					email like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'contents'">
+	  					contents like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				order by reg_date asc
+				</when>
+
+  			</choose>
+  			
+  			
+  			
   		</select>
   		
   		

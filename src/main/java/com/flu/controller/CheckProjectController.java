@@ -49,8 +49,8 @@ public class CheckProjectController {
 		System.out.println(listInfo.getKind());
 		
 		List<ProjectDTO> list = checkProjectService.listCheck(listInfo);
-		model.addAttribute("list", list);
-		return "checkProject/checkProjectList";
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "project");
+		return "checkProject/checkList";
 	}
 	
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
@@ -65,8 +65,8 @@ public class CheckProjectController {
 	@RequestMapping(value="checkCashList")
 	public String listCash(ListInfo listInfo,Model model){
 		List<ProjectDTO> list = checkProjectService.listCash(listInfo);
-		model.addAttribute("list", list);
-		return "checkProject/checkProjectList";
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "cash");
+		return "checkProject/checkList";
 	}
 	
 	@RequestMapping(value="checkCashView")
