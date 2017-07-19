@@ -34,8 +34,6 @@
 	    <version>1.5.5</version>
 	</dependency>
 	
-	
-	
 	<!-- SMTP -->
 	<!-- https://mvnrepository.com/artifact/com.sun.mail/smtp -->
 	<dependency>

@@ -48,7 +48,7 @@
 <script type="text/javascript">
 
 	$("#btn1").click(function() {
-		if(confirm("신원확인 처리 하시겠습니까?")){
+		if(confirm("신원확인을 완료 하시겠습니까?")){
 			$('#frm1').submit();
 		}
 		else{

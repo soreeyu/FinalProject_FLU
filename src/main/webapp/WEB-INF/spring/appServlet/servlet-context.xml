@@ -29,12 +29,23 @@
 	<beans:bean class="com.flu.file.Download" id="download">
 	</beans:bean>
 	
+	<!-- Interceptor -->
+	<beans:bean class="com.flu.util.Interceptor" id="interceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/check*/*"/>
+			<beans:ref bean="interceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	
 	
 	<context:component-scan base-package="com.flu.home" />
 	<context:component-scan base-package="com.flu.alarm"/>
 	<context:component-scan base-package="com.flu.applicant"/>
 	<context:component-scan base-package="com.flu.client"/>
-	<context:component-scan base-package="com.flu.checkProjectMember"/>
+	<context:component-scan base-package="com.flu.checkMember"/>
 	<context:component-scan base-package="com.flu.checkProject"/>
 	<context:component-scan base-package="com.flu.controller"/>
 	<context:component-scan base-package="com.flu.eachRoom"/>

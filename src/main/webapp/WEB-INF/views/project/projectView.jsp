@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -39,14 +40,54 @@
 <p><a href="projectUpdate?projectNum=${dto.projectNum}">Update</a></p>
 <p><a href="projectDelete?projectNum=${dto.projectNum}">Delete</a></p>
 <hr>
+
 <p>관리자 부분</p>
+<form action="../checkProject/checkProjectUpdate" id="frm">
+
+<input type="hidden" name="state" value="${dto.state }">
+<input type="hidden" name="projectNum" value="${dto.projectNum}">
+
 <c:if test="${dto.state=='check'}">
-<p><a href="../checkProject/checkProjectUpdate?state=${dto.state }&projectNum=${dto.projectNum}">검수 완료</a></p>
+<input type="button" value="프로젝트 검수 완료" id="${dto.state }">
 </c:if>
 <c:if test="${dto.state=='done'}">
-<p><a href="../checkProject/checkProjectUpdate?state=${dto.state }&projectNum=${dto.projectNum}">프로젝트 진행하기</a></p>
-<p><a href="">Delete</a></p>
+<input type="button" value="프로젝트 시작" id="${dto.state }">
 </c:if>
 
+</form>
+
+<p><a href="">Delete</a></p>
 </body>
+<script type="text/javascript">
+
+	var state = '${dto.state }';
+
+	$('#'+state).click(function() {
+		
+		var check = $(this).attr('id')
+		
+		if(check=='check'){
+			if(confirm("프로젝트 검수를 완료하시겠습니까?")){
+				$('#frm').submit();
+			}
+			else{
+				alert("no"); 
+			}
+		}else{
+			if(confirm("프로젝트 인원 모집을 시작하시겠습니까?")){
+				$('#frm').submit();
+			}
+			else{
+				alert("no"); 
+			}
+		}
+
+			
+	});
+
+	
+
+
+
+</script>
 </html>

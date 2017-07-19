@@ -48,7 +48,14 @@ $(function() {
 		
 		$('#'+count).on("click",".btn2", function() {
 			var email = $(this).attr('id');
-			location.href = "./appUpdate?email="+email+"&projectNum="+projectNum;
+			
+			if(confirm(email+"님의 대금처리를 완료하시겠습니까?")){
+				location.href = "./appUpdate?email="+email+"&projectNum="+projectNum;
+			}else{
+				alert("잘생각하셨습니다.");
+			}
+			
+			
 			
 		}) 
 	

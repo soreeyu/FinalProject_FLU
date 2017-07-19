@@ -99,29 +99,4 @@ public class CheckMemberController {
 	
 	
 	
-	//임시 로그인
-	@RequestMapping(value="loginTest",method=RequestMethod.GET)
-	public void loginTest(){
-	
-	}
-	
-	//임시 로그인
-	@RequestMapping(value="loginTest",method=RequestMethod.POST)
-	public ModelAndView loginTest(MemberDTO memberDTO,HttpSession session){
-		
-		MemberDTO memberDTO2 = checkMemberService.loginTest(memberDTO);
-		ModelAndView mv = new ModelAndView();
-		String message = "실패";
-		
-		if(memberDTO2!=null){
-			session.setAttribute("member", memberDTO2);
-			message = "성공";
-			mv.addObject("message", message);
-			mv.addObject("path","/flu");
-			mv.setViewName("common/result");
-		}
-		
-		return mv;
-	}
-	
 }
