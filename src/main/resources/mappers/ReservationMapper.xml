@@ -15,7 +15,7 @@
   	</select>
   	
   	<select id="Reserved_time2" parameterType="com.flu.reservation.ReservationDTO" resultType="com.flu.reservation.ReservationDTO">
-  		select time from reservation where reserve_date=#{reserve_date} and name=#{name}
+  		select * from reservation where reserve_date=#{reserve_date} and name=#{name}
   	</select>
   	
   	<!-- 예약하기 -->

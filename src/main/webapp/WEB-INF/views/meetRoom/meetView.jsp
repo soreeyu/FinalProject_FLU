@@ -83,16 +83,21 @@
 section {
 	min-width : 1152px;
 	width : 60%;
+	height: 1500px;
 	margin : 0 auto;
 }
 p {
 	font-family: sans-serif;
 }
 #meetView_header {
+	width : 60%;
 	margin-top: 50px;
 	display: inline-block;
 }
 #eachRoomList {
+	width : 400px;
+	background-color: white;
+	margin-top: 120px;
 	float: right;
 }
 #meetView_name{
@@ -100,23 +105,27 @@ p {
 	font-family: sans-serif;
 	margin-bottom: 40px;
 }
+
 #photo_wrap {
-	width: 40%;
+	width: 100%;
 	height: 50%;
 }
 #photo_wrap > img{
 	width : 100%;
 	height : 500px;
 }
+#map_box{
+	width : 60%;
+}
 #map_box_header{
 	background-color: white;
-	width: 480px;
+	width: 100%;
 	height: 50px;
-	padding: 17px 15px;
+	vertical-align: middle;
+	text-align: center;
 }
 #table {
-	width : 100%;
-	height: 30%;
+	width : 60%;
 }
 
 </style>
@@ -137,10 +146,9 @@ p {
 		</div>		
 		
 		<div id="eachRoomList">
-		<p>세부공간</p>
+		<h3>세부공간 선택</h3>
 		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>
 		<hr>
-		<h2>세부공간 리스트</h2>
 		<div id="eachRoom">
 		
 		</div>
@@ -189,7 +197,7 @@ p {
 		${dto.addr_main}${dto.addr_detail}
 		</div>
 		<input type="hidden" id="address_main" value="${dto.addr_main}">
-		<div id="map" style="width:510px;height:400px;"></div>
+		<div id="map" style="width:100%;height:400px;"></div>
 		</div>
 	
 		

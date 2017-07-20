@@ -93,9 +93,7 @@
      	function sel(index1,index2){
      		alert("index1="+index1+","+"index2="+index2);
     		$(".time").each(function(index){
-    			alert(index);
     			if(index>=index1 && index<=index2){
-    				alert("아이디"+$(this).attr("id"));
     				$(this).css("background-color", "red");
     			}else if(index>=index2 && index<=index1){
     				$(this).css("background-color", "red");
@@ -233,6 +231,8 @@ font-size:14px;
 		<h3>시간 선택(예약가능시간)</h3>
 	</div>
 	<div id="reserve_time">
+	
+	
 	
 	</div>
 	<div id="timeresult">

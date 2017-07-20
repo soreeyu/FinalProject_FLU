@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.flu.eachRoom.EachRoomDTO;
@@ -94,28 +96,21 @@ public class ReservationController {
 	
 	@RequestMapping(value="reservedTime", method=RequestMethod.POST)
 	public void reservedTime(Model model, ReservationDTO reservationDTO) throws Exception{
-		ArrayList<ReservationDTO> ar = (ArrayList<ReservationDTO>)reservaionService.reservedTime2(reservationDTO);
+		List<ReservationDTO> ar = reservaionService.reservedTime2(reservationDTO);
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());
 		String [] access = meetRoomDTO.getTime().split(",");
 		model.addAttribute("access", access);
 		
 		if(ar!=null){
-			String [] result = null;
+			String [] result;
 			ArrayList<String> start = new ArrayList<String>();
 			ArrayList<String> last = new ArrayList<String>();
-			int list= 0;
+			
 			for(int i=0;i<ar.size();i++){
-				
 				result = ar.get(i).getTime().split(",");
-	
-				start.add(result[0]);
-				last.add(result[1]);
-	
-				System.out.println("start"+i+"번"+start.get(i));
-				System.out.println("last"+i+"번"+last.get(i));
-				list = start.size();
+				
 			}
-			model.addAttribute("list", list);
+
 			model.addAttribute("start", start);//예약된 시간들 중에서 입실시간들 ArrayList
 			model.addAttribute("last", last);//예약된 시간들 중에서 퇴실시간들 ArrayList
 		}

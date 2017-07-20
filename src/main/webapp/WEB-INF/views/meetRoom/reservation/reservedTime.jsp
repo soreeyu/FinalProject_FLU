@@ -4,7 +4,7 @@
 <table id="timeList">
 		<thead>
 			<tr>
-				<c:forEach begin="${access[0]}" end="${access[1]}" var="i" step="1">
+				<c:forEach begin="0" end="24" var="i" step="1">
 					<td>${i}</td>
 				</c:forEach>
 			</tr>
@@ -15,10 +15,10 @@
 				<c:forEach begin="0" end="23" var="i" step="1" varStatus="r">
 					<c:choose>
 						<c:when test="${access[0]<=r.index && access[1]>=r.index}" >
-							<td>
+							<td id="reserved">
 							<c:choose>
 							<c:when test="${start[0]<=r.index && last[0]>=r.index}">
-								<div id="reserved${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: black; margin-left: 10px;" ></div>
+								<div id="reserved${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: gray; margin-left: 10px;" ></div>
 							</c:when>
 							<c:otherwise>
 								<div id="reserve${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: yellow; margin-left: 10px;" ></div>
@@ -26,6 +26,11 @@
 							</c:choose>
 							</td>
 						</c:when>
+						<c:otherwise>
+							<td>
+								<div id="${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: gray; margin-left: 10px;" ></div>
+							</td>
+						</c:otherwise>
 					</c:choose>			
 				</c:forEach>
 			</tr>
