@@ -236,10 +236,11 @@ public class ScheduleController {
 		//할일 리스트 뿌려주기 
 		@ResponseBody
 		@RequestMapping(value="unitList", method=RequestMethod.POST)
-		public List<ScheduleUnitDTO> unitList(SchedulePartDTO schedulePartDTO,String email){ 
-			System.out.println("schduleNum_partNum "+schedulePartDTO.getScheduleNum()+schedulePartDTO.getPartNum());
-			System.out.println("email "+email);
-			List<ScheduleUnitDTO> list = null;
+		public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{ 
+			System.out.println("schduleNum_partNum "+scheduleUnitDTO.getScheduleNum()+"_"+scheduleUnitDTO.getPartNum());
+			System.out.println("email "+scheduleUnitDTO.getEmail());
+			List<ScheduleUnitDTO> list = scheduleService.unitList(scheduleUnitDTO);
+			System.out.println("가져온 첫번째 할일 "+list.get(0).getUnitName());
 			return list;
 		}
 		

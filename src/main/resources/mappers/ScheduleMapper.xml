@@ -74,10 +74,14 @@
 		select * from scheduleunit where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</select>
 	
-	<select id="listUnit" resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select * from scheduleunit
+	<!-- 
+	<select id="listUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO" resultType="com.flu.schedule.client.ScheduleUnitDTO">
+		 select * from scheduleunit where schedulenum=#{scheduleNum} and email like '%'|| #{email} ||'%' and  partnum in (select distinct partnum from schedulepart where schedulenum=#{scheduleNum}) order by unitnum asc;
 	</select>
-	
+	 -->
+	 <select id="listUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO" resultType="com.flu.schedule.client.ScheduleUnitDTO">
+		 select * from scheduleunit where schedulenum=#{scheduleNum} and email like '%'|| #{email} ||'%' and  partnum=#{partNum} order by unitnum asc;
+	</select>
 	
 	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe,unitstartDate,unitfinishdate, partnum, email, unitstate)

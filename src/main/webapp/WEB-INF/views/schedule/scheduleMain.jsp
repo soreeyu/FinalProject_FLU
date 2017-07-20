@@ -597,6 +597,7 @@ function getScheduleNum(projectNum){
 				$("#scheduleNum").val(scheduleNum);
 				getPartList(scheduleNum);
 				getUserList(scheduleNum);
+				getUnitList(scheduleNum,0,'myeon01');
 				//var test = getPartList(scheduleNum);
 				//alert("test data"+JSON.stringify(test)); //이것도 값이 들어오기전에 먼저 찍히는 무의미함..
 			}else{ //오류났을때
@@ -724,7 +725,7 @@ function getUnitList(scheduleNum,partNum,email){
 			email:email
 		},
 		success: function(data){
-			//alert(JSON.stringify(data));
+			alert(JSON.stringify(data));
 			
 			var result="<table>";
 			$(data).each(function(){

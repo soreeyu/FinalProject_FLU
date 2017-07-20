@@ -154,8 +154,8 @@ public class ScheduleService {
 
 
 	//할일 리스트 뿌려주기 
-	public List<ScheduleUnitDTO> unitList(int scheduleNum){ 
-		return null;
+	public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{ 
+		return scheduleDAO.unitList(scheduleUnitDTO);
 	}
 
 
