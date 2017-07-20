@@ -122,7 +122,7 @@
 .category-select-both{
 	margin-left: 20px;
 	height: 560px;
-	background-image: url("${pageContext.request.contextPath}/resources/img/select.png");
+	background-image: url("${pageContext.request.contextPath}/resources/img/project/select.png");
 	background-repeat: no-repeat;
 }
 .category-select-list{
@@ -132,6 +132,7 @@
 }
 .cate-skipper{
 	height: 17px;
+	width: 100%;
 	float: left;
 	cursor: pointer;
 	display: block;
@@ -163,12 +164,13 @@
 	display: block;
 }
 .cate-list li label{
-	font-size: 12px;
+
 	font-weight: normal;
 	margin-left: 10px;
 	display: block;
-	width: 120px;
-	margin-bottom: 10px;
+	width: 100%;
+	/* margin-bottom: 10px; */
+	margin-bottom: 7px;
 }
 .place-sort-box{
 	height: 65px;
@@ -623,10 +625,10 @@ background-color: white;
 						<div class="project-contents">${dto.contents }</div>
 						<div class="project-contents-right">
 							<div class="right-contents-sub">
-							<img src="${pageContext.request.contextPath}/resources/img/clock-closed.png">
+							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
 							마감<strong>${dto.finishDate}</strong></div>
 							<div class="right-contents-sub">
-							<img src="${pageContext.request.contextPath}/resources/img/proposal-user.png">
+							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
 							총지원 <strong>몇명</strong></div>
 						</div>
 						

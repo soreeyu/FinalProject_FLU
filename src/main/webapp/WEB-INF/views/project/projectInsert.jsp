@@ -125,13 +125,13 @@ label{
 	text-align: center;
 }
 #plan-radio1{
-	background-image: url("${pageContext.request.contextPath}/resources/img/idea.png");
+	background-image: url("${pageContext.request.contextPath}/resources/img/project/idea.png");
 }
 #plan-radio2{
-	background-image: url("${pageContext.request.contextPath}/resources/img/simple.png");
+	background-image: url("${pageContext.request.contextPath}/resources/img/project/simple.png");
 }
 #plan-radio3{
-	background-image: url("${pageContext.request.contextPath}/resources/img/detail.png");
+	background-image: url("${pageContext.request.contextPath}/resources/img/project/detail.png");
 }
 
 .radio-text{
