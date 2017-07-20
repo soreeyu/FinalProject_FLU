@@ -14,9 +14,9 @@ public class ProjectService {
 	@Inject
 	private ProjectDAO projectDAO;
 	
-	//project write
-	public int projectWrite(ProjectDTO projectDTO){
-		return projectDAO.projectWrite(projectDTO);
+	//project insert
+	public int projectInsert(ProjectDTO projectDTO){
+		return projectDAO.projectInsert(projectDTO);
 	}
 	
 	//project update
@@ -37,6 +37,10 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo){
 		return projectDAO.projectList(listInfo);
+	}
+	
+	public List<ProjectDTO> projectListM(ListInfo listInfo){
+		return projectDAO.projectListM(listInfo);
 	}
 	
 	//project Count

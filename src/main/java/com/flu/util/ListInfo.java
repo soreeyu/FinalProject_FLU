@@ -9,6 +9,7 @@ public class ListInfo {
 	//row
 	private String kind; //contents인지
 	private String search;//입력한값
+	private String arrange;
 	private int startRow;
 	private int lastRow;
 
@@ -127,6 +128,18 @@ public class ListInfo {
 	public void setKind(String kind) {
 		this.kind = kind;
 	}
+
+
+	public String getArrange() {
+		return arrange;
+	}
+
+
+	public void setArrange(String arrange) {
+		this.arrange = arrange;
+	}
+
+
 
 
 }

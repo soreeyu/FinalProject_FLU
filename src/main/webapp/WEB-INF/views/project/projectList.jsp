@@ -14,7 +14,8 @@
 .main_section {
 	min-width: 1160px;
 	width: 1160px;
-	height: 2700px;
+	height: auto;
+	min-height: 2300px;
 	margin: 0 auto;
 	margin-top: 30px;
 }
@@ -41,7 +42,10 @@
 
 .contents {
 	width: 1260;
-	height: 2700px;
+	height: auto;
+	min-height: 1200px;
+	max-height: 2700px;
+	
 }
 
 .clean{
@@ -62,7 +66,9 @@
 
 .contents_main {
 	width: 900px;
-	height: 2100px;
+	height: auto;
+	max-height: 2100px;
+	min-height: 250px;
 	display: block;
 	float: right;
 	background-color: white;
@@ -264,7 +270,7 @@ background-color: white;
 	border-right: 1px solid #dedede;
 	color: #666;
 	margin-right: 10px;
-	padding-right: 10px;
+	padding-right: 10px;	
 }
 .skill-box{
 	display: inline-block;
@@ -278,6 +284,23 @@ background-color: white;
 }
 .skill-box span{
 	color: #999;
+}
+.contents_bottom{
+	margin-top: 30px;
+	width: 100%;
+}
+.contents_paging{
+	width: 380px;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: bold;
+}
+.contents_paging span{
+	cursor: pointer;
+}
+.project-title a{
+	text-decoration: none;
+	color: #2099bb;
 }
 </style>
 <script type="text/javascript">
@@ -293,7 +316,7 @@ background-color: white;
 
 				var num = $(this).prop("id");
 				alert(num);
-				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}";
+				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}";
 						
 						});
 		$("#nextview").click(function() {
@@ -336,6 +359,7 @@ background-color: white;
 <body>
 	<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 	<section class="main_section">
+				<form action="" id="frm">
 
 		<div class="project_header">
 			<div class="header_text">
@@ -344,15 +368,15 @@ background-color: white;
 				
 				<div class="search-part">
 				
-				<form action="" id="frm">
 
 
 					<input type="hidden" name="curPage"> 
 					
 					<input type="hidden" name="kind" value="total">
+					 <input type="hidden" name="arrange" id="arrange">
 					<input type="text" name="search"> <input type="submit" value="SEARCH">
 
-				</form>
+
 				</div>
 			</div>
 		</div>
@@ -387,39 +411,39 @@ background-color: white;
 							<label for="dev" class="cate-label">개발</label>
 							<ul class="cate-list">
 								<li>
-									<input id="dev-1" name="detailCategory" class="dev-chk" type="checkbox">
-									<label class="cate-label">웹</label>
+									<input id="dev-1" name="detailCategory" class="dev-chk" type="checkbox" value="웹">
+									<label class="cate-label" for="dev-1">웹</label>
 								</li>
 								<li>
-									<input id="dev-2" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-2" name="detailCategory" class="dev-chk" type="checkbox" value="애플리케이션">
 									<label class="cate-label">애플리케이션</label>
 								</li>
 								<li>
-									<input id="dev-3" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-3" name="detailCategory" class="dev-chk" type="checkbox" value="워드프레스">
 									<label class="cate-label">워드프레스</label>
 								</li>
 								<li>
-									<input id="dev-4" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-4" name="detailCategory" class="dev-chk" type="checkbox" value="퍼블리싱">
 									<label class="cate-label">퍼블리싱</label>
 								</li>
 								<li>
-									<input id="dev-5" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-5" name="detailCategory" class="dev-chk" type="checkbox" value="일반소프트웨어">
 									<label class="cate-label">일반 소프트웨어</label>
 								</li>
 								<li>
-									<input id="dev-6" name="detailCategory" class="dev-chk" type="checkbox">
-									<label class="cate-label">커머스, 쇼핑몰</label>
+									<input id="dev-6" name="detailCategory" class="dev-chk" type="checkbox" value="쇼핑몰">
+									<label class="cate-label">쇼핑몰</label>
 								</li>
 								<li>
-									<input id="dev-7" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-7" name="detailCategory" class="dev-chk" type="checkbox" value="게임">
 									<label class="cate-label">게임</label>
 								</li>
 								<li>
-									<input id="dev-8" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-8" name="detailCategory" class="dev-chk" type="checkbox" value="임베디드">
 									<label class="cate-label">임베디드</label>
 								</li>
 								<li>
-									<input id="dev-9" name="detailCategory" class="dev-chk" type="checkbox">
+									<input id="dev-9" name="detailCategory" class="dev-chk" type="checkbox" value="기타">
 									<label class="cate-label">기타</label>
 								</li>
 							</ul>
@@ -428,51 +452,51 @@ background-color: white;
 					</div>
 					<div class="category-select-list">
 						<div class="cate-skipper">
-							<input id="design" class="cate-chk" name="category" type="checkbox">
+							<input id="design" class="cate-chk" name="category" type="checkbox" onclick="designClick()">
 							<label for="design" class="cate-label">디자인</label>
 							<ul class="cate-list">
 								<li>
-									<input id="design-1" name="detailCategory" type="checkbox">
+									<input id="design-1" name="detailCategory" class="design-chk" type="checkbox" value="웹">
 									<label class="cate-label">웹</label>
 								</li>
 								<li>
-									<input id="design-2" name="detailCategory" type="checkbox">
+									<input id="design-2" name="detailCategory" class="design-chk" type="checkbox" value="애플리케이션">
 									<label class="cate-label">애플리케이션</label>
 								</li>
 								<li>
-									<input id="design-3" name="detailCategory" type="checkbox">
+									<input id="design-3" name="detailCategory" class="design-chk" type="checkbox" value="제품">
 									<label class="cate-label">제품</label>
 								</li>
 								<li>
-									<input id="design-4" name="detailCategory" type="checkbox">
+									<input id="design-4" name="detailCategory" class="design-chk" type="checkbox" value="프레젠테이션">
 									<label class="cate-label">프레젠테이션</label>
 								</li>
 								<li>
-									<input id="design-5" name="detailCategory" type="checkbox">
+									<input id="design-5" name="detailCategory" class="design-chk" type="checkbox" value="인쇄물">
 									<label class="cate-label">인쇄물</label>
 								</li>
 								<li>
-									<input id="design-6" name="detailCategory" type="checkbox">
-									<label class="cate-label">커머스, 쇼핑몰</label>
+									<input id="design-6" name="detailCategory" class="design-chk" type="checkbox" value="쇼핑몰">
+									<label class="cate-label">쇼핑몰</label>
 								</li>
 								<li>
-									<input id="design-7" name="detailCategory" type="checkbox">
+									<input id="design-7" name="detailCategory" class="design-chk" type="checkbox" value="로고">
 									<label class="cate-label">로고</label>
 								</li>
 								<li>
-									<input id="design-8" name="detailCategory" type="checkbox">
+									<input id="design-8" name="detailCategory" class="design-chk" type="checkbox" value="그래픽">
 									<label class="cate-label">그래픽</label>
 								</li>
 								<li>
-									<input id="design-9" name="detailCategory" type="checkbox">
+									<input id="design-9" name="detailCategory" class="design-chk" type="checkbox" value="영상">
 									<label class="cate-label">영상</label>
 								</li>
 								<li>
-									<input id="design-10" name="detailCategory" type="checkbox">
+									<input id="design-10" name="detailCategory" class="design-chk" type="checkbox" value="게임">
 									<label class="cate-label">게임</label>
 								</li>
 								<li>
-									<input id="design-11" name="detailCategory" type="checkbox">
+									<input id="design-11" name="detailCategory" class="design-chk" type="checkbox" value="기타">
 									<label class="cate-label">기타</label>
 								</li>
 							</ul>
@@ -588,7 +612,7 @@ background-color: white;
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title"><a href="#">${dto.name}</a></div>
+						<div class="project-title"><a href="projectView?projectNum=${dto.projectNum}">${dto.name}</a></div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -626,98 +650,130 @@ background-color: white;
 			</c:forEach>
 
 			
-
-
+			<div class="contents_bottom">
+				<div class="contents_paging">
 				<c:if test="${listInfo.curBlock>1 }"> -
-		<span id="preview">[이전]</span>
-					
+				<span id="preview">[이전]</span>		
 				</c:if>
-
-				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
-					var="i">
-					<span class="num" id="${i}">${i}</span>
-					
+		
+				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
+					<span class="num" id="${i}">${i}</span>			
 				</c:forEach>
-
+		
 				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
-					<span id="nextview">[다음]</span>
-					
+				<span id="nextview">[다음]</span>			
 				</c:if>
-
+				</div>
+	 
 				<div>
-
-					<p>curPage : ${listInfo.curPage }</p>
-					<p>search : ${listInfo.search}</p>
-					<p>kind : ${listInfo.kind }</p>
-					<p>startNum : ${listInfo.startNum}</p>
-					<p>lastNum : ${listInfo.lastNum}</p>
-					<p>startRow : ${listInfo.startRow}</p>
-					<p>lastRow : ${listInfo.lastRow}</p>
-					<p>curBlock : ${listInfo.curBlock }</p>
-					<p>perPage : ${listInfo.perPage}</p>
-
+					<p>curPage : ${listInfo.curPage }         search : ${listInfo.search}     kind : ${listInfo.kind }</p>
+					<p>startNum : ${listInfo.startNum}   lastNum : ${listInfo.lastNum}</p>
+					<p>startRow : ${listInfo.startRow}   lastRow : ${listInfo.lastRow}</p>
+					<p>curBlock : ${listInfo.curBlock }      perPage : ${listInfo.perPage}</p>
 				</div>
 
-
+			</div>
 			</section>
 		</div>
+		</form>
 	</section>
 <script type="text/javascript">
 
-var devCheck = $("input[class='dev-chk']:checked").length;
-
-
-
-function devClick() {
-	
-	alert("g");	
-	alert($(".dev-chk").length);
-	
-	alert(devCheck);
-	if(($(".dev-chk").length)==devCheck){
-		alert("같은갯수");
-		$(".dev-chk").prop("checked", false);
-	}else{
-		$(".dev-chk").prop("checked", true);
-	}
-	
-}
-/* $(".dev-chk").click(function() {
-	
-	if(($(".dev-chk").length)==devCheck){
-		$("#dev").prop("checked", true);
-	}
-}); */
-
-
-
 
 $("#by-price-desc").click(function() {
-	alert("금액높은순"); 
-	
-	
-	
-	/* alert($("#dev").attr("data-on"));
-	if(($("#dev").attr("data-on"))=="off"){
-		$("#dev").attr("data-on", "on");
-		$("#dev").attr("checked", "checked");
-		alert($("#dev").attr("checked"));
-	}else{
-		$("#dev").attr("data-on", "off");
-		$("#dev").removeAttr("checked");
-		alert($("#dev").attr("checked"));
-	} */
-	
-});
+	alert("click");
+	$("#arrange").val("money");
+	alert($("#arrange").val());
+	$.get("arrangeMoney?arrange=money&search=dd",function(data){
+		alert("${listInfo.search}");
+	});
+	/* alert("cc");
+	  $.ajax({
+		url:"arrangeMoney",
+		//"projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}";
+		data:{
+			list:list
+		},
+		type:"GET",
+		success:function(data){
+			alert("success");
+		}
+	});  */
+}); 
 $("#by-price-asc").click(function() {
 	alert("금액낮은순");
+	$("#arrange").val("mm");
+	alert($("#arrange").val());
+	$("#frm").submit();
 });
 $("#by-date-curr").click(function() {
 	alert("최신등록순");
+	$("#arrange").val("current");
+	alert($("#arrange").val());
+	$("#frm").submit();
 });
 $("#by-date-finish").click(function() {
 	alert("마감임박순");
+	$("#arrange").val("last");
+	alert($("#arrange").val());
+	$("#frm").submit();
 });
+
+
+
+
+/* 프로젝트 카테고리 체크박스 설정 */
+function devClick() {
+	var devCheck = $("input[class='dev-chk']:checked").length;
+		alert(devCheck);
+		if(($(".dev-chk").length)==devCheck){
+			$(".dev-chk").prop("checked", false);
+		}else{
+			$(".dev-chk").prop("checked", true);
+		}
+	
+}
+ $(".dev-chk").click(function() { 
+	 var de_id = $(this).val();
+	 alert(de_id);
+	 var devCheck = $("input[class='dev-chk']:checked").length;
+	 alert(devCheck);
+	if(($(".dev-chk").length)==devCheck){
+		$("#dev").prop("checked", true);
+	}else{
+		$("#dev").prop("checked", false);
+	}
+});
+
+  function designClick() {
+		
+	var designCheck = $("input[class='design-chk']:checked").length;
+		alert(designCheck); 
+		if(($(".design-chk").length)==designCheck){
+			$(".design-chk").prop("checked", false);
+		}else{
+			$(".design-chk").prop("checked", true);
+		}
+	}
+
+
+$(".design-chk").click(function() { 
+	 var de_id = $(this).val();
+	 alert(de_id);
+	 var designCheck = $("input[class='design-chk']:checked").length;
+	 alert(designCheck);
+	if(($(".design-chk").length)==designCheck){
+		$("#design").prop("checked", true);
+	}else{
+		$("#design").prop("checked", false);
+	}
+}); 
+
+
+
+
+
+
 
 
 /* 왼쪽 주소체크박스 */

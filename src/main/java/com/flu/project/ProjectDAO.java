@@ -17,9 +17,9 @@ public class ProjectDAO {
 	private final String NAMESPACE="ProjectMapper.";
 	
 	
-		//project write
-		public int projectWrite(ProjectDTO projectDTO){
-			return sqlSession.insert(NAMESPACE+"write", projectDTO);
+		//project insert
+		public int projectInsert(ProjectDTO projectDTO){
+			return sqlSession.insert(NAMESPACE+"insert", projectDTO);
 		}
 		
 		//project update
@@ -40,6 +40,10 @@ public class ProjectDAO {
 		//project List
 		public List<ProjectDTO> projectList(ListInfo listInfo){
 			return sqlSession.selectList(NAMESPACE+"list", listInfo);
+		}
+		
+		public List<ProjectDTO> projectListM(ListInfo listInfo){
+			return sqlSession.selectList(NAMESPACE+"listM", listInfo);
 		}
 		
 		//project Count

@@ -55,6 +55,12 @@ public class ProjectController {
 		return "project/projectList";
 
 	}
+	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
+	public void arrangeMoney(Model model, ListInfo listInfo){
+		System.out.println("arrangeMoney");
+		System.out.println(listInfo.getSearch());
+			
+	}
 	
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
@@ -67,16 +73,18 @@ public class ProjectController {
 		System.out.println(projectDTO.getProjectNum());
 		System.out.println(projectDTO.getName());
 		System.out.println(projectDTO.getSkill());
+		System.out.println(projectDTO.getEmail());
 		model.addAttribute("dto", projectDTO);
+		
 	}
 	
 	
 	
-	//projectWrite Form
-	@RequestMapping(value="projectWrite", method=RequestMethod.GET)
-	public String projectWrite(Model model, HttpSession session, MemberDTO memberDTO){
-		System.out.println("projectWriteForm");
-		model.addAttribute("type", "write");
+	//projectInsert Form
+	@RequestMapping(value="projectInsert", method=RequestMethod.GET)
+	public String projectInsert(Model model, HttpSession session, MemberDTO memberDTO){
+		System.out.println("projectInsertForm");
+		model.addAttribute("type", "insert");
 		
 		memberDTO = (MemberDTO) session.getAttribute("member");
 		System.out.println("email=="+memberDTO.getEmail());
@@ -90,16 +98,16 @@ public class ProjectController {
 		}else{
 			
 		}*/
-		return "project/projectWrite"; 
+		return "project/projectInsert"; 
 		
 	}
 	
 	
-	//project Write
-	@RequestMapping(value="projectWrite", method=RequestMethod.POST)
-	public String projectWrite(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
+	//project Insert
+	@RequestMapping(value="projectInsert", method=RequestMethod.POST)
+	public String projectInsert(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
 		
-		System.out.println("projectWrite");
+		System.out.println("projectInsert");
 		
 
 		
@@ -114,7 +122,7 @@ public class ProjectController {
 		projectDTO.setoName(projectDTO.getFileName().getOriginalFilename());
 	
 
-		int result = projectService.projectWrite(projectDTO);
+		int result = projectService.projectInsert(projectDTO);
 		
 		String message = "fail";
 		
@@ -128,14 +136,31 @@ public class ProjectController {
 	}
 	
 	
-	//update form (write form 공유)
+	//update form (insert form 공유)
 	@RequestMapping(value="projectUpdate", method=RequestMethod.GET)
-	public String projectUpdate(Model model, ProjectDTO projectDTO){
+	public String projectUpdate(Model model, ProjectDTO projectDTO, MemberDTO memberDTO, HttpSession session){
+		System.out.println("projectUpdateForm");
+
+		memberDTO = (MemberDTO) session.getAttribute("member");
+		System.out.println("email=="+memberDTO.getEmail());
+		System.out.println(projectDTO.getEmail());
+		if(memberDTO.getEmail()==projectDTO.getEmail()){
+		
+			System.out.println(memberDTO.getKind());	
+			System.out.println("수정가능");
+		}else{
+			
+
+			System.out.println(memberDTO.getKind());	
+			System.out.println("수정 불가능");
+		}
+		
+	
 		
 		model.addAttribute("type", "update");
 		model.addAttribute("dto", projectDTO);
 		
-		return "project/projectWrite";
+		return "project/projectInsert";
 	}
 	
 	//update

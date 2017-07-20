@@ -187,15 +187,14 @@ label{
 
 		<div class="contents">
 			<section class="contents_main">
-				<c:if test="${type eq 'write'}">
-					<form action="projectWrite" method="post" id="frm" name="frm" enctype="multipart/form-data">
+				<c:if test="${type eq 'insert'}">
+					<form action="projectInsert" method="post" id="frm" name="frm" enctype="multipart/form-data">
 				</c:if>
 				
 				<c:if test="${type eq 'update'}">
 					<form action="projectUpdate" method="post" id="frm" name="frm" enctype="multipart/form-data">
 						<input type="hidden" name="projectNum" value="${dto.projectNum}">
 				</c:if>
-				
 				
 				
 				<!-- state는 프로젝트 등록시 검수중(check)으로 넘어가므로 hidden으로 값을 넘겨줌 -->
@@ -239,7 +238,7 @@ label{
 					<label><span>*</span>프로젝트 제목</label>
 					<div class="category-wrapper">
 						<input id="name" type="text" name="name" style="width: 100%;">
-					<span id="detail">프로젝트 이름을 선택해 주세요</span>
+					<span id="detail">${dto.name}프로젝트 이름을 선택해 주세요</span>
 					</div>
 				</div>
 
