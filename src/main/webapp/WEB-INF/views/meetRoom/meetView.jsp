@@ -90,8 +90,16 @@ p {
 }
 #meetView_header {
 	margin-top: 50px;
+	display: inline-block;
 }
-
+#eachRoomList {
+	float: right;
+}
+#meetView_name{
+	font-size: 2.0em;	
+	font-family: sans-serif;
+	margin-bottom: 40px;
+}
 #photo_wrap {
 	width: 40%;
 	height: 50%;
@@ -120,13 +128,25 @@ p {
 		<input type="hidden" id="mak" value="${dto.name}">
 		
 		<div id="meetView_header">
-		<p>${dto.name}</p>
-
+		<div id="meetView_name">
+		<h1>${dto.name}</h1>
+		</div>
 		<div id="photo_wrap">
 		<img alt="" src="${pageContext.request.contextPath}/resources/upload/${dto.fname}">	
 		</div>
 		</div>		
 		
+		<div id="eachRoomList">
+		<p>세부공간</p>
+		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>
+		<hr>
+		<h2>세부공간 리스트</h2>
+		<div id="eachRoom">
+		
+		</div>
+		<input type="button" id="reservation_btn" value="예약하기">
+		<hr>
+		</div>
 		
 		<div id="contents">
 		<p>공간 소개</p>
@@ -173,17 +193,6 @@ p {
 		</div>
 	
 		
-		<div id="eachRoomList">
-		<p>세부공간</p>
-		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>
-		<hr>
-		<h2>세부공간 리스트</h2>
-		<div id="eachRoom">
-		
-		</div>
-		<input type="button" id="reservation_btn" value="예약하기">
-		<hr>
-		</div>
 		<a href="meetDelete?num=${dto.num}">업체 삭제</a>
 		<a href="meetUpdate?num=${dto.num}">업체 수정</a>
 		</section>

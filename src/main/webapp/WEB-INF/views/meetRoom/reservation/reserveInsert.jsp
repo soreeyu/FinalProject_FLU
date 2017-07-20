@@ -32,6 +32,7 @@
     	var index2=0;
     	var name=$("#reserved_name").val();
     	var snum = '${each.snum}';
+    	
         $("#datepicker").datepicker({
         	altField : "#day",
         	
@@ -40,91 +41,65 @@
         		var reserve_date = $("#day").val();
 
         		$.post("reservedTime", {reserve_date : reserve_date, name : name, snum:snum}, function(data) {
-					$("#reserve_time").html(data);
-				}) 
+        			$("#reserve_time").html(data);
+				}); 
         		//에이작스범위는 여기까지
         	}
         });
+        var reserve_date = $("#day").val();
+		$.ajax({
+			url : "reservedTime",
+			type: "POST",
+			data :{
+				reserve_date : reserve_date,
+				name : name,
+				snum:snum
+				},
+			success: function(data) {
+				
+				$("#reserve_time").html(data);
+			}				
+			
+		});
        
+		/* 시간 뿌려주는 부분에서 가로 스크롤 스크립트  */
         $("#reserve_time").mouseenter(function() {
     		$(this).mousewheel(function(event, delta) {
     			this.scrollLeft -= (delta * 30);    
-    		     event.preventDefault();
-    		});
-    		
+    		    event.preventDefault();
+    		});    		
     	});     
         
-        /* 전체 시간 뿌려주고 검은색 div는 버튼 클릭 비활성화 해준다. */
-       /*  $(".time").each(function(index) {
-        	var access1 = '${access[0]}';
-        	var access2 = '${access[1]}';
-        	if(index<access1*1 && index>access2*1){
-        		
-        	}
-			
-		}); */  
     		$(this).each(function(index){
     			$("#reserve_time").on("click",".time", function() {
-	    		$(this).click(function(){
 	    			if(check<2){
 	    				check++;
 	    				if(check==1){
 	    					index1 = $(this).attr("title");			
-	    					$(this).css("background-color", "red");
-	    					
+	    					$(this).css("background-color", "red");	    					
 	    				}
 	    				else if(check==2) {
 	    					index2 = $(this).attr("title");
+	    					sel(index1,index2);
 	    					$(this).css("background-color", "red");
-	    					
-	    					sel(index1,index2); 
-	    					
-	    				
 	    				}
 	    			}else {
 	    				check=0;
-	    				$(".time").css("background-color", "yellow");
-	    			}
-	    			
-	    			
-	    		});
+	    				$(this).css("background-color", "yellow");
+	    			}    			
     			});	
-	    	});	
-	
-	     	$(".time").each(function(index){
-	    		$(this).click(function(){
-	    			if(check<2){
-	    				check++;
-	    				if(check==1){
-	    					index1 = $(this).attr("title");			
-	    					$(this).css("background-color", "red");
-	    					
-	    				}
-	    				else if(check==2) {
-	    					index2 = $(this).attr("title");
-	    					$(this).css("background-color", "red");
-	    					
-	    					sel(index1,index2); 
-	    					
-	    				
-	    				}
-	    			}else {
-	    				check=0;
-	    				$(".time").css("background-color", "yellow");
-	    			}
-	    			
-	    			
-	    		});
-	     			
-	    	});		
+	    	});
+			
      	function sel(index1,index2){
+     		alert("index1="+index1+","+"index2="+index2);
     		$(".time").each(function(index){
+    			alert(index);
     			if(index>=index1 && index<=index2){
+    				alert("아이디"+$(this).attr("id"));
     				$(this).css("background-color", "red");
     			}else if(index>=index2 && index<=index1){
     				$(this).css("background-color", "red");
-    			}
-    			
+    			}			
     		});	  		
     		if(index1*1>index2*1){
     			alert("index1이 index2보다 큰 경우");
@@ -135,24 +110,34 @@
     			$("#out").val(index2);
     		}else if(index1*1==index2*1){
     			alert("오픈시간과 마감시간을 확인하세요");
-    			$(".time").css("background-color", "black");
-    			
+    			$(this).css("background-color", "yellow");  			
     		}
-    	}
-        
-    	
+    	} 
+     	
+     	$("#reset_btn").click(function(index) {
+    		var tin = $("#in").val()*1;
+    		var tout = $("#out").val()*1;
+    		
+    		if(tin!="" && tout!=""){
+    			alert("시간을 다시 설정합니다.");
+    			$(".time").css("background-color", "yellow");
+    			check=0;
+    			$("#in").val("");
+    			$("#out").val("");
+    		}else if(topen=="" || tclose ==""){
+    			alert("오픈 시간과 마감시간을 입력해주세요");
+    		}
+    	})
+     	
     	$("#people").blur(function() {
 			var price = $("#price").val();
 			var final_price = ($(this).val()*1)*(price*1);
 			$("#rprice").val(final_price);
 			$(".final_price").append(final_price);
-			
-			
 		});
     	
     	$("#reserve_btn").click(function() {
     		var reserve_Info = document.getElementsByClassName("reserve_Info");
-
     		if(reserve_Info[0].value==""){
     			alert("날짜를 선택하세요");
     		}else if(reserve_Info[1].value==""){
@@ -169,11 +154,9 @@
     			alert("이메일을 입력 해주세요");
     		}else { 
 	    		$("#frm").submit();    			
-    		}
-    		
+    		}   		
 		});
     });
-
 </script>
 <style type="text/css">
 section {
@@ -234,7 +217,6 @@ font-size:14px;
 	<h2>세부공간</h2>
 	<div>${each.price}/시간(인)</div>
 	<input type="hidden" id="price" value="${each.price}">
-	
 		유형 : ${each.type}
 		예약시간 : ${each.time}
 		인원 : ${each.human}
@@ -248,36 +230,10 @@ font-size:14px;
 	
 	</div>
 	<div class="heading">
-		<h3>시간 선택</h3>
+		<h3>시간 선택(예약가능시간)</h3>
 	</div>
 	<div id="reserve_time">
-	<table id="timeList">
-		<thead>
-			<tr>
-				<c:forEach begin="0" end="24" var="i" step="1">
-					<td>${i}</td>
-				</c:forEach>
-			</tr>
-		</thead>
-		<tbody>
-			<tr id="result_reserved">
-				<c:forEach begin="0" end="24" var="i" step="1" varStatus="r">
-					<c:choose >
-						<c:when test="${access[0]<=r.index && access[1]>=r.index}" >
-							<td>
-								<div id="reserve${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: yellow; margin-left: 10px;" ></div>
-							</td>							
-						</c:when>
-						<c:otherwise>
-							<td>
-								<div class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: black; margin-left: 10px;"></div>
-							</td>					
-						</c:otherwise>
-					</c:choose>			
-				</c:forEach>
-			</tr>
-		</tbody>
-	</table>
+	
 	</div>
 	<div id="timeresult">
 		<input type="hidden" name="time" id="in" class="reserve_Info">

@@ -3,6 +3,7 @@
   
   
   <mapper namespace="ReservationMapper">
+  
 	<!-- 예약 가능 시간 불러오기 -->
 	<select id="Reserve_accessTime" parameterType="java.lang.Integer" resultType="com.flu.meetRoom.MeetRoomDTO">
 		select time from meetroom where num=#{snum}

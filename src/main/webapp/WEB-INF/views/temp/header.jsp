@@ -26,6 +26,9 @@
 					</span>
 					</c:when>
 					<c:otherwise>
+					<span>
+						<a href="#">알람</a>
+					</span>
 					<span class="header_sign_up">	
 						<a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
 					</span>

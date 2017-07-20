@@ -12,8 +12,6 @@ section {
 	min-width : 1152px;
 	width : 60%;
 	margin : 0 auto;
-	height: 1000px;
-	
 }
 .Room{
 	width : 30%;
@@ -51,7 +49,6 @@ section {
 <body>
 	<c:import url="../temp/header.jsp"/>
 	<section>
-
 	<c:forEach items="${list}" var="i">
 	<div class="Room">
 		<div class="Room_Img" >
@@ -67,7 +64,7 @@ section {
 	
 	
 	
-	<c:if test="${kind eq admin}">
+	<c:if test="${member.kind eq admin}">
 	<a href="meetInsert" style="float: left;">업체등록</a>	
 	</c:if>
 	</section>

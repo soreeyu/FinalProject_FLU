@@ -11,27 +11,8 @@
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=cde07d5e2e22a53124fd5730df8d372b"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<!-- 마우스 휠 플러그인 -->
-<script type='text/javascript' src='../resources/js/jquery.mousewheel.min.js'></script>
 <script type="text/javascript">
 	$(function() {
-		//전역변수선언
-		var editor_object = [];
-
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef : editor_object,
-			elPlaceHolder : "smarteditor",
-			sSkinURI : "../resources/SE2/SmartEditor2Skin.html",
-			htParams : {
-				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseToolbar : true,
-				// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseVerticalResizer : true,
-				// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseModeChanger : true,
-			}
-		});
-
 		//전송버튼 클릭이벤트
 		$("#savebutton").click(
 				function() {				
@@ -54,99 +35,10 @@
 						alert("상세주소를 입력하세요.")
 					}else if(meetRoomInfo[7].value==""){
 						alert("오픈시간을 입력하세요.")
-					}else {
-						//id가 smarteditor인 textarea에 에디터에서 대입
-						editor_object.getById["smarteditor"].exec(
-								"UPDATE_CONTENTS_FIELD", []);
-	
-						// 이부분에 에디터 validation 검증
+					}else {	
 						$('#frm').submit();
 					}
-				})
-
-	$("#meetRoom_time").mouseenter(function() {
-		$(this).mousewheel(function(event, delta) {
-			this.scrollLeft -= (delta * 30);    
-		     event.preventDefault();
-		});
-		
-	});
-		
-				
-	var check=0;
-	var index1=0;
-	var index2=0;
- 	$(".time").each(function(index){
-		$(this).click(function(){
-			if(check<2){
-				check++;
-				if(check==1){
-					index1 = $(this).attr("title");			
-					$(this).css("background-color", "red");
-					
-				}
-				else if(check==2) {
-					index2 = $(this).attr("title");
-					$(this).css("background-color", "red");
-					
-					sel(index1,index2); 
-					
-				
-				}
-			}else {
-				check=0;
-				$(".time").css("background-color", "black");
-			}
-			
-			
-		});
- 			
-	});	 
-	
-	
-	
-	function sel(index1,index2){
-		alert('함수안 index1='+index1+" index2="+index2);
-		$(".time").each(function(index){
-			if(index>=index1 && index<=index2){
-				$(this).css("background-color", "red");
-			}else if(index>=index2 && index<=index1){
-				$(this).css("background-color", "red");
-			}
-			
-		});	
-		
-		
-		if(index1*1>index2*1){
-			alert("index1이 index2보다 큰 경우");
-			$("#topen").val(index2);
-			$("#tclose").val(index1);
-		}else if(index1*1<index2*1) {
-			$("#topen").val(index1);
-			$("#tclose").val(index2);
-		}else if(index1*1==index2*1){
-			alert("오픈시간과 마감시간을 확인하세요");
-			$(".time").css("background-color", "black");
-			
-		}
-	}
-	
-	 
-	 
-	$("#reset_btn").click(function() {
-		var topen = $("#topen").val()*1;
-		var tclose = $("#tclose").val()*1;
-		
-		if(topen!="" && tclose!=""){
-			alert("시간을 다시 설정합니다.");
-			$(".time").css("background-color", "black");
-			check=0;
-			$("#topen").val("");
-			$("#tclose").val("");
-		}else if(topen=="" || tclose ==""){
-			alert("오픈 시간과 마감시간을 입력해주세요");
-		}
-	})
+				});
 	
 	$("#holiday_select_day").hide();
 	$("#holiday_select").change(function() {
@@ -213,7 +105,6 @@ section {
 	min-width : 1152px;
 	width : 70%;
 	margin : 0 auto;
-	height: 1000px;
 }
 #meetRoom_header{
 	display: table;
@@ -240,20 +131,23 @@ section {
 	position: relative;
 }
 #meetRoom_contents > textarea{
-	width: 99%;
-	margin: 0 auto;
+	width: 100%;
+	position: relative;
+	vertical-align: top;
 }
 #meetRoom_time {
-	width : 100%;
-	overflow: hidden;
+	display: inline-block;
+}
+#timeresult {
+	margin-top: 20px;
+	display: inline-block;
 }
 #holiday {
 	display: inline-block;
     position: relative;
-    width: 50%;
     border: 1px solid #e0e0e0;
-    background-color: #fff
 }
+
 #holiday > selecet {
 	position: relative;
     z-index: 2;
@@ -265,6 +159,9 @@ section {
     line-height: 48px;
     vertical-align: top;
     width: 100%;
+}
+#holiday_select_day {
+	display: inline-block;
 }
 #holiday_select_day li {
 	display : inline;
@@ -282,68 +179,61 @@ section {
 	
 	<form action="meetInsert" method="post" enctype="multipart/form-data" id="frm">
 	<div class="meetRoom_name">
-		공간명<br>
+		<span>
+		공간명
+		</span>
 		<input type="text" name="name" placeholder="공간명을 입력해주세요." class="meetRoomInfo">
 	</div>
 	<div id="meetRoom_contents">
+		<span>
 		공간소개
-		<textarea rows="" cols="" name="contents" id="smarteditor"> </textarea>
+		</span>
+		<textarea rows="" cols="" name="contents" id="smarteditor" style="height: 108px;"> </textarea>
 	</div>
-		<p>이용시간</p>
+			
 		<div id="meetRoom_time">
-		<table id="timeList">
-			<thead>
-				<tr>
-					<c:forEach begin="0" end="24" var="i" step="1">
-						<td>
-							${i}
-						</td>
-					</c:forEach>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<c:forEach begin="0" end="23" var="i" varStatus="r" step="1">
-						<td>
-							<div class="time" title="${r.index}" style="min-width: 90px; min-height: 76px; background-color: black; margin-left: 10px;"></div>
-						</td>
-					</c:forEach>
-				</tr>
-			</tbody>
-
-		</table>
+		<span> 이용시간 </span>
+		<select name="time" class="meetRoomInfo">
+			<c:forEach begin="0" end="23" var="i">
+				<option value="${i}">${i}시</option>			
+			</c:forEach>
+		</select>
+		<span>부터</span>
+		<select name="time" class="meetRoomInfo">
+			<c:forEach begin="0" end="24" var="i">
+				<option value="${i}">${i}시</option>			
+			</c:forEach>
+		</select>
+		<span>까지</span>
 		</div>
-		<div id="timeresult">
-			<input type="hidden" name="time" id="topen" class="meetRoomInfo">
-			<input type="hidden" name="time" id="tclose" class="meetRoomInfo">
-			<input type="button" id="reset_btn" value="RESET">
-		</div>
+		
 		<br>
-		정기 휴무
 		<div id="holiday">
+		<span>
+		정기 휴무
+		</span>
 		<select id="holiday_select" name="holiday">
-			<option value="none">휴무 없음</option>
-			<option value="weekly">매주</option>
-			<option value="week1">매월 첫째주</option>
-			<option value="week2">매월 둘째주</option>
-			<option value="week3">매월 셋째주</option>
-			<option value="week4">매월 넷째주</option>
-			<option value="lastweek">매월 마지막주</option>
-			<option value="monthly">직접지정</option>
+			<option value="휴무없음">휴무 없음</option>
+			<option value="매주">매주</option>
+			<option value="매월 첫째주">매월 첫째주</option>
+			<option value="매월 둘째주">매월 둘째주</option>
+			<option value="매월 셋째주">매월 셋째주</option>
+			<option value="매월 넷째주">매월 넷째주</option>
+			<option value="매월 마지막주">매월 마지막주</option>
 		</select>
 		</div>
 		<div id="holiday_select_day">
 		 <ul class="check_list week" id="weekError">
-				<li><input type="checkbox" name="holiday" id="date_MON" value="MON"> <label for="date_MON">월</label></li>
-				<li><input type="checkbox" name="holiday" id="date_TUE" value="TUE"> <label for="date_TUE">화</label></li>
-				<li><input type="checkbox" name="holiday" id="date_WED" value="WED"> <label for="date_WED">수</label></li>
-				<li><input type="checkbox" name="holiday" id="date_THU" value="THU"> <label for="date_THU">목</label></li>
-				<li><input type="checkbox" name="holiday" id="date_FRI" value="FRI"> <label for="date_FRI">금</label></li>
-				<li><input type="checkbox" name="holiday" id="date_SAT" value="SAT"> <label for="date_SAT">토</label></li>
-				<li><input type="checkbox" name="holiday" id="date_SUN" value="SUN"> <label for="date_SUN">일</label></li>
+				<li><input type="checkbox" name="holiday" id="date_MON" value="월요일"> <label for="date_MON">월</label></li>
+				<li><input type="checkbox" name="holiday" id="date_TUE" value="화요일"> <label for="date_TUE">화</label></li>
+				<li><input type="checkbox" name="holiday" id="date_WED" value="수요일"> <label for="date_WED">수</label></li>
+				<li><input type="checkbox" name="holiday" id="date_THU" value="목요일"> <label for="date_THU">목</label></li>
+				<li><input type="checkbox" name="holiday" id="date_FRI" value="금요일"> <label for="date_FRI">금</label></li>
+				<li><input type="checkbox" name="holiday" id="date_SAT" value="토요일"> <label for="date_SAT">토</label></li>
+				<li><input type="checkbox" name="holiday" id="date_SUN" value="일요일"> <label for="date_SUN">일</label></li>
 			</ul>
 		</div>
-
+		<br>
 		대표이미지<br>
 		<input type="file" name="file" id="files" class="meetRoomInfo">
 		<p>우편번호<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo"></p>
