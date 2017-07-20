@@ -120,7 +120,7 @@ $(function(){
 		//$('iframe[id!=scheduleFrame]').remove();
 	});
 	
-	$('#schcalendar').fullCalendar({
+	/*$('#schcalendar').fullCalendar({
 		 customButtons: {
 			 myCustomButton: {
 		            text: 'custom!',
@@ -179,13 +179,13 @@ $(function(){
 	        modal.show(); 
 	        
 	        //일정에 가지고있는 링크를 사용해서 열어준다
-	        /*
+	        
 	        if(event.url) {
                 alert(event.title + "\n" + event.url, "wicked", "width=700,height=600");
                 window.open(event.url,"_blank");
                 return false;
             }
-	        */
+	        
 
 	    },
 	    // 달력의 빈칸을 클릭했을때 실행되는 함수
@@ -198,7 +198,7 @@ $(function(){
 			writeModal.show(); 
 			
 	    }
-	});
+	});*/
 	
     $("#addUnitBtn").click(function(){
     	alert("할일 등록하기");

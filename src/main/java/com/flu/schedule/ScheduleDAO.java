@@ -19,7 +19,7 @@ public class ScheduleDAO {
 	private static final String NAMESPACE = "ScheduleMapper.";
 	
 	//주어진 projectNum에 대한 schedule이 존재하는지 확인 
-	public ScheduleMainDTO checkSchedule(Integer projectNum){
+	public ScheduleMainDTO checkSchedule(Integer projectNum) throws Exception{
 		System.out.println("check하러 DAO옴"+projectNum);
 		ScheduleMainDTO dto = sqlSession.selectOne(NAMESPACE+"checkS", projectNum);
 		System.out.println(dto);

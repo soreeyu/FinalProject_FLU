@@ -32,7 +32,8 @@ public class ScheduleService {
 	 * 		부재 : null 
 	 * 		존재 : ScheduleMainDTO 객체 (scheduleNum, startDate, finishDate, projectNum)
 	 * */
-	public ScheduleMainDTO checkSchedule(Integer projectNum){
+	@Transactional
+	public ScheduleMainDTO checkSchedule(Integer projectNum) throws Exception{
 		System.out.println("check하러 서비스옴");
 		return scheduleDAO.checkSchedule(projectNum);
 	}

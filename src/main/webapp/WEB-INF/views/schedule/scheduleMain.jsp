@@ -15,6 +15,19 @@
 <script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/lib/niee-canvas-chart003.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/lib/ajaxfileupload.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/base.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/core.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/button.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/combo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/datepicker.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/dropdown.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
+
 
 
 <title>ScheduleMain</title>
@@ -99,233 +112,14 @@ div{
 	width: 300px;
 }
 
+/****************** modal css *******************/
+#partModal{
+	background: lime;
+}
+
+
 
 </style>
-
-
-<script type="text/javascript">
-
-function getContextPath(){
-	alert('${pageContext.request.contextPath}');
-	var context = '${pageContext.request.contextPath}';
-	return context;
-}
-
-
-
-$(function(){
-	//alert("다시 시작하기");
-	//var scheduleNum = 0; 
-	//var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
-	
-	
-	
-	//scheduleNum = getScheduleNum(3000);
-	//****************************************************주의..
-	//alert("ajax 아래에서 찍어보는 scheduleNum="+scheduleNum); 
-	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
-	
-	
-	getScheduleNum(8000);
-});
-
-
-
-
-function getScheduleNum(projectNum){
-	//ajax로 스케줄있는지 확인필요 
-	$.ajax({
-		url: getContextPath()+"/schedule/check?projectNum="+projectNum,
-		type: "GET",
-		success: function(data){
-			alert(JSON.stringify(data));
-			if(data.schedule=='n'){
-				//스케줄 생성하도록 창띄워주기
-				//alert(data.projectNum);
-				if(confirm('스케줄을 생성하시겠소?')){
-					scheduleNum = createSchedule(data.projectNum);
-				}else{
-					//이전 화면으로 가기 
-					window.history.back();
-				}
-				
-			}else{
-				//있으니까 가져온 scheduleNum으로 화면에 뿌려주기
-				alert("있다고"+data.scheduleMainDTO);
-				scheduleNum = data.scheduleMainDTO.scheduleNum;
-				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
-				
-				var test = getPartList(scheduleNum);
-				//alert("test data"+JSON.stringify(test)); //이것도 값이 들어오기전에 먼저 찍히는 무의미함..
-			} 
-		}
-	});
-}
-
-
-function createSchedule(projectNum){
-	var scheduleNum = 0;
-	$.ajax({
-		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
-		type: "GET",
-		success:function(data){
-			alert("여기엔 파트 입력 폼이 와야겠지요, 거기엔 물론 scheduleNum이 포함되어있고요 ");
-			alert(data);
-			$("#partsDiv").html(data);
-			scheduleNum = $("#scheduleNum").val();// 뭐이런식으로 하고
-			alert("ajax로 생성된 scheduleNum = "+scheduleNum);
-			return scheduleNum;
-		}
-	});
-}
-
-
-	
-/**
- * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
- */
-function getPartList(scheduleNum){
-	
-	var partsJsonArray = new Array();
-	
-	$.ajax({
-		url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
-		type: "GET",
-		success:function(data){ //json 넘어옴 
-
-			
-			var result="<table>";
-			$(data).each(function(){
-				result = result + "<tr>";
-				result = result + '<td class="schNum">'+ this.scheduleNum + "</td>";
-				result = result + '<td class="partNum">'+ this.partNum + "</td>";
-				result = result + "<td> "+ this.partName + " </td>";
-				result = result + "<td> "+ this.partStartDate + " </td>";
-				result = result + "<td> "+ this.partFinishDate + " </td>";
-				result = result + "<td> "+ this.partNum + " </td>";
-				result = result + "<td> "+ this.partDescFileO + " </td>";
-				result = result + "</tr>";
-				
-				//fullcal의 event 속성에 맞춰서 json 만들어주기
-				var partsJson = new Object();
-				partsJson.id = this.scheduleNum+this.partName+this.partNum;
-				partsJson.title = this.partName;
-				partsJson.start =  this.partStartDate; 
-				partsJson.end =  this.partFinishDate; 
-				partsJson.description =  this.partDescFileO; 
-				partsJson.color =  'blue'; 
-				partsJson.textColor =  'white'; 
-				partsJsonArray.push(partsJson);
-	
-				
-			});
-			result = result + "</table>";
-
-			
-			$("#partsDiv").html(result); //화면에 뿌려주기
-			partsJSONArray = data;
-			//여기서 이 json을 사용하는 함수를 불러 주는게 좋겠다
-			//return partsJSONArray; 
-			//이렇게하면 비동기화 방식이 무의미 해지기 때문에 //데이터를 담은 후 그 데이터를 사용하기 위한것이기 때문에
-			//동기화 방식 // 즉 데이터가 다 가져와져서 담길때까지 기다려야하기 때문이라는 말이다 
-			//그냥 여기서 함수를 호출해버리는게 좋을수도 있겠다 
-			alert("success안에 data "+JSON.stringify(partsJSONArray));
-			//addEvents(partsJSONArray); // 달력 뿌려주고 이거 실행되면 되는것이지요 
-		}
-	});
-	
-	//alert("ajax아래 함수안에 data "+JSON.stringify(partsJSONArray)); // 오류남
-	
-	
-	
-} // getPartList() 끝
-
-
-function getUserList(scheduleNum){
-	
-	$.ajax({
-		url: "/flu/schedule/userList?scheduleNum="+scheduleNum,
-		type: "GET",
-		success: function(data){
-			//alert(JSON.stringify(data));
-			
-			var result="<table>";
-			$(data).each(function(){
-				result = result + "<tr>";
-				result = result + "<td> "+ this.email + " </td>";
-				result = result + "<td> "+ this.kind + " </td>";
-				result = result + "<td> "+ this.name+"("+this.nickName+")" + " </td>";
-				result = result + "</tr>";				
-			});
-			result = result + "</table>";
-
-			$("#usersDiv").html(result); //화면에 뿌려주기
-		}
-		
-	});
-	
-}
-
-
-function getUnitList(scheduleNum,partNum,email){
-	
-	$.ajax({
-		url: "/flu/schedule/unitList",
-		type: "POST",
-		data: {
-			scheduleNum:scheduleNum,
-			partNum:partNum,
-			email:email
-		},
-		success: function(data){
-			//alert(JSON.stringify(data));
-			
-			var result="<table>";
-			$(data).each(function(){
-				result = result + "<tr>";
-				result = result + "<td> "+  " </td>";
-				result = result + "<td> "+  " </td>";
-				result = result + "<td> "+  " </td>";
-				result = result + "</tr>";				
-			});
-			result = result + "</table>";
-
-			$("#unitsDiv").html(result); //화면에 뿌려주기
-		}
-		
-	});
-	
-}
-
-
-
-
-
-
-/**
- * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 
- */
-function addEvents(jsonObj){
-	for(var i=0; i<Object.keys(jsonObj).length; i++){
-		//alert('일정추가되고있는가'+i);
-        $('#schcalendar').fullCalendar('addEventSource', [{
-            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
-            title:       jsonObj[i].partName,
-            start:       jsonObj[i].partStartDate,
-            end:         jsonObj[i].partFinishDate,
-            //description: partsJsonArray[i].description, 
-            color:       'red',
-            textColor:   'white',
-            //url: 'https://www.github.com'
-        }]);
-        console.log('ok');
-    } 
-}
-
-
-
-
-</script>
 
 
 
@@ -356,6 +150,16 @@ function addEvents(jsonObj){
 			
 		</div>
 		
+		<!-- 파트 추가하기 -->
+		<div id="partModal" class="msgbox" style="display: none;">
+			<div class="head">
+				<span id="partModal-title">파트 추가</span>
+		    </div>
+			<div class="body">
+				<span id="partModal-contents"></span>	
+			</div>
+		</div>
+		
 		
 		
 		
@@ -377,7 +181,7 @@ function addEvents(jsonObj){
 			<div class="head">
 				<span>등록 폼</span>
 		    </div>
-			<div class="body">
+			<div class="body  insertForm">
 			<!-- <form id="unitFrm" action="" method="POST"> -->
 				<table>
 					<tr>
@@ -570,6 +374,333 @@ function addEvents(jsonObj){
 
 
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
+
+
+<script type="text/javascript">
+
+function getContextPath(){
+	alert('${pageContext.request.contextPath}');
+	var context = '${pageContext.request.contextPath}';
+	return context;
+}
+</script>
+
+
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_FUNCTION.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_JUI.js" type="text/javascript" charset="utf-8"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_JQUERY.js" type="text/javascript" charset="utf-8"></script> --%>
+<script src="${pageContext.request.contextPath}/resources/schedule/myeon/test_DATE.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+<script type="text/javascript">
+$(function(){
+	//alert("다시 시작하기");
+	//var scheduleNum = 0; 
+	//var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
+	
+	
+	
+	//scheduleNum = getScheduleNum(3000);
+	//****************************************************주의..
+	//alert("ajax 아래에서 찍어보는 scheduleNum="+scheduleNum); 
+	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
+	
+	
+	getScheduleNum(5000);
+	
+	
+	
+	
+	
+	
+	$('#schcalendar').fullCalendar({
+		 customButtons: {
+			 myCustomButton: {
+		            text: 'custom!',
+		            click: function() {
+		                alert('clicked the custom button!');
+		            }
+		        }
+		 },
+		    
+		header: {
+			left: '',
+			center: 'prev title next myCustomButton',
+			right: 'today,month'//'today,month,basicWeek,basicDay'
+		},
+		titleFormat: {
+			month: 'yyyy년 MMMM',
+			week: "yyyy년 MMMM d[yyyy]{'일 ~ '[mmm] dd일'}",
+			day: "yyyy년 MMM d dddd"
+		},
+		monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		monthNamesShort : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		dayNames : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+		dayNamesShort : ['일','월','화','수','목','금','토'],
+		allDayText : '금일일정',
+		minTime : 9,
+		maxTime : 19,
+		axisFormat : "HH:mm",
+		editable: false,
+		events: [{
+	        id: 'All Day Event',
+	        title: 'All Day Event',
+	        start: new Date()
+	    }, {
+	        id: 'popo',
+	        title: 'popo',
+	        start: new Date('2017-07-20'),
+	        //end:   '2014-11-05T12:30:00',
+	        description: 'This is a cool event 테슷흐',
+	        color: 'rgb(142, 67, 163)',
+	        textColor: 'orange'
+	    }, {
+	        id: 'test2',
+	        title: 'test2',
+	        url: 'http://google.com/',
+	        start: new Date('2017-07-30'),
+	    }],
+	    //등록된 일정을 클릭했을 때 실행하는 함수 
+	   eventClick: function(calEvent, jsEvent, view) {
+
+	        alert('Event: ' + calEvent.title);
+	        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY); // 화면 좌표인듯
+	        alert('View: ' + view.name);
+
+	        // change the border color just for fun
+	        $(this).css('border-color', 'red');
+	        modal.show(); 
+	        
+	        //일정에 가지고있는 링크를 사용해서 열어준다
+	        /*
+	        if(event.url) {
+               alert(event.title + "\n" + event.url, "wicked", "width=700,height=600");
+               window.open(event.url,"_blank");
+               return false;
+           }
+	        */
+
+	    },
+	    // 달력의 빈칸을 클릭했을때 실행되는 함수
+	    dayClick: function(date) {
+			//scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
+			//$('#title').val(scheduleParam.title);
+			//$('#contents').val(scheduleParam.contents);
+			spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
+			epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
+			writeModal.show(); 
+			
+	    }
+	});
+	
+	
+	
+
+
+
+
+
+function getScheduleNum(projectNum){
+	//ajax로 스케줄있는지 확인필요 
+	$.ajax({
+		url: getContextPath()+"/schedule/check?projectNum="+projectNum,
+		type: "GET",
+		success: function(data){
+			alert(JSON.stringify(data));
+			if(data.schedule=='n'){
+				//스케줄 생성하도록 창띄워주기
+				//alert(data.projectNum);
+				if(confirm('스케줄을 생성하시겠소?')){
+					scheduleNum = createSchedule(data.projectNum);
+				}else{
+					//이전 화면으로 가기 
+					window.history.back();
+				}
+				
+			}else if(data.schedule=='y'){
+				//있으니까 가져온 scheduleNum으로 화면에 뿌려주기
+				alert("있다고"+data.scheduleMainDTO);
+				scheduleNum = data.scheduleMainDTO.scheduleNum;
+				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
+				
+				getPartList(scheduleNum);
+				getUserList(scheduleNum);
+				//var test = getPartList(scheduleNum);
+				//alert("test data"+JSON.stringify(test)); //이것도 값이 들어오기전에 먼저 찍히는 무의미함..
+			}else{ //오류났을때
+				location.href=getContextPath();
+			}
+		}
+	});
+}
+
+
+function createSchedule(projectNum){
+	var scheduleNum = 0;
+	$.ajax({
+		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
+		type: "GET",
+		success:function(data){
+			alert("여기엔 파트 입력 폼이 와야겠지요, 거기엔 물론 scheduleNum이 포함되어있고요 ");
+			alert(data);
+			//$("#partsDiv").html(data);
+			$(".insertForm").html(data);
+			writeModal.show(); 
+			scheduleNum = $("#scheduleNum").val();// 뭐이런식으로 하고
+			alert("ajax로 생성된 scheduleNum = "+scheduleNum);
+			return scheduleNum;
+		}
+	});
+}
+
+
+	
+/**
+ * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
+ */
+function getPartList(scheduleNum){
+	
+	var partsJsonArray = new Array();
+	
+	$.ajax({
+		url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
+		type: "GET",
+		success:function(data){ //json 넘어옴 
+
+			
+			var result="<table>";
+			$(data).each(function(){
+				result = result + "<tr>";
+				result = result + '<td class="schNum">'+ this.scheduleNum + "</td>";
+				result = result + '<td class="partNum">'+ this.partNum + "</td>";
+				result = result + "<td> "+ this.partName + " </td>";
+				result = result + "<td> "+ this.partStartDate + " </td>";
+				result = result + "<td> "+ this.partFinishDate + " </td>";
+				result = result + "<td> "+ this.partNum + " </td>";
+				result = result + "<td> "+ this.partDescFileO + " </td>";
+				result = result + "</tr>";
+				
+				//fullcal의 event 속성에 맞춰서 json 만들어주기
+				var partsJson = new Object();
+				partsJson.id = this.scheduleNum+this.partName+this.partNum;
+				partsJson.title = this.partName;
+				partsJson.start =  this.partStartDate; 
+				partsJson.end =  this.partFinishDate; 
+				partsJson.description =  this.partDescFileO; 
+				partsJson.color =  'blue'; 
+				partsJson.textColor =  'white'; 
+				partsJsonArray.push(partsJson);
+	
+				
+			});
+			result = result + "</table>";
+
+			
+			$("#partsDiv").html(result); //화면에 뿌려주기
+			partsJSONArray = data;
+			//여기서 이 json을 사용하는 함수를 불러 주는게 좋겠다
+			//return partsJSONArray; 
+			//이렇게하면 비동기화 방식이 무의미 해지기 때문에 //데이터를 담은 후 그 데이터를 사용하기 위한것이기 때문에
+			//동기화 방식 // 즉 데이터가 다 가져와져서 담길때까지 기다려야하기 때문이라는 말이다 
+			//그냥 여기서 함수를 호출해버리는게 좋을수도 있겠다 
+			alert("success안에 data "+JSON.stringify(partsJSONArray));
+			//addEvents(partsJSONArray); // 달력 뿌려주고 이거 실행되면 되는것이지요 
+		}
+	});
+	
+	//alert("ajax아래 함수안에 data "+JSON.stringify(partsJSONArray)); // 오류남
+	
+	
+	
+} // getPartList() 끝
+
+
+function getUserList(scheduleNum){
+	
+	$.ajax({
+		url: "/flu/schedule/userList?scheduleNum="+scheduleNum,
+		type: "GET",
+		success: function(data){
+			//alert(JSON.stringify(data));
+			
+			var result="<table>";
+			$(data).each(function(){
+				result = result + "<tr>";
+				result = result + "<td> "+ this.email + " </td>";
+				result = result + "<td> "+ this.kind + " </td>";
+				result = result + "<td> "+ this.name+"("+this.nickName+")" + " </td>";
+				result = result + "</tr>";				
+			});
+			result = result + "</table>";
+
+			$("#usersDiv").html(result); //화면에 뿌려주기
+		}
+		
+	});
+	
+}
+
+
+function getUnitList(scheduleNum,partNum,email){
+	
+	$.ajax({
+		url: "/flu/schedule/unitList",
+		type: "POST",
+		data: {
+			scheduleNum:scheduleNum,
+			partNum:partNum,
+			email:email
+		},
+		success: function(data){
+			//alert(JSON.stringify(data));
+			
+			var result="<table>";
+			$(data).each(function(){
+				result = result + "<tr>";
+				result = result + "<td> "+  " </td>";
+				result = result + "<td> "+  " </td>";
+				result = result + "<td> "+  " </td>";
+				result = result + "</tr>";				
+			});
+			result = result + "</table>";
+
+			$("#unitsDiv").html(result); //화면에 뿌려주기
+		}
+		
+	});
+	
+}
+
+
+
+
+
+
+/**
+ * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 
+ */
+function addEvents(jsonObj){
+	for(var i=0; i<Object.keys(jsonObj).length; i++){
+		//alert('일정추가되고있는가'+i);
+        $('#schcalendar').fullCalendar('addEventSource', [{
+            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
+            title:       jsonObj[i].partName,
+            start:       jsonObj[i].partStartDate,
+            end:         jsonObj[i].partFinishDate,
+            //description: partsJsonArray[i].description, 
+            color:       'red',
+            textColor:   'white',
+            //url: 'https://www.github.com'
+        }]);
+        console.log('ok');
+    } 
+}
+
+}); // $(function(){}) 끝
+
+
+</script>
 
 </body>
 </html>

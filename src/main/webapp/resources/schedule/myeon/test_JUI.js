@@ -10,12 +10,19 @@ var spicker;
 var epicker;
 var userPaging;
 var userTree;
+//
+var partModal;
 
 
 /**
  * JUI 영역
  */
 jui.ready(function(ui, uix, _) {
+	
+	partModal = ui.modal("#partModal", {
+		color: "black",
+		target: ".main_section"
+	});
 	
 	
 	modal = ui.modal("#modal", {

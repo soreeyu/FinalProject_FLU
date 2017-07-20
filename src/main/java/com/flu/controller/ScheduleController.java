@@ -37,27 +37,36 @@ public class ScheduleController {
 			System.out.println("check하러옴");
 			System.out.println("projectNum = "+projectNum);
 			Map<String, Object> map = new HashMap<String, Object>();
-			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
-			System.out.println("check의 result = "+result);
-			if(result != null){ //스케줄이 있음
-				map.put("schedule", "y");
-				map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
-				//model.addAttribute("schedule", "y");
-				//model.addAttribute("scheduleMainDTO", result); 
-				System.out.println("스케줄있음");
-			
-			}else{//스케줄이 없음 
-				map.put("schedule", "n");
-				map.put("projectNum", projectNum);
-				//model.addAttribute("schedule", "n");
-				//model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
-				System.out.println("스케줄없음");
+			ScheduleMainDTO result = null;;
+			try {
+				result = scheduleService.checkSchedule(projectNum);
+
+				System.out.println("check의 result = "+result);
+				if(result != null){ //스케줄이 있음
+					map.put("schedule", "y");
+					map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
+					//model.addAttribute("schedule", "y");
+					//model.addAttribute("scheduleMainDTO", result); 
+					System.out.println("스케줄있음");
+
+				}else{//스케줄이 없음 
+					map.put("schedule", "n");
+					map.put("projectNum", projectNum);
+					//model.addAttribute("schedule", "n");
+					//model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
+					System.out.println("스케줄없음");
+				}
+				//map.put("", "schedule/scheduleMain")
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("check할때 오류임 ");
+				map.put("schedule", "error");
+				e.printStackTrace();
 			}
-			//map.put("", "schedule/scheduleMain")
 			return map;
 
 		}
-		
+
 		
 		
 
@@ -87,9 +96,8 @@ public class ScheduleController {
 			System.out.println("Controller insertMainS result = " + result);
 
 			if(result > 0){
-
-				model.addAttribute("scheduleNum", result);
-				return "schedule/main";
+				//model.addAttribute("scheduleNum", result);
+				return "schedule/scheduleMain";
 
 			}else{
 				return "redirect:/";
