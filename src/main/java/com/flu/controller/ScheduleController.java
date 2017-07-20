@@ -82,7 +82,8 @@ public class ScheduleController {
 		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
 			System.out.println("컨트롤러");
 	
-			int result = 0;//업데이트 해야할듯 scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
+			//int result = 0;//업데이트 해야할듯 scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
+			int result = scheduleService.insertMainPartSchedule(scheduleMainDTO, schedulePartArrayDTO, session);
 			System.out.println("Controller insertMainS result = " + result);
 
 			if(result > 0){

@@ -94,7 +94,7 @@ public class ScheduleController_back {
 		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
 			System.out.println("컨트롤러");
 			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
+			int result =  0;//scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
 			System.out.println("Controller insertMainS result = " + result);
 
 			if(result > 0){

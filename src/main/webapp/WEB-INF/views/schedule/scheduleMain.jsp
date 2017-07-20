@@ -114,15 +114,22 @@ function getContextPath(){
 
 
 $(function(){
-	alert("다시 시작하기");
-	var scheduleNum = 0; 
-	var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
+	//alert("다시 시작하기");
+	//var scheduleNum = 0; 
+	//var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
 	
-	scheduleNum = getScheduleNum(3000);
+	
+	
+	//scheduleNum = getScheduleNum(3000);
 	//****************************************************주의..
-	alert("ajax 아래에서 찍어보는 scheduleNum="+scheduleNum); 
+	//alert("ajax 아래에서 찍어보는 scheduleNum="+scheduleNum); 
 	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
+	
+	
+	getScheduleNum(8000);
 });
+
+
 
 
 function getScheduleNum(projectNum){
@@ -134,14 +141,22 @@ function getScheduleNum(projectNum){
 			alert(JSON.stringify(data));
 			if(data.schedule=='n'){
 				//스케줄 생성하도록 창띄워주기
-				alert(data.projectNum);
-				scheduleNum = createSchedule(data.projectNum);
+				//alert(data.projectNum);
+				if(confirm('스케줄을 생성하시겠소?')){
+					scheduleNum = createSchedule(data.projectNum);
+				}else{
+					//이전 화면으로 가기 
+					window.history.back();
+				}
 				
 			}else{
 				//있으니까 가져온 scheduleNum으로 화면에 뿌려주기
 				alert("있다고"+data.scheduleMainDTO);
 				scheduleNum = data.scheduleMainDTO.scheduleNum;
 				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
+				
+				var test = getPartList(scheduleNum);
+				//alert("test data"+JSON.stringify(test)); //이것도 값이 들어오기전에 먼저 찍히는 무의미함..
 			} 
 		}
 	});
@@ -170,15 +185,14 @@ function createSchedule(projectNum){
  * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
  */
 function getPartList(scheduleNum){
-
+	
+	var partsJsonArray = new Array();
 	
 	$.ajax({
 		url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
 		type: "GET",
-		//async:false,
 		success:function(data){ //json 넘어옴 
-			//alert(data); 
-			//var i=0;
+
 			
 			var result="<table>";
 			$(data).each(function(){
@@ -192,59 +206,35 @@ function getPartList(scheduleNum){
 				result = result + "<td> "+ this.partDescFileO + " </td>";
 				result = result + "</tr>";
 				
-				partsJson = new Object();
+				//fullcal의 event 속성에 맞춰서 json 만들어주기
+				var partsJson = new Object();
 				partsJson.id = this.scheduleNum+this.partName+this.partNum;
 				partsJson.title = this.partName;
 				partsJson.start =  this.partStartDate; 
 				partsJson.end =  this.partFinishDate; 
 				partsJson.description =  this.partDescFileO; 
-				//alert(JSON.stringify(partsJson));
 				partsJson.color =  'blue'; 
 				partsJson.textColor =  'white'; 
 				partsJsonArray.push(partsJson);
-				//alert(JSON.stringify(partsJsonArray));
+	
 				
 			});
 			result = result + "</table>";
-			//alert(JSON.stringify(partsJSONArray));
 
-			
 			
 			$("#partsDiv").html(result); //화면에 뿌려주기
 			partsJSONArray = data;
-			
-			/* 
-			 for(var i=0; i<Object.keys(partsJsonArray).length; i++){
-			        $('#schcalendar').fullCalendar('addEventSource', [{
-			            id:          partsJsonArray[i].id,
-			            title:       partsJsonArray[i].title,
-			            start:       partsJsonArray[i].start,
-			            end:         partsJsonArray[i].end,
-			            //description: partsJsonArray[i].description, 
-			            color:       partsJsonArray[i].color,
-			            textColor:   partsJsonArray[i].textColor
-			        }]);
-			        console.log('ok');
-			    } 
-			*//* 
-			for(var i=0; i<Object.keys(data).length; i++){
-				alert('일정추가되고있는가'+i);
-		        $('#schcalendar').fullCalendar('addEventSource', [{
-		            id:          data[i].scheduleNum+data[i].partName+data[i].partNum,
-		            title:       data[i].partName,
-		            start:       data[i].partStartDate,
-		            end:         data[i].partFinishDate,
-		            //description: partsJsonArray[i].description, 
-		            color:       'orange',
-		            textColor:   'white',
-		            url: 'https://www.github.com'
-		        }]);
-		        console.log('ok');
-		    }  */
-		    
-			return partsJSONArray;
+			//여기서 이 json을 사용하는 함수를 불러 주는게 좋겠다
+			//return partsJSONArray; 
+			//이렇게하면 비동기화 방식이 무의미 해지기 때문에 //데이터를 담은 후 그 데이터를 사용하기 위한것이기 때문에
+			//동기화 방식 // 즉 데이터가 다 가져와져서 담길때까지 기다려야하기 때문이라는 말이다 
+			//그냥 여기서 함수를 호출해버리는게 좋을수도 있겠다 
+			alert("success안에 data "+JSON.stringify(partsJSONArray));
+			//addEvents(partsJSONArray); // 달력 뿌려주고 이거 실행되면 되는것이지요 
 		}
 	});
+	
+	//alert("ajax아래 함수안에 data "+JSON.stringify(partsJSONArray)); // 오류남
 	
 	
 	

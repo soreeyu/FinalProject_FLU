@@ -17,14 +17,25 @@
 		(schedule_seq.nextval, sysdate, sysdate, #{projectNum})
 	</insert>
 	
+
 	<select id="getSNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select schedulenum from schedulemain where projectnum=#{projectNum}
 	</select>
+	
+	<update id="mainUpdate" parameterType="com.flu.schedule.client.ScheduleMainDTO">
+		update schedulemain set startdate=#{startDate}, finishdate=#{finishDate} where scheduleNum=#{scheduleNum}
+	</update>
+	
+	
+	
 	
 	
 	<select id="projectInfo" parameterType="java.lang.Integer" resultType="com.flu.project.ProjectDTO">
 		select * from scheduleMain where projectnum=#{projectNum}
 	</select>
+	
+	
+	
 	
 	
 	
@@ -43,7 +54,7 @@
 		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, #{partNum}, #{partDescFileO}, #{partDescFileF})
 	</insert>
 	
-	<update id="updatePart" parameterType="com.flu.schedule.client.SchedulePartDTO">
+	<update id="partUpdate" parameterType="com.flu.schedule.client.SchedulePartDTO">
 		update schedulepart set partname=#{partName}, partstartdate=#{partStartDate}, partfinishdate=#{partFinishDate},
 		partdescfileO=#{partDescFileO}, partdescfileF=#{partDescFileF}
 		where schedulenum=#{scheduleNum} and partnum=#{partNum}

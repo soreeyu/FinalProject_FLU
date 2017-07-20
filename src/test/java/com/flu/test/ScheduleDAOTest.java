@@ -48,7 +48,7 @@ public class ScheduleDAOTest extends MyAbstract{
 		scheduleMainDTO.setFinishDate(sDate);
 
 		
-		int result = scheduleDAO.insertMainSchedule(scheduleMainDTO);
+		int result = 0;//scheduleDAO.insertMainSchedule(scheduleMainDTO);
 		
 		assertNotEquals(0, result);
 		System.out.println("Test MainS insert result = "+result);

@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>main Insert Form</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 	$(function(){
 		var partNum=1;
@@ -29,8 +24,7 @@
 		
 	});
 </script>
-</head>
-<body>
+
 
 <form action="./create" method="POST"  enctype="multipart/form-data">
 	<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
@@ -55,7 +49,3 @@
 	
 	<button>등록</button>
 </form>
-
-
-</body>
-</html>

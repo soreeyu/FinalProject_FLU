@@ -50,7 +50,7 @@ public class ScheduleDAO {
 
 	//main스케줄 수정하기 //시작 날짜, 마감날짜가 바뀐다 
 	public int updateMainSchedule(ScheduleMainDTO scheduleMainDTO){
-		return 0;
+		return sqlSession.update(NAMESPACE+"mainUpdate",scheduleMainDTO);
 	}
 	
 	
@@ -78,7 +78,7 @@ public class ScheduleDAO {
 	
 	//part수정하기 //진행중에 part 수정하는 경우에는 DB에서 part와 clientSchedule 의 part도 같이 수정되어야한다
 	public int updatePart(SchedulePartDTO schedulePartDTO){
-		return sqlSession.insert(NAMESPACE+"", schedulePartDTO); 
+		return sqlSession.insert(NAMESPACE+"partUpdate", schedulePartDTO); 
 	}
 	
 	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
