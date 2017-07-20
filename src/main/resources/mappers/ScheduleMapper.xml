@@ -80,14 +80,15 @@
 	
 	
 	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
-		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe, unitfinishdate, unitdescfileO, unitdescfileF, partName, email, unitstate)
-		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit where schedulenum=#{scheduleNum}),0), #{unitName}, #{unitDescribe}, #{unitFinishDate}, #{unitDescFileO}, #{unitDescFileF}, #{partName}, #{email}, '할일')
+		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe,unitstartDate,unitfinishdate, partnum, email, unitstate)
+		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit where schedulenum=#{scheduleNum}),0), #{unitName}, #{unitDescribe}, #{unitStartDate}, #{unitFinishDate}, #{partNum}, #{email}, '할일')
 	</insert>
 	
 	<update id="updateUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		update scheduleunit set 
-		unitname=#{unitName}, unitdescribe=#{unitDescribe}, unitfinishdate=#{unitFinishDate}, 
-		unitdescfileO=#{unitDescFileO}, unitdescfileF=#{unitDescFileF}, partName=#{partName}, 
+		unitname=#{unitName}, unitdescribe=#{unitDescribe}, 
+		unitstartdate=#{unitStartDate},
+		unitfinishdate=#{unitFinishDate}, partnum=#{partNum}, 
 		email=#{email}, unitstate=#{unitState}
 		where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</update>

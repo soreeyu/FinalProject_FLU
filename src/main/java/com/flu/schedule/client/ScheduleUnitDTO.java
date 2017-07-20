@@ -11,7 +11,7 @@ public class ScheduleUnitDTO {
 	private MultipartFile unitDescFile;
 	private String unitDescFileO;
 	private String unitDescFileF;
-	private String partName; // Part들 중에 무조건 속해잇어야함
+	private Integer partNum; // Part들 중에 무조건 속해잇어야함
 	private String unitStartDate; //시작일
 	private String unitFinishDate; //마감일
 	private String email; // 해당 일을 맡은 사용자 등록 
@@ -61,13 +61,13 @@ public class ScheduleUnitDTO {
 	public void setUnitDescFileF(String unitDescFileF) {
 		this.unitDescFileF = unitDescFileF;
 	}
-	public String getPartName() {
-		return partName;
+	public Integer getPartNum() {
+		return partNum;
 	}
-	public void setPartName(String partName) {
-		this.partName = partName;
+	public void setPartNum(Integer partNum) {
+		this.partNum = partNum;
 	}
-	
+
 	public String getUnitStartDate() {
 		return unitStartDate;
 	}

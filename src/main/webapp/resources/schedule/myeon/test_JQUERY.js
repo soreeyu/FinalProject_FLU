@@ -12,7 +12,7 @@ $(function(){
 	
 	
 	//글쓰기 클릭 이벤트
-	$('#writeBtn').click(function(){
+	/*$('#writeBtn').click(function(){
 		alert('글쓰기클릭');
 		//oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
 		var title = $('#title').val();
@@ -38,7 +38,7 @@ $(function(){
 			$('#contents').val('');
 			$('#contents').focus();
 		}else{
-			/*
+			
 			var realnames = '';
 			var subnames = '';
 			$('#schedulefileName').find('span').each(function(){
@@ -51,7 +51,7 @@ $(function(){
 					subnames += $(this).attr('subname');
 					subnames +=',';
 				}
-			});*/
+			});
 			scheduleParam.unitName=title;
 			scheduleParam.unitDescribe=contents;
 			scheduleParam.unitStartDate = starttime;
@@ -119,7 +119,7 @@ $(function(){
 		writeModal.hide();
 		//$('iframe[id!=scheduleFrame]').remove();
 	});
-	
+	*/
 	/*$('#schcalendar').fullCalendar({
 		 customButtons: {
 			 myCustomButton: {

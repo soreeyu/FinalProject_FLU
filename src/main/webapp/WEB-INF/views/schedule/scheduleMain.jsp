@@ -128,7 +128,7 @@ div{
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 		<section class="main_section jui">
-		
+		<input type="hidden" name="scheduleNum" id="scheduleNum" value="0">
 		
 		<!-- 값 넘어오는거 확인용 -->
 		<div class="testData">
@@ -149,17 +149,6 @@ div{
 			
 			
 		</div>
-		
-		<!-- 파트 추가하기 -->
-		<div id="partModal" class="msgbox" style="display: none;">
-			<div class="head">
-				<span id="partModal-title">파트 추가</span>
-		    </div>
-			<div class="body">
-				<span id="partModal-contents"></span>	
-			</div>
-		</div>
-		
 		
 		
 		
@@ -262,9 +251,9 @@ div{
 					</tr>
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
-							<input type="radio" class="partName" name="partName" value="part1">part1
-							<input type="radio" class="partName" name="partName" value="part2">part2
-							<input type="radio" class="partName" name="partName" value="part3">part3
+							<input type="radio" class="partName" name="partName" value="part1" data-num="0">part1
+							<input type="radio" class="partName" name="partName" value="part2" data-num="1">part2
+							<input type="radio" class="partName" name="partName" value="part3" data-num="2">part3
 						</td>
 					</tr>
 					<tr>
@@ -395,6 +384,10 @@ function getContextPath(){
 
 <script type="text/javascript">
 $(function(){
+	//상세보기 등록용
+	$('#starttime').val(spicker.getFormat());
+	$('#endtime').val(epicker.getFormat());
+	
 	//alert("다시 시작하기");
 	//var scheduleNum = 0; 
 	//var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
@@ -407,7 +400,7 @@ $(function(){
 	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
 	
 	
-	getScheduleNum(5000);
+	getScheduleNum(3000);
 	
 	
 	
@@ -495,6 +488,84 @@ $(function(){
 	});
 	
 	
+	$('#writeBtn').click(function(){
+		alert('글쓰기클릭');
+		//oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+		var title = $('#title').val();
+		var contents = $('#contents').val();
+		var starttime = $('#starttime').val();
+		var endtime = $('#endtime').val();
+		var email = $(':input:radio[name=email]:checked').val();   
+		var partName = $(':input:radio[name=partName]:checked').val();  
+		var partNum = $(':input:radio[name=partName]:checked').attr("data-num");
+		
+		
+		var scheduleNum = $("#scheduleNum").val()*1;
+		alert('스케줄넘 '+scheduleNum);
+		//var formData = new FormData();
+		 //첫번째 파일태그
+		//formData.append("schedulefile",$("input[name=schedulefile]")[0].files[0]);
+
+		
+		var starttimeStr=starttime.toString();
+		var endtimeStr=endtime.toString();
+		alert(title+contents+starttime+starttimeStr+endtime+endtimeStr+email+partName);
+			$.ajax({
+			url : '/flu/schedule/unitWrite',
+			type : 'POST',
+				//dataType: 'JSON',
+			    //data:  scheduleParam,
+			    //contentType:"application/json; charset=UTF-8",
+				//processData: false,
+				//contentType: false,
+				data: {
+					scheduleNum:scheduleNum,
+					unitName:title,
+					unitDescribe:contents,
+					unitStartDate:starttimeStr,
+					unitFinishDate:endtimeStr,
+					email:email,
+					partNum:partNum,
+				},
+				
+				success : function(response){ //json으로 result 만옴
+					//alert(response.result);
+					if(response.result > 0){
+						alert("등록성공");
+						writeModal.hide();
+					}else{
+						alert("등록실패");
+					}
+					//등록후 내용 비워주는 부분
+					writeModal.hide();
+					$('iframe[id!=scheduleFrame]').remove();
+					$('#title').val('');
+					$('#contents').val('');
+					$('#schcalendar').fullCalendar('refetchEvents');
+					$('#schedulefileName').html('');
+					var date = new Date();
+		    		spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+		    		epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				},
+				error: function(request,status,error){
+					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
+				}
+			});
+		
+		
+		//$("#unitFrm").attr("action",getContextPath()+'/schedule/unitWrite');
+		//$("#unitFrm").submit();
+	});
+	
+	
+	$('#writeClose').click(function(){
+		//$('#schedulefileName').html('');
+		writeModal.hide();
+		//$('iframe[id!=scheduleFrame]').remove();
+	});
+	
+	
+	
 	
 
 
@@ -523,7 +594,7 @@ function getScheduleNum(projectNum){
 				alert("있다고"+data.scheduleMainDTO);
 				scheduleNum = data.scheduleMainDTO.scheduleNum;
 				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
-				
+				$("#scheduleNum").val(scheduleNum);
 				getPartList(scheduleNum);
 				getUserList(scheduleNum);
 				//var test = getPartList(scheduleNum);

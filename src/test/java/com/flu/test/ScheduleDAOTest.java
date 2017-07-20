@@ -57,7 +57,7 @@ public class ScheduleDAOTest extends MyAbstract{
 	//@Test
 	public void testCheck() {
 		
-		ScheduleMainDTO dto = scheduleDAO.checkSchedule(5000);
+		ScheduleMainDTO dto = null;//scheduleDAO.checkSchedule(5000);
 		//assertNotNull(dto);
 		assertNull(dto);
 		//System.out.println("scheduleNum= "+dto.getScheduleNum());
@@ -69,7 +69,7 @@ public class ScheduleDAOTest extends MyAbstract{
 	public void testInsertUnit(){
 		ScheduleUnitDTO dto = new ScheduleUnitDTO();
 		dto.setEmail("myeon01@flu.com");
-		dto.setPartName("part1");
+		//dto.setPartName("part1");
 		dto.setScheduleNum(81);
 		dto.setUnitStartDate("2017-07-01");
 		dto.setUnitFinishDate("2017-07-30");
@@ -93,7 +93,7 @@ public class ScheduleDAOTest extends MyAbstract{
 	@Test
 	public void checkSchedule(){
 		int projectNum=4000;
-		ScheduleMainDTO dto = scheduleDAO.checkSchedule(projectNum);
+		ScheduleMainDTO dto = null;//scheduleDAO.checkSchedule(projectNum);
 		assertNull(dto);
 	}
 	

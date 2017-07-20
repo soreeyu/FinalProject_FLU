@@ -74,7 +74,7 @@ public class ScheduleController_back {
 			//있으면 바로 스케줄메인화면
 			//없으면
 			//시작날짜,마감날짜,파트 입력화면
-			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
+			ScheduleMainDTO result = null;//scheduleService.checkSchedule(projectNum);
 			String path = "redirect:/";
 			if(result != null){
 				model.addAttribute("scheduleMainDTO", result); //있을 경우 일단 home으로 보내기 
@@ -203,7 +203,7 @@ public class ScheduleController_back {
 			System.out.println("scheduleUnit scheduleNum "+scheduleUnitDTO.getScheduleNum());
 			System.out.println("scheduleUnit unitname "+scheduleUnitDTO.getUnitName());
 			System.out.println("scheduleUnit username"+scheduleUnitDTO.getEmail());
-			System.out.println("scheduleUnit partname"+scheduleUnitDTO.getPartName());
+			//System.out.println("scheduleUnit partname"+scheduleUnitDTO.getPartName());
 			System.out.println("unit 등록하러옴 내용가지고");
 			//System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
 			

@@ -3,10 +3,10 @@
 
 <script type="text/javascript">
 	$(function(){
-		var partNum=1;
+		var partCount=1;
 		
 		$("#addPartBtn").click(function(){
-			partNum++;
+			partCount++;
 			//alert('part 추가');
 			//alert($("#partSection").html());
 			var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
@@ -18,7 +18,7 @@
 		});
 		
 		$("#partSection").on("click",".partDel",(function(){
-			partNum --;
+			partCount --;
 			$(this).parent(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
 		}));
 		
@@ -27,7 +27,7 @@
 
 
 <form action="./create" method="POST"  enctype="multipart/form-data">
-	<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
+	<%-- <input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}"> --%>
 	<div>
 		프로젝트 시작일:<input type="date" name="startDate" value=""> 
 		프로젝트 마감일:<input type="date" name="finishDate"> 

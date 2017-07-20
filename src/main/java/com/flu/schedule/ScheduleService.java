@@ -119,7 +119,7 @@ public class ScheduleService {
 				schedulePartDTO.setPartStartDate(schedulePartArrayDTO.getPartStartDate()[i]);
 				schedulePartDTO.setPartFinishDate(schedulePartArrayDTO.getPartFinishDate()[i]);
 				schedulePartDTO.setPartName(schedulePartArrayDTO.getPartName()[i]);
-				schedulePartDTO.setPartNum(0);
+				schedulePartDTO.setPartNum(i);
 				schedulePartDTO.setPartDescFileF(schedulePartArrayDTO.getPartDescFileF()[i]);
 				schedulePartDTO.setPartDescFileO(schedulePartArrayDTO.getPartDescFileO()[i]);
 				result = scheduleDAO.insertPart(schedulePartDTO); 

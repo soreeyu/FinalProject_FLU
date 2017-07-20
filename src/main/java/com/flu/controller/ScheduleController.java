@@ -1,5 +1,6 @@
 package com.flu.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class ScheduleController {
 		@Autowired
 		private ScheduleService scheduleService;
 		
-		
+
 
 		// 프로젝트에 생성된 스케줄이 있는지 확인 //1번
 		@ResponseBody
@@ -258,13 +259,15 @@ public class ScheduleController {
 			System.out.println("scheduleUnit scheduleNum "+scheduleUnitDTO.getScheduleNum());
 			System.out.println("scheduleUnit unitname "+scheduleUnitDTO.getUnitName());
 			System.out.println("scheduleUnit username"+scheduleUnitDTO.getEmail());
-			System.out.println("scheduleUnit partname"+scheduleUnitDTO.getPartName());
+			System.out.println("scheduleUnit partnum"+scheduleUnitDTO.getPartNum());
 			System.out.println("unit 등록하러옴 내용가지고");
 			//System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
 			
 			int result = scheduleService.insertUnit(scheduleUnitDTO);
 			if(result > 0){
 				
+			}else{
+				System.out.println("내용등록 실패");
 			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("result", result);
