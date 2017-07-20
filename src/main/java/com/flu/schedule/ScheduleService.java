@@ -29,6 +29,7 @@ public class ScheduleService {
 
 
 	public ScheduleMainDTO checkSchedule(Integer projectNum){
+		System.out.println("check하러 서비스옴");
 		return scheduleDAO.checkSchedule(projectNum);
 	}
 

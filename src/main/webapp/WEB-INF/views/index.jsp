@@ -29,6 +29,8 @@
 			<p><a href="./schedule/create?projectNum=4000">스케줄 생성하기</a></p>
 			<p><a href="./schedule/partView?scheduleNum=66">66번 파트 보기</a></p>
 			<p><a href="./schedule/test">달력view </a></p>
+			<br/>
+			<p><a href="./schedule/create?projectNum=6000">스케줄 생성하기</a></p>
 		</div>
 	</section>
 	<section class="project">

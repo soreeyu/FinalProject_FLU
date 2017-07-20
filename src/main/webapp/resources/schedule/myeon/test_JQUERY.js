@@ -1,13 +1,17 @@
 /**
  * 
  */
-
-$(function(){
+var partsJson = new Object();
+var partsJsonArray = new Array();
 	
+$(function(){
+	alert("시작쓰");
 	$('#starttime').val(spicker.getFormat());
 	$('#endtime').val(epicker.getFormat());
 	
 	
+	
+	//글쓰기 클릭 이벤트
 	$('#writeBtn').click(function(){
 		alert('글쓰기클릭');
 		//oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -209,19 +213,22 @@ $(function(){
         end: new Date('2017-08-12')
     }]);
     
-    
-    var partsJsonArray = getPartList(81); 
-    addEvents(partsJSONArray); //가져온 json 데이터를 partsJsonArray에 담아두고  fullcalendar에 저장 
-    //addEvents(getPartList(81)); //이렇게 안됨..
-    
-    getUserList(81);
-    
-    //getUnitList(81,1,"myeon04@flu.com"); 우선 part데려오고 고민좀 해봅시다
-    
-    
     $('#sview-refresh').click(function(){
     	alert("새로고침누름");
 		$('#schcalendar').fullCalendar('refetchEvents'); // 일정 리로딩
 	});
+    
+    
+    //var partsJsonArray = getPartList(81); 
+    //getPartList(81);
+    //addEvents(partsJSONArray); //가져온 json 데이터를 partsJsonArray에 담아두고  fullcalendar에 저장 
+    //addEvents(getPartList(81)); //이렇게 안됨..
+    
+    getUserList(41);
+    
+    //getUnitList(81,1,"myeon04@flu.com"); 우선 part데려오고 고민좀 해봅시다
+    
+    
+
     
 }); // 끝

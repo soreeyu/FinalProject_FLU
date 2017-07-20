@@ -84,10 +84,17 @@ public class ScheduleDAOTest extends MyAbstract{
 		
 	}
 	
-	@Test
+	//@Test
 	public void testUserList(){
 		List<MemberDTO> list = scheduleDAO.userList(81);
 		assertNotNull(list);
+	}
+	
+	@Test
+	public void checkSchedule(){
+		int projectNum=4000;
+		ScheduleMainDTO dto = scheduleDAO.checkSchedule(projectNum);
+		assertNull(dto);
 	}
 	
 	

@@ -21,110 +21,19 @@ import com.flu.schedule.client.SchedulePartArrayDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
-@Controller
-@RequestMapping(value="/schedule/**")
-public class ScheduleController {
+//@Controller
+//@RequestMapping(value="/schedule/**")
+public class ScheduleController_back {
 	
 		@Autowired
 		private ScheduleService scheduleService;
-		
-		
-
-		// 프로젝트에 생성된 스케줄이 있는지 확인
-		@ResponseBody
-		@RequestMapping(value="check", method=RequestMethod.GET)
-		public Map<String, Object> checkSchedule(Integer projectNum){
-			System.out.println("check하러옴");
-			System.out.println("projectNum = "+projectNum);
-			Map<String, Object> map = new HashMap<String, Object>();
-			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
-			System.out.println("check의 result = "+result);
-			if(result != null){ //스케줄이 있음
-				map.put("schedule", "y");
-				map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
-				//model.addAttribute("schedule", "y");
-				//model.addAttribute("scheduleMainDTO", result); 
-				System.out.println("스케줄있음");
-			
-			}else{//스케줄이 없음 
-				map.put("schedule", "n");
-				map.put("projectNum", projectNum);
-				//model.addAttribute("schedule", "n");
-				//model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
-				System.out.println("스케줄없음");
-			}
-			//map.put("", "schedule/scheduleMain")
-			return map;
-
-		}
-
-		
-/*
-		// 프로젝트에 생성된 스케줄이 있는지 확인
-		@RequestMapping(value="create", method=RequestMethod.GET)
-		public String checkSchedule(Integer projectNum, Model model){
-			//있으면 바로 스케줄메인화면
-			//없으면
-			//시작날짜,마감날짜,파트 입력화면
-			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
-			String path = "redirect:/";
-			if(result != null){
-				model.addAttribute("scheduleMainDTO", result); //있을 경우 일단 home으로 보내기 
-			}else{
-				model.addAttribute("projectNum", projectNum);
-				path = "schedule/mainInsertForm";
-			}
-			
-			return path;
-			
-		}
-		*/
-
-		
-		//진행중인 스케줄이 없을때 넘어오는 창으로 main, part, 첨부파일을 받는다  //진짜
-		@RequestMapping(value="create", method=RequestMethod.POST)
-		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
-			System.out.println("컨트롤러");
-			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
-			System.out.println("Controller insertMainS result = " + result);
-
-			if(result > 0){
-
-				model.addAttribute("scheduleNum", result);
-				return "schedule/main";
-
-			}else{
-				return "redirect:/";
-			}
-
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
 		//main스케줄인서트로 바로가기  테스트 
 		@RequestMapping(value="test", method=RequestMethod.GET)
 		public String insertMainScheduleT(){ //넘어온 projectNum 이 저장되어있다 
-			return "schedule/scheduleMain";
+			return "schedule/main";
 		}
 		
 		//상세파일 등록 테스트
@@ -157,6 +66,47 @@ public class ScheduleController {
 		/////////////////////////////////////////////
 		
 		
+		
+		
+		// 프로젝트에 생성된 스케줄이 있는지 확인
+		@RequestMapping(value="create", method=RequestMethod.GET)
+		public String checkSchedule(Integer projectNum, Model model){
+			//있으면 바로 스케줄메인화면
+			//없으면
+			//시작날짜,마감날짜,파트 입력화면
+			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
+			String path = "redirect:/";
+			if(result != null){
+				model.addAttribute("scheduleMainDTO", result); //있을 경우 일단 home으로 보내기 
+			}else{
+				model.addAttribute("projectNum", projectNum);
+				path = "schedule/mainInsertForm";
+			}
+			
+			return path;
+			
+		}
+		
+
+		
+		//진행중인 스케줄이 없을때 넘어오는 창으로 main, part, 첨부파일을 받는다  //진짜
+		@RequestMapping(value="create", method=RequestMethod.POST)
+		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
+			System.out.println("컨트롤러");
+			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
+			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
+			System.out.println("Controller insertMainS result = " + result);
+
+			if(result > 0){
+
+				model.addAttribute("scheduleNum", result);
+				return "schedule/main";
+
+			}else{
+				return "redirect:/";
+			}
+
+		}
 		
 		
 		
