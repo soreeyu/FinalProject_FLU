@@ -90,11 +90,30 @@ public class ScheduleDAOTest extends MyAbstract{
 		assertNotNull(list);
 	}
 	
-	@Test
+	//@Test
 	public void checkSchedule(){
 		int projectNum=4000;
 		ScheduleMainDTO dto = null;//scheduleDAO.checkSchedule(projectNum);
 		assertNull(dto);
+	}
+	
+	@Test
+	public void unitList() throws Exception{
+		ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+		scheduleUnitDTO.setEmail("myeon0");
+		scheduleUnitDTO.setScheduleNum(45);
+		scheduleUnitDTO.setPartNum(0);
+		List<ScheduleUnitDTO> list = null;
+
+			list = scheduleDAO.unitList(scheduleUnitDTO);
+			
+			
+			for(int i=0;i<list.size();i++){
+				System.out.println(i+"번째 할일이름 = "+list.get(i).getUnitName());
+			}
+
+		
+		assertNotNull(list);
 	}
 	
 	

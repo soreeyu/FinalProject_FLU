@@ -240,7 +240,9 @@ public class ScheduleController {
 			System.out.println("schduleNum_partNum "+scheduleUnitDTO.getScheduleNum()+"_"+scheduleUnitDTO.getPartNum());
 			System.out.println("email "+scheduleUnitDTO.getEmail());
 			List<ScheduleUnitDTO> list = scheduleService.unitList(scheduleUnitDTO);
-			System.out.println("가져온 첫번째 할일 "+list.get(0).getUnitName());
+			for(int i=0;i<list.size();i++){
+				System.out.println(i+"번째 할일이름 = "+list.get(i).getUnitName());
+			}
 			return list;
 		}
 		

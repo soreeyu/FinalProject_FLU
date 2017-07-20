@@ -92,7 +92,7 @@ public class ScheduleDAO {
 	//세부항목
 	
 	public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
-		return sqlSession.selectList(NAMESPACE+"listUnit", scheduleUnitDTO.getScheduleNum());
+		return sqlSession.selectList(NAMESPACE+"listUnit", scheduleUnitDTO);
 	}
 	
 	
