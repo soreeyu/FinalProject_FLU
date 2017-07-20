@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="./checkMemberInsert" method="post" enctype="multipart/form-data">
+<form action="./memberCheckInsert" method="post" enctype="multipart/form-data">
 <input type="hidden" name="email" value="${member.email}">
 <p>파일<input type="file" name="file1"></p>
 <p>회사형태: ${member.type}</p>

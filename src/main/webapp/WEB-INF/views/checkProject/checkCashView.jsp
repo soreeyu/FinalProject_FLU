@@ -18,7 +18,7 @@ $(function() {
 	
 	$('#client').click(function() {
 		
-		window.open("./clientInfo?email="+pemail, "check", "width=600, height=400, top=100, left=300");
+		window.open("./checkClientInfo?email="+pemail, "check", "width=600, height=400, top=100, left=300");
 		
 	});
 	
@@ -34,7 +34,7 @@ $(function() {
 		
 	 	$.ajax({
 			
-			url: "./memberInfo",
+			url: "./checkMemberInfo",
 			type: "GET",
 			data: {email:remail,pay:pay},
 			success:function(data){
@@ -50,7 +50,7 @@ $(function() {
 			var email = $(this).attr('id');
 			
 			if(confirm(email+"님의 대금처리를 완료하시겠습니까?")){
-				location.href = "./appUpdate?email="+email+"&projectNum="+projectNum;
+				location.href = "./checkApplicantUpdate?email="+email+"&projectNum="+projectNum;
 			}else{
 				alert("잘생각하셨습니다.");
 			}

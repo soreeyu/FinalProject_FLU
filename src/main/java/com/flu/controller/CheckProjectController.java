@@ -81,8 +81,8 @@ public class CheckProjectController {
 	}
 
 	//클라이언트 이름으로 3개의 테이블에서 정보 들고오기 window.open
-	@RequestMapping(value="clientInfo")
-	public void clientInfo(String email,Model model){
+	@RequestMapping(value="checkClientInfo")
+	public void checkClientInfo(String email,Model model){
 		
 		ClientDTO client = clientService.clientView(email);
 		Evaluation evaluation = clientService.evaluationView(email);
@@ -95,16 +95,16 @@ public class CheckProjectController {
 	}
 	
 	//Ajax로 프리랜서 보여주기 member Table만 view 해오는 것
-	@RequestMapping(value="memberInfo",method=RequestMethod.GET)
-	public void memberCash(String email,Integer pay,Model model){
+	@RequestMapping(value="checkMemberInfo",method=RequestMethod.GET)
+	public void checkMemberInfo(String email,Integer pay,Model model){
 		
 		model.addAttribute("memberDTO", memberService.memberView(email));
 		model.addAttribute("pay", pay*0.9);
 	}
 	
 	//지원자의 상태 업데이트 (돈을 지급했다고 payFinish로 변경)
-	@RequestMapping(value="appUpdate")
-	public String appUpdate(String email,Integer projectNum){
+	@RequestMapping(value="checkApplicantUpdate")
+	public String checkApplicantUpdate(String email,Integer projectNum){
 		int result = applicantService.appUpdate(email);
 		
 		return "redirect:/checkProject/checkCashView?projectNum="+projectNum;

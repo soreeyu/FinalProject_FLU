@@ -29,14 +29,14 @@ public class CheckMemberController {
 	private CheckMemberService checkMemberService;
 	
 	
-	//신원확인 insert FORM으로 가기
-	@RequestMapping(value="checkMemberInsert", method=RequestMethod.GET)
+	//신원확인 insert FORM으로 가기 
+	@RequestMapping(value="memberCheckInsert", method=RequestMethod.GET)
 	public void insert(){
 		
 	}
 	
 	//신원확인 등록하기
-	@RequestMapping(value="checkMemberInsert", method=RequestMethod.POST)
+	@RequestMapping(value="memberCheckInsert", method=RequestMethod.POST)
 	public String insert(CheckMemberDTO checkMemberDTO,HttpSession session, MultipartHttpServletRequest request,Model model) throws Exception{
 		MultipartFile multi = request.getFile("file1");
 		String realPath = session.getServletContext().getRealPath("resources/upload");
