@@ -30,7 +30,7 @@ public class ScheduleController {
 		
 		
 
-		// 프로젝트에 생성된 스케줄이 있는지 확인
+		// 프로젝트에 생성된 스케줄이 있는지 확인 //1번
 		@ResponseBody
 		@RequestMapping(value="check", method=RequestMethod.GET)
 		public Map<String, Object> checkSchedule(Integer projectNum){
@@ -57,36 +57,32 @@ public class ScheduleController {
 			return map;
 
 		}
+		
+		
+		
 
 		
-/*
-		// 프로젝트에 생성된 스케줄이 있는지 확인
+		//스케줄 없을 경우 //서비스에서 먼저 main을 만들어서 생성후(시작,마감일은 당일로 우선 설정) 가져온다 
 		@RequestMapping(value="create", method=RequestMethod.GET)
-		public String checkSchedule(Integer projectNum, Model model){
-			//있으면 바로 스케줄메인화면
-			//없으면
-			//시작날짜,마감날짜,파트 입력화면
-			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
-			String path = "redirect:/";
-			if(result != null){
-				model.addAttribute("scheduleMainDTO", result); //있을 경우 일단 home으로 보내기 
-			}else{
-				model.addAttribute("projectNum", projectNum);
-				path = "schedule/mainInsertForm";
+		public String createSchedule(Integer projectNum, Model model){
+			int scheduleNum = scheduleService.createSchedule(projectNum);
+			if(scheduleNum > 0){ //생성 성공
+				
+			}else{ //생성실패
+				
 			}
-			
-			return path;
-			
+			model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/mainInsertForm"; //스케줄넘을 가지고 파트 등록하는 화면			
 		}
-		*/
+		
 
 		
-		//진행중인 스케줄이 없을때 넘어오는 창으로 main, part, 첨부파일을 받는다  //진짜
+		//파트 입력 받는 폼 
 		@RequestMapping(value="create", method=RequestMethod.POST)
 		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
 			System.out.println("컨트롤러");
-			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
+	
+			int result = 0;//업데이트 해야할듯 scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
 			System.out.println("Controller insertMainS result = " + result);
 
 			if(result > 0){

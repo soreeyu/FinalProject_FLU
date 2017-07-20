@@ -111,29 +111,58 @@ function getContextPath(){
 	return context;
 }
 
-var scheduleNum = 0; 
+
 
 $(function(){
 	alert("다시 시작하기");
+	var scheduleNum = 0; 
+	var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
 	
+	scheduleNum = getScheduleNum(3000);
+	//****************************************************주의..
+	alert("ajax 아래에서 찍어보는 scheduleNum="+scheduleNum); 
+	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
+});
+
+
+function getScheduleNum(projectNum){
 	//ajax로 스케줄있는지 확인필요 
 	$.ajax({
-		url: getContextPath()+"/schedule/check?projectNum=4000",
+		url: getContextPath()+"/schedule/check?projectNum="+projectNum,
 		type: "GET",
 		success: function(data){
-			alert("있어요 없어요");
 			alert(JSON.stringify(data));
 			if(data.schedule=='n'){
 				//스케줄 생성하도록 창띄워주기
 				alert(data.projectNum);
+				scheduleNum = createSchedule(data.projectNum);
+				
 			}else{
 				//있으니까 가져온 scheduleNum으로 화면에 뿌려주기
 				alert("있다고"+data.scheduleMainDTO);
-			}
+				scheduleNum = data.scheduleMainDTO.scheduleNum;
+				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
+			} 
 		}
 	});
-});
+}
 
+
+function createSchedule(projectNum){
+	var scheduleNum = 0;
+	$.ajax({
+		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
+		type: "GET",
+		success:function(data){
+			alert("여기엔 파트 입력 폼이 와야겠지요, 거기엔 물론 scheduleNum이 포함되어있고요 ");
+			alert(data);
+			$("#partsDiv").html(data);
+			scheduleNum = $("#scheduleNum").val();// 뭐이런식으로 하고
+			alert("ajax로 생성된 scheduleNum = "+scheduleNum);
+			return scheduleNum;
+		}
+	});
+}
 
 
 	

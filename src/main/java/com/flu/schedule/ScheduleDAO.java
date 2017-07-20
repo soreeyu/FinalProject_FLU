@@ -18,26 +18,32 @@ public class ScheduleDAO {
 	private SqlSession sqlSession;
 	private static final String NAMESPACE = "ScheduleMapper.";
 	
-	//주어진 projectNum에 대한 schedule이 존재하는지 확인
+	//주어진 projectNum에 대한 schedule이 존재하는지 확인 
 	public ScheduleMainDTO checkSchedule(Integer projectNum){
 		System.out.println("check하러 DAO옴"+projectNum);
 		ScheduleMainDTO dto = sqlSession.selectOne(NAMESPACE+"checkS", projectNum);
 		System.out.println(dto);
 		return dto;
 	}
+	
+	public int createSchedule(Integer projectNum){
+		return sqlSession.insert(NAMESPACE+"createS", projectNum); //실패or성공임
+	}
+	
 
 	
-	
+	/*
     //projectNum, 프로젝트 시작일 , 마감일 , scheduleNum 이 등록된다
 	public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO){ //넘어온 projectNum 이 저장되어있다 
 		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
 		return sqlSession.insert(NAMESPACE+"addMainS", scheduleMainDTO); //스케줄 등록
 
 	}
+	*/
 	
 	//등록되어져잇는 scheduleNum 을 가져온다
 	public int getScheduleNum(Integer projectNum){
-		return sqlSession.selectOne(NAMESPACE+"getSNum", projectNum);
+		return sqlSession.selectOne(NAMESPACE+"getSNum", projectNum);//만든 scheduleNum을 리던
 	}
 	
 	

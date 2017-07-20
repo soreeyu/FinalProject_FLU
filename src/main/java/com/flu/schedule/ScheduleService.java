@@ -23,15 +23,33 @@ public class ScheduleService {
 
 	@Autowired
 	private ScheduleDAO scheduleDAO;
-	@Autowired
-	private MemberDAO memberDAO;
+	
 
-
-
+	
 	public ScheduleMainDTO checkSchedule(Integer projectNum){
 		System.out.println("check하러 서비스옴");
 		return scheduleDAO.checkSchedule(projectNum);
 	}
+	
+	
+
+	public int createSchedule(Integer projectNum){
+		int scheduleNum = 0;
+		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
+		int result = scheduleDAO.createSchedule(projectNum); //우선 하나 생성함
+		if(result > 0){
+			scheduleNum = scheduleDAO.getScheduleNum(projectNum); //생성된 아이를 가져옴 
+			System.out.println("만들고 가져온 scheduleNum(서비스) = "+scheduleNum);
+			if(scheduleNum < 1){ //가져왔는데 이상한거지
+				scheduleNum = 0; 
+				//여기서 트랜잭션..롤백하면 좋은뒙 
+			}
+		}
+		return scheduleNum; //실패하면 0 성공하면 스케줄 넘
+	}
+
+
+
 
 
 
@@ -59,9 +77,7 @@ public class ScheduleService {
 
 
 
-
-
-
+/*
 	//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
 	public int insertMainSchedule(ScheduleMainDTO scheduleMainDTO, SchedulePartArrayDTO schedulePartArrayDTO ,HttpSession session) throws Exception{ 
 		System.out.println("서비스");
@@ -105,7 +121,7 @@ public class ScheduleService {
 
 		return scheduleNum; //실패하면 0 성공하면 스케줄 넘
 	}
-
+*/
 	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 	public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO){
 		int result = 0;
