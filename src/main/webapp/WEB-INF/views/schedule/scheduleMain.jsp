@@ -128,7 +128,7 @@ div{
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 		<section class="main_section jui">
-		<input type="text" name="scheduleNum" id="projectNum" value="${projectNum}">
+		<input type="text" name="projectNum" id="projectNum" value="${projectNum}">
 		<input type="hidden" name="scheduleNum" id="scheduleNum" value="0">
 		
 		<!-- 값 넘어오는거 확인용 -->
@@ -161,8 +161,7 @@ div{
 			<div class="body">
 				<span id="modal-contents"></span>
 				클릭한 파트에 대해서 해당 파트에 대한 할일들과 그 할일들에 대한 사용자, 마감일, 첨부파일등을 뿌려주면 좋겠다
-				<div style="text-align: center; margin-top: 45px;" id="contentsBtn">
-				</div>
+				<div style="text-align: center; margin-top: 45px;" id="contentsBtn"></div>
 			</div>
 		</div>
 		
@@ -244,19 +243,12 @@ div{
 					</tr> -->
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
-						<!-- 	여기는 DB에서 불러와야함 해당 스케줄에 참여하는 유저들 -->
 							<div id="users"></div>
-						<!-- 	<input type="radio" class="email" name="email" value="test1@test.com">사용자1
-							<input type="radio" class="email" name="email" value="test2@test.com">사용자2
-							<input type="radio" class="email" name="email" value="test3@test.com">사용자3 -->
 						</td>
 					</tr>
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
 							<div id="parts"></div>
-							<!-- <input type="radio" class="partName" name="partName" value="part1" data-num="0">part1
-							<input type="radio" class="partName" name="partName" value="part2" data-num="1">part2
-							<input type="radio" class="partName" name="partName" value="part3" data-num="2">part3 -->
 						</td>
 					</tr>
 					<tr>
@@ -272,10 +264,7 @@ div{
 				</div>
 				<!-- </form> -->
 			</div>
-		</div>
-		
-		
-		
+		</div>	
 		<!-- 스케줄등록모달 끝 -->
 		
 		
@@ -285,7 +274,6 @@ div{
 		
 		<div id="schedule_section">
 		<h1>SCHEDULE MAIN</h1>
-		<h3>${scheduleNum}</h3>
 		
 		<!----------------- 달력&체크리스트 --------------->
 		<div id="part1"> 
@@ -298,7 +286,6 @@ div{
 						</div>
 						<div id='schcalendar'></div>
 					</div>
-					<!-- <div id='calendar'></div> -->
 			</div>
 			
 			<div id="cklist_section">
@@ -386,28 +373,28 @@ function getContextPath(){
 
 
 <script type="text/javascript">
+
+//********* ajax 함수 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 undefined****************//
+
 $(function(){
-	var projectNum = '${projectNum}';
-	//상세보기 등록용
+	var projectNum = '${projectNum}'; //들어올때 DB확인해서 받아옴 
+	
+	//unit 등록용
 	$('#starttime').val(spicker.getFormat());
 	$('#endtime').val(epicker.getFormat());
-	
-	//alert("다시 시작하기");
-	//var scheduleNum = 0; 
-	//var partJsonArray = new Array(); //다시 새롭게 값을 넣어주고싶을땐 반드시 초기화를 다시해줘야한다 
-	
-	
-	
-	//scheduleNum = getScheduleNum(3000);
-	//****************************************************주의..
-	//alert("ajax 아래에서 찍어보는 scheduleNum="+scheduleNum); 
-	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
-	
-	
+
 	getScheduleNum(projectNum);
 	
 	
+	$(document).on("click",".onePartClick",function(){
+		partClick($(this).children(".partNum").text());
+	});
 	
+	
+	function partClick(partNum){
+		alert("partNum"+partNum);
+		//scheduleNum 과 partNum 을 가지고 
+	}
 	
 	
 	
@@ -451,7 +438,7 @@ $(function(){
 	        //end:   '2014-11-05T12:30:00',
 	        description: 'This is a cool event 테슷흐',
 	        color: 'rgb(142, 67, 163)',
-	        textColor: 'orange'
+	        textColor: 'black'
 	    }, {
 	        id: 'test2',
 	        title: 'test2',
@@ -462,11 +449,14 @@ $(function(){
 	   eventClick: function(calEvent, jsEvent, view) {
 
 	        alert('Event: ' + calEvent.title);
-	        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY); // 화면 좌표인듯
-	        alert('View: ' + view.name);
+	        alert('desc: ' + calEvent.description);
+	        partClick(calEvent.description);
+	       // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY); // 화면 좌표인듯
+	       // alert('View: ' + view.name);
 
 	        // change the border color just for fun
-	        $(this).css('border-color', 'red');
+	        $(this).css('background', 'orange');
+	        
 	        modal.show(); 
 	        
 	        //일정에 가지고있는 링크를 사용해서 열어준다
@@ -551,7 +541,7 @@ $(function(){
 		    		spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 		    		epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 				
-		    		getUnitList(scheduleNum,2,''); // 추가되었으니 또 뿌려줘야겠죠
+		    		getUnitList(scheduleNum,-1,''); // 추가되었으니 또 뿌려줘야겠죠
 				},
 				error: function(request,status,error){
 					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
@@ -577,14 +567,21 @@ $(function(){
 
 
 
-
+/* 
+	DB 에 해당 프로젝트의 스케줄이 있는지 확인 후 
+	있으면 users, parts , units 정보를 가져오는 함수호출
+	없으면 스케줄 생성여부를 물어본 뒤 
+		생성한다고하면 생성함수호출 
+		안한다고 하면 이전 화면
+*/
 function getScheduleNum(projectNum){
-	//ajax로 스케줄있는지 확인필요 
+	
 	$.ajax({
 		url: getContextPath()+"/schedule/check?projectNum="+projectNum,
 		type: "GET",
 		success: function(data){
-			alert(JSON.stringify(data));
+			//alert(JSON.stringify(data));
+			
 			if(data.schedule=='n'){
 				//스케줄 생성하도록 창띄워주기
 				//alert(data.projectNum);
@@ -597,16 +594,14 @@ function getScheduleNum(projectNum){
 				
 			}else if(data.schedule=='y'){
 				
-				alert("있다고"+data.scheduleMainDTO);
 				scheduleNum = data.scheduleMainDTO.scheduleNum;
 				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
 				$("#scheduleNum").val(scheduleNum);
 				getPartList(scheduleNum);
 				getUserList(scheduleNum);
-				getUnitList(scheduleNum,2,''); //전체 part가 고민이다
-				//var test = getPartList(scheduleNum);
-				//alert("test data"+JSON.stringify(test)); //이것도 값이 들어오기전에 먼저 찍히는 무의미함..
-			}else{ //오류났을때
+				getUnitList(scheduleNum,-1,'');// -1 이면 전체가 나온다 
+			}else{
+				alert("스케줄 생성 오류");
 				location.href=getContextPath();
 			}
 		}
@@ -614,18 +609,21 @@ function getScheduleNum(projectNum){
 }
 
 
+/* 
+	스케줄 생성함수 
+*/
 function createSchedule(projectNum){
 	var scheduleNum = 0;
 	$.ajax({
 		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
 		type: "GET",
 		success:function(data){
-			alert("여기엔 파트 입력 폼이 와야겠지요, 거기엔 물론 scheduleNum이 포함되어있고요 ");
-			alert(data);
-			//$("#partsDiv").html(data);
-			$(".insertForm").html(data);
+			//mainInsertForm 이 넘어옴  // schedule 시작일, 마감일 , part추가 폼 
+			//alert(data);
+			$(".insertForm").html(data); // writeModal 의 contents 부분에 세팅해둔다
 			writeModal.show(); 
-			scheduleNum = $("#scheduleNum").val();// 뭐이런식으로 하고
+			
+			scheduleNum = $("#scheduleNum").val(); //생성된 scheduleNum을 저장한다 
 			alert("ajax로 생성된 scheduleNum = "+scheduleNum);
 			return scheduleNum;
 		}
@@ -649,7 +647,7 @@ function getPartList(scheduleNum){
 			
 			var result="<table>";
 			$(data).each(function(){
-				result = result + "<tr>";
+				result = result + '<tr class="onePartClick">';
 				result = result + '<td class="schNum">'+ this.scheduleNum + "</td>";
 				result = result + '<td class="partNum">'+ this.partNum + "</td>";
 				result = result + "<td> "+ this.partName + " </td>";
@@ -690,7 +688,7 @@ function getPartList(scheduleNum){
 			//동기화 방식 // 즉 데이터가 다 가져와져서 담길때까지 기다려야하기 때문이라는 말이다 
 			//그냥 여기서 함수를 호출해버리는게 좋을수도 있겠다 
 			alert("success안에 data "+JSON.stringify(partsJSONArray));
-			//addEvents(partsJSONArray); // 달력 뿌려주고 이거 실행되면 되는것이지요 
+			addEvents(partsJSONArray); // 달력 뿌려주고 이거 실행되면 되는것이지요 
 		}
 	});
 	
@@ -739,6 +737,7 @@ function getUserList(scheduleNum){
 }
 
 
+//part별 보기로 클릭했을때 partnum을 주면된다
 function getUnitList(scheduleNum,partNum,email){
 	
 	$.ajax({
@@ -788,9 +787,9 @@ function addEvents(jsonObj){
             title:       jsonObj[i].partName,
             start:       jsonObj[i].partStartDate,
             end:         jsonObj[i].partFinishDate,
-            //description: partsJsonArray[i].description, 
-            color:       'red',
-            textColor:   'white',
+            description: jsonObj[i].partNum, 
+            color:       jsonObj[i].color,
+            textColor:   jsonObj[i].textColor,
             //url: 'https://www.github.com'
         }]);
         console.log('ok');

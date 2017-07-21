@@ -80,7 +80,11 @@
 	
 
 	 <select id="listUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO" resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		 select * from scheduleunit where schedulenum=#{scheduleNum} and email like '%'||#{email}||'%'  and  partnum=#{partNum} order by unitnum asc
+		 select * from scheduleunit where schedulenum=#{scheduleNum} and email like '%'||#{email}||'%'  
+		 <if test="partNum != -1">
+		 	and  partnum in #{partNum} 
+		 </if>
+		 order by unitnum asc
 	</select>
 	
 	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
