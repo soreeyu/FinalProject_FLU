@@ -244,19 +244,19 @@ div{
 					</tr> -->
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
-							여기는 DB에서 불러와야함 해당 스케줄에 참여하는 유저들
+						<!-- 	여기는 DB에서 불러와야함 해당 스케줄에 참여하는 유저들 -->
 							<div id="users"></div>
-							<input type="radio" class="email" name="email" value="test1@test.com">사용자1
+						<!-- 	<input type="radio" class="email" name="email" value="test1@test.com">사용자1
 							<input type="radio" class="email" name="email" value="test2@test.com">사용자2
-							<input type="radio" class="email" name="email" value="test3@test.com">사용자3
+							<input type="radio" class="email" name="email" value="test3@test.com">사용자3 -->
 						</td>
 					</tr>
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
 							<div id="parts"></div>
-							<input type="radio" class="partName" name="partName" value="part1" data-num="0">part1
+							<!-- <input type="radio" class="partName" name="partName" value="part1" data-num="0">part1
 							<input type="radio" class="partName" name="partName" value="part2" data-num="1">part2
-							<input type="radio" class="partName" name="partName" value="part3" data-num="2">part3
+							<input type="radio" class="partName" name="partName" value="part3" data-num="2">part3 -->
 						</td>
 					</tr>
 					<tr>
@@ -597,19 +597,6 @@ function getScheduleNum(projectNum){
 				
 			}else if(data.schedule=='y'){
 				
-				//보배언니위한 테스트
-				alert("보배언니꺼"+data.testbobae);
-				alert("보배언니꺼"+data.testbobae.length);
-				alert("보배언니꺼"+data.testbobae[0]);
-				alert("보배언니꺼"+data.bobaelist);
-				alert("보배언니꺼"+JSON.stringify(data.bobaelist));
-				alert("보배언니꺼"+data.bobaelist[0]);
-				alert("보배언니꺼"+data.bobaelist[0].partName);
-				alert("보배언니꺼"+data.bobaelistString);
-				alert("보배언니꺼"+data.bobaelistString.length);
-				alert("보배언니꺼"+data.bobaelistString[0]);
-				
-				//있으니까 가져온 scheduleNum으로 화면에 뿌려주기
 				alert("있다고"+data.scheduleMainDTO);
 				scheduleNum = data.scheduleMainDTO.scheduleNum;
 				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
@@ -688,6 +675,12 @@ function getPartList(scheduleNum){
 			result = result + "</table>";
 			$("#partsDiv").html(result); //화면에 뿌려주기
 			
+			
+			var unitInsertParts = '';
+			$(data).each(function(){
+				unitInsertParts = unitInsertParts + '<input type="radio" class="partName" name="partName" value="'+this.partName+'" data-num="'+this.partNum+'">'+this.partName;
+			});
+			$("#parts").html(unitInsertParts);
 
 			
 			partsJSONArray = data;

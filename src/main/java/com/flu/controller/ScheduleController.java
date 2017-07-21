@@ -65,16 +65,6 @@ public class ScheduleController {
 				System.out.println("check의 result = "+result);
 				if(result != null){ //스케줄이 있음
 					map.put("schedule", "y");
-					
-					String[] test = {"ajax","json","spring"};
-					List<String> bobaelistString = new ArrayList<String>();
-					bobaelistString.add("하이1");
-					bobaelistString.add("하이2");
-					map.put("bobaelistString", bobaelistString);
-					List<SchedulePartDTO> bobaelist = scheduleService.partList(66);
-					map.put("bobaelist", bobaelist);
-					map.put("testbobae", test);
-					
 					map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
 					//model.addAttribute("schedule", "y");
 					//model.addAttribute("scheduleMainDTO", result); 
@@ -325,6 +315,7 @@ public class ScheduleController {
 		public List<MemberDTO> userList(Integer scheduleNum){ 
 			List<MemberDTO> list = scheduleService.userList(scheduleNum);
 			System.out.println("해당 스케줄의 사용자들 데려오기");
+			System.out.println("사용자 list = "+list.get(0).getEmail());
 			return list;
 		} 
 
