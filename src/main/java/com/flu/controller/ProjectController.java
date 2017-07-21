@@ -1,6 +1,8 @@
 package com.flu.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -29,7 +31,7 @@ public class ProjectController {
 	
 	
 	//list
-	
+
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
 	public String projectList(Model model, ListInfo listInfo){
 		
@@ -44,8 +46,25 @@ public class ProjectController {
 		System.out.println("ar="+ar.get(0).getName());
 		System.out.println("dd="+ar.get(0));
 		
-	
+		System.out.println("name=="+ar.get(0).getName());
+		System.out.println("name=="+ar.get(0).getSkill());
+		System.out.println(ar.get(0).getSkill().length());
+		Map<String, Object> m = new HashMap<String, Object>();
+		/*System.out.println("length=="+ar.get(0).getSkill().length());
+		System.out.println(",=="+ar.get(0).getSkill().split(","));*/
+		/*for(int i=0;i;i++){
+			
+		}*/
 		
+		String[] sp = ar.get(0).getSkill().split(",");
+		sp = ar.get(1).getSkill().split(",");
+		
+		System.out.println(sp);
+		System.out.println(sp[0]);
+		System.out.println(sp[2]);
+		System.out.println(sp.length);
+		
+		model.addAttribute("skill", sp);
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
 		model.addAttribute("pjcount", totalCount);
@@ -57,9 +76,13 @@ public class ProjectController {
 	}
 	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
 	public void arrangeMoney(Model model, ListInfo listInfo){
+		System.out.println("=====================");
 		System.out.println("arrangeMoney");
 		System.out.println(listInfo.getSearch());
-			
+		System.out.println(listInfo.getKind());
+		System.out.println(listInfo.getArrange());
+		System.out.println(listInfo.getCurPage());
+		System.out.println("=====================");	
 	}
 	
 	//view

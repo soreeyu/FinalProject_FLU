@@ -164,13 +164,12 @@
 	display: block;
 }
 .cate-list li label{
-
+	font-size:12px;
 	font-weight: normal;
 	margin-left: 10px;
 	display: block;
 	width: 100%;
-	/* margin-bottom: 10px; */
-	margin-bottom: 7px;
+	margin-bottom: 10px;
 }
 .place-sort-box{
 	height: 65px;
@@ -639,11 +638,11 @@ background-color: white;
 							<span class="sub-cate">애플리케이션</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
-								<span class="skill-name-0"></span>
-								<span class="skill-name-1"></span>
-								<span class="skill-name-2"></span>
-								<span class="skill-name-3"></span>
-								<span class="skill-name-4"></span>
+								<span class="skill-name-0">${skill[0]}</span>
+								<span class="skill-name-1">${skill[1] }</span>
+								<span class="skill-name-2">${skill[2] }</span>
+								<span class="skill-name-3">${skill[3] }</span>
+								<span class="skill-name-4">${skill[4] }</span>
 							
 							</div>
 						</div>
@@ -683,15 +682,18 @@ background-color: white;
 
 
 $("#by-price-desc").click(function() {
-	alert("click");
+	/* alert("click");
 	$("#arrange").val("money");
 	alert($("#arrange").val());
-	$.get("arrangeMoney?arrange=money&search=dd",function(data){
+	$.get("arrangeMoney?search=${listInfo.search}&kind=${listinfo.kind}&arrange=money",function(data){
 		alert("${listInfo.search}");
-	});
-	/* alert("cc");
+		$(".contnets-main").html();
+		
+	}); */
+	 alert("cc");
 	  $.ajax({
 		url:"arrangeMoney",
+		dataType:JSON,
 		//"projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}";
 		data:{
 			list:list
@@ -700,7 +702,7 @@ $("#by-price-desc").click(function() {
 		success:function(data){
 			alert("success");
 		}
-	});  */
+	}); 
 }); 
 $("#by-price-asc").click(function() {
 	alert("금액낮은순");
