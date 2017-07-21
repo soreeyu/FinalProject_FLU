@@ -25,6 +25,17 @@ public class ScheduleService {
 	@Autowired
 	private ScheduleDAO scheduleDAO;
 	
+	/*
+	 * projectNum으로 project DB 에 존재하는 지 체크 
+	 * return 
+	 * 		부재 : 0 
+	 * 		존재 : 1
+	 * */
+	public int checkProject(Integer projectNum) throws Exception{
+		System.out.println("프로젝트 존재여부확인용");
+		return scheduleDAO.checkProject(projectNum);
+	}
+	
 
 	/*
 	 * projectNum으로 scheduleMain DB 에 존재하는 지 체크 

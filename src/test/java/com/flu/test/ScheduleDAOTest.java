@@ -97,7 +97,7 @@ public class ScheduleDAOTest extends MyAbstract{
 		assertNull(dto);
 	}
 	
-	@Test
+	//@Test
 	public void unitList() throws Exception{
 		ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
 		scheduleUnitDTO.setEmail("myeon0");
@@ -116,6 +116,12 @@ public class ScheduleDAOTest extends MyAbstract{
 		assertNotNull(list);
 	}
 	
+	@Test
+	public void checkeProject() throws Exception{
+		int result = scheduleDAO.checkProject(4000);
+		System.out.println(result);
+		assertEquals(1, result);
+	}
 	
 	
 	

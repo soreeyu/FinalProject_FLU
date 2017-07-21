@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="ScheduleMapper">
+  
+  	<select id="checkP" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  		select count(projectNum) from project where projectnum=#{projectNum}
+  	</select>
 
   
     <!-- 제대로 가져와졌으면 스케줄 존재, null이면 해당프로젝트에 스케줄 없음  -->

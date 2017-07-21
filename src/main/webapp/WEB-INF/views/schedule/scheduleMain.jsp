@@ -128,6 +128,7 @@ div{
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 		<section class="main_section jui">
+		<input type="text" name="scheduleNum" id="projectNum" value="${projectNum}">
 		<input type="hidden" name="scheduleNum" id="scheduleNum" value="0">
 		
 		<!-- 값 넘어오는거 확인용 -->
@@ -244,6 +245,7 @@ div{
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
 							여기는 DB에서 불러와야함 해당 스케줄에 참여하는 유저들
+							<div id="users"></div>
 							<input type="radio" class="email" name="email" value="test1@test.com">사용자1
 							<input type="radio" class="email" name="email" value="test2@test.com">사용자2
 							<input type="radio" class="email" name="email" value="test3@test.com">사용자3
@@ -251,6 +253,7 @@ div{
 					</tr>
 					<tr>
 						<td style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
+							<div id="parts"></div>
 							<input type="radio" class="partName" name="partName" value="part1" data-num="0">part1
 							<input type="radio" class="partName" name="partName" value="part2" data-num="1">part2
 							<input type="radio" class="partName" name="partName" value="part3" data-num="2">part3
@@ -384,6 +387,7 @@ function getContextPath(){
 
 <script type="text/javascript">
 $(function(){
+	var projectNum = '${projectNum}';
 	//상세보기 등록용
 	$('#starttime').val(spicker.getFormat());
 	$('#endtime').val(epicker.getFormat());
@@ -400,7 +404,7 @@ $(function(){
 	//********* 이게 ajax 아래있다고 해서 ajax에서 받아온 값을 사용하는 것이 아니다 
 	
 	
-	getScheduleNum(3000);
+	getScheduleNum(projectNum);
 	
 	
 	
@@ -546,6 +550,8 @@ $(function(){
 					var date = new Date();
 		    		spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 		    		epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				
+		    		getUnitList(scheduleNum,2,''); // 추가되었으니 또 뿌려줘야겠죠
 				},
 				error: function(request,status,error){
 					  alert("에러 부들 code:"+request.status+"\n"+"error:"+error);
@@ -590,6 +596,19 @@ function getScheduleNum(projectNum){
 				}
 				
 			}else if(data.schedule=='y'){
+				
+				//보배언니위한 테스트
+				alert("보배언니꺼"+data.testbobae);
+				alert("보배언니꺼"+data.testbobae.length);
+				alert("보배언니꺼"+data.testbobae[0]);
+				alert("보배언니꺼"+data.bobaelist);
+				alert("보배언니꺼"+JSON.stringify(data.bobaelist));
+				alert("보배언니꺼"+data.bobaelist[0]);
+				alert("보배언니꺼"+data.bobaelist[0].partName);
+				alert("보배언니꺼"+data.bobaelistString);
+				alert("보배언니꺼"+data.bobaelistString.length);
+				alert("보배언니꺼"+data.bobaelistString[0]);
+				
 				//있으니까 가져온 scheduleNum으로 화면에 뿌려주기
 				alert("있다고"+data.scheduleMainDTO);
 				scheduleNum = data.scheduleMainDTO.scheduleNum;
@@ -667,9 +686,10 @@ function getPartList(scheduleNum){
 				
 			});
 			result = result + "</table>";
+			$("#partsDiv").html(result); //화면에 뿌려주기
+			
 
 			
-			$("#partsDiv").html(result); //화면에 뿌려주기
 			partsJSONArray = data;
 			//여기서 이 json을 사용하는 함수를 불러 주는게 좋겠다
 			//return partsJSONArray; 
@@ -707,6 +727,18 @@ function getUserList(scheduleNum){
 			result = result + "</table>";
 
 			$("#usersDiv").html(result); //화면에 뿌려주기
+			
+			
+			
+			var unitInsertUsers = '';
+			$(data).each(function(){
+				unitInsertUsers = unitInsertUsers + '<input type="radio" class="email" name="email" value="'+this.email+'">' + this.name + '(' + this.nickName + ')';			
+			});
+			alert(unitInsertUsers);
+			$("#users").html(unitInsertUsers);
+			
+			
+			
 		}
 		
 	});

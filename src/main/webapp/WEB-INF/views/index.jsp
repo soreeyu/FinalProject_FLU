@@ -15,6 +15,12 @@
 	background-color: aqua;
 }
 </style>
+<script type="text/javascript">
+	var message = '${message}';
+	if(message!=''){
+		alert(message);
+	}
+</script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
@@ -28,7 +34,7 @@
 			등록된 프로젝트 갯수
 			<p><a href="./schedule/create?projectNum=4000">스케줄 생성하기</a></p>
 			<p><a href="./schedule/partView?scheduleNum=66">66번 파트 보기</a></p>
-			<p><a href="./schedule/test">달력view </a></p>
+			<p><a href="./schedule?projectNum=4000">스케줄화면가기</a></p>
 			<br/>
 			<p><a href="./schedule/create?projectNum=6000">스케줄 생성하기</a></p>
 		</div>

@@ -10,9 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.file.FileService;
 import com.flu.member.MemberDTO;
@@ -29,6 +32,23 @@ public class ScheduleController {
 		@Autowired
 		private ScheduleService scheduleService;
 		
+		
+		//main스케줄인서트로 바로가기  테스트 
+		@RequestMapping(method=RequestMethod.GET)
+		public String scheduleMain(@RequestParam(defaultValue="0") Integer projectNum, Model model, RedirectAttributes rd) throws Exception{ //넘어온 projectNum 이 저장되어있다 
+			//project가 있는지 확인해야한다 
+			String path = "redirect:/";
+			int result = scheduleService.checkProject(projectNum);
+			if(result>0){
+				model.addAttribute("projectNum", projectNum);
+				path = "schedule/scheduleMain";
+			}else{
+				rd.addFlashAttribute("message", "해당 프로젝트가 존재하지 않습니다");
+			}
+			return path;
+		}
+		
+		
 
 
 		// 프로젝트에 생성된 스케줄이 있는지 확인 //1번
@@ -38,13 +58,23 @@ public class ScheduleController {
 			System.out.println("check하러옴");
 			System.out.println("projectNum = "+projectNum);
 			Map<String, Object> map = new HashMap<String, Object>();
-			ScheduleMainDTO result = null;;
+			ScheduleMainDTO result = null;
 			try {
 				result = scheduleService.checkSchedule(projectNum);
 
 				System.out.println("check의 result = "+result);
 				if(result != null){ //스케줄이 있음
 					map.put("schedule", "y");
+					
+					String[] test = {"ajax","json","spring"};
+					List<String> bobaelistString = new ArrayList<String>();
+					bobaelistString.add("하이1");
+					bobaelistString.add("하이2");
+					map.put("bobaelistString", bobaelistString);
+					List<SchedulePartDTO> bobaelist = scheduleService.partList(66);
+					map.put("bobaelist", bobaelist);
+					map.put("testbobae", test);
+					
 					map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
 					//model.addAttribute("schedule", "y");
 					//model.addAttribute("scheduleMainDTO", result); 
@@ -126,13 +156,7 @@ public class ScheduleController {
 		
 		
 		
-		
-		//main스케줄인서트로 바로가기  테스트 
-		@RequestMapping(value="test", method=RequestMethod.GET)
-		public String insertMainScheduleT(){ //넘어온 projectNum 이 저장되어있다 
-			return "schedule/scheduleMain";
-		}
-		
+
 		//상세파일 등록 테스트
 		@RequestMapping(value="testUnit", method=RequestMethod.GET)
 		public String insertUnitScheduleT(){ //넘어온 projectNum 이 저장되어있다 
