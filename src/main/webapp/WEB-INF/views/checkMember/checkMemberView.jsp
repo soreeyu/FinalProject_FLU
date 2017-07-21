@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>t>
 <title>Insert title here</title>
 </head>
 <body>
-
+<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 <p>사업자형태: ${checkMember.kind}</p>
 <p>email: ${checkMember.email}</p>
 <p>pw: ${checkMember.pw}</p>
@@ -43,7 +43,7 @@
 	<input type="button" name="check" value="삭제하기" id="btn2">
 </form>
 </c:if>
-
+<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 <script type="text/javascript">
 

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 <title>Insert title here</title>
 <script type="text/javascript">
 
@@ -88,7 +88,7 @@ $(function() {
 </style>
 </head>
 <body>
-
+<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 PROJECT
 <p>${project.projectNum}</p>
 <p>${project.name}</p>
@@ -132,6 +132,6 @@ PROJECT
 
 </c:forEach>
 
-
+<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 </html>

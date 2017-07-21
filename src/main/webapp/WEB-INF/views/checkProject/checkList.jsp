@@ -4,10 +4,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+
+.main_section{
+	min-width: 1460px;
+	width: 100%;
+	min-height: 1000px;
+	background-color: #f2f2f2;
+}
+
+.page_wrap{
+	min-width: 1152px;
+	width: 1152px;
+	height: 100%;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+
+.left{
+	width: 352px;
+	height: 100%;
+	float: left;
+}
+
+.right{
+	width: 800px;
+	height: 100%;
+	float: left;
+}
+
+
+.user{
+	width: 248px;
+	padding : 15px 30px;
+	background-color: white;
+	margin-bottom: 20px;
+	border: 1px solid #dedede;
+}
+.user > span{
+	font-size: 18px;
+	display: block;
+	font-weight: bold;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 9px;
+}
+.user_name{
+	display: inline-block;
+}
+
+.user_name > img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	float: left;
+	border: 1px solid #dedede;
+}
+.user_name > span{
+	width: 150px;
+	display: inline-block;
+	padding-left: 10px;
+	float: left;
+	line-height: 25px;
+}
+.user_name > a{
+	width: 150px;
+	display: inline-block;
+	padding-left: 10px;
+	float: left;
+	line-height: 25px;
+}
+
+.user_name > a span{
+	font-size: 12px;
+	color: blue;
+}
+
+.history{
+	width: 248px;
+	padding : 15px 30px;
+	background-color: white;
+	margin-bottom: 20px;
+	border: 1px solid #dedede;
+}
+.history > span:first-child{
+	display: block;
+    font-size: 18px;
+    font-weight: bold;
+	padding-bottom: 11px;
+    border-bottom: 1px solid #dedede;
+    margin-bottom: 9px;
+}
+
+.history > p{
+	padding: 7px;
+	font-size: 17px;
+	line-height: 25px;
+}
+
+.history > p:HOVER{
+
+cursor: pointer;
+background-color: #446eab;
+color: white;
+
+}
+
+
+.title{
+	width: 800px;
+	height: 100px;
+	background-color: white;
+	border: 1px solid #dedede;
+}
+
+.contents{
+
+	width: 800px;
+	height: 100%;
+	background-color: white;
+	margin-top: 15px;
+	border: 1px solid #dedede;
+}
+
+
+
 
 #detail{
 width: 120px;
@@ -19,6 +143,61 @@ width: 120px;
 
 	$(function() {
 	
+		$('#projectBTN').click(function() {
+			
+			var from = $("#frm")[0];
+			
+			var formData = new FormData(from);
+			
+		 	$.ajax({
+		 		
+				url: "checkProjectDoneList",
+				processData:false,
+				contentType:false,
+				type: "GET",
+				data: formData,
+				success:function(data){
+					data = data.trim();
+					$('.right').html(data);
+				}
+				
+			}) 
+
+			
+		});
+		
+		
+		$('#freelancerBTN').click(function() {
+			
+			var from = $("#frm")[0];
+			
+			var formData = new FormData(from);
+			
+		 	$.ajax({
+		 		
+				url: "checkProjectFinishList",
+				processData:false,
+				contentType:false,
+				type: "GET",
+				data: formData,
+				success:function(data){
+					data = data.trim();
+					$('.right').html(data);
+				}
+				
+			}) 
+
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	$('select[name=category]').change(function() {
 		
 		var i = $(this).val();
@@ -93,75 +272,47 @@ width: 120px;
 </script>
 </head>
 <body>
-
-<form action="" id="frm"> <!-- 스크립트에서 submit 전에 넣어줌 -->
-
-<c:if test="${board=='project'}">
-<h1>Project 검수하는 곳</h1>
-</c:if>
-
-<c:if test="${board=='cash'}">
-<h1>대금 관리</h1>
-</c:if>
+<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 
-<div>
-<select name="category" id="detail">
-<option value="">전체</option>
-<option value="개발">개발</option>
-<option value="디자인">디자인</option>
-</select>
+<section class="main_section">
+<section class="page_wrap">
+	<article class="left">
+				<div class="user">
+					<span>프리랜서</span>
+					<div class="user_name">
+						<img alt="프로필 사진" src="${pageContext.request.contextPath}/resources/img/FLU.png">
+						<span>닉네임</span>
+						<a><span>기본 정보 수정</span></a>
+					</div>
+				</div>
+				<div class="history">
+					<c:if test="${board=='done'}">
+					<p id="projectBTN">검수 전 프로젝트</p>
+					<p id="freelancerBTN">완료된 프로젝트</p>
+					</c:if>
+					<c:if test="${board=='finish'}">
+					<p id="projectBTN">진행 전 프로젝트</p>
+					<p id="freelancerBTN">프리랜서 대금관리</p>
+					</c:if>
+				</div>
+				
+	</article>
+	<article class="right">
+	
 
-<div id="result">
-<select name="detailCategory" id="detail"><option value="">전체</option><option value="웹">웹</option><option value="어플리케이션">어플리케이션</option><option value="워드프레스">워드프레스</option><option value="퍼블리싱">퍼블리싱</option><option value="일반소프트웨어">일반소프트웨어</option><option value="쇼핑몰">쇼핑몰</option><option value="게임">게임</option><option value="임베디드">임베디드</option><option value="기타">기타</option></select>
-</div>
+	</article>
+		
 
-</div>
-
-<div>
-<select name="kind">
-<option value="name">제목</option>
-<option value="email">담당자</option>
-<option value="contents">내용</option>
-</select>
-<input type="text" name="search" id="search" value="${listInfo.search}"><input type="button" value="검색" id="btn">
-</div>
-
-</form>
-
-<table>
-<tr>
-<td>분야</td>
-<td>세부분야</td>
-<td>프로젝트명</td>
-<td>담당자</td>
-<td>상태</td>
-<td>날짜</td>
-</tr>
+</section>
 
 
-<c:forEach items="${list}" var="i">
-<tr>
-<td>${i.category}</td>
-<td>${i.detailCategory}</td>
-<td>
-<c:if test="${i.state=='check' or i.state=='done'}">
-<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-</c:if>
-<c:if test="${i.state=='finish'}">
-<a href="../checkProject/checkCashView?projectNum=${i.projectNum}">${i.name }</a>
-</c:if>
-</td>
-<td>${i.email }</td>
-<td>
-<c:if test="${i.state=='check'}">검수 단계</c:if>
-<c:if test="${i.state=='done'}">입금 대기중</c:if>
-<c:if test="${i.state=='finish'}">프로젝트 종료</c:if>
-</td>
-<td>${i.reg_date}</td>
-</tr>
-</c:forEach>
 
-</table>
+
+
+
+
+</section>
+<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 </html>

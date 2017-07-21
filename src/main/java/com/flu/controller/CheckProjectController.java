@@ -39,19 +39,49 @@ public class CheckProjectController {
 	@Inject
 	private MemberService memberService;
 	
-	
-	//검수전, 진행전 프로젝트 리스트 불러오기
 	@RequestMapping(value="checkProjectList")
-	public String listCheck(ListInfo listInfo,Model model){
+	public String checkProjectList(ListInfo listInfo,Model model){
+			System.out.println(listInfo.getCategory());
+			System.out.println(listInfo.getDetailCategory());
+			System.out.println(listInfo.getSearch());
+			System.out.println(listInfo.getKind());
+			
+			List<ProjectDTO> list = checkProjectService.doneList(listInfo);
+			
+			model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "done");
+			return "checkProject/checkList";
+			
+	}	
+	
+	//검수전 프로젝트 들고오기
+	@RequestMapping(value="checkProjectDoneList", method=RequestMethod.GET)
+	public String checkProjectDoneList(ListInfo listInfo,Model model){
 		System.out.println(listInfo.getCategory());
 		System.out.println(listInfo.getDetailCategory());
 		System.out.println(listInfo.getSearch());
 		System.out.println(listInfo.getKind());
 		
-		List<ProjectDTO> list = checkProjectService.listCheck(listInfo);
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "project");
-		return "checkProject/checkList";
+		List<ProjectDTO> list = checkProjectService.doneList(listInfo);
+		
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "done");
+		return "checkProject/projectContents";
 	}
+	
+	//완료된 프로젝트 들고오기
+	@RequestMapping(value="checkProjectFinishList", method=RequestMethod.GET)
+	public String checkProjectFinishList(ListInfo listInfo,Model model){
+		System.out.println(listInfo.getCategory());
+		System.out.println(listInfo.getDetailCategory());
+		System.out.println(listInfo.getSearch());
+		System.out.println(listInfo.getKind());
+		
+		List<ProjectDTO> list = checkProjectService.finishList(listInfo);
+		
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "finish");
+		return "checkProject/projectContents";
+	}
+	
+	
 	
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
 	public String update(ProjectDTO projectDTO){

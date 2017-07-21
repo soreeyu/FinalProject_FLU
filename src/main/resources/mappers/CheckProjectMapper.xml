@@ -5,15 +5,15 @@
   
   <mapper namespace="CheckProjectMapper">
   
-  		<select id="listCheck" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  		<select id="doneList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
   			select * from project
   			
   			<choose>
   				<when test="category==null and detailCategory==null">
-  					where state in('check','done') order by reg_date asc
+  					where state in('done') order by reg_date asc
   				</when>
 				<when test="category!=null and detailCategory!=null">
-  					where state in('check','done') and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
+  					where state in('done') and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
   				
 	  				<if test="kind == 'name'">
 	  					name like '%' || #{search} || '%'
@@ -32,6 +32,35 @@
 
   			</choose>
   		</select>
+  		
+  		  	<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  			select * from project
+  			
+  			<choose>
+  				<when test="category==null and detailCategory==null">
+  					where state in('finish') order by reg_date asc
+  				</when>
+				<when test="category!=null and detailCategory!=null">
+  					where state in('finish') and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
+  				
+	  				<if test="kind == 'name'">
+	  					name like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'email'">
+	  					email like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'contents'">
+	  					contents like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				order by reg_date asc
+				</when>
+
+  			</choose>
+  		</select>
+  		
   		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">
   			update project set 

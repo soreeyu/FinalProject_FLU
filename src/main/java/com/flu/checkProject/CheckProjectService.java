@@ -19,9 +19,15 @@ public class CheckProjectService {
 	@Inject
 	private CheckProjectDAO checkProjectDAO;
 	
-	public List<ProjectDTO> listCheck(ListInfo listInfo){
-		return checkProjectDAO.listCheck(listInfo);
+	public List<ProjectDTO> doneList(ListInfo listInfo){
+		return checkProjectDAO.doneList(listInfo);
 	}
+	
+	public List<ProjectDTO> finishList(ListInfo listInfo){
+		return checkProjectDAO.finishList(listInfo);
+	}
+	
+	
 	
 	public int update(ProjectDTO projectDTO){
 		return checkProjectDAO.update(projectDTO);

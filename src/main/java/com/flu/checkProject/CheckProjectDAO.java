@@ -20,9 +20,16 @@ public class CheckProjectDAO {
 	//**********프로젝트 검수 관리**************
 	
 	//검수 전 프로젝트 리스트 들고오기
-	public List<ProjectDTO> listCheck(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"listCheck",listInfo);
+	public List<ProjectDTO> doneList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"doneList",listInfo);
 	}
+	
+	
+	public List<ProjectDTO>finishList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"finishList",listInfo);
+	}
+	
+	
 	
 	public int update(ProjectDTO projectDTO){
 		return sqlSession.update(NAMESPACE+"update",projectDTO);
