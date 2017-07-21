@@ -734,7 +734,7 @@ function getUnitList(scheduleNum,partNum,email){
 				result = result + "<td> "+ this.unitName + " </td>";
 				result = result + "<td> "+ this.unitDescribe + " </td>";
 				result = result + "<td> "+ this.unitFinishDate + " </td>";
-				result = result + "<td> "+ this.unitpartNum + " </td>";
+				result = result + "<td> "+ this.partNum + " </td>";
 				result = result + "<td> "+ this.email + " </td>";
 				result = result + "</tr>";				
 			});
