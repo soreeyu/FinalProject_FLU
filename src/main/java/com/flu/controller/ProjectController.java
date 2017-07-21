@@ -1,5 +1,8 @@
 package com.flu.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +32,89 @@ public class ProjectController {
 	@Inject
 	private ProjectService projectService;
 	
+	/*
+	 // 프로젝트에 생성된 스케줄이 있는지 확인 //1번
+      @ResponseBody
+      @RequestMapping(value="check", method=RequestMethod.GET)
+      public Map<String, Object> checkSchedule(Integer projectNum){
+         System.out.println("check하러옴");
+         System.out.println("projectNum = "+projectNum);
+         Map<String, Object> map = new HashMap<String, Object>();
+         ScheduleMainDTO result = null;
+         try {
+            result = scheduleService.checkSchedule(projectNum);
+
+            System.out.println("check의 result = "+result);
+            if(result != null){ //스케줄이 있음
+               map.put("schedule", "y");
+               
+               String[] test = {"ajax","json","spring"};
+               List<String> bobaelistString = new ArrayList<String>();
+               bobaelistString.add("하이1");
+               bobaelistString.add("하이2");
+               map.put("bobaelistString", bobaelistString);
+               List<SchedulePartDTO> bobaelist = scheduleService.partList(66);
+               map.put("bobaelist", bobaelist);
+               map.put("testbobae", test);
+               
+               map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
+               //model.addAttribute("schedule", "y");
+               //model.addAttribute("scheduleMainDTO", result); 
+               System.out.println("스케줄있음");
+
+            }else{//스케줄이 없음 
+               map.put("schedule", "n");
+               map.put("projectNum", projectNum);
+               //model.addAttribute("schedule", "n");
+               //model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
+               System.out.println("스케줄없음");
+            }
+            //map.put("", "schedule/scheduleMain")
+         } catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println("check할때 오류임 ");
+            map.put("schedule", "error");
+            e.printStackTrace();
+         }
+         return map;
+
+      }
+	 * 
+	 * */
+	//@ResponseBody
+	@RequestMapping(value="projectMap", method=RequestMethod.GET)
+	public Map<String, Object> projectMap(ListInfo listInfo){
+		
+		System.out.println("들어옴");
+		
+
+		int totalCount = projectService.projectCount(listInfo);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+        List<ProjectDTO> pjlist = projectService.projectList(listInfo);
+        
+        map.put("pjlist", pjlist);
+        
+ 
+
+       
+        System.out.println("list="+pjlist);
+        System.out.println("size="+pjlist.size());
+        System.out.println("getName="+pjlist.get(0).getName());
+        
+        return map;
+	}
+	
 	
 	//list
-
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
-	public String projectList(Model model, ListInfo listInfo){
-		
-	
+	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO){
+
+		String sk2=null;
 		int totalCount = projectService.projectCount(listInfo);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
@@ -43,28 +122,23 @@ public class ProjectController {
 		
 		System.out.println("start="+listInfo.getStartRow());
 		System.out.println("last="+listInfo.getLastRow());
-		System.out.println("ar="+ar.get(0).getName());
-		System.out.println("dd="+ar.get(0));
+		projectDTO.getSkills();
+	
+		/*System.out.println(ar.get(1).getSkills());
+		System.out.println("ar.length="+ar.get(1).getSkills().length);
+		System.out.println("list.length"+ar.size());
+		ArrayList<String> sk = new ArrayList<String>();
+		for(int i=0;i<ar.size();i++){
+			int arlong = ar.get(i).getSkills().length;
+			for(int j=0;j<arlong;j++){
+				System.out.println(ar.get(i).getSkills()[j]);
+				sk2 = ar.get(i).getSkills()[j];
+				sk.add(sk2);
+			}
+		}
 		
-		System.out.println("name=="+ar.get(0).getName());
-		System.out.println("name=="+ar.get(0).getSkill());
-		System.out.println(ar.get(0).getSkill().length());
-		Map<String, Object> m = new HashMap<String, Object>();
-		/*System.out.println("length=="+ar.get(0).getSkill().length());
-		System.out.println(",=="+ar.get(0).getSkill().split(","));*/
-		/*for(int i=0;i;i++){
-			
-		}*/
-		
-		String[] sp = ar.get(0).getSkill().split(",");
-		sp = ar.get(1).getSkill().split(",");
-		
-		System.out.println(sp);
-		System.out.println(sp[0]);
-		System.out.println(sp[2]);
-		System.out.println(sp.length);
-		
-		model.addAttribute("skill", sp);
+		System.out.println("sk=="+sk);*/
+	
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
 		model.addAttribute("pjcount", totalCount);
@@ -72,8 +146,9 @@ public class ProjectController {
 		
 		
 		return "project/projectList";
-
 	}
+	
+	
 	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
 	public void arrangeMoney(Model model, ListInfo listInfo){
 		System.out.println("=====================");

@@ -638,11 +638,10 @@ background-color: white;
 							<span class="sub-cate">애플리케이션</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
-								<span class="skill-name-0">${skill[0]}</span>
-								<span class="skill-name-1">${skill[1] }</span>
-								<span class="skill-name-2">${skill[2] }</span>
-								<span class="skill-name-3">${skill[3] }</span>
-								<span class="skill-name-4">${skill[4] }</span>
+							<c:forEach items="${list}" >
+								<span class="skill-name-0"></span>
+							
+							</c:forEach>
 							
 							</div>
 						</div>
@@ -682,6 +681,35 @@ background-color: white;
 
 
 $("#by-price-desc").click(function() {
+	alert("click");
+	 $.ajax({
+	    url: "projectMap",
+	    type: "GET",
+ 
+	    success: function(data){
+	       alert(JSON.stringify(data));
+	       		
+	  /*      alert("skill="+data.sk);
+	       alert(JSON.stringify(data.sk)); */
+	       
+	          alert("pjlist="+data.pjlist);
+	          alert(JSON.stringify(data.pjlist));
+	          alert("pjlist[4].name="+data.pjlist[5].name);
+	          alert("pjlist[0].budget="+data.pjlist[0].budget);
+	          alert("pjlist[0].period="+data.pjlist[0].period);
+	          alert("pjlist[0].reg_date="+data.pjlist[0].reg_date);
+	          alert("pjlist[0].contents="+data.pjlist[0].contents);
+	          alert("pjlist[4].skill="+data.pjlist[5].skill);
+	          alert("skills[4]="+data.pjlist[5].skills[0]);
+	          alert("skills.length="+data.pjlist[5].skills.length);
+				
+			$(".project-unit").html(
+				
+			);
+	    }
+		
+	}); 
+});  
 	/* alert("click");
 	$("#arrange").val("money");
 	alert($("#arrange").val());
@@ -690,7 +718,7 @@ $("#by-price-desc").click(function() {
 		$(".contnets-main").html();
 		
 	}); */
-	 alert("cc");
+	/*  alert("cc");
 	  $.ajax({
 		url:"arrangeMoney",
 		dataType:JSON,
@@ -703,7 +731,8 @@ $("#by-price-desc").click(function() {
 			alert("success");
 		}
 	}); 
-}); 
+*/
+
 $("#by-price-asc").click(function() {
 	alert("금액낮은순");
 	$("#arrange").val("mm");

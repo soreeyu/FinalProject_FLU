@@ -42,10 +42,6 @@ public class ProjectDAO {
 			return sqlSession.selectList(NAMESPACE+"list", listInfo);
 		}
 		
-		public List<ProjectDTO> projectListM(ListInfo listInfo){
-			return sqlSession.selectList(NAMESPACE+"listM", listInfo);
-		}
-		
 		//project Count
 		public int projectCount(ListInfo listInfo){
 			return sqlSession.selectOne(NAMESPACE+"count", listInfo);

@@ -18,6 +18,7 @@ public class ProjectDTO {
 	private String planState;
 	private String contents;
 	private String skill;
+	private String[] skills;
 	private String meetKind;
 	private String exp;
 	private String state;			
@@ -171,6 +172,12 @@ public class ProjectDTO {
 	}
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
+	}
+	public String[] getSkills() {
+		return skills;
+	}
+	public void setSkills(String[] skills) {
+		this.skills = skills;
 	}
 	
 	

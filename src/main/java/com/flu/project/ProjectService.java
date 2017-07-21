@@ -1,6 +1,7 @@
 package com.flu.project;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -36,13 +37,23 @@ public class ProjectService {
 	
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo){
-		return projectDAO.projectList(listInfo);
+		
+		System.out.println("projectSkillparsing");
+		
+		List<ProjectDTO> list = projectDAO.projectList(listInfo);
+		
+		for(int i=0;i<list.size();i++){
+			String[] parsing = list.get(i).getSkill().split(",");
+			list.get(i).setSkills(parsing);
+		}
+		
+		
+		//return projectDAO.projectList(listInfo);
+		return list;
 	}
 	
-	public List<ProjectDTO> projectListM(ListInfo listInfo){
-		return projectDAO.projectListM(listInfo);
-	}
 	
+
 	//project Count
 	public int projectCount(ListInfo listInfo){
 		return projectDAO.projectCount(listInfo);
