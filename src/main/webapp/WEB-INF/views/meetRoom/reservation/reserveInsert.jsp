@@ -259,9 +259,7 @@ font-size:14px;
 	
 	
 	</div>
-	<div id="reservedTime">
-		
-	</div>
+
 	<div id="timeresult">
 		<input type="hidden" name="time" id="in" class="reserve_Info">
 		<input type="hidden" name="time" id="out" class="reserve_Info">

@@ -12,6 +12,7 @@ section {
 	min-width : 1152px;
 	width : 60%;
 	margin : 0 auto;
+	height: 1500px;
 }
 .Room{
 	width : 30%;
@@ -35,8 +36,9 @@ section {
 	position: relative;
     padding: 18px 20px 14px;
     background-color: #fff;
-	text-overflow : ellipsis;
+    overflow : hidden;
     white-space: nowrap;
+	text-overflow : ellipsis;
     
 }
 

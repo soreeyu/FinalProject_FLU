@@ -10,6 +10,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=cde07d5e2e22a53124fd5730df8d372b&libraries=services"></script>
 <script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="../resources/js/scroll.js"></script>
 <script type="text/javascript">
 	$(function() {
 		/*해당 업체가 보유하고 있는 방의 리스트를 뿌려주는 스크립트  */
@@ -82,7 +83,7 @@
 section {
 	min-width : 1152px;
 	width : 60%;
-	height: 1500px;
+	height: 2000px;
 	margin : 0 auto;
 }
 p {
@@ -93,11 +94,21 @@ p {
 	margin-top: 50px;
 	display: inline-block;
 }
-#eachRoomList {
+#Layer1 {
+	position : relative;
 	width : 400px;
-	background-color: white;
 	margin-top: 120px;
 	float: right;
+	z-index: 1;
+	left: 0;
+	top: 170;
+}
+#eachRoomTit {
+	border-bottom: 4px solid #0066ff;
+}
+#eachRoomContents {
+	background-color: white;
+	
 }
 #meetView_name{
 	font-size: 2.0em;	
@@ -113,23 +124,50 @@ p {
 	width : 100%;
 	height : 500px;
 }
+#contents{
+	position: relative;
+    padding-bottom: 16px;
+    margin: 70px 0 28px;
+    color: #000;
+    font-size: 18px;
+    line-height: 30px;
+}
+.info_list {
+	margin-top: 35px;
+	list-style: none;
+}
+.info_list li {
+	padding: 10px 0 8px;
+    font-size: 16px;
+    position: relative;
+    vertical-align: middle;
+    display: list-item;
+    text-align: -webkit-match-parent;
+    word-break: break-all;
+    word-wrap: break-word;
+}
 #map_box{
 	width : 60%;
 }
 #map_box_header{
 	background-color: white;
-	width: 100%;
-	height: 50px;
+	width: 92%;
 	vertical-align: middle;
-	text-align: center;
-}
-#table {
-	width : 60%;
+	padding: 33px 30px 38px;
 }
 
+.title:after{
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    content: '';
+    height: 4px;
+    width: 20px;
+    background-color: #ffd014;
+}
 </style>
 </head>
-<body>
+<body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
 	<c:import url="../temp/header.jsp"/>
 	<section>
 		<input type="hidden" value="${dto.num}" id="snum">
@@ -144,59 +182,50 @@ p {
 		</div>
 		</div>		
 		
-		<div id="eachRoomList">
+
+		<div id="Layer1">
+		<div id="eachRoomTit">
 		<h3>세부공간 선택</h3>
+		</div>
+		<div id="eachRoomContents">
 		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>
 		<hr>
 		<div id="eachRoom">
 		
 		</div>
 		<input type="button" id="reservation_btn" value="예약하기">
-		<hr>
+		<hr>			
 		</div>
+		</div>
+
 		
 		<div id="contents">
-		<p>공간 소개</p>
-		<div>
+		<h3 class="title">공간 소개</h3>
 			${dto.contents}
 		</div>
-		</div>
 		
 		
-		<div id="table">
-		<p>추가 정보</p>
-		<table >
-				<tr>
-					<td>
-						운영시간 | 오른 : ${time[0]}시 / 마감 : ${time[1]}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						정기휴무 | ${dto.holiday}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						주소  | ${dto.addr_main}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						홈페이지  | ${dto.homePage}
-					</td>
-				</tr>
-			
-		</table>	
+		<div id="contents">
+		<h3 class="title">추가 정보</h3>	
+		<ul class="info_list">
+			<li>
+			<span class="tit">이용시간</span> <span class="data">${time[0]}~${time[1]}시</span>
+			</li>
+			<li>
+			<span class="tit">휴무일</span> <span class="data">${dto.holiday}</span>
+			</li>
+		</ul>
 		</div>
+
 		
 		<div id="map_box">
 		<div id="map_box_header">
 		<h3>${dto.name}</h3>
-		${dto.addr_main}${dto.addr_detail}
+		<h4>${dto.addr_main} ${dto.addr_detail}</h4>
+		<span class="tit">홈페이지</span> <span class="data">${dto.homePage}</span>
 		</div>
 		<input type="hidden" id="address_main" value="${dto.addr_main}">
-		<div id="map" style="width:100%;height:400px;"></div>
+		<div id="map" style="width:100%;height:400px;margin-top: 5px;"></div>
 		</div>
 	
 		
