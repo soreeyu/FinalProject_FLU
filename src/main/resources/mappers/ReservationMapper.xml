@@ -4,19 +4,17 @@
   
   <mapper namespace="ReservationMapper">
   
-	<!-- 예약 가능 시간 불러오기 -->
+	<!-- 운영 시간 불러오기 -->
 	<select id="Reserve_accessTime" parameterType="java.lang.Integer" resultType="com.flu.meetRoom.MeetRoomDTO">
 		select time from meetroom where num=#{snum}
 	</select>
 	
   	<!-- 예약되어 있는 시간 뿌려주기  -->
   	<select id="Reserved_time" parameterType="com.flu.reservation.ReservationDTO" resultType="com.flu.reservation.ReservationDTO" >
-  		select R.* from reservation R, eachroom E where R.snum=#{snum} and E.name=#{name} and R.snum=E.snum
+  		select R.* from reservation R, eachroom E where R.snum=#{snum} and E.name=#{name} and R.snum=E.snum and reserve_date=#{reserve_date}
   	</select>
   	
-  	<select id="Reserved_time2" parameterType="com.flu.reservation.ReservationDTO" resultType="com.flu.reservation.ReservationDTO">
-  		select * from reservation where reserve_date=#{reserve_date} and name=#{name}
-  	</select>
+  	
   	
   	<!-- 예약하기 -->
   	<insert id="ReservePay" parameterType="com.flu.reservation.ReservationDTO">

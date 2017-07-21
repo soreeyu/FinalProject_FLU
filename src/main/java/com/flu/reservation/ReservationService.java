@@ -61,7 +61,7 @@ public class ReservationService {
 	public MeetRoomDTO accessTime(int snum) throws Exception{
 		return reservationDAO.accessTime(snum);
 	}
-	//예약 되어이쓴ㄴ 시간 불러오기
+	//예약 되어있는 시간 불러오기
 	public List<ReservationDTO> reservedTime(ReservationDTO reservationDTO) throws Exception{
 		return reservationDAO.reservedTime(reservationDTO);
 	}

@@ -31,36 +31,67 @@
     	var index1=0;
     	var index2=0;
     	var name=$("#reserved_name").val();
-    	var snum = '${each.snum}';
-    	
+    	var snum = '${map.each.snum}';
+    	var reserve_date = "";
         $("#datepicker").datepicker({
         	altField : "#day",
-        	
+        	minDate :0,
         	onSelect : function(data){    							//해당 페이지의 방 이름;
         		$("#day").val(data);// 클릭한 날짜
-        		var reserve_date = $("#day").val();
-
-        		$.post("reservedTime", {reserve_date : reserve_date, name : name, snum:snum}, function(data) {
-        			$("#reserve_time").html(data);
-				}); 
-        		//에이작스범위는 여기까지
+        		accessTime(snum);
+        		reserve_date = $("#day").val();
+				load(reserve_date, name, snum);
+        		/* 날짜 하나 클릭할 때 해당 날짜에 예약된 정보를 가져온다. */
         	}
         });
-        var reserve_date = $("#day").val();
+        		function load(reserve_date, name, snum) {
+	        		$.post("reservedTime", {reserve_date : reserve_date, name : name, snum:snum}, function(data) {
+	        			var count = data.reserve_count;
+	        			var reserve_in = data.reserve_in;
+	        			var reserve_out = data.reserve_out;
+	        			var result = $(".time").attr("title");
+	        			
+	        			
+						for(var i=0;i<count;i++){
+	        				$(".time").each(function(index) {
+	        					if(reserve_in[i]<=index && reserve_out[i]>=index){
+		        					$(this).css("background-color", "gray");       					
+	        					} 
+						})
+							
+							
+						}        			
+	        			
+	        			
+	        			
+					}); 
+	        		//에이작스범위는 여기까지
+					
+				}
+        
+      
+      
+        
+        /* 페이지 로딩 되면서 에이작스로 운영시간을 가져와서 뿌려준다. */
+        reserve_date = $("#day").val();
+        accessTime(snum);
+        load(reserve_date, name, snum);
+        function accessTime(snum) {
+        	$("#reserve_time").html("");
 		$.ajax({
-			url : "reservedTime",
+			url : "accessTime",
 			type: "POST",
 			data :{
-				reserve_date : reserve_date,
-				name : name,
 				snum:snum
 				},
 			success: function(data) {
-				
 				$("#reserve_time").html(data);
 			}				
 			
 		});
+			
+		}
+		
        
 		/* 시간 뿌려주는 부분에서 가로 스크롤 스크립트  */
         $("#reserve_time").mouseenter(function() {
@@ -72,7 +103,8 @@
         
     		$(this).each(function(index){
     			$("#reserve_time").on("click",".time", function() {
-	    			if(check<2){
+	    			if($(this).css("background-color")=='rgb(255, 255, 0)'){    				
+    				if(check<2){
 	    				check++;
 	    				if(check==1){
 	    					index1 = $(this).attr("title");			
@@ -87,15 +119,18 @@
 	    				check=0;
 	    				$(this).css("background-color", "yellow");
 	    			}    			
+	    			}
     			});	
 	    	});
 			
      	function sel(index1,index2){
-     		alert("index1="+index1+","+"index2="+index2);
     		$(".time").each(function(index){
     			if(index>=index1 && index<=index2){
+    				alert("inex"+index);
     				$(this).css("background-color", "red");
-    			}else if(index>=index2 && index<=index1){
+    			}
+    			if(index>=index2 && index<=index1){
+    				alert("index"+index);
     				$(this).css("background-color", "red");
     			}			
     		});	  		
@@ -112,19 +147,9 @@
     		}
     	} 
      	
-     	$("#reset_btn").click(function(index) {
-    		var tin = $("#in").val()*1;
-    		var tout = $("#out").val()*1;
-    		
-    		if(tin!="" && tout!=""){
-    			alert("시간을 다시 설정합니다.");
-    			$(".time").css("background-color", "yellow");
-    			check=0;
-    			$("#in").val("");
-    			$("#out").val("");
-    		}else if(topen=="" || tclose ==""){
-    			alert("오픈 시간과 마감시간을 입력해주세요");
-    		}
+     	$("#reset_btn").click(function() {
+    		accessTime(snum);
+    		load(reserve_date, name, snum);
     	})
      	
     	$("#people").blur(function() {
@@ -204,23 +229,23 @@ font-size:14px;
 	<section>
 	<h1>예약</h1>
 	<form action="reserveInsert" method="post" id="frm" name="frm_check">
-	<c:forEach items="${reserved}" var="r">
+	<c:forEach items="${map.reserved}" var="r">
 	<input type="hidden" id="reserved_name" value="${r.name}">
 	</c:forEach>
-	<input type="hidden" name="name" value="${each.name}" id="name">
+	<input type="hidden" name="name" value="${map.each.name}" id="name">
 	<input type="hidden" name="reserve_date" id="day" class="reserve_Info"> 
 	<input type="hidden" name="price" id="rprice">
-	<input type="hidden" name="snum" value="${each.snum}">
+	<input type="hidden" name="snum" value="${map.each.snum}">
 		<div>
 	<h2>세부공간</h2>
-	<div>${each.price}/시간(인)</div>
-	<input type="hidden" id="price" value="${each.price}">
-		유형 : ${each.type}
-		예약시간 : ${each.time}
-		인원 : ${each.human}
+	<div>${map.each.price}/시간(인)</div>
+	<input type="hidden" id="price" value="${map.each.price}">
+		유형 : ${map.each.type}
+		운영시간 : ${map.each.time}
+		인원 : ${map.each.human}
 		편의 시설
 		<div>
-			${each.convenience}
+			${map.each.convenience}
 		</div>
 	</div>
 	
@@ -233,7 +258,9 @@ font-size:14px;
 	<div id="reserve_time">
 	
 	
-	
+	</div>
+	<div id="reservedTime">
+		
 	</div>
 	<div id="timeresult">
 		<input type="hidden" name="time" id="in" class="reserve_Info">

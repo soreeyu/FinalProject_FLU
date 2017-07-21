@@ -68,7 +68,6 @@
 			if(reservation_check == undefined){
 				alert("세부 공간을 선택해주세요");
 			}else {
-				alert(eachroom_name);
 				location.href="reservation/reserveInsert?num="+reservation_num+"&snum="+meetroom_num+"&name="+eachroom_name; 
 			}
 			

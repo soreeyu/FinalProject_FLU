@@ -3,8 +3,11 @@ package com.flu.controller;
 import com.flu.util.ListInfo;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,18 +44,33 @@ public class ReservationController {
 	public void reserveInsert(Model model, int num, ReservationDTO reservationDTO) throws Exception{
 		EachRoomDTO eachRoomDTO =  reservaionService.eachView(num);//방 번호를 가지고 해당방의 정보를 뿌려준다.
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());//업체 번호를 가지고 업체의 정보를 뿌려준다.(운영시간, 위치 등등)
+		Calendar ca = Calendar.getInstance();
+		Date da = new Date(ca.getTimeInMillis());
+		System.out.println(da.toString());
+		reservationDTO.setReserve_date(da.toString());
 		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);//방 이름과 업체 번호를 가지고와서 해당 업체의 선택한 방의 예약된 정보를 가져온다.
+		
 		String [] reserved_time = null;
+		ArrayList<String> in = new ArrayList<String>();
+		ArrayList<String> out = new ArrayList<String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		String [] access = meetRoomDTO.getTime().split(",");//해당 업체의 운영시간 파싱
+		
 		if(ar!=null){
 			for(int i=0; i<ar.size();i++){
 				reserved_time = ar.get(i).getTime().split(",");//예약되어있는 시간을 가져와서 파싱
+				in.add(reserved_time[0]);
+				out.add(reserved_time[1]);
 			}
+			map.put("in", in);
+			map.put("out", out);
 		}
-		model.addAttribute("reserved", ar);//예약되어있는 정보
-		model.addAttribute("reserved_time", reserved_time);//예약되어있는 시간
-		model.addAttribute("each", eachRoomDTO);//방 정보
-		String [] access = meetRoomDTO.getTime().split(",");//해당 업체의 운영시간 파싱
-		model.addAttribute("access",access );//운영시간
+		
+		map.put("each", eachRoomDTO);
+		map.put("reserved", ar);
+		map.put("access", access);
+		
+		model.addAttribute("map", map );//운영시간
 
 	}
 	
@@ -94,27 +112,34 @@ public class ReservationController {
 		
 	}
 	
-	@RequestMapping(value="reservedTime", method=RequestMethod.POST)
-	public void reservedTime(Model model, ReservationDTO reservationDTO) throws Exception{
-		List<ReservationDTO> ar = reservaionService.reservedTime2(reservationDTO);
+	@RequestMapping(value="accessTime", method=RequestMethod.POST)
+	public void accessTime(Model model, ReservationDTO reservationDTO) throws Exception{
+		System.out.println(reservationDTO.getSnum());
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());
+		System.out.println(meetRoomDTO.getTime());
 		String [] access = meetRoomDTO.getTime().split(",");
 		model.addAttribute("access", access);
-		
+	}
+	
+	@RequestMapping(value="reservedTime", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> reservedTime(Model model, ReservationDTO reservationDTO) throws Exception{
+		System.out.println("날짜"+reservationDTO.getReserve_date());
+		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<String> in = new ArrayList<String>();
+		ArrayList<String> out = new ArrayList<String>();
+		String [] reserved = null;
 		if(ar!=null){
-			String [] result;
-			ArrayList<String> start = new ArrayList<String>();
-			ArrayList<String> last = new ArrayList<String>();
-			
 			for(int i=0;i<ar.size();i++){
-				result = ar.get(i).getTime().split(",");
-				
+				reserved = ar.get(i).getTime().split(",");
+				in.add(reserved[0]);
+				out.add(reserved[1]);
 			}
-
-			model.addAttribute("start", start);//예약된 시간들 중에서 입실시간들 ArrayList
-			model.addAttribute("last", last);//예약된 시간들 중에서 퇴실시간들 ArrayList
+			map.put("reserve_count", in.size());
+			map.put("reserve_in", in);
+			map.put("reserve_out", out);
 		}
-
-		
+		return map;
 	}
 }
