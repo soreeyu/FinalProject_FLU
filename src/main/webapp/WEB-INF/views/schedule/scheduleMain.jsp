@@ -45,20 +45,30 @@ div{
 	min-width: 1460px;
 	width: 100%;
 	height: auto;
-	background-color: aqua;
+	background-color: #f2f2f2; /* white; */ /* aqua; */
+}
+
+#partsAndUsers{
+	display: block;
+    margin-top: 100px;
+    width: 15%;
+    height: auto;
+    background: orange;
+    float: left;
+    font-size: 12px;
 }
 
 .testData{
 	width: 1152px;
 	height: auto;
-	background: lime;
+	background: white; /* lime; */
 	margin: 0 auto;
 }
 
 #schedule_section{
 	width: 1152px;
 	height: inherit;
-	background: orange;
+	background: white; /* orange; */
 	margin: 0 auto;
 }
 
@@ -66,21 +76,26 @@ div{
 #part1{
 	width: 100%;
 	height: 500px;
-	background: green;
+	background: white; /* green; */
+}
+
+
+#main_View{
+	padding: 10px;
 }
 
 
 #part1 #cal_section{
-	width: 50%;
+	width: calc(40% - 20px);
 	height: inherit;
-	background: gray;
+	background: white; /* gray; */
 	float: left;
 }
 
 #part1 #cklist_section{
-	width: 50%;
+	width: 40%;
 	height: inherit;
-	background: lightgray;
+	background: white; /* lightgray; */
 	float: left;
 }
 
@@ -98,14 +113,15 @@ div{
 }
 
 #schcalendar{
-	width: auto;
+	width: inherit;
+    height: 100%;
 }
 
 
 #part2{
 	width: 100%;
 	height: auto;
-	background: red;
+	background: white; /* red; */
 }
 
 .pg-bar{
@@ -114,7 +130,7 @@ div{
 
 /****************** modal css *******************/
 #partModal{
-	background: lime;
+	background: white; /* lime; */
 }
 
 
@@ -130,27 +146,6 @@ div{
 		<section class="main_section jui">
 		<input type="text" name="projectNum" id="projectNum" value="${projectNum}">
 		<input type="hidden" name="scheduleNum" id="scheduleNum" value="0">
-		
-		<!-- 값 넘어오는거 확인용 -->
-		<div class="testData">
-		이곳에 스케줄넘,해당 스케줄에 대한 파트/클라이언트/사용자,  현재 로그인된 세션 이 필요함  
-		
-			<div id="partsDiv"></div>
-			<hr>
-			
-			<div id="unitsDiv"></div>
-			<hr>
-			
-			<div id="clientDiv"></div>
-			<hr>
-			
-			<div id="usersDiv"></div>
-			<hr>
-			
-			
-			
-		</div>
-		
 		
 		
 		<!-- 스케줄 글보기 모달 -->
@@ -267,16 +262,25 @@ div{
 		</div>	
 		<!-- 스케줄등록모달 끝 -->
 		
-		
-		
-		
-		
+
 		
 		<div id="schedule_section">
 		<h1>SCHEDULE MAIN</h1>
 		
 		<!----------------- 달력&체크리스트 --------------->
 		<div id="part1"> 
+				
+		
+				
+		<div id="partsAndUsers">
+				myeon01(myeon01)@sss<br/>
+				욥욥<br/>
+				립립<br/>
+				클래스구축<br/>
+				DB설계를통한 어쩌고 저쩌고<br/>
+		</div>
+		
+
 			<div id="cal_section">
 				<!-- Schedule_View -->
 					<div id="main_View" style="display: block;">
@@ -289,7 +293,46 @@ div{
 			</div>
 			
 			<div id="cklist_section">
-				<input type="button" id="addUnitBtn" value="할일 등록하기">
+				<div id="unitTitle">
+					<div>할일</div><div>진행중</div><div>완료</div><div>목표</div>
+				</div>
+				<div id="unitWill">
+					<ul>
+						<li>기나긴 이름들의 할일1</li>
+						<li>기나긴 이름들의 할일2</li>
+						<li>기나긴 이름들의 할일3</li>
+						<li>기나긴 이름들의 할일4</li>
+						<li>기나긴 이름들의 할일5</li>
+					</ul>
+				</div>
+				<div id="unitIng">
+					<ul>
+						<li>기나긴 이름들의 진행중1</li>
+						<li>기나긴 이름들의 진행중2</li>
+						<li>기나긴 이름들의 진행중3</li>
+						<li>기나긴 이름들의 진행중4</li>
+						<li>기나긴 이름들의 진행중5</li>
+					</ul>
+				</div>
+				<div id="unitDone">
+					<ul>
+						<li>기나긴 이름들의 완료1</li>
+						<li>기나긴 이름들의 완료2</li>
+						<li>기나긴 이름들의 완료3</li>
+						<li>기나긴 이름들의 완료4</li>
+						<li>기나긴 이름들의 완료5</li>
+					</ul>
+				</div>
+				<div id="unitGoal">
+					<ul>
+						<li>기나긴 이름들의 파트1</li>
+						<li>기나긴 이름들의 파트2</li>
+						<li>기나긴 이름들의 파트3</li>
+						<li>기나긴 이름들의 파트4</li>
+						<li>기나긴 이름들의 파트5</li>
+					</ul>
+				</div>
+				<!-- <input type="button" id="addUnitBtn" value="할일 등록하기">
 				<table id="cklist_table">
 					<tr>
 						<th id="task">할일</th>
@@ -323,7 +366,7 @@ div{
 							part4<br/>
 						</td>
 					</tr>
-				</table>
+				</table> -->
 			</div>
 		</div> 
 		<!----------------- 달력&체크리스트 끝--------------->
@@ -336,6 +379,29 @@ div{
 
 			
 		</div>
+		
+		
+		
+		<!-- 값 넘어오는거 확인용 -->
+		<div class="testData">
+		이곳에 스케줄넘,해당 스케줄에 대한 파트/클라이언트/사용자,  현재 로그인된 세션 이 필요함  
+		
+			<div id="partsDiv"></div>
+			<hr>
+			
+			<div id="unitsDiv"></div>
+			<hr>
+			
+			<div id="clientDiv"></div>
+			<hr>
+			
+			<div id="usersDiv"></div>
+			<hr>
+			
+			
+			
+		</div>
+		
 		
 		
 		
@@ -649,7 +715,6 @@ function getPartList(scheduleNum){
 			$(data).each(function(){
 				result = result + '<tr class="onePartClick">';
 				result = result + '<td class="schNum">'+ this.scheduleNum + "</td>";
-				result = result + '<td class="partNum">'+ this.partNum + "</td>";
 				result = result + "<td> "+ this.partName + " </td>";
 				result = result + "<td> "+ this.partStartDate + " </td>";
 				result = result + "<td> "+ this.partFinishDate + " </td>";
