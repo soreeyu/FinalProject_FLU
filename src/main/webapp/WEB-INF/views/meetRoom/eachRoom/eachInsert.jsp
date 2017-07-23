@@ -10,23 +10,6 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">$(function(){
-    //전역변수선언
-    var editor_object = [];
-     
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: editor_object,
-        elPlaceHolder: "smarteditor",
-        sSkinURI: "${pageContext.request.contextPath}/resources/SE2/SmartEditor2Skin.html", 
-        htParams : {
-            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseToolbar : true,             
-            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseVerticalResizer : true,     
-            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseModeChanger : true, 
-        }
-    });
-     
     //전송버튼 클릭이벤트
     $("#savebutton").click(function(){
         var eachRoomInfo = document.getElementsByClassName("eachRoomInfo");
@@ -41,11 +24,6 @@
         }else if(eachRoomInfo[4].value==""){
         	alert("가격을 입력하세요");
         }else {
-	        //id가 smarteditor인 textarea에 에디터에서 대입
-	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-	         
-	        // 이부분에 에디터 validation 검증
-	         
 	        //폼 submit
 	        $("#frm").submit();
         	
@@ -65,19 +43,111 @@ section {
 	<c:import url="../../temp/header.jsp"/>
 	
 	<section>
-	<h1>세부공간등록</h1>
+	<div id="eachRoom_header">
+		세부공간 정보를 입력해주세요	
+	</div>
+	
 	<form action="eachInsert" method="post" enctype="multipart/form-data" id="frm">
-	<p>방 이름  <input type="text" name="name" class="eachRoomInfo"> </p>
-	<p>세부내용 <textarea rows="" cols="" name="contents" id="smarteditor"></textarea></p>
-	<input type="hidden" name="time" value="${time[0]}">
-	<input type="hidden" name="time" value="${time[1]}">
+	<div>
+		<span>
+			세부공간 명
+		</span>
+		<input type="text" name="name" placeholder="세부 공간명을 입력해주세요." class="eachRoomInfo">
+	</div>
+	
+	<div id="eachRoom_contents">
+		<span>
+			세부공간 소개
+		</span>
+		<textarea rows="" cols="" name="contents"></textarea>
+	</div>
+
+	<div id="eachRoom_convenience">
+		<div class="tit">
+			편의시설
+		</div>
+		<span>구비된 편의시설을 선택해주세요</span>
+		<div class="convenience_list">
+			<ul>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>TV/프로젝터</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>인터넷/WIFI</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>복사/인쇄기</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>화이트보드</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>음향/마이크</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>주차</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>금연</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>PC/노트북</span>
+					</label>
+				</li>
+				<li>	
+					<input type="checkbox">
+					<label>
+						<i> </i>
+						<span>의자/테이블</span>
+					</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 	<p>대표사진 <input type="file" name="files" class="eachRoomInfo"> </p>
 	<p>공간유형 <input type="text" name="type" class="eachRoomInfo"> </p>
-	<p>수용인원 <input type="text" name="human" class="eachRoomInfo"> </p>
+	<p>수용인원 <input type="number" name="human" class="eachRoomInfo"> </p>
 	<p>편의시설 <input type="text" name="convenience"> </p>
 	<p>가격 <input type="number" name="price" class="eachRoomInfo"> </p>
-	<input type="hidden" name="snum" value="${num}">
+	
 	<input type="button" id="savebutton" value="방 등록">
+
+
+	<input type="hidden" name="snum" value="${num}">
+	<input type="hidden" name="time" value="${time[0]}">
+	<input type="hidden" name="time" value="${time[1]}">
 	</form>
 	</section>
 	

@@ -234,17 +234,19 @@ p {
 	border-bottom: 1px solid #ebebeb;
 }
 .list_detail li{
-	padding: 12px 0 11px 82px;
+	padding: 12px 0 11px;
     font-size: 14px;
+    position: relative;
 }
-.list_detail li:before{
-	left: 0;
-    top: 13px;
+li:before {
+    left: 1px;
+    top: 18px;
     margin-top: 0;
 }
 .type_tit {
 	left: 14px;
     margin-right: 18px;
+    
 }
 </style>
 </head>

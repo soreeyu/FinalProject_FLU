@@ -16,7 +16,7 @@
 		<span>${dto.type}</span>
 	</li>
 	<li>
-		<span>수용인원</span>
+		<span class="type_tit">수용인원</span>
 		<span>${dto.human}</span>
 	</li>
 </ul>
