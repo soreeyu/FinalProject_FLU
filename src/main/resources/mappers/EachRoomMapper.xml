@@ -14,7 +14,7 @@
   		select * from eachroom where snum=#{num} order by num asc
   	</select>
 
-	<!-- 세부공간 하나 보기  -->
+	<!-- 세부공간 정보 보기  -->
 	<select id="EachView" parameterType="java.lang.Integer" resultType="com.flu.eachRoom.EachRoomDTO">
 		select * from eachroom where num=#{num}
 	</select>

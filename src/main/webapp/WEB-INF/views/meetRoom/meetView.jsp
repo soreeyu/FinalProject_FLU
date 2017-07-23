@@ -44,6 +44,21 @@
 		});
 		/*해당 업체가 보유하고 있는 방 하나를 삭제하는 스크립트  */
 		
+		/* 라디오 버튼 눌렀을때 상세공간의 정보 Ajax로 가져오기  */
+		$("#eachRoom").on("click", ".eachRoom_class", function() {
+			var num =$(this).val();
+			
+			$.ajax({
+				url: "eachRoom/eachView",
+				typs : "POST",
+				data : {num : num},
+				success : function(data) {
+					$(".flex_info").html(data);
+				}
+			})
+			
+		})
+		
 		/* 해당 업체가 보유하고 있는 방 하나의 정보를 수정하는 스크립트 */
 		 $("#eachRoom").on("click", ".update", function() {
 				var num = $(this).attr("id");
@@ -106,6 +121,9 @@ p {
 #eachRoomTit {
 	border-bottom: 4px solid #0066ff;
 }
+#eachRoomTit > h3{
+	display: inline-block;
+}
 #eachRoomContents {
 	background-color: white;
 	
@@ -155,6 +173,10 @@ p {
 	vertical-align: middle;
 	padding: 33px 30px 38px;
 }
+#choice {
+	margin-left : 210px;
+	color: red;
+}
 
 .title:after{
 	position: absolute;
@@ -164,6 +186,65 @@ p {
     height: 4px;
     width: 20px;
     background-color: #ffd014;
+}
+.flex_box {
+	padding: 22px 0 21px;
+	position: relative;
+    display: table;
+    width: 100%;
+}
+.flex {
+	display: table-cell;
+}
+.flex_right {
+	position : relative;
+	min-width : 120px;
+	padding-top : 0;
+	text-align: right;
+	word-break: break-all;
+    word-wrap: break-word;
+}
+.info_photo{
+	position: relative;
+    padding: 0 0 15px 125px;
+    min-height: 125px;
+    height: 125px;
+    font-size: 14px;
+}
+.info_photo img {
+	width: 100%;
+	height: 100%;
+}
+.info_photo > span {
+	position: absolute;
+    width: 110px;
+    height: 110px;
+    left: 0;
+    top: 0;
+}
+.info_photo p {
+	max-height: 107px;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+.list_detail {
+	border-bottom: 1px solid #ebebeb;
+}
+.list_detail li{
+	padding: 12px 0 11px 82px;
+    font-size: 14px;
+}
+.list_detail li:before{
+	left: 0;
+    top: 13px;
+    margin-top: 0;
+}
+.type_tit {
+	left: 14px;
+    margin-right: 18px;
 }
 </style>
 </head>
@@ -186,6 +267,7 @@ p {
 		<div id="Layer1">
 		<div id="eachRoomTit">
 		<h3>세부공간 선택</h3>
+		<span id="choice">필수선택</span>
 		</div>
 		<div id="eachRoomContents">
 		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>

@@ -110,8 +110,9 @@ public class EachRoomController {
 	}
 	
 	@RequestMapping(value="eachView",method=RequestMethod.GET)
-	public void eachView(Integer num){
-		
+	public void eachView(Integer num, Model model) throws Exception{
+		EachRoomDTO eachRoomDTO =(EachRoomDTO)eachRoomServiceImpl.view(num);
+		model.addAttribute("dto", eachRoomDTO);
 	}
 	
 	

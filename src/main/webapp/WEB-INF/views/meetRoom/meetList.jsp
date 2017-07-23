@@ -27,6 +27,8 @@ section {
 	display: block;
     position: relative;
     overflow: hidden;
+	width: 345px;
+	height: 261px;
 }
 .Room_Img > img {
 	width : 100%;
