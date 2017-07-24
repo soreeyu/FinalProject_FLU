@@ -1,5 +1,7 @@
 package com.flu.member;
 
+import java.sql.Date;
+
 import com.flu.profile.TypeInfo;
 
 public class MemberDTO {
@@ -23,6 +25,30 @@ public class MemberDTO {
 	private String authenticState;
 	private String alarmstate;
 	private String emailcheck;
+	private String name;
+	private String namegender;
+	private Date birth;
+	
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNamegender() {
+		return namegender;
+	}
+	public void setNamegender(String namegender) {
+		this.namegender = namegender;
+	}
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
 	public String getKind() {
 		return kind;
 	}

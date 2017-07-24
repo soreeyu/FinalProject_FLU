@@ -11,6 +11,7 @@ public class Academic{
 	private String major;
 	private Date entrance;
 	private Date graduate;
+	private int num;
 	
 	
 	public Date getEntrance() {
@@ -54,6 +55,12 @@ public class Academic{
 	}
 	public void setMajor(String major) {
 		this.major = major;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 
 }

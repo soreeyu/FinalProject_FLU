@@ -126,8 +126,7 @@
 }
 
 .profile_wrap{
-	padding-bottom: 20px;
-	margin-bottom: 20px;
+	
 }
 .profile_wrap > p:FIRST-CHILD{
 	margin-top: 20px;
@@ -135,32 +134,89 @@
 	font-weight: 700;
 }
 
+.profile_wrap > .or{
+	border-bottom: 1px dashed #dedede;
+}
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
+    min-height: 410px;
     padding-top: 15px;
-    padding-bottom: 15px;
+   
+    
 }
 .no_data{
 	width: 100%;
-    height: 100%;
-    text-align: center;
+    text-align: left;
     margin: 0 auto;
+}
+.no_img{
+	
+	padding: 40px 0 40px 0;
 }
 .no_img p{
 	font-size: 14px;
 	margin-top: 15px;
 	color: #999;
 }
-.no_img p span{
-	font-weight: bold;
+.no_img label{
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+	margin-right: 30px;
+}
+.no_img textarea{
+	vertical-align: top;
+}
+.no_img input[type = text]{
+	padding: 5px;
+	margin-left: -5px;
+}
+
+.no_img input[type = button]{
+	float: right;
+	margin-top: 7px;
+	padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: black;
+    border-radius: .2em;
+    color: white;
+    line-height: 1.5;
+    border: 0;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.p_label{
+	margin-left: 130px;
+	color: red !important;
+}
+.p_label label{
+	width: 100%;
+	text-align: left;
+	margin-right: 0;
+	display: inline;
 }
 
 #a{
-	background-color: #66b3ff;
 	color: white;
+	background-color: #66b3ff;
 }
+
+
+.portView{
+    margin-top: 7px;
+    padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #66b3ff;
+    border-radius: .2em;
+    color: white;
+    line-height: 1.5;
+}
+	
 </style>
 </head>
 <body>
@@ -174,48 +230,23 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<c:if test="${empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillInsert" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
-						<c:if test="${not empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillUpdate" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
+						<p><span>포트폴리오</span></p>
 					</section>
 					<section class="profile_wrap">
-						<p><span>보유기술</span></p>
+						
 						
 						<div class="no_data_wrap">
-							<c:if test="${empty list }">
 							<div class="no_data">
-								<div class="no_img">
-									<img alt="기술" src="${pageContext.request.contextPath }/resources/img/mypage/skill.png">
-									<p>등록된 <span>'기술'</span>이 없습니다.</p>
-								</div>
+								<p>${map.dto.title }</p>
+								<p>${map.dto.describe }</p>
+								<p>${map.dto.startDate }</p>
+								<p>${map.dto.finishDate }</p>
+								<p>${map.dto.percentage }</p>
+								<p>${map.dto.pfOname }</p>
+								
 							</div>
-							</c:if>
-							<c:if test="${not empty list }">
-								<table style="width: 100%; text-align: left;">
-								<colgroup>
-									<col width="60%">
-									<col width="18%">
-									<col width="*%">
-								</colgroup>
-								<tr>
-									<th>종류</th>
-									<th>숙련도</th>
-									<th>경험</th>
-								</tr>
-								<c:forEach items="${list }" var="i">
-									<tr>
-										<td>${i.kind }</td>
-										<td>${i.slevel}</td>
-										<td>${i.exp }</td>
-									</tr>
-								</c:forEach>
-								</table>
-							</c:if>
+							<br><a class="portView" href="portfolioUpdate?pfNum=${map.dto.pfNum }" style="margin-top: -5px;">업데이트 하기</a>
 						</div>
-						
 					</section>
 					
 				</div>
@@ -226,4 +257,6 @@
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
+
+
 </html>

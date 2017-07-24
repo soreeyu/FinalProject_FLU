@@ -11,7 +11,7 @@ import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
 
-public class ProjectTest extends MyAbstractTest {
+public class ProjectTest extends MyAbstract{
 
 	@Inject
 	private ProjectDAO projectDAO;

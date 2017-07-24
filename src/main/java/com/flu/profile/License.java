@@ -9,6 +9,8 @@ public class License {
 	private String agency;
 	private Date publishDate;
 	private int seiralNum;
+	private int num;
+	
 	public String getEmail() {
 		return email;
 	}
@@ -38,6 +40,12 @@ public class License {
 	}
 	public void setSeiralNum(int seiralNum) {
 		this.seiralNum = seiralNum;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 	

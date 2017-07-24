@@ -138,14 +138,12 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
 .no_data{
 	width: 100%;
     height: 100%;
-    text-align: center;
     margin: 0 auto;
 }
 .no_img p{
@@ -161,7 +159,58 @@
 	background-color: #66b3ff;
 	color: white;
 }
+
+
+.info_body{
+	margin-top: 20px;
+}
+
+.info_div{
+	
+}
+.info_div label{
+	padding-left: 30px;
+	width: 100px;
+	display: inline-block;
+}
+.info_div > label:FIRST-CHILD{
+	text-align: right;
+}
+
+.job_info label{
+	font-size: 20px;
+}
+.job_info p{
+	padding-left: 40px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.job_info{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.info1{
+	line-height: 1;
+    margin-bottom: 25px;
+}
+
+.info4 a{
+	float: right;
+	margin-top: 7px;
+	padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #66b3ff;
+    border-radius: .2em;
+    color: white;
+    line-height: 1.5;
+}
+
+
 </style>
+
 </head>
 <body>
 	<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
@@ -174,48 +223,51 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<c:if test="${empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillInsert" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
-						<c:if test="${not empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillUpdate" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
+						<p><span>프리랜서 정보</span></p>
 					</section>
 					<section class="profile_wrap">
-						<p><span>보유기술</span></p>
-						
-						<div class="no_data_wrap">
-							<c:if test="${empty list }">
-							<div class="no_data">
-								<div class="no_img">
-									<img alt="기술" src="${pageContext.request.contextPath }/resources/img/mypage/skill.png">
-									<p>등록된 <span>'기술'</span>이 없습니다.</p>
+						<div class="info_body">
+							<div class="info1 info_div">
+								<label>직종</label>
+								<label>${free.dto.jobKind }</label>
+							</div>
+							<div class="info2 info_div">
+								<label>관심분야</label>
+								<div class="job_info">
+									<label>개발</label>
+									<c:if test="${not empty free.interesting }">
+									<c:forEach items="${free.interesting }" var="i">
+									<p>${i }</p>
+									</c:forEach>
+									</c:if>
+									<c:if test="${empty free.interesting }">
+									<p>아직 관심분야를 선택하지 않았습니다.</p>
+									</c:if>
+									<label>디자인</label>
+									<c:if test="${not empty free.interesting2 }">
+									<c:forEach items="${free.interesting2 }" var="i">
+									<p>${i }</p>
+									</c:forEach>
+									</c:if>
+									<c:if test="${empty free.interesting2 }">
+									<p>아직 관심분야를 선택하지 않았습니다.</p>
+									</c:if>
 								</div>
 							</div>
-							</c:if>
-							<c:if test="${not empty list }">
-								<table style="width: 100%; text-align: left;">
-								<colgroup>
-									<col width="60%">
-									<col width="18%">
-									<col width="*%">
-								</colgroup>
-								<tr>
-									<th>종류</th>
-									<th>숙련도</th>
-									<th>경험</th>
-								</tr>
-								<c:forEach items="${list }" var="i">
-									<tr>
-										<td>${i.kind }</td>
-										<td>${i.slevel}</td>
-										<td>${i.exp }</td>
-									</tr>
-								</c:forEach>
-								</table>
-							</c:if>
+							<div class="info3 info_div">
+								<label>활동가능성</label>
+								<label>${free.dto.possibility }</label>
+							</div>
+							<div class="info4 info_div">
+								<c:if test="${not empty free.dto.jobKind }">
+								<a href="infoUpdate"><span>수정</span></a>
+								</c:if>
+								<c:if test="${empty free.dto.jobKind }">
+								<a href="infoInsert"><span>수정</span></a>
+								</c:if>
+								
+							</div>
 						</div>
-						
 					</section>
 					
 				</div>

@@ -43,7 +43,7 @@
 	<section class="profile_section">
 		<div class="profile_div">
 			<ul>
-				<li><a href="#">내프로필</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage">내프로필</a></li>
 				<li><a href="#">내커리어</a></li>
 				<li><a href="#">프로젝트 관리</a></li>
 			</ul>
