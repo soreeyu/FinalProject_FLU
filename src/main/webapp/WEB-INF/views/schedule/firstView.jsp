@@ -571,56 +571,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
-#schedule_info{
-
-	width: calc(100% - 40px);
-    height: 52px;
-    margin: 10px auto;
-    padding: 30px 20px;
-    border-radius: 2px;
-    background: #fff;
-    
-}
- */
-
-
-
-
 </style>
 </head>
 <body>
@@ -642,11 +592,12 @@
 											<div class="tw-project-analytics-status__head">시작일</div>
 											<div class="tw-project-analytics-status__text">
 												<section class="tw-add-date-panel">
-													<div class="tw-add-date-panel__left">
-														<div class="tw-add-date-panel__input">
-															<div class="add-button">
-																<i class="tw-icon tw-icon-add --name_add"></i>
-															</div>
+													<div class="tw-add-date-panel__added-date with-close-icon">
+														<!-- react-text: 437 -->
+														7월 25일
+														<!-- /react-text -->
+														<div class="tw-add-date-panel__remove-date">
+															<i class="tw-icon tw-icon-close --name_close"></i>
 														</div>
 													</div>
 												</section>
@@ -667,7 +618,7 @@
 												</section>
 											</div>
 										</div>
-										<div>
+										<!-- <div>
 											<div class="tw-project-analytics-status__head">완료일</div>
 											<div class="tw-project-analytics-status__text">
 												<section class="tw-add-date-panel">
@@ -680,7 +631,7 @@
 													</div>
 												</section>
 											</div>
-										</div>
+										</div> -->
 										<div>
 											<div class="tw-project-analytics-status__head">경과 시간</div>
 											<div class="tw-project-analytics-status__text --plain">-</div>
@@ -690,14 +641,19 @@
 											<div class="tw-project-analytics-status__text --plain">32일</div>
 										</div>
 										<div>
-											<div class="tw-project-analytics-status__head">완료됨</div>
+											<div class="tw-project-analytics-status__head">계획 업무</div>
 											<div class="tw-project-analytics-status__text --plain">3개
 												업무 (60%)</div>
 										</div>
 										<div>
-											<div class="tw-project-analytics-status__head">남은 업무</div>
+											<div class="tw-project-analytics-status__head">진행 업무</div>
 											<div class="tw-project-analytics-status__text --plain">2개
 												업무 (40%)</div>
+										</div>
+										<div>
+											<div class="tw-project-analytics-status__head">완료 업무</div>
+											<div class="tw-project-analytics-status__text --plain">3개
+												업무 (60%)</div>
 										</div>
 									</div>
 								</div>
