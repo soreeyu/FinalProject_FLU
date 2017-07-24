@@ -17,7 +17,7 @@
 				</ul>
 				<span class="header_right">
 					<c:choose>
-					<c:when test="${empty member }">
+					<c:when test="${empty member}">
 					<span class="header_login">
 						<a href="${pageContext.request.contextPath}/member/login">로그인</a>
 					</span>
@@ -27,7 +27,7 @@
 					</c:when>
 					<c:otherwise>
 					<span>
-						<a href="#">알람</a>
+						<a href="${pageContext.request.contextPath}/alram/alramList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alram/alram.png"></a>
 					</span>
 					<span class="header_sign_up">	
 						<a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>

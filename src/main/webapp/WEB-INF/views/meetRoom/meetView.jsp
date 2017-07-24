@@ -204,6 +204,10 @@ p {
 	word-break: break-all;
     word-wrap: break-word;
 }
+.tit_unit{
+	font-size: 12px;
+	padding: 1px 0 0 2px;
+}
 .info_photo{
 	position: relative;
     padding: 0 0 15px 125px;

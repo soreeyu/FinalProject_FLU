@@ -28,7 +28,7 @@
 					</div>
 					<div class="flex_right">
 						<strong>\ ${E.price}</strong>
-						<span>/시간(인)</span>
+						<span class="tit_unit">/시간(인)</span>
 					</div>
 				</div>
 				<!--ajax  로 정보 뿌려주는 div  -->

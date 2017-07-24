@@ -168,6 +168,7 @@ section {
 	float: left;	
 	list-style: none;
 }
+
 </style>
 </head>
 <body>
@@ -235,7 +236,7 @@ section {
 		</div>
 		<br>
 		대표이미지<br>
-		<input type="file" name="file" id="files" class="meetRoomInfo">
+		<span class="buttonWrap"><input type="file" name="file" id="files" class="meetRoomInfo"></span>
 		<p>우편번호<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo"></p>
 		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 		<br>

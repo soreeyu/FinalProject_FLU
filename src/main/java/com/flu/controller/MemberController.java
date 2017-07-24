@@ -28,10 +28,11 @@ public class MemberController {
 		@RequestMapping(value="MemberJoin", method=RequestMethod.POST)
 		public String MemberJoin(MemberDTO memberDTO){
 			
-			int result =memberService.memberInsert(memberDTO);
+			int result = memberService.memberInsert(memberDTO);
 			if(result > 0){
 				this.EmailAccess(memberDTO.getEmail());
 			}
+			//알람 디비에 인서트
 			System.out.println("회원가입 성공");
 			return "/member/emailCK";
 		}
