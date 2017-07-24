@@ -198,8 +198,8 @@
 	
 }
 #sample6_address2{
-	width: 320px;
-	height:30px;
+	width: 305px;
+	height:18px;
 	display: inline-block;
 	border: 1px solid #dedede;
 	font-size: 14px;
@@ -252,6 +252,7 @@ input[type=file] {
 
 .fileinput .btn {
     vertical-align: middle;
+    min-width: 70px;
 }
 
 
@@ -262,6 +263,61 @@ input[type=file] {
 }
 
 
+
+form p span{
+	vertical-align: top;
+    line-height: 32px;
+    width: 200px;
+    display: inline-block;
+   	text-align: right;
+   	padding-right: 30px;
+}	
+select {
+	width: 322px;
+	height: 30px;
+	padding-left: 10px;
+	vertical-align: bottom;
+}
+form > p {
+	margin-bottom: 10px
+}
+
+p input[type=text]{
+	width: 100%;
+	height: 16px;
+	padding: 5px;
+	padding-left: 10px;
+}
+p label{
+	line-height: 30px;
+	width: 303px;;
+	display: inline-block;
+}
+p input[type=radio]{
+	margin-right: 20px;
+	margin-left: 9px;
+}
+p input[type=date]{
+	width: 100%;
+	height: 16px;
+	padding: 5px;
+	padding-left: 10px;
+}
+#btn{
+	cursor: pointer;
+	float: right;
+	margin-top: 7px;
+	padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #66b3ff;
+    border-radius: .2em;
+    color: white;
+    line-height: 1.5;
+    width: 70px;
+    margin-top: 20px;
+}
 
 </style>
 <script>
@@ -313,6 +369,61 @@ input[type=file] {
             }
         }).open();
 	});
+	
+	
+	
+	
+	//개인, 팀, 사업자 폼
+	
+
+		var radio = $("#lgender").html();
+	$("#type").change(function() {
+		var type= $(this).val();
+		 if(type == '개인'){
+			$("#sname").text("이름");
+			$("#sgender").text("성별");
+			$("#lgender").html(radio);
+			$("#sbirth").text("생년월일");
+		}else if(type == '팀'){
+			$("#sname").text("팀명");
+			$("#sgender").text("팀대표명");
+			$("#lgender").html("<input type='text' name='namegender' value=''>");
+			
+			$("#sbirth").text("설립일");
+		}else{
+			$("#sname").text("회사명");
+			$("#sgender").text("대표자명");
+			$("#lgender").html("<input type='text' name='namegender' value=''>");
+			$("#sbirth").text("설립일");
+		} 
+	});
+		
+		
+	$("#btn").click(function() {
+		var name = $('input:text[name="name"]').val();
+		var namegender = $('input:radio[name="namegender"]:checked').val();
+		if(namegender == undefined){
+			namegender = $('input:text[name="namegender"]').val();
+		}
+		var birth = $("#birth").val();
+		
+		var addr = $("#sample6_address").val();
+		var addr2 = $("#sample6_address2").val();
+		
+		var f1 = $("#profile_img").val();
+		
+		
+		
+		if(name =="" || namegender =="" || birth == "" || addr =="" || addr2 == "" || f1 ==""){
+			alert("항목을 채워주세요");
+		}else{
+			$("#form").submit();
+		}
+		
+	});
+	
+	
+	
 });
 </script>
 </head>
@@ -328,48 +439,48 @@ input[type=file] {
 				<div class="contents_inner">
 					<section class="profile_title">
 						<p><span>계정 정보</span>
-						<c:choose>
-						<c:when test="${empty free.intro }">
-						<a href="introInsert" style="margin-top: -5px;">등록 하기</a>
-						</c:when>
-						<c:otherwise>
-						<a href="introUpdate" style="margin-top: -5px;">업데이트 하기</a>
-						</c:otherwise>
-						</c:choose>
+						
 						</p>
 					</section>
 					<section class="profile_wrap">
 						<p><span>내정보 수정</span></p>
 						
 						<div class="no_data_wrap">
-							<form>
-							<div>
+							<form id="form" action="${path }" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="email" value="${member.email }">
+							<div style="margin-bottom: 20px;">
+								<div style="width: 210px; height: 200px; margin: 0 auto;">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 										<img src="${pageContext.request.contextPath }/resources/img/img.PNG" alt="...">
 									</div>
-									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
-									<div>
+									<div class="fileinput-preview fileinput-exists thumbnail" style="min-width:199px; min-height:149px; max-width: 200px; max-height: 150px;">
+										<img src="">
+									</div>
+									<div style="margin-top: 10px;">
 										<span class="btn btn-default btn-file">
 										<span class="fileinput-new">Select image</span>
 										<span class="fileinput-exists">Change</span>
-										<input type="file" name="..."></span>
-										<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+										<input type="file" id="profile_img" name="f1"></span>
+										<a style="float: right;" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
 									</div>
 								</div>
+								</div>
 							</div>
-							<p><select>
-								<option></option>
-								<option></option>
-								<option></option>
-								<option></option>
-								
+							<p><span>파트너형태</span><select id="type" name="type">
+								<option value="개인" selected="selected">개인</option>
+								<option value="팀">팀</option>
+								<option value="사업자">사업자</option>
 							</select></p>
+							<p><span id="sname">이름</span><label id="lname"><input type="text" name="name" value=""></label></p>
+							<p><span id="sgender">성별</span><label id="lgender">남<input checked="checked" type="radio" name="namegender" value="남">여<input type="radio" name="namegender" value="여"></label></p>
+							<p><span id="sbirth">생연월일</span><label id="lbirth"><input id="birth" type="date" name="birth" value=""></label></p>
 							<div>
-								<p><label id="postcode" for="btn11"></label><input  type="hidden" id="sample6_postcode" readonly="readonly"><input id="btn11" type="button" value="우편번호 찾기"></p>
-								<p><label id="address" for="btn11"style="display: inline-block;"></label><input type="hidden" id="sample6_address" readonly="readonly"></p>
-								<p><input type="text" id="sample6_address2"></p>
+								<p><span>우편번호</span><label id="postcode" for="btn11"></label><input  type="hidden" id="sample6_postcode" name="addr_num"><input id="btn11" type="button" value="우편번호 찾기"></p>
+								<p><span>주소</span><label id="address" for="btn11"style="min-width:320px; overflow:hidden; display: inline-block;"></label><input type="hidden" id="sample6_address" name="addr_main"></p>
+								<p><span>나머지 주소</span><input type="text" id="sample6_address2" name="addr_detail"></p>
 							</div>
+							<p><span id="btn">수정완료</span></p>
 							</form>
 						</div>
 						
