@@ -30,5 +30,13 @@
   			select * from member where email = #{email} and pw = #{pw}
   		</select>
   		
+  		<!-- 정보 수정 -->
+  		<update id="memberUpdate" parameterType="com.flu.member.MemberDTO">
+  			update member set type=#{type} , oprofileimage = #{oProfileImage} , 
+  			fprofileimage = #{fProfileImage}, addr_num = #{addr_num}, addr_main = #{addr_main}, 
+  			addr_detail = #{addr_detail}, phone = #{phone}, phone2 = #{phone2}, fax = #{fax}, 
+  			name = #{name}, namegender = #{namegender}, birth = #{birth} where email = #{email}
+  		</update>
+  		
   	
   </mapper>

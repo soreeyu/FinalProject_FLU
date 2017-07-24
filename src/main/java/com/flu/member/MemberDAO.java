@@ -26,8 +26,8 @@ public class MemberDAO {
 
 	//계정 정보수정
 	public int memberUpdate(MemberDTO memberDTO){
-
-		return 0;
+		
+		return sqlSession.update(NAMESPACE+"memberUpdate", memberDTO);
 	}
 
 

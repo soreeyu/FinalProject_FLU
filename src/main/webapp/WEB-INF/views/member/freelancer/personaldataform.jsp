@@ -146,7 +146,6 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -181,7 +180,6 @@
 	line-height: 30px;
 }
 #address{
-	width: 320px;
 	font-size: 14px;
 	height:30px;
 	display: inline-block;
@@ -290,7 +288,7 @@ p input[type=text]{
 }
 p label{
 	line-height: 30px;
-	width: 303px;;
+	min-width: 200px;;
 	display: inline-block;
 }
 p input[type=radio]{
@@ -317,6 +315,16 @@ p input[type=date]{
     line-height: 1.5;
     width: 70px;
     margin-top: 20px;
+}
+.img1{
+	width: 200px;
+	height: 150px;
+}
+.img2{
+	min-width:199px;
+	min-height:149px;
+	max-width: 200px;
+	max-height: 150px;
 }
 
 </style>
@@ -411,11 +419,17 @@ p input[type=date]{
 		var addr2 = $("#sample6_address2").val();
 		
 		var f1 = $("#profile_img").val();
-		
+		var paramf1 = "${dto.fProfileImage}";
+		if(paramf1 != ""){
+			f1 = " ";
+		}
 		
 		
 		if(name =="" || namegender =="" || birth == "" || addr =="" || addr2 == "" || f1 ==""){
+			
 			alert("항목을 채워주세요");
+			
+			
 		}else{
 			$("#form").submit();
 		}
@@ -425,6 +439,7 @@ p input[type=date]{
 	
 	
 });
+
 </script>
 </head>
 <body>
@@ -433,7 +448,7 @@ p input[type=date]{
 	<section class="main_section">
 		<div class="page_wrap">
 		<div class="page">
-			<c:import url="/WEB-INF/views/temp/mypagesidebar.jsp"></c:import>
+			<c:import url="/WEB-INF/views/temp/personaldatasidbar.jsp"></c:import>
 			
 			<div class="contents">
 				<div class="contents_inner">
@@ -451,12 +466,22 @@ p input[type=date]{
 							<div style="margin-bottom: 20px;">
 								<div style="width: 210px; height: 200px; margin: 0 auto;">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
-									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+									<c:if test="${not empty dto.fProfileImage }">
+									<div class="fileinput-new thumbnail img1"  style="display: none;">
 										<img src="${pageContext.request.contextPath }/resources/img/img.PNG" alt="...">
 									</div>
-									<div class="fileinput-preview fileinput-exists thumbnail" style="min-width:199px; min-height:149px; max-width: 200px; max-height: 150px;">
-										<img src="">
+									<div class="fileinput-preview fileinput-exists thumbnail img2" style="display:block; min-width:199px; min-height:149px; max-width: 200px; max-height: 150px;">
+										<img style="max-height: 140px;" src="${pageContext.request.contextPath }/resources/profile/${dto.fProfileImage}">
 									</div>
+									</c:if>
+									<c:if test="">
+									<div class="fileinput-new thumbnail img1">
+										<img src="${pageContext.request.contextPath }/resources/img/img.PNG" alt="...">
+									</div>
+									<div class="fileinput-preview fileinput-exists thumbnail img2" style="min-width:199px; min-height:149px; max-width: 200px; max-height: 150px;">
+									</div>
+									</c:if>
+									
 									<div style="margin-top: 10px;">
 										<span class="btn btn-default btn-file">
 										<span class="fileinput-new">Select image</span>
@@ -472,13 +497,17 @@ p input[type=date]{
 								<option value="팀">팀</option>
 								<option value="사업자">사업자</option>
 							</select></p>
-							<p><span id="sname">이름</span><label id="lname"><input type="text" name="name" value=""></label></p>
-							<p><span id="sgender">성별</span><label id="lgender">남<input checked="checked" type="radio" name="namegender" value="남">여<input type="radio" name="namegender" value="여"></label></p>
-							<p><span id="sbirth">생연월일</span><label id="lbirth"><input id="birth" type="date" name="birth" value=""></label></p>
+							<p><span id="sname">이름</span><label style="width: 303px;" id="lname"><input type="text" name="name" value="${dto.name }"></label></p>
+							<p><span id="sgender">성별</span><label style="width: 303px;" id="lgender">남<input checked="checked" type="radio" name="namegender" value="남">여<input type="radio" name="namegender" value="여"></label></p>
+							<p><span id="sbirth">생연월일</span><label style="width: 303px;" id="lbirth"><input id="birth" type="date" name="birth" value="${dto.birth }"></label></p>
 							<div>
-								<p><span>우편번호</span><label id="postcode" for="btn11"></label><input  type="hidden" id="sample6_postcode" name="addr_num"><input id="btn11" type="button" value="우편번호 찾기"></p>
-								<p><span>주소</span><label id="address" for="btn11"style="min-width:320px; overflow:hidden; display: inline-block;"></label><input type="hidden" id="sample6_address" name="addr_main"></p>
-								<p><span>나머지 주소</span><input type="text" id="sample6_address2" name="addr_detail"></p>
+								<p><span>우편번호</span><label id="postcode" for="btn11">${dto.addr_num }</label><input  type="hidden" id="sample6_postcode" name="addr_num" value="${dto.addr_num }"><input id="btn11" type="button" value="우편번호 찾기"></p>
+								<p><span>주소</span><label id="address" for="btn11"style="min-width:320px; overflow:hidden; display: inline-block;">${dto.addr_main }</label><input type="hidden" id="sample6_address" name="addr_main" value="${dto.addr_main }"></p>
+								<p><span>나머지 주소</span><input type="text" id="sample6_address2" name="addr_detail" value="${dto.addr_detail }"></p>
+								
+								<p style="margin-top: 10px;"><span>핸드폰</span><label style="width: 303px;"><input type="text" name="phone" value="${dto.phone }"></label></p>
+								<p style="margin-top: 10px;"><span>전화번호</span><label style="width: 303px;"><input type="text" name="phone2" value="${dto.phone2 }"></label></p>
+								<p style="margin-top: 10px;"><span>팩스번호</span><label style="width: 303px;"><input type="text" name="fax" value="${dto.fax }"></label></p>
 							</div>
 							<p><span id="btn">수정완료</span></p>
 							</form>

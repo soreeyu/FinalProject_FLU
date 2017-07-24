@@ -101,4 +101,10 @@ public class MemberService {
 	public MemberDTO memberView(String email){
 		return memberDAO.memberView(email);
 	}
+	
+	//회원 정보 수정
+	public int memberUpdate(MemberDTO memberDTO){
+		return memberDAO.memberUpdate(memberDTO);
+	}
+	
 }

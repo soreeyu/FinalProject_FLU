@@ -144,28 +144,7 @@ public class FreelancerController {
 		return "/member/freelancer/personaldata";
 	}
 	
-	//계정 정보 등록 폼
-	@RequestMapping(value="personaldataInsert", method=RequestMethod.GET)
-	public String psersonaldataInsert(Model model){
-		
-		
-		model.addAttribute("path", "personaldataInsert");
-		return "/member/freelancer/personaldataform";
-	}
-	//계정 등록
-	@RequestMapping(value="personaldataInsert", method=RequestMethod.POST)
-	public String psersonaldataInsert(MemberDTO memberDTO, Model model){
-		System.out.println(memberDTO.getEmail());
-		System.out.println(memberDTO.getType());
-		System.out.println(memberDTO.getName());
-		System.out.println(memberDTO.getNamegender());
-		System.out.println(memberDTO.getBirth());
-		System.out.println(memberDTO.getAddr_num());
-		System.out.println(memberDTO.getAddr_main());
-		System.out.println(memberDTO.getAddr_detail());
-		System.out.println("-------------------------");
-		return "/member/freelancer/personaldataform";
-	}
+	
 	
 	
 	/************************** Intro **********************************/
