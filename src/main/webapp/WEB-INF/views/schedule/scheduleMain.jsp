@@ -93,7 +93,7 @@ div{
 }
 
 #part1 #cklist_section{
-	width: 40%;
+	width: 60%;
 	height: inherit;
 	background: white; /* lightgray; */
 	float: left;
@@ -102,9 +102,10 @@ div{
 #cklist_table{
 	border: 1px solid black;
 	text-align: center;
-	width: 80%;
-	height: 80%;
-	margin : 10% auto;
+	width: 95%;
+	height: 40%;
+	margin : 10px auto;
+	font-size: 15px;
 }
 
 #cklist_table th{
@@ -271,7 +272,7 @@ div{
 		<div id="part1"> 
 				
 		
-				
+		<!-- 		
 		<div id="partsAndUsers">
 				myeon01(myeon01)@sss<br/>
 				욥욥<br/>
@@ -279,7 +280,7 @@ div{
 				클래스구축<br/>
 				DB설계를통한 어쩌고 저쩌고<br/>
 		</div>
-		
+		 -->
 
 			<div id="cal_section">
 				<!-- Schedule_View -->
@@ -293,7 +294,19 @@ div{
 			</div>
 			
 			<div id="cklist_section">
-				<div id="unitTitle">
+				<div id="unitSearch">
+					<select>
+						<option>test1(tester1)</option>
+						<option>test1(tester1)</option>
+						<option>test1(tester1)</option>
+					</select>
+					<select>
+						<option>파트파트파트1</option>
+						<option>파트파트파트2</option>
+						<option>파트파트파트3</option>
+					</select>
+				</div>
+			<!-- 	<div id="unitTitle">
 					<div>할일</div><div>진행중</div><div>완료</div><div>목표</div>
 				</div>
 				<div id="unitWill">
@@ -331,43 +344,91 @@ div{
 						<li>기나긴 이름들의 파트4</li>
 						<li>기나긴 이름들의 파트5</li>
 					</ul>
-				</div>
-				<!-- <input type="button" id="addUnitBtn" value="할일 등록하기">
+				</div> -->
+				<!-- <input type="button" id="addUnitBtn" value="할일 등록하기">-->
 				<table id="cklist_table">
-					<tr>
+					<tr id="unitTitle">
 						<th id="task">할일</th>
 						<th id="ing">진행중</th>
 						<th id="comp">완료</th>
 						<th id="goal">목표</th>
 					</tr>
 					<tr>
-						<td>
-							<input type="checkbox">할일1<br/>
-							<input type="checkbox">할일2<br/>
-							<input type="checkbox">할일3<br/>
-							<input type="checkbox">할일4<br/>
+						<td id="unitWill">
+							<ul>
+								<li><input type="checkbox">기나긴 이름들의 할일1</li>
+								<li><input type="checkbox">기나긴 이름들의 할일2</li>
+								<li><input type="checkbox">기나긴 이름들의 할일3</li>
+								<li><input type="checkbox">기나긴 이름들의 할일4</li>
+								<li><input type="checkbox">기나긴 이름들의 할일5</li>
+							</ul>
 						</td>
-						<td>
-							<input type="checkbox">할일1<br/>
-							<input type="checkbox">할일2<br/>
-							<input type="checkbox">할일3<br/>
-							<input type="checkbox">할일4<br/>
+						<td id="unitIng">
+							<ul>
+								<li><input type="checkbox">기나긴 이름들의 진행중1</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중2</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중3</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중4</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중5</li>
+							</ul>
 						</td>
-						<td>
-							<input type="checkbox">할일1<br/>
-							<input type="checkbox">할일2<br/>
-							<input type="checkbox">할일3<br/>
-							<input type="checkbox">할일4<br/>
+						<td id="unitDone">
+							<ul>
+								<li><input type="checkbox">기나긴 이름들의 완료1</li>
+								<li><input type="checkbox">기나긴 이름들의 완료2</li>
+								<li><input type="checkbox">기나긴 이름들의 완료3</li>
+								<li><input type="checkbox">기나긴 이름들의 완료4</li>
+								<li><input type="checkbox">기나긴 이름들의 완료5</li>
+							</ul>
 						</td>
-						<td>
-							part1<br/>
-							part2<br/>
-							part3<br/>
-							part4<br/>
+						<td id="unitGoal">
+							<ul>
+								<li>기나긴 이름들의 파트1</li>
+								<li>기나긴 이름들의 파트2</li>
+								<li>기나긴 이름들의 파트3</li>
+								<li>기나긴 이름들의 파트4</li>
+								<li>기나긴 이름들의 파트5</li>
+							</ul>
 						</td>
 					</tr>
-				</table> -->
-			</div>
+				</table> 
+				<table id="cklist_table">
+					<tr id="unitTitle">
+						<th id="task">할일</th>
+						<th id="ing">진행중</th>
+						<th id="comp">완료</th>
+					</tr>
+					<tr>
+						<td id="unitWill">
+							<ul>
+								<li><input type="checkbox">기나긴 이름들의 할일1</li>
+								<li><input type="checkbox">기나긴 이름들의 할일2</li>
+								<li><input type="checkbox">기나긴 이름들의 할일3</li>
+								<li><input type="checkbox">기나긴 이름들의 할일4</li>
+								<li><input type="checkbox">기나긴 이름들의 할일5</li>
+							</ul>
+						</td>
+						<td id="unitIng">
+							<ul>
+								<li><input type="checkbox">기나긴 이름들의 진행중1</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중2</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중3</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중4</li>
+								<li><input type="checkbox">기나긴 이름들의 진행중5</li>
+							</ul>
+						</td>
+						<td id="unitDone">
+							<ul>
+								<li><input type="checkbox">기나긴 이름들의 완료1</li>
+								<li><input type="checkbox">기나긴 이름들의 완료2</li>
+								<li><input type="checkbox">기나긴 이름들의 완료3</li>
+								<li><input type="checkbox">기나긴 이름들의 완료4</li>
+								<li><input type="checkbox">기나긴 이름들의 완료5</li>
+							</ul>
+						</td>
+					</tr>
+				</table> 
+				</div>
 		</div> 
 		<!----------------- 달력&체크리스트 끝--------------->
 		
