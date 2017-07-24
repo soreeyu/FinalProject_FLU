@@ -102,14 +102,10 @@ public class MemberService {
 		return memberDAO.memberView(email);
 	}
 	
-<<<<<<< HEAD
+
 	//회원 정보 수정
 	public int memberUpdate(MemberDTO memberDTO){
 		return memberDAO.memberUpdate(memberDTO);
 	}
-=======
-	
-	
->>>>>>> 860635e7171cf6a836545e50321826a587d87144
-	
+
 }
