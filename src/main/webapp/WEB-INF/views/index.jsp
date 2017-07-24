@@ -37,7 +37,7 @@
 			<p><a href="./schedule?projectNum=3000">스케줄화면가기</a></p>
 			<br/>
 			<p><a href="./schedule/create?projectNum=6000">스케줄 생성하기</a></p>
-		</div>
+			<p><a href="./schedule/test">css</a></p>
 	</section>
 	<section class="project">
 		<div class="project_div">

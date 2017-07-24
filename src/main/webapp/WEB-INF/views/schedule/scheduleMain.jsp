@@ -65,6 +65,14 @@ div{
 	margin: 0 auto;
 }
 
+#tag_viewAll{
+	width: 100px;
+	height: 50px;
+	background: red;
+}
+
+
+/* 이게 가운데 네모 전체임 */
 #schedule_section{
 	width: 1152px;
 	height: inherit;
@@ -263,8 +271,10 @@ div{
 		</div>	
 		<!-- 스케줄등록모달 끝 -->
 		
-
 		
+		<div id="tag_viewAll">
+			전체보기
+		</div>
 		<div id="schedule_section">
 		<h1>SCHEDULE MAIN</h1>
 		

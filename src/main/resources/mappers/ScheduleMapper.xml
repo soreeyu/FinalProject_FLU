@@ -84,7 +84,7 @@
 		 <if test="partNum != -1">
 		 	and  partnum in #{partNum} 
 		 </if>
-		 order by unitnum asc
+		 order by unitstartdate asc
 	</select>
 	
 	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
@@ -92,7 +92,7 @@
 		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit where schedulenum=#{scheduleNum}),0), #{unitName}, #{unitDescribe}, #{unitStartDate}, #{unitFinishDate}, #{partNum}, #{email}, '할일')
 	</insert>
 	
-	<update id="updateUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
+	<update id="unitUpdate" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
 		update scheduleunit set 
 		unitname=#{unitName}, unitdescribe=#{unitDescribe}, 
 		unitstartdate=#{unitStartDate},
@@ -101,8 +101,8 @@
 		where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</update>
 	
-	<delete id="deleteUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
-		delete * from scheduleunit where where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+	<delete id="unitDelete" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
+		delete * from scheduleunit where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</delete>
 	
 	

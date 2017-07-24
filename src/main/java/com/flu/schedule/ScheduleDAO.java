@@ -109,12 +109,12 @@ public class ScheduleDAO {
 	}
 	
 	public int updateUnit(ScheduleUnitDTO scheduleUnitDTO){
-		return 0;
+		return sqlSession.update(NAMESPACE+"unitUpdate",scheduleUnitDTO);
 	}
 	
-	//권한이 맞으면 삭제 허용하되 // 확인작업은 거쳐야한다
-	public int deleteUnit(String email){
-		return 0;
+	//권한이 맞으면 삭제 허용하되 // 확인작업은 거쳐야한다 //서비스나 컨트롤러에서 해야지
+	public int deleteUnit(ScheduleUnitDTO scheduleUnitDTO){
+		return sqlSession.update(NAMESPACE+"unitDelete",scheduleUnitDTO);
 	}
 	
 
