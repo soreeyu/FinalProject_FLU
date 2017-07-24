@@ -162,7 +162,7 @@ public class ProjectController {
 	
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
-	public void projectView(Integer projectNum, Model model){
+	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO){
 		if(projectNum==null){
 			projectNum=1;
 		}
@@ -173,6 +173,10 @@ public class ProjectController {
 		System.out.println(projectDTO.getSkill());
 		System.out.println(projectDTO.getEmail());
 		model.addAttribute("dto", projectDTO);
+		System.out.println("session의 사진을 불러와보자");
+		memberDTO = (MemberDTO)session.getAttribute("member");
+/*		System.out.println("profileOname="+memberDTO.getoProfileImage());
+		System.out.println("profileOname="+memberDTO.getfProfileImage());*/
 		
 	}
 	

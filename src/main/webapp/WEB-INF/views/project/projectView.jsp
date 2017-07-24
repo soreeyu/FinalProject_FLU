@@ -457,6 +457,11 @@ background-color: white;
 	text-decoration: none;
 	color: #2099bb;
 }
+.project-reply-box{
+	background-color: aqua;
+	width: 100%;
+	height: 300px;
+}
 </style>
 
 </head>
@@ -530,11 +535,15 @@ background-color: white;
 				<div class="project-detail">
 					<div class="project-detail-title">프로젝트 내용</div>	
 					<div>${dto.contents }</div>
+					
 				</div>
 				
 				<div>
 					<div class="project-detail-title" style="margin-top: 20px;">관련 기술</div>
 					<span class="project-skill">${dto.skill}</span>
+		
+					
+					
 				</div>
 			</div>
 			<div style="clear: both;"></div>
@@ -555,6 +564,29 @@ background-color: white;
 			<div class="project-qna">
 				<div class="project-detail-title">프로젝트 문의</div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
+				<div style="margin-top: 30px;">
+				<div class="project-reply-box">
+					<table>
+						<tr><td>writer</td><td>contents</td><td>reg_date</td></tr>
+						<c:forEach items="${replylist}" var="reply">
+						<tr><td>${reply.writer}</td><td>${reply.contents}</td><td>${reply.reg_date }</td></tr>
+						</c:forEach>
+						<tr><td>writer</td><td>contents</td><td>reg_date</td></tr>
+					</table>
+				</div>
+				<form action="../reply/replyInsert" id="frm" method="post">
+					<input type="hidden" name="projectNum" value="${dto.projectNum}">
+					
+					<!-- member의 img를 넣자 -->
+					
+					<input type="text" name="contents">
+					<input type="checkbox" id="reply_check">비공개 설정
+					<input type="hidden" name="replyChk" id="replyChk" value="true">
+					<input type="button" id="btn" value="작성">
+				</form>
+				
+				</div>
+				
 			</div>
 			
 			</section>
@@ -582,5 +614,31 @@ background-color: white;
 
 </section>
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
+
+<script type="text/javascript">
+ $("#btn").click(function() {
+	 alert("yes");
+	var chk = $("#reply_check").prop("checked");
+	alert(chk);
+	/* check되있으면 true, 아니면 false값 */
+	if(chk==true){
+		alert("true");
+		alert($("#replyChk").val());
+		$("#replyChk").prop("value", "true");
+	}else{
+		alert("false");
+		$("#replyChk").prop("value", "false");
+	}
+
+	alert("${replylist}");
+	
+$.get("../reply/replyList",function(data){
+	alert("repyl");
+	
+});
+
+});
+ 
+</script>
 </body>
 </html>

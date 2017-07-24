@@ -282,6 +282,8 @@ background-color: white;
 }
 .skill-name{
 	background-color: #a1a7ad;
+	color: white;
+	
 }
 .skill-box span{
 	color: #999;
@@ -638,8 +640,9 @@ background-color: white;
 							<span class="sub-cate">애플리케이션</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
-							<c:forEach items="${list}" >
-								<span class="skill-name-0"></span>
+						
+							<c:forEach items="${dto.skills}" var="sk">
+								 <span class="skill-name">sk = ${sk}</span>
 							
 							</c:forEach>
 							
@@ -682,15 +685,15 @@ background-color: white;
 
 $("#by-price-desc").click(function() {
 	alert("click");
-	 $.ajax({
+	/*  $.ajax({
 	    url: "projectMap",
 	    type: "GET",
  
 	    success: function(data){
 	       alert(JSON.stringify(data));
 	       		
-	  /*      alert("skill="+data.sk);
-	       alert(JSON.stringify(data.sk)); */
+	    alert("skill="+data.sk);
+	       alert(JSON.stringify(data.sk)); 
 	       
 	          alert("pjlist="+data.pjlist);
 	          alert(JSON.stringify(data.pjlist));
@@ -708,7 +711,7 @@ $("#by-price-desc").click(function() {
 			);
 	    }
 		
-	}); 
+	});  */
 });  
 	/* alert("click");
 	$("#arrange").val("money");
