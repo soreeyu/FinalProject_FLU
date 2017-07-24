@@ -27,7 +27,7 @@
 					</c:when>
 					<c:otherwise>
 					<span>
-						<a href="${pageContext.request.contextPath}/alram/alramList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alram/alram.png"></a>
+						<a href="${pageContext.request.contextPath}/alarm/alarmList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alarm/alarm.png"></a>
 					</span>
 					<span class="header_sign_up">	
 						<a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>

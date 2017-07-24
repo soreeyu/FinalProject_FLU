@@ -72,6 +72,7 @@ public class ProjectController {
 		
 		if(result==1){
 			message = "success";
+			
 		}
 		
 		rd.addFlashAttribute("message", message);

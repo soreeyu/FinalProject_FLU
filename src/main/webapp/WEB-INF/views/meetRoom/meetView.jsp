@@ -45,20 +45,26 @@
 		/*해당 업체가 보유하고 있는 방 하나를 삭제하는 스크립트  */
 		
 		/* 라디오 버튼 눌렀을때 상세공간의 정보 Ajax로 가져오기  */
-		$("#eachRoom").on("click", ".eachRoom_class", function() {
-			var num =$(this).val();
-			
-			$.ajax({
-				url: "eachRoom/eachView",
-				typs : "POST",
-				data : {num : num},
-				success : function(data) {
-					$(".flex_info").html(data);
+			$("#eachRoom").on("change", ".eachRoom_class", function() {
+				var result = $("input:radio[name='eachRoom']").is(":checked");
+				if(result){
+				var num = $(this).val();
+				$(".flex_info").hide();
+				$(".box_form").hide();
+				 $.ajax({
+					url: "eachRoom/eachView",
+					typs : "POST",
+					data : {num : num},
+					success : function(data) {
+						$("#R"+num).html(data);
+						$("#R"+num).show();
+						$(".box_form").show();
+					}
+				}) 
 				}
 			})
-			
-		})
-		
+
+
 		/* 해당 업체가 보유하고 있는 방 하나의 정보를 수정하는 스크립트 */
 		 $("#eachRoom").on("click", ".update", function() {
 				var num = $(this).attr("id");
@@ -188,6 +194,7 @@ p {
     background-color: #ffd014;
 }
 .flex_box {
+	border-top: 1px solid #ccc;
 	padding: 22px 0 21px;
 	position: relative;
     display: table;
@@ -204,6 +211,11 @@ p {
 	word-break: break-all;
     word-wrap: break-word;
 }
+.flex_info{
+	padding: 15px 0 30px;
+    border-top: 1px solid #ebebeb;
+    font-size: 14px;
+}
 .tit_unit{
 	font-size: 12px;
 	padding: 1px 0 0 2px;
@@ -214,17 +226,20 @@ p {
     min-height: 125px;
     height: 125px;
     font-size: 14px;
+    
 }
 .info_photo img {
-	width: 100%;
-	height: 100%;
-}
-.info_photo > span {
 	position: absolute;
     width: 110px;
     height: 110px;
     left: 0;
     top: 0;
+}
+
+.lst {
+	padding: 0 20px;
+	display: block;
+	color: #949494;
 }
 .info_photo p {
 	max-height: 107px;
@@ -233,25 +248,39 @@ p {
     text-overflow: ellipsis;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
+    
 }
 .list_detail {
 	border-bottom: 1px solid #ebebeb;
 }
+
 .list_detail li{
 	padding: 12px 0 11px;
     font-size: 14px;
     position: relative;
 }
-li:before {
-    left: 1px;
-    top: 18px;
-    margin-top: 0;
-}
+
 .type_tit {
 	left: 14px;
     margin-right: 18px;
     
 }
+.respond_info {
+	padding: 19px 20px 17px;
+    font-size: 16px;
+    background-color: #fff;
+    text-align: center;
+    display: block;
+}
+.responde_info > p {
+	line-height: 25px;
+}
+label {
+	padding-left: 33px;
+    font-size: 18px;
+    line-height: 21px;
+}
+
 </style>
 </head>
 <body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
@@ -276,11 +305,18 @@ li:before {
 		<span id="choice">필수선택</span>
 		</div>
 		<div id="eachRoomContents">
-		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>
-		<hr>
+		<c:if test="${member.kind eq 'admin' }">
+		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>		
+		</c:if>
+		<div class="respond_info">
+			<p>지금 바로 예약하세요!</p>
+		</div>
 		<div id="eachRoom">
 		
+		
+		
 		</div>
+		
 		<input type="button" id="reservation_btn" value="예약하기">
 		<hr>			
 		</div>

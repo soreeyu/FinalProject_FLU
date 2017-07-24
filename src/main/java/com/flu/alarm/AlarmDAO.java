@@ -16,17 +16,17 @@ public class AlarmDAO {
 	private final String NAMESPACE="AlarmMapper.";
 	
 	//알람 INSERT
-	public int alaramInsert(AlarmDTO alaramDTO){
-		return 0;
+	public int alarmInsert(AlarmDTO alarmDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE+"AlarmInsert", alarmDTO);
 	}
 	
 	//알람 LIST
-	public List<AlarmDTO> alaramList(ListInfo listInfo){
-		return null;
+	public List<AlarmDTO> alarmList(AlarmDTO alarmDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"AlarmList", alarmDTO);
 	}
 	
 	//알람 DELETE
-	public int alaramDelete(int num){
+	public int alarmDelete(int num) throws Exception{
 		return 0;
 	}
 	

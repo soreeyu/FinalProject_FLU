@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 
@@ -33,7 +35,7 @@ public class MemberController {
 		}
 		//사이트 회원 가입
 		@RequestMapping(value="MemberJoin", method=RequestMethod.POST)
-		public String MemberJoin(MemberDTO memberDTO){
+		public String MemberJoin(MemberDTO memberDTO) throws Exception{
 			
 
 			int result = memberService.memberInsert(memberDTO);
@@ -41,7 +43,14 @@ public class MemberController {
 			if(result > 0){
 				this.EmailAccess(memberDTO.getEmail());
 			}
+			
+			
 			//알람 디비에 인서트
+			AlarmDTO alarmDTO = new AlarmDTO();
+			AlarmService alarmService = new AlarmService();
+			alarmDTO.setEmail(memberDTO.getEmail());
+			alarmDTO.setContents("회원가입이 성공적으로 이루어졌습니다.");
+			alarmService.alaramInsert(alarmDTO);
 			System.out.println("회원가입 성공");
 			return "/member/emailCK";
 		}

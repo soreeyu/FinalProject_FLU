@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <mapper namespace="AlarmMapper">
+  	
+  	<!-- 알람 테이블에 인서트 -->
+  	<insert id="AlarmInsert" parameterType="com.flu.alarm.AlarmDTO">
+  		insert into alarm values (#{email}, #{contents}, sysdate, alarm_seq.nextval)
+  	</insert>
+  	
+  	<!-- 로그인 한 사람의 알람 리스트를 뿌려준다. -->
+  	<select id="AlarmList" parameterType="com.flu.alarm.AlarmDTO" resultType="com.flu.alarm.AlarmDTO">
+  		select * from alarm where email=#{email}
+  	</select>
+  	
+  	
+  </mapper>
