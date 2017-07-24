@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 <title>Insert title here</title>
 <style type="text/css">
 span{

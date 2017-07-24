@@ -50,12 +50,6 @@ public class CheckMemberDAO {
 	}
 	
 
-	
-	//loginTest
-	public MemberDTO loginTest(MemberDTO memberDTO){
-		return sqlSession.selectOne(NAMESPACE+"loginTest",memberDTO);
-	}
-	
-	
+
 	
 }

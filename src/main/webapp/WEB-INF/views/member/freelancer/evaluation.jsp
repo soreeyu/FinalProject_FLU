@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 .main_section{
+
 	min-width: 1460px;
 	width: 100%;
 	min-height: 2050px;
@@ -19,16 +20,26 @@
 	width: 1152px;
 	margin: 0 auto;
 }
+
 .page{
 	width: 1152px;
 	display: inline-block;
 	margin-top: 30px;
+   min-width: 1460px;
+   width: 100%;
+   min-height: 2050px;
+   background-color: #f2f2f2;
+}
+
+
 }
 
 
 /******************************** 왼쪽 메뉴 *******************************/
 .side{
-	float: left;
+
+   float: left;
+
     margin-left: 10px;
     margin-right: 10px;
     width: 250px;
@@ -51,6 +62,22 @@
 .free_img_div{
 	width: 220px;
 	font-size: 17px;
+   background-color:white;
+   padding: 15px;
+   margin-bottom: 15px;
+}
+.freelancer_name > span:FIRST-CHILD{
+   font-size: 16px;
+   display: block;
+   padding-bottom: 11px;
+   border-bottom: 1px solid #dedede;
+   font-weight: 700;
+   margin-bottom: 9px;
+   color: #454545;
+}
+.free_img_div{
+   width: 220px;
+   font-size: 17px;
     color: #333333;
     font-weight: bold;
     text-align: center;
@@ -58,6 +85,7 @@
 }
 .free_img_div img{
 	width: 216px;
+   width: 216px;
     height: 216px;
     border: 1px solid #dedede;
     border-radius: 10%;
@@ -69,6 +97,11 @@
 
 .sidebar_menu ul{
 	border: 1px solid #dedede;
+   margin-top: 20px;
+}
+
+.sidebar_menu ul{
+   border: 1px solid #dedede;
     border-radius: 3px;
     padding: 4px 8px;
     background-color: white;
@@ -80,6 +113,11 @@
 }
 .sidebar_menu ul li a{
 	border-radius: 2px;
+   height: 40px;
+    padding: 4px 0;
+}
+.sidebar_menu ul li a{
+   border-radius: 2px;
     display: block;
     padding: 10px 15px;
     font-size: 14px;
@@ -97,6 +135,12 @@
 /******************************** 왼쪽 메뉴  끝*******************************/
 .contents{
 	float: left;
+   background-color: #66b3ff;
+   color: white;
+}
+/******************************** 왼쪽 메뉴  끝*******************************/
+.contents{
+   float: left;
     margin-left: 10px;
     margin-right: 10px;
     width: 790px;
@@ -115,6 +159,18 @@
 	float: right;
 	margin-top: 7px;
 	padding: 6px 12px;
+   padding: 15px 30px 30px 30px;
+   background-color: #fff;
+    border-radius: 3px;
+}
+.profile_title{
+   border-bottom: 1px dashed #dedede;
+   padding-bottom: 25px;
+}
+.profile_title > p:FIRST-CHILD > a{
+   float: right;
+   margin-top: 7px;
+   padding: 6px 12px;
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
@@ -140,17 +196,34 @@
 	margin-top: 20px;
 	font-size: 18px;
 	font-weight: 700;
+   margin-top: 20px;
+}
+.profile_title > p > span {
+   font-size: 28px;
+   font-weight: bold;
+}
+
+.profile_wrap{
+   padding-bottom: 20px;
+   margin-bottom: 20px;
+}
+.profile_wrap > p:FIRST-CHILD{
+   margin-top: 20px;
+   font-size: 18px;
+   font-weight: 700;
 }
 
 
 .no_data_wrap{
 	width: 100%;
+   width: 100%;
     height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
 .no_data{
 	width: 100%;
+   width: 100%;
     height: 100%;
     text-align: center;
     margin: 0 auto;
@@ -162,6 +235,12 @@
 }
 .no_img p span{
 	font-weight: bold;
+   font-size: 14px;
+   margin-top: 15px;
+   color: #999;
+}
+.no_img p span{
+   font-weight: bold;
 }
 
 
@@ -174,6 +253,12 @@
 
 .project_count{
 	float: left;
+   margin-top: 30px;
+   display: table;
+}
+
+.project_count{
+   float: left;
     width: 365px;
     border-top: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
@@ -181,7 +266,7 @@
 }
 
 .count1{
-	background-color: #fafafa;
+   background-color: #fafafa;
     float: left;
     color: #555;
     font-size: 14px;
@@ -198,19 +283,27 @@
 }
 .count2 span{
 	font-size: 16px;
+   float: left;
+    color: #666;
+    font-size: 12px;
+    padding: 12px 20px;
+   margin-left: 15%;
+}
+.count2 span{
+   font-size: 16px;
     font-weight: bold;
     
 }
 
 .project_eval{
-	width: 363px;
+    width: 363px;
     border-top: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
     float: left;
     line-height: 1;
 }
 .eval1{
-	background-color: #fafafa;
+    background-color: #fafafa;
     float: left;
     color: #555;
     font-size: 14px;
@@ -246,6 +339,13 @@
 }
 .chart-penta p{
 	padding-left: 30px;
+    margin-top: 20px;
+}
+.chart-penta{
+   display: inline-block;
+}
+.chart-penta p{
+    padding-left: 30px;
     line-height: 1;
     color: #666;
     font-weight: bold;
@@ -258,6 +358,11 @@
 }
 .chart_list ul{
 	font-size: 15px;
+    display: inline-block;
+    vertical-align: top;
+}
+.chart_list ul{
+    font-size: 15px;
     margin-top: 1px;
     margin-left: 40px;
     margin-bottom: 0;
@@ -286,6 +391,29 @@
 }
 .chart-star ul{
 	float: left;
+    font-weight: bold;
+}
+.chart_list ul li span {
+   padding-left: 29px;
+}
+.chart_list ul li {
+   line-height: 14px;
+}
+.chart_list ul li+li{
+   padding-top: 26px;
+}
+
+.canvas_div{
+   margin-left: 20px;
+   display: inline-block;
+}
+
+.chart-star{
+   display: inline-block;   
+   vertical-align: top;
+}
+.chart-star ul{
+    float: left;
     margin: 0 20px 0 12px;
     list-style: none;
     font-size: 12px;
@@ -296,13 +424,14 @@
 	height: 25px;
 }
 
+
 .star5{
-	width: 150px;
+    width: 150px;
     height: 25px;
     margin-bottom: 18px;
 }
 .star4{
-	width: 150px;
+    width: 150px;
     height: 25px;
     margin-bottom: 18px;
 }
@@ -345,6 +474,7 @@
 .evaluation_div > p > span {
 	font-size: 18px;
 	font-weight: bold;
+
 }
 
 
@@ -397,7 +527,8 @@ $(function(){
     ctx.closePath();
     ctx.stroke();
   
- 	//5
+    
+    //5
     ctx.beginPath();
     ctx.moveTo(100,15);
     ctx.lineTo(19,75);
@@ -595,6 +726,7 @@ $(function(){
 	
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
+
 </body>
 
 

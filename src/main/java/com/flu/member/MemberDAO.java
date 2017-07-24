@@ -45,6 +45,7 @@ public class MemberDAO {
 
 	//회원 정보
 	public MemberDTO memberView(String email) {
+		System.out.println("view를 하러 왔음");
 		return sqlSession.selectOne(NAMESPACE+"memberView", email);
 	}
 
@@ -67,5 +68,6 @@ public class MemberDAO {
 
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
 	}
-
+	
+	
 }

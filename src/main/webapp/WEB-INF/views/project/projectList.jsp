@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
+
 <h2>project ${type}</h2>
 
 <table>
@@ -23,10 +25,6 @@
 </table>
 
 
-
-
-
-
-
+<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 </html>
