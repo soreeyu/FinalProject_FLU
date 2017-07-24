@@ -120,24 +120,6 @@ public class ProjectController {
 		listInfo.makeRow();
 		List<ProjectDTO> ar = projectService.projectList(listInfo);
 		
-		System.out.println("start="+listInfo.getStartRow());
-		System.out.println("last="+listInfo.getLastRow());
-		projectDTO.getSkills();
-	
-		/*System.out.println(ar.get(1).getSkills());
-		System.out.println("ar.length="+ar.get(1).getSkills().length);
-		System.out.println("list.length"+ar.size());
-		ArrayList<String> sk = new ArrayList<String>();
-		for(int i=0;i<ar.size();i++){
-			int arlong = ar.get(i).getSkills().length;
-			for(int j=0;j<arlong;j++){
-				System.out.println(ar.get(i).getSkills()[j]);
-				sk2 = ar.get(i).getSkills()[j];
-				sk.add(sk2);
-			}
-		}
-		
-		System.out.println("sk=="+sk);*/
 	
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
@@ -172,11 +154,16 @@ public class ProjectController {
 		System.out.println(projectDTO.getName());
 		System.out.println(projectDTO.getSkill());
 		System.out.println(projectDTO.getEmail());
-		model.addAttribute("dto", projectDTO);
+		
 		System.out.println("session의 사진을 불러와보자");
 		memberDTO = (MemberDTO)session.getAttribute("member");
 /*		System.out.println("profileOname="+memberDTO.getoProfileImage());
 		System.out.println("profileOname="+memberDTO.getfProfileImage());*/
+		
+		
+		model.addAttribute("dto", projectDTO);
+		
+		
 		
 	}
 	

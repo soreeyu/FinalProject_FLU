@@ -31,10 +31,10 @@ public class ReplyDAO {
 		return sqlSession.delete(NAMESPACE+"delete", num);
 	}
 	
-	public List<ReplyDTO> replyList(ListInfo listInfo, ProjectDTO projectDTO){
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	public List<ReplyDTO> replyList(HashMap<String, Object> map){
+		/*HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("listInfo", listInfo);
-		map.put("project", projectDTO);
+		map.put("project", projectDTO);*/
 		return sqlSession.selectList(NAMESPACE+"list", map); 
 	}
 	

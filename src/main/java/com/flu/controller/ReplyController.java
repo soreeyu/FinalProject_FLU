@@ -1,5 +1,6 @@
 package com.flu.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,22 +72,34 @@ public class ReplyController {
 		return "redirect:/project/projectView";
 	}
 	
-	@RequestMapping(value="replyList")
+	@RequestMapping(value="replyList", method=RequestMethod.GET)
 	public String ReplyList(ListInfo listInfo, ProjectDTO projectDTO, Model model){
 		System.out.println("replyList");
 		
 		int totalCount = replyService.replyCount(listInfo, projectDTO);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
-		List<ReplyDTO> ar = replyService.replyList(listInfo, projectDTO);
 		
-		model.addAttribute("replylist", ar);
-		model.addAttribute("listInfo", listInfo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("project", projectDTO);
+		List<ReplyDTO> ar = replyService.replyList(map);
+		
+		model.addAttribute("replyList", ar);
+		model.addAttribute("listInfo", map.get("listInfo"));
 		model.addAttribute("replycount", totalCount);
-		/*System.out.println(ar);
-		System.out.println(ar.get(0).getContents());
-		*/
-		return "/project/projectView"; 
+		model.addAttribute("project", map.get("project"));
+		model.addAttribute("map", map);
+
+		System.out.println("ar=="+ar);
+		System.out.println("map1="+map);
+		System.out.println("map2="+map.size());
+		System.out.println("map3="+map.get("project"));
+		System.out.println("map3="+map.get("listInfo"));
+		
+		System.out.println("start="+listInfo.getStartRow());
+		System.out.println("last="+listInfo.getLastRow());
+		return "reply/replyList"; 
 	}
 	
 	

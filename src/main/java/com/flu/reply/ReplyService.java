@@ -1,5 +1,6 @@
 package com.flu.reply;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,8 +28,17 @@ public class ReplyService {
 		return replyDAO.replyDelete(num);
 	}
 	
-	public List<ReplyDTO> replyList(ListInfo listInfo, ProjectDTO projectDTO){
-		return replyDAO.replyList(listInfo, projectDTO); 
+	public List<ReplyDTO> replyList(HashMap<String, Object> map){
+		
+		
+		/*HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("project", projectDTO);*/
+		List<ReplyDTO> ar =  replyDAO.replyList(map);
+		
+		System.out.println("service의 ar=="+ar);
+		
+		return replyDAO.replyList(map); 
 	}
 	
 	public int replyCount(ListInfo listInfo, ProjectDTO projectDTO){

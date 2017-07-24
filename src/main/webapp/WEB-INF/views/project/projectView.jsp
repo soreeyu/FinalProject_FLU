@@ -234,12 +234,6 @@ strong{
 
 
 
-
-
-
-
-
-
 .project-sort-text{
 	height: 40px;
 	margin-bottom: 15px;
@@ -564,16 +558,17 @@ background-color: white;
 			<div class="project-qna">
 				<div class="project-detail-title">프로젝트 문의</div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
-				<div style="margin-top: 30px;">
-				<div class="project-reply-box">
-					<table>
-						<tr><td>writer</td><td>contents</td><td>reg_date</td></tr>
+				<div style="margin-top: 30px;" class="project-reply-box">
+				<div class="project-reply-box-inner">
+					<div class="project-reply-box-top">
+					<div>writer</div><div>contents</div><div>reg_date</div><div>삭제</div>
 						<c:forEach items="${replylist}" var="reply">
-						<tr><td>${reply.writer}</td><td>${reply.contents}</td><td>${reply.reg_date }</td></tr>
+						<div>${reply.writer}</div><div>${reply.contents}</div><div>${reply.reg_date}</div><div>삭제</div>
 						</c:forEach>
-						<tr><td>writer</td><td>contents</td><td>reg_date</td></tr>
-					</table>
+					
+					</div>
 				</div>
+				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
 				<form action="../reply/replyInsert" id="frm" method="post">
 					<input type="hidden" name="projectNum" value="${dto.projectNum}">
 					
@@ -584,6 +579,7 @@ background-color: white;
 					<input type="hidden" name="replyChk" id="replyChk" value="true">
 					<input type="button" id="btn" value="작성">
 				</form>
+				</div>
 				
 				</div>
 				
@@ -629,13 +625,24 @@ background-color: white;
 		alert("false");
 		$("#replyChk").prop("value", "false");
 	}
-
-	alert("${replylist}");
+	var kk = "${replylist}";
+	alert(kk);
 	
-$.get("../reply/replyList",function(data){
+/* $.get("../reply/replyList",function(data){
 	alert("repyl");
 	
-});
+}); */
+var curPage=1;
+$.ajax({
+	url:"../reply/replyList",
+	type:"GET",
+	success:function(result){
+		alert("yeyyy");
+
+		alert(result);
+		$(".project-reply-box-top").html(result);
+	}
+}); 
 
 });
  

@@ -608,7 +608,7 @@ background-color: white;
 		<!-- 프로젝트 리스트 뿌려주는부분  -->
 			<section class="contents_main">
 			
-			
+		
 			
 		<!-- 프로젝트 각각 -->	
 			<c:forEach items="${list}"  var="dto">
