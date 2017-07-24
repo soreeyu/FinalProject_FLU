@@ -22,7 +22,7 @@
   		
   		<!-- 회원 가입 -->
   		<insert id="memberInsert" parameterType="com.flu.member.MemberDTO">
-  			insert into member values(#{kind}, #{email}, #{pw}, #{nickName}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+  			insert into member values(#{kind}, #{email}, #{pw}, #{nickName}, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null)
   		</insert>
   		
   		<!-- 로그인 -->

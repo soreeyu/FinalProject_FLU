@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,12 @@ public class MemberController {
 	@Inject
 	private MemberService memberService;
 	
+	//AJAX 뒤로가기 테스트
+	@RequestMapping(value="test")
+	public void test(){
+		
+	}
+	
 	//사이트 회원 가입폼 이동
 		@RequestMapping(value="MemberJoin", method=RequestMethod.GET)
 		public String MemberJoin(){
@@ -28,7 +35,9 @@ public class MemberController {
 		@RequestMapping(value="MemberJoin", method=RequestMethod.POST)
 		public String MemberJoin(MemberDTO memberDTO){
 			
+
 			int result = memberService.memberInsert(memberDTO);
+
 			if(result > 0){
 				this.EmailAccess(memberDTO.getEmail());
 			}
@@ -128,14 +137,18 @@ public class MemberController {
 		
 		//MY PAGE
 		@RequestMapping(value="mypage")
-		public String mypage(HttpSession session){
+		public String mypage(HttpSession session, Model model){
 			MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
 			
 			if(memberDTO.getKind().equals("client")){
+				model.addAttribute("active1", "a");
 				return "/member/client/mypage";
 			}else{
+				model.addAttribute("active1", "a");
 				return "/member/freelancer/mypage";
 			}
+			//model.addAttribute("active1", "a");
+			/*return "/member/freelancer/mypage";*/
 		}
 		
 		//멤버 테스트 페이지

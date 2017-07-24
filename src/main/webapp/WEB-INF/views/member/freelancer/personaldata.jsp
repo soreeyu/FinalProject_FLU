@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 
+
 <title>Insert title here</title>
 <style type="text/css">
 .main_section{
@@ -174,46 +175,18 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<c:if test="${empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillInsert" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
-						<c:if test="${not empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillUpdate" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
+						<p><span>계정 정보</span>
+						
+						
+						<a href="psersonaldataUpdate" style="margin-top: -5px;">내 정보 수정</a>
+						
+						</p>
 					</section>
 					<section class="profile_wrap">
-						<p><span>보유기술</span></p>
+						<p><span>자기소개</span></p>
 						
 						<div class="no_data_wrap">
-							<c:if test="${empty list }">
-							<div class="no_data">
-								<div class="no_img">
-									<img alt="기술" src="${pageContext.request.contextPath }/resources/img/mypage/skill.png">
-									<p>등록된 <span>'기술'</span>이 없습니다.</p>
-								</div>
-							</div>
-							</c:if>
-							<c:if test="${not empty list }">
-								<table style="width: 100%; text-align: left;">
-								<colgroup>
-									<col width="60%">
-									<col width="18%">
-									<col width="*%">
-								</colgroup>
-								<tr>
-									<th>종류</th>
-									<th>숙련도</th>
-									<th>경험</th>
-								</tr>
-								<c:forEach items="${list }" var="i">
-									<tr>
-										<td>${i.kind }</td>
-										<td>${i.slevel}</td>
-										<td>${i.exp }</td>
-									</tr>
-								</c:forEach>
-								</table>
-							</c:if>
+							
 						</div>
 						
 					</section>
