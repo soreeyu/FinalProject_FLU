@@ -45,8 +45,8 @@
 			<ul>
 			<c:choose>
 			<c:when test='${member.kind=="admin"}'>
-				<li><a href="${pageContext.request.contextPath}/checkProject/checkCashList">대금 관리</a></li>
-				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectList">프로젝트 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectWaitList">대금 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectCheckList">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/checkMember/checkMemberList">회원 관리</a></li>
 			</c:when>
 			<c:otherwise>

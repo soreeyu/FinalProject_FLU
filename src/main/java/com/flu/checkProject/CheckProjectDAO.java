@@ -20,14 +20,25 @@ public class CheckProjectDAO {
 	//**********프로젝트 검수 관리**************
 	
 	//검수 전 프로젝트 리스트 들고오기
-	public List<ProjectDTO> doneList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"doneList",listInfo);
+	public List<ProjectDTO> checkList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"checkList",listInfo);
 	}
 	
+	
+	public List<ProjectDTO>failList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"failList",listInfo);
+	}
+	
+	public List<ProjectDTO>waitList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"waitList",listInfo);
+	}
 	
 	public List<ProjectDTO>finishList(ListInfo listInfo){
 		return sqlSession.selectList(NAMESPACE+"finishList",listInfo);
 	}
+	
+	
+	
 	
 	
 	
@@ -36,16 +47,6 @@ public class CheckProjectDAO {
 	}
 
 	
-	
-	//**************대금관리**************
-	
-	//대금 관리를 위한 프로젝트 리스트 들고오기
-	public List<ProjectDTO> listCash(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"listCash",listInfo);
-	}
-	
-	
-	//담당자 정보 들고오는 view
 	
 	
 }

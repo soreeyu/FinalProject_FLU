@@ -12,6 +12,9 @@
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 <p>project View &emsp;
+<c:if test="${dto.state=='done'}">
+검수완료
+</c:if>
 <c:if test="${dto.state=='ing'}">
 진행중
 </c:if>
@@ -45,15 +48,13 @@
 
 <p>관리자 부분</p>
 <form action="../checkProject/checkProjectUpdate" id="frm">
-
-<input type="hidden" name="state" value="${dto.state }">
+<input type="hidden" name="state" value="${dto.state}">
 <input type="hidden" name="projectNum" value="${dto.projectNum}">
-
 <c:if test="${dto.state=='check'}">
 <input type="button" value="프로젝트 검수 완료" id="${dto.state }">
 </c:if>
-<c:if test="${dto.state=='done'}">
-<input type="button" value="프로젝트 시작" id="${dto.state }">
+<c:if test="${dto.state=='wait'}">
+<input type="button" value="프로젝트 진행하기" id="${dto.state }">
 </c:if>
 
 </form>
@@ -65,34 +66,29 @@
 </body>
 <script type="text/javascript">
 
-	var state = '${dto.state }';
-
+	var state = '${dto.state}';
+	
 	$('#'+state).click(function() {
 		
-		var check = $(this).attr('id')
-		
-		if(check=='check'){
+		if(state=='check'){
+			
 			if(confirm("프로젝트 검수를 완료하시겠습니까?")){
 				$('#frm').submit();
 			}
 			else{
 				alert("no"); 
 			}
+
 		}else{
-			if(confirm("프로젝트 인원 모집을 시작하시겠습니까?")){
+			if(confirm("프로젝트를 진행하시겠습니까??")){
 				$('#frm').submit();
 			}
 			else{
 				alert("no"); 
 			}
 		}
-
 			
 	});
-
-	
-
-
 
 </script>
 </html>

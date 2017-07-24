@@ -7,8 +7,6 @@ public class ListInfo {
 
 
 	//row
-	private String category;
-	private String detailCategory;
 	private String search; 
 	private String kind;
 	private int startRow;
@@ -21,6 +19,28 @@ public class ListInfo {
 	private int startNum;
 	private int lastNum;
 	private int perBlock=5;
+
+	//project
+	private String category;
+	private String detailCategory;
+	private String[] project;
+
+
+
+
+
+
+	public String[] getProject() {
+		return project;
+	}
+
+
+
+
+	public void setProject(String[] project) {
+		this.project = project;
+	}
+
 
 
 

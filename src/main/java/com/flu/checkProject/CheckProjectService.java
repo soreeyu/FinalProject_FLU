@@ -19,8 +19,16 @@ public class CheckProjectService {
 	@Inject
 	private CheckProjectDAO checkProjectDAO;
 	
-	public List<ProjectDTO> doneList(ListInfo listInfo){
-		return checkProjectDAO.doneList(listInfo);
+	public List<ProjectDTO> checkList(ListInfo listInfo){
+		return checkProjectDAO.checkList(listInfo);
+	}
+	
+	public List<ProjectDTO> failList(ListInfo listInfo){
+		return checkProjectDAO.failList(listInfo);
+	}
+	
+	public List<ProjectDTO> waitList(ListInfo listInfo){
+		return checkProjectDAO.waitList(listInfo);
 	}
 	
 	public List<ProjectDTO> finishList(ListInfo listInfo){
@@ -29,13 +37,12 @@ public class CheckProjectService {
 	
 	
 	
+	
+	
 	public int update(ProjectDTO projectDTO){
 		return checkProjectDAO.update(projectDTO);
 	}
 	
-	public List<ProjectDTO> listCash(ListInfo listInfo){
-		return checkProjectDAO.listCash(listInfo);
-	}
 	
 
 	
