@@ -27,26 +27,13 @@
   z-index: 2;
 } */
 .tw-sub-layout__content {
-	width: 1152px;
+	/* width: 1152px; */
 }
 
 /* sublayout 끝 */
 
 /* 첫째행 */
-.tw-project-analytics-page__container {
-    margin: auto;
-    padding: 20px 0 50px;
-    width: 90%;
-    height: 100%;
-}
 
-
-.tw-project-analytics-page__container > div {
-    margin: 10px auto;
-    padding: 30px 35px;
-    border-radius: 2px;
-    background: #fff;
-}
 
 
 
@@ -181,8 +168,8 @@
 
 /* projectAnalysticPage 시작 */
 .tw-project-analytics-page {
-  min-height: 100vh;
-  width: 100%;
+  /* min-height: 100vh; */
+ /*  width: 100%; */
 }
 .tw-project-analytics-page h3 {
   margin: 0;
@@ -195,8 +182,8 @@
 }
 .tw-project-analytics-page__container {
   margin: auto;
-  padding: 20px 0 50px;
-  width: 90%;
+  /* padding: 20px 0 50px; */
+  width: 100%;
   height: 100%;
 }
 .tw-project-analytics-page__container > div {
