@@ -49,9 +49,14 @@
 				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectCheckList">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/checkMember/checkMemberList">회원 관리</a></li>
 			</c:when>
+			<c:when test="${member.kind eq 'freelancer' }">
+				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
+				<li><a href="#">프로젝트 관리</a></li>
+			</c:when>
 			<c:otherwise>
-				<li><a href="${pageContext.request.contextPath}/member/personaldataView">내프로필</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/mypage">내커리어</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
 				<li><a href="#">프로젝트 관리</a></li>
 			</c:otherwise>
 			</c:choose>

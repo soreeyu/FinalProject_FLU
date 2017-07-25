@@ -171,7 +171,7 @@ public class MemberController {
 			
 			model.addAttribute("path", "personaldataInsert");
 			model.addAttribute("active1", "a");
-			return "/member/freelancer/personaldataform";
+			return "/member/personaldataform";
 		}
 		//계정 등록(내정보 수정)
 		@RequestMapping(value="personaldataInsert", method=RequestMethod.POST)
@@ -217,7 +217,7 @@ public class MemberController {
 			
 			model.addAttribute("active1", "a");
 			model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
-			return "/member/freelancer/personaldata";
+			return "/member/personaldata";
 		}
 		
 		//내정보 수정 폼
@@ -228,7 +228,7 @@ public class MemberController {
 			model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
 			model.addAttribute("path", "personaldataUpdate");
 			model.addAttribute("active1", "a");
-			return "/member/freelancer/personaldataform";
+			return "/member/personaldataform";
 		}
 		
 		//내정보 수정

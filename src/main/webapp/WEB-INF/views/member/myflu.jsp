@@ -332,12 +332,7 @@ body{
 		
 		<div class="contents">
 			<div class="contents_header">
-				<c:if test="${not empty member.name }">
-				<p><a href="personaldataView">계정정보 수정</a></p>
-				</c:if>
-				<c:if test="${empty member.name }">
-				<p><a href="personaldataInsert">계정정보 수정</a></p>
-				</c:if>
+				
 				
 				<p><span style="font-weight: bold; font-size: 26px;">MY FLU</span></p>
 			</div>

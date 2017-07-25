@@ -32,8 +32,6 @@
 }
 
 
-}
-
 
 /******************************** 왼쪽 메뉴 *******************************/
 .side{
@@ -218,12 +216,6 @@
 }
 
 .project_count{
-	float: left;
-   margin-top: 30px;
-   display: table;
-}
-
-.project_count{
    float: left;
     width: 365px;
     border-top: 1px solid #dedede;
@@ -245,21 +237,15 @@
     color: #666;
     font-size: 12px;
     padding: 12px 20px;
-	margin-left: 15%;
+	margin-left: 21%;
 }
 .count2 span{
 	font-size: 16px;
-   float: left;
+    float: left;
     color: #666;
-    font-size: 12px;
-    padding: 12px 20px;
-   margin-left: 15%;
-}
-.count2 span{
-   font-size: 16px;
     font-weight: bold;
-    
 }
+
 
 .project_eval{
     width: 363px;

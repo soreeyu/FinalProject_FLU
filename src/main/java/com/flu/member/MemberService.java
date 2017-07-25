@@ -34,9 +34,7 @@ public class MemberService {
 		System.out.println("이메일 : "+to1);
 		System.out.println(num);
 		String content = 
-				"<a href=\"http://localhost/flu/member/EmailAccessCk?num="+num+"&email="+email+"\">이메일 주소 인증하기</a>"
-				
-;
+				"<a href=\"http://localhost/flu/member/EmailAccessCk?num="+num+"&email="+email+"\">이메일 주소 인증하기</a>";
 		
 		try{
 			Properties props = new Properties();
