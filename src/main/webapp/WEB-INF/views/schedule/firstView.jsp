@@ -572,6 +572,21 @@
 
 
 </style>
+
+<script type="text/javascript">
+	$(function(){
+		
+		//part별 갯수로 설정 //1개 기준 150 + 55px //tw-bar-chart
+		var partCount = 3;
+		var graphHeight = 55;
+		var fullGraphHeight = (150+(partCount*graphHeight))+"px";
+		alert(fullGraphHeight);
+		$(".tw-bar-chart").css("height",fullGraphHeight);
+		
+		
+		
+	});
+</script>
 </head>
 <body>
 
@@ -641,14 +656,9 @@
 											<div class="tw-project-analytics-status__text --plain">32일</div>
 										</div>
 										<div>
-											<div class="tw-project-analytics-status__head">계획 업무</div>
-											<div class="tw-project-analytics-status__text --plain">3개
-												업무 (60%)</div>
-										</div>
-										<div>
-											<div class="tw-project-analytics-status__head">진행 업무</div>
-											<div class="tw-project-analytics-status__text --plain">2개
-												업무 (40%)</div>
+											<div class="tw-project-analytics-status__head">목표 업무(총)</div>
+											<div class="tw-project-analytics-status__text --plain">10개
+												업무 </div>
 										</div>
 										<div>
 											<div class="tw-project-analytics-status__head">완료 업무</div>
@@ -659,13 +669,13 @@
 								</div>
 								<div class="tw-project-analytics-overview">
 									<div class="tw-project-analytics-overview__head">
-										<h3>프로젝트 개요</h3>
+										<h3>프로젝트 개요(업무상태별)</h3>
 										<div class="tw-project-analytics-overview__head-legends">
 											<div class="tw-project-analytics-overview__head-legend">
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(39, 182, 186);"></div>
 												<span
-													class="tw-project-analytics-overview__head-legend-text">완료됨</span><strong>
+													class="tw-project-analytics-overview__head-legend-text">완료</span><strong>
 													<!-- react-text: 468 -->60<!-- /react-text -->
 													<!-- react-text: 469 -->%<!-- /react-text -->
 												</strong>
@@ -702,7 +712,7 @@
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(255, 176, 36);"></div>
 												<span
-													class="tw-project-analytics-overview__head-legend-text">계획됨</span><strong>
+													class="tw-project-analytics-overview__head-legend-text">할일</span><strong>
 													<!-- react-text: 486 -->20<!-- /react-text -->
 													<!-- react-text: 487 -->%<!-- /react-text -->
 												</strong>
@@ -720,8 +730,8 @@
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(176, 180, 187);"></div>
 												<span
-													class="tw-project-analytics-overview__head-legend-text">마감일
-													없음</span><strong>
+													class="tw-project-analytics-overview__head-legend-text">진행중
+													</span><strong>
 													<!-- react-text: 495 -->0<!-- /react-text -->
 													<!-- react-text: 496 -->%<!-- /react-text -->
 												</strong>
@@ -740,13 +750,14 @@
 									<div class="tw-project-analytics-overview__bars">
 										<div style="background: rgb(39, 182, 186); width: 60%;"></div>
 										<div style="background: rgb(233, 94, 81); width: 20%;"></div>
-										<div style="background: rgb(255, 176, 36); width: 20%;"></div>
+										<div style="background: rgb(255, 176, 36); width: 10%;"></div>
+										<div style="background: rgb(176, 180, 187); width: 10%;"></div>
 									</div>
 								</div>
 							<section class="tw-project-analytics-page__self-centric">
 								<div class="tw-project-analytics-self-centric-chart">
 									<div class="tw-project-analytics-self-centric-chart__header">
-										<h3>나에게 배정된 업무</h3>
+										<h3>사용자1</h3>
 									</div>
 									<div class="tw-donut-chart">
 										<div class="tw-donut-chart__chart-container">
@@ -1074,7 +1085,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(39, 182, 186);"></div>
-													<div class="tw-chart-legend__text">완료됨</div>
+													<div class="tw-chart-legend__text">완료</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -1100,7 +1111,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(255, 176, 36);"></div>
-													<div class="tw-chart-legend__text">계획됨</div>
+													<div class="tw-chart-legend__text">할일</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -1113,7 +1124,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(176, 180, 187);"></div>
-													<div class="tw-chart-legend__text">마감일 없음</div>
+													<div class="tw-chart-legend__text">진행중</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -1127,7 +1138,7 @@
 								</div>
 								<div class="tw-project-analytics-self-centric-chart">
 									<div class="tw-project-analytics-self-centric-chart__header">
-										<h3>내가 작성한 업무</h3>
+										<h3>사용자2</h3>
 									</div>
 									<div class="tw-donut-chart">
 										<div class="tw-donut-chart__chart-container">
@@ -1520,7 +1531,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(39, 182, 186);"></div>
-													<div class="tw-chart-legend__text">완료됨</div>
+													<div class="tw-chart-legend__text">완료</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">3</span>
@@ -1546,7 +1557,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(255, 176, 36);"></div>
-													<div class="tw-chart-legend__text">계획됨</div>
+													<div class="tw-chart-legend__text">할일</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">1</span>
@@ -1559,7 +1570,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(176, 180, 187);"></div>
-													<div class="tw-chart-legend__text">마감일 없음</div>
+													<div class="tw-chart-legend__text">진행중</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">1</span>
@@ -1573,7 +1584,7 @@
 								</div>
 								<div class="tw-project-analytics-self-centric-chart">
 									<div class="tw-project-analytics-self-centric-chart__header">
-										<h3>내가 팔로우하는 업무</h3>
+										<h3>사용자3</h3>
 									</div>
 									<div class="tw-donut-chart">
 										<div class="tw-donut-chart__chart-container">
@@ -1967,7 +1978,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(39, 182, 186);"></div>
-													<div class="tw-chart-legend__text">완료됨</div>
+													<div class="tw-chart-legend__text">완료</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">3</span>
@@ -1993,7 +2004,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(255, 176, 36);"></div>
-													<div class="tw-chart-legend__text">계획됨</div>
+													<div class="tw-chart-legend__text">할일</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -2006,7 +2017,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(176, 180, 187);"></div>
-													<div class="tw-chart-legend__text">마감일 없음</div>
+													<div class="tw-chart-legend__text">진행중</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">1</span>
@@ -2023,46 +2034,47 @@
 							<div class="tw-project-analytics-page__task-overview">
 									<div class="tw-tasklist-stats-panel">
 										<div class="tw-tasklist-stats-panel__header">
-											<h3 class="tw-tasklist-stats-panel__title">업무리스트 개요</h3>
+											<h3 class="tw-tasklist-stats-panel__title">업무리스트 개요(파트별)</h3>
 											<div class="tw-tasklist-stats-panel__spacer"></div>
 											<div class="tw-tasklist-stats-panel__filter">
 												<div class="tw-tasklist-stats-panel__legend-container">
 													<div class="tw-chart-legend --compact --selected" id="all"
-														style="margin-right: 60px; height: 21px;">
+														style="height: 21px; line-height:21px;">
 														<div class="tw-chart-legend__name">
-															<div class="tw-chart-legend__text --compact">전체</div>
-														</div>
+														<div class="tw-chart-legend__text --compact"
+															style="margin-left: 0px;">전체</div>
 													</div>
-													<div class="tw-chart-legend --compact" id="completed"
-														style="margin-right: 60px; height: 21px;">
+													</div>
+													<div class="tw-chart-legend --compact --selected" id="completed"
+														style="height: 21px; line-height:21px;">
 														<div class="tw-chart-legend__name">
 															<div class="tw-chart-legend__circle --compact"
 																style="border: 4px solid rgb(39, 182, 186);"></div>
-															<div class="tw-chart-legend__text --compact">완료됨</div>
+															<div class="tw-chart-legend__text --compact">완료</div>
 														</div>
 													</div>
 													<div class="tw-chart-legend --compact" id="overdue"
-														style="margin-right: 60px; height: 21px;">
+														style="height: 21px; line-height:21px;">
 														<div class="tw-chart-legend__name">
 															<div class="tw-chart-legend__circle --compact"
 																style="border: 4px solid rgb(233, 94, 81);"></div>
-															<div class="tw-chart-legend__text --compact">마감일 지남</div>
+															<div class="tw-chart-legend__text --compact" >마감일 지남</div>
 														</div>
 													</div>
 													<div class="tw-chart-legend --compact" id="planned"
-														style="margin-right: 60px; height: 21px;">
+														style="height: 21px; line-height:21px;">
 														<div class="tw-chart-legend__name">
 															<div class="tw-chart-legend__circle --compact"
 																style="border: 4px solid rgb(255, 176, 36);"></div>
-															<div class="tw-chart-legend__text --compact">계획됨</div>
+															<div class="tw-chart-legend__text --compact">할일</div>
 														</div>
 													</div>
 													<div class="tw-chart-legend --compact" id="noDuedate"
-														style="height: 21px;">
+														style="height: 21px; margin-right:50px">
 														<div class="tw-chart-legend__name">
 															<div class="tw-chart-legend__circle --compact"
 																style="border: 4px solid rgb(176, 180, 187);"></div>
-															<div class="tw-chart-legend__text --compact">마감일 없음</div>
+															<div class="tw-chart-legend__text --compact">진행중</div>
 														</div>
 													</div>
 												</div>
@@ -2106,7 +2118,7 @@
 													<div class="tw-bar-chart__tasklist">
 														<div class="tw-bar-chart__tasklist-title">
 															<!-- react-text: 693 -->
-															해야할 일
+															파트1
 															<!-- /react-text -->
 															<span class="tw-tooltip__dummy-element"
 																style="display: none;"></span>
@@ -2173,7 +2185,7 @@
 													<div class="tw-bar-chart__tasklist">
 														<div class="tw-bar-chart__tasklist-title">
 															<!-- react-text: 722 -->
-															진행중
+															파트2
 															<!-- /react-text -->
 															<span class="tw-tooltip__dummy-element"
 																style="display: none;"></span>
@@ -2240,7 +2252,74 @@
 													<div class="tw-bar-chart__tasklist">
 														<div class="tw-bar-chart__tasklist-title">
 															<!-- react-text: 751 -->
-															완료
+															파트3
+															<!-- /react-text -->
+															<span class="tw-tooltip__dummy-element"
+																style="display: none;"></span>
+														</div>
+														<div class="tw-bar-chart__chart">
+															<div class="tw-bar-chart__subChart"
+																style="background-color: rgb(39, 182, 186); width: 100%;">
+																<div class="tw-bar-chart__subChart-text --percent">100%</div>
+																<div class="tw-bar-chart__subChart-text">
+																	<!-- react-text: 757 -->
+																	1
+																	<!-- /react-text -->
+																	<!-- react-text: 758 -->
+																	<!-- /react-text -->
+																	<!-- react-text: 759 -->
+																	업무
+																	<!-- /react-text -->
+																</div>
+															</div>
+															<div class="tw-bar-chart__subChart"
+																style="background-color: rgb(233, 94, 81); width: 0%;">
+																<div class="tw-bar-chart__subChart-text --percent">0%</div>
+																<div class="tw-bar-chart__subChart-text">
+																	<!-- react-text: 763 -->
+																	0
+																	<!-- /react-text -->
+																	<!-- react-text: 764 -->
+																	<!-- /react-text -->
+																	<!-- react-text: 765 -->
+																	업무
+																	<!-- /react-text -->
+																</div>
+															</div>
+															<div class="tw-bar-chart__subChart"
+																style="background-color: rgb(255, 176, 36); width: 0%;">
+																<div class="tw-bar-chart__subChart-text --percent">0%</div>
+																<div class="tw-bar-chart__subChart-text">
+																	<!-- react-text: 769 -->
+																	0
+																	<!-- /react-text -->
+																	<!-- react-text: 770 -->
+																	<!-- /react-text -->
+																	<!-- react-text: 771 -->
+																	업무
+																	<!-- /react-text -->
+																</div>
+															</div>
+															<div class="tw-bar-chart__subChart"
+																style="background-color: rgb(176, 180, 187); width: 0%;">
+																<div class="tw-bar-chart__subChart-text --percent">0%</div>
+																<div class="tw-bar-chart__subChart-text">
+																	<!-- react-text: 775 -->
+																	0
+																	<!-- /react-text -->
+																	<!-- react-text: 776 -->
+																	<!-- /react-text -->
+																	<!-- react-text: 777 -->
+																	업무
+																	<!-- /react-text -->
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="tw-bar-chart__tasklist">
+														<div class="tw-bar-chart__tasklist-title">
+															<!-- react-text: 751 -->
+															파트4
 															<!-- /react-text -->
 															<span class="tw-tooltip__dummy-element"
 																style="display: none;"></span>

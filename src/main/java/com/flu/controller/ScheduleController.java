@@ -35,6 +35,11 @@ public class ScheduleController {
 			return "schedule/firstView";
 		}
 		
+		@RequestMapping(value="test2")
+		public String test2(){
+			return "schedule/secondView";
+		}
+		
 		
 		//main스케줄인서트로 바로가기  테스트 
 		@RequestMapping(method=RequestMethod.GET)
