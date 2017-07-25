@@ -13,7 +13,7 @@
 				<div class="sidebar_menu">
 					<ul>
 						<li><a id="${active1}" class="menu" href="${pageContext.request.contextPath}/member/personaldataView">계정 정보</a></li>
-						<li><a id="${active2}" class="menu" href="#">신원 인증</a></li>
+						<li><a id="${active2}" class="menu" href="${pageContext.request.contextPath}/checkMember/memberCheckInsert">신원 인증</a></li>
 						<li><a id="${active3}" class="menu" href="#">계좌 관리</a></li>
 						<li><a id="${active4}" class="menu" href="#">회원 탈퇴</a></li>
 					</ul>

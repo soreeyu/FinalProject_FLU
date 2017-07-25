@@ -37,9 +37,7 @@
 
 /******************************** 왼쪽 메뉴 *******************************/
 .side{
-
-   float: left;
-
+	float: left;
     margin-left: 10px;
     margin-right: 10px;
     width: 250px;
@@ -62,22 +60,6 @@
 .free_img_div{
 	width: 220px;
 	font-size: 17px;
-   background-color:white;
-   padding: 15px;
-   margin-bottom: 15px;
-}
-.freelancer_name > span:FIRST-CHILD{
-   font-size: 16px;
-   display: block;
-   padding-bottom: 11px;
-   border-bottom: 1px solid #dedede;
-   font-weight: 700;
-   margin-bottom: 9px;
-   color: #454545;
-}
-.free_img_div{
-   width: 220px;
-   font-size: 17px;
     color: #333333;
     font-weight: bold;
     text-align: center;
@@ -85,7 +67,6 @@
 }
 .free_img_div img{
 	width: 216px;
-   width: 216px;
     height: 216px;
     border: 1px solid #dedede;
     border-radius: 10%;
@@ -97,11 +78,6 @@
 
 .sidebar_menu ul{
 	border: 1px solid #dedede;
-   margin-top: 20px;
-}
-
-.sidebar_menu ul{
-   border: 1px solid #dedede;
     border-radius: 3px;
     padding: 4px 8px;
     background-color: white;
@@ -113,11 +89,6 @@
 }
 .sidebar_menu ul li a{
 	border-radius: 2px;
-   height: 40px;
-    padding: 4px 0;
-}
-.sidebar_menu ul li a{
-   border-radius: 2px;
     display: block;
     padding: 10px 15px;
     font-size: 14px;
@@ -132,12 +103,7 @@
 	background-color: #66b3ff;
 	color: white;
 }
-/******************************** 왼쪽 메뉴  끝*******************************/
-.contents{
-	float: left;
-   background-color: #66b3ff;
-   color: white;
-}
+
 /******************************** 왼쪽 메뉴  끝*******************************/
 .contents{
    float: left;
