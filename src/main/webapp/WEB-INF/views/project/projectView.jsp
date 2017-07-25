@@ -207,6 +207,19 @@ strong{
 	padding: 10px 12px;
 	margin-top: 15px;
 }
+#schedult-btn{
+	width:230px;
+	height:40px;
+	color: white;
+	background-color: #f1720c;
+	border-color: #f48023;
+	border-radius: 2px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px 12px;
+	margin-top: 15px;
+}
 .project-qna{
 	margin-top: 10px;
 	height: 600px;
@@ -220,12 +233,12 @@ strong{
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
+	margin-bottom: 20px;
 	padding: 5px 9px;
 }
 .client-info-box{
 	background-color: white;
 	min-height: 450px;
-	margin-top: 20px;
 	border: 1px solid #dedede;
 }
 
@@ -594,12 +607,26 @@ background-color: white;
 			
 			<!-- right contents  -->
 			<section class="contents_sub">
+			<c:if test="${member.kind eq 'client'}">
 				<div class="project-apply-box">
 				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
 				<a href="#" id="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
 				</div>
+			</c:if>
 				
 				<div class="client-info-box">
+					<div>
+					<div>프로젝트 등록자 : ${dto.email }</div>
+					<div><span>프로젝트 등록</span><span>몇 건 </span></div>
+					<div><span>계약한 프로젝트</span><span>몇 건</span></div>
+					<div><span>진행중인 프로젝트</span><span>몇 건</span></div>
+					<div><span>완료한 프로젝트</span><span>몇 건</span></div>
+					</div>
+				</div>
+
+				
+				<div class="project-apply-box" style="margin-top: 20px;">
+					<a href="#" id="schedult-btn">프로젝트 스케줄 </a>
 				
 				</div>
 			</section>

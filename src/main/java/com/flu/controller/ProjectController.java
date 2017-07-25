@@ -112,7 +112,7 @@ public class ProjectController {
 	
 	//list
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
-	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO){
+	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
 
 		String sk2=null;
 		int totalCount = projectService.projectCount(listInfo);
@@ -120,11 +120,15 @@ public class ProjectController {
 		listInfo.makeRow();
 		List<ProjectDTO> ar = projectService.projectList(listInfo);
 		
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO= (MemberDTO)session.getAttribute("member");
+		/*System.out.println("projectController-memberEmail="+memberDTO.getEmail());*/
 	
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
 		model.addAttribute("pjcount", totalCount);
 		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
 		
 		
 		return "project/projectList";
@@ -162,8 +166,7 @@ public class ProjectController {
 		
 		
 		model.addAttribute("dto", projectDTO);
-		
-		
+		/*model.addAttribute("member", memberDTO);*/
 		
 	}
 	
