@@ -12,7 +12,7 @@ import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
 
 
-public class ProjectTest extends MyAbstract{
+public class ProjectTest extends MyAbstract {
 
 
 	@Inject

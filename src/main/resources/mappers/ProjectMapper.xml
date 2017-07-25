@@ -7,17 +7,14 @@
   
   <!-- 검색도 넣기 -->
   
-  <!-- <sql id="search">
-  	<trim prefix="where" prefixOverrides="and || or">
-		<if test="search=='name'">
-			writer like '%' || #{find} || '%'
-		</if>
-		<if test="search=='skill'">
-			contents like '%' || #{find} || '%'
-		</if> 
-		</trim>
-  </sql> -->
-  
+ <sql id="search">
+  <if test="kind=='total'">
+  	where name like '%' || #{search} || '%' or  contents like '%' || #{search} || '%'
+  </if>
+ </sql>
+
+ 
+
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
   <!-- where가 들어가는 상황이면 where가 추가되고, and가 나올상황이면 알아서 지워주는 where태그  -->
   <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
@@ -25,28 +22,48 @@
   
   <select id="count" parameterType="com.flu.util.ListInfo" resultType="int">
   	select count(nvl(projectNum,0)) from project
-  	<!-- <include refid="search"></include> -->
+<include refid="search"/>
   </select>
     
     
-  <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO"> 
-		select * from project order by projectNum asc
-		
-  	<!-- select * from 
-		(select rownum R, N.* from
+  <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
+
+
+		 select * from 
+		(select rownum R, N.* from 
 		(select * from project 
 		
-		<include refid="search"></include>
+		<include refid="search"/>
 		
-		 order by projectNum desc) N)
-		where R between #{startRow} and #{lastRow} -->
+		order by
+		<choose>
+			<when test="arrange=='money'">
+			budget desc
+			</when>
+			<when test="arrange=='mm'">
+			budget asc
+			</when>
+			<when test="arrange=='current'">
+			reg_date desc
+			</when>
+			<when test="arrange=='last'">
+			startDate asc
+			</when>
+			<otherwise>
+			projectNum desc
+			</otherwise>
+		</choose>
 		
+		
+			<!-- and startDate >= sysdate order by startDate asc -->
+
+		  ) N) where R between #{startRow} and #{lastRow}
+
   	</select>
-
-
+  	
   
   
-  <insert id="write" parameterType="com.flu.project.ProjectDTO">
+  <insert id="insert" parameterType="com.flu.project.ProjectDTO">
   	insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
   	meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date) 
   	values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 

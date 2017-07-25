@@ -7,8 +7,9 @@ public class ListInfo {
 
 
 	//row
-	private String search; 
-	private String find;
+	private String kind; //contents인지
+	private String search;//입력한값
+	private String arrange;
 	private int startRow;
 	private int lastRow;
 
@@ -26,7 +27,7 @@ public class ListInfo {
 		//1. totalCount
 		//2. totalPage
 		int totalPage = 0;
-
+		int perBlock=5;
 
 		if(totalCount%this.getPerPage()==0){
 			totalPage=totalCount/this.getPerPage();
@@ -83,8 +84,10 @@ public class ListInfo {
 	}
 
 	public void makeRow(){
-		startRow = (this.getCurPage()-1)*this.getPerPage();
-		lastRow = this.getCurPage()*this.getPerPage();
+		startRow=(this.getCurPage()-1)*this.getPerPage()+1;
+		lastRow=this.getCurPage()*this.getPerPage();
+		System.out.println(startRow);
+		System.out.println(lastRow);
 	}
 
 
@@ -115,11 +118,28 @@ public class ListInfo {
 	public void setSearch(String search) {
 		this.search = search;
 	}
-	public String getFind() {
-		return find;
+
+
+	public String getKind() {
+		return kind;
 	}
-	public void setFind(String find) {
-		this.find = find;
+
+
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
+
+
+	public String getArrange() {
+		return arrange;
+	}
+
+
+	public void setArrange(String arrange) {
+		this.arrange = arrange;
+	}
+
+
+
 
 }
