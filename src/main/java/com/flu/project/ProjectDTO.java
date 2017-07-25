@@ -2,6 +2,9 @@ package com.flu.project;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
+
 public class ProjectDTO {
 
 	private int projectNum;
@@ -15,19 +18,29 @@ public class ProjectDTO {
 	private String planState;
 	private String contents;
 	private String skill;
+	private String[] skills;
 	private String meetKind;
 	private String exp;
 	private String state;			
 	private String email;
-	private int quick;				
+	private int quick;	
+	private MultipartFile fileName;
 	private String fName;			
 	private String oName;			
 	private String addr_num;		
 	private String addr_main;		
 	private String addr_detail;
-	private Date reg_date;			
+	private Date reg_date;		
 	
 	
+	
+	
+	public MultipartFile getFileName() {
+		return fileName;
+	}
+	public void setFileName(MultipartFile fileName) {
+		this.fileName = fileName;
+	}
 	public int getProjectNum() {
 		return projectNum;
 	}
@@ -159,6 +172,12 @@ public class ProjectDTO {
 	}
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
+	}
+	public String[] getSkills() {
+		return skills;
+	}
+	public void setSkills(String[] skills) {
+		this.skills = skills;
 	}
 	
 	
