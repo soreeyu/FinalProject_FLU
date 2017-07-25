@@ -53,8 +53,9 @@ public class ScheduleController {
 		
 		
 		
-		@RequestMapping(value="test2")
-		public String test2(){
+		@RequestMapping(value="secondView")
+		public String test2(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
 			return "schedule/secondView";
 		}
 		

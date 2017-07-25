@@ -63,7 +63,7 @@ function getScheduleNum(projectNum){
 				
 				var scheduleNum = data.scheduleMainDTO.scheduleNum;
 				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
-				location.href = "./test?scheduleNum="+scheduleNum;
+				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum;
 			}else{
 				alert("스케줄 생성 오류");
 				location.href = $(location).attr('href');
@@ -87,7 +87,7 @@ function createSchedule(projectNum){
 			//alert("스케줄 생성해야됨"+data);
 			if(data.result == 'y'){
 				alert("생성된 scheduleNum = "+data.scheduleNum);
-				location.href = "./test?scheduleNum="+data.scheduleNum;
+				location.href = getContextPath()+"/schedule/test?scheduleNum="+data.scheduleNum;
 			}else{
 				alert("스케줄생성오류");
 			}

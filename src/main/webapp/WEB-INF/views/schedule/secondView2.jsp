@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<c:import url="../temp/bootstrap.jsp"></c:import>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
@@ -21,11 +26,27 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
+<title>달력뷰</title>
 
 
 <style type="text/css">
+.main_section{
+	min-width: 1460px;
+	width: 100%;
+	min-height: 1000px;
+	background-color: #f2f2f2;
+	position: relative;
+}
 
-.schedule_main_container {
+
+#main_wrap{
+	width: 1152px;
+	height: auto;
+	margin: 0 auto;
+	background: black;	
+}
+
+.main_container {
     margin: auto;
     padding: 20px 0 50px;
     width: 90%;
@@ -140,9 +161,22 @@
 	});
 	
 </script>
+</head>
+<body>
 
-<div class="schedule_main_container">
-		<div id='schcalendar'></div>
-</div>
-	
+<c:import url="../temp/header.jsp"></c:import>
 
+<section class="main_section">
+	<div id= "main_wrap">
+		<div class="main_container">
+			<div id='schcalendar'></div>
+		</div>
+	</div>
+
+</section>
+
+<c:import url="../temp/footer.jsp"></c:import>
+
+
+</body>
+</html>

@@ -41,7 +41,55 @@
 	height: auto;
 	min-height: 1000px;
 	position: relative;
+	margin-top: 30px;
 }
+
+
+.schedule_header {
+    height: 102px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 30px;
+    background-color: white;
+}
+#header_ttt {
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+#header_t {
+    font-size: medium;
+    font-weight: lighter;
+    color: #666;
+}
+#header_ttt span:last-child {
+    font-size: 14px;
+    background-color: #07b481;
+    vertical-align: middle;
+    margin-top: 5px;
+    float: right;
+    height: 20px;
+    border-radius: 4px;
+    color: white;
+    line-height: 15px;
+    padding: 2px 3px;
+}
+#header_t span:last-child {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: 5px;
+    margin-right: 50px;
+    float: right;
+    height: 20px;
+    line-height: 20px;
+}
+
+
+
+
+
+
 
 #main_wrap {
 	width: 1152px;
@@ -121,7 +169,7 @@ ul.tab li.current {
 			if(activeTab == 'tab1'){
 				alert("개요보기");
 				$.ajax({
-					url:"./firstView?scheduleNum=3000",
+					url:"/flu/schedule/firstView?scheduleNum=3000",
 					type:"GET",
 					success:function(data){
 						alert(data);
@@ -131,7 +179,12 @@ ul.tab li.current {
 			}else if(activeTab == 'tab2'){
 				alert("달력보기");
 				$.ajax({
-					
+					url:"/flu/schedule/secondView?scheduleNum=3000",
+					type:"GET",
+					success:function(data){
+						alert(data);
+						$("#"+activeTab).html(data);
+					}
 				});
 				
 			}else if(activeTab == 'tab3'){
@@ -161,9 +214,27 @@ ul.tab li.current {
 
 <section class="main_section">
 
-	
 
 	<div id= "main_wrap">
+	
+	
+	<div class="schedule_header">
+		<div class="header_text">
+			<p id="header_ttt" style="margin-bottom: 20px;">
+				<span>테스트</span>
+				<span>2017-08-01-2017-07-31</span>
+			</p>
+			<p id="header_t">
+				<span>개발 &gt; 웹</span>
+				<span>
+			<img src="/flu/resources/img/project/proposal.png">
+			총<strong>1명</strong>지원</span>
+			</p>
+		</div>
+	</div>	
+	
+	
+	
 		<div class="scheduleNav">
 			<div>
 				<ul class="tab">

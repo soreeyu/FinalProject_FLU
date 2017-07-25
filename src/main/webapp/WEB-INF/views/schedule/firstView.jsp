@@ -9,7 +9,9 @@
 	height: auto;
 	margin: 0 auto;
 	background: gray;
+	
 }
+
 
 /* sublayout 시작 */
 /* .tw-sub-layout {
@@ -153,7 +155,8 @@
 .tw-project-analytics-overview__bars {
     display: flex;
     height: 40px;
-    border-radius: 2px;
+   /*  border-radius: 2px; */
+    border: 1px solid #e6e6e6;
     background: #d4d6db;
 }
 
@@ -189,7 +192,8 @@
 .tw-project-analytics-page__container > div {
   margin: 10px auto;
   padding: 30px 35px;
-  border-radius: 2px;
+  /* border-radius: 2px; */
+  border: 1px solid #e6e6e6;
   background: #fff;
 }
 .tw-project-analytics-page__self-centric {
@@ -246,7 +250,8 @@
 .tw-project-analytics-overview__bars {
   display: flex;
   height: 40px;
-  border-radius: 2px;
+ /*  border-radius: 2px; */
+  border: 1px solid #e6e6e6;
   background: #d4d6db;
 }
 .tw-project-analytics-overview__bars > div:first-child {
@@ -266,7 +271,8 @@
   margin: 0 5px;
   padding: 15px 15px 0;
   width: 33%;
-  border-radius: 2px;
+  /* border-radius: 2px; */
+  border: 1px solid #e6e6e6;
   background: #fff;
 }
 .tw-project-analytics-self-centric-chart__header {
@@ -559,6 +565,7 @@
 </script>
 
 <div id= "#firstView_main_wrap">
+
 	
 				<div class="tw-sub-layout__content">
 					<section>
