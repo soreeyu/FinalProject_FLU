@@ -13,11 +13,11 @@
     
     
   <select id="list" parameterType="java.util.HashMap" resultType="com.flu.reply.ReplyDTO">
-		
-		select * from (select rownum R, P.* from
-		(select * from reply)P) where R between #{listInfo.startRow} and #{listInfo.lastRow} 
-		and projectNum=#{project.projectNum}
 
+       select * from 
+       (select rownum R, P.* from
+       (select * from reply where projectNum=#{project.projectNum}) P)
+        where R between #{listInfo.startRow} and #{listInfo.lastRow}
   	</select>
   	
   

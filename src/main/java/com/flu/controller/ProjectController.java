@@ -150,10 +150,10 @@ public class ProjectController {
 		}
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
-		System.out.println(projectDTO.getProjectNum());
+		/*System.out.println(projectDTO.getProjectNum());
 		System.out.println(projectDTO.getName());
 		System.out.println(projectDTO.getSkill());
-		System.out.println(projectDTO.getEmail());
+		System.out.println(projectDTO.getEmail());*/
 		
 		System.out.println("session의 사진을 불러와보자");
 		memberDTO = (MemberDTO)session.getAttribute("member");

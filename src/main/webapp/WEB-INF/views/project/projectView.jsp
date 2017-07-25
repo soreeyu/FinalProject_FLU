@@ -209,7 +209,7 @@ strong{
 }
 .project-qna{
 	margin-top: 10px;
-	height: 350px;
+	height: 600px;
 	background-color: white;
 	padding: 30px;	
 }
@@ -456,6 +456,12 @@ background-color: white;
 	width: 100%;
 	height: 300px;
 }
+.project-reply-box-inner{
+	background-color: yellow;
+	min-height: 200px;
+	max-height: 600px;
+	height: auto;
+}
 </style>
 
 </head>
@@ -556,18 +562,17 @@ background-color: white;
 			</div>
 			
 			<div class="project-qna">
-				<div class="project-detail-title">프로젝트 문의</div>
+				<div class="project-detail-title">프로젝트 문의 ${dto.projectNum }</div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
 				<div style="margin-top: 30px;" class="project-reply-box">
 				<div class="project-reply-box-inner">
 					<div class="project-reply-box-top">
-					<div>writer</div><div>contents</div><div>reg_date</div><div>삭제</div>
-						<c:forEach items="${replylist}" var="reply">
-						<div>${reply.writer}</div><div>${reply.contents}</div><div>${reply.reg_date}</div><div>삭제</div>
-						</c:forEach>
+					 
 					
 					</div>
 				</div>
+				
+				
 				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
 				<form action="../reply/replyInsert" id="frm" method="post">
 					<input type="hidden" name="projectNum" value="${dto.projectNum}">
@@ -612,11 +617,22 @@ background-color: white;
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
+var projectNum = "${dto.projectNum}";
+
+/* reply ajax */
+$.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
+	$(".project-reply-box-top").html(data);
+});
+
+
+
+/* reply 작성 */
  $("#btn").click(function() {
 	 alert("yes");
 	var chk = $("#reply_check").prop("checked");
 	alert(chk);
-	/* check되있으면 true, 아니면 false값 */
+	
+	/* 비밀글이면 true, 공개댓글이면 false값 */
 	if(chk==true){
 		alert("true");
 		alert($("#replyChk").val());
@@ -625,26 +641,52 @@ background-color: white;
 		alert("false");
 		$("#replyChk").prop("value", "false");
 	}
-	var kk = "${replylist}";
-	alert(kk);
+	$("#frm").submit();
+});
+
+ $(".contents").on("click",".listReply",function() {
+
+	 	/* 답글클릭했을때 replyNum */
+		alert($(this).attr("data-id"));
+		var replyId = $(this).attr("data-id");
+		
+		/* 해당하는 답글 아래의 id에 replyNum셋팅 */
+		$(".rereply").attr("id", replyId);
+		alert($(".rereply").attr("id"));
+		
+		$(".listReply").html("");
+					
+		$(this).html('<input type="text" name="contents"><input type="button" value="댓글달기"><input type="button" class="cancle" value="취소">');
+		$(this).attr("data-on", "on");
+		
+		
+		
+		/* $.ajax({
+			url:"../reply/replyInsert",
+			type:"POST",
+			success:function(data){
+				alert("Insert들어옴");
+			}
+		}); */
+	});
+ 
+ $(".contents").on("click",".cancle",function() {
+	alert("취소합시다");
+ });
 	
-/* $.get("../reply/replyList",function(data){
-	alert("repyl");
-	
-}); */
-var curPage=1;
+
+/* var curPage=1;
 $.ajax({
-	url:"../reply/replyList",
+	url:"../reply/replyList?projectNum=${dto.projectNum}",
 	type:"GET",
-	success:function(result){
+	success:function(data){
 		alert("yeyyy");
 
-		alert(result);
-		$(".project-reply-box-top").html(result);
+		alert(data);
+		$(".project-reply-box-top").html(data);
 	}
-}); 
+});  */
 
-});
  
 </script>
 </body>
