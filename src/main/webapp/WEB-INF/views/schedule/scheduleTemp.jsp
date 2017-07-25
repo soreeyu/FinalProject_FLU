@@ -30,11 +30,16 @@
 
 
 <style type="text/css">
+
+.clear{
+	clear: both;
+}
+
 .main_section {
 	min-width: 1460px;
 	width: 100%;
+	height: auto;
 	min-height: 1000px;
-	background-color: #f2f2f2;
 	position: relative;
 }
 
@@ -42,7 +47,6 @@
 	width: 1152px;
 	height: auto;
 	margin: 0 auto;
-	background: black;
 }
 
 .scheduleNav {
@@ -85,7 +89,7 @@
 
 .tabcontent {
 	display: none;
-	background-color: rgb(0, 154, 200);
+	background-color: #f2f2f2;
 	padding: 6px 12px;
 	color: #fff;
 }
@@ -194,6 +198,7 @@ ul.tab li.current {
 
 </section>
 
+<div class="clear"></div>
 <c:import url="../temp/footer.jsp"></c:import>
 
 

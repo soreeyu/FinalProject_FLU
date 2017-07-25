@@ -2,17 +2,10 @@
     pageEncoding="UTF-8"%>
 
 <style type="text/css">
-.main_section{
-	min-width: 1460px;
-	width: 100%;
-	min-height: 1000px;
-	background-color: #f2f2f2;
-	position: relative;
-}
 
 
-#main_wrap{
-	width: 1152px;
+#firstView_main_wrap{
+	width: 1032px;
 	height: auto;
 	margin: 0 auto;
 	background: gray;
@@ -578,7 +571,7 @@
 	});
 </script>
 
-
+<div id= "#firstView_main_wrap">
 	
 				<div class="tw-sub-layout__content">
 					<section>
@@ -3148,5 +3141,5 @@
 						</div>
 					</section>
 				</div>
-
+</div>
 
