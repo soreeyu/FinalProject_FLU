@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<c:import url="../temp/bootstrap.jsp"></c:import>
+<title>Insert title here</title>
 <style type="text/css">
 .main_section{
 	min-width: 1460px;
@@ -564,6 +570,9 @@
     margin: 5px 10px 0 0;
 }
 
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -577,8 +586,14 @@
 		$(".tw-bar-chart").css("height",fullGraphHeight);
 	});
 </script>
+</head>
+<body>
 
+<c:import url="../temp/header.jsp"></c:import>
 
+<section class="main_section">
+
+	<div id= "main_wrap">
 	
 				<div class="tw-sub-layout__content">
 					<section>
@@ -3148,5 +3163,14 @@
 						</div>
 					</section>
 				</div>
+			</div>
 
 
+
+</section>
+
+<c:import url="../temp/footer.jsp"></c:import>
+
+
+</body>
+</html>

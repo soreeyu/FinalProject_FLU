@@ -30,10 +30,28 @@ public class ScheduleController {
 		@Autowired
 		private ScheduleService scheduleService;
 		
-		@RequestMapping(value="test")
-		public String test(){
+		//이게 보배언니의 프로젝트 뷰 라고 가정한다 
+		@RequestMapping(value="testProjectView")
+		public String testProjectView(){
+			return "schedule/testProjectView";
+		}
+		
+		
+		
+		@RequestMapping(value="test" , method=RequestMethod.GET)
+		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
+			//return "schedule/firstView";
+			return "schedule/scheduleTemp";
+		}
+		
+		@RequestMapping(value="firstView" , method=RequestMethod.GET)
+		public String test3(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
 			return "schedule/firstView";
 		}
+		
+		
 		
 		@RequestMapping(value="test2")
 		public String test2(){
@@ -41,16 +59,29 @@ public class ScheduleController {
 		}
 		
 		
-		//main스케줄인서트로 바로가기  테스트 
+		
+		
+		
+		
+		
+		
+		
+		/*
+		 * /schedule 로 접근할때 동작 //url 쳤을때 프로젝트가 있는지 확인해주는 것
+		 * projectNum으로 project DB 에 존재하고 state가 ing인지 체크 
+		 * 
+		 * 		부재 : index.jsp 
+		 * 		존재 : schedule메인화면(firstView)으로 이동 
+		 * */
 		@RequestMapping(method=RequestMethod.GET)
 		public String scheduleMain(@RequestParam(defaultValue="0") Integer projectNum, Model model, RedirectAttributes rd) throws Exception{ //넘어온 projectNum 이 저장되어있다 
 			//project가 있는지 확인해야한다 
 			String path = "redirect:/";
 			int result = scheduleService.checkProject(projectNum);
-			if(result>0){
-				model.addAttribute("projectNum", projectNum);
-				path = "schedule/scheduleMain";
-			}else{
+			if(result>0){ //프로젝트가 있으면
+				//model.addAttribute("projectNum", projectNum);
+				path = "schedule/testProjectView";//firstView로 수정해야함
+			}else{ //프로젝트가 없으면
 				rd.addFlashAttribute("message", "해당 프로젝트가 존재하지 않습니다");
 			}
 			return path;
@@ -59,11 +90,12 @@ public class ScheduleController {
 		
 
 
+		//ajax로 불려져서 json 보내줌 
 		// 프로젝트에 생성된 스케줄이 있는지 확인 //1번
 		@ResponseBody
 		@RequestMapping(value="check", method=RequestMethod.GET)
-		public Map<String, Object> checkSchedule(Integer projectNum){
-			System.out.println("check하러옴");
+		public Map<String, Object> checkSchedule(Integer projectNum){ //Exception 던지기
+			System.out.println("스케줄 있는지 check하러옴 Controller");
 			System.out.println("projectNum = "+projectNum);
 			Map<String, Object> map = new HashMap<String, Object>();
 			ScheduleMainDTO result = null;
@@ -100,20 +132,25 @@ public class ScheduleController {
 		
 
 		
+		//프로젝트뷰에서 호출함
 		//스케줄 없을 경우 //서비스에서 먼저 main을 만들어서 생성후(시작,마감일은 당일로 우선 설정) 가져온다 
+		@ResponseBody
 		@RequestMapping(value="create", method=RequestMethod.GET)
-		public String createSchedule(Integer projectNum, Model model){
+		public Map<String, Object> createSchedule(Integer projectNum, Model model) throws Exception{
 			int scheduleNum = scheduleService.createSchedule(projectNum);
+			Map<String, Object> map = new HashMap<String, Object>();
 			if(scheduleNum > 0){ //생성 성공
-				
+				map.put("result", "y");
+				map.put("scheduleNum", scheduleNum);
 			}else{ //생성실패
-				
+				map.put("result", "n");
 			}
-			model.addAttribute("scheduleNum", scheduleNum);
-			return "schedule/mainInsertForm"; //스케줄넘을 가지고 파트 등록하는 화면			
+			return map;
 		}
 		
 
+		
+		
 		
 		//파트 입력 받는 폼 
 		@RequestMapping(value="create", method=RequestMethod.POST)
@@ -211,7 +248,7 @@ public class ScheduleController {
 		//저장된 partList 가져오기 //세부사항 등록시 필요
 		@ResponseBody
 		@RequestMapping(value="partList",method=RequestMethod.GET)
-		public List<SchedulePartDTO> partList(Integer scheduleNum, Model model){
+		public List<SchedulePartDTO> partList(Integer scheduleNum, Model model) throws Exception{
 		//public String partList(int scheduleNum, Model model){
 			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
 			System.out.println("컨트롤러 에서 part리스트"+partList);
@@ -231,7 +268,7 @@ public class ScheduleController {
 		
 		//DTO내의 배열에 각각 값이 저장됨
 		@RequestMapping(value="addPart", method=RequestMethod.POST)
-		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO){
+		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO) throws Exception{
 			int result =  scheduleService.insertPart(schedulePartArrayDTO);
 
 			System.out.println("part등록 Controller result = "+result);
@@ -245,7 +282,7 @@ public class ScheduleController {
 		}
 		
 		@RequestMapping(value="partDelete", method=RequestMethod.POST)
-		public String partDelete(SchedulePartDTO schedulePartDTO){
+		public String partDelete(SchedulePartDTO schedulePartDTO) throws Exception{
 			System.out.println("ScheduleNum="+schedulePartDTO.getScheduleNum()+", partNum="+schedulePartDTO.getPartNum());
 			int result = scheduleService.deletePart(schedulePartDTO);
 			return "schedule/partView";
@@ -282,7 +319,7 @@ public class ScheduleController {
 		
 		@ResponseBody //이건 리턴을 json으로 해주는애임
 		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
-		public Map<String, Object> unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model){
+		public Map<String, Object> unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model) throws Exception{
 			System.out.println("scheduleUnit scheduleNum "+scheduleUnitDTO.getScheduleNum());
 			System.out.println("scheduleUnit unitname "+scheduleUnitDTO.getUnitName());
 			System.out.println("scheduleUnit username"+scheduleUnitDTO.getEmail());
@@ -290,7 +327,7 @@ public class ScheduleController {
 			System.out.println("unit 등록하러옴 내용가지고");
 			//System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
 			
-			int result = scheduleService.insertUnit(scheduleUnitDTO);
+			int result = scheduleService.unitInsert(scheduleUnitDTO);
 			if(result > 0){
 				
 			}else{
@@ -322,7 +359,7 @@ public class ScheduleController {
 		//참여하고 있는 프리랜서 목록 가져오기 
 		@ResponseBody
 		@RequestMapping(value="userList", method=RequestMethod.GET)
-		public List<MemberDTO> userList(Integer scheduleNum){ 
+		public List<MemberDTO> userList(Integer scheduleNum) throws Exception{ 
 			List<MemberDTO> list = scheduleService.userList(scheduleNum);
 			System.out.println("해당 스케줄의 사용자들 데려오기");
 			System.out.println("사용자 list = "+list.get(0).getEmail());

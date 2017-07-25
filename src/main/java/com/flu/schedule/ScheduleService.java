@@ -7,12 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flu.file.FileService;
-import com.flu.member.MemberDAO;
 import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
@@ -56,7 +52,7 @@ public class ScheduleService {
 	 *  	- 성공 : 생성된 scheduleNum 
 	 *  	- 실패 : 0
 	 **/
-	public int createSchedule(Integer projectNum){
+	public int createSchedule(Integer projectNum) throws Exception{
 		ScheduleMainDTO scheduleMainDTO = null;
 		int scheduleNum = 0;
 		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
@@ -125,7 +121,7 @@ public class ScheduleService {
 	
 	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 	@Transactional
-	public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO){
+	public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO) throws Exception{
 		int result = 0;
 		//여러개의 값이 올수가 있습니다 
 		if(schedulePartArrayDTO != null){
@@ -137,16 +133,113 @@ public class ScheduleService {
 				schedulePartDTO.setPartStartDate(schedulePartArrayDTO.getPartStartDate()[i]);
 				schedulePartDTO.setPartFinishDate(schedulePartArrayDTO.getPartFinishDate()[i]);
 				schedulePartDTO.setPartName(schedulePartArrayDTO.getPartName()[i]);
-				schedulePartDTO.setPartNum(i);
+				//schedulePartDTO.setPartNum(i); //DB에서 가장 큰 숫자 다음 숫자로 세팅함 
 				schedulePartDTO.setPartDescFileF(schedulePartArrayDTO.getPartDescFileF()[i]);
 				schedulePartDTO.setPartDescFileO(schedulePartArrayDTO.getPartDescFileO()[i]);
-				result = scheduleDAO.insertPart(schedulePartDTO); 
+				result = scheduleDAO.insertPart(schedulePartDTO); //파트 여러개
 				System.out.println("잘들어갔나요 서비스 에서 반복문"+i+" 결과 "+result);
 			}
 		}
 
 		return result;
 	}
+	
+	////////////////////////////////////////////////////////////////////////
+	
+	//해당 스케줄에 존재하는 part 갯수
+		public int partCount(SchedulePartDTO schedulePartDTO) throws Exception{
+			return scheduleDAO.partCount(schedulePartDTO);
+		}
+
+		//파트 하나 정보 
+		public SchedulePartDTO partOne(SchedulePartDTO schedulePartDTO) throws Exception{
+			return scheduleDAO.partOne(schedulePartDTO);
+		}
+
+
+		//저장된 part들 가져오기 //세부사항 등록시 필요
+		public List<SchedulePartDTO> partList(int scheduleNum) throws Exception{
+			return scheduleDAO.partList(scheduleNum);
+		} 
+		
+			
+		//파트 세부정보저장
+		public int insertPart(SchedulePartDTO schedulePartDTO) throws Exception{
+			return scheduleDAO.insertPart(schedulePartDTO);
+		}
+		
+		
+
+		
+		//part수정하기 
+		//진행중에 part 수정하는 경우에는 DB에서 part와 clientSchedule 의 part도 같이 수정되어야한다 ..?
+		public int updatePart(SchedulePartDTO schedulePartDTO) throws Exception{
+			return scheduleDAO.updatePart(schedulePartDTO);
+		}
+		
+		//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
+		public int deletePart(SchedulePartDTO schedulePartDTO) throws Exception{
+			return scheduleDAO.deletePart(schedulePartDTO);
+		}
+		
+		
+		
+		
+		//세부항목
+		//원하는 조건에 해당하는 unit들의 갯수//아무조건도 없을경우는 전체갯수지요
+		public int unitCount(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			return scheduleDAO.unitCount(scheduleUnitDTO);
+		}
+		
+		//unit 하나에 대한 상세정보
+		public ScheduleUnitDTO unitOne(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			return scheduleDAO.unitOne(scheduleUnitDTO);
+		}
+
+		//원하는 조건에 해당하는 unit들
+		public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			return scheduleDAO.unitList(scheduleUnitDTO);
+		}
+		
+		
+		public int unitInsert(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			return scheduleDAO.unitInsert(scheduleUnitDTO);
+		}
+		
+		
+		
+		public int unitUpdate(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			return scheduleDAO.unitUpdate(scheduleUnitDTO);
+		}
+		
+		
+		//권한이 맞으면 삭제 허용하되 // 확인작업은 거쳐야한다 //서비스나 컨트롤러에서 해야지
+		public int unitDelete(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			return scheduleDAO.unitDelete(scheduleUnitDTO);
+		}
+		
+
+		
+		///////////////////////////////////////////////////
+		
+		//해당 스케줄에(프로젝트에) 참여중이 applicant 의 state가 'ing' 인 프리랜서들의 이메일, 이름, 닉네임을 가져옴
+		public List<MemberDTO> userList(int scheduleNum) throws Exception{
+			return scheduleDAO.userList(scheduleNum);
+		}
+		
+		
+		
+		
+
+		
+		//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
+		public int stateChange(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			//clientSchedule 부분에 state를 변경해준다 
+			return scheduleDAO.stateChange(scheduleUnitDTO);
+		}	
+	
+	
+	
 	
 
 

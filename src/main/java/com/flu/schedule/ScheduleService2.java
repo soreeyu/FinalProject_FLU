@@ -59,7 +59,7 @@ public class ScheduleService2 {
 	public int createSchedule(Integer projectNum){
 		int scheduleNum = 0;
 		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
-		int result = scheduleDAO.createSchedule(projectNum); //우선 하나 생성함
+		int result = 0;//scheduleDAO.createSchedule(projectNum); //우선 하나 생성함
 		if(result > 0){
 			scheduleNum = 0;//scheduleDAO.getScheduleNum(projectNum); //생성된 아이를 가져옴 
 			System.out.println("만들고 가져온 scheduleNum(서비스) = "+scheduleNum);
@@ -133,7 +133,7 @@ public class ScheduleService2 {
 				schedulePartDTO.setPartNum(i);
 				schedulePartDTO.setPartDescFileF(schedulePartArrayDTO.getPartDescFileF()[i]);
 				schedulePartDTO.setPartDescFileO(schedulePartArrayDTO.getPartDescFileO()[i]);
-				result = scheduleDAO.insertPart(schedulePartDTO); 
+				result = 0;//scheduleDAO.insertPart(schedulePartDTO); 
 				System.out.println("잘들어갔나요 서비스 에서 반복문"+i+" 결과 "+result);
 			}
 		}
@@ -149,7 +149,7 @@ public class ScheduleService2 {
 
 	//저장된 part들 가져오기 //세부사항 등록시 필요
 	public List<SchedulePartDTO> partList(int scheduleNum){
-		return scheduleDAO.partList(scheduleNum);
+		return null;//scheduleDAO.partList(scheduleNum);
 	} 
 
 
@@ -159,7 +159,7 @@ public class ScheduleService2 {
 	public List<MemberDTO> userList(int scheduleNum){ //재식친구의 DTO 리스트
 		//여기서는 scheduleNum으로 projectNum 만 구해오고 그 projectNum을 사용해서 Member를 데려온다 //걍sql로 해결함
 		//int projectNum = scheduleDAO.getProjectNum(scheduleNum);
-		return scheduleDAO.userList(scheduleNum);
+		return null; //scheduleDAO.userList(scheduleNum);
 	} 
 
 
@@ -186,7 +186,7 @@ public class ScheduleService2 {
 
 	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
 	public int deletePart(SchedulePartDTO schedulePartDTO){
-		return scheduleDAO.deletePart(schedulePartDTO);
+		return 0; //scheduleDAO.deletePart(schedulePartDTO);
 	}
 
 

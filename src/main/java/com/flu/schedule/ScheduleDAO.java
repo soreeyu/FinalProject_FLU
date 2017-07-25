@@ -34,38 +34,38 @@ public class ScheduleDAO {
 	}
 	
 	//시퀀스 사용 insert mainschedule
-	public int createSchedule(Integer projectNum){
+	public int createSchedule(Integer projectNum) throws Exception{
 		return sqlSession.insert(NAMESPACE+"createS", projectNum); //실패or성공임
 	}
 	
 
 	//등록된 schedulemain 정보를 가져온다 (scheduleNum 필요할때도 사용)
-	public ScheduleMainDTO getSchedule(Integer projectNum){
+	public ScheduleMainDTO getSchedule(Integer projectNum) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"mainSInfo", projectNum);//만든 scheduleNum을 리던
 	}
 	
 	
 
 	//main스케줄 수정하기 //시작 날짜, 마감날짜만 바꿈
-	public int updateMainSchedule(ScheduleMainDTO scheduleMainDTO){
+	public int updateMainSchedule(ScheduleMainDTO scheduleMainDTO) throws Exception{
 		return sqlSession.update(NAMESPACE+"mainSUpdate",scheduleMainDTO);
 	}
 	
 	//////////////////////////////////////////////////////
 	
 	//해당 스케줄에 존재하는 part 갯수
-	public int partCount(SchedulePartDTO schedulePartDTO){
+	public int partCount(SchedulePartDTO schedulePartDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"partCount", schedulePartDTO);
 	}
 
 	//파트 하나 정보 
-	public SchedulePartDTO partOne(SchedulePartDTO schedulePartDTO){
+	public SchedulePartDTO partOne(SchedulePartDTO schedulePartDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"partOne", schedulePartDTO);
 	}
 
 
 	//저장된 part들 가져오기 //세부사항 등록시 필요
-	public List<SchedulePartDTO> partList(int scheduleNum){
+	public List<SchedulePartDTO> partList(int scheduleNum) throws Exception{
 		List<SchedulePartDTO> ar = sqlSession.selectList(NAMESPACE+"partList", scheduleNum);
 		System.out.println("part list 확인 dao 0번째이름 "+ar.get(0).getPartName());
 		return sqlSession.selectList(NAMESPACE+"partList", scheduleNum); 	
@@ -73,7 +73,7 @@ public class ScheduleDAO {
 	
 		
 	//파트 세부정보저장
-	public int insertPart(SchedulePartDTO schedulePartDTO){
+	public int insertPart(SchedulePartDTO schedulePartDTO) throws Exception{
 		return sqlSession.insert(NAMESPACE+"partInsert", schedulePartDTO); 
 	}
 	
@@ -82,12 +82,12 @@ public class ScheduleDAO {
 	
 	//part수정하기 
 	//진행중에 part 수정하는 경우에는 DB에서 part와 clientSchedule 의 part도 같이 수정되어야한다 ..?
-	public int updatePart(SchedulePartDTO schedulePartDTO){
+	public int updatePart(SchedulePartDTO schedulePartDTO) throws Exception{
 		return sqlSession.insert(NAMESPACE+"partUpdate", schedulePartDTO); 
 	}
 	
 	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
-	public int deletePart(SchedulePartDTO schedulePartDTO){
+	public int deletePart(SchedulePartDTO schedulePartDTO) throws Exception{
 		return sqlSession.insert(NAMESPACE+"partDelete", schedulePartDTO); 
 	}
 	
@@ -96,12 +96,12 @@ public class ScheduleDAO {
 	
 	//세부항목
 	//원하는 조건에 해당하는 unit들의 갯수//아무조건도 없을경우는 전체갯수지요
-	public int unitCount(ScheduleUnitDTO scheduleUnitDTO){
+	public int unitCount(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"unitCount", scheduleUnitDTO);
 	}
 	
 	//unit 하나에 대한 상세정보
-	public ScheduleUnitDTO unitOne(ScheduleUnitDTO scheduleUnitDTO){
+	public ScheduleUnitDTO unitOne(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"unitOne", scheduleUnitDTO);
 	}
 
@@ -111,19 +111,19 @@ public class ScheduleDAO {
 	}
 	
 	
-	public int unitInsert(ScheduleUnitDTO scheduleUnitDTO){
+	public int unitInsert(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		return sqlSession.insert(NAMESPACE+"unitInsert", scheduleUnitDTO); 
 	}
 	
 	
 	
-	public int unitUpdate(ScheduleUnitDTO scheduleUnitDTO){
+	public int unitUpdate(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		return sqlSession.update(NAMESPACE+"unitUpdate",scheduleUnitDTO);
 	}
 	
 	
 	//권한이 맞으면 삭제 허용하되 // 확인작업은 거쳐야한다 //서비스나 컨트롤러에서 해야지
-	public int unitDelete(ScheduleUnitDTO scheduleUnitDTO){
+	public int unitDelete(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		return sqlSession.update(NAMESPACE+"unitDelete",scheduleUnitDTO);
 	}
 	
@@ -132,7 +132,7 @@ public class ScheduleDAO {
 	///////////////////////////////////////////////////
 	
 	//해당 스케줄에(프로젝트에) 참여중이 applicant 의 state가 'ing' 인 프리랜서들의 이메일, 이름, 닉네임을 가져옴
-	public List<MemberDTO> userList(int scheduleNum){
+	public List<MemberDTO> userList(int scheduleNum) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"userList", scheduleNum);
 	}
 	
@@ -142,14 +142,14 @@ public class ScheduleDAO {
 
 	
 	//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-	public int stateChange(ScheduleUnitDTO scheduleUnitDTO){
+	public int stateChange(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		//clientSchedule 부분에 state를 변경해준다 
 		return sqlSession.update(NAMESPACE+"stateChange", scheduleUnitDTO);
 	}	
 	
 	
 	//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-	public void uploadResult(String file,String contents){ //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
+	public void uploadResult(String file,String contents) throws Exception { //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
 		
 	}  
 	
