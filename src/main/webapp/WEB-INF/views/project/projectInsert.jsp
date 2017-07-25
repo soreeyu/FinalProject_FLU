@@ -53,7 +53,9 @@ font-family: -webkit-body;
 	padding: 30px;
 }
 .contents_sub{
-	width: 350px;
+	border-left: 1px solid #dedede;
+	padding: 20px;
+	width: 300px;
 	height: 100%;
 	display: block;
 	background-color: red;
@@ -163,8 +165,76 @@ label{
 }
 .btn{
 	margin: 0 auto;
-	text-align: ce
+	text-align: center;
 }
+
+.sub_process_first{
+	padding-top: 10px;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px #dedede solid;
+}
+.sub_process_bar{
+	border-bottom: 1px #dedede solid;
+	padding-bottom: 30px;
+}
+.project-add-helper-title{
+	margin-bottom: 15px;
+	font-weight: bold;
+	display: block;
+}
+.fa{
+	margin-right: 7px;
+}
+.project-add-time{
+	margin-bottom: 10px;
+	font-size: 13px;
+}
+.progress-bar{
+	height: 1em !important;
+    margin-bottom: 8px;
+    border: none;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+}
+.progress-bar-in{
+	margin-left: -1px !important;
+    margin: 0 !important;
+    height: 100% !important;
+    /* border: none; */
+    background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+}
+.project-add-helper-bottom{
+	float: right;
+}
+.project-add-info-box{
+	background-color: yellow;
+	margin-top: 20px;
+}
+.info-data-img{
+	margin-top: 20px;
+	width: 40px;
+	height: 40px;
+/* 	float: left; */
+}
+
+.project-info-text{
+	margin-top: 20px;
+/* 	padding-top: 8px; */
+    margin-left: 7px;
+    display: block;
+    float: left;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 14px;
+    width: 180px;
+    color: #666;
+    font-size: 12px;
+}
+
 </style>
 
 
@@ -599,8 +669,55 @@ label{
 				</form>
 			</section>
 			<section class="contents_sub">
+			<div class="sub_process_first">
+				<img src="${pageContext.request.contextPath}/resources/img/project/project-process.png" style="vertical-align: middle; width:80%;">
+			</div>
+			<div class="sub_process_bar">
+				<div class="project-add-helper-title">
+				<i class="fa fa-clock-o"></i>작성 완료까지 걸리는 시간
+				</div>
+				<div class="project-add-time">약 4분 소요 예정</div>
+				<div class="progress-bar">
+					<div class="progress-bar-in"></div>
+				</div>
+				<div class="project-add-helper-bottom">
+					최대 10분
+				</div>
+			</div>
+			<div class="project-add-info-box">
+				<div class="project-add-info-data">
+					<img src="${pageContext.request.contextPath}/resources/img/project/process-one.png" class="info-data-img">
+					<div class="project-info-text">
+					FLU는 클라이언트님께 무료로 제공 됩니다.
+					</div>
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/resources/img/project/process-two.png" class="info-data-img">
+					<div class="project-info-text">
+					다양한 지원자들의 견적과 포트폴리오를 한눈에 비교할 수 있습니다.
+					</div>
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/resources/img/project/process-three.png" class="info-data-img">
+					<div class="project-info-text">
+					온/오프라인 미팅을 통해 마음에 드는 지원자를 선택합니다.
+					</div>
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/resources/img/project/process-four.png" class="info-data-img">
+					<div class="project-info-text">
+					대금 보호 시스템을 통해 돈 문제 없는 안전한 계약이 가능합니다.
+					</div>
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/resources/img/project/process-five.png" class="info-data-img">
+					<div class="project-info-text">
+					클라이언트님의 승인 후에 파트너에게 대금이 지급됩니다.
+					</div>
+				</div>
+			</div>
 				
-				<!-- 옆구리 CSS껴넣기 사진들 -->
+				
 			</section>
 		</div>
 
@@ -608,7 +725,7 @@ label{
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
-alert("type == ${type}");
+/* alert("type == ${type}"); */
 
 
  function check_submit() {

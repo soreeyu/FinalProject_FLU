@@ -179,7 +179,7 @@ strong{
 	margin-bottom: 20px;
 }
 .project-skill{
-	background-color: #666;
+/* 	background-color: #666; */
 	color: white;
 	border-radius: 2px;
 }
@@ -371,12 +371,11 @@ background-color: white;
 }
 .project-head{
 	height: 27px;
-	background-color: yellow;
 	margin-bottom: 5px;
 }
 .project-title{
-	color: blue;
-	font-size: 15px;
+	color: #15647a;
+	font-size: 18px;
 	font-weight: bold;
 }
 .project-body{
@@ -406,6 +405,7 @@ background-color: white;
 	float: left;
 	height: 60px;
 	background-color: red;
+	padding-top: 5px;
 }
 .project-contents-right{
 	font-size: 13px;
@@ -413,7 +413,6 @@ background-color: white;
 	float: right;
 	height: 54px;
 	line-height: 13px;
-	background-color: gray;
 }
 .right-contents-sub{
 	border-bottom: 1px solid #dedede;
@@ -650,6 +649,8 @@ var projectNum = "${dto.projectNum}";
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
 	$(".project-reply-box-top").html(data);
 });
+
+
 
 
 
