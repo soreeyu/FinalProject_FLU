@@ -61,7 +61,7 @@ public class ScheduleService2 {
 		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
 		int result = scheduleDAO.createSchedule(projectNum); //우선 하나 생성함
 		if(result > 0){
-			scheduleNum = scheduleDAO.getScheduleNum(projectNum); //생성된 아이를 가져옴 
+			scheduleNum = 0;//scheduleDAO.getScheduleNum(projectNum); //생성된 아이를 가져옴 
 			System.out.println("만들고 가져온 scheduleNum(서비스) = "+scheduleNum);
 			if(scheduleNum < 1){ //가져왔는데 이상한거지
 				scheduleNum = 0; 
@@ -195,7 +195,7 @@ public class ScheduleService2 {
 	public int insertUnit(ScheduleUnitDTO scheduleUnitDTO){
 		scheduleUnitDTO.setUnitDescFileF("파일이름");
 		scheduleUnitDTO.setUnitDescFileO("파일진짜이름");
-		return scheduleDAO.insertUnit(scheduleUnitDTO);
+		return 0;//scheduleDAO.insertUnit(scheduleUnitDTO);
 	}
 	
 	

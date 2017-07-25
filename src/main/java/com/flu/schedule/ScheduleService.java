@@ -57,16 +57,23 @@ public class ScheduleService {
 	 *  	- 실패 : 0
 	 **/
 	public int createSchedule(Integer projectNum){
+		ScheduleMainDTO scheduleMainDTO = null;
 		int scheduleNum = 0;
 		//시퀀스 사용하여 스케줄테이블에 하나가 생성된다
 		int result = scheduleDAO.createSchedule(projectNum); //우선 하나 생성함
 		if(result > 0){
-			scheduleNum = scheduleDAO.getScheduleNum(projectNum); //생성된 아이를 가져옴 
-			System.out.println("만들고 가져온 scheduleNum(서비스) = "+scheduleNum);
-			if(scheduleNum < 1){ //가져왔는데 이상한거지
-				scheduleNum = 0; 
-				//여기서 트랜잭션..롤백하면 좋은뒙 
+			scheduleMainDTO = scheduleDAO.getSchedule(projectNum); //생성된 아이를 가져옴 
+			if(scheduleMainDTO != null){
+				System.out.println("만들고 가져온 scheduleNum(서비스) = "+scheduleMainDTO.getScheduleNum());
+				scheduleNum = scheduleMainDTO.getScheduleNum();
+				if( scheduleNum < 1){ //가져왔는데 이상한거지
+					scheduleNum = 0; 
+					//여기서 트랜잭션..롤백하면 좋은뒙 
+				}
+			}else{
+				//null이면 문제지
 			}
+			
 		}
 		return scheduleNum; //실패하면 0 성공하면 스케줄 넘
 	}
@@ -143,84 +150,6 @@ public class ScheduleService {
 	
 
 
-
-
-
-
-	//저장된 part들 가져오기 //세부사항 등록시 필요
-	public List<SchedulePartDTO> partList(int scheduleNum){
-		return scheduleDAO.partList(scheduleNum);
-	} 
-
-
-
-
-	//참여하고 있는 프리랜서 목록 가져오기 
-	public List<MemberDTO> userList(int scheduleNum){ //재식친구의 DTO 리스트
-		//여기서는 scheduleNum으로 projectNum 만 구해오고 그 projectNum을 사용해서 Member를 데려온다 //걍sql로 해결함
-		//int projectNum = scheduleDAO.getProjectNum(scheduleNum);
-		return scheduleDAO.userList(scheduleNum);
-	} 
-
-
-
-	//할일 리스트 뿌려주기 
-	public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{ 
-		return scheduleDAO.unitList(scheduleUnitDTO);
-	}
-
-
-
-	//main스케줄 수정하기 //시작 날짜, 마감날짜가 바뀐다 
-	public int updateMainSchedule(ScheduleMainDTO scheduleMainDTO){
-		return 0;
-	}
-
-
-
-
-	//part수정하기 //진행중에 part 수정하는 경우에는 DB에서 part와 clientSchedule 의 part도 같이 수정되어야한다
-	public int updatePart(ScheduleMainDTO scheduleMainDTO){
-		return 0;
-	}
-
-	//수정이 아니라 삭제인 경우 이 part 에 해당하는 상세항목을 처리해줄 수 있어야한다 
-	public int deletePart(SchedulePartDTO schedulePartDTO){
-		return scheduleDAO.deletePart(schedulePartDTO);
-	}
-
-
-
-	//세부항목
-	public int insertUnit(ScheduleUnitDTO scheduleUnitDTO){
-		scheduleUnitDTO.setUnitDescFileF("파일이름");
-		scheduleUnitDTO.setUnitDescFileO("파일진짜이름");
-		return scheduleDAO.insertUnit(scheduleUnitDTO);
-	}
-	
-	
-
-	public int updateUnit(ScheduleUnitDTO scheduleUnitDTO){
-		return 0;
-	}
-
-	//권한이 맞으면 삭제 허용하되 // 확인작업은 거쳐야한다
-	public int deleteUnit(String email){
-		return 0;
-	}
-
-
-
-
-	//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-	public void stateChange(String user,Integer doNum){
-		//clientSchedule 부분에 state를 변경해준다 
-	}	
-
-	//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-	public void uploadResult(String file,String contents){ //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
-
-	}  
 
 
 }
