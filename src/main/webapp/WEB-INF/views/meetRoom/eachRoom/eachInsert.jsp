@@ -74,8 +74,31 @@
 
 		
 		$("#human_minus").click(function() {
-			($("#human").val()*1)-1;
+			var num = $("#human").val();
+			num--;
+			$("#human").val(num);
 		});
+		$("#human_plus").click(function() {
+			var num = $("#human").val();
+			num++;
+			$("#human").val(num);
+		});
+		
+		$("#price_plus").click(function() {
+			var num = $("#price").val();
+			num = (num*1)+100;
+			$("#price").val(num);
+		});
+		$("#price_minus").click(function() {
+			var num = $("#price").val();
+			num = (num*1)-100;
+			$("#price").val(num);
+		});
+		
+		$("#imfile").change(function() {
+			var imfile= $(this).val();
+			$("#result_img").html("<img src='"+imfile+"'>");
+		})
 		
 })
 </script>
@@ -138,6 +161,44 @@ section {
     font-size: 14px;
     line-height: 14px;
     color: #656565;
+}
+.file {
+    position: relative;
+    padding-right: 174px;
+
+    overflow: hidden;
+}
+.file .inner_img {
+    min-height: 156px;
+    font-size: 16px;
+    line-height: 16px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 16px 16px 0;
+    color: #b2b2b2;
+}
+.btn_box {
+    width: 154px;
+    height : 50px;
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-left: 10px;
+    overflow: hidden;
+}
+.file .btn_box .btn {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    background-color: #704de4;
+    border: 0;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
 }
 .convenience_list{
 	height: 130px;
@@ -225,7 +286,7 @@ input[type=checkbox]+label .fa{
     display: inline-block;
     position: relative;
 }
-input[type=number]{
+input[type=tel]{
     width: 58px;
     height: 48px;
     padding: 0 2px;
@@ -295,13 +356,28 @@ a {
 	</div>
 	
 	<div class="eachRoom_form">
-	<div class="tit_form">
-	대표이미지 	
-	</div>
-	<span class="option">
-		2048 *1158 권장, 한 장당 최대 10MB
-	</span>
-	<input type="file" name="files" class="eachRoomInfo">	
+		<div class="tit_form">
+			대표이미지 	
+		</div>
+		<span class="option">
+			2048 *1158 권장, 한 장당 최대 10MB
+		</span>
+		<div class="file">
+			<div class="inner_img">
+				<div>이미지 파일을 추가해 주세요. (JPG, JPEG, PNG)</div>
+				<div class="result_img">
+				
+				</div>
+			</div>
+			<div class="btn_box">
+				<label class="btn">
+					<div>파일첨부</div>
+					<input type="file" name="files" class="eachRoomInfo" style="display: none;" id="imfile" >
+					
+				</label>
+	
+			</div>	
+		</div>
 	</div>
 	
 	<div class="eachRoom_form">
@@ -390,7 +466,7 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
-					<input type="number" name="human" id="human" class="eachRoomInfo" value="1">
+					<input type="tel" name="human" id="human" class="eachRoomInfo" value="1">
 					<strong class="txt unit">명</strong>
 				</span>
 				<span class="btn_minus" id="human_minus">
@@ -411,7 +487,7 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
-					<input type="number" name="price" id="price" class="eachRoomInfo" value="1000" >
+					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" >
 					<strong class="txt unit">원</strong>
 				</span>
 				<span class="btn_minus" id="price_minus">

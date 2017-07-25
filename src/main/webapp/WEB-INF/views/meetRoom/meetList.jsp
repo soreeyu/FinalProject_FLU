@@ -68,7 +68,7 @@ section {
 	
 	
 	
-	<c:if test="${member.kind eq admin}">
+	<c:if test="${member.kind eq 'admin'}">
 	<a href="meetInsert" style="float: left;">업체등록</a>	
 	</c:if>
 	</section>
