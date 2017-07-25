@@ -184,7 +184,8 @@
 <style type="text/css">
 section {
 	min-width : 1152px;
-	width : 70%;
+	width : 60%;
+	height: 2000px;
 	margin : 0 auto;
 }
 .ui-datepicker{
@@ -222,13 +223,125 @@ font-size:14px;
 	width : 100%;
 	overflow: hidden;
 }
+/* 달력이랑 시간 부분 css  */
+
+/* 바디부분 */
+.heading {
+	display: table;
+    position: relative;
+    width: 100%;
+    padding-bottom: 15px;
+    padding-top: 2px;
+    border-bottom: 3px solid #704de4;
+}
+.reserve_space{
+	display: table-cell;
+    font-size: 18px;
+    line-height: 18px;
+}
+.option{
+	position: absolute;
+	font-size: 18px;
+    line-height: 20px;
+   	right: 0;
+   	color: #704de4;
+   	display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+.price_tit {
+	font-size: 18px;
+	color: #6d3afb;
+}
+.tit_unit {
+	font-size:12px;
+	color: #949494;
+	vertical-align: top;
+	top : 3px;
+}
+.contents_box{
+	padding: 100px 0 0 0;
+	width: 1152px;
+	margin: 0 auto;
+}
+.detail_form{
+	position: relative;
+    padding-right: 395px;
+}
+.eachRoom_info {
+	padding: 30px 30px 39px;
+    background-color: #fff;
+    border-bottom: 1px solid #ebebeb;
+}
+.info_photo{
+    position: relative;
+    padding: 0 0 30px 170px;
+    min-height: 170px;
+    font-size: 16px;
+    line-height: 22px;
+    vertical-align: top;
+}
+.me_name{
+	padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 24px;
+    display: block;
+}
+.img {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left :0;
+    top: 0;
+    
+}
+.img img {
+	width: 100%;
+    height: 100%;
+}
+.list_detail{
+	border-bottom: 1px solid #ebebeb;
+	list-style: none;
+}
+.list_detail li {
+    position: relative;
+    padding: 17px 0 15px 104px;
+    font-size: 16px;
+    border-top: 1px solid #ebebeb;
+}
+.list_detail li:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    background-color: #656565;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    margin-top: -2px;
+}
+.list_detail li .tit {
+    color: #656565;
+    left: 15px;
+    margin-right: 18px;
+    position: absolute;
+}
+.list_detail li .data {
+	vertical-align: top;
+}
+.convenience_wrap {
+	padding: 0 0 3px;
+    margin: -2px 0 0 20px;
+}
 </style>
 </head>
 <body>
 	<c:import url="../../temp/header.jsp"/>
 	<section>
-	<h1>예약</h1>
+	<div class="contents_box">
 	<form action="reserveInsert" method="post" id="frm" name="frm_check">
+	<div class="detail_form">
 	<c:forEach items="${map.reserved}" var="r">
 	<input type="hidden" id="reserved_name" value="${r.name}">
 	</c:forEach>
@@ -236,15 +349,45 @@ font-size:14px;
 	<input type="hidden" name="reserve_date" id="day" class="reserve_Info"> 
 	<input type="hidden" name="price" id="rprice">
 	<input type="hidden" name="snum" value="${map.each.snum}">
-		<div>
-	<h2>세부공간</h2>
-	<div>${map.each.price}/시간(인)</div>
+	
+	<div class="heading">
+	<h3 class="reserve_space">예약공간</h3>
+	<span class="option">
+	<strong class="price_tit">
+	\ ${map.each.price}
+	</strong>
+	<em class="tit_unit">
+	/시간(인)
+	</em>
+	</span>
+	</div>
+	<div class="eachRoom_info">
 	<input type="hidden" id="price" value="${map.each.price}">
-		유형 : ${map.each.type}
-		운영시간 : ${map.each.time}
-		인원 : ${map.each.human}
+	<div class="info_photo">
+	<h4 class="me_name">${map.meetroom.name}, ${map.each.name} (${map.each.human}인실)</h4>
+	<span class="img">
+		<img alt="" src="${pageContext.request.contextPath}/resources/upload/${map.each.fname}">
+	</span>	
+	<p>
+		${map.each.contents}
+	</p>
+	</div>
+	<ul class="list_detail">
+		<li>
+			<span class="tit">공간유형</span>
+			<span class="data">${map.each.type}</span>
+		</li>
+		<li>
+			<span class="tit">운영시간</span>
+			<span class="data">${map.each.time}</span>
+		</li>
+		
+	</ul>
+		<div class="convenience_wrap">
+		<ul>
+		
+		</ul>
 		편의 시설
-		<div>
 			${map.each.convenience}
 		</div>
 	</div>
@@ -340,7 +483,9 @@ font-size:14px;
 		
 		<div>금액 : <span class="final_price"></span></div>
 		<input type="button" value="예약하기" id="reserve_btn">			
+	</div>
 	</form>
+	</div>
 	</section>
 	<c:import url="../../temp/footer.jsp"/> 
 </body>

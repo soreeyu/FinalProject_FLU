@@ -6,7 +6,7 @@
   
 	<!-- 운영 시간 불러오기 -->
 	<select id="Reserve_accessTime" parameterType="java.lang.Integer" resultType="com.flu.meetRoom.MeetRoomDTO">
-		select time from meetroom where num=#{snum}
+		select * from meetroom where num=#{snum}
 	</select>
 	
   	<!-- 예약되어 있는 시간 뿌려주기  -->

@@ -21,7 +21,8 @@ public class MemberController {
 
 	@Inject
 	private MemberService memberService;
-	
+	@Inject
+	AlarmService alarmService;
 	//AJAX 뒤로가기 테스트
 	@RequestMapping(value="test")
 	public void test(){
@@ -47,10 +48,9 @@ public class MemberController {
 			
 			//알람 디비에 인서트
 			AlarmDTO alarmDTO = new AlarmDTO();
-			AlarmService alarmService = new AlarmService();
 			alarmDTO.setEmail(memberDTO.getEmail());
 			alarmDTO.setContents("회원가입이 성공적으로 이루어졌습니다.");
-			alarmService.alaramInsert(alarmDTO);
+			alarmService.alarmInsert(alarmDTO);
 			System.out.println("회원가입 성공");
 			return "/member/emailCK";
 		}

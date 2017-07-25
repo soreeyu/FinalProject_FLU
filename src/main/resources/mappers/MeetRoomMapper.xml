@@ -30,6 +30,7 @@
 	<select id="MeetDelete_eachRoom" parameterType="java.lang.Integer" resultType="com.flu.eachRoom.EachRoomDTO">
 		select * from eachroom where snum=#{num}
 	</select>
+	
 	<!-- 업체정보 수정 -->
 	<update id="MeetUpdate" parameterType="com.flu.meetRoom.MeetRoomDTO">
 		update meetroom set name=#{name}, contents=#{contents}, time=#{time}, fname=#{fname}, oname=#{oname}, holiday=#{holiday}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail}, homepage=#{homePage} where num=#{num}

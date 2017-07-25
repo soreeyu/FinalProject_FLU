@@ -9,8 +9,9 @@
 <c:import url="../../temp/bootstrap.jsp"/>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- 아이콘 -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- 아이콘 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">$(function(){
     //전송버튼 클릭이벤트
@@ -32,12 +33,57 @@
         	
         }
     })
+    
+    	//편의시설 하나 클릭 했을때
+    	var convenience = document.getElementsByName("convenience");
+		$(".fa").click(function() {
+			
+			var title = $(this).attr("title");
+			
+			if(title=="TV/프로젝터"){
+				convenience[0].value=title;
+				alert(convenience[0].value);
+				$("#tv").css("background-color", "white");				
+			}else if(title=="인터넷/WIFI"){
+				convenience[1].value=title;
+				alert(convenience[1].value);
+				$("#wifi").css("background-color", "white");
+			}else if(title=="복사/인쇄기"){
+				convenience[2].value=title;
+				alert(convenience[2].value);
+				$("#print").css("background-color", "white");
+			}else if(title=="음향/마이크"){
+				convenience[3].value=title;
+				alert(convenience[3].value);
+				$("#mic").css("background-color", "white");
+			}else if(title=="주차"){
+				convenience[4].value=title;
+				alert(convenience[4].value);
+				$("#parking").css("background-color", "white");
+			}else if(title=="금연"){
+				convenience[5].value=title;
+				alert(convenience[5].value);
+				$("#nosomking").css("background-color", "white");
+			}else if(title=="PC/노트북"){
+				convenience[6].value=title;
+				alert(convenience[6].value);
+				$("#laptop").css("background-color", "white");
+			}
+			
+		});
+
+		
+		$("#human_minus").click(function() {
+			($("#human").val()*1)-1;
+		});
+		
 })
 </script>
 <style type="text/css">
 section {
 	min-width : 1152px;
 	width : 60%;
+	height: 1500px;
 	margin : 0 auto;
 }
 #eachRoom_header{
@@ -72,6 +118,7 @@ section {
 .eachRoom_form{
 	position: relative;
     margin-top: 45px;
+    display: block;
 }
 .eachRoom_form > span{
 	display: block;
@@ -82,6 +129,7 @@ section {
     font-size: 18px;
     padding: 0;
     border-bottom: 1px solid #e0e0e0;
+    display: block;
 }
 .option{
 	position : absolute;
@@ -91,8 +139,13 @@ section {
     line-height: 14px;
     color: #656565;
 }
+.convenience_list{
+	height: 130px;
+}
 .convenience_list .inner{
 	margin-bottom: -25px;
+	list-style: none;
+    -webkit-box-sizing: border-box;
 }
 .convenience_list .inner li:first-child {
     margin-left: 0;
@@ -102,6 +155,118 @@ section {
     width: 90px;
     padding-bottom: 25px;
     margin: 0 3px;
+    text-align: center;
+}
+input[type="checkbox"]{
+    position: absolute;
+    left: -99999px;
+    font-size: 16px;
+    border-radius: 0;
+    color: #000;
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+.convenience_list input[type=checkbox]+label {
+    display: inline-block;
+    height: 90px;
+    padding: 17px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    background: #f6f6f6;
+    text-align: center;
+    cursor: pointer;
+    
+}
+input[type=checkbox]+label span {
+    display: block;
+    width: 90px;
+    padding: 26px 0 0;
+    margin: 0 -17px;
+    font-size: 14px;
+    color: #000;
+    line-height: 17px;
+    text-align: center;
+}
+input[type=checkbox]+label .fa{
+    background-position: -236px -380px;
+    width: 50px;
+    height: 50px;
+}
+
+
+.flex_wrap.column2 {
+	margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+}
+.flex_wrap.column2>dl {
+    width: 50%;
+    padding: 0 34px 0 0;
+    margin-top: 0;
+}
+.pull_left {
+    float: left;
+    width: 170px;
+}
+.pull_right{
+	float: left;
+}
+.box_setting {
+    position: relative;
+    width: 250px;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    text-align: center;
+}
+.input {
+    display: inline-block;
+    position: relative;
+}
+input[type=number]{
+    width: 58px;
+    height: 48px;
+    padding: 0 2px;
+    border: 0;
+    text-align: right;
+    vertical-align: top;
+    font-size: 18px;
+    line-height: 48px;
+}
+.unit {
+    display: inline-block;
+    margin-top: 0;
+    font-size: 18px;
+    color: #000;
+    line-height: 50px;
+}
+.btn_minus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-right: 1px solid #ebebeb;
+}
+.box_setting .btn_plus {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px solid #ebebeb;
+}
+a {
+	text-decoration: none;
+}
+.box:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.type_sub {
+	line-height: 50px;
+    font-size: 18px;
+    margin-bottom: 30px;
+    padding: 0;
 }
 
 </style>
@@ -139,12 +304,16 @@ section {
 	<input type="file" name="files" class="eachRoomInfo">	
 	</div>
 	
-	공간유형
+	<div class="eachRoom_form">
+	<div class="tit_form">
+	공간유형	
+	</div>
 	<select name="type" class="eachRoomInfo">
 		<option value="세미나실">세미나실</option>
 		<option value="작업실">작업실</option>
 		<option value="회의실">회의실</option>
 	</select>
+	</div>
 
 	<div class="eachRoom_form">
 		<div class="tit_form">
@@ -153,78 +322,108 @@ section {
 		<span class="option">구비된 편의시설을 선택해주세요</span>
 		<div class="convenience_list">
 			<ul class="inner">
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i></i>
+				<li style="display: list-item;">	
+					<input type="checkbox" name="convenience" id="1">
+					<label for="1" id="tv">
+						<i class="fa fa-television" style="font-size:36px" title="TV/프로젝터"></i>
 						<span>TV/프로젝터</span>
 					</label>
 				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
+				<li style="display: list-item;">	
+					<input type="checkbox" name="convenience" id="2">
+					<label for="2" id="wifi">
+						<i class="fa material-icons" style="font-size:36px" title="인터넷/WIFI">wifi</i>
 						<span>인터넷/WIFI</span>
 					</label>
 				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<span></span>
+				<li style="display: list-item;">	
+					<input type="checkbox" name="convenience" id="3">
+					<label for="3" id="print">
+						<i class="fa fa-print" style="font-size:36px" title="복사/인쇄기"></i>
 						<span>복사/인쇄기</span>
 					</label>
 				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
-						<span>화이트보드</span>
-					</label>
-				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
+				<li style="display: list-item;">	
+					<input type="checkbox" name="convenience" id="4">
+					<label for="4" id="mic">
+						<i class="fa fa-microphone" style="font-size:36px" title="음향/마이크"></i>
 						<span>음향/마이크</span>
 					</label>
 				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
+				<li style="display: list-item;">	
+					<input type="checkbox" name="convenience" id="5">
+					<label for="5" id="parking">
+						<i class="fa material-icons" style="font-size:36px" title="주차">local_parking</i>
 						<span>주차</span>
 					</label>
 				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
+				<li style="display: list-item;">	
+					<input type="checkbox" name="convenience" id="6">
+					<label for="6" id="nosomking">
+						<i class="fa material-icons" style="font-size:36px" title="금연">smoke_free</i>
 						<span>금연</span>
 					</label>
 				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
+				<li style="display: list-item;" >	
+					<input type="checkbox" name="convenience" id="7">
+					<label for="7" id="laptop">
+						<i class="fa fa-laptop" style="font-size:36px" title="PC/노트북"></i>
 						<span>PC/노트북</span>
-					</label>
-				</li>
-				<li>	
-					<input type="checkbox" name="convenience">
-					<label>
-						<i> </i>
-						<span>의자/테이블</span>
 					</label>
 				</li>
 			</ul>
 		</div>
 	</div>
 	
-	<div>
-	수용인원 <input type="number" name="human" class="eachRoomInfo">
+	
+	<div class="eachRoom_form">
+	<div class="tit_form">
+		추가정보
 	</div>
-	<div>
-	가격 <input type="number" name="price" class="eachRoomInfo">
+	<div class="flex_wrap column2">
+	<dl class="box reservation">
+		<dt class="pull_left tit">
+			<label>
+				수용인원
+			</label>
+		</dt>
+		<dd class="pull_right">
+			<div class="box_setting">
+				<span class="input won">
+					<input type="number" name="human" id="human" class="eachRoomInfo" value="1">
+					<strong class="txt unit">명</strong>
+				</span>
+				<span class="btn_minus" id="human_minus">
+					<i class="fa fa-minus" style="font-size:48px"></i>
+				</span>
+				<span class="btn_plus" id="human_plus">
+					<i class="fa fa-plus" style="font-size:48px"></i>
+				</span>
+			</div>
+		</dd>
+	</dl>
+	<dl class="box">
+		<dt class="pull_left tit">
+			<label>
+				가격
+			</label>
+		</dt>
+		<dd class="pull_right">
+			<div class="box_setting">
+				<span class="input won">
+					<input type="number" name="price" id="price" class="eachRoomInfo" value="1000" >
+					<strong class="txt unit">원</strong>
+				</span>
+				<span class="btn_minus" id="price_minus">
+					<i class="fa fa-minus" style="font-size:48px"></i>
+				</span>
+				<span class="btn_plus" id="price_plus">
+					<i class="fa fa-plus" style="font-size:48px"></i>
+				</span>
+			</div>
+		</dd>
+	</dl>
+	</div>
 	
 	</div>
 	

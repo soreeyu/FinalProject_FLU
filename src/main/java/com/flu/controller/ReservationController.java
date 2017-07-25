@@ -43,6 +43,7 @@ public class ReservationController {
 	@RequestMapping(value="reserveInsert", method=RequestMethod.GET)
 	public void reserveInsert(Model model, int num, ReservationDTO reservationDTO) throws Exception{
 		EachRoomDTO eachRoomDTO =  reservaionService.eachView(num);//방 번호를 가지고 해당방의 정보를 뿌려준다.
+		
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());//업체 번호를 가지고 업체의 정보를 뿌려준다.(운영시간, 위치 등등)
 		Calendar ca = Calendar.getInstance();
 		Date da = new Date(ca.getTimeInMillis());
@@ -65,7 +66,7 @@ public class ReservationController {
 			map.put("in", in);
 			map.put("out", out);
 		}
-		
+		map.put("meetroom", meetRoomDTO);
 		map.put("each", eachRoomDTO);
 		map.put("reserved", ar);
 		map.put("access", access);

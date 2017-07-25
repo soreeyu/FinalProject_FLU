@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -32,6 +34,8 @@ public class ProjectController {
 	@Inject
 	private ProjectService projectService;
 	
+	@Inject
+	private AlarmService alarmService;
 	/*
 	 // 프로젝트에 생성된 스케줄이 있는지 확인 //1번
       @ResponseBody
@@ -217,7 +221,11 @@ public class ProjectController {
 		
 		if(result==1){
 			message = "success";
-			
+			AlarmDTO alarmDTO = new AlarmDTO();
+			System.out.println("프로젝트 등록"+((MemberDTO)session.getAttribute("member")).getEmail());
+			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+			alarmDTO.setContents("프로젝트를 성공적으로 등록하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
 		}
 		
 		rd.addFlashAttribute("message", message);

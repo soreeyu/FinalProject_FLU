@@ -12,7 +12,7 @@ public class AlarmService {
 	private AlarmDAO alarmDAO;
 	
 	//알람 INSERT
-	public int alaramInsert(AlarmDTO alarmDTO) throws Exception{
+	public int alarmInsert(AlarmDTO alarmDTO) throws Exception{
 		return alarmDAO.alarmInsert(alarmDTO);
 	}
 	
