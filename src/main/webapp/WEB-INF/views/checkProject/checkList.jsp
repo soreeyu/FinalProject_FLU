@@ -131,6 +131,13 @@
 #detail {
 	width: 120px;
 }
+
+.bbttnn:HOVER{
+
+cursor: pointer;
+	
+}
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -216,6 +223,90 @@
 
 		});
 
+		
+		//Ajax---------------------------------------------------
+		
+		
+		$('.bbttnn').click(function() {
+			
+			var client = $(this).attr('title');
+			var num = $(this).attr('lang');
+			var state = $(this).attr('role');
+			
+			if(state=='wait'){
+				
+
+
+				$.ajax({
+					
+					url: "./checkWait",
+					type: "GET",
+					data: {email:client,projectNum:num,state:state},
+					success:function(data){
+						$('#'+num).html(data);
+					}
+					
+				})
+				
+				
+				
+				
+				$('#'+num).on("click",".btn2", function() {
+
+					var projectNum = $(this).attr('title');
+					
+					if(confirm("입급여부를 확정하고 프로젝트를 시작하시겠습니까?")){
+						
+						
+						alert(client);
+						alert(projectNum);
+						alert(state);
+						
+ 					 	$.ajax({
+							
+							url: "./checkProjectUpdate",
+							type: "GET",
+							data: {email:client,projectNum:projectNum,state:state},
+							success:function(data){
+								$('#'+projectNum).html(data);
+							}
+							
+						})  
+						
+						
+						
+					}else{
+						alert("NO");
+					}
+					
+
+				}) 
+				
+				$(this).attr('role',"ing");
+
+			}else{
+				$.ajax({
+					
+					url: "./checkWait",
+					type: "GET",
+					data: {email:client,projectNum:num,state:state},
+					success:function(data){
+						$('#'+num).html(data);
+					}
+					
+				})
+			}
+			
+			
+			
+			
+		});
+		
+		
+		
+		
+		//검색----------------------------------------------------
+		
 		$('#btn').click(function() {
 
 			var board = '${board}';
@@ -250,6 +341,10 @@
 			}
 		});
 
+		
+		
+		
+		
 	});
 </script>
 </head>
@@ -378,20 +473,19 @@
 								<td>${i.category}</td>
 								<td>${i.detailCategory}</td>
 								<td>
-								<c:if test="${i.state=='check' or i.state=='done' or i.state=='fail'}">
-										<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='fail'}">
-									<a href="#">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='wait' or i.state=='ing'}">
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
+								<c:if test="${i.state=='wait' or i.state=='ing'}"> <!-- 임금대기 -->
+									<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">${i.name }</span>
 								</c:if>
 								<c:if test="${i.state=='finish' or i.state=='payFinish'}">
+									<span class="bbttnn" title="${i.projectNum}" lang="${i.projectNum}" role="${i.state }">${i.name }</span>
+								</c:if>
+								<c:if test="${i.state=='fail'}"> <!-- 실패 -->
 									<a href="../checkProject/checkCashView?projectNum=${i.projectNum}">${i.name }</a>
 								</c:if>
+								<c:if test="${i.state=='check' or i.state=='done'}"> <!-- 검수 -->
+									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
+								</c:if>
 
-								
 								</td>
 								<td>${i.email }</td>
 								<td>
@@ -403,6 +497,13 @@
 								 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
 								 </td>
 								<td>${i.reg_date}</td>
+							</tr>
+							<tr>
+								<td colspan="6">
+									<div id="${i.projectNum}">
+									
+									</div>
+								</td>
 							</tr>
 						</c:forEach>
 

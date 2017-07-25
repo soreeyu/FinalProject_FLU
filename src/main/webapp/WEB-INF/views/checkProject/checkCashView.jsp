@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -48,6 +48,7 @@ $(function() {
 		
 		$('#'+count).on("click",".btn2", function() {
 			var email = $(this).attr('id');
+			var pay = $(this).attr('title');
 			
 			if(confirm(email+"님의 대금처리를 완료하시겠습니까?")){
 				location.href = "./checkApplicantUpdate?email="+email+"&projectNum="+projectNum;
@@ -116,10 +117,16 @@ PROJECT
 <p>프로젝트넘: ${a.projectNum}</p>
 
 <p class="${i.index }" title="${a.pay }">
-지원자 : ${a.email} 지급액: ${a.pay}
-<c:if test="${a.state=='payFinish'}">
-지급완료
+지원자 : ${a.email}
+<c:if test="${a.state=='finish'}">
+ 요청금액: ${a.pay}
 </c:if>
+<c:if test="${a.state=='payFinish'}">
+/ 10% 계산 후: 
+<fmt:formatNumber type="currency">${a.pay*0.9}</fmt:formatNumber>
+ 지급완료 
+</c:if>
+
 <c:if test="${a.state=='finish'}">
 <input type="button" value="지급하기" lang="${a.email}" class="btn" title="${i.index}">
 </c:if>

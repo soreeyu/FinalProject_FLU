@@ -108,18 +108,33 @@ public class CheckProjectController {
 		return "checkProject/checkList";
 	}
 	
-	
-	//프로젝트 검수완료하기
-	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
-	public String update(ProjectDTO projectDTO){
+	//입금대기중 프로젝트의 클라이언트 정보 AJAX로 불러오기
+	@RequestMapping(value="checkWait")
+	public String checkWait(ProjectDTO projectDTO,Integer projectNum,Model model){
 		
-			int result = checkProjectService.update(projectDTO);
-
-		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		MemberDTO memberDTO = clientService.memberView(projectDTO.getEmail());
+		
+		
+		model.addAttribute("client", memberDTO).addAttribute("projectNum", projectNum).addAttribute("state",projectDTO.getState());
+		
+		
+		return "checkProject/checkWait";
 	}
 	
 	
+	//프로젝트 검수완료 및 진행하기
+	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
+	public String update(ProjectDTO projectDTO,Model model){
+			
+			int result = checkProjectService.update(projectDTO);
+			MemberDTO memberDTO = clientService.memberView(projectDTO.getEmail());
+			
+			model.addAttribute("client", memberDTO).addAttribute("state", "ing");
+			
+		return "checkProject/checkWait";
+	}
 	
+
 	
 	
 	//**************대금관리************************
@@ -140,7 +155,9 @@ public class CheckProjectController {
 	//지원자의 상태 업데이트 (돈을 지급했다고 payFinish로 변경)
 	@RequestMapping(value="checkApplicantUpdate")
 	public String checkApplicantUpdate(String email,Integer projectNum){
+		
 		int result = applicantService.appUpdate(email);
+	
 		
 		return "redirect:/checkProject/checkCashView?projectNum="+projectNum;
 	}
