@@ -71,7 +71,7 @@
 	min-height: 250px;
 	display: block;
 	float: right;
-	background-color: white;
+
 }
 .project-sort-box{
 	width: 100%;
@@ -198,9 +198,10 @@ background-color: white;
 }
 .project-unit{
 	padding: 25px;
-	background-color: aqua;
+	border: 1px solid #eeeeee;
 	height: 200px;
 	margin-bottom: 5px;
+	background-color: white;
 }
 .project-head{
 	height: 27px;
@@ -211,11 +212,12 @@ background-color: white;
 	color: blue;
 	font-size: 15px;
 	font-weight: bold;
+	cursor: pointer;
 }
 .project-body{
 	width: 100%;
 	height: 120px;
-	background-color: green;
+/* 	background-color: green; */
 }
 .project-info{
 	width: 100%;
@@ -615,7 +617,7 @@ background-color: white;
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title"><a href="projectView?projectNum=${dto.projectNum}">${dto.name}</a></div>
+						<div class="project-title">${dto.name}</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -681,6 +683,22 @@ background-color: white;
 		</form>
 	</section>
 <script type="text/javascript">
+
+/* 로그인해야 projectView 진입 가능 */
+$(".project-title").click(function() {
+	
+	var memberEmail = '${member.email}';
+	if(memberEmail == ""){
+		location.href="../member/login";
+	} else { 
+		location.href="projectView?projectNum=${dto.projectNum}"
+		
+	}
+});
+
+
+
+
 
 
 $("#by-price-desc").click(function() {

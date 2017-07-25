@@ -15,14 +15,20 @@
 
 		<c:forEach items="${replyList}" var="reply">
 		<div>
+			<%-- <c:if test="${reply.replyChk=='false'}"> --%>
 			<span>${reply.writer}</span>
 			<span>${reply.contents}</span>
 			<span>${reply.reg_date}</span>
-			<span>${reply.num}</span>
 			<span>${reply.replyChk}</span>
+			<%-- </c:if> --%>
+			<%-- <c:if test="${reply.replyChk=='true'}">
+			<span>비공개 댓글입니다.</span>
+			<span>${reply.replyChk}</span>
+			</c:if> --%>
 			
 			<span class="listDelete" id="${reply.num}">X</span>
 			<c:if test="${reply.replyChk=='false'}">
+			
 			<span class="listReply" data-id="${reply.num}" data-on="off">답글</span>
 			</c:if>
 			<p>
