@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -27,6 +28,7 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -53,9 +55,20 @@ public class FreelancerController {
 	
 
 	//프리랜서 리스트
-	@RequestMapping(value="freeList", method=RequestMethod.GET)
-	public List<FreelancerDTO> freelancerList(){
-		return null;
+	@RequestMapping(value="freelancerList", method=RequestMethod.GET)
+	public String freelancerList(ListInfo listInfo, Model model){
+		listInfo.setSearch("%%");
+		int totalCount = freelancerService.totalcount(listInfo);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		
+		
+		
+		model.addAttribute("map",freelancerService.freelancerList(listInfo));
+		
+		
+		
+		return "/member/freelancer/freelancerlist";
 	}
 
 
@@ -144,28 +157,10 @@ public class FreelancerController {
 		return "/member/freelancer/personaldata";
 	}
 	
-	//계정 정보 등록 폼
-	@RequestMapping(value="personaldataInsert", method=RequestMethod.GET)
-	public String psersonaldataInsert(Model model){
-		
-		
-		model.addAttribute("path", "personaldataInsert");
-		return "/member/freelancer/personaldataform";
-	}
-	//계정 등록
-	@RequestMapping(value="personaldataInsert", method=RequestMethod.POST)
-	public String psersonaldataInsert(MemberDTO memberDTO, Model model){
-		System.out.println(memberDTO.getEmail());
-		System.out.println(memberDTO.getType());
-		System.out.println(memberDTO.getName());
-		System.out.println(memberDTO.getNamegender());
-		System.out.println(memberDTO.getBirth());
-		System.out.println(memberDTO.getAddr_num());
-		System.out.println(memberDTO.getAddr_main());
-		System.out.println(memberDTO.getAddr_detail());
-		System.out.println("-------------------------");
-		return "/member/freelancer/personaldataform";
-	}
+	
+	
+	
+
 	
 	
 	/************************** Intro **********************************/

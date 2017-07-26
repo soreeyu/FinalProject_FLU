@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 
@@ -27,6 +29,13 @@ public class MemberController {
 	@RequestMapping(value="test")
 	public void test(){
 		
+	}
+	
+	//멤버 이메일 가져오기
+	private String getEmail(HttpSession session){
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		return memberDTO.getEmail();
 	}
 	
 	//사이트 회원 가입폼 이동
@@ -165,4 +174,117 @@ public class MemberController {
 		public void memberTest(){
 			
 		}
+		
+		//계정 정보 등록 폼
+		@RequestMapping(value="personaldataInsert", method=RequestMethod.GET)
+		public String psersonaldataInsert(Model model){
+			
+			
+			model.addAttribute("path", "personaldataInsert");
+			model.addAttribute("active1", "a");
+			return "/member/personaldataform";
+		}
+		//계정 등록(내정보 수정)
+		@RequestMapping(value="personaldataInsert", method=RequestMethod.POST)
+		public String psersonaldataInsert(MemberDTO memberDTO, Model model, HttpSession session)
+		{
+			System.out.println(memberDTO.getEmail());
+			System.out.println(memberDTO.getType());
+			System.out.println(memberDTO.getName());
+			System.out.println(memberDTO.getNamegender());
+			System.out.println(memberDTO.getBirth());
+			System.out.println(memberDTO.getAddr_num());
+			System.out.println(memberDTO.getAddr_main());
+			System.out.println(memberDTO.getAddr_detail());
+			
+			System.out.println(memberDTO.getPhone());
+			System.out.println(memberDTO.getPhone2());
+			System.out.println(memberDTO.getFax());
+			System.out.println("-------------------------");
+			
+			String realPath = session.getServletContext().getRealPath("resources/profile");
+			
+			FileSaver fileSaver = new FileSaver();
+			try {
+				String fileName = fileSaver.fileSave(realPath, memberDTO.getF1());
+				memberDTO.setfProfileImage(fileName);
+				memberDTO.setoProfileImage(memberDTO.getF1().getOriginalFilename());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(memberDTO.getfProfileImage());
+			System.out.println(memberDTO.getoProfileImage());
+			
+			memberService.memberUpdate(memberDTO);
+			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+			
+			return "redirect:/member/personaldataView";
+		}
+		
+		//계정 정보 뷰
+		@RequestMapping(value="personaldataView", method=RequestMethod.GET)
+		public String personaldataView(Model model, HttpSession session){
+			
+			
+			model.addAttribute("active1", "a");
+			model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
+			return "/member/personaldata";
+		}
+		
+		//내정보 수정 폼
+		@RequestMapping(value="personaldataUpdate", method=RequestMethod.GET)
+		public String personaldataUpdate(Model model, HttpSession session){
+			
+			
+			model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
+			model.addAttribute("path", "personaldataUpdate");
+			model.addAttribute("active1", "a");
+			return "/member/personaldataform";
+		}
+		
+		//내정보 수정
+		@RequestMapping(value="personaldataUpdate", method=RequestMethod.POST)
+		public String personaldataUpdate(MemberDTO memberDTO, HttpSession session){
+			
+			System.out.println(memberDTO.getEmail());
+			System.out.println(memberDTO.getType());
+			System.out.println(memberDTO.getName());
+			System.out.println(memberDTO.getNamegender());
+			System.out.println(memberDTO.getBirth());
+			System.out.println(memberDTO.getAddr_num());
+			System.out.println(memberDTO.getAddr_main());
+			System.out.println(memberDTO.getAddr_detail());
+			
+			System.out.println(memberDTO.getPhone());
+			System.out.println(memberDTO.getPhone2());
+			System.out.println(memberDTO.getFax());
+			System.out.println("-------------------------");
+			
+			String realPath = session.getServletContext().getRealPath("resources/profile");
+			
+			FileSaver fileSaver = new FileSaver();
+			try {
+				if(!memberDTO.getF1().getOriginalFilename().equals("")){
+					String fileName = fileSaver.fileSave(realPath, memberDTO.getF1());
+					memberDTO.setfProfileImage(fileName);
+					memberDTO.setoProfileImage(memberDTO.getF1().getOriginalFilename());
+				}else{
+					memberDTO.setfProfileImage(((MemberDTO)session.getAttribute("member")).getfProfileImage());
+					memberDTO.setoProfileImage(((MemberDTO)session.getAttribute("member")).getoProfileImage());
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(memberDTO.getfProfileImage());
+			System.out.println(memberDTO.getoProfileImage());
+			
+			memberService.memberUpdate(memberDTO);
+			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+
+			return "redirect:/member/personaldataView";
+		}
+		
+		
 }

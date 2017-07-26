@@ -16,18 +16,20 @@ public class MemberDAO {
 	private SqlSession sqlSession;
 
 	private final String NAMESPACE = "MemberMapper.";
+	private final String NAMESPACE2 = "FreelancerMapper.";
 
 
 	//회원 가입
 	public int memberInsert(MemberDTO memberDTO) {
 		int result = sqlSession.insert(NAMESPACE+"memberInsert", memberDTO);
+			sqlSession.insert(NAMESPACE2+"freelancerInsert", memberDTO.getEmail());
 		return result;
 	}
 
 	//계정 정보수정
 	public int memberUpdate(MemberDTO memberDTO){
-
-		return 0;
+		
+		return sqlSession.update(NAMESPACE+"memberUpdate", memberDTO);
 	}
 
 
@@ -45,6 +47,7 @@ public class MemberDAO {
 
 	//회원 정보
 	public MemberDTO memberView(String email) {
+		System.out.println("view를 하러 왔음");
 		return sqlSession.selectOne(NAMESPACE+"memberView", email);
 	}
 
@@ -58,7 +61,22 @@ public class MemberDAO {
 
 	//이메일 중복확인
 	public String jungbok(String email){
-		return sqlSession.selectOne(NAMESPACE+"memberEmail", email); // 이메일이 없을시 값이 없는 것 처리해야함
+		String email2 =sqlSession.selectOne(NAMESPACE+"freelancerEmail", email);
+		System.out.println("이메일2:"+email2);
+		System.out.println("이메일1:"+email);
+		if(email.equals(email2)){
+			System.out.println("중복임");
+			if(sqlSession.selectOne(NAMESPACE+"memberEmail", email) == null){
+				System.out.println("널임");
+				return email2;
+			}else{
+				System.out.println("널아님");
+				return sqlSession.selectOne(NAMESPACE+"memberEmail", email); // 이메일이 없을시 값이 없는 것 처리해야함
+			}
+		}else{
+			System.out.println("아님");
+			return sqlSession.selectOne(NAMESPACE+"memberEmail", email);
+		}
 	}
 
 
@@ -67,5 +85,6 @@ public class MemberDAO {
 
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
 	}
-
+	
+	
 }

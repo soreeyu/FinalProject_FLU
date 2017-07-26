@@ -111,7 +111,6 @@ $("#btn_member").click(function() {
 				email:email
 			},
 			success:function(data){
-				
 				if(data == email){
 					$("#p_email").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>입력하신 E-mail은 이미 사용중 입니다.</label>");
 					

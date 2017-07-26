@@ -139,9 +139,11 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+.no_data_wrap p{
+    line-height: 32px;
 }
 .no_data{
 	width: 100%;
@@ -162,6 +164,15 @@
 	background-color: #66b3ff;
 	color: white;
 }
+p span{
+	vertical-align: top;
+    line-height: 32px;
+    width: 200px;
+    display: inline-block;
+   	text-align: right;
+   	padding-right: 30px;
+}	
+
 </style>
 </head>
 <body>
@@ -170,7 +181,7 @@
 	<section class="main_section">
 		<div class="page_wrap">
 		<div class="page">
-			<c:import url="/WEB-INF/views/temp/mypagesidebar.jsp"></c:import>
+			<c:import url="/WEB-INF/views/temp/personaldatasidbar.jsp"></c:import>
 			
 			<div class="contents">
 				<div class="contents_inner">
@@ -178,15 +189,48 @@
 						<p><span>계정 정보</span>
 						
 						
-						<a href="psersonaldataUpdate" style="margin-top: -5px;">내 정보 수정</a>
+						<a href="personaldataUpdate" style="margin-top: -5px;">내 정보 수정</a>
 						
 						</p>
 					</section>
 					<section class="profile_wrap">
-						<p><span>자기소개</span></p>
+						<p><span>내 정보</span></p>
 						
 						<div class="no_data_wrap">
-							
+							<div>
+								<div>
+									<p style="display: inline-block; vertical-align: top;"><span>프로필 사진</span></p>
+									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/profile/${dto.fProfileImage}">
+								</div>
+								<p><span>프리랜서 형태</span>${dto.type }</p>
+								<p><span>닉네임</span>${dto.nickName }</p>
+								<p><span>성별</span>${dto.namegender }</p>
+								<p><span>생년월일</span>${dto.birth }</p>
+								<p><span>상세주소</span>${dto.addr_main }&nbsp;${dto.addr_detail}</p>
+								<p><span>핸드폰번호</span>
+								<c:if test="${not empty dto.phone }">
+								${dto.phone }
+								</c:if>
+								<c:if test="${empty dto.phone }">
+								정보가 없습니다.
+								</c:if>
+								</p>
+								<p><span>전화번호</span>
+								<c:if test="${not empty dto.phone2 }">
+								${dto.phone2 }
+								</c:if>
+								<c:if test="${empty dto.phone2 }">
+								정보가 없습니다.
+								</c:if></p>
+								<p><span>패스번호</span>
+								<c:if test="${not empty dto.fax }">
+								${dto.fax }
+								</c:if>
+								<c:if test="${empty dto.fax }">
+								정보가 없습니다.
+								</c:if></p>
+								
+							</div>
 						</div>
 						
 					</section>

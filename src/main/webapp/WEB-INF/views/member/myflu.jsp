@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"></c:import>
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">
 body{
 	color: #404040;
@@ -292,7 +293,32 @@ body{
 </style>
 </head>
 <body>
-
+<!-- Channel Plugin Scripts -->
+<script>
+  window.channelPluginSettings = {
+    "plugin_id": "ef582c73-3a40-4525-bb41-a68efc7f806b"
+  };
+  (function() {
+    var node = document.createElement('div');
+    node.id = 'ch-plugin';
+    document.body.appendChild(node);
+    var async_load = function() {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = '//cdn.channel.io/plugin/ch-plugin-web.js';
+      s.charset = 'UTF-8';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    };
+    if (window.attachEvent) {
+      window.attachEvent('onload', async_load);
+    } else {
+      window.addEventListener('load', async_load, false);
+    }
+  })();
+</script>
+<!-- End Channel Plugin -->
 <c:import url="../temp/header.jsp"></c:import>
 
 <section class="main_section">
@@ -306,12 +332,7 @@ body{
 		
 		<div class="contents">
 			<div class="contents_header">
-				<c:if test="${not empty member.name }">
-				<p><a href="personaldataView">계정정보 수정</a></p>
-				</c:if>
-				<c:if test="${empty member.name }">
-				<p><a href="personaldataInsert">계정정보 수정</a></p>
-				</c:if>
+				
 				
 				<p><span style="font-weight: bold; font-size: 26px;">MY FLU</span></p>
 			</div>
