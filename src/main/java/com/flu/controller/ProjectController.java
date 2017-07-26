@@ -166,7 +166,7 @@ public class ProjectController {
 		
 		
 		model.addAttribute("dto", projectDTO);
-		/*model.addAttribute("member", memberDTO);*/
+		model.addAttribute("member", memberDTO);
 		
 	}
 	

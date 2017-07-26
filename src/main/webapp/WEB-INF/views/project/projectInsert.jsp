@@ -223,14 +223,13 @@ label{
 
 .project-info-text{
 	margin-top: 20px;
-/* 	padding-top: 8px; */
     margin-left: 7px;
     display: block;
-    float: left;
+    float: right;
     white-space: normal;
     word-break: break-all;
     line-height: 14px;
-    width: 180px;
+    width: 250px;
     color: #666;
     font-size: 12px;
 }
