@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -27,6 +28,7 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -54,11 +56,17 @@ public class FreelancerController {
 
 	//프리랜서 리스트
 	@RequestMapping(value="freelancerList", method=RequestMethod.GET)
-	public String freelancerList(Model model){
+	public String freelancerList(ListInfo listInfo, Model model){
+		listInfo.setSearch("%%");
+		int totalCount = freelancerService.totalcount(listInfo);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
 		
-		Map<String, Object> map = freelancerService.freelancerList("웹");
 		
-		model.addAttribute("list", map);
+		
+		model.addAttribute("map",freelancerService.freelancerList(listInfo));
+		
+		
 		
 		return "/member/freelancer/freelancerlist";
 	}

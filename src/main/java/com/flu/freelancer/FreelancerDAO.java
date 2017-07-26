@@ -1,5 +1,6 @@
 package com.flu.freelancer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.util.ListInfo;
 
 @Repository
 public class FreelancerDAO{
@@ -32,19 +34,40 @@ public class FreelancerDAO{
 		return sqlSession.selectOne(NAMESPACE+"freelancerView", email);
 	}
 	
-	//프리랜서 리스트
-	public Map<String, Object> freelancerList(String search){
+	//totalCount
+	public int totalcount(ListInfo listInfo){
+		return this.getemail(listInfo).size();
+	}
+	
+	//프리랜서 리스트1 email
+	private List<String> getemail(ListInfo listInfo){
+		
+		return sqlSession.selectList(NAMESPACE+"freelancerList_email", listInfo);
+	}
+	//프리랜서 리스트2 각각의 리스트
+	public Map<String, Object> freelancerList(ListInfo listInfo){
+		
+		System.out.println(listInfo.getSearch());
+		List<String> ar = this.getemail(listInfo);
+		List<MemberDTO> ar1 = new ArrayList<MemberDTO>();
+		List<FreelancerDTO> ar2 = new ArrayList<FreelancerDTO>();
+		List<Evaluation> ar3 = new ArrayList<Evaluation>();
+		List<List<Skill>> ar4 = new ArrayList<List<Skill>>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("search", search);
-		sqlSession.selectOne(NAMESPACE+"freelancerList", map);
-		List<MemberDTO> m = (List<MemberDTO>)map.get("member");
-		List<FreelancerDTO> f = (List<FreelancerDTO>)map.get("freelancer");
-		List<Evaluation> e = (List<Evaluation>)map.get("evaluation");
-		map.put("member1", m);
-		map.put("freelancer1", f);
-		map.put("evaluation1", e);
+		for(int i =0; i < ar.size(); i++){
+			System.out.println(ar.get(i));
+			ar1.add((MemberDTO)sqlSession.selectOne(NAMESPACE+"freelancerList_member", ar.get(i)));
+			ar2.add((FreelancerDTO)sqlSession.selectOne(NAMESPACE+"freelancerList_freelancer", ar.get(i)));
+			List<Skill> ars = sqlSession.selectList(NAMESPACE+"skillList", ar.get(i));
+			ar4.add(ars);
+		}
+		map.put("member", ar1);
+		map.put("freelancer", ar2);
+		map.put("skills", ar4);
+		
 		return map;
 	}
+	
 	
 	//프리랜서 정보 입력(추가로 입력 Update)
 	public int freelancerInsert(FreelancerDTO freelancerDTO){

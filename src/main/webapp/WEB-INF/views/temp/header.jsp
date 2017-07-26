@@ -58,6 +58,8 @@
 				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
 				<li><a href="#">프로젝트 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>
+				
 			</c:otherwise>
 			</c:choose>
 			

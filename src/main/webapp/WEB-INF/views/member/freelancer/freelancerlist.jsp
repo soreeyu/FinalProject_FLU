@@ -153,26 +153,25 @@
 				</div>
 			</div>
 		</div>
+					<c:forEach begin="0" end="${map.member.size()-1 }" var="i">
 			<div class="freelancerListform">
 				<div class="freelancerdiv">
 					<div class="freelancerimg">
 						<a href="#"><img src="${pageContext.request.contextPath}/resources/profile/${dto.fProfileImage}"></a>
 					</div>
 					<div class="freelancerdata">
-						<p><span class="username">개발자1</span><label><span class="avail">활동가능</span></label></p>
-						<p><span class="kind">디자이너 | 사업자</span></p>
-						<p><span class="intro">자기소개</span></p>
-						<p><span class="skills">보유기술</span><span class="skills">보유기술</span><span class="skills">보유기술</span></p>
-						<c:forEach begin="1" end="${list.member.size()}" var="i">
-							${list.member.get(i)}<br>
-							${list.freelancer.get(i)}<br>
-							
+						<p><span class="username">${map.member[i].nickName }</span><label><span class="avail">${map.freelancer[i].possibility }</span></label></p>
+						<p><span class="kind">${map.freelancer[i].jobKind } | ${map.member[i].type }</span></p>
+						<p><span class="intro">${map.freelancer[i].intro }</span></p>
+						<p>
+						<c:forEach items="${map.skills[i] }" var="j">
+						<span class="skills">${j.kind }</span>
 						</c:forEach>
+						</p>
 					</div>
 				</div>
 				<div class="freelancerstar">
 					<div class="starpoint">
-						${list.member}
 						<p>****</p>
 						<p>계약한 프로젝트</p>
 						<p>포트폴리오</p>
@@ -182,6 +181,7 @@
 					</div>
 				</div>
 			</div>
+					</c:forEach>
 		</div>
 		
 	</section>

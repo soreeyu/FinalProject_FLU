@@ -19,6 +19,9 @@
   		<select id="memberEmail" resultType="java.lang.String" parameterType="java.lang.String">
   			select email from member where email = #{email}
   		</select>
+  		<select id="freelancerEmail" resultType="java.lang.String" parameterType="java.lang.String">
+  			select email from freelancer where email = #{email}
+  		</select>
   		
   		<!-- 회원 가입 -->
   		<insert id="memberInsert" parameterType="com.flu.member.MemberDTO">
