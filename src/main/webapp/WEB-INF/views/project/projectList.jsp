@@ -617,7 +617,7 @@ background-color: white;
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title">${dto.name}</div>
+						<div class="project-title" id="${dto.projectNum}">${dto.name}</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -687,11 +687,12 @@ background-color: white;
 /* 로그인해야 projectView 진입 가능 */
 $(".project-title").click(function() {
 	
+	var projectNum = $(this).attr("id");
 	var memberEmail = '${member.email}';
 	if(memberEmail == ""){
 		location.href="../member/login";
 	} else { 
-		location.href="projectView?projectNum=${dto.projectNum}"
+		location.href="projectView?projectNum="+projectNum;
 		
 	}
 });

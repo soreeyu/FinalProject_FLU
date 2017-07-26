@@ -369,8 +369,15 @@ public class ScheduleController {
 		@RequestMapping(value="userList", method=RequestMethod.GET)
 		public List<MemberDTO> userList(Integer scheduleNum) throws Exception{ 
 			List<MemberDTO> list = scheduleService.userList(scheduleNum);
+			
 			System.out.println("해당 스케줄의 사용자들 데려오기");
-			System.out.println("사용자 list = "+list.get(0).getEmail());
+			
+			if(list != null && list.size() >0){
+				System.out.println("사용자 list = "+list.get(0).getEmail());
+			}else{
+				System.out.println("사용자가 없네");
+			}
+	
 			return list;
 		} 
 

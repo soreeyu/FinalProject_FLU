@@ -80,7 +80,7 @@ function editorInit(id){
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef: oEditors,
 		elPlaceHolder: id,
-		sSkinURI: getContextPath()+"/resources/SE2/SmartEditor2Skin.html",	
+		sSkinURI: getContextPath()+"/resources/SE/SmartEditor2Skin.html",	
 		htParams : {
 			bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 			bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -103,6 +103,44 @@ function editorInit(id){
  */
 function trim(str){
 	return str.replace(new RegExp(' ','g'),'');
+}
+/**
+ * Etc호출함수
+ */
+function getEtc(){
+	var syear = $('#syear').val();
+	var smonth = $('#smonth').val();
+	var eyear = $('#eyear').val();
+	var emonth = $('#emonth').val();
+	$.getJSON(getContextPath()+'/home/getEtc.do',{syear:syear,smonth:smonth,eyear:eyear,emonth:emonth}).done(function(response){
+		var result = response;
+		var html = '';
+		for(var i = 0 ; i < result.length ; i ++){
+			var  contents = result[i].contents;
+			var sdate = new Date(result[i].starttime);
+			var edate = new Date(result[i].endtime);
+			html +='<div class="etc-contents">';
+			html +='<div class="label label-blue" style="margin:5px;">';
+			html +=(i+1) +". " +result[i].title;
+			html +='</div>';
+			html +='<br>';
+			html +='<div class="label label-red" style="margin:5px;">';
+			html +=sdate.getFullYear() + "년 " + (sdate.getMonth()+1) + "월 " + sdate.getDate() + "일";
+			if(sdate.getTime() != edate.getTime()){
+				html +=' ~ ';
+				html +=edate.getFullYear() + "년 " + (edate.getMonth()+1) + "월 " + edate.getDate() + "일";				
+			}
+			html +='</div>';
+			html +='<br>';
+			html +=contents;
+			html +='</div>';
+		}
+		$('#etc-contents').html(html);
+	}).fail(function(jqxhr, textStatus, error){
+		 var err = textStatus + ", " + error;
+		 console.log( "Request Failed: " + err );
+		 location.href=getContextPath()+'/common/error.do?code='+textStatus;
+	});	
 }
 /**
  * 파일 호출 함수
@@ -289,6 +327,44 @@ function changePage(pNo){
 		refrashRow(userArticle, {param:{page : pNo, email : $('#selectUser').val()}, url: getContextPath()+'/home/userArticle.do'});
 	}else if($('#selectTab').val() == 'tab_Schedule'){
 		refrashRow(scheduleArticle, {url: getContextPath()+'/home/scheduleArticle.do', param:{page : pNo, today : datepicker.getFormat()}});
+	}
+}
+
+/**
+ * 비밀번호 변경
+ */
+function changePasswd(){
+	var oldpass = $('#oldpass').val();
+	var newpass = $('#newpass').val();
+	
+	if(trim(oldpass) == ''){
+		alert('현재 비밀번호를 입력하세요');
+		$('#oldpass').val('');
+		$('#oldpass').focus();
+	}
+	else if(trim(newpass) == ''){
+		alert('변경 할 비밀번호를 입력하세요');
+		$('#newpass').val('');
+		$('#newpass').focus();
+	}
+	else{
+		$.ajax({
+			url : getContextPath()+"/user/changePasswd.do",
+			data : {oldpass:oldpass,newpass:newpass},
+			type : 'post',
+			success:function(response){
+				var result = JSON.parse(response);
+				if(result.success){
+					alert(result.msg);
+					passwdModal.hide();
+				}else{
+					alert(result.msg);
+					$('#oldpass').val('');
+					$('#newpass').val('');
+					$('#oldpass').focus();
+				}
+			}
+		});
 	}
 }
 

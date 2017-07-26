@@ -107,18 +107,55 @@ $(function(){
 		chartModal.show();
 	});
 	
+	$('#changePasswd').click(function(){
+		passwdModal.show();
+	});
+	
+	$('#etc-game').click(function(){
+		$('#gameBody').append('<iframe src="'+getContextPath()+'/resources/html/snake.jsp" height="400"></iframe>');
+		gameModal.show();
+	});
 	
 	$('#lib-fileadd').click(function(){
 		fileModal.show();
 	});
 	
-
+	$('#sessionBtn').click(function(){
+		if(sessionCheker == null){
+			sessionCheker = setInterval(function(){
+				$.ajax({url : getContextPath()+'/user/session.do',success:function(response){console.log(response.locale);}});
+			},(1000*60*5));
+			sessionCheker;
+			$("#sessionBtn").removeClass('btn-gray');
+			$("#sessionBtn").addClass('btn-black');
+			$(".icon-gear").addClass('icon-white');
+			$('#sessionText').text("세션유지(켜짐)");
+		}else{
+			clearInterval(sessionCheker);
+			sessionCheker = null;
+			$("#sessionBtn").removeClass('btn-black');
+			$("#sessionBtn").addClass('btn-gray');
+			$(".icon-gear").removeClass('icon-white');
+			$('#sessionText').text("세션유지(꺼짐)");
+		}
+	});
 	
 	$('#starttime').val(spicker.getFormat());
 	$('#endtime').val(epicker.getFormat());
 	
+	$('#btnLogout').click(function(){
+		location.href=getContextPath()+"/user/logout.do";
+	});
 	
+	$('#userMailSearch').click(function(){
+		var sType = userRadio.getValue();
+		var sText = $('#mText').val();
+		refrashRow(userArticle, {param:{page : 1, email : $('#selectUser').val(),sType:sType,sText:sText}, url: getContextPath()+'/home/userArticle.do'});
+	});
 	
+	$('#etc-refresh').click(function(){
+		getEtc();
+	});
 	
 	$('#lib-refresh').click(function(){
 		getFiles();
@@ -320,6 +357,54 @@ $(function(){
 	    }
 	});
 	
+	$('#mailBtn').click(function(){
+		oEditors.getById["mail-contents"].exec("UPDATE_CONTENTS_FIELD", []);
+		var title = $('#mail-title').val();
+		var contents = $('#mail-contents').val();
+		var isSend = $('#mail-yn').is(':checked');
+		if(trim(title) == ''){
+			alert('제목을 입력하세요');
+			$('#mail-title').val('');
+			$('#mail-title').focus();
+		}
+		else if(trim(contents) == '<p>&nbsp;</p>' || trim(contents) == ''){
+			alert('내용을 입력하세요');
+			$('#mail-contents').val('');
+			$('#mail-contents').focus();
+		}else{
+			var realnames = '';
+			var subnames = '';
+			var ccs = '';
+			$('#fileName').find('span').each(function(){
+				if($(this).attr('realname')!='' && $(this).attr('realname')!=null && $(this).attr('realname')!='undefined' ){
+					realnames += $(this).attr('realname');
+					realnames +=',';
+				}
+				if($(this).attr('subname')!='' && $(this).attr('subname')!=null && $(this).attr('subname')!='undefined'){
+					subnames += $(this).attr('subname');
+					subnames +=',';
+				}
+			});
+			$('span[id=cc]').each(function(){
+				ccs += $(this).attr('email');
+				ccs +=',';
+			});
+			$.ajax({
+				url : getContextPath()+'/home/sendUserMail.do',
+				data : {title:title,contents:contents,isSend:isSend,email:$('#selectUser').val(),realnames:realnames,subnames:subnames,ccs:ccs},
+				type : 'post',
+				success : function(response){
+					alert(JSON.parse(response).msg);
+					refrashRow(userArticle, {param:{page : 1, email : $('#selectUser').val()}, url: getContextPath()+'/home/userArticle.do'});
+					mailModal.hide();
+					$('iframe[id!=scheduleFrame]').remove();
+					$('#mail-title').val('');
+					$('#mail-contents').val('');
+					$('#mail-yn').attr('checked',false);
+				}
+			});
+		}
+	});
 	
 	$('#work-refresh').click(function(){
 		refrashRow(userArticle, {param:{page : 1, email : $('#selectUser').val()}, url: getContextPath()+'/home/userArticle.do'});
@@ -335,6 +420,10 @@ $(function(){
 		$('iframe[id!=scheduleFrame]').remove();
 	});
 
+	$('#mailClose').click(function(){
+		mailModal.hide();
+		$('iframe[id!=scheduleFrame]').remove();
+	});
 	
 	$('#contentsUpdate').click(function(){
 		alert();
@@ -370,6 +459,42 @@ $(function(){
 	
 	$("#etc-print").click(function() {
 	    window.print();
+	});
+	
+	$('#mailFileAddBtn').click(function(){
+		 $.ajaxFileUpload 
+		    ( 
+		        { 
+		            url:getContextPath()+'/home/mailFileUpload.do', 
+		            secureuri:false, 
+		            type:'post',
+		            fileElementId:'mailfile', 
+		            dataType: 'json', 
+		            success: function (data, status) 
+		            {
+		            	if(data.error == '' || data.error == null || data.error == 'undefined'){
+		            		alert('등록이 완료되었습니다.');
+		            		
+		            		var span = document.createElement('span');
+		            		$(span).text(data.realname);
+		            		$(span).attr('realname',data.realname);
+		            		$(span).attr('subname',data.subname);
+		            		
+		            		var html = $('#fileName').html();
+		            		
+		            		$('#fileName').html(html + '<span>&nbsp;' +  span.outerHTML + '<i class="icon-trashcan icon-small" style="cursor:pointer;" onclick="mailFileDelete(\''+trim(data.subname)+'\')"></i></span>');
+		            	}else{
+		            		alert(data.error);
+		            	}
+		            }, 
+		            error: function (data, status, e) 
+		            { 
+		                alert(e); 
+		            } 
+		        } 
+		    ); 
+		     
+		    return false;
 	});
 
 	$('#scheduleFileAddBtn').click(function(){

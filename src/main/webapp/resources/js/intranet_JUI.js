@@ -22,6 +22,33 @@ var userTree;
  */
 jui.ready(function(ui, uix, _) {
 	
+	userTree = uix.tree(".tree", {
+		root: { title: "CC_LIST" },
+		event: {
+			select: function(node) {
+				this.select(node.index); // 선택 효과
+				addCC(node.data);
+			}
+		},
+		tpl: {
+			node: $("#tpl_tree").html()
+		}
+	});
+	
+	chartModal = ui.modal("#chartModal", {
+		color: "black",
+		target: ".main-container"
+	});
+
+	userModal = ui.modal("#userModal", {
+		color: "black",
+		target: ".main-container"
+	});
+
+	sviewModal = ui.modal("#sviewModal", {
+		color: "black",
+		target: ".main-container"
+	});
 	
 	modal = ui.modal("#modal", {
 		color: "black",
@@ -29,15 +56,44 @@ jui.ready(function(ui, uix, _) {
 	});
 	
 	
+	passwdModal = ui.modal("#passwdModal", {
+		color: "black",
+		target: ".main-container"
+	});
+
+	gameModal = ui.modal("#gameModal", {
+		color: "black"
+	});
 	
+	gameModal.callAfter("hide",function(){
+		$('iframe[id!=scheduleFrame]').remove();
+	});
+	
+	fileModal = ui.modal("#fileModal", {
+		color: "black",
+		target: ".main-container"
+	});
 	
 	writeModal = ui.modal("#writeModal", {
 		color: "black",
 		target: ".main-container"
 	});
 	
+	mailModal = ui.modal("#mailModal", {
+		color: "black",
+		target: ".main-container"
+	});
 	
+	searchCombo = ui.combo("#searchCombo", {
+		width: 200,
+		position: "bottom"
+	});
 
+	var userRadio_options2 = {
+		type: "radio"
+	};
+	
+	userRadio = ui.button("#userRadio", userRadio_options2);
 	
 	datepicker = ui.datepicker("#datepicker", {
 	    titleFormat: "yyyy년 MM월",

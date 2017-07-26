@@ -26,6 +26,13 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
+
+
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
 <title>달력뷰</title>
 
 
@@ -43,6 +50,8 @@
 	position: relative;
 	margin-top: 30px;
 }
+
+
 
 
 .schedule_header {
@@ -100,36 +109,6 @@
 
 
 
-/* 
-.scheduleNav {
-	width: 120px;
-	height: auto;
-	background: red;
-	float: left;
-}
- *//* 
-.tab {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-} */
-/* Float the list items side by side */
-/* .tab li {
-	/* float: left; */
-	/* margin: 5px 5px;
-	background: orange; */
-/*} */
-/* Style the links inside the list items */
-/* .tab li a {
-	display: inline-block;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	/* padding: 14px 16px; */
-	/*font-size: 15px;
-	transition: 0.3s;
-} */
 /* Style the tab content */
 
 .tabContentWrap{
@@ -143,15 +122,10 @@
 .tabcontent {
 	display: none;
 	background-color: #f2f2f2;
-	padding:0px 12px;
+	/* padding:0px 12px; */
 	/* color: #fff; */
 	color: black;
 }
-
-/* ul.tab li.current {
-	background-color: rgb(0, 154, 200);
-	color: #222;
-} */
 
 .tabcontent.current {
 	display: block;
