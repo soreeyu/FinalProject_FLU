@@ -60,6 +60,12 @@ public class ScheduleController {
 		}
 		
 		
+		@RequestMapping(value="thirdView")
+		public String test4(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/thirdView";
+		}
+		
 		
 		
 		
@@ -301,6 +307,7 @@ public class ScheduleController {
 		public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{ 
 			System.out.println("schduleNum_partNum "+scheduleUnitDTO.getScheduleNum()+"_"+scheduleUnitDTO.getPartNum());
 			System.out.println("email "+scheduleUnitDTO.getEmail());
+			System.out.println("unitState "+scheduleUnitDTO.getUnitState());
 			List<ScheduleUnitDTO> list = scheduleService.unitList(scheduleUnitDTO);
 			for(int i=0;i<list.size();i++){
 				System.out.println(i+"번째 할일이름 = "+list.get(i).getUnitName());

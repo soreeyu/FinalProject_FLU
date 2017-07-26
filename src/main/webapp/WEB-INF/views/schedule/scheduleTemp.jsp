@@ -97,65 +97,120 @@
 	margin: 0 auto;
 }
 
+
+
+
+/* 
 .scheduleNav {
 	width: 120px;
 	height: auto;
 	background: red;
 	float: left;
 }
-
+ *//* 
 .tab {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-}
+} */
 /* Float the list items side by side */
-.tab li {
+/* .tab li {
 	/* float: left; */
-	margin: 5px 5px;
-	background: orange;
-}
+	/* margin: 5px 5px;
+	background: orange; */
+/*} */
 /* Style the links inside the list items */
-.tab li a {
+/* .tab li a {
 	display: inline-block;
 	color: white;
 	text-align: center;
 	text-decoration: none;
 	/* padding: 14px 16px; */
-	font-size: 15px;
+	/*font-size: 15px;
 	transition: 0.3s;
-}
+} */
 /* Style the tab content */
 
 .tabContentWrap{
-	width: 1032px;
+	width: 992px;
 	height: auto;
 	float: left;
+	background: white;
 }
 
 
 .tabcontent {
 	display: none;
 	background-color: #f2f2f2;
-	padding: 6px 12px;
-	color: #fff;
+	padding:0px 12px;
+	/* color: #fff; */
+	color: black;
 }
 
-ul.tab li.current {
+/* ul.tab li.current {
 	background-color: rgb(0, 154, 200);
 	color: #222;
-}
+} */
 
 .tabcontent.current {
 	display: block;
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+.sidebar {
+    display: inline;
+    float: left;
+    margin-right: 10px;
+    width: 150px;
+}
+.sidebar .sidebar-nav ul {
+    list-style: none;
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    border-bottom-width: 2px;
+    padding: 4px 8px;
+    background-color: #fff;
+}
+.sidebar .sidebar-nav ul li {
+    height: 48px;
+    padding: 4px 0;
+}
+.sidebar .sidebar-nav ul li a {
+    border-radius: 2px;
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #999;
+   /*  width: 100%; */
+}
+
+.tab>.current>a {
+    background-color: #2099bb !important;
+    color: #ffffff !important;
+}
+
 </style>
 
 <script type="text/javascript">
 	$(function() {
+		
+		var scheduleNum = '${scheduleNum}';
+		
+		loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1');
+		
 		
 		
 		$('ul.tab li').click(function() {
@@ -166,45 +221,45 @@ ul.tab li.current {
 			$(this).addClass('current'); //클릭한 애만 current 설정
 			$('#' + activeTab).addClass('current');
 			
+			
+			var url = "/flu/schedule/firstView?scheduleNum="+scheduleNum;
 			if(activeTab == 'tab1'){
 				alert("개요보기");
-				$.ajax({
-					url:"/flu/schedule/firstView?scheduleNum=3000",
-					type:"GET",
-					success:function(data){
-						alert(data);
-						$("#"+activeTab).html(data);
-					}
-				});
+				url = "/flu/schedule/firstView?scheduleNum="+scheduleNum;
 			}else if(activeTab == 'tab2'){
 				alert("달력보기");
-				$.ajax({
-					url:"/flu/schedule/secondView?scheduleNum=3000",
-					type:"GET",
-					success:function(data){
-						alert(data);
-						$("#"+activeTab).html(data);
-					}
-				});
-				
+				url = "/flu/schedule/secondView?scheduleNum="+scheduleNum;
 			}else if(activeTab == 'tab3'){
 				alert("표보기");
-				$.ajax({
-					
-				});
-				
+				url = "/flu/schedule/thirdView?scheduleNum="+scheduleNum;
 			}else if(activeTab == 'tab4'){
 				alert("수정하기");
-				$.ajax({
-					
-				});
+				url = "";
 			}
-		});
-		
-		
-		
+			
+			loadTabContent(url,activeTab);
+	
+			
+		});//클릭햇을때
 
-	});
+
+	}); //function
+	
+	
+	function loadTabContent(url,activeTab){
+		if(url != ""){
+			
+			$.ajax({
+				url:url,
+				type:"GET",
+				success:function(data){
+					alert(data);
+					$("#"+activeTab).html(data);
+				}
+			});
+			
+		}
+	}
 </script>
 
 </head>
@@ -231,10 +286,23 @@ ul.tab li.current {
 			총<strong>1명</strong>지원</span>
 			</p>
 		</div>
-	</div>	
+	</div>
 	
 	
-	
+			<div class="sidebar">
+				<div class="sidebar-nav">
+					<ul class="tab">
+						<li class="current"  data-tab="tab1"><a href="#">개요</a></li>
+						<li class="" data-tab="tab2"><a href="#">달력보기</a></li>
+						<li class=""  data-tab="tab3"><a href="#">카드보기</a></li>
+						<li class=""  data-tab="tab4"><a href="#">일정/업무수정</a></li>
+						<li class=""  data-tab="tab5"><a href="#">###</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			
+			<!-- 
 		<div class="scheduleNav">
 			<div>
 				<ul class="tab">
@@ -246,7 +314,7 @@ ul.tab li.current {
 					
 			</div>
 		</div>
-		
+		 -->
 		<div class="tabContentWrap">
 			<div id="tab1" class="tabcontent current">
 				tab1내용 은 개요야 

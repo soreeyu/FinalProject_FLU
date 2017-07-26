@@ -196,6 +196,11 @@
   border: 1px solid #e6e6e6;
   background: #fff;
 }
+
+.tw-project-analytics-page__container > div:first-child {
+  margin-top: 0px;
+}
+
 .tw-project-analytics-page__self-centric {
   display: flex;
   background: none;
