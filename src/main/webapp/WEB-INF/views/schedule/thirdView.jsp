@@ -408,35 +408,41 @@ div{
 			alert("unit 클릭 스케줄 넘"+$("#scheduleNum").val());
 			
 			var unitNum = $(this).attr("data-unitnum");
-			var scheduleNum = $("#scheduleNum").val();
-			 $.ajax({
-				url: "/flu/schedule/unitOne",
-				type: "POST",
-				data: {
-					unitNum : unitNum,
-					scheduleNum : scheduleNum	
-				},
-				success: function(data){
-					alert(JSON.stringify(data));
-					var finishdate = new Date( data.unitFinishDate );
-					var startdate  = new Date( data.unitStartDate );
-
-				    var year1  = startdate.getFullYear();
-				    var month1 = startdate.getMonth() + 1;
-				    var day1   = startdate.getDate();
-				    var year2  = finishdate.getFullYear();
-				    var month2 = finishdate.getMonth() + 1;
-				    var day2   = finishdate.getDate();
-
-				      
-				    $("#unitName").html(data.unitName);
-					$("#unitDuration").html(year1+"-"+month1+"-"+day1+" ~ "+year2+"-"+month2+"-"+day2);
-					$("#unitDescribe").html(data.unitDescribe);
-					$("#unitPart").html(data.partNum);
-					$("#unitEmail").html(data.email);
-					unitModal.show(); 
-				}
-			});
+			
+			if(unitNum == -1){
+				alert("추가해야징");
+			}else{
+				var scheduleNum = $("#scheduleNum").val();
+				 $.ajax({
+					url: "/flu/schedule/unitOne",
+					type: "POST",
+					data: {
+						unitNum : unitNum,
+						scheduleNum : scheduleNum	
+					},
+					success: function(data){
+						alert(JSON.stringify(data));
+						var finishdate = new Date( data.unitFinishDate );
+						var startdate  = new Date( data.unitStartDate );
+	
+					    var year1  = startdate.getFullYear();
+					    var month1 = startdate.getMonth() + 1;
+					    var day1   = startdate.getDate();
+					    var year2  = finishdate.getFullYear();
+					    var month2 = finishdate.getMonth() + 1;
+					    var day2   = finishdate.getDate();
+	
+					      
+					    $("#unitName").html(data.unitName);
+						$("#unitDuration").html(year1+"-"+month1+"-"+day1+" ~ "+year2+"-"+month2+"-"+day2);
+						$("#unitDescribe").html(data.unitDescribe);
+						$("#unitPart").html(data.partNum);
+						$("#unitEmail").html(data.email);
+						unitModal.show(); 
+					}
+			
+				});
+			}
 			
 		}); //unit 클릭이벤트
 		
@@ -472,7 +478,19 @@ div{
 					getUnitList(scheduleNum,-1,'myeon','',"사용자별");
 				});
 				
+			}
+			
+			//데이터 없을 경우
+			if($(".card").length == 0){
+				var makeCard = "";
+				makeCard = makeCard + '<div class="card">';
+				makeCard = makeCard + '<div class="cardTitle_wrap">';
+				makeCard = makeCard + '<span class="cardTitle">'+$(this).text()+'</span></div>';
+				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';				
+				makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';						
+				makeCard = makeCard + '</div></div></div>';
 				
+				$(".cardContentWrap").append(makeCard);
 			}
 			
 			
