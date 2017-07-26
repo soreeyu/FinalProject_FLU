@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
     <div class="side">
 				<div class="freelancer_name">
 					<span>프리랜서</span>
 					<div class="free_img_div">
+						<c:if test="${empty member.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/FLU.png">
+						</c:if>
+						<c:if test="${not empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
+						</c:if>
 						<p><span>닉네임</span></p>
 					</div>
 				</div>

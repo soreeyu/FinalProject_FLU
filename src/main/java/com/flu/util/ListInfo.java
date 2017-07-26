@@ -7,7 +7,6 @@ public class ListInfo {
 
 
 	//row
-
 	private String search;//입력한값
 	private String kind; //contents인지
 	private String arrange;
@@ -98,18 +97,7 @@ public class ListInfo {
 
 
 
-	public String getSearch() {
-		return search;
-	}
-	public void setSearch(String search) {
-		this.search = search;
-	}
-	public String getKind() {
-		return kind;
-	}
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
+
 	public int getStartRow() {
 		return startRow;
 	}
@@ -152,12 +140,7 @@ public class ListInfo {
 	public void setPerBlock(int perBlock) {
 		this.perBlock = perBlock;
 	}
-	public void setCurPage(Integer curPage) {
-		if(curPage==null){
-			curPage=1;
-		}
-		this.curPage = curPage;
-	}
+
 
 	public void makeRow(){
 		startRow=(this.getCurPage()-1)*this.getPerPage()+1;
@@ -180,7 +163,30 @@ public class ListInfo {
 		}
 		return curPage;
 	}
-	
+
+	public void setCurPage(Integer curPage) {
+		if(curPage==null){
+			curPage=1;
+		}
+		this.curPage = curPage;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+
+	public String getKind() {
+		return kind;
+	}
+
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
 	public String getArrange() {
 		return arrange;
 	}
@@ -189,6 +195,7 @@ public class ListInfo {
 	public void setArrange(String arrange) {
 		this.arrange = arrange;
 	}
+
 
 
 }

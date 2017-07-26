@@ -842,6 +842,5 @@ $(".address-select-btn").click(function() {
 
 </script>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
-
 </body>
 </html>

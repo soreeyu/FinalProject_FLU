@@ -479,7 +479,6 @@ background-color: white;
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
-
 <section class="main_section">
 
 		<!--  header -->
@@ -638,6 +637,7 @@ background-color: white;
 </c:if>
 <a href="projectDelete?projectNum=${dto.projectNum}">Delete</a>
 </p>
+
 
 
 <span><strong>재식이꺼</strong></span>

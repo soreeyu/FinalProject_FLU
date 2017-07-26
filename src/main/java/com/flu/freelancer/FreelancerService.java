@@ -35,8 +35,8 @@ public class FreelancerService{
 	}
 
 	//프리랜서 리스트
-	public List<FreelancerDTO> freelancerList(){
-		return null;
+	public Map<String, Object> freelancerList(String search){
+		return freelancerDAO.freelancerList(search);
 	}
 
 	//프리랜서 뷰
