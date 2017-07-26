@@ -479,7 +479,6 @@ background-color: white;
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
-<<<<<<< HEAD
 
 <section class="main_section">
 

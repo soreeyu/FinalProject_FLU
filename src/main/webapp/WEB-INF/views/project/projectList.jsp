@@ -362,7 +362,6 @@ background-color: white;
 </script>
 </head>
 <body>
-<<<<<<< HEAD
 	<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 	<section class="main_section">
 				<form action="" id="frm">
@@ -843,8 +842,6 @@ $(".address-select-btn").click(function() {
 
 </script>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
-=======
-<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
->>>>>>> 5c3a8593b3d88351542049681139f9ce92810794
+
 </body>
 </html>

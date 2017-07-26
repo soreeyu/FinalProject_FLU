@@ -153,6 +153,9 @@ public class ListInfo {
 		this.perBlock = perBlock;
 	}
 	public void setCurPage(Integer curPage) {
+		if(curPage==null){
+			curPage=1;
+		}
 		this.curPage = curPage;
 	}
 
@@ -177,31 +180,7 @@ public class ListInfo {
 		}
 		return curPage;
 	}
-<<<<<<< HEAD
-	public void setCurPage(Integer curPage) {
-		if(curPage==null){
-			curPage=1;
-		}
-		this.curPage = curPage;
-	}
-	public String getSearch() {
-		return search;
-	}
-	public void setSearch(String search) {
-		this.search = search;
-	}
-
-
-	public String getKind() {
-		return kind;
-	}
-
-
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
-
-
+	
 	public String getArrange() {
 		return arrange;
 	}
@@ -210,10 +189,6 @@ public class ListInfo {
 	public void setArrange(String arrange) {
 		this.arrange = arrange;
 	}
-=======
->>>>>>> 5c3a8593b3d88351542049681139f9ce92810794
-
-
 
 
 }
