@@ -1,5 +1,7 @@
 package com.flu.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,8 @@ import com.flu.alarm.AlarmService;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
+import com.flu.reservation.ReservationDTO;
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -286,5 +290,20 @@ public class MemberController {
 			return "redirect:/member/personaldataView";
 		}
 		
+		
+		//미팅룸 예약 현황 가져오기
+		@RequestMapping(value="myMeetRoom", method=RequestMethod.GET)
+		public void MemberReservedList(HttpSession session, ListInfo listInfo, Model model) throws Exception{
+			MemberDTO memberDTO = new MemberDTO();
+			memberDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+			List<ReservationDTO> ar = memberService.memberReservedList(memberDTO);
+			
+			if(ar!=null){
+				model.addAttribute("list", ar);
+				model.addAttribute("listInfo", listInfo);
+			}
+			
+			
+		}
 		
 }

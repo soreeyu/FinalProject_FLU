@@ -38,6 +38,7 @@ public class MeetRoomController {
 	@RequestMapping(value="meetList")
 	public void meetList(Model model, ListInfo listInfo) throws Exception{
 		List<RoomDTO> ar = meetRoomServiceImpl.list(listInfo);
+		
 		model.addAttribute("list", ar);
 		model.addAttribute("listInfo", listInfo);
 		

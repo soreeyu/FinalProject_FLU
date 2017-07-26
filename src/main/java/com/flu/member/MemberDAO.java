@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.reservation.ReservationDTO;
 import com.flu.util.RowMaker;
 
 @Repository
@@ -84,6 +85,11 @@ public class MemberDAO {
 	public MemberDTO login(MemberDTO memberDTO){
 
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
+	}
+	
+	//예약현황 리스트
+	public List<ReservationDTO> memberReservedList(MemberDTO memberDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberReserved", memberDTO);
 	}
 	
 	

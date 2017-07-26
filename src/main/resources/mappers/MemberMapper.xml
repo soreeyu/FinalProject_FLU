@@ -41,5 +41,9 @@
   			name = #{name}, namegender = #{namegender}, birth = #{birth} where email = #{email}
   		</update>
   		
-  	
+  		<!-- 예약현황 가져오기 -->
+  		<select id="memberReserved" parameterType="com.flu.member.MemberDTO" resultType="com.flu.reservation.ReservationDTO">
+  			select * from reservation where email=#{email}
+  			<!-- 페이징 처리를 위한 조건 추가할 것 -->
+  		</select>
   </mapper>

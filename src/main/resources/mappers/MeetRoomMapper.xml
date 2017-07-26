@@ -3,6 +3,13 @@
   
   
   <mapper namespace="MeetRoomMapper">
+  <!-- 	<sql id="search">
+	<trim prefix="where" prefixOverrides="and || or">
+	<if test="search == 'title'"> title like '%' || #{find} || '%'</if>
+	<if test="search == 'writer'"> writer like '%' || #{find} || '%'</if>
+	<if test="search == 'contents'"> contents like '%' || #{find} || '%'</if>
+	</trim>
+	</sql> -->
   	
   	<!-- 업체 등록  -->
   	<insert id="MeetInsert" parameterType="com.flu.meetRoom.MeetRoomDTO" >
@@ -41,5 +48,11 @@
 	<delete id="EachDelete" parameterType="java.lang.Integer">
 		delete eachroom where snum=#{num}
 	</delete>
+	
+	<!-- 업체 페이징 처리를 위한 토탈카운트 가져오기-->
+	<select id="MeetRoomCount" resultType="java.lang.Integer">
+		select nvl(count(num), 0) from meetroom
+		<!-- <include refid="search"/> -->
+	</select>
 	
   </mapper>

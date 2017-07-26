@@ -66,38 +66,29 @@ section {
 	</div>
 	</c:forEach>
 
-
-
-
-
-
 		<div id="pagination">
-
 			<c:if test="${listInfo.curBlock > 1}">
 				<span class="block">
-				<a href="./${board}List.${board}?curPage=${listInfo.startNum-1}">&lt;
+				<a href="meetList?curPage=${listInfo.startNum-1}">&lt;
 				Prior
 				</a>
 				</span>
 			</c:if>
-
 			<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
 				var="y">
-				<span>${y}</span>
+				<span><a href="meetList?curPage=${y}">${y}</a></span>
 			</c:forEach>
-
 			<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
-				<span class="block"><a
-					href="./${board}List.${board}?curPage=${pageResult.lastNum+1}">Next
-						&gt;</a></span>
+				<span class="block">
+				<a href="meetList?curPage=${pageResult.lastNum+1}">Next &gt;</a>
+				</span>
 			</c:if>
-
 		</div>
 
 
 		<c:if test="${member.kind eq 'admin'}">
-	<a href="meetInsert" style="float: left;">업체등록</a>	
-	</c:if>
+			<a href="meetInsert" style="float: left;">업체등록</a>	
+		</c:if>
 	
 	
 	</section>
