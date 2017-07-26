@@ -221,7 +221,7 @@ div{
 						result = result + "<td> "+ this.partName + " </td>";
 						result = result + "<td> "+ this.partStartDate + " </td>";
 						result = result + "<td> "+ this.partFinishDate + " </td>";
-						result = result + "<td> "+ this.partNum + " </td>";
+						result = result + "<td class='partNum'> "+ this.partNum + " </td>";
 						result = result + "<td> "+ this.partDescFileO + " </td>";
 						result = result + "</tr>";
 						
@@ -278,7 +278,7 @@ div{
 					var result="<table>";
 					$(data).each(function(){
 						result = result + "<tr>";
-						result = result + "<td> "+ this.email + " </td>";
+						result = result + "<td class='users'> "+ this.email + " </td>";
 						result = result + "<td> "+ this.kind + " </td>";
 						result = result + "<td> "+ this.name+"("+this.nickName+")" + " </td>";
 						result = result + "</tr>";				
@@ -379,6 +379,14 @@ div{
 			makeCard = makeCard + '</div></div></div>';
 			
 			$(".cardContentWrap").append(makeCard);
+			
+			if($(".card").length <= 3){
+				$(".cardContentWrap").css("height","320px");
+			}else if($(".card").length > 3){
+				$(".cardContentWrap").css("height","640px");
+			}else if($(".card").length > 6){
+				$(".cardContentWrap").css("height","960px");
+			}
 	
 		}
 		
@@ -451,11 +459,19 @@ div{
 				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
 			}else if($(this).text() == "파트별"){
 					
-				getUnitList(scheduleNum,0,'','',"파트별"); //파트갯수만큼 반복문
+				$(".partNum").each(function(){
+					var partNum = $(this).text();
+					getUnitList(scheduleNum,partNum,'','',"파트별"); //파트갯수만큼 반복문
+				});
+				
 					
 			}else if($(this).text() == "사용자별"){
+				$(".users").each(function(){
+					var user = $(this).text();
+					//getUnitList(scheduleNum,-1,user,'',"사용자별"); //사용자수만큼 반복문
+					getUnitList(scheduleNum,-1,'myeon','',"사용자별");
+				});
 				
-				getUnitList(scheduleNum,0,'','myeon',"사용자별"); //사용자수만큼 반복문
 				
 			}
 			
@@ -514,7 +530,7 @@ div{
 
 
 <!-- 값 넘어오는거 확인용 -->
-<div class="testData" style="display:none">
+<div class="testData" style="display:block">
 	이곳에 스케줄넘,해당 스케줄에 대한 파트/클라이언트/사용자, 현재 로그인된 세션 이 필요함
 
 	<div id="partsDiv"></div>
