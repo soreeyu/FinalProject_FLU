@@ -7,7 +7,7 @@
   
   
   
-  	<sql id="project">
+  	<!-- <sql id="project">
 	  	select * from project
 		<choose>
   				<when test="category==null and detailCategory==null">
@@ -43,13 +43,63 @@
 	  				order by reg_date asc
 				</when>
   			</choose>
+	</sql> -->
+	
+	
+  <sql id="project">
+	  	select * from project where state in 
+  					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>	  	
+
+	  	and category like '%' || #{projectDTO.category} || '%' and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
+	  	and name like '%' || #{projectDTO.name} || '%' 
+	  	and email like '%' || #{projectDTO.email} || '%' 
+	  	and planstate like '%' || #{projectDTO.planState} || '%' 
+	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
+	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
+	  	order by reg_date asc
+		<!-- <choose>
+  				<when test="category==null and detailCategory==null">
+  					where state in
+  					
+  					<foreach collection="project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>
+  					
+  					 order by reg_date asc
+  				</when>
+				<when test="category!=null and detailCategory!=null">
+  					where state in
+  					
+  					<foreach collection="project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>
+  					
+  					 and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
+  				
+	  				<if test="kind == 'name'">
+	  					name like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'email'">
+	  					email like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'contents'">
+	  					contents like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				order by reg_date asc
+				</when>
+  			</choose> -->
 	</sql>
   
-  
-  		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
   		</select>
-  		
+  		<!-- 
   		<select id="failList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
   			<include refid="project" />
   		</select>
@@ -60,7 +110,7 @@
   		
   		<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
   			<include refid="project" />
-  		</select>
+  		</select> -->
   		
   		
   		

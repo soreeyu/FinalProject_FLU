@@ -1,6 +1,7 @@
 package com.flu.checkProject;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -20,11 +21,11 @@ public class CheckProjectDAO {
 	//**********프로젝트 검수 관리**************
 	
 	//검수 전 프로젝트 리스트 들고오기
-	public List<ProjectDTO> checkList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"checkList",listInfo);
+	public List<ProjectDTO> checkList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"checkList",map);
 	}
 	
-	
+/*	
 	public List<ProjectDTO>failList(ListInfo listInfo){
 		return sqlSession.selectList(NAMESPACE+"failList",listInfo);
 	}
@@ -36,7 +37,7 @@ public class CheckProjectDAO {
 	public List<ProjectDTO>finishList(ListInfo listInfo){
 		return sqlSession.selectList(NAMESPACE+"finishList",listInfo);
 	}
-	
+	*/
 	
 	
 	
