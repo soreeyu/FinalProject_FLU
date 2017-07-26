@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -274,6 +275,15 @@ public class MemberController {
 
 			return "redirect:/member/personaldataView";
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 }

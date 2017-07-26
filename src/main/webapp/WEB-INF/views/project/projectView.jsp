@@ -629,6 +629,8 @@ background-color: white;
 				</div>
 			</section>
 		</div>
+		
+
 
 <p>
 
@@ -733,13 +735,16 @@ $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
 		alert($(this).attr("data-id"));
 		var replyId = $(this).attr("data-id");
 		
+		var testId = $(this).attr("id");
+		
+		
 		/* 해당하는 답글 아래의 id에 replyNum셋팅 */
 		$(".rereply").attr("id", replyId);
 		alert($(".rereply").attr("id"));
 		
 		$(".listReply").html("");
 					
-		$(this).html('<input type="text" name="contents"><input type="button" value="댓글달기"><input type="button" class="cancle" value="취소">');
+		$("."+testId).html('<input type="text" name="contents"><input type="button" value="댓글달기"><input type="button" class="cancle" value="취소">');
 		$(this).attr("data-on", "on");
 		
 		

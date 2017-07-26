@@ -13,7 +13,7 @@
   </if>
  </sql>
 
- 
+
 
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
   <!-- where가 들어가는 상황이면 where가 추가되고, and가 나올상황이면 알아서 지워주는 where태그  -->
@@ -24,8 +24,25 @@
   	select count(nvl(projectNum,0)) from project
 <include refid="search"/>
   </select>
+  
+  
+    <select id="clientcount" parameterType="com.flu.member.MemberDTO" resultType="int">
+    	select count(nvl(projectNum,0)) from project where email=#{email}
+    </select>
     
     
+  	<select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+ 		select * from 
+ 		(select rownum R, P.* from
+  		(select * from project where email=#{member.email})P) 
+  		where R between #{listInfo.startRow} and #{listInfo.lastRow} 
+  		
+  		<!-- and state=#{project.state} -->
+  	
+  	</select>
+  	
+  	
+  	
   <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
 
 
@@ -61,6 +78,7 @@
 
   	</select>
   	
+
   
   
   <insert id="insert" parameterType="com.flu.project.ProjectDTO">

@@ -29,11 +29,11 @@
 			<span class="listDelete" id="${reply.num}">X</span>
 			<c:if test="${reply.replyChk=='false'}">
 			
-			<span class="listReply" data-id="${reply.num}" data-on="off">답글</span>
+			<span class="listReply" id="listReply${reply.num}" data-id="${reply.num}" data-on="off">답글</span>
 			</c:if>
 			<p>
 			
-			<div class="rereply" style="display: block;" data-id="${reply.num}">
+			<div class="listReply${reply.num}"  data-id="${reply.num}">
 			
 			</div>
 			</p>

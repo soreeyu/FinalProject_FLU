@@ -2,14 +2,17 @@ package com.flu.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
 
+import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDAO;
 import com.flu.project.ProjectDTO;
-import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
+
 
 
 
@@ -28,8 +31,8 @@ public class ProjectTest extends MyAbstract {
 		java.util.Date uDate = new java.util.Date();
 		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 		
-		
-		projectDTO.setProjectNum(1);
+		ListInfo listInfo = new ListInfo(); 
+	/*	projectDTO.setProjectNum(1);
 		projectDTO.setCategory("ca");
 		projectDTO.setDetailCategory("aaa");
 		projectDTO.setName("name");
@@ -54,8 +57,14 @@ public class ProjectTest extends MyAbstract {
 		
 		int result = projectDAO.projectUpdate(projectDTO);
 		
-		assertEquals(1, result);
+		assertEquals(1, result);*/
+		/*MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setEmail("bobae0904@gmail.com");
+		int count = projectDAO.clientPjCount(listInfo, memberDTO);*/
 		
+		
+		
+	/*	assertEquals(1, result);*/
 	}
 
 }

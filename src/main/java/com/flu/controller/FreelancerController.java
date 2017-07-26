@@ -27,6 +27,9 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -34,6 +37,7 @@ public class FreelancerController {
 
 	@Inject
 	private FreelancerService freelancerService;
+
 
 	
 	
@@ -709,7 +713,10 @@ public class FreelancerController {
 	
 	//내가 FLU 에서 진행한 프로젝트
 	@RequestMapping(value="myproject")
-	public String myproject(Model model){
+	public String myproject(Model model, HttpSession session, ListInfo listInfo){
+		
+		
+				
 		model.addAttribute("active7", "a");
 		return "/member/freelancer/myproject";
 	}

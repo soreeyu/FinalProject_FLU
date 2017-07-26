@@ -32,9 +32,6 @@ public class ReplyDAO {
 	}
 	
 	public List<ReplyDTO> replyList(HashMap<String, Object> map){
-		/*HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("project", projectDTO);*/
 		List<ReplyDTO> ar = sqlSession.selectList(NAMESPACE+"list", map);
 		System.out.println("dao의 ar=="+ar);
 		return sqlSession.selectList(NAMESPACE+"list", map); 

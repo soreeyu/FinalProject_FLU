@@ -1,6 +1,8 @@
 package com.flu.controller;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
 import com.flu.member.MemberDTO;
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
+import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
 
 @Controller
@@ -24,6 +29,8 @@ public class ClientController {
 
 	@Inject
 	private ClientService clientService;
+	@Inject
+	private ProjectService projectService;
 	
 	//클라이언트 정보 추가등록(소개,홈페이지 Update)
 	@RequestMapping(value="clientInsert2" , method=RequestMethod.POST)
@@ -38,6 +45,38 @@ public class ClientController {
 		return 0;
 	}
 	
+	
+	
+	//클라이언트 프로젝트 페이지
+	@RequestMapping(value="clientproject")
+	public String myproject(Model model, HttpSession session, ListInfo listInfo, ProjectDTO projectDTO){
+		
+		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println("myProject의 email="+memberDTO.getEmail());
+		
+		
+		int totalCount =  projectService.clientPjCount(memberDTO);
+		System.out.println("client의 project count="+totalCount);
+		
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		
+		List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
+		System.out.println("arsize="+ar.size());
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println(ar.get(i).getProjectNum());
+		}
+	
+		model.addAttribute("list", ar);
+		model.addAttribute("count", totalCount);
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("active7", "a");
+		
+		
+		return "/member/client/clientproject";
+	}
 
 	
 	

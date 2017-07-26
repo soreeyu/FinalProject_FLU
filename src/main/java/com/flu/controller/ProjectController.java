@@ -290,5 +290,33 @@ public class ProjectController {
 		return "redirect:/project/projectList";
 	}
 
+
+
+	//Test
+	//Client가 mypage에서 확인하는 myprojectList
+	//@RequestMapping(value="projectView")
+	/*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
+		System.out.println("Client ProjectList");
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		int totalCount = projectService.clientPjCount(listInfo, memberDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
+		
+		System.out.println("totalCount="+totalCount);
+		System.out.println("arsize="+ar.size());
+	
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", totalCount);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+		
+		return "project/clientProjectList";
+	}*/
+	
+
+
 	
 }

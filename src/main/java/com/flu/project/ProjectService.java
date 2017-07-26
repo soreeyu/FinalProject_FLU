@@ -1,5 +1,6 @@
 package com.flu.project;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.flu.member.MemberDTO;
+import com.flu.reply.ReplyDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -59,5 +62,29 @@ public class ProjectService {
 	//project Count
 	public int projectCount(ListInfo listInfo){
 		return projectDAO.projectCount(listInfo);
+	}
+	
+	//Client가 mypage에서 확인하는 myprojectList
+	public List<ProjectDTO> clientPjList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("member", memberDTO);
+		map.put("project", projectDTO);
+		
+		List<ProjectDTO> ar =  projectDAO.clientPjList(map);
+		
+		System.out.println("service의 ar=="+ar);
+		
+		return projectDAO.clientPjList(map);
+	}
+	
+	//Client ProjectList의 Count
+	public int clientPjCount(MemberDTO memberDTO){
+		System.out.println("service들어옴");
+		
+		int count = projectDAO.clientPjCount(memberDTO);
+		System.out.println("service부분="+count);
+		return projectDAO.clientPjCount(memberDTO);
 	}
 }
