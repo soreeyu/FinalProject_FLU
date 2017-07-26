@@ -1,19 +1,16 @@
 package com.flu.controller;
 
 
+
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
@@ -21,7 +18,6 @@ import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
 import com.flu.util.ListInfo;
-import com.flu.util.RowMaker;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -94,12 +90,9 @@ public class ClientController {
 			listInfo.makeRow();
 			
 			List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
-			System.out.println("arsize="+ar.size());
-			
-			for(int i=0;i<ar.size();i++){
-				System.out.println(ar.get(i).getProjectNum());
-			}
 		
+			
+			
 			model.addAttribute("list", ar);
 			model.addAttribute("count", totalCount);
 			model.addAttribute("member", memberDTO);

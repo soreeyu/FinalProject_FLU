@@ -230,7 +230,6 @@
 }
 .skill-box{
 	display: inline-block;
-	background-color: yellow;
 }
 .skill-title{
 	margin-left: 10px;
@@ -238,7 +237,7 @@
 }
 .skill-name{
 	background-color: #a1a7ad;
-	color: white;
+	padding: 2px 3px;
 	
 }
 .skill-box span{

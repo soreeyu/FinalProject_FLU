@@ -66,20 +66,22 @@ public class ProjectService {
 	//Client가 mypage에서 확인하는 myprojectList
 	public List<ProjectDTO> clientPjList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
 
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("member", memberDTO);
-		map.put("project", projectDTO);
 		
-		List<ProjectDTO> ar =  projectDAO.clientPjList(map);
-		
-		System.out.println("projectDTO="+projectDTO);
-		System.out.println("skill="+projectDTO.getSkill());
-		
-		
+		List<ProjectDTO> ar =  projectDAO.clientPjList(listInfo, memberDTO, projectDTO);
 		System.out.println("service의 ar=="+ar);
 		
-		return projectDAO.clientPjList(map);
+		for(int i=0;i<ar.size();i++){
+			System.out.println(ar.get(i).getSkill());
+			String[] parsing = ar.get(i).getSkill().split(",");
+			System.out.println(parsing.length);
+			for(int j=0;j<parsing.length;j++){
+				ar.get(i).setSkills(parsing);				
+			}
+			System.out.println(ar.get(i).getSkills());
+		}
+		
+	
+		return ar;
 	}
 	
 	//Client ProjectList의 Count

@@ -55,8 +55,8 @@
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
 						
-							<c:forEach items="${dto.skills}" var="sk">
-								 <span class="skill-name">sk = ${sk}</span>
+							<c:forEach items="${dto.skills}" end="4" var="sk">
+								 <span class="skill-name" style="color: white; font-size: 13px;">${sk}</span>
 							
 							</c:forEach>
 							
@@ -95,6 +95,8 @@
 	var state = "${list[0].state}";
 	var preview = ((curBlock-2)*perBlock)+1;
 	var next = curBlock*perBlock+1;
+	
+	
 	$(".num").each(function() {
 		if(curPage==$(this).attr("id")){
 			$(this).css("color", "#3385ff");
@@ -139,6 +141,21 @@
 	location.href="../../project/projectView?projectNum="+projectNum;
 	
 });
+	 
+	 $(".leftDate").each(function() {
+		
+	});
+
+	var finishDate = "${list[0].finishDate}";
+	var deadline = new Date(finishDate);
+	var date = new Date();
+
+
+	var left = deadline.getTime()-date.getTime();
+	alert("leftDate="+left);
+	var leftDate = Math.ceil(left/(24*60*60*1000));
+	alert("남은날="+leftDate);
+	 
 	
 	</script>
 </body>
