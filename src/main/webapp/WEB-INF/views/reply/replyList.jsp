@@ -94,6 +94,10 @@ $(".rereply").css("display", "none");
 		
 		
 		/* 페이징처리 */
+		$("#preview").click(function() { 
+			alert("preview");
+			
+		});
 		 $(".num").click(function() {
 			var pageNum = $(this).attr("id");
 			alert(pageNum);
@@ -102,6 +106,10 @@ $(".rereply").css("display", "none");
 				$(".project-reply-box-top").html(data);
 			});   
 		});
+		 $("#nextview").click(function() {
+				alert("nextview")
+				
+			});
 		
 
 

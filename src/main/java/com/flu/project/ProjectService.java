@@ -42,7 +42,6 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo){
 		
-		System.out.println("projectSkillparsing");
 		
 		List<ProjectDTO> list = projectDAO.projectList(listInfo);
 		
@@ -74,17 +73,21 @@ public class ProjectService {
 		
 		List<ProjectDTO> ar =  projectDAO.clientPjList(map);
 		
+		System.out.println("projectDTO="+projectDTO);
+		System.out.println("skill="+projectDTO.getSkill());
+		
+		
 		System.out.println("service의 ar=="+ar);
 		
 		return projectDAO.clientPjList(map);
 	}
 	
 	//Client ProjectList의 Count
-	public int clientPjCount(MemberDTO memberDTO){
+	public int clientPjCount(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
 		System.out.println("service들어옴");
 		
-		int count = projectDAO.clientPjCount(memberDTO);
+		int count = projectDAO.clientPjCount(listInfo, memberDTO, projectDTO);
 		System.out.println("service부분="+count);
-		return projectDAO.clientPjCount(memberDTO);
+		return projectDAO.clientPjCount(listInfo, memberDTO, projectDTO);
 	}
 }

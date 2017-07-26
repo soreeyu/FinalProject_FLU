@@ -57,14 +57,15 @@ public class ProjectDAO {
 			return sqlSession.selectList(NAMESPACE+"clientpjlist", map); 
 		}
 		//Client ProjectList의 Count
-		public int clientPjCount(MemberDTO memberDTO){
+		public int clientPjCount(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
 			System.out.println("dao들어옴");
-			/*HashMap<String, Object> map = new HashMap<String, Object>();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("member", memberDTO);
+			map.put("project", projectDTO);
 			System.out.println(memberDTO.getEmail());
-			return sqlSession.selectOne(NAMESPACE+"clientcount", map);*/
-			return sqlSession.selectOne(NAMESPACE+"clientcount", memberDTO);
+			return sqlSession.selectOne(NAMESPACE+"clientcount", map);
+			
 			
 		}
 		

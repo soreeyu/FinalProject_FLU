@@ -114,7 +114,7 @@ public class ProjectController {
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
 	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
 
-		String sk2=null;
+
 		int totalCount = projectService.projectCount(listInfo);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
@@ -154,15 +154,9 @@ public class ProjectController {
 		}
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
-		/*System.out.println(projectDTO.getProjectNum());
-		System.out.println(projectDTO.getName());
-		System.out.println(projectDTO.getSkill());
-		System.out.println(projectDTO.getEmail());*/
-		
+
 		System.out.println("session의 사진을 불러와보자");
 		memberDTO = (MemberDTO)session.getAttribute("member");
-/*		System.out.println("profileOname="+memberDTO.getoProfileImage());
-		System.out.println("profileOname="+memberDTO.getfProfileImage());*/
 		
 		
 		model.addAttribute("dto", projectDTO);

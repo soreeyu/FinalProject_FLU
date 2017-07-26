@@ -26,8 +26,8 @@
   </select>
   
   
-    <select id="clientcount" parameterType="com.flu.member.MemberDTO" resultType="int">
-    	select count(nvl(projectNum,0)) from project where email=#{email}
+    <select id="clientcount" parameterType="java.util.HashMap" resultType="int">
+    	select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state}
     </select>
     
     
@@ -36,8 +36,7 @@
  		(select rownum R, P.* from
   		(select * from project where email=#{member.email})P) 
   		where R between #{listInfo.startRow} and #{listInfo.lastRow} 
-  		
-  		<!-- and state=#{project.state} -->
+  		and state=#{project.state}
   	
   	</select>
   	

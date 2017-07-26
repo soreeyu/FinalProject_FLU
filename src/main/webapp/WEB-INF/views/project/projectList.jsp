@@ -388,6 +388,7 @@ background-color: white;
 
 
 		<div class="contents">
+
 		
 		<!-- 프로젝트 찾기처리  -->
 		<section class="contents_sub">

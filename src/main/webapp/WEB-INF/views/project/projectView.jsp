@@ -206,6 +206,7 @@ strong{
 	vertical-align: middle;
 	padding: 10px 12px;
 	margin-top: 15px;
+	text-decoration: none;
 }
 #schedult-btn{
 	width:230px;
@@ -219,6 +220,7 @@ strong{
 	vertical-align: middle;
 	padding: 10px 12px;
 	margin-top: 15px;
+	text-decoration: none;
 }
 .project-qna{
 	margin-top: 10px;
@@ -228,13 +230,13 @@ strong{
 }
 .project-apply-box{
 	width: 100%;
-	height: 140px;
+	height: auto;
 	border: 1px solid #dedede;
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
 	margin-bottom: 20px;
-	padding: 5px 9px;
+	padding: 5px 9px 20px;
 }
 .client-info-box{
 	background-color: white;
@@ -605,12 +607,21 @@ background-color: white;
 			
 			<!-- right contents  -->
 			<section class="contents_sub">
-			<c:if test="${member.kind eq 'client'}">
+			${dto.state }
 				<div class="project-apply-box">
+			<c:if test="${member.kind eq 'freelancer'}">
 				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
 				<a href="#" id="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
+	 		</c:if> 
+	 		<c:if test="${dto.state eq 'ing'}">
+				<a href="#" id="schedult-btn">프로젝트 스케줄 </a>
+	 		</c:if>
+	 		<c:if test="${dto.state eq 'recruit'|| dto.state eq 'ing'}">
+				<a href="#" id="schedult-btn">미팅룸 예약하기 </a>
+	 		</c:if>
+			
+			
 				</div>
-			</c:if>
 				
 				<div class="client-info-box">
 					<div>
@@ -623,10 +634,7 @@ background-color: white;
 				</div>
 
 				
-				<div class="project-apply-box" style="margin-top: 20px;">
-					<a href="#" id="schedult-btn">프로젝트 스케줄 </a>
-				
-				</div>
+		
 			</section>
 		</div>
 		
