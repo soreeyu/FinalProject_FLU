@@ -8,11 +8,7 @@
 </head>
 <body>
 
-<form action="./checkMember/loginTest" method="post">
-<input type="text" name="email">
-<input type="text" name="pw">
-<button>로그인</button>
-</form>
+<h1>정상적인 접근이 아닙니다.</h1>
 
 </body>
 </html>

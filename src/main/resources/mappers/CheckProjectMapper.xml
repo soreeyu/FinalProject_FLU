@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="CheckProjectMapper">
+  
+  
+  
+  	<sql id="project">
+	  	select * from project
+		<choose>
+  				<when test="category==null and detailCategory==null">
+  					where state in
+  					
+  					<foreach collection="project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>
+  					
+  					 order by reg_date asc
+  				</when>
+				<when test="category!=null and detailCategory!=null">
+  					where state in
+  					
+  					<foreach collection="project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>
+  					
+  					 and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
+  				
+	  				<if test="kind == 'name'">
+	  					name like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'email'">
+	  					email like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				<if test="kind == 'contents'">
+	  					contents like '%' || #{search} || '%'
+	  				</if>
+	  				
+	  				order by reg_date asc
+				</when>
+  			</choose>
+	</sql>
+  
+  
+  		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  			<include refid="project" />
+  		</select>
+  		
+  		<select id="failList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  			<include refid="project" />
+  		</select>
+  		
+  		<select id="waitList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  			<include refid="project" />
+  		</select>
+  		
+  		<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  			<include refid="project" />
+  		</select>
+  		
+  		
+  		
+  		
+  		
+  		<update id="update" parameterType="com.flu.project.ProjectDTO">
+  			update project set 
+  				<if test="state=='check'">
+  				state='done' where projectNum=#{projectNum}
+  				</if>
+  				<if test="state=='wait'">
+  				state='ing' where projectNum=#{projectNum}
+  				</if>
+  		</update>
+  		
+
+  		
+  </mapper>

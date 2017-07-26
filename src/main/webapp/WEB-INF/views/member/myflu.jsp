@@ -7,7 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"></c:import>
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">
+body{
+	color: #404040;
+}
 .main_section{
 	min-width: 1460px;
 	width: 100%;
@@ -197,6 +201,36 @@
 	color: blue;
 }
 
+.project_insert{
+	width: 248px;
+	padding : 15px 30px;
+	margin-left: 20px;
+	background-color: white;
+	margin-bottom: 20px;
+	border: 1px solid #dedede;
+}
+
+.project_insert label{
+	display: block;
+	margin-bottom: 10px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	color: #555555;
+}
+
+.project_insert a{
+	display: block;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 3px;
+    background-color: #d9d9d9;
+}
+
 .history{
 	width: 248px;
 	padding : 15px 30px;
@@ -259,7 +293,32 @@
 </style>
 </head>
 <body>
-
+<!-- Channel Plugin Scripts -->
+<script>
+  window.channelPluginSettings = {
+    "plugin_id": "ef582c73-3a40-4525-bb41-a68efc7f806b"
+  };
+  (function() {
+    var node = document.createElement('div');
+    node.id = 'ch-plugin';
+    document.body.appendChild(node);
+    var async_load = function() {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = '//cdn.channel.io/plugin/ch-plugin-web.js';
+      s.charset = 'UTF-8';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    };
+    if (window.attachEvent) {
+      window.attachEvent('onload', async_load);
+    } else {
+      window.addEventListener('load', async_load, false);
+    }
+  })();
+</script>
+<!-- End Channel Plugin -->
 <c:import url="../temp/header.jsp"></c:import>
 
 <section class="main_section">
@@ -273,6 +332,8 @@
 		
 		<div class="contents">
 			<div class="contents_header">
+				
+				
 				<p><span style="font-weight: bold; font-size: 26px;">MY FLU</span></p>
 			</div>
 			<div class="contents_inner">
@@ -295,7 +356,8 @@
 					
 					<span>내 프로젝트</span>
 					<div class="interest_project project1">
-						<p>관심 프로젝트</p>
+						<c:if test="${member.kind eq 'client' }"><p>검수중</p></c:if>
+						<c:if test="${member.kind eq 'freelancer' }"><p>관심 프로젝트</p></c:if>
 						<table>
 							<colgroup>
 								<col width="45%">
@@ -342,7 +404,8 @@
 						</p>
 					</div>
 					<div class="proposal_project project1">
-						<p>지원한 프로젝트</p>
+						<c:if test="${member.kind eq 'freelancer' }"><p>지원한 프로젝트</p></c:if>
+						<c:if test="${member.kind eq 'client' }"><p>지원자 모집중</p></c:if>
 						<table>
 							<colgroup>
 								<col width="45%">
@@ -441,13 +504,23 @@
 		<div class="side">
 			<div class="inner">
 				<div class="user">
-					<span>프리랜서</span>
+					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
+					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
 					<div class="user_name">
 						<img alt="프로필 사진" src="${pageContext.request.contextPath}/resources/img/FLU.png">
 						<span>닉네임</span>
 						<a><span>기본 정보 수정</span></a>
+						
 					</div>
 				</div>
+				<c:if test="${member.kind eq 'client' }">
+				<div class="project_insert">
+					<label>
+						<span>무료로 프로젝트를<br>등록해 보세요</span>
+					</label>
+					<a href="#">프로젝트 등록하기</a>
+				</div>
+				</c:if>
 				<div class="history">
 					<span>FLU 히스토리</span>
 					<p>지원한 프로젝트<span>0 건</span></p>

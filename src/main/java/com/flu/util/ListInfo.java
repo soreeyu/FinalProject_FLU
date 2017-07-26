@@ -7,8 +7,9 @@ public class ListInfo {
 
 
 	//row
-	private String kind; //contents인지
+
 	private String search;//입력한값
+	private String kind; //contents인지
 	private String arrange;
 	private int startRow;
 	private int lastRow;
@@ -20,6 +21,28 @@ public class ListInfo {
 	private int startNum;
 	private int lastNum;
 	private int perBlock=5;
+
+	//project
+	private String category;
+	private String detailCategory;
+	private String[] project;
+
+
+
+
+
+
+	public String[] getProject() {
+		return project;
+	}
+
+
+
+
+	public void setProject(String[] project) {
+		this.project = project;
+	}
+
 
 
 
@@ -55,32 +78,82 @@ public class ListInfo {
 	}
 
 	
-	public int getPerBlock() {
-		return perBlock;
+
+
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 
-	public int getTotalBlock() {
-		return totalBlock;
+	public String getDetailCategory() {
+		return detailCategory;
+	}
+	public void setDetailCategory(String detailCategory) {
+		this.detailCategory = detailCategory;
 	}
 
-	public int getCurBlock() {
-		return curBlock;
-	}
 
-	public int getStartNum() {
-		return startNum;
-	}
 
-	public int getLastNum() {
-		return lastNum;
-	}
 
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
 	public int getStartRow() {
 		return startRow;
 	}
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
 	public int getLastRow() {
 		return lastRow;
+	}
+	public void setLastRow(int lastRow) {
+		this.lastRow = lastRow;
+	}
+	public int getTotalBlock() {
+		return totalBlock;
+	}
+	public void setTotalBlock(int totalBlock) {
+		this.totalBlock = totalBlock;
+	}
+	public int getCurBlock() {
+		return curBlock;
+	}
+	public void setCurBlock(int curBlock) {
+		this.curBlock = curBlock;
+	}
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getLastNum() {
+		return lastNum;
+	}
+	public void setLastNum(int lastNum) {
+		this.lastNum = lastNum;
+	}
+	public int getPerBlock() {
+		return perBlock;
+	}
+	public void setPerBlock(int perBlock) {
+		this.perBlock = perBlock;
+	}
+	public void setCurPage(Integer curPage) {
+		this.curPage = curPage;
 	}
 
 	public void makeRow(){
@@ -89,8 +162,6 @@ public class ListInfo {
 		System.out.println(startRow);
 		System.out.println(lastRow);
 	}
-
-
 	public Integer getPerPage() {
 		if(perPage==null){
 			perPage=10;
@@ -106,6 +177,7 @@ public class ListInfo {
 		}
 		return curPage;
 	}
+<<<<<<< HEAD
 	public void setCurPage(Integer curPage) {
 		if(curPage==null){
 			curPage=1;
@@ -138,6 +210,8 @@ public class ListInfo {
 	public void setArrange(String arrange) {
 		this.arrange = arrange;
 	}
+=======
+>>>>>>> 5c3a8593b3d88351542049681139f9ce92810794
 
 
 

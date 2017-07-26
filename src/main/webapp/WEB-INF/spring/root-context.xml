@@ -70,7 +70,11 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<tx:advice id="txAdvise" transaction-manager="txManager">
+	
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	
+<!-- 	<tx:advice id="txAdvise" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="*" rollback-for="Exception"/>
 		</tx:attributes>
@@ -79,10 +83,17 @@
 	<aop:config>
 		<aop:pointcut expression="execution(* com.flu.checkMember..CheckMemberService.*Tran(..))" id="txPoint"/>
 		<aop:advisor advice-ref="txAdvise" pointcut-ref="txPoint"/>
-	</aop:config>
+	</aop:config> -->
+	
+	
 	
 	<!-- Upload -->
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
-</beans>
+	</beans>
+
+
+
+
+

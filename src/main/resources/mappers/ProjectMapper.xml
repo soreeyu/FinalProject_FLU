@@ -75,6 +75,7 @@
   	select * from project where projectNum=#{projectNum}
   </select>
   
+  
   <!-- email은 변경불가 -->
   <update id="update" parameterType="com.flu.project.ProjectDTO">
   	update project set category=#{category}, detailCategory=#{detailCategory}, name=#{name}, period=#{period}, startDate=#{startDate}, budget=#{budget},

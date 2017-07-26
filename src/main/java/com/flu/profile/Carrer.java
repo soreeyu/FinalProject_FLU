@@ -10,6 +10,7 @@ public class Carrer {
 	private String position;
 	private Date hireDate;
 	private Date retireDate;
+	private int num;
 	public String getEmail() {
 		return email;
 	}
@@ -45,6 +46,12 @@ public class Carrer {
 	}
 	public void setRetireDate(Date retireDate) {
 		this.retireDate = retireDate;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 
 	

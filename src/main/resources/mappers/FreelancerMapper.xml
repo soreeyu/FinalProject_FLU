@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="FreelancerMapper">
+  		
+  		
+  		<!-- 프리랜서가 없을 때 자기소개 등록-->
+  		<insert id="introInsert" parameterType="com.flu.freelancer.FreelancerDTO">
+  			insert into freelancer values(#{email},null,null,null,#{intro})
+  		</insert>
+  		<!-- 프리랜서가 있을 때 or 자기소개 수정 -->
+  		<update id="introUpdate" parameterType="com.flu.freelancer.FreelancerDTO">
+  			update freelancer set intro = #{intro} where email=#{email}
+  		</update>
+  		
+  		<!-- 프리랜서가 없을 때 내정보 등록 -->
+  		<insert id="infoInsert" parameterType="com.flu.freelancer.FreelancerDTO">
+  			insert into freelancer values(#{email},#{jobKind},#{Interesting},#{possibility},null)
+  		</insert>
+  	
+  		<!-- 프리랜서가 있을 때 내정보 등록, 내정보 수정 -->
+  		<update id="infoUpdate" parameterType="com.flu.freelancer.FreelancerDTO">
+  			update freelancer set jobkind = #{jobKind}, interesting = #{Interesting}, possibility=#{possibility} where email=#{email}
+  		</update>
+  		
+  		<!-- 프리랜서 데이터 하나 가져오기 -->
+  		<select id="freelancerView" resultType="com.flu.freelancer.FreelancerDTO" parameterType="java.lang.String">
+  			select * from freelancer where email = #{email}
+  		</select>
+  		
+  		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡPortFolioㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		
+  		<!-- 포트폴리오 등록 -->
+  		<insert id="portfolioInsert" parameterType="com.flu.profile.PortFolio">
+  			insert into portfolio values(#{email},#{title},#{describe},#{startDate},#{finishDate},#{percentage},#{pfOname},#{pfFname},pf_seq.nextval)
+  		</insert> 
+  		<!-- 포트폴리오 리스트 -->
+  		<select id="portfolioList" resultType="com.flu.profile.PortFolio" parameterType="java.lang.String">
+  			select * from portfolio where email = #{email}
+  		</select>
+  		<!-- 포트폴리오 뷰 -->
+  		<select id="portfolioView" resultType="com.flu.profile.PortFolio" parameterType="java.lang.Integer">
+  			select * from portfolio where pfnum = #{pfNum}
+  		</select>
+  		<!-- 포트폴리오 수정 -->
+  		<update id="portfolioUpdate" parameterType="com.flu.profile.PortFolio">
+  			update portfolio set title = #{title} , describe = #{describe} , startdate = #{startDate} , finishdate = #{finishDate} , 
+  			percentage = #{percentage}, pfoname=#{pfOname}, pffname = #{pfFname} where pfnum = #{pfNum}
+  		</update>
+  		
+  		<!-- 포트폴리오 시퀀스 받아오기 -->
+  		<select id="portfolioseq" resultType="java.lang.Integer" parameterType="java.lang.String">
+  			select max(pfnum) from portfolio where email=#{email}
+  		</select>
+  		
+  		<!-- 포트폴리오 이미지 등록 -->
+  		<insert id="pf_imageInsert" parameterType="com.flu.profile.PortFolioImg">
+  			insert into pf_images values(#{pfNum},#{Fimage},#{Oimage},#{arrage},#{contents})
+  		</insert>
+  		<!-- 포트폴리오 이미지 리스트 -->
+  		<select id="pf_imageView" resultType="com.flu.profile.PortFolioImg" parameterType="java.lang.Integer">
+  			select * from pf_images where pfnum = #{pfNum}
+  		</select>
+  		<!-- 포트폴리오 이미지 수정 -->
+  		
+  		<!-- 포트폴리오 이미지 삭제 -->
+  		<delete id="pf_imageDelete" parameterType="java.lang.Integer">
+  			delete pf_images where pfnum = #{pfNum}
+  		</delete>
+  		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡSkillㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  	
+  		<!-- 기술 등록 -->
+  		<insert id="skillInsert" parameterType="com.flu.profile.Skill">
+  			insert into skill values(#{email},#{kind},#{slevel},#{exp})
+  		</insert>
+  		<!-- 기술 리스트 -->
+  		<select id="skillList" resultType="com.flu.profile.Skill" parameterType="java.lang.String">
+  			select * from skill where email = #{email}
+  		</select>
+  		<!-- 기술 뷰 -->
+  		<select id="skillView" parameterType="com.flu.profile.Skill">
+  			select * from skill where email = #{email} and kind = #{kind}
+  		</select>
+  		<!-- 기술 수정 -->
+  		<!-- 기술 삭제 -->
+  		<delete id="skillDelete" parameterType="java.lang.String">
+  			delete skill where email = #{email}
+  		</delete>
+  		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡCarrerㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		<!-- 경력 등록 -->
+  		<insert id="carrerInsert" parameterType="com.flu.profile.Carrer">
+  			insert into carrer values(#{email},#{companyName},#{dept},#{position},#{hireDate},#{retireDate}, carrer_seq.nextval)
+  		</insert>
+  		
+  		<!-- 경력 뷰 -->
+  		<select id="carrerView" resultType="com.flu.profile.Carrer" parameterType="com.flu.profile.Carrer">
+  			select * from carrer where email=#{email} and companyname = #{companyName}
+  		</select>
+  		
+  		<!-- 경력 리스트 -->
+  		<select id="carrerList" resultType="com.flu.profile.Carrer" parameterType="java.lang.String">
+  			select * from carrer where email=#{email}
+  		</select>
+  		
+  		<!-- 경력 수정 -->
+  		<update id="carrerUpdate" parameterType="com.flu.profile.Carrer">
+  			update carrer set companyname = #{companyName}, dept=#{dept},position=#{position},hiredate=#{hireDate}, retiredate=#{retireDate} where email=#{email}and num = #{num}
+  		</update>
+  		
+  		<!-- 경력 삭제 -->
+  		<delete id="carrerDelete" parameterType="com.flu.profile.Carrer">
+  			delete carrer where email = #{email} and num=#{num}
+  		</delete>
+  		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAcademicㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		<!-- 학력 등록 -->
+  		<insert id="academicInsert" parameterType="com.flu.profile.Academic">
+  			insert into academic values(#{email} , #{school}, #{state}, #{sName}, #{major}, #{entrance}, #{graduate}, academic_seq.nextval)
+  		</insert>
+  		
+  		<!-- 학력 뷰 -->
+  		<select id="academicView" resultType="com.flu.profile.Academic" parameterType="com.flu.profile.Academic">
+  			select * from academic where email=#{email} and sname = #{sName}
+  		</select>
+  		
+  		<!-- 학력 리스트 -->
+  		<select id="academicList" resultType="com.flu.profile.Academic" parameterType="com.flu.profile.Academic">
+  			select * from academic where email=#{email}
+  		</select>
+  		<!-- 학력 수정 -->
+  		<update id="academicUpdate" parameterType="com.flu.profile.Academic">
+  			update academic set school = #{school}, state = #{state}, sname = #{sName}, major = #{major}, entrance = #{entrance}, graduate = #{graduate} where email = #{email} and num = #{num}
+  		</update>
+  		<!-- 학력 삭제 -->
+  		<delete id="academicDelete" parameterType="com.flu.profile.Academic">
+  			delete academic where email = #{email} and num= #{num}
+  		</delete>
+  	
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡLicenseㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		<!-- 자격증 등록 -->
+  		<insert id="licenseInsert" parameterType="com.flu.profile.License">
+  			insert into license values(#{email} , #{lName}, #{agency}, #{publishDate}, #{seiralNum}, license_seq.nextval)
+  		</insert>
+  		
+  		<!-- 자격증 뷰 -->
+  		<select id="licenseView" resultType="com.flu.profile.License" parameterType="com.flu.profile.License">
+  			select * from license where email=#{email} and lname = #{lName}
+  		</select>
+  		
+  		<!-- 자격증 리스트 -->
+  		<select id="licenseList" resultType="com.flu.profile.License" parameterType="com.flu.profile.License">
+  			select * from license where email=#{email}
+  		</select>
+  		<!-- 자격증 수정 -->
+  		<update id="licenseUpdate" parameterType="com.flu.profile.License">
+  			update license set lname = #{lName}, agency = #{agency}, publishdate = #{publishDate}, seiralnum = #{seiralNum} where email = #{email} and num = #{num}
+  		</update>
+  		<!-- 자격증 삭제 -->
+  		<delete id="licenseDelete" parameterType="com.flu.profile.License">
+  			delete license where email = #{email} and num = #{num}
+  		</delete>
+  		
+  		
+  </mapper>

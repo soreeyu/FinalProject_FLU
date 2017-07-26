@@ -29,14 +29,14 @@ public class CheckMemberController {
 	private CheckMemberService checkMemberService;
 	
 	
-	//신원확인 insert FORM으로 가기
-	@RequestMapping(value="checkMemberInsert", method=RequestMethod.GET)
+	//신원확인 insert FORM으로 가기 
+	@RequestMapping(value="memberCheckInsert", method=RequestMethod.GET)
 	public void insert(){
 		
 	}
 	
 	//신원확인 등록하기
-	@RequestMapping(value="checkMemberInsert", method=RequestMethod.POST)
+	@RequestMapping(value="memberCheckInsert", method=RequestMethod.POST)
 	public String insert(CheckMemberDTO checkMemberDTO,HttpSession session, MultipartHttpServletRequest request,Model model) throws Exception{
 		MultipartFile multi = request.getFile("file1");
 		String realPath = session.getServletContext().getRealPath("resources/upload");
@@ -98,30 +98,5 @@ public class CheckMemberController {
 	
 	
 	
-	
-	//임시 로그인
-	@RequestMapping(value="loginTest",method=RequestMethod.GET)
-	public void loginTest(){
-	
-	}
-	
-	//임시 로그인
-	@RequestMapping(value="loginTest",method=RequestMethod.POST)
-	public ModelAndView loginTest(MemberDTO memberDTO,HttpSession session){
-		
-		MemberDTO memberDTO2 = checkMemberService.loginTest(memberDTO);
-		ModelAndView mv = new ModelAndView();
-		String message = "실패";
-		
-		if(memberDTO2!=null){
-			session.setAttribute("member", memberDTO2);
-			message = "성공";
-			mv.addObject("message", message);
-			mv.addObject("path","/flu");
-			mv.setViewName("common/result");
-		}
-		
-		return mv;
-	}
 	
 }
