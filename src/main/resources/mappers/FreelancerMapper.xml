@@ -4,6 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="FreelancerMapper">
+  		<resultMap type="com.flu.member.MemberDTO" id="member">
+  		<!-- <id column="vnum" property="num"/> --> 			<!-- 컬럼명과 DTO 이름이 다를때 매핑 시켜주는 방법 -->
+  		<!-- 아무것도 작성안하면 키값과 벨류값이 자동으로 입력됨  -->
+  		</resultMap>
+  		<resultMap type="com.flu.freelancer.FreelancerDTO" id="freelancer">
+  		
+  		</resultMap>
+  		<resultMap type="com.flu.profile.Evaluation" id="evaluation">
+  		</resultMap>
   		
   		
   		<!-- 프리랜서가 없을 때 자기소개 등록-->
@@ -28,6 +37,11 @@
   		<!-- 프리랜서 데이터 하나 가져오기 -->
   		<select id="freelancerView" resultType="com.flu.freelancer.FreelancerDTO" parameterType="java.lang.String">
   			select * from freelancer where email = #{email}
+  		</select>
+  		
+  		<!-- 프리랜서 리스트 -->
+  		<select id="freelancerList" statementType="CALLABLE" parameterType="java.util.Map">
+  			{ call freelancer_list(#{search, mode=IN},#{member, mode=OUT,jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=member},#{freelancer, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=freelancer},#{evaluation, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=evaluation}) }
   		</select>
   		
   		

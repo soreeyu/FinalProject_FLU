@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.member.MemberDTO;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
 import com.flu.profile.Evaluation;
@@ -29,6 +30,20 @@ public class FreelancerDAO{
 	//프리랜서 1명 가져오기
 	public FreelancerDTO freelancerView(String email){
 		return sqlSession.selectOne(NAMESPACE+"freelancerView", email);
+	}
+	
+	//프리랜서 리스트
+	public Map<String, Object> freelancerList(String search){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		sqlSession.selectOne(NAMESPACE+"freelancerList", map);
+		List<MemberDTO> m = (List<MemberDTO>)map.get("member");
+		List<FreelancerDTO> f = (List<FreelancerDTO>)map.get("freelancer");
+		List<Evaluation> e = (List<Evaluation>)map.get("evaluation");
+		map.put("member1", m);
+		map.put("freelancer1", f);
+		map.put("evaluation1", e);
+		return map;
 	}
 	
 	//프리랜서 정보 입력(추가로 입력 Update)

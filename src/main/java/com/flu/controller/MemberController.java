@@ -206,6 +206,7 @@ public class MemberController {
 			System.out.println(memberDTO.getoProfileImage());
 			
 			memberService.memberUpdate(memberDTO);
+			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
 			
 			return "redirect:/member/personaldataView";
 		}
@@ -269,6 +270,7 @@ public class MemberController {
 			System.out.println(memberDTO.getoProfileImage());
 			
 			memberService.memberUpdate(memberDTO);
+			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
 
 			return "redirect:/member/personaldataView";
 		}

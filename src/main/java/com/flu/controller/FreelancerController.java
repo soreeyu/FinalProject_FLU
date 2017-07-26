@@ -53,9 +53,14 @@ public class FreelancerController {
 	
 
 	//프리랜서 리스트
-	@RequestMapping(value="freeList", method=RequestMethod.GET)
-	public List<FreelancerDTO> freelancerList(){
-		return null;
+	@RequestMapping(value="freelancerList", method=RequestMethod.GET)
+	public String freelancerList(Model model){
+		
+		Map<String, Object> map = freelancerService.freelancerList("웹");
+		
+		model.addAttribute("list", map);
+		
+		return "/member/freelancer/freelancerlist";
 	}
 
 
@@ -145,6 +150,9 @@ public class FreelancerController {
 	}
 	
 	
+	
+	
+
 	
 	
 	/************************** Intro **********************************/

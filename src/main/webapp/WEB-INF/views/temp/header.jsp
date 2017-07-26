@@ -12,7 +12,7 @@
 				<ul>
 					<li><a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록</a></li>
 					<li><a href="${pageContext.request.contextPath}/project/projectList">프로젝트 찾기</a></li>
-					<li><a href="#">프리랜서 목록</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/freelancerList">프리랜서 목록</a></li>
 					<li><a href="#">미팅룸 목록</a></li>
 				</ul>
 				<span class="header_right">
