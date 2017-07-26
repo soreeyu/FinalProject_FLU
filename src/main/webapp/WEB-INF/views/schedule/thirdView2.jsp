@@ -60,7 +60,7 @@ div{
 	/* background: red; */
 }
 
-.cardContentWrap {
+.stateContent, .partContent, .userContent {
     width: 816px;
     height: 320px;
     margin: 0 auto;
@@ -100,13 +100,13 @@ div{
     font-weight: bold;
 }
 
-.cardContent_wrap{
+.cardContent{
 	height: calc(100% - 35px);
 	/* background: orange; */
 	overflow: auto;
 }
 
-.cardContent{
+.cardContent_inner{
 	padding: 10px 10px;
 }
 
@@ -193,11 +193,11 @@ div{
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
 		
-		
-		$(".cardContentWrap").html("");
-		getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
-		getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
-		getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
+		getUnitList(scheduleNum,-1,'','할일');// -1 이면 전체가 나온다 
+		getUnitList(scheduleNum,-1,'','진행중');// -1 이면 전체가 나온다 
+		getUnitList(scheduleNum,-1,'','완료');// -1 이면 전체가 나온다 
+		//$(".stateContent").css("display","block");
+		//getUnitList(scheduleNum,-1,'','상태별');// -1 이면 전체가 나온다 
 		
 
 		
@@ -306,13 +306,12 @@ div{
 
 
 		//part별 보기로 클릭했을때 partnum을 주면된다
-		function getUnitList(scheduleNum,partNum,email,unitState,kind){
+		function getUnitList(scheduleNum,partNum,email,unitState){
 		//alert("unit가져오기"+scheduleNum+partNum+email);
 			
 			$.ajax({
 				url: "/flu/schedule/unitList",
 				type: "POST",
-				async:false,
 				data: {
 					scheduleNum:scheduleNum,
 					partNum:partNum,
@@ -323,7 +322,35 @@ div{
 					
 					
 				//alert("unit들"+JSON.stringify(data));
-		
+					if(unitState != "할일" && unitState != "진행중" && unitState != "완료" ){
+						
+						$(".stateContent").css("display","none");
+						$(".partContent").css("display","none");
+						$(".userContent").css("display","none");
+						
+						if(email == ""){/* 파트별 */
+							
+							
+							var makeCard = "";
+							makeCard = makeCard + '<div class="card">';
+							makeCard = makeCard + '<div class="cardTitle_wrap">';
+							makeCard = makeCard + '<span class="cardTitle">'+data[0].partNum+'</span></div>';
+							makeCard = makeCard + '<div class="cardContent"><div class="cardContent_inner">';
+							$(data).each(function(){							
+								makeCard = makeCard + '<div class="unit" data-unitNum='+this.unitNum+'>'+this.unitName+'</div>';						
+							});
+							makeCard = makeCard + '</div></div></div>';
+							
+							$(".partContent").append(makeCard);
+							$(".partContent").css("display","block");
+							
+							
+						}else{/* 사용자별 */
+							$(".userContent").css("display","display");
+						}
+						
+					}else{/* 상태별 */
+						$(".stateContent").css("display","display");
 						var result="<table>";
 						$(data).each(function(){
 							result = result + "<tr>";
@@ -338,18 +365,10 @@ div{
 						result = result + "</table>";
 			
 						$("#unitsDiv").html(result); //화면에 뿌려주기
-						
-						
-						if(kind == "상태별"){
-							makeUnitList(data,unitState); //카드뷰에 집어넣을겨
-						}else if(kind == "파트별"){
-							makeUnitList(data,partNum); //카드뷰에 집어넣을겨
-						}else if(kind == "사용자별"){
-							makeUnitList(data,email); //카드뷰에 집어넣을겨
-						}
 		
+						makeUnitList(data,unitState); //카드뷰에 집어넣을겨
 
-				
+						}
 					
 					}
 			
@@ -358,28 +377,24 @@ div{
 			
 		} //getUnitList끝
 		
-		function makeUnitList(data,state){ //state에는 카드뷰의 제목이옵니다
+		function makeUnitList(data,state){
 			
-			/* 
 			var result="";
 			$(data).each(function(){
 				result = result + "<div class='unit' data-unitnum='"+this.unitNum+"'>"+this.unitName+"</div>";
 			});
-			 */
-			 
+
 			
-			var makeCard = "";
-			makeCard = makeCard + '<div class="card">';
-			makeCard = makeCard + '<div class="cardTitle_wrap">';
-			makeCard = makeCard + '<span class="cardTitle">'+state+'</span></div>';
-			makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
-			$(data).each(function(){							
-				makeCard = makeCard + '<div class="unit" data-unitNum='+this.unitNum+'>'+this.unitName+'</div>';						
-			});
-			makeCard = makeCard + '</div></div></div>';
+			if(state == '할일'){
+				$("#willUnits").html(result);		
+			}else if(state == '진행중'){
+				$("#ingUnits").html(result);
+			}else if(state == '완료'){
+				$("#finUnits").html(result);
+			}else{
+				
+			}
 			
-			$(".cardContentWrap").append(makeCard);
-	
 		}
 		
 		var unitModal;
@@ -442,24 +457,19 @@ div{
 		//nav 클릭
 		$("#cardKind ul li").click(function(){
 			alert($(this).text());
-			
-			$(".cardContentWrap").html("");
-			
+			/* $(".stateContent").css("display","none"); */
+			$(".partContent").html();
+			$(".userContent").html();
 			if($(this).text() == "상태별"){
-				getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
-				getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
-				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','할일');// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','진행중');// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','완료');// -1 이면 전체가 나온다 
 			}else if($(this).text() == "파트별"){
-					
-				getUnitList(scheduleNum,0,'','',"파트별"); //파트갯수만큼 반복문
-					
+					getUnitList(scheduleNum,0,'','');// -1 이면 전체가 나온다 
+					//파트번호가 없는 경우는 ....
 			}else if($(this).text() == "사용자별"){
 				
-				getUnitList(scheduleNum,0,'','myeon',"사용자별"); //사용자수만큼 반복문
-				
 			}
-			
-			
 		});
 
 		
@@ -479,27 +489,61 @@ div{
 		
 		<div class="cardContents">
 			
-			<div class="cardContentWrap">
+			<div class="stateContent">
 			
-				<div class="card">
-				
+				<div class="card" id="card1">
 					<div class="cardTitle_wrap">
-						<span class="cardTitle">상태/파트명/사용자</span>
+						<span class="cardTitle">할일</span>
 					</div>
-					<div class="cardContent_wrap">
-						<div class="cardContent">						
+					<div class="cardContent">
+						<div id="willUnits" class="cardContent_inner">						
 							<div class="unit">어쩌고저쩌고랄라라</div>
 							<div class="unit">어쩌고저쩌고랄라라</div>
 							<div class="unit">어쩌고저쩌고랄라라</div>
 						</div>
 					</div>
+				</div>
+				
+				<div class="card" id="card2">
+					<div class="cardTitle_wrap">
+						<span class="cardTitle">진행중</span>
+					</div>
+					<div class="cardContent">
+						<div id="ingUnits" class="cardContent_inner">
+							
+							<div class="unit">어쩌고저쩌고랄라라</div>
+							<div class="unit">어쩌고저쩌고랄라라</div>
+							<div class="unit">어쩌고저쩌고랄라라</div>
 
-					
+						</div>
+					</div>
+				</div>
+				
+				<div class="card" id="card3">
+					<div class="cardTitle_wrap">
+						<span class="cardTitle">완료</span>
+					</div>
+					<div class="cardContent">
+						<div id="finUnits" class="cardContent_inner">
+
+							<div class="unit">어쩌고저쩌고랄라라</div>
+							<div class="unit">어쩌고저쩌고랄라라</div>
+							<div class="unit">어쩌고저쩌고랄라라</div>
+
+						</div>
+					</div>
 				</div>
 				
 				
 			</div>
 			
+			<div class="partContent" style="display:none;">
+				
+			</div>
+			
+			<div class="userContent" style="display:none;">
+				
+			</div>
 			
 		</div>
 		

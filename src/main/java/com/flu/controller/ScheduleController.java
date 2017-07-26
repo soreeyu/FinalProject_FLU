@@ -315,7 +315,16 @@ public class ScheduleController {
 			return list;
 		}
 		
-		public void unitOne(){}
+		@ResponseBody
+		@RequestMapping(value="unitOne",method=RequestMethod.POST)
+		public ScheduleUnitDTO unitOne(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			System.out.println("unitOne정보보기");
+			System.out.println("ggg"+scheduleUnitDTO.getScheduleNum()+" "+scheduleUnitDTO.getUnitNum());
+			ScheduleUnitDTO dto = scheduleService.unitOne(scheduleUnitDTO);	
+			System.out.println("unitOne정보보기다녀옴");
+			return dto;
+			
+		}
 		
 		/*
 		@RequestMapping(value="unitWrite", method=RequestMethod.GET)

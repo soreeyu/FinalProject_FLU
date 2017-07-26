@@ -250,8 +250,9 @@
 	<div class="schedule_header">
 		<div class="header_text">
 			<p id="header_ttt" style="margin-bottom: 20px;">
-				<span>테스트</span>
+				<span>[테스트 프로젝트] 스케줄 </span>
 				<span>2017-08-01-2017-07-31</span>
+				<input type="hidden" id="scheduleNum" value="${scheduleNum}">
 			</p>
 			<p id="header_t">
 				<span>개발 &gt; 웹</span>
