@@ -13,6 +13,9 @@
 <script type="text/javascript" src="../resources/js/scroll.js"></script>
 <script type="text/javascript">
 	$(function() {
+	var reservation_num = "";	
+		
+	
 		/*해당 업체가 보유하고 있는 방의 리스트를 뿌려주는 스크립트  */
 		var num = ${dto.num};
 		 $.ajax({
@@ -49,6 +52,7 @@
 				var result = $("input:radio[name='eachRoom']").is(":checked");
 				if(result){
 				var num = $(this).val();
+				reservation_num = $(this).val();
 				$(".flex_info").hide();
 				$(".box_form").hide();
 				 $.ajax({
@@ -81,9 +85,10 @@
 		
 		 
 		 //예약하기 버튼을 눌렀을떄
-		 $("#reservation_btn").click(function() {
+		 
+		$("#reservation_btn").click(function() {
 			//선택한 방의 넘버를 가져온다.
-			var reservation_num = $("#eachRoom_num").val();
+
 			var meetroom_num = $("#snum").val();
 			var reservation_check  = $("input:radio[name='eachRoom']:checked").val();
 			var eachroom_name = $("input:hidden[id='eachRoom_name"+reservation_check+"']").val();
@@ -280,7 +285,34 @@ label {
     font-size: 18px;
     line-height: 21px;
 }
+#total_price{
+    padding: 0 20px;
+    border-top: 3px solid #ccc;
+    border-color: #ccc;
 
+}
+.pull_box {
+    padding: 19px 0 23px;
+}
+.pull_left {
+    width: 30px;
+    float: left;
+}
+.txt_price {
+    font-size: 28px;
+    line-height: 28px;
+}
+.pull_right {
+    float: right;
+}
+.txt_unit {
+    font-size: 14px;
+    padding-bottom: 3px;
+    padding: 0 0 1px 2px;
+    vertical-align: bottom;
+    color: #6d3afb;
+    text-align: right;
+}
 </style>
 </head>
 <body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
@@ -316,7 +348,17 @@ label {
 		
 		
 		</div>
-		
+		<div id="total_price">
+			<dl class="pull_box">
+				<dt class="pull_left">
+					<strong class="txt_price">\</strong>
+				</dt>
+				<dd class="pull_right">
+					<strong class="txt_price"> </strong>
+					<span class="txt_unit">/ 시간(인)</span>
+				</dd>
+			</dl>
+		</div>
 		<input type="button" id="reservation_btn" value="예약하기">
 		<hr>			
 		</div>

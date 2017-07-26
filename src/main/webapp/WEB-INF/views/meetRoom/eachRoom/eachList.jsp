@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<c:forEach items="${each}" var="E" varStatus="e">
-		<input type="hidden" id="eachRoom_num" value="${E.num}">
+		<input type="hidden" id="eachRoom_num${E.num}" value="${E.num}">
 		<input type="hidden" id="eachRoom_name${E.num}" value="${E.name}"> 
 		<div class="box_form">
 		<ul class="reserve_lst">
@@ -25,6 +25,8 @@
 		</ul>
 		</div>
 		
+		<c:if test="${member.kind eq 'admin' }">
 		<span id="D${E.num}" class="del"> 삭제 </span>
 		<span id="U${E.num}" class="update"> 수정 </span>
+		</c:if>
 	</c:forEach>

@@ -12,7 +12,6 @@
 <!-- 아이콘 -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- 아이콘 -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">$(function(){
     //전송버튼 클릭이벤트
     $("#savebutton").click(function(){
@@ -95,10 +94,25 @@
 			$("#price").val(num);
 		});
 		
+		
 		$("#imfile").change(function() {
-			var imfile= $(this).val();
-			$("#result_img").html("<img src='"+imfile+"'>");
+		    var input = event.target;
+		    var reader = new FileReader();
+		    reader.onload = function(){
+		      var dataURL = reader.result;
+		      var output = document.getElementById('output');
+		      output.src = dataURL;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+			
 		})
+			
+				
+			
+			
+	
+		
+		
 		
 })
 </script>
@@ -199,6 +213,19 @@ section {
     font-size: 20px;
     -webkit-border-radius: 0;
     border-radius: 0;
+}
+.file .result_img {
+    position: relative;
+    float: left;
+    width: 122px;
+    height: 122px;
+    margin: 0 16px 16px 0;
+    vertical-align: top;
+}
+#output{
+	width : 100%;
+	height: 100%;
+	border: 1px white solid;
 }
 .convenience_list{
 	height: 130px;
@@ -365,17 +392,15 @@ a {
 		<div class="file">
 			<div class="inner_img">
 				<div>이미지 파일을 추가해 주세요. (JPG, JPEG, PNG)</div>
-				<div class="result_img">
-				
+				<div class="result_img" >
+					<img id="output">
 				</div>
 			</div>
-			<div class="btn_box">
+			<div class="btn_box " >
 				<label class="btn">
 					<div>파일첨부</div>
-					<input type="file" name="files" class="eachRoomInfo" style="display: none;" id="imfile" >
-					
-				</label>
-	
+					<input type="file" name="files" class="eachRoomInfo" style="display: none;" id="imfile" accept='image/*' > 	
+				</label>	
 			</div>	
 		</div>
 	</div>

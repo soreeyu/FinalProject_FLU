@@ -41,8 +41,8 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value="reserveInsert", method=RequestMethod.GET)
-	public void reserveInsert(Model model, int num, ReservationDTO reservationDTO) throws Exception{
-		EachRoomDTO eachRoomDTO =  reservaionService.eachView(num);//방 번호를 가지고 해당방의 정보를 뿌려준다.
+	public void reserveInsert(Model model, ReservationDTO reservationDTO) throws Exception{
+		EachRoomDTO eachRoomDTO =  reservaionService.eachView(reservationDTO.getNum());//방 번호를 가지고 해당 방의 정보를 뿌려준다.
 		
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());//업체 번호를 가지고 업체의 정보를 뿌려준다.(운영시간, 위치 등등)
 		Calendar ca = Calendar.getInstance();
@@ -102,8 +102,9 @@ public class ReservationController {
 	public void reserveView(Integer num){
 		
 	}
+	
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
-	public void reservePay(ReservationDTO reservationDTO, Model model) throws Exception{
+	public String reservePay(ReservationDTO reservationDTO, Model model) throws Exception{
 		int result = reservaionService.insert(reservationDTO);
 		if(result>0){
 			System.out.println("예약성공");
@@ -111,6 +112,7 @@ public class ReservationController {
 			System.out.println("예약실패");
 		}
 		
+		return "redirect:member/myflu";
 	}
 	
 	@RequestMapping(value="accessTime", method=RequestMethod.POST)

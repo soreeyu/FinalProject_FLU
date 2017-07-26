@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class ReservationDTO {
 	
+	private int num;
 	private String name;
 	private String time;
 	private String reserve_date;
@@ -14,6 +15,12 @@ public class ReservationDTO {
 	private Integer snum;
 	private String phone;
 	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public String getPhone() {
 		return phone;
 	}

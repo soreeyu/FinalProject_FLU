@@ -11,7 +11,7 @@
 	
   	<!-- 예약되어 있는 시간 뿌려주기  -->
   	<select id="Reserved_time" parameterType="com.flu.reservation.ReservationDTO" resultType="com.flu.reservation.ReservationDTO" >
-  		select R.* from reservation R, eachroom E where R.snum=#{snum} and E.name=#{name} and R.snum=E.snum and reserve_date=#{reserve_date}
+  		select R.* from reservation R, eachroom E where R.snum=#{snum} and reserve_date=#{reserve_date} and E.num=#{num} and R.name=#{name}
   	</select>
   	
   	

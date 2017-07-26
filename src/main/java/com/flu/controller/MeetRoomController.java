@@ -71,10 +71,12 @@ public class MeetRoomController {
 	}
 	
 	@RequestMapping(value="meetUpdate",method=RequestMethod.GET)
-	public void meetUpdate(Integer num, Model model) throws Exception{
+	public String meetUpdate(Integer num, Model model) throws Exception{
 		//update form
 		MeetRoomDTO meetRoomDTO = (MeetRoomDTO)meetRoomServiceImpl.view(num);
 		model.addAttribute("dto", meetRoomDTO);
+		
+		return "meetRoom/meetInsert";
 	}
 	
 	@RequestMapping(value="meetUpdate",method=RequestMethod.POST)

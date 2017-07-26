@@ -49,8 +49,6 @@
 		}
 	});
 	
-	
-
 	})
 </script>
 <!-- 주소검색 API  -->
@@ -103,7 +101,7 @@
 <style type="text/css">
 section {
 	min-width : 1152px;
-	width : 70%;
+	width : 60%;
 	margin : 0 auto;
 }
 #meetRoom_header{
@@ -177,19 +175,23 @@ section {
 	<div id="meetRoom_header">
 		공간 정보를 입력해주세요
 	</div>
-	
+	<c:if test="${empty dto.num }">
+	<form action="meetInsert" method="post" enctype="multipart/form-data" id="frm">	
+	</c:if>
+	<c:if test="${not empty dto.num }">
 	<form action="meetInsert" method="post" enctype="multipart/form-data" id="frm">
+	</c:if>
 	<div class="meetRoom_name">
 		<span>
 		공간명
 		</span>
-		<input type="text" name="name" placeholder="공간명을 입력해주세요." class="meetRoomInfo">
+		<input type="text" name="name" placeholder="공간명을 입력해주세요." class="meetRoomInfo" value="${dto.name}"> 
 	</div>
 	<div id="meetRoom_contents">
 		<span>
 		공간소개
 		</span>
-		<textarea rows="" cols="" name="contents" id="smarteditor" style="height: 108px;"> </textarea>
+		<textarea rows="" cols="" name="contents" id="smarteditor" style="height: 108px;">${dto.contents}</textarea>
 	</div>
 			
 		<div id="meetRoom_time">
@@ -237,14 +239,14 @@ section {
 		<br>
 		대표이미지<br>
 		<span class="buttonWrap"><input type="file" name="file" id="files" class="meetRoomInfo"></span>
-		<p>우편번호<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo"></p>
+		<p>우편번호<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo" value="${dto.addr_num}"></p>
 		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 		<br>
-		<p>주소<input type="text" name="addr_main" id="sample6_address" placeholder="주소" class="meetRoomInfo"></p>
-		<p>상세주소<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" class="meetRoomInfo"></p>
+		<p>주소<input type="text" name="addr_main" id="sample6_address" placeholder="주소" class="meetRoomInfo" value="${dto.addr_main}"></p>
+		<p>상세주소<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" class="meetRoomInfo" value="${dto.addr_detail}"></p>
 		<div class="meetRoom_name">
 		홈페이지
-		<input type="text" name="homePage" class="meetRoomInfo">		
+		<input type="text" name="homePage" class="meetRoomInfo" value="${dto.homePage}">		
 		</div>
 		<input type="button" id="savebutton" value="전송">
 	</form>

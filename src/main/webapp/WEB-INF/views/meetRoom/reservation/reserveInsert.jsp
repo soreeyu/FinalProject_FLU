@@ -33,6 +33,7 @@
     	var name=$("#reserved_name").val();
     	var snum = '${map.each.snum}';
     	var reserve_date = "";
+    	var num = '${map.each.num}';
         $("#datepicker").datepicker({
         	altField : "#day",
         	minDate :0,
@@ -40,12 +41,12 @@
         		$("#day").val(data);// 클릭한 날짜
         		accessTime(snum);
         		reserve_date = $("#day").val();
-				load(reserve_date, name, snum);
+				load(reserve_date, num, snum, name);
         		/* 날짜 하나 클릭할 때 해당 날짜에 예약된 정보를 가져온다. */
         	}
         });
-        		function load(reserve_date, name, snum) {
-	        		$.post("reservedTime", {reserve_date : reserve_date, name : name, snum:snum}, function(data) {
+        		function load(reserve_date, num, snum, name) {
+	        		$.post("reservedTime", {reserve_date : reserve_date, num : num, snum:snum, name:name}, function(data) {
 	        			var count = data.reserve_count;
 	        			var reserve_in = data.reserve_in;
 	        			var reserve_out = data.reserve_out;
@@ -75,7 +76,7 @@
         /* 페이지 로딩 되면서 에이작스로 운영시간을 가져와서 뿌려준다. */
         reserve_date = $("#day").val();
         accessTime(snum);
-        load(reserve_date, name, snum);
+        load(reserve_date, num, snum, name);
         function accessTime(snum) {
         	$("#reserve_time").html("");
 		$.ajax({
@@ -345,6 +346,7 @@ font-size:14px;
 	<c:forEach items="${map.reserved}" var="r">
 	<input type="hidden" id="reserved_name" value="${r.name}">
 	</c:forEach>
+	<input type="hidden" id="num" value="${map.each.num}">
 	<input type="hidden" name="name" value="${map.each.name}" id="name">
 	<input type="hidden" name="reserve_date" id="day" class="reserve_Info"> 
 	<input type="hidden" name="price" id="rprice">
@@ -417,12 +419,12 @@ font-size:14px;
 		<span class="color_select">선택</span>
 	</div>
 	
-	<p>인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0"> </p>
+	<p>인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}"> *최대 수용 인원 : ${map.each.human}</p>
 	
 	<!--세션에서 예약자 정보 가져오기  -->
 	<p>예약자 : <input type="text" name="reserve_name" class="reserve_Info"> </p>
-	<p>연락처 : <input type="text" name="phone" class="reserve_Info"> </p>
-	<p>이메일 : <input type="text" name="email" class="reserve_Info"> </p>
+	<p>연락처 : <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> </p>
+	<p>이메일 : <input type="text" name="email" class="reserve_Info" value="${member.email}"> </p>
 
 	<!-- DB에 들어갈 내용은 아니고 업체의 간단한 정보확인용 뷰  -->
 	
