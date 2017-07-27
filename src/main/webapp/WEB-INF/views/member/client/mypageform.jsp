@@ -109,7 +109,6 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -151,28 +150,21 @@
 				<div class="contents_inner">
 					
 					<section class="profile_wrap">
-						<p><span>클라이언트 정보</span></p>
+						<p><span>클라이언트 수정</span></p>
 						
 						<div class="no_data_wrap">
-							<c:if test="${empty dto.intro }">
-							<div class="no_data">
-								<div class="no_img">
-									<img alt="자기소개" src="${pageContext.request.contextPath }/resources/img/mypage/intro.png">
-									<p>입력된 <span>'자기소개'</span>가 없습니다.</p>
-								</div>
-							</div>
-							</c:if>
-							<c:if test="${not empty dto.intro }">
+							<form id="form" action="${path }" method="post">
+								<input type="hidden" name="email" value="${member.email }">
 								<div>
-									${dto.intro }
+									<textarea name="intro" rows="10" cols="100">${dto.intro }</textarea>
 								</div>
-							</c:if>
-							<c:if test="${empty dto.intro }">
-							<a href="clientInsert">입력</a>
-							</c:if>
-							<c:if test="${not empty dto.intro }">
-							<a href="clientUpdate">수정</a>
-							</c:if>
+								
+								<div>
+									<p><span>홈페이지</span> <label><input type="text" name="homepage" value="${dto.homepage }"></label> </p>
+									
+								</div>
+								<p><span id="ok">수정 완료</span><span id="cencel">취소</span></p>
+							</form>
 						</div>
 						
 					</section>
@@ -185,4 +177,18 @@
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
+<script type="text/javascript">
+	$(function() {
+		$("#ok").click(function() {
+			
+			$("#form").submit();
+			
+		});
+		
+		$("#cencel").click(function() {
+			history.back();
+		});
+		
+	});
+</script>
 </html>

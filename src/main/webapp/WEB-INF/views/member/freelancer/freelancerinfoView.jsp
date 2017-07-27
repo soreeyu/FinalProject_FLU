@@ -229,7 +229,14 @@
 						<div class="info_body">
 							<div class="info1 info_div">
 								<label>직종</label>
-								<label>${free.dto.jobKind }</label>
+								<label>
+								<c:if test="${not empty free.dto.jobKind }">
+								${free.dto.jobKind }
+								</c:if>
+								<c:if test="${empty free.dto.jobKind }">
+								X
+								</c:if>
+								</label>
 							</div>
 							<div class="info2 info_div">
 								<label>관심분야</label>
@@ -256,7 +263,14 @@
 							</div>
 							<div class="info3 info_div">
 								<label>활동가능성</label>
-								<label>${free.dto.possibility }</label>
+								<label>
+								<c:if test="${not empty free.dto.possibility }">
+								${free.dto.possibility }
+								</c:if>
+								<c:if test="${empty free.dto.possibility }">
+								X
+								</c:if>
+								</label>
 							</div>
 							<div class="info4 info_div">
 								<c:if test="${not empty free.dto.jobKind }">

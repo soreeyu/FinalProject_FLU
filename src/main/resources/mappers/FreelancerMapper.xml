@@ -5,6 +5,10 @@
   
   <mapper namespace="FreelancerMapper">
   		
+  		 <sql id="search">
+ 			where j.intro like '%' || #{search } || '%' or j.INTERESTING like '%' || #{search} || '%' or j.nickname like '%' || #{search} || '%' 
+ 		</sql>
+  		
   		
   		<!-- 프리랜서 생성 -->
   		<insert id="freelancerInsert" parameterType="java.lang.String">
@@ -35,13 +39,24 @@
   			select * from freelancer where email = #{email}
   		</select>
   		
-  		
+  		<!-- 프리랜서 totalCount -->
+  		<select id="freelancerCount" resultType="java.lang.Integer" parameterType="com.flu.util.ListInfo">
+  			select count(nvl(m.email,0)) from 
+  			(select j.email from 
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.emailcheck = 1) j
+  			  <include refid="search"/> 
+  			 ) m
+  		</select>
   		
   		
   		<!-- 프리랜서 리스트1 검색키워드별 email 가져오기 -->
   		<select id="freelancerList_email" resultType="java.lang.String" parameterType="com.flu.util.ListInfo">
-  			select * from (select m.*, rownum R from (select j.email from (select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email) j  
-			where j.intro like #{search} or j.INTERESTING like #{search} or j.nickname like #{search}) m) where R between #{startRow} and #{lastRow}
+  			select * from 
+  			(select m.*, rownum R from 
+  			(select j.email from 
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.emailcheck = 1) j  
+			 <include refid="search"/>  
+			) m) where R between #{startRow} and #{lastRow}
   		</select>
   		<!-- 프리랜서 리스트2 각 리스트 가져오기 -->
   		<select id="freelancerList_member" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">

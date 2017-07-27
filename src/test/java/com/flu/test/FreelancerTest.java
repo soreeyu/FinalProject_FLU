@@ -46,7 +46,7 @@ public class FreelancerTest extends MyAbstract{
 	public void Test3(){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		freelancerDAO.freelancerList("웹");
+		//freelancerDAO.freelancerList("웹");
 		
 		/*List<MemberDTO> member = (List<MemberDTO>)map.get("member");
 		List<FreelancerDTO> free = (List<FreelancerDTO>)map.get("freelancer");

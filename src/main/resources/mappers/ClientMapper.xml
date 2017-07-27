@@ -17,5 +17,19 @@
   	</select>
   	
   	
+  	<!-- 클라이언트 정보 등록 -->
+  	<insert id="clientInsert" parameterType="com.flu.client.ClientDTO">
+  		insert into client values(#{email},#{intro},#{homepage},0,0,0,0,0)
+  	</insert>
+  	<!-- 클라이언트 정보 수정 -->
+  	<update id="clientUpdate" parameterType="com.flu.client.ClientDTO">
+  		update client set intro = #{intro} , homepage = #{homepage} where email = #{email}
+  	</update>
+  	<!-- 클라이언트 소개 수정 -->
+  	<update id="clientUpdate2" parameterType="com.flu.client.ClientDTO">
+  		update client set intro = #{intro} where email = #{email}
+  	</update>
+  	
+  	
   
   </mapper>

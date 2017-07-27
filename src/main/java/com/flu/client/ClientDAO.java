@@ -17,15 +17,16 @@ public class ClientDAO{
 	private SqlSession sqlsession;
 	private final String NAMESPACE = "ClientMapper.";
 	
-	//클라이언트 정보 추가등록(소개,홈페이지 Update)
-	public int clientInsert2(ClientDTO clientDTO){
-	
-		return 0;
-	}
-	//클라이언트 정보 추가등록(프로젝트 Update)
-	public int clientInsert3(ClientDTO clientDTO){
+	//클라이언트 정보 추가
+	public int clientInsert(ClientDTO clientDTO){
 		
-		return 0;
+		return sqlsession.insert(NAMESPACE+"clientInsert", clientDTO);
+	}
+	
+	//클라이언트 정보 수정
+	public int clientUpdate(ClientDTO clientDTO){
+		
+		return sqlsession.update(NAMESPACE+"clientUpdate", clientDTO);
 	}
 	
 	

@@ -75,6 +75,9 @@ public class ListInfo {
 		if(this.curBlock==this.totalBlock){
 			this.lastNum=totalPage;
 		}
+		if(this.totalBlock==0){
+			this.lastNum = 1;
+		}
 	}
 
 	

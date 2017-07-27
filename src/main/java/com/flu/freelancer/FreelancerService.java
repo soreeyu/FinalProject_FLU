@@ -54,17 +54,19 @@ public class FreelancerService{
 	
 	//관심분야를 가져서와서 리스트에 담는 뷰
 	public Map<String, Object> freelancerView2(String email){
+		System.out.println("내 이메일 :"+email);
 		FreelancerDTO freelancerDTO = freelancerDAO.freelancerView(email);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		List<String> ar = new ArrayList<String>();
+		List<String> ar2 = new ArrayList<String>();
+		if(freelancerDTO.getInteresting() != null){
 		String interesting = freelancerDTO.getInteresting();
 		String [] interestingArray = interesting.split(",");
 		
 		String [] interestingArray2 = null;
 		
-		List<String> ar = new ArrayList<String>();
-		List<String> ar2 = new ArrayList<String>();
 		for(int i = 0; i< interestingArray.length; i++){
 			interestingArray2 = interestingArray[i].split("_");
 			
@@ -80,6 +82,11 @@ public class FreelancerService{
 		map.put("interesting", ar);
 		map.put("interesting2", ar2);
 		map.put("dto", freelancerDAO.freelancerView(email));
+		}else{
+			map.put("dto", freelancerDAO.freelancerView(email));
+			map.put("interesting", ar);
+			map.put("interesting2", ar2);
+		}
 		
 		return map;
 	}
