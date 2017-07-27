@@ -23,29 +23,64 @@ public class CheckProjectService {
 	private CheckProjectDAO checkProjectDAO;
 	
 	public List<ProjectDTO> checkList(Map<String, Object> map) throws Exception{
-	
-		List<ProjectDTO> ar = checkProjectDAO.checkList(map);
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YY-MM-dd");
-		
-		System.out.println(ar.get(0).getStartDate().substring(0,ar.get(0).getStartDate().toString().lastIndexOf(" ")));
-		
-		return null;
+			if(!((ProjectDTO)map.get("projectDTO")).getStartDate().equals("")){
+				((ProjectDTO)map.get("projectDTO")).setStartDate(((ProjectDTO)map.get("projectDTO")).getStartDate().replaceAll("-", "/").substring(2));
+			}
+			
+			if(!((ProjectDTO)map.get("projectDTO")).getFinishDate().equals("")){
+				((ProjectDTO)map.get("projectDTO")).setFinishDate(((ProjectDTO)map.get("projectDTO")).getFinishDate().replaceAll("-", "/").substring(2));
+				
+			}
+			if(!((ProjectDTO)map.get("projectDTO")).getReg_date().equals("")){	
+				((ProjectDTO)map.get("projectDTO")).setReg_date(((ProjectDTO)map.get("projectDTO")).getReg_date().replaceAll("-", "/").substring(2));
+				
+			}
+			
+			return checkProjectDAO.checkList(map);
 		
 	}
 	
 /*	public List<ProjectDTO> failList(ListInfo listInfo){
 		return checkProjectDAO.failList(listInfo);
 	}
-	
-	public List<ProjectDTO> waitList(ListInfo listInfo){
-		return checkProjectDAO.waitList(listInfo);
+		*/
+	public List<ProjectDTO> waitList(Map<String, Object> map){
+		
+		if(!((ProjectDTO)map.get("projectDTO")).getStartDate().equals("")){
+			((ProjectDTO)map.get("projectDTO")).setStartDate(((ProjectDTO)map.get("projectDTO")).getStartDate().replaceAll("-", "/").substring(2));
+		}
+		
+		if(!((ProjectDTO)map.get("projectDTO")).getFinishDate().equals("")){
+			((ProjectDTO)map.get("projectDTO")).setFinishDate(((ProjectDTO)map.get("projectDTO")).getFinishDate().replaceAll("-", "/").substring(2));
+			
+		}
+		if(!((ProjectDTO)map.get("projectDTO")).getReg_date().equals("")){	
+			((ProjectDTO)map.get("projectDTO")).setReg_date(((ProjectDTO)map.get("projectDTO")).getReg_date().replaceAll("-", "/").substring(2));
+			
+		}
+		
+		return checkProjectDAO.waitList(map);
 	}
 	
-	public List<ProjectDTO> finishList(ListInfo listInfo){
-		return checkProjectDAO.finishList(listInfo);
+	public List<ProjectDTO> finishList(Map<String, Object> map){
+		
+		if(!((ProjectDTO)map.get("projectDTO")).getStartDate().equals("")){
+			((ProjectDTO)map.get("projectDTO")).setStartDate(((ProjectDTO)map.get("projectDTO")).getStartDate().replaceAll("-", "/").substring(2));
+		}
+		
+		if(!((ProjectDTO)map.get("projectDTO")).getFinishDate().equals("")){
+			((ProjectDTO)map.get("projectDTO")).setFinishDate(((ProjectDTO)map.get("projectDTO")).getFinishDate().replaceAll("-", "/").substring(2));
+			
+		}
+		if(!((ProjectDTO)map.get("projectDTO")).getReg_date().equals("")){	
+			((ProjectDTO)map.get("projectDTO")).setReg_date(((ProjectDTO)map.get("projectDTO")).getReg_date().replaceAll("-", "/").substring(2));
+			
+		}
+		
+		return checkProjectDAO.finishList(map);
 	}
-	*/
+
 	
 	
 	

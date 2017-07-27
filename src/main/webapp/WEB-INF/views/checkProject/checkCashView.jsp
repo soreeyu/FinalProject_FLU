@@ -34,7 +34,7 @@ $(function() {
 		
 	 	$.ajax({
 			
-			url: "./checkMemberInfo",
+			url: "../applicant/checkApplicantInfo",
 			type: "GET",
 			data: {email:remail,pay:pay},
 			success:function(data){
