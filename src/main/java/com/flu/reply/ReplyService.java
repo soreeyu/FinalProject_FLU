@@ -28,12 +28,12 @@ public class ReplyService {
 		return replyDAO.replyDelete(num);
 	}
 	
-	public List<ReplyDTO> replyList(HashMap<String, Object> map){
+	public List<ReplyDTO> replyList(ListInfo listInfo, ProjectDTO projectDTO){
 		
 		
-		/*HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("listInfo", listInfo);
-		map.put("project", projectDTO);*/
+		map.put("project", projectDTO);
 		List<ReplyDTO> ar =  replyDAO.replyList(map);
 		
 		System.out.println("service의 ar=="+ar);

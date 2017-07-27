@@ -20,8 +20,10 @@ import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.meetRoom.MeetRoomServiceImpl;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
+
 import com.flu.reservation.ReservationDTO;
 import com.flu.room.RoomDTO;
+
 import com.flu.util.ListInfo;
 
 @Controller
@@ -294,6 +296,7 @@ public class MemberController {
 		}
 		
 		
+
 		//미팅룸 예약 현황 가져오기 
 		@RequestMapping(value="myMeetRoom", method=RequestMethod.GET)
 		public void MemberReservedList(HttpSession session, ListInfo listInfo, Model model) throws Exception{
@@ -328,7 +331,6 @@ public class MemberController {
 			}				
 			
 		}
-		
-		
+
 		
 }

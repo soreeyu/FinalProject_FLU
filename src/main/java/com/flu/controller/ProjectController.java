@@ -116,34 +116,65 @@ public class ProjectController {
 	
 	//list
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
-	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO){
-
-		String sk2=null;
-		int totalCount = projectService.projectCount(listInfo);
-		listInfo.makePage(totalCount);
-		listInfo.makeRow();
-		List<ProjectDTO> ar = projectService.projectList(listInfo);
+	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
 		
-	
-		model.addAttribute("list", ar);
-		model.addAttribute("type", "list");
-		model.addAttribute("pjcount", totalCount);
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO= (MemberDTO)session.getAttribute("member");
+
+
 		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
 		
 		
 		return "project/projectList";
 	}
 	
 	
+	//project 리스트 AJAX
+	@RequestMapping(value="projectListInner", method=RequestMethod.GET)
+	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO){
+		System.out.println("projectListInner요");
+		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println("projectListInner의 email="+memberDTO.getEmail());
+				
+			
+		System.out.println("controller에서 state="+projectDTO.getState());
+		int totalCount =  projectService.projectCount(listInfo);
+		System.out.println("projectListInner의 project count="+totalCount);
+				
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+				
+		List<ProjectDTO> ar = projectService.projectList(listInfo);
+				
+		System.out.println("projectListInner의 ar="+ar);
+
+		System.out.println("=====================");
+		System.out.println("arrangeMoney");
+		System.out.println("search="+listInfo.getSearch());
+		System.out.println("kind="+listInfo.getKind());
+		System.out.println("arrange="+listInfo.getArrange());
+		System.out.println("curPage="+listInfo.getCurPage());
+		System.out.println("=====================");	
+		
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", totalCount);
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("listInfo", listInfo);
+		}
+	
+	
 	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
 	public void arrangeMoney(Model model, ListInfo listInfo){
-		System.out.println("=====================");
+		/*System.out.println("=====================");
 		System.out.println("arrangeMoney");
 		System.out.println(listInfo.getSearch());
 		System.out.println(listInfo.getKind());
 		System.out.println(listInfo.getArrange());
 		System.out.println(listInfo.getCurPage());
-		System.out.println("=====================");	
+		System.out.println("=====================");	*/
 	}
 	
 	//view
@@ -154,20 +185,13 @@ public class ProjectController {
 		}
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
-		System.out.println(projectDTO.getProjectNum());
-		System.out.println(projectDTO.getName());
-		System.out.println(projectDTO.getSkill());
-		System.out.println(projectDTO.getEmail());
-		
+
 		System.out.println("session의 사진을 불러와보자");
 		memberDTO = (MemberDTO)session.getAttribute("member");
-/*		System.out.println("profileOname="+memberDTO.getoProfileImage());
-		System.out.println("profileOname="+memberDTO.getfProfileImage());*/
 		
 		
 		model.addAttribute("dto", projectDTO);
-		
-		
+		model.addAttribute("member", memberDTO);
 		
 	}
 	
@@ -191,6 +215,7 @@ public class ProjectController {
 		}else{
 			
 		}*/
+		
 		return "project/projectInsert"; 
 		
 	}
@@ -295,6 +320,34 @@ public class ProjectController {
 		
 		return "redirect:/project/projectList";
 	}
+
+
+
+	//Test
+	//Client가 mypage에서 확인하는 myprojectList
+	//@RequestMapping(value="projectView")
+	/*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
+		System.out.println("Client ProjectList");
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		int totalCount = projectService.clientPjCount(listInfo, memberDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
+		
+		System.out.println("totalCount="+totalCount);
+		System.out.println("arsize="+ar.size());
+	
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", totalCount);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+		
+		return "project/clientProjectList";
+	}*/
+	
+
 
 	
 }

@@ -64,6 +64,16 @@ section {
 .info {
 	padding-bottom: 10px;
 }
+.pagination-wrapper {
+    text-align: center;
+    height: 100px;
+}
+.pagination {
+	display: inline-block;
+    padding-left: 0;
+    margin: 10px 0;
+    vertical-align: top;
+}
 
 </style>
 </head>
@@ -95,7 +105,7 @@ section {
 
 	
 	
-		<div id="pagination">
+		<div class="pagination-wrapper">
 			<c:if test="${listInfo.curBlock > 1}">
 				<span class="block">
 				<a href="meetList?curPage=${listInfo.startNum-1}">&lt;
@@ -105,7 +115,7 @@ section {
 			</c:if>
 			<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
 				var="y">
-				<span><a href="meetList?curPage=${y}">${y}</a></span>
+				<span class="pagination"><a href="meetList?curPage=${y}">${y}</a></span>
 			</c:forEach>
 			<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
 				<span class="block">
