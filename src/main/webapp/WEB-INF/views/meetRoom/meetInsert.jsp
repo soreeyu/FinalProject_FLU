@@ -148,39 +148,35 @@ label {
 }
 .flex_wrap{
     margin: 44px 0 0;
+    height : 133px;
 }
 .flex_wrap .column2 {
     margin-left: 0;
     margin-right: 0;
 }
 
-.flex_wrap.column2>div{
-    width: 50%;
-    padding: 0;
-    margin-top: 0;
-}
-.flex_wrap>div {
+.flex_wrap > div {
     float: left;
+    display:inline-block; 
 }
 .flex_wrap.column2>div:nth-child(1){
-	padding-right: 30px;
+	padding-right: 20px;
 }
 .flex_wrap.column2>div:nth-child(2){
-	padding-left: 34px;
+	padding-left: 28px;
 	position: relative;
 }
 
 .box_form{
-	width: 50%;
+	width: 45%;
     padding: 0;
-    padding-right: 34px;
     margin-top: 30px;
     position: relative;
 
 }
 .box_form .tit {
     line-height: 50px;
-    font-size: 18px;
+    font-size: 15px;
     margin-bottom: 0;
     padding: 0;
 }
@@ -209,7 +205,7 @@ label {
 .select>select {
     position: relative;
     z-index: 2;
-    padding: 0 35px 0 13px;
+    padding: 0 30px 0 13px;
     margin: 0;
     height: 48px;
     border: 0;
@@ -228,7 +224,7 @@ label {
 .txt_hour {
 	height : 50px;
 	font-size : 16px;
-    margin-left: 10px;
+    margin-left: 5px;
     line-height: 50px;
     vertical-align: top;
 }
@@ -374,7 +370,7 @@ label {
 			</p>
 		</div>
 		
-		<div class="box_form ">
+		<div class="box_form">
 			<span class="tit">
 				<label >정기휴무</label>
 			</span>
@@ -390,7 +386,7 @@ label {
 						<option value="매월 마지막주">매월 마지막주</option>
 					</select>				
 				</div>
-					 <ul class="check_list week" id="weekError" id="holiday_select_day">
+					 <ul class="check_list week" id="holiday_select_day">
 							<li><input type="checkbox" name="holiday" id="date_MON" value="월요일"> <label for="date_MON">월</label></li>
 							<li><input type="checkbox" name="holiday" id="date_TUE" value="화요일"> <label for="date_TUE">화</label></li>
 							<li><input type="checkbox" name="holiday" id="date_WED" value="수요일"> <label for="date_WED">수</label></li>
@@ -404,7 +400,7 @@ label {
 	</div>
 	
 		
-	<%-- 	<div>
+		<div>
 			<div class="tit">
 				대표이미지 	
 			</div>
@@ -436,7 +432,7 @@ label {
 		홈페이지
 		<input type="text" name="homePage" class="meetRoomInfo" value="${dto.homePage}">		
 		</div>
-		<input type="button" id="savebutton" value="전송"> --%>
+		<input type="button" id="savebutton" value="전송">
 	</form>
 	</section>
 	<c:import url="../temp/footer.jsp"/>
