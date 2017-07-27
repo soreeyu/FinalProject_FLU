@@ -16,9 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.file.FileSaver;
+import com.flu.meetRoom.MeetRoomDTO;
+import com.flu.meetRoom.MeetRoomServiceImpl;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.reservation.ReservationDTO;
+import com.flu.room.RoomDTO;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -291,19 +294,41 @@ public class MemberController {
 		}
 		
 		
-		//미팅룸 예약 현황 가져오기
+		//미팅룸 예약 현황 가져오기 
 		@RequestMapping(value="myMeetRoom", method=RequestMethod.GET)
 		public void MemberReservedList(HttpSession session, ListInfo listInfo, Model model) throws Exception{
-			MemberDTO memberDTO = new MemberDTO();
-			memberDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
-			List<ReservationDTO> ar = memberService.memberReservedList(memberDTO);
 			
-			if(ar!=null){
-				model.addAttribute("list", ar);
-				model.addAttribute("listInfo", listInfo);
+			//관리자를 위한 미팅룸 예약현황 리스트 가져오기 reservation 테이블에 있는 모든 데이터를 가져온다.
+			List<ReservationDTO> ar = null;
+			//세션이 사용자 인경우
+			if(!((MemberDTO)session.getAttribute("member")).getEmail().equals("admin")){
+				System.out.println("세션이 회원입니다.");
+				MemberDTO memberDTO = new MemberDTO();
+				memberDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				
+				ar = memberService.memberReservedList(memberDTO);
+				
+			//세션이 관리자인경우	
+			}else if(((MemberDTO)session.getAttribute("member")).getEmail().equals("admin")){
+				System.out.println("세션이 관리자 입니다.");
+				ar =  memberService.adminReservedlist(listInfo);
+				
 			}
 			
 			
+			
+			if(ar!=null){
+				for(int i=0;i<ar.size();i++){
+					System.out.println(ar.get(i).getReserve_date());
+					
+					
+				}
+				model.addAttribute("list", ar);
+				model.addAttribute("listInfo", listInfo);
+			}				
+			
 		}
+		
+		
 		
 }

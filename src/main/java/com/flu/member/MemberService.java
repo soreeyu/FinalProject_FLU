@@ -15,6 +15,7 @@ import javax.mail.internet.MimeUtility;
 import org.springframework.stereotype.Service;
 
 import com.flu.reservation.ReservationDTO;
+import com.flu.util.ListInfo;
 
 @Service
 public class MemberService {
@@ -113,5 +114,11 @@ public class MemberService {
 	public List<ReservationDTO> memberReservedList(MemberDTO memberDTO) throws Exception{
 		return memberDAO.memberReservedList(memberDTO);
 	}
-
+	//예약현황 리스트 ( 관리자 전용 )
+	public List<ReservationDTO> adminReservedlist(ListInfo listInfo) throws  Exception{
+		int totalCount = memberDAO.totalCount();
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		return memberDAO.adminReservedList(listInfo);
+	}
 }

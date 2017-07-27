@@ -4,6 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="MemberMapper">
+  <sql id="search">
+	<trim prefix="where" prefixOverrides="and || or">
+	<if test="kind == 'name'"> name like '%' || #{search} || '%'</if>
+	<if test="kind == 'price'"> price like '%' || #{search} || '%'</if>
+	<if test="kind == 'reserve_date'"> reserve_date like '%' || #{search} || '%'</if>
+	<if test="kind == 'reserve_name'"> reserve_name like '%' || #{search} || '%'</if>
+	</trim>
+	</sql>
   		
   		<!-- 이메일 인증 상태 업데이트 -->
   		<update id="emailUpdate" parameterType="com.flu.member.MemberDTO">
@@ -43,7 +51,16 @@
   		
   		<!-- 예약현황 가져오기 -->
   		<select id="memberReserved" parameterType="com.flu.member.MemberDTO" resultType="com.flu.reservation.ReservationDTO">
-  			select * from reservation where email=#{email}
-  			<!-- 페이징 처리를 위한 조건 추가할 것 -->
+  			select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date from reservation where email=#{email}
+  		</select>
+  		
+  		<!-- 예약현황 리스트 ( 관리자 전용 )  -->
+  		<select id="adminReserved" parameterType="com.flu.util.ListInfo" resultType="com.flu.reservation.ReservationDTO"> 
+  			select * from
+  			(select rownum N, R.* from
+  			(select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date from reservation
+  			<include refid="search"/>  			
+  			) R)
+  			where N between #{startRow} and #{lastRow}
   		</select>
   </mapper>

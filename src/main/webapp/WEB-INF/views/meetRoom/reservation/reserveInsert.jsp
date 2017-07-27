@@ -143,8 +143,8 @@
     			$("#in").val(index1);
     			$("#out").val(index2);
     		}else if(index1*1==index2*1){
-    			alert("오픈시간과 마감시간을 확인하세요");
-    			$(this).css("background-color", "yellow");  			
+    			$("#in").val(index1);
+    			$("#out").val(index2+1);    			  			
     		}
     	} 
      	

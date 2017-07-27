@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.flu.reservation.ReservationDTO;
+import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
 
 @Repository
@@ -92,5 +93,15 @@ public class MemberDAO {
 		return sqlSession.selectList(NAMESPACE+"memberReserved", memberDTO);
 	}
 	
+	//예약현황 리스트 ( 관리자 전용 ) 
+	public List<ReservationDTO> adminReservedList(ListInfo listInfo) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"adminReserved", listInfo);
+	}
+	
+	//리스트를 가져오기 위한 count
+	public int totalCount() throws Exception{
+		return sqlSession.selectOne("MeetRoomMapper.MeetRoomCount");
+		
+	}
 	
 }

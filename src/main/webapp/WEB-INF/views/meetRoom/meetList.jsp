@@ -7,6 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"/>
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(function() {
+		$("#search_btn").click(function() {
+		var kind = $("#select_kind").val();
+		var search = $("#select_search").val();
+			
+		location.href="meetList?curPage=1&kind="+kind+"&search="+search;
+		});
+		
+		
+		
+		
+		
+	});
+	
+
+</script>
 <style type="text/css">
 section {
 	min-width : 1152px;
@@ -66,6 +83,18 @@ section {
 	</div>
 	</c:forEach>
 
+
+	<div class="search">
+		<select name="kind" id="select_kind">
+			<option value="name">업체명</option>
+			<option value="addr_main">지역</option>
+		</select>
+		<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
+		<input type="button" value="검색" id="search_btn">
+	</div>
+
+	
+	
 		<div id="pagination">
 			<c:if test="${listInfo.curBlock > 1}">
 				<span class="block">

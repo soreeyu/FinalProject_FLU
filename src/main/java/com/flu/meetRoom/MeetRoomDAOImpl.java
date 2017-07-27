@@ -23,7 +23,8 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	
 	@Override
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println(listInfo.getSearch());
+		System.out.println(listInfo.getKind());
 		return sqlSession.selectList(NAMESPACE+"MeetList", listInfo);
 	}
 	

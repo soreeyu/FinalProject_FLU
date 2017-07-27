@@ -237,9 +237,61 @@ label {
 }
 .check_list .week {
     max-width: 344px;
+}
+.select+.check_list {
     margin-top: 10px;
-	border-top: 1px solid rgba(0,0,0,0.1);
-	float: left;
+    left: 0;
+    bottom: 0;
+}
+.check_list {
+    border-top: 1px solid rgba(0,0,0,0.1);
+}   
+	
+input[type="checkbox"]{
+    position: absolute;
+    left: -99999px;
+    font-size: 16px;
+    border-radius: 0;
+    color: #000;
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+.check_list.week li input+label {
+    padding: 16px 0;
+    min-height: 50px;
+    font-size: 15px;
+}
+.check_list li input+label {
+    width: 100%;
+    padding: 23px 0;
+    min-height: 64px;
+    font-size: 20px;
+    color: #656565;
+    border-left: 0;
+    background-color: #fff;
+}
+.check_list li input+label {
+    display: block;
+    width: 100%;
+    padding: 11px 10px;
+    min-height: 37px;
+    font-size: 13px;
+    color: #656565;
+    border-left: 0;
+    background-color: #fff;
+}
+  
+.check_list li input+label:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-left: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 .check_list.week li {
     width: 14.28%;
@@ -247,6 +299,21 @@ label {
     position: relative;
     float: left;
     text-align: center;
+}
+.check_list:after{
+	content: '';
+    display: table;
+    clear: both;
+}
+.box_file {
+	position: relative;
+    margin-top: 55px;
+}
+.box_file .tit{
+    line-height: 50px;
+    font-size: 18px;
+    margin-bottom: 0;
+    padding: 0;
 }
 .option{
 	position : absolute;
@@ -307,6 +374,22 @@ label {
 	height: 100%;
 	border: 1px white solid;
 }
+
+
+.address_box > input:first-child{
+	width : 50%;
+	
+}
+.addr_btn {
+	width: 154px;
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
 </style>
 </head>
 <body>
@@ -375,7 +458,7 @@ label {
 				<label >정기휴무</label>
 			</span>
 			<div class="dayOff">
-				<div class="select">
+				<div class="select ">
 					<select id="holiday_select" name="holiday">
 						<option value="휴무없음">휴무 없음</option>
 						<option value="매주">매주</option>
@@ -400,10 +483,10 @@ label {
 	</div>
 	
 		
-		<div>
-			<div class="tit">
+		<div class="box_file">
+			<span class="tit">
 				대표이미지 	
-			</div>
+			</span>
 			<span class="option">
 				2048 *1158 권장, 한 장당 최대 10MB
 			</span>
@@ -423,11 +506,29 @@ label {
 			</div>
 		</div>
 		
-		<p>우편번호<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo" value="${dto.addr_num}"></p>
-		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-		<br>
-		<p>주소<input type="text" name="addr_main" id="sample6_address" placeholder="주소" class="meetRoomInfo" value="${dto.addr_main}"></p>
-		<p>상세주소<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" class="meetRoomInfo" value="${dto.addr_detail}"></p>
+		<div class="flex_wrap">
+			<span class="tit">
+				<label>
+				주소(위치)				
+				</label>
+			</span>
+			
+			<div class="address_box">
+				<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo" value="${dto.addr_num}">
+				<div class="addr_btn">
+				<label>
+					<div>우편번호 찾기</div>
+					<input type="button" onclick="sample6_execDaumPostcode()">													
+				</label>
+				</div>
+				<input type="text" name="addr_main" id="sample6_address" placeholder="주소" class="meetRoomInfo" value="${dto.addr_main}">
+			</div>
+			<div class="input">
+				<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" class="meetRoomInfo" value="${dto.addr_detail}">						
+			</div>
+		</div>
+	
+		
 		<div class="meetRoom_name">
 		홈페이지
 		<input type="text" name="homePage" class="meetRoomInfo" value="${dto.homePage}">		

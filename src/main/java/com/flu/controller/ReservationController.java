@@ -112,7 +112,7 @@ public class ReservationController {
 			System.out.println("예약실패");
 		}
 		
-		return "redirect:member/myflu";
+		return "redirect:../../member/myMeetRoom";
 	}
 	
 	@RequestMapping(value="accessTime", method=RequestMethod.POST)

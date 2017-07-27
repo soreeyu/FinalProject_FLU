@@ -3,13 +3,12 @@
   
   
   <mapper namespace="MeetRoomMapper">
-  <!-- 	<sql id="search">
+  	<sql id="search">
 	<trim prefix="where" prefixOverrides="and || or">
-	<if test="search == 'title'"> title like '%' || #{find} || '%'</if>
-	<if test="search == 'writer'"> writer like '%' || #{find} || '%'</if>
-	<if test="search == 'contents'"> contents like '%' || #{find} || '%'</if>
+	<if test="kind == 'name'"> name like '%' || #{search} || '%'</if>
+	<if test="kind == 'addr_main'"> addr_main like '%' || #{search} || '%'</if>
 	</trim>
-	</sql> -->
+	</sql> 
   	
   	<!-- 업체 등록  -->
   	<insert id="MeetInsert" parameterType="com.flu.meetRoom.MeetRoomDTO" >
@@ -20,7 +19,9 @@
   	<select id="MeetList" resultType="com.flu.meetRoom.MeetRoomDTO" parameterType="com.flu.util.ListInfo">
   		select * from
   		(select rownum R, M.* from
-  		(select * from meetroom order by num desc) M)
+  		(select * from meetroom 
+  		<include refid="search"/>
+  		order by num desc) M)
   		where R between #{startRow} and #{lastRow}
   	</select>
 
