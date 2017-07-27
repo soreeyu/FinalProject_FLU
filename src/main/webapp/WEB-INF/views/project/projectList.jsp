@@ -594,7 +594,7 @@ $(".project-title").click(function() {
 /* ========================검색========================== */
  
  
- /* total검색기능 */
+ /* -----total검색기능------- */
 $("#searchBtn").click(function() {
 
 	var searchCon = $("#search").val();
@@ -614,7 +614,7 @@ $("#searchBtn").click(function() {
 
 
 
-/* 프로젝트 정렬 */
+/* --------프로젝트 정렬---------- */
 
 $("#by-price-desc").click(function() {
 	alert("금액높은순");

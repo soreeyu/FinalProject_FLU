@@ -112,7 +112,6 @@ $("#preview").click(function() {
 		$(".contents_main").html(data);
 		document.body.scrollTop = 0;
 		});
-		
 	});
 
  $(".num").click(function() {
