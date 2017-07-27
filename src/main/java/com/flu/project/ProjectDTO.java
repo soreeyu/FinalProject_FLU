@@ -9,8 +9,8 @@ public class ProjectDTO {
 	private String detailCategory;	
 	private String name;
 	private String period;
-	private Date startDate;
-	private Date finishDate;
+	private String startDate;
+	private String finishDate;
 	private int budget;
 	private String planState;
 	private String contents;
@@ -25,7 +25,7 @@ public class ProjectDTO {
 	private String addr_num;		
 	private String addr_main;		
 	private String addr_detail;
-	private Date reg_date;			
+	private String reg_date;			
 	
 	
 	public int getProjectNum() {
@@ -58,18 +58,7 @@ public class ProjectDTO {
 	public void setPeriod(String period) {
 		this.period = period;
 	}
-	public Date getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-	public Date getFinishDate() {
-		return finishDate;
-	}
-	public void setFinishDate(Date finishDate) {
-		this.finishDate = finishDate;
-	}
+
 	public int getBudget() {
 		return budget;
 	}
@@ -154,14 +143,25 @@ public class ProjectDTO {
 	public void setAddr_detail(String addr_detail) {
 		this.addr_detail = addr_detail;
 	}
-	public Date getReg_date() {
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getFinishDate() {
+		return finishDate;
+	}
+	public void setFinishDate(String finishDate) {
+		this.finishDate = finishDate;
+	}
+	public String getReg_date() {
 		return reg_date;
 	}
-	public void setReg_date(Date reg_date) {
+	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
-	
-	
+
 	
 	
 }
