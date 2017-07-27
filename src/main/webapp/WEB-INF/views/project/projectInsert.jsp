@@ -613,7 +613,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>모집 마감일자</label>
 					<div class="category-wrapper">
-						<input type="date" name="finishDate">
+						<input type="date" name="finishDate" id="finishDate">
 					</div>
 				</div>
 
@@ -640,7 +640,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br> 예상 시작일</label>
 					<div class="category-wrapper">
-						<input type="date" name="startDate" required="required">
+						<input type="date" name="startDate" id="startDate" required="required">
 					</div>
 				</div>
 
@@ -725,9 +725,20 @@ label{
 
 <script type="text/javascript">
 /* alert("type == ${type}"); */
+ 
+ alert("사용자email = ${member.email}");
+
+	
+
+
+
+
+ 
 
 
  function check_submit() {
+	
+
 	
 	alert("btn");
 	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
@@ -749,6 +760,7 @@ label{
 		alert("File을 선택해주세요");
 	}else if(document.frm.finishDate.value==""){
 		alert("마감일을 선택해주세요");
+
 	}else if(document.frm.addr_main.value==""){
 		alert("주소를 입력해주세요");
 	}else if(document.frm.startDate.value==""){
@@ -757,10 +769,45 @@ label{
 		alert("매니징 경험을 선택해주세요");
 	}else if(document.frm.quick.value==""){
 		alert("급구 여부를 선택해주세요");
-	}else{
-		document.frm.submit();
+	}else if(document.frm.finishDate.value!=""){
+		var finishDate = $("#finishDate").val();
+		 alert("finishDate="+finishDate); 
+		 var finish = new Date(finishDate);
+		 var today = new Date();
+		 alert("today="+today);
+		 var left = finish.getTime()-today.getTime();
+		 alert(left);
+		 var leftDate = Math.ceil(left/(24*60*60*1000));
+		 alert("leftDate="+leftDate);
+		 if(leftDate<7){
+			 alert("마감일은 최소 1주일입니다.");
+		 }else{
+			 alert("마감일 괜춘");
+			 if(document.frm.startDate.value!=""){
+				 var startDate = $("#startDate").val();
+				 alert("startDate="+startDate);
+				 var start = new Date(startDate);
+				 alert("today="+today);
+				 var lef = start.getTime()-finish.getTime();
+				 alert(lef);
+				 var lefDate = Math.ceil(lef/(24*60*60*1000));
+				 alert("시작일-마감일="+lefDate);
+				 if(lefDate<7){
+					 alert("시작일은 마감일 이후 최소 1주일입니다.");
+				 }else{
+					 alert("시작일 적당");
+					 document.frm.submit();
+				 }
+			 }
+		 }
 	}
 }
+
+
+
+
+
+
 
 
 

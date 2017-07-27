@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantService;
 import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
 import com.flu.member.MemberDTO;
@@ -27,6 +29,8 @@ public class ClientController {
 	private ClientService clientService;
 	@Inject
 	private ProjectService projectService;
+	@Inject
+	private ApplicantService applicantService;
 	
 	//클라이언트 정보 추가등록(소개,홈페이지 Update)
 	@RequestMapping(value="clientInsert2" , method=RequestMethod.POST)
@@ -40,6 +44,8 @@ public class ClientController {
 
 		return 0;
 	}
+	
+	
 	
 	
 	
@@ -58,11 +64,7 @@ public class ClientController {
 		listInfo.makeRow();
 		
 		List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
-		System.out.println("arsize="+ar.size());
 		
-		for(int i=0;i<ar.size();i++){
-			System.out.println(ar.get(i).getProjectNum());
-		}*/
 	/*
 		model.addAttribute("list", ar);
 		model.addAttribute("count", totalCount);*/
@@ -90,16 +92,17 @@ public class ClientController {
 			listInfo.makeRow();
 			
 			List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
-		
+			
 			
 			System.out.println("clientController의 ar="+ar);
+
 			model.addAttribute("list", ar);
 			model.addAttribute("count", totalCount);
 			model.addAttribute("member", memberDTO);
 			model.addAttribute("listInfo", listInfo);
 	}
 	
-		
+	
 	
 	
 }

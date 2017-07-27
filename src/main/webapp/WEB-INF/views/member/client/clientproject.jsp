@@ -341,7 +341,6 @@ $.get("projectCheck?state=check&curPage=1", function(data){
 
 /* 검수중인 프로젝트 리스트 */
 $("#check").click(function() {
-	
 	$.get("projectCheck?state=check&curPage=1", function(data){
 		alert("검수중");
 		$(".contents").html(data);
