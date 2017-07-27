@@ -32,7 +32,7 @@
 					<div class="project-body">
 						<div class="project-info">
 							<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
-							<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
+							<div class="fa fa-clock-o">예상기간 ${dto.period}</div>
 							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
 						</div>
 						<div class="project-contents">${dto.contents }</div>
@@ -49,7 +49,7 @@
 						
 						<div class="project-bottom">
 							<span class="main-cate">개발</span>
-							<span class="sub-cate">애플리케이션</span>
+							<span class="sub-cate">${dto.detailCategory }</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
 						
@@ -97,6 +97,7 @@ var curPage="${listInfo.curPage}";
 
 var preview = ((curBlock-2)*perBlock)+1;
 var next = curBlock*perBlock+1;
+
 
 /* 페이징 색상 */
 $(".num").each(function() {

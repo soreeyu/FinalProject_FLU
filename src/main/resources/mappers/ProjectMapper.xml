@@ -8,9 +8,27 @@
   <!-- 검색도 넣기 -->
   
  <sql id="search">
-  <if test="kind=='total'">
-  	where name like '%' || #{search} || '%' or  contents like '%' || #{search} || '%'
-  </if>
+
+
+  <if test="project.detailCategory != null">
+ 	detailCategory=#{project.detailCategory} 
+ </if>  
+
+   name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+ 
+ 
+ </sql>
+ 
+ <sql id="search2">
+ 	<where>
+ 		 <if test="detailCategory != null">
+		 	detailCategory=#{project.detailCategory}
+		 </if> 
+		 <if test="detailCategory == null">
+		   name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+		 </if>
+ 	</where>
+ 
  </sql>
 
 
@@ -20,22 +38,48 @@
   <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
   
   
-  <select id="count" parameterType="com.flu.util.ListInfo" resultType="int">
+  <select id="count" parameterType="java.util.HashMap" resultType="int">
   	select count(nvl(projectNum,0)) from project
-<include refid="search"/>
+	 where detailCategory in('웹', '워드프레스') and 
+	name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'	
+  	 <!-- <if test="detailCategory != null">
+  	 detailCategory=#{project.detailCategory} and name like '%' || #{listInfo.search} || '%'
+ 	</if> 
+ 	<if test="detailCategory == null">
+ 	name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+  	 </if> -->
   </select>
   
   
  
-  	
-  <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
+  	<!-- 
+  <select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
 
 
 		 select * from 
 		(select rownum R, N.* from 
 		(select * from project 
 		
-		<include refid="search"/>
+		<where>
+			<if test="checkList.size()!=0">
+				detailCategory IN
+				<foreach collection="checkList" item="c" open="(" close=")" separator=",">
+					#{c}				
+				</foreach>
+				and
+			</if>
+			name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+		</where>
+		<if test="project.detailCategory != null">
+		detailCategory=#{project.detailCategory} and name like '%' || #{listInfo.search} || '%'
+	 	</if> 
+	 	<if test="project.detailCategory == null">
+	 	name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+  	 	</if>
+  	 	
+		where detailCategory in('웹', '워드프레스') and 
+		name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+	
 		
 		order by
 		<choose>
@@ -56,12 +100,89 @@
 			</otherwise>
 		</choose>
 		
-		
-			<!-- and startDate >= sysdate order by startDate asc -->
-
-		  ) N) where R between #{startRow} and #{lastRow}
+		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
   	</select>
+  	
+  	
+  	
+  	 -->
+  	
+  	
+  	
+  	
+  	
+  	<select id="listMyeon" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+
+
+		 select * from 
+		(select rownum R, N.* from 
+		(select * from project 
+		
+		where 
+		(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+		<if test="result == 1">
+		 and detailCategory IN 
+		 <foreach collection="array" item="c" open="(" close=")" separator=",">
+		 	#{c}
+		 </foreach>
+		</if>
+			
+		
+	<!-- 
+		
+		order by
+		<choose>
+			<when test="arrange=='money'">
+			budget desc
+			</when>
+			<when test="arrange=='lowmoney'">
+			budget asc
+			</when>
+			<when test="arrange=='current'">
+			reg_date desc
+			</when>
+			<when test="arrange=='last'">
+			finishDate asc
+			</when>
+			<otherwise>
+			projectNum desc
+			</otherwise>
+		</choose>
+		 -->
+		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
+
+  	</select>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
   	
 
 
@@ -72,7 +193,6 @@
     
     
   	<select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-  	
   	select * from 
   	(select rownum R, P.* from 
   	(select * from project where email=#{member.email} and state=#{project.state}) P) 

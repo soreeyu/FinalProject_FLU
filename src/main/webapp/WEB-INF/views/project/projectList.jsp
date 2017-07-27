@@ -329,6 +329,7 @@ background-color: white;
 					
 					<input type="hidden" name="kind" value="total">
 					 <input type="hidden" name="arrange" id="arrange">
+					 <input type="hidden" name="detailSkill" id="detailSkill">
 					<input type="text" name="search" id="search"> <input type="button" id="searchBtn" value="SEARCH">
 
 
@@ -569,11 +570,21 @@ background-color: white;
 		
 	</section>
 <script type="text/javascript">
+/* var checkList = $("input[class='dev-chk']:checked");
+var array = new Array();
+var i=0;
+alert("checkList="+checkList);
 
-$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+checkList.each(function(index) {
+	array[index] = $(this).val();
+});
+alert(array);
+
+
+$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&checkList="+array,function(data){
 	$(".contents_main").html(data);
 });
-
+ */
 
 
 
@@ -684,6 +695,8 @@ $("#by-date-finish").click(function() {
 
 
 /* =================프로젝트 카테고리 체크박스 설정================= */
+ 
+ /* 개발자 */
 function devClick() {
 	var devCheck = $("input[class='dev-chk']:checked").length;
 		alert(devCheck);
@@ -694,18 +707,56 @@ function devClick() {
 		}
 	
 }
- $(".dev-chk").click(function() { 
+ $(".dev-chk").click(function() {
+	 
 	 var de_id = $(this).val();
-	 alert(de_id);
+	 /* if(de_id==null){
+		 de_id = "";
+	 }
+	 $(".detailCategory").val(de_id);
+	 alert("value=="+$(".detailCategory").val()); */
+	 var checkList = $("input[class='dev-chk']:checked");
+	 var array = new Array();
+	 var category = "";
+	 var i=0;
+	 alert("checkList="+checkList);
+	 
+	 checkList.each(function(index) {
+		array[index] = $(this).val();
+		
+		/* 
+		category = category + "'"+$(this).val()+"'";
+		
+		if(checkList.length-1 != index){
+			category = category + ",";
+		}
+		 */
+	});
+	 alert(array);
+	 //alert(category);
+	 
 	 var devCheck = $("input[class='dev-chk']:checked").length;
-	 alert(devCheck);
+	 
+	 
+	 var arrangeVal = $("#arrange").val();
+	 var searchCon = $("#search").val();
+	alert("arrangeValue="+arrangeVal);
+	alert("클릭한 프로젝트종류="+de_id);
+	
 	if(($(".dev-chk").length)==devCheck){
 		$("#dev").prop("checked", true);
 	}else{
 		$("#dev").prop("checked", false);
 	}
+	alert("클릭한 프로젝트종류="+de_id);
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
+		 alert("웹들어옴");
+		 $(".contents_main").html(data);
+	}); 
 });
 
+ 
+ /* 디자인 */
   function designClick() {
 		
 	var designCheck = $("input[class='design-chk']:checked").length;
@@ -720,9 +771,7 @@ function devClick() {
 
 $(".design-chk").click(function() { 
 	 var de_id = $(this).val();
-	 alert(de_id);
 	 var designCheck = $("input[class='design-chk']:checked").length;
-	 alert(designCheck);
 	if(($(".design-chk").length)==designCheck){
 		$("#design").prop("checked", true);
 	}else{
@@ -730,6 +779,7 @@ $(".design-chk").click(function() {
 	}
 }); 
 
+/* 프로젝트 카테고리에서 체크로 검색정렬 */
 
 
 

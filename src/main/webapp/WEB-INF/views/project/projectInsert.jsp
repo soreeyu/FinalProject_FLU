@@ -743,7 +743,7 @@ label{
 	alert("btn");
 	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
 		alert("옵션 선택좀");
-	}else if(document.frm.name.value==""){
+	} else if(document.frm.name.value==""){
 		alert("제목을 입력하세요");
 	}else if(document.frm.period.value==""){
 		alert("기간을 입력하세요");
@@ -753,10 +753,13 @@ label{
 		alert("기획상태를 입력하세요");
 	}else if(document.frm.contents.value==""){
 		alert("내용을 입력하세요");
-	}/* else if(document.frm.skill.value==""){
+	} 
+	
+	/* else if($(".chk").prop("checked")==false){
 		alert("skill을 입력하세요");
-	} */
-	else if(document.frm.fileName.value==""){
+	}  */
+	
+	  else if(document.frm.fileName.value==""){
 		alert("File을 선택해주세요");
 	}else if(document.frm.finishDate.value==""){
 		alert("마감일을 선택해주세요");
@@ -769,7 +772,7 @@ label{
 		alert("매니징 경험을 선택해주세요");
 	}else if(document.frm.quick.value==""){
 		alert("급구 여부를 선택해주세요");
-	}else if(document.frm.finishDate.value!=""){
+	} else if(document.frm.finishDate.value!=""){
 		var finishDate = $("#finishDate").val();
 		 alert("finishDate="+finishDate); 
 		 var finish = new Date(finishDate);
@@ -781,6 +784,16 @@ label{
 		 alert("leftDate="+leftDate);
 		 if(leftDate<7){
 			 alert("마감일은 최소 1주일입니다.");
+			 
+			 
+	/* 	  $(".chk").each(function() {
+			
+			 if($(this).prop("checked")==false){
+				  alert($(this).val()); 
+			 }
+		});  */
+			 
+			 
 		 }else{
 			 alert("마감일 괜춘");
 			 if(document.frm.startDate.value!=""){

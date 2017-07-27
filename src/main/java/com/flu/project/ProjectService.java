@@ -40,9 +40,10 @@ public class ProjectService {
 	}
 	
 	//project List
-	public List<ProjectDTO> projectList(ListInfo listInfo){
-		
-		List<ProjectDTO> list = projectDAO.projectList(listInfo);
+	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
+		//System.out.println("checklist service"+checkList.get(0));
+		System.out.println("projectService-projectList");
+		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
 		
 		for(int i=0;i<list.size();i++){
 			String[] parsing = list.get(i).getSkill().split(",");
@@ -55,8 +56,8 @@ public class ProjectService {
 	
 
 	//project Count
-	public int projectCount(ListInfo listInfo){
-		return projectDAO.projectCount(listInfo);
+	public int projectCount(ListInfo listInfo, ProjectDTO projectDTO){
+		return projectDAO.projectCount(listInfo, projectDTO);
 	}
 	
 	
@@ -81,6 +82,7 @@ public class ProjectService {
 			System.out.println(ar.get(i).getSkills());
 		}
 		
+		System.out.println("dao-detailCategory="+ar.get(0).getDetailCategory());
 	
 		return ar;
 	}

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -32,74 +33,25 @@ public class ProjectController {
 	@Inject
 	private ProjectService projectService;
 	
-	/*
-	 // 프로젝트에 생성된 스케줄이 있는지 확인 //1번
-      @ResponseBody
-      @RequestMapping(value="check", method=RequestMethod.GET)
-      public Map<String, Object> checkSchedule(Integer projectNum){
-         System.out.println("check하러옴");
-         System.out.println("projectNum = "+projectNum);
-         Map<String, Object> map = new HashMap<String, Object>();
-         ScheduleMainDTO result = null;
-         try {
-            result = scheduleService.checkSchedule(projectNum);
 
-            System.out.println("check의 result = "+result);
-            if(result != null){ //스케줄이 있음
-               map.put("schedule", "y");
-               
-               String[] test = {"ajax","json","spring"};
-               List<String> bobaelistString = new ArrayList<String>();
-               bobaelistString.add("하이1");
-               bobaelistString.add("하이2");
-               map.put("bobaelistString", bobaelistString);
-               List<SchedulePartDTO> bobaelist = scheduleService.partList(66);
-               map.put("bobaelist", bobaelist);
-               map.put("testbobae", test);
-               
-               map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
-               //model.addAttribute("schedule", "y");
-               //model.addAttribute("scheduleMainDTO", result); 
-               System.out.println("스케줄있음");
-
-            }else{//스케줄이 없음 
-               map.put("schedule", "n");
-               map.put("projectNum", projectNum);
-               //model.addAttribute("schedule", "n");
-               //model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
-               System.out.println("스케줄없음");
-            }
-            //map.put("", "schedule/scheduleMain")
-         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println("check할때 오류임 ");
-            map.put("schedule", "error");
-            e.printStackTrace();
-         }
-         return map;
-
-      }
-	 * 
-	 * */
 	//@ResponseBody
 	@RequestMapping(value="projectMap", method=RequestMethod.GET)
-	public Map<String, Object> projectMap(ListInfo listInfo){
+	public Map<String, Object> projectMap(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
 		
-		System.out.println("들어옴");
+		System.out.println("controller-projectMap");
 		
 
-		int totalCount = projectService.projectCount(listInfo);
+		int totalCount = projectService.projectCount(listInfo, projectDTO);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
-        List<ProjectDTO> pjlist = projectService.projectList(listInfo);
+        List<ProjectDTO> pjlist = projectService.projectList(listInfo, projectDTO, array);
         
         map.put("pjlist", pjlist);
         
- 
 
        
         System.out.println("list="+pjlist);
@@ -120,6 +72,7 @@ public class ProjectController {
 
 		model.addAttribute("listInfo", listInfo);
 		model.addAttribute("member", memberDTO);
+	
 		
 		
 		return "project/projectList";
@@ -128,25 +81,28 @@ public class ProjectController {
 	
 	//project 리스트 AJAX
 	@RequestMapping(value="projectListInner", method=RequestMethod.GET)
-	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO){
+	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
 		System.out.println("projectListInner요");
+		//System.out.println("category"+category);
+		//System.out.println("array"+array.get(0));
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		System.out.println("projectListInner의 email="+memberDTO.getEmail());
 				
 			
-		System.out.println("controller에서 state="+projectDTO.getState());
-		int totalCount =  projectService.projectCount(listInfo);
+		int totalCount =  projectService.projectCount(listInfo, projectDTO);
 		System.out.println("projectListInner의 project count="+totalCount);
 				
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
 				
-		List<ProjectDTO> ar = projectService.projectList(listInfo);
+		List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
 				
 		System.out.println("projectListInner의 ar="+ar);
-
+		System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
+		
+		//System.out.println("chekcLsit찍어보자="+checkList.size());
 		System.out.println("=====================");
-		System.out.println("arrangeMoney");
+		System.out.println("detailCategory="+ar.get(0).getDetailCategory());
 		System.out.println("search="+listInfo.getSearch());
 		System.out.println("kind="+listInfo.getKind());
 		System.out.println("arrange="+listInfo.getArrange());
@@ -161,18 +117,7 @@ public class ProjectController {
 		model.addAttribute("listInfo", listInfo);
 		}
 	
-	
-	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
-	public void arrangeMoney(Model model, ListInfo listInfo){
-		/*System.out.println("=====================");
-		System.out.println("arrangeMoney");
-		System.out.println(listInfo.getSearch());
-		System.out.println(listInfo.getKind());
-		System.out.println(listInfo.getArrange());
-		System.out.println(listInfo.getCurPage());
-		System.out.println("=====================");	*/
-	}
-	
+
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
 	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO){
