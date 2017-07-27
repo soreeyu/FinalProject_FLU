@@ -29,15 +29,17 @@ public class CheckProjectDAO {
 	public List<ProjectDTO>failList(ListInfo listInfo){
 		return sqlSession.selectList(NAMESPACE+"failList",listInfo);
 	}
+		*/
 	
-	public List<ProjectDTO>waitList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"waitList",listInfo);
+	//입금대기중 리스트 불러오기
+	public List<ProjectDTO>waitList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"waitList",map);
 	}
 	
-	public List<ProjectDTO>finishList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"finishList",listInfo);
+	public List<ProjectDTO>finishList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"finishList",map);
 	}
-	*/
+
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.flu.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class CheckProjectController {
 		
 		return "checkProject/checkList";
 	}
-	/*
+/*
 	//모집 실패한 프로젝트 들고오기
 	@RequestMapping(value="checkProjectFailList", method=RequestMethod.GET)
 	public String checkProjectFailList(ListInfo listInfo,Model model){
@@ -100,40 +101,94 @@ public class CheckProjectController {
 
 		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "fail");
 		return "checkProject/checkList";
-	}
+	}*/
 	
 	//입금대기중인 프로젝트 불러오기
 	@RequestMapping(value="checkProjectWaitList", method=RequestMethod.GET)
-	public String checkProjectWaitList(ListInfo listInfo,Model model){
+	public String checkProjectWaitList(ProjectDTO projectDTO, ListInfo listInfo,Model model){
 
-		System.out.println(listInfo.getSearch());
-		System.out.println(listInfo.getKind());
+		if(projectDTO.getCategory()==null){
+			projectDTO.setCategory("");
+		}
+		if(projectDTO.getDetailCategory()==null){
+			projectDTO.setDetailCategory("");
+		}
+		if(projectDTO.getPlanState()==null){
+			projectDTO.setPlanState("");
+		}
+		if(projectDTO.getName()==null){
+			projectDTO.setName("");
+		}
+		if(projectDTO.getEmail()==null){
+			projectDTO.setEmail("");
+		}
+		if(projectDTO.getStartDate()==null){
+			projectDTO.setStartDate("");
+		}
+		if(projectDTO.getFinishDate()==null){
+			projectDTO.setFinishDate("");
+		}
+		if(projectDTO.getReg_date()==null){
+			projectDTO.setReg_date("");
+		}
+		
+		
 		
 		String [] ar = {"wait","ing"};
 		listInfo.setProject(ar);
 
-		List<ProjectDTO> list = checkProjectService.waitList(listInfo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("projectDTO", projectDTO);
+		
+		List<ProjectDTO> list = checkProjectService.waitList(map);
 
 		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "wait");
 		return "checkProject/checkList";
 	}
-	
+
 	//완료된 프로젝트 불러오기 (프리랜서 급여주려고)
 	@RequestMapping(value="checkProjectFinishList", method=RequestMethod.GET)
-	public String checkProjectDoneList(ListInfo listInfo,Model model){
+	public String checkProjectDoneList(ProjectDTO projectDTO,ListInfo listInfo,Model model){
 
-		System.out.println(listInfo.getSearch());
-		System.out.println(listInfo.getKind());
+		if(projectDTO.getCategory()==null){
+			projectDTO.setCategory("");
+		}
+		if(projectDTO.getDetailCategory()==null){
+			projectDTO.setDetailCategory("");
+		}
+		if(projectDTO.getPlanState()==null){
+			projectDTO.setPlanState("");
+		}
+		if(projectDTO.getName()==null){
+			projectDTO.setName("");
+		}
+		if(projectDTO.getEmail()==null){
+			projectDTO.setEmail("");
+		}
+		if(projectDTO.getStartDate()==null){
+			projectDTO.setStartDate("");
+		}
+		if(projectDTO.getFinishDate()==null){
+			projectDTO.setFinishDate("");
+		}
+		if(projectDTO.getReg_date()==null){
+			projectDTO.setReg_date("");
+		}
 		
 		String [] ar = {"finish"};
 		listInfo.setProject(ar);
-
-		List<ProjectDTO> list = checkProjectService.finishList(listInfo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("projectDTO", projectDTO);
+		
+		List<ProjectDTO> list = checkProjectService.finishList(map);
 
 		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "finish");
 		return "checkProject/checkList";
 	}
-	*/
+
 	//입금대기중 프로젝트의 클라이언트 정보 AJAX로 불러오기
 	@RequestMapping(value="checkWait")
 	public String checkWait(ProjectDTO projectDTO,Model model){
@@ -157,36 +212,9 @@ public class CheckProjectController {
 			
 			model.addAttribute("client", memberDTO).addAttribute("state", "ing");
 			
-		return "redirect:checkProject/checkProjectWaitList";
+		return "redirect:/checkProject/checkProjectWaitList";
 	}
 	
-
-	
-	
-	//**************대금관리************************
-	
-	
-	//대금관리 뷰페이지로 가는거
-	@RequestMapping(value="checkCashView")
-	public String viewCash(Integer projectNum,Model model){
-		
-		//지원자 리스트 들고오기
-		model.addAttribute("applicant", applicantService.list(projectNum));
-		//프로젝트 리스트 들고오기
-		model.addAttribute("project",projectService.projectView(projectNum));
-		
-		return "checkProject/checkCashView";
-	}
-	
-	//지원자의 상태 업데이트 (돈을 지급했다고 payFinish로 변경)
-	@RequestMapping(value="checkApplicantUpdate")
-	public String checkApplicantUpdate(String email,Integer projectNum){
-		
-		int result = applicantService.appUpdate(email);
-	
-		
-		return "redirect:/checkProject/checkCashView?projectNum="+projectNum;
-	}
 
 	//클라이언트 이름으로 3개의 테이블에서 정보 들고오기 window.open
 	@RequestMapping(value="checkClientInfo")
@@ -202,13 +230,13 @@ public class CheckProjectController {
 	
 	}
 	
-	//Ajax로 프리랜서 보여주기 member Table만 view 해오는 것
+/*	//Ajax로 프리랜서 보여주기 member Table만 view 해오는 것
 	@RequestMapping(value="checkMemberInfo",method=RequestMethod.GET)
 	public void checkMemberInfo(String email,Integer pay,Model model){
 		
 		model.addAttribute("memberDTO", memberService.memberView(email));
 		model.addAttribute("pay", pay*0.9);
-	}
+	}*/
 	
 
 	

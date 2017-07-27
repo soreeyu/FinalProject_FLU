@@ -285,35 +285,87 @@ cursor: pointer;
 			}
 		}); 
 		
-		$("select[name=name]").val("${projectDTO.name}");
-		$("select[name=email]").val("${projectDTO.email}");
+		$("#name").val("${projectDTO.name}");
+		$("#email").val("${projectDTO.email}");
 		
-		$("select[name=startDate]").val("${projectDTO.startDate}");
-		$("select[name=finishDate]").val("${projectDTO.finishDate}");
-		$("select[name=reg_date]").val("${projectDTO.reg_date}");
+		var startDate = '${projectDTO.startDate}';
+		
+		var y = startDate.substr(0, 2);
+	    var m = startDate.substr(3, 2);
+	    var d = startDate.substr(6, 2);
+	    
+	    
+	    startDate = y+"-"+m+"-"+d;
+	    
+		var finishDate = '${projectDTO.finishDate}';
+		
+		$("#startDate").val('20'+y+"-"+m+"-"+d);
+		
+		y = finishDate.substr(0, 2);
+	    m = finishDate.substr(3, 2);
+	    d = finishDate.substr(6, 2);
+	    
+	    $("#finishDate").val('20'+y+"-"+m+"-"+d);
+	    
+		var reg_date = '${projectDTO.reg_date}';
+		
+		y = reg_date.substr(0, 2);
+	    m = reg_date.substr(3, 2);
+	    d = reg_date.substr(6, 2);
+
+	    $("#reg_date").val('20'+y+"-"+m+"-"+d);
+	    
 		
 		//Ajax---------------------------------------------------
 		
 		
 		$('.bbttnn').click(function() {
 			
-			var client = $(this).attr('title');
+			var email = $(this).attr('title');
 			var num = $(this).attr('lang');
 			var state = $(this).attr('role');
 
+			if('${board}'=='finish'){
+				
+				
+			 	$.ajax({
+					
+					url: "../applicant/applicantListCheck",
+					type: "GET",
+					data: {projectNum:num},
+					success:function(data){
+						data = data.trim();
+						$('#'+num).html(data);
+					}
+					
+				}) 
+				
+
+				
+				$('#'+num).on("click",".btn2", function() {
+					var email = $(this).attr('title');
+					
+					if(confirm(email+"님의 대금처리를 완료하시겠습니까?")){
+						
+					}else{
+						alert("잘생각하셨습니다.");
+					}
+				}) 
+			
+				
+				
+			}else{
+			
 				$.ajax({
 					
 					url: "./checkWait",
 					type: "GET",
-					data: {email:client,projectNum:num,state:state},
+					data: {email:email,projectNum:num,state:state},
 					success:function(data){
 						$('#'+num).html(data);
 					}
 					
 				})
-				
-				
-				
 				
 				$('#'+num).on("click",".btn2", function() {
 
@@ -322,12 +374,12 @@ cursor: pointer;
 					if(confirm("입급여부를 확정하고 프로젝트를 시작하시겠습니까?")){
 						
 						
-						alert(client);
+						alert(email);
 						alert(projectNum);
 						alert(state);
 						
 							
-						location.href="./checkProjectUpdate?email="+client+"&projectNum="+projectNum+"&state="+state;
+						location.href="./checkProjectUpdate?email="+email+"&projectNum="+projectNum+"&state="+state;
 						
 					}else{
 						alert("NO");
@@ -344,7 +396,7 @@ cursor: pointer;
 				}) 
 				
 
-			
+			}			
 			
 		});
 		
@@ -465,19 +517,19 @@ cursor: pointer;
 								</div>
 							</td>
 							<td>프로젝트 명</td>
-							<td><input type="text" name="name"></td>
+							<td><input type="text" name="name" id="name"></td>
 						</tr>
 						<tr>
 							<td>프로젝트 시작일</td>
-							<td><input type="date" name="startDate"></td>
+							<td><input type="date" name="startDate" id="startDate" value="${projectDTO.email}"></td>
 							<td>담당자 명</td>
-							<td><input type="text" name="email"></td>
+							<td><input type="text" name="email" id="email"></td>
 						</tr>
 						<tr>
 							<td>모집마감일</td>
-							<td><input type="date" name="finishDate"></td>
+							<td><input type="date" name="finishDate" id="finishDate"></td>
 							<td>등록날짜</td>
-							<td><input type="date" name="reg_date"></td>
+							<td><input type="date" name="reg_date" id="reg_date"></td>
 						</tr>
 						
 					</table>
@@ -498,7 +550,7 @@ cursor: pointer;
 							<td>담당자</td>
 							<td>등록날짜</td>
 							<td>상태</td>
-							<td>확인</td>
+							<td></td>
 
 						</tr>
 
@@ -533,7 +585,7 @@ cursor: pointer;
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
 								 </td>
 								 <td>
-								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">확인</span>
+								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
 								 </td>
 							</tr>
 							<tr>
