@@ -48,7 +48,10 @@
 	
   <sql id="project">
   
-	  	select * from project where state in 
+  	<choose>
+  		<when test="projectNumList==null">
+  			
+  				  	select * from project where state in 
 	  	
   					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
   					#{item}
@@ -62,12 +65,40 @@
 	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
 	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
 	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
-	    <!-- and projectnum = (select projectnum from applicant where email = (select email from member where name ='한형선') and state in ('finish','payFinish')) -->
-	  	
 	  	
 	  	order by reg_date asc
 		
-	</sql>
+  		</when>
+  		
+  		<otherwise>
+  		
+  		  select * from project where state in 
+	  	
+  					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>	  	
+
+	  	and category like '%' || #{projectDTO.category} || '%' 
+	  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
+	  	and name like '%' || #{projectDTO.name} || '%' 
+	  	and email like '%' || #{projectDTO.email} || '%' 
+	  	and planstate like '%' || #{projectDTO.planState} || '%' 
+	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
+	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
+	    and projectNum in
+	    <foreach collection="projectNumList" item="item" open="(" separator="," close=")">
+	    #{item}
+	    </foreach>
+	  	
+	  	
+	  	order by reg_date asc
+  		
+  		
+  		</otherwise>
+  		
+  	</choose>
+ </sql>
   
   		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
@@ -87,6 +118,11 @@
   		
   		
   		
+  		
+  		
+  		<select id="supportList" resultType="java.lang.String" parameterType="java.lang.String">
+  			select projectnum from applicant where email in (select email from member where name like '%' || #{memberName} || '%') and state in ('finish','payFinish')
+  		</select>
   		
   		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">

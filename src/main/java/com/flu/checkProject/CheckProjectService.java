@@ -1,7 +1,6 @@
 package com.flu.checkProject;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+
 import java.util.List;
 import java.util.Map;
 
@@ -83,6 +82,11 @@ public class CheckProjectService {
 
 	
 	
+	
+	public List<String> supportList(String memberName){
+		
+		return checkProjectDAO.supportList(memberName);
+	}
 	
 	
 	public int update(ProjectDTO projectDTO){
