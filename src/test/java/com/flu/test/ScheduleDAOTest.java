@@ -32,13 +32,13 @@ public class ScheduleDAOTest extends MyAbstract{
 		java.util.Calendar cal = java.util.Calendar.getInstance(); //현재 시간 가져오기
 
 		
-
 		java.sql.Date sDate = new java.sql.Date(cal.getTimeInMillis());
 		System.out.println("Calendar 이용 시간 = "+sDate);
 		
 		java.util.Date uDate = new java.util.Date();
 		sDate = new java.sql.Date(uDate.getTime());
 		System.out.println("utilDate 이용 시간 = "+sDate);
+		
 		
 
 		ScheduleMainDTO scheduleMainDTO = new ScheduleMainDTO();
