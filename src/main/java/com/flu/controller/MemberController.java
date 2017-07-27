@@ -318,14 +318,12 @@ public class MemberController {
 				
 			}
 			
-			
-			
 			if(ar!=null){
 				for(int i=0;i<ar.size();i++){
-					System.out.println(ar.get(i).getReserve_date());
-					
+					ar.get(i).setTime(ar.get(i).getTime().replaceAll(",", "~"));
 					
 				}
+				System.out.println(ar.get(0).getTime());
 				model.addAttribute("list", ar);
 				model.addAttribute("listInfo", listInfo);
 			}				

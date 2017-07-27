@@ -25,11 +25,31 @@
 
 </script>
 <style type="text/css">
-section {
-	min-width : 1152px;
-	width : 60%;
-	margin : 0 auto;
-	height: 1500px;
+.main_section {
+    min-width: 1160px;
+    width: 1160px;
+    height: auto;
+    min-height: 2300px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.meetRoom_header {
+    height: 122px;
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 30px;
+    background-color: white;
+}
+#header_tit1 {
+	font-size: x-large;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+#heaer_tit2{
+	font-size: small;
+    font-weight: lighter;
 }
 .Room{
 	width : 30%;
@@ -39,7 +59,9 @@ section {
 	
 }
 
-
+.search {
+	float: right;
+}
 .Room_Img {
 	display: block;
     position: relative;
@@ -57,10 +79,8 @@ section {
     background-color: #fff;
     overflow : hidden;
     white-space: nowrap;
-	text-overflow : ellipsis;
-    
+	text-overflow : ellipsis;  
 }
-
 .info {
 	padding-bottom: 10px;
 }
@@ -74,12 +94,31 @@ section {
     margin: 10px 0;
     vertical-align: top;
 }
-
 </style>
 </head>
 <body>
 	<c:import url="../temp/header.jsp"/>
-	<section>
+	<section class="main_section">
+	
+	<div class="meetRoom_header">
+		<div class="header_txt">
+			<p id="header_tit1">미팅룸 찾기</p>
+			<p id="header_tit2">개의 미팅룸이 있습니다.</p>
+			
+			<div class="search">
+				<select name="kind" id="select_kind">
+					<option value="name">업체명</option>
+					<option value="addr_main">지역</option>
+				</select>
+				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
+				<input type="button" value="검색" id="search_btn">
+			</div>	
+		</div>
+		
+		
+	</div>
+	
+	
 	<c:forEach items="${list}" var="i">
 	<div class="Room">
 		<div class="Room_Img" >
@@ -94,14 +133,6 @@ section {
 	</c:forEach>
 
 
-	<div class="search">
-		<select name="kind" id="select_kind">
-			<option value="name">업체명</option>
-			<option value="addr_main">지역</option>
-		</select>
-		<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
-		<input type="button" value="검색" id="search_btn">
-	</div>
 
 	
 	

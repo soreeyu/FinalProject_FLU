@@ -10,7 +10,6 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=cde07d5e2e22a53124fd5730df8d372b"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function() {
 		//전송버튼 클릭이벤트
@@ -48,6 +47,20 @@
 			$("#holiday_select_day").show();
 		}
 	});
+	
+	
+	$("#imfile").change(function() {
+	    var input = event.target;
+	    var reader = new FileReader();
+	    reader.onload = function(){
+	      var dataURL = reader.result;
+	      var output = document.getElementById('output');
+	      output.src = dataURL;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+		
+	})
+	
 	
 	})
 </script>
@@ -500,7 +513,7 @@ input[type="checkbox"]{
 				<div class="btn_box " >
 					<label class="btn">
 						<div>파일첨부</div>
-						<input type="file" name="file" id="files" class="meetRoomInfo"style="display: none;" id="imfile" accept='image/*'>
+						<input type="file" name="file"  class="meetRoomInfo"style="display: none;" id="imfile" accept='image/*'>
 					</label>	
 				</div>	
 			</div>

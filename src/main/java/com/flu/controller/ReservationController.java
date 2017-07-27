@@ -47,7 +47,6 @@ public class ReservationController {
 		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());//업체 번호를 가지고 업체의 정보를 뿌려준다.(운영시간, 위치 등등)
 		Calendar ca = Calendar.getInstance();
 		Date da = new Date(ca.getTimeInMillis());
-		System.out.println(da.toString());
 		reservationDTO.setReserve_date(da.toString());
 		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);//방 이름과 업체 번호를 가지고와서 해당 업체의 선택한 방의 예약된 정보를 가져온다.
 		
@@ -111,7 +110,6 @@ public class ReservationController {
 		}else {
 			System.out.println("예약실패");
 		}
-		
 		return "redirect:../../member/myMeetRoom";
 	}
 	

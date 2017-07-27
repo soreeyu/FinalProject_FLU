@@ -16,8 +16,7 @@
 			
 		location.href="myMeetRoom?curPage=1&kind="+kind+"&search="+search;
 		});
-		
-		
+			
 		
 	});
 </script>
@@ -166,6 +165,46 @@
 }
 .contents-inner {
 	padding: 30px;
+	width: 790px;
+	background-color: #fff;
+    border-radius: 3px;
+    border-bottom-width: 2px;
+}
+.reserve_list {
+	width: 100%;
+	border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+	
+}
+.reserve_header	{
+	padding: 10px;
+    font-weight: bold;
+    font-size : 15px;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+
+.reserve_body >td {
+	width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+    white-space: nowrap;
+	text-overflow : ellipsis; 
+}
+.pagination-wrapper	{
+    text-align: center;
+    height: 100%;
+}
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 10px 0;
+    vertical-align: top;
 }
 </style>
 </head>
@@ -213,18 +252,17 @@
 					</h3>
 				</div>
 				<div class="contents-inner">
-					<table>
-						<tr>
+					<table class="reserve_list">
+						<tr class="reserve_header">
 							<td>예약자</td>
 							<td>방이름</td>
 							<td>예약날짜</td>
 							<td>예약인원</td>
-							<td>입실,퇴실(시간)</td>
-							<td>가격</td>
-							
+							<td>예약시간</td>
+							<td>가격</td>		
 						</tr>
 					<c:forEach items="${list}" var="i">
-						<tr>
+						<tr class="reserve_body">
 						<td>${i.reserve_name}</td>
 						<td><a href="../meetRoom/meetView?num=${i.snum}">${i.name}</a></td>
 						<td>
@@ -237,40 +275,46 @@
 					</c:forEach>
 					</table>
 				</div>
+				
+				
+			<c:if test="${member.kind eq 'admin'}">
+			<div class="search">
+				<select name="kind" id="select_kind">
+					<option value="name">업체명</option>
+					<option value="addr_main">지역</option>
+				</select>
+				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
+				<input type="button" value="검색" id="search_btn">
+			</div>
+			</c:if>
+				
+				
+				
+			<div class="pagination-wrapper">
+				<c:if test="${listInfo.curBlock > 1}">
+					<span class="block">
+					<a href="meetList?curPage=${listInfo.startNum-1}">&lt;
+					Prior
+					</a>
+					</span>
+				</c:if>
+				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
+					var="y">
+					<span class="pagination"><a href="meetList?curPage=${y}">${y}</a></span>
+				</c:forEach>
+				<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
+					<span class="block">
+					<a href="meetList?curPage=${pageResult.lastNum+1}">Next &gt;</a>
+					</span>
+				</c:if>
+			</div>
+				
 			</div>
 		</div>
 	</div>
 	
-	<c:if test="${member.kind eq 'admin'}">
-	<div class="search">
-		<select name="kind" id="select_kind">
-			<option value="name">업체명</option>
-			<option value="addr_main">지역</option>
-		</select>
-		<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
-		<input type="button" value="검색" id="search_btn">
-	</div>
-	</c:if>
 	
 	
-		<div id="pagination">
-			<c:if test="${listInfo.curBlock > 1}">
-				<span class="block">
-				<a href="meetList?curPage=${listInfo.startNum-1}">&lt;
-				Prior
-				</a>
-				</span>
-			</c:if>
-			<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
-				var="y">
-				<span><a href="meetList?curPage=${y}">${y}</a></span>
-			</c:forEach>
-			<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
-				<span class="block">
-				<a href="meetList?curPage=${pageResult.lastNum+1}">Next &gt;</a>
-				</span>
-			</c:if>
-		</div>
 	
 	</section>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
