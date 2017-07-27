@@ -162,7 +162,7 @@
     height: 48px;
     padding: 4px 0;
 }
-.sidebar .sidebar-nav ul li a {
+.sidebar .sidebar-nav ul li .taba{
     border-radius: 2px;
     display: block;
     padding: 10px 15px;
@@ -171,7 +171,7 @@
    /*  width: 100%; */
 }
 
-.tab>.current>a {
+.tab>.current>.taba {
     background-color: #2099bb !important;
     color: #ffffff !important;
 }
@@ -184,8 +184,9 @@
 		var scheduleNum = '${scheduleNum}';
 		
 		loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1');
-		
-		
+		getPartList(scheduleNum);
+		getUserList(scheduleNum);
+		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
 		
 		$('ul.tab li').click(function() {
 			//css
@@ -215,6 +216,10 @@
 	
 			
 		});//클릭햇을때
+		
+		
+		
+		
 
 
 	}); //function
@@ -234,6 +239,249 @@
 			
 		}
 	}
+	
+	
+	
+	
+	
+	/**
+	 * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
+	 */
+	function getPartList(scheduleNum){
+		
+		var partsJSONArray = new Array();
+		//var colors = ['red','yellow','orange','green','blue','lime','purple'];
+		var colors = ['#ccccff','#b3b3ff','#9999ff','#8080ff','#6666ff','#4d4dff','#3333ff'];
+		
+		$.ajax({
+			url: "/flu/schedule/partList?scheduleNum="+scheduleNum,
+			type: "GET",
+			async:false,
+			success:function(data){ //json 넘어옴 
+
+				partsJSONArray = data;
+				for(var i=0;i<partsJSONArray.length;i++){
+					partsJSONArray[i].color = colors[((i+1)%7)-1]; //7개설정해놔서그렇습니다
+					partsJSONArray[i].textColor = 'white';
+				}
+				
+				
+				//아래 뿌려주는애
+				var result="<table>";
+				$(data).each(function(){
+					
+					result = result + '<tr class="onePartClick">';
+					result = result + '<td class="schNum">'+ this.scheduleNum + "</td>";
+					result = result + "<td> "+ this.partName + " </td>";
+					result = result + "<td> "+ this.partStartDate + " </td>";
+					result = result + "<td> "+ this.partFinishDate + " </td>";
+					result = result + "<td class='partNum'> "+ this.partNum + " </td>";
+					result = result + "<td> "+ this.partDescFileO + " </td>";
+					result = result + "</tr>";
+				});
+				result = result + "</table>";
+				$("#partsDiv").html(result); //아래화면에 뿌려주기
+				
+				
+				
+				
+				
+				//클라이언트가 unit 등록할때 
+				var unitInsertParts = '';
+				$(data).each(function(){
+					unitInsertParts = unitInsertParts + '<input type="radio" class="partName" name="partName" value="'+this.partName+'" data-num="'+this.partNum+'">'+this.partName;
+				});
+				$("#parts").html(unitInsertParts);
+
+				
+		
+				
+			
+				//return partsJSONArray; 
+				//이렇게하면 비동기화 방식이 무의미 해지기 때문에 //데이터를 담은 후 그 데이터를 사용하기 위한것이기 때문에
+				//동기화 방식 // 즉 데이터가 다 가져와져서 담길때까지 기다려야하기 때문이라는 말이다 
+				//그냥 여기서 함수를 호출해버리는게 좋을수도 있겠다 
+				
+			}
+		}); //success끝
+		
+		alert("ajax아래 함수안에 data "+JSON.stringify(partsJSONArray)); // 오류남
+		return partsJSONArray;
+		
+		
+	} // getPartList() 끝
+
+
+	function getUserList(scheduleNum){
+		
+		$.ajax({
+			url: "/flu/schedule/userList?scheduleNum="+scheduleNum,
+			type: "GET",
+			success: function(data){
+				//alert(JSON.stringify(data));
+				
+				var result="<table>";
+				$(data).each(function(){
+					result = result + "<tr>";
+					result = result + "<td  class='userEmail'>"+ this.email + "</td>";
+					result = result + "<td> "+ this.kind + " </td>";
+					result = result + "<td> "+ this.name+"("+this.nickName+")" + " </td>";
+					result = result + "</tr>";				
+				});
+				result = result + "</table>";
+
+				$("#usersDiv").html(result); //화면에 뿌려주기
+				
+				
+				/* 
+				var unitInsertUsers = '';
+				$(data).each(function(){
+					unitInsertUsers = unitInsertUsers + '<input type="radio" class="email" name="email" value="'+this.email+'">' + this.name + '(' + this.nickName + ')';			
+				});
+			//alert(unitInsertUsers);
+				$("#users").html(unitInsertUsers);
+				
+				 */
+				
+			}
+			
+		});
+		
+	}
+
+
+	//part별 보기로 클릭했을때 partnum을 주면된다
+	function getUnitList(scheduleNum,partNum,email,unitState,kind){
+	//alert("unit가져오기"+scheduleNum+partNum+email);
+		
+		$.ajax({
+			url: "/flu/schedule/unitList",
+			type: "POST",
+			async:false,
+			data: {
+				scheduleNum:scheduleNum,
+				partNum:partNum,
+				email:email,
+				unitState:unitState
+			},
+			success: function(data){
+				
+				
+			//alert("unit들"+JSON.stringify(data));
+	
+						var result="<table>";
+						$(data).each(function(){
+							result = result + "<tr>";
+							result = result + "<td> "+ this.unitNum + " </td>";
+							result = result + "<td> "+ this.unitName + " </td>";
+							result = result + "<td> "+ this.unitDescribe + " </td>";
+							result = result + "<td> "+ this.unitFinishDate + " </td>";
+							result = result + "<td> "+ this.partNum + " </td>";
+							result = result + "<td> "+ this.email + " </td>";
+							result = result + "</tr>";				
+						});
+						result = result + "</table>";
+			
+						$("#unitsDiv").html(result); //화면에 뿌려주기
+						
+						
+						
+					//secondView 를 위한것 
+						var unitsResult="<table>";
+						$(data).each(function(){
+							unitsResult = unitsResult + "<tr>";
+							unitsResult = unitsResult + "<td> "+ this.unitNum + " </td>";
+							unitsResult = unitsResult + "<td> <span class='listModalUnit'>"+ this.unitName + "</span></td>";
+							unitsResult = unitsResult + "<td> "+ this.unitFinishDate + " </td>";
+							unitsResult = unitsResult + "<td> "+ this.email + " </td>";
+							unitsResult = unitsResult + "<td> "+ this.unitState + " </td>";
+							unitsResult = unitsResult + "</tr>";				
+						});
+						unitsResult = unitsResult + "</table>";
+						$("#listModalContents").html(unitsResult); //달력 모달
+					
+						
+					//thirdView 를 위한 것
+					//뿌려논애를 사용해서 그려주는것..
+					//값 들어왓을때만이니까 괜찮을거 같은데
+					if(kind == "상태별"){
+						makeUnitList(data,unitState); //카드뷰에 집어넣을겨
+					}else if(kind == "파트별"){
+						makeUnitList(data,partNum); //카드뷰에 집어넣을겨
+					}else if(kind == "사용자별"){
+						makeUnitList(data,email); //카드뷰에 집어넣을겨
+					}else{
+						
+						alert("지금은 전체 내용이 아래에 있지");
+						
+					}
+	
+
+			
+				
+				}
+		
+			
+		});
+		
+	} //getUnitList끝
+	
+	function makeUnitList(data,state){ //state에는 카드뷰의 제목이옵니다 //상태,파트,사용자 등
+		
+		var makeCard = "";
+		makeCard = makeCard + '<div class="card">';
+		makeCard = makeCard + '<div class="cardTitle_wrap">';
+		makeCard = makeCard + '<span class="cardTitle">'+state+'</span></div>';
+		makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
+		$(data).each(function(){							
+			makeCard = makeCard + '<div class="unit" data-unitNum='+this.unitNum+'>'+this.unitName+'</div>';						
+		});
+		makeCard = makeCard + '</div></div></div>';
+		
+		
+		
+		$(".cardContentWrap").append(makeCard);
+		
+		
+		//카드 뷰 높이조정
+		if($(".card").length <= 3){
+			$(".cardContentWrap").css("height","320px");
+		}else if($(".card").length > 3){
+			$(".cardContentWrap").css("height","640px");
+		}else if($(".card").length > 6){
+			$(".cardContentWrap").css("height","960px");
+		}
+
+		
+	} //makeUnitList 함수 끝
+	
+	
+	
+	
+	/**
+	 * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 
+	 */
+	/* function addEvents(jsonObj){
+		for(var i=0; i<Object.keys(jsonObj).length; i++){
+			//alert('일정추가되고있는가'+i);
+	        $('#schcalendar').fullCalendar('addEventSource', [{
+	            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
+	            title:       jsonObj[i].partName,
+	            start:       jsonObj[i].partStartDate,
+	            end:         jsonObj[i].partFinishDate,
+	            description: jsonObj[i].partNum, 
+	            color:       jsonObj[i].color,
+	            textColor:   jsonObj[i].textColor,
+	            //url: 'https://www.github.com'
+	        }]);
+	        console.log('달력이벤트 추가 ok');
+	    } 
+	} */
+
+
+	
+	
+	
 </script>
 
 </head>
@@ -267,29 +515,16 @@
 			<div class="sidebar">
 				<div class="sidebar-nav">
 					<ul class="tab">
-						<li class="current"  data-tab="tab1"><a href="#">개요</a></li>
-						<li class="" data-tab="tab2"><a href="#">달력보기</a></li>
-						<li class=""  data-tab="tab3"><a href="#">카드보기</a></li>
-						<li class=""  data-tab="tab4"><a href="#">일정/업무수정</a></li>
-						<li class=""  data-tab="tab5"><a href="#">###</a></li>
+						<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
+						<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
+						<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
+						<li class=""  data-tab="tab4"><span class="taba">일정/업무수정</span></li>
+						<li class=""  data-tab="tab5"><span class="taba">###</span></li>
 					</ul>
 				</div>
 			</div>
 			
 			
-			<!-- 
-		<div class="scheduleNav">
-			<div>
-				<ul class="tab">
-					<li class="current" data-tab="tab1"><a href="#">개요</a></li>
-					<li data-tab="tab2"><a href="#">달력보기</a></li>
-					<li data-tab="tab3"><a href="#">표보기</a></li>
-					<li data-tab="tab4"><a href="#">일정수정</a></li>
-				</ul>
-					
-			</div>
-		</div>
-		 -->
 		<div class="tabContentWrap">
 			<div id="tab1" class="tabcontent current">
 				tab1내용 은 개요야 
@@ -308,7 +543,37 @@
 			</div>
 		</div>
 		
-	</div>
+		
+		
+		<div class="clear"></div>
+
+
+		<!-- ------------------- 값 넘어오는거 확인용----------------- -->
+		<div class="testData" style="display:block">
+		
+			<div id="partsDiv"></div>
+			<hr>
+		
+			<div id="unitsDiv"></div>
+			<hr>
+		
+			<div id="clientDiv"></div>
+			<hr>
+		
+			<div id="usersDiv"></div>
+			<hr>
+
+		
+
+		</div>
+
+	
+		
+		
+		
+</div> <!-- main_section 안에 가로정한칸 -->
+	
+
 
 </section>
 

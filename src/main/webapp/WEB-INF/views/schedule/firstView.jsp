@@ -672,8 +672,7 @@
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(233, 94, 81);"></div>
 												<span
-													class="tw-project-analytics-overview__head-legend-text">마감일
-													지남</span><strong>
+													class="tw-project-analytics-overview__head-legend-text">마감일지남</span><strong>
 													<!-- react-text: 477 -->20<!-- /react-text -->
 													<!-- react-text: 478 -->%<!-- /react-text -->
 												</strong>
@@ -1084,7 +1083,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(233, 94, 81);"></div>
-													<div class="tw-chart-legend__text">마감일 지남</div>
+													<div class="tw-chart-legend__text">마감일지남</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -1465,7 +1464,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(233, 94, 81);"></div>
-													<div class="tw-chart-legend__text">마감일 지남</div>
+													<div class="tw-chart-legend__text">마감일지남</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -1846,7 +1845,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(233, 94, 81);"></div>
-													<div class="tw-chart-legend__text">마감일 지남</div>
+													<div class="tw-chart-legend__text">마감일지남</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">0</span>
@@ -2292,7 +2291,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(233, 94, 81);"></div>
-													<div class="tw-chart-legend__text">마감일 지남</div>
+													<div class="tw-chart-legend__text">마감일지남</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">1</span>
@@ -2739,7 +2738,7 @@
 												<div class="tw-chart-legend__name --has-data">
 													<div class="tw-chart-legend__circle"
 														style="border: 4px solid rgb(233, 94, 81);"></div>
-													<div class="tw-chart-legend__text">마감일 지남</div>
+													<div class="tw-chart-legend__text">마감일지남</div>
 												</div>
 												<div class="tw-chart-legend__data">
 													<span class="tw-chart-legend__value">1</span>
@@ -2806,7 +2805,7 @@
 														<div class="tw-chart-legend__name">
 															<div class="tw-chart-legend__circle --compact"
 																style="border: 4px solid rgb(233, 94, 81);"></div>
-															<div class="tw-chart-legend__text --compact" >마감일 지남</div>
+															<div class="tw-chart-legend__text --compact" >마감일지남</div>
 														</div>
 													</div>
 													<div class="tw-chart-legend --compact" id="planned"

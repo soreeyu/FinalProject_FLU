@@ -1,35 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/lib/niee-canvas-chart003.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/lib/ajaxfileupload.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/base.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/core.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/button.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/combo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/datepicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/dropdown.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
-
 
 <style type="text/css">
 
 .schedule_main_container {
-    margin: auto;
-    padding: 20px 0 50px;
-    width: 90%;
+    padding: 50px 25px;
+    width: calc(100% - 50px);
     height: 100%;
+    border-radius: 2px;
+    border: 1px solid #e6e6e6;
+    background: #fff;
 }
 
 .main_container > div {
@@ -47,13 +28,77 @@
 
 
 
+/* ************ unitlist 보기 mordal************* */
+#unitListModal {
+    margin-top: 100px;
+    width: 600px;
+    max-height: 550px;
+    background: white;
+    border-radius: 3px;
+}
+
+#unitListModal .headWrap {
+    width: 100%;
+    height: 50px;
+    background: #2099bb;
+    
+}
+
+#unitListModal .head {
+    /* margin: 0 auto; */
+    padding: 10px 10px;
+    line-height: 30px;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+.listModalContents{
+
+}
+
+.detail {
+    width: calc(100% - 60px);
+    margin: 0 30px;
+    padding: 15px 0;
+    font-weight: bold;
+}
+
+
+.closeBtn:HOVER{
+	color: gray;
+}
+
+
+
+
 </style>
 
 
 <!--  -->
 <script type="text/javascript">
+var unitListModal;
+
 
 	$(function(){
+		
+		var scheduleNum = '${scheduleNum}';
+		
+
+		jui.ready([ "ui.modal" ], function(modal) {
+			alert("모달 생성하기");
+			unitListModal = modal("#unitListModal", {
+		        color: "black",
+		        target: "body",
+		        opacity: 0.5
+		    });
+		});
+		
+		
+		$(document).on("click",".closeBtn",function(data){
+			unitListModal.hide(); 
+		});
+		
 		$('#schcalendar').fullCalendar({
 			 customButtons: {
 				 myCustomButton: {
@@ -82,38 +127,21 @@
 			minTime : 9,
 			maxTime : 19,
 			axisFormat : "HH:mm",
-			editable: false,
-			events: [{
-		        id: 'All Day Event',
-		        title: 'All Day Event',
-		        start: new Date()
-		    }, {
-		        id: 'popo',
-		        title: 'popo',
-		        start: new Date('2017-07-20'),
-		        //end:   '2014-11-05T12:30:00',
-		        description: 'This is a cool event 테슷흐',
-		        color: 'rgb(142, 67, 163)',
-		        textColor: 'black'
-		    }, {
-		        id: 'test2',
-		        title: 'test2',
-		        url: 'http://google.com/',
-		        start: new Date('2017-07-30'),
-		    }],
-		    //등록된 일정을 클릭했을 때 실행하는 함수 
+			editable: true,
+
 		   eventClick: function(calEvent, jsEvent, view) {
 
 		        alert('Event: ' + calEvent.title);
 		        alert('desc: ' + calEvent.description);
-		        partClick(calEvent.description);
-		       // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY); // 화면 좌표인듯
-		       // alert('View: ' + view.name);
+		        //partClick(calEvent.description);
+		        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY); // 화면 좌표인듯
+		        alert('View: ' + view.name);
 
 		        // change the border color just for fun
-		        $(this).css('background', 'orange');
+		        //$(this).css('background', 'orange');
 		        
-		        modal.show(); 
+		        getUnitList(scheduleNum,calEvent.description,'','','');//눌린 파트에 대한 unit 들을 table로 뿌린다
+		        unitListModal.show(); 
 		        
 		        //일정에 가지고있는 링크를 사용해서 열어준다
 		        /*
@@ -132,17 +160,92 @@
 				//$('#contents').val(scheduleParam.contents);
 				//spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
 				//epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
-				writeModal.show(); 
+				//writeModal.show(); 
 				
 		    }
 		});
 		
-	});
+		var resultJson = getPartList(scheduleNum);
+		addEvents(resultJson);
+		
+		
+		
+		$(document).on("click",".listModalUnit",function(){
+			alert("unit 상세보기 modal로 바꿔주면 좋겟지요");
+		});
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}); //function 끝
+	
+	
+	/**
+	 * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 //파트만..
+	 */
+	function addEvents(jsonObj){
+		
+		for(var i=0; i<Object.keys(jsonObj).length; i++){
+			//alert('일정추가되고있는가'+i);
+	        $('#schcalendar').fullCalendar('addEventSource', [{
+	            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
+	            title:       jsonObj[i].partName,
+	            start:       jsonObj[i].partStartDate,
+	            end:         jsonObj[i].partFinishDate,
+	            description: jsonObj[i].partNum, 
+	            color:       jsonObj[i].color,
+	            textColor:   jsonObj[i].textColor,
+	            //url: 'https://www.github.com'
+	        }]);
+	        console.log('달력이벤트 추가 ok');
+	    } 
+	}
+
+	
 	
 </script>
 
-<div class="schedule_main_container">
+<div class="schedule_main_container jui">
 		<div id='schcalendar'></div>
+</div>
+
+<!-- 파트 클릭했을때 unitList 뿌려주기 -->
+<div id="unitListModal" class="msgbox" style="display: none;">
+    <div class="headWrap">
+    	<div class="head">
+    		<div id="partName">DB구축이라던가</div>
+    	</div>      
+    </div>
+    <div class="bodyWrap">
+		<div id="listModalContents">
+			
+			
+			<!-- 여기에 table 그리기 -->
+			<table>
+				<tr>
+					<td><span class="listModalUnit">상세할일 제목쓰</span></td>
+					<td>2017-08-14</td>
+					<td>담당자</td>
+					<td>상태</td>
+				</tr>
+			</table>
+			
+			
+			
+			
+			
+		</div>
+        <div style="text-align: center; margin: 30px;">
+            <!-- <a class="btn focus small">Save</a> -->
+            <a class="closeBtn">Close</a>
+        </div>
+    </div>
 </div>
 	
 
