@@ -205,12 +205,11 @@ background-color: white;
 }
 .project-head{
 	height: 27px;
-	background-color: yellow;
 	margin-bottom: 5px;
 }
 .project-title{
-	color: blue;
-	font-size: 15px;
+	color: #3385ff;
+	font-size: 18px;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -246,7 +245,6 @@ background-color: white;
 	max-height: 60px;
 	float: left;
 	height: 60px;
-	background-color: red;
 }
 .project-contents-right{
 	font-size: 13px;
@@ -284,8 +282,7 @@ background-color: white;
 }
 .skill-name{
 	background-color: #a1a7ad;
-	color: white;
-	
+	padding: 2px 3px;
 }
 .skill-box span{
 	color: #999;
@@ -307,64 +304,17 @@ background-color: white;
 	text-decoration: none;
 	color: #2099bb;
 }
+.deadline{
+	font-weight: bold; 
+	margin-left: 5px;
+}
 </style>
-<script type="text/javascript">
 
-
-	$(function() {
-
-		$("#preview").click(function() { 
-			alert("preview");
-			
-		});
-		$(".num").click(function() {
-
-				var num = $(this).prop("id");
-				alert(num);
-				location.href = "projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}";
-						
-						});
-		$("#nextview").click(function() {
-			alert("nextview")
-			
-		});
-
-		
-		/* $("#test").click(function() {
-			
-			var count = "${pjcount}";
-			alert(count);
-			
-			  for(var j=0;j<count;j++){ 
-				  var list = '${list}'.split(",");
-				  alert(list);
-				  
-		
-				  var skill = list.skill;
-					alert(skill);
-			  }  
-		}); */
-				
-		
-		
-		
-				//C#, CSS, JAVA
-			  
-				/* var sk = skill.split(",");
-				alert(sk.length); //3
-				for(i=0;i<sk.length;i++){
-					$(".skill-name-"+i).text(sk[i]);	
-				}  */
-				
-			
-			
-	});
-</script>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 	<section class="main_section">
-				<form action="" id="frm">
+	
 
 		<div class="project_header">
 			<div class="header_text">
@@ -379,7 +329,7 @@ background-color: white;
 					
 					<input type="hidden" name="kind" value="total">
 					 <input type="hidden" name="arrange" id="arrange">
-					<input type="text" name="search"> <input type="submit" value="SEARCH">
+					<input type="text" name="search" id="search"> <input type="button" id="searchBtn" value="SEARCH">
 
 
 				</div>
@@ -612,84 +562,22 @@ background-color: white;
 			<section class="contents_main">
 			
 		
-			
-		<!-- 프로젝트 각각 -->	
-			<c:forEach items="${list}"  var="dto">
-			
-				<div class="project-unit">
-					<div class="project-head">
-						<div class="project-title" id=${dto.projectNum}>${dto.name}</div>
-					</div>
-					<div class="project-body">
-						<div class="project-info">
-							<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
-							<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
-							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
-						</div>
-						<div class="project-contents">${dto.contents }</div>
-						<div class="project-contents-right">
-							<div class="right-contents-sub">
-							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
-							마감<strong>${dto.finishDate}</strong></div>
-							<div class="right-contents-sub">
-							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							총지원 <strong>몇명</strong></div>
-						</div>
-						
-						<div style="clear: both;"></div>
-						
-						<div class="project-bottom">
-							<span class="main-cate">개발</span>
-							<span class="sub-cate">애플리케이션</span>
-							<div class="skill-box">
-								<span class="skill-main">요구기술</span>
-						
-							<c:forEach items="${dto.skills}" var="sk">
-								 <span class="skill-name">sk = ${sk}</span>
-							
-							</c:forEach>
-							
-							</div>
-						</div>
-					</div>
-				</div>	
-			</c:forEach>
-
-			
-			<div class="contents_bottom">
-				<div class="contents_paging">
-				<c:if test="${listInfo.curBlock>1 }"> -
-				<span id="preview">[이전]</span>		
-				</c:if>
-		
-				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
-					<span class="num" id="${i}">${i}</span>			
-				</c:forEach>
-		
-				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
-				<span id="nextview">[다음]</span>			
-				</c:if>
-				</div>
-	 
-				<div>
-					<p>curPage : ${listInfo.curPage }         search : ${listInfo.search}     kind : ${listInfo.kind }</p>
-					<p>startNum : ${listInfo.startNum}   lastNum : ${listInfo.lastNum}</p>
-					<p>startRow : ${listInfo.startRow}   lastRow : ${listInfo.lastRow}</p>
-					<p>curBlock : ${listInfo.curBlock }      perPage : ${listInfo.perPage}</p>
-				</div>
-
-			</div>
 			</section>
 		</div>
-		</form>
+
 		
 		
 	</section>
 <script type="text/javascript">
 
+$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+	$(".contents_main").html(data);
+});
+
+
+
+
 /* 로그인해야 projectView 진입 가능 */
-
-
 $(".project-title").click(function() {
 	var projectNum=$(this).attr("id");
 	var memberEmail = '${member.email}';
@@ -703,85 +591,99 @@ $(".project-title").click(function() {
 
 
 
+/* ========================검색========================== */
+ 
+ 
+ /* total검색기능 */
+$("#searchBtn").click(function() {
+
+	var searchCon = $("#search").val();
+	alert("검색 : "+searchCon);
+	
+	var arrangeVal = $("#arrange").val();
+	alert(arrangeVal);
+	
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal,function(data){
+		$(".contents_main").html(data);
+	});
+	$("#search").val(searchCon);
+	alert($("#search").val());
+});
 
 
+
+
+
+/* 프로젝트 정렬 */
 
 $("#by-price-desc").click(function() {
-	alert("click");
-	/*  $.ajax({
-	    url: "projectMap",
-	    type: "GET",
- 
-	    success: function(data){
-	       alert(JSON.stringify(data));
-	       		
-	    alert("skill="+data.sk);
-	       alert(JSON.stringify(data.sk)); 
-	       
-	          alert("pjlist="+data.pjlist);
-	          alert(JSON.stringify(data.pjlist));
-	          alert("pjlist[4].name="+data.pjlist[5].name);
-	          alert("pjlist[0].budget="+data.pjlist[0].budget);
-	          alert("pjlist[0].period="+data.pjlist[0].period);
-	          alert("pjlist[0].reg_date="+data.pjlist[0].reg_date);
-	          alert("pjlist[0].contents="+data.pjlist[0].contents);
-	          alert("pjlist[4].skill="+data.pjlist[5].skill);
-	          alert("skills[4]="+data.pjlist[5].skills[0]);
-	          alert("skills.length="+data.pjlist[5].skills.length);
-				
-			$(".project-unit").html(
-				
-			);
-	    }
-		
-	});  */
-});  
-	/* alert("click");
+	alert("금액높은순");
+	$("#arrange").val("money");
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money",function(data){
+		$(".contents_main").html(data);
+	});
+	
 	$("#arrange").val("money");
 	alert($("#arrange").val());
-	$.get("arrangeMoney?search=${listInfo.search}&kind=${listinfo.kind}&arrange=money",function(data){
-		alert("${listInfo.search}");
-		$(".contnets-main").html();
-		
-	}); */
-	/*  alert("cc");
-	  $.ajax({
-		url:"arrangeMoney",
-		dataType:JSON,
-		//"projectList?curPage="+ num	+ "&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}";
-		data:{
-			list:list
-		},
-		type:"GET",
-		success:function(data){
-			alert("success");
-		}
-	}); 
-*/
+	
+}); 
+
+
 
 $("#by-price-asc").click(function() {
 	alert("금액낮은순");
-	$("#arrange").val("mm");
+	$("#arrange").val("lowmoney");
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney",function(data){
+		$(".contents_main").html(data);
+	});
+	
+	$("#arrange").val("lowmoney");
 	alert($("#arrange").val());
-	$("#frm").submit();
+	
 });
+
+
+
 $("#by-date-curr").click(function() {
 	alert("최신등록순");
 	$("#arrange").val("current");
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current",function(data){
+		$(".contents_main").html(data);
+	});
+	
+	$("#arrange").val("current");
 	alert($("#arrange").val());
-	$("#frm").submit();
 });
+
+
+
 $("#by-date-finish").click(function() {
 	alert("마감임박순");
 	$("#arrange").val("last");
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last",function(data){
+		$(".contents_main").html(data);
+	});
+	$("#arrange").val("last");
 	alert($("#arrange").val());
-	$("#frm").submit();
 });
 
 
 
 
-/* 프로젝트 카테고리 체크박스 설정 */
+
+
+
+
+/* =================프로젝트 카테고리 체크박스 설정================= */
 function devClick() {
 	var devCheck = $("input[class='dev-chk']:checked").length;
 		alert(devCheck);
@@ -831,9 +733,8 @@ $(".design-chk").click(function() {
 
 
 
-/* 왼쪽 주소체크박스 */
+/* ======================왼쪽 주소체크박스=================== */
 $(".address-select-btn").click(function() {
-	alert("btn");
 	if($(".address-select-btn").attr("data-on")=="off"){
 		$("#addr_list").css("visibility", "visible");			
 		$(".address-select-btn").attr("data-on", "on");
@@ -842,6 +743,10 @@ $(".address-select-btn").click(function() {
 		$(".address-select-btn").attr("data-on", "off");
 	}
 });
+
+
+	
+
 
 </script>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>

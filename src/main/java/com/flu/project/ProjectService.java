@@ -42,7 +42,6 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo){
 		
-		
 		List<ProjectDTO> list = projectDAO.projectList(listInfo);
 		
 		for(int i=0;i<list.size();i++){
@@ -54,12 +53,16 @@ public class ProjectService {
 		return list;
 	}
 	
-	
 
 	//project Count
 	public int projectCount(ListInfo listInfo){
 		return projectDAO.projectCount(listInfo);
 	}
+	
+	
+	
+	
+	
 	
 	//Client가 mypage에서 확인하는 myprojectList
 	public List<ProjectDTO> clientPjList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){

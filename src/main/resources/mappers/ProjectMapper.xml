@@ -42,14 +42,14 @@
 			<when test="arrange=='money'">
 			budget desc
 			</when>
-			<when test="arrange=='mm'">
+			<when test="arrange=='lowmoney'">
 			budget asc
 			</when>
 			<when test="arrange=='current'">
 			reg_date desc
 			</when>
 			<when test="arrange=='last'">
-			startDate asc
+			finishDate asc
 			</when>
 			<otherwise>
 			projectNum desc

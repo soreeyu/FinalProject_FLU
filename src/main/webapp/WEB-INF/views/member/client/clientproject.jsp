@@ -238,7 +238,6 @@
 .skill-name{
 	background-color: #a1a7ad;
 	padding: 2px 3px;
-	
 }
 .skill-box span{
 	color: #999;

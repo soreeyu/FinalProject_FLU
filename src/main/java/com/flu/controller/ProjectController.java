@@ -113,20 +113,11 @@ public class ProjectController {
 	//list
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
 	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
-
-
-		int totalCount = projectService.projectCount(listInfo);
-		listInfo.makePage(totalCount);
-		listInfo.makeRow();
-		List<ProjectDTO> ar = projectService.projectList(listInfo);
 		
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO= (MemberDTO)session.getAttribute("member");
 
-	
-		model.addAttribute("list", ar);
-		model.addAttribute("type", "list");
-		model.addAttribute("pjcount", totalCount);
+
 		model.addAttribute("listInfo", listInfo);
 		model.addAttribute("member", memberDTO);
 		
@@ -135,15 +126,51 @@ public class ProjectController {
 	}
 	
 	
+	//project 리스트 AJAX
+	@RequestMapping(value="projectListInner", method=RequestMethod.GET)
+	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO){
+		System.out.println("projectListInner요");
+		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println("projectListInner의 email="+memberDTO.getEmail());
+				
+			
+		System.out.println("controller에서 state="+projectDTO.getState());
+		int totalCount =  projectService.projectCount(listInfo);
+		System.out.println("projectListInner의 project count="+totalCount);
+				
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+				
+		List<ProjectDTO> ar = projectService.projectList(listInfo);
+				
+		System.out.println("projectListInner의 ar="+ar);
+
+		System.out.println("=====================");
+		System.out.println("arrangeMoney");
+		System.out.println("search="+listInfo.getSearch());
+		System.out.println("kind="+listInfo.getKind());
+		System.out.println("arrange="+listInfo.getArrange());
+		System.out.println("curPage="+listInfo.getCurPage());
+		System.out.println("=====================");	
+		
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", totalCount);
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("listInfo", listInfo);
+		}
+	
+	
 	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
 	public void arrangeMoney(Model model, ListInfo listInfo){
-		System.out.println("=====================");
+		/*System.out.println("=====================");
 		System.out.println("arrangeMoney");
 		System.out.println(listInfo.getSearch());
 		System.out.println(listInfo.getKind());
 		System.out.println(listInfo.getArrange());
 		System.out.println(listInfo.getCurPage());
-		System.out.println("=====================");	
+		System.out.println("=====================");	*/
 	}
 	
 	//view
