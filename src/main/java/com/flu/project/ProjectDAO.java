@@ -53,12 +53,13 @@ public class ProjectDAO {
 		//Client가 mypage에서 확인하는 myprojectList
 		public List<ProjectDTO> clientPjList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
 			
-			
+			System.out.println("clientPjList들어옴");;
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("member", memberDTO);
 			map.put("project", projectDTO);
 			
+			System.out.println(map.get("project"));
 			return sqlSession.selectList(NAMESPACE+"clientpjlist", map); 
 		}
 		//Client ProjectList의 Count

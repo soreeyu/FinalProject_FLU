@@ -92,7 +92,7 @@ public class ClientController {
 			List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
 		
 			
-			
+			System.out.println("clientController의 ar="+ar);
 			model.addAttribute("list", ar);
 			model.addAttribute("count", totalCount);
 			model.addAttribute("member", memberDTO);

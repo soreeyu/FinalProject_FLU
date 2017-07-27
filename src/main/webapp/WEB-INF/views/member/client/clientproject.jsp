@@ -153,7 +153,7 @@
 .project-unit{
 	padding: 25px;
 	border: 1px solid #eeeeee;
-	height: 200px;
+	height: 180px;
 	margin-bottom: 10px;
 	background-color: white;
 }
@@ -216,7 +216,7 @@
 }
 .project-bottom{
 	margin-top: 10px;
-	line-height: 18px;
+	line-height: 2px;
 	background-color: white;
 }
 .main-cate{

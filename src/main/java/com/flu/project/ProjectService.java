@@ -48,11 +48,9 @@ public class ProjectService {
 		for(int i=0;i<list.size();i++){
 			String[] parsing = list.get(i).getSkill().split(",");
 			list.get(i).setSkills(parsing);
-			/*System.out.println(parsing[i]);*/
+		
 		}
 		
-		
-		//return projectDAO.projectList(listInfo);
 		return list;
 	}
 	

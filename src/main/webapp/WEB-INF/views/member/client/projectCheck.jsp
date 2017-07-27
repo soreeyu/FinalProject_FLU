@@ -38,14 +38,17 @@
 							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
 						</div>
 						<div class="project-contents">${dto.contents }</div>
+						
+						<c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
 						<div class="project-contents-right">
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
-							마감<strong>${dto.finishDate}</strong></div>
+							마감<span class="deadline" id="${dto.finishDate}"></span></div>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
 							총지원 <strong>몇명</strong></div>
 						</div>
+						</c:if>
 						
 						<div style="clear: both;"></div>
 						
@@ -96,7 +99,7 @@
 	var preview = ((curBlock-2)*perBlock)+1;
 	var next = curBlock*perBlock+1;
 	
-	
+	/* 페이징 색상 */
 	$(".num").each(function() {
 		if(curPage==$(this).attr("id")){
 			$(this).css("color", "#3385ff");
@@ -142,18 +145,27 @@
 	
 });
 	 
-	 $(".leftDate").each(function() {
+	 
+	 
+	 
+	 /* 남은기한 표시하기 */
+	 
+	 $(".deadline").each(function() {
+		 var finishDate = $(this).attr("id");
+		 /* finishDate는 마감일자 */
+		var deadline = new Date(finishDate);
+		var date = new Date();
+		 
+		var left = deadline.getTime()-date.getTime();
+		var leftDate = Math.ceil(left/(24*60*60*1000));
 		
+		$(this).html(leftDate+"일");
+		 
 	});
 
-	var finishDate = "${list[0].finishDate}";
-	var deadline = new Date(finishDate);
-	var date = new Date();
+	
 
-
-	var left = deadline.getTime()-date.getTime();
 	alert("leftDate="+left);
-	var leftDate = Math.ceil(left/(24*60*60*1000));
 	alert("남은날="+leftDate);
 	 
 	

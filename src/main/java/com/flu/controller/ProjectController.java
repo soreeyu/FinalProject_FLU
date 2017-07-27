@@ -122,7 +122,7 @@ public class ProjectController {
 		
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO= (MemberDTO)session.getAttribute("member");
-		/*System.out.println("projectController-memberEmail="+memberDTO.getEmail());*/
+
 	
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");

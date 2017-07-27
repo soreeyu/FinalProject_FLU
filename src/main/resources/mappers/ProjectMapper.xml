@@ -26,21 +26,7 @@
   </select>
   
   
-    <select id="clientcount" parameterType="java.util.HashMap" resultType="int">
-    	select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state}
-    </select>
-    
-    
-  	<select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
- 		select * from 
- 		(select rownum R, P.* from
-  		(select * from project where email=#{member.email})P) 
-  		where R between #{listInfo.startRow} and #{listInfo.lastRow} 
-  		and state=#{project.state}
-  	
-  	</select>
-  	
-  	
+ 
   	
   <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
 
@@ -78,6 +64,27 @@
   	</select>
   	
 
+
+  <!-- client페이지에서 보여지는 state에 따른 리스트들 -->
+    <select id="clientcount" parameterType="java.util.HashMap" resultType="int">
+    	select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state}
+    </select>
+    
+    
+  	<select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+  	
+  	select * from 
+  	(select rownum R, P.* from 
+  	(select * from project where email=#{member.email} and state=#{project.state}) P) 
+  	where R between #{listInfo.startRow} and #{listInfo.lastRow}
+  	</select>
+  	
+  
+  
+  
+  
+  
+  
   
   
   <insert id="insert" parameterType="com.flu.project.ProjectDTO">
