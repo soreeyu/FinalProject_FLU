@@ -1,5 +1,9 @@
 package com.flu.member;
 
+import java.sql.Date;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.flu.profile.TypeInfo;
 
 public class MemberDTO {
@@ -23,6 +27,32 @@ public class MemberDTO {
 	private String authenticState;
 	private String alarmstate;
 	private String emailcheck;
+	private String name;
+	private String namegender;
+	private Date birth;
+	
+	private MultipartFile f1;
+	
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNamegender() {
+		return namegender;
+	}
+	public void setNamegender(String namegender) {
+		this.namegender = namegender;
+	}
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
 	public String getKind() {
 		return kind;
 	}
@@ -136,6 +166,12 @@ public class MemberDTO {
 	}
 	public void setEmailcheck(String emailcheck) {
 		this.emailcheck = emailcheck;
+	}
+	public MultipartFile getF1() {
+		return f1;
+	}
+	public void setF1(MultipartFile f1) {
+		this.f1 = f1;
 	}
 	
 

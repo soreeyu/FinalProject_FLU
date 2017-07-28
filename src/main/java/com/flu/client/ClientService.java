@@ -29,19 +29,19 @@ public class ClientService{
 	}
 
 
-
-	public int clientUpdate(){
-		return 0;
+	//클라이언트 정보 수정
+	public int clientUpdate(ClientDTO clientDTO){
+		return clientDAO.clientUpdate(clientDTO);
 	}
 
 	public int clientDelete(){
 		return 0;
 	}
 
-	//클라이언트 정보 추가등록(소개,홈페이지 Update)
-	public int clientInsert2(ClientDTO clientDTO){
-
-		return 0;
+	//클라이언트 정보 등록
+	public int clientInsert(ClientDTO clientDTO){
+		
+		return clientDAO.clientInsert(clientDTO);
 	}
 	//클라이언트 정보 추가등록(프로젝트 Update)
 	public int clientInsert3(ClientDTO clientDTO){

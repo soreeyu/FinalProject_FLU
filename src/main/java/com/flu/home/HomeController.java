@@ -44,10 +44,10 @@ public class HomeController {
 		}
 		
 	}
-	@RequestMapping(value="/test")
+	@RequestMapping(value="/home")
 	public String test(){
 		
-		return "member/mypage";
+		return "home";
 	}
 	
 }

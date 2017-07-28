@@ -8,10 +8,11 @@ public class ReplyDTO {
 	private String writer;
 	private String contents;
 	private Date reg_date;
-	private int projectNum;		//project Class�� ����
+	private int projectNum;		//project Class
 	private int ref;
 	private int step;
 	private int depth;
+	private String replyChk;
 	
 	
 	
@@ -64,6 +65,13 @@ public class ReplyDTO {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
+	public String getReplyChk() {
+		return replyChk;
+	}
+	public void setReplyChk(String replyChk) {
+		this.replyChk = replyChk;
+	}
+
 	
 	
 }

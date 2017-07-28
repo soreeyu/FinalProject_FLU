@@ -19,16 +19,27 @@
   		<select id="memberEmail" resultType="java.lang.String" parameterType="java.lang.String">
   			select email from member where email = #{email}
   		</select>
+  		<select id="freelancerEmail" resultType="java.lang.String" parameterType="java.lang.String">
+  			select email from freelancer where email = #{email}
+  		</select>
   		
   		<!-- 회원 가입 -->
   		<insert id="memberInsert" parameterType="com.flu.member.MemberDTO">
-  			insert into member values(#{kind}, #{email}, #{pw}, #{nickName}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+  			insert into member values(#{kind}, #{email}, #{pw}, #{nickName}, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null)
   		</insert>
   		
   		<!-- 로그인 -->
   		<select id="memberLogin" resultType="com.flu.member.MemberDTO" parameterType="com.flu.member.MemberDTO">
   			select * from member where email = #{email} and pw = #{pw}
   		</select>
+  		
+  		<!-- 정보 수정 -->
+  		<update id="memberUpdate" parameterType="com.flu.member.MemberDTO">
+  			update member set type=#{type} , oprofileimage = #{oProfileImage} , 
+  			fprofileimage = #{fProfileImage}, addr_num = #{addr_num}, addr_main = #{addr_main}, 
+  			addr_detail = #{addr_detail}, phone = #{phone}, phone2 = #{phone2}, fax = #{fax}, 
+  			name = #{name}, namegender = #{namegender}, birth = #{birth} where email = #{email}
+  		</update>
   		
   	
   </mapper>
