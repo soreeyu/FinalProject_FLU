@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -1259,6 +1259,13 @@ var unitModal;
 			}else if(activeTab == 'tab4'){
 				alert("체크리스트");
 				//url = "";
+			}else if(activeTab == 'tab5'){
+				//alert("수정");
+				//url = "";
+			}else if(activeTab == 'tab6'){
+				alert("간트");
+				location.href="/flu/schedule/sixthView";
+				//url = "";
 			}
 			
 			//loadTabContent(url,activeTab);
@@ -1708,6 +1715,7 @@ var unitModal;
 						<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
 						<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
 						<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
+						<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
 					</ul>
 				</div>
 			</div>
@@ -1737,6 +1745,11 @@ var unitModal;
 			<div id="tab5" class="tabcontent">
 				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
 				<c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" />
+			</div>
+			
+			<div id="tab6" class="tabcontent">
+				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+				<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
 			</div>
 		</div>
 		

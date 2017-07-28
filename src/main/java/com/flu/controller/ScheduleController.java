@@ -70,7 +70,12 @@ public class ScheduleController {
 		}
 		
 		
-		
+		@RequestMapping(value="sixthView")
+		public String test6(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			//model.addAttribute("scheduleNum", scheduleNum);
+			//return "schedule/ganttchartTest2";
+			return "schedule/ganttchartTest";
+		}
 		
 		
 		
