@@ -26,6 +26,8 @@ public class ProjectService {
 	
 	//project update
 	public int projectUpdate(ProjectDTO projectDTO){
+		System.out.println("sevice-projectNum="+projectDTO.getProjectNum());
+		System.out.println("sevice-project-name="+projectDTO.getName());
 		return projectDAO.projectUpdate(projectDTO);
 	}
 	
@@ -42,6 +44,7 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
 		//System.out.println("checklist service"+checkList.get(0));
+		System.out.println("service-list-search==="+listInfo.getSearch());
 		System.out.println("projectService-projectList");
 		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
 		
@@ -56,8 +59,9 @@ public class ProjectService {
 	
 
 	//project Count
-	public int projectCount(ListInfo listInfo, ProjectDTO projectDTO){
-		return projectDAO.projectCount(listInfo, projectDTO);
+	public int projectCount(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
+		System.out.println("service-count-search==="+listInfo.getSearch());
+		return projectDAO.projectCount(listInfo, projectDTO, array);
 	}
 	
 	

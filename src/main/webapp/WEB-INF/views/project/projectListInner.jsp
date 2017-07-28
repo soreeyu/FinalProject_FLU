@@ -11,8 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<c:if test="${list.size()==0}">
+<c:if test="${pjcount==0}">
 
 	<div class="project-unit" style="height: 100px;">
 	<div class="non-project">
@@ -109,6 +108,7 @@ $(".num").each(function() {
 
 /* 페이징처리 */
 $("#preview").click(function() { 
+
 	$.get("projectListInner?curPage="+preview+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
 		$(".contents_main").html(data);
 		document.body.scrollTop = 0;
@@ -117,8 +117,25 @@ $("#preview").click(function() {
 
  $(".num").click(function() {
 	var pageNum = $(this).attr("id");
+	var checkList = $("input[class='dev-chk']:checked");
+	alert("페이징chkeck="+checkList);
+	var searchCon = $("#search").val();
+	alert("search=="+searchCon);
+	var array = new Array();
 	
-	$.get("projectListInner?curPage="+pageNum+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	var arrangeVal = $("#arrange").val();
+	alert(arrangeVal);
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	alert("pageNum="+pageNum);
+	$.get("projectListInner?curPage="+pageNum+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
 	
 		document.body.scrollTop = 0;

@@ -27,6 +27,8 @@ public class ProjectDAO {
 		
 		//project update
 		public int projectUpdate(ProjectDTO projectDTO){
+			System.out.println("dao-projectNum="+projectDTO.getProjectNum());
+			System.out.println("dao-project-name="+projectDTO.getName());
 			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
@@ -42,12 +44,13 @@ public class ProjectDAO {
 		
 		//project List
 		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
-			//System.out.println("category dao"+category);
-			//System.out.println("array dao"+array.get(0));
+
 			System.out.println("projectDAO-projectList들어옴");
+			System.out.println("dao-list- arrange=="+listInfo.getArrange());
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("project", projectDTO);
+			map.put("arrange", listInfo.getArrange());
 			map.put("array", array);
 			if(array.size() == 0){
 				map.put("result", 0);
@@ -56,19 +59,35 @@ public class ProjectDAO {
 				map.put("result", 1);
 				System.out.println("zz"+array.size());
 			}
+			System.out.println("dao-list-search==="+listInfo.getSearch());
+			if(listInfo.getSearch() == null){
+				map.put("sech", 0);
+				System.out.println("sech==="+listInfo.getSearch());
+			}else{
+				map.put("sech", 1);
+				System.out.println("sech==="+listInfo.getSearch());
+			}
 			
-			//System.out.println("detail====="+((ProjectDTO)map.get("project")).getDetailCategory());
 			return sqlSession.selectList(NAMESPACE+"listMyeon", map);
 		}
 		
 		//project Count
-		public int projectCount(ListInfo listInfo, ProjectDTO projectDTO){
+		public int projectCount(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
 			System.out.println("dao-projectCount");
-			System.out.println("dao-category="+projectDTO.getDetailCategory());
+			System.out.println("dao-count- arrange=="+listInfo.getArrange());
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("project", projectDTO);
-			
+			map.put("arrange", listInfo.getArrange());
+			map.put("array", array);
+			if(array.size() == 0){
+				map.put("result", 0);
+				System.out.println("zz"+array.size());
+			}else{
+				map.put("result", 1);
+				System.out.println("zz"+array.size());
+			}
+			System.out.println("dao-count-search==="+listInfo.getSearch());
 			System.out.println("dao-projectCount="+sqlSession.selectOne(NAMESPACE+"count", map));
 			return sqlSession.selectOne(NAMESPACE+"count", map);
 		}

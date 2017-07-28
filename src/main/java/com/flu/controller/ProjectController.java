@@ -41,7 +41,7 @@ public class ProjectController {
 		System.out.println("controller-projectMap");
 		
 
-		int totalCount = projectService.projectCount(listInfo, projectDTO);
+		int totalCount = projectService.projectCount(listInfo, projectDTO, array);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
 		
@@ -83,13 +83,12 @@ public class ProjectController {
 	@RequestMapping(value="projectListInner", method=RequestMethod.GET)
 	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
 		System.out.println("projectListInner요");
-		//System.out.println("category"+category);
-		//System.out.println("array"+array.get(0));
+	
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		System.out.println("projectListInner의 email="+memberDTO.getEmail());
-				
+		
+		 System.out.println("controller-search==="+listInfo.getSearch());
 			
-		int totalCount =  projectService.projectCount(listInfo, projectDTO);
+		int totalCount =  projectService.projectCount(listInfo, projectDTO, array);
 		System.out.println("projectListInner의 project count="+totalCount);
 				
 		listInfo.makePage(totalCount);
@@ -201,31 +200,37 @@ public class ProjectController {
 		System.out.println("projectUpdateForm");
 
 		memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("email=="+memberDTO.getEmail());
-		System.out.println(projectDTO.getEmail());
-		if(memberDTO.getEmail()==projectDTO.getEmail()){
-		
-			System.out.println(memberDTO.getKind());	
-			System.out.println("수정가능");
-		}else{
-			
+		System.out.println("member의 email=="+memberDTO.getEmail());
+		System.out.println("project의 email=="+projectDTO.getEmail());
 
-			System.out.println(memberDTO.getKind());	
-			System.out.println("수정 불가능");
-		}
+		System.out.println(memberDTO.getKind());	
 		
-	
+		System.out.println("projectNum="+projectDTO.getProjectNum());
+		System.out.println("project-name="+projectDTO.getName());
 		
+		int result = projectService.projectUpdate(projectDTO);
+		/*if(result)*/
 		model.addAttribute("type", "update");
+		model.addAttribute("member", memberDTO);
 		model.addAttribute("dto", projectDTO);
 		
 		return "project/projectInsert";
 	}
 	
-	//update
+	
+	//update 하기
 	@RequestMapping(value="projectUpdate", method=RequestMethod.POST)
-	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd){
+	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
 		System.out.println("projectUpdate");
+		
+		String realPath = session.getServletContext().getRealPath("resources/upload");
+		
+		FileSaver fileSaver = new FileSaver();
+		String fname = fileSaver.fileSave(realPath, projectDTO.getFileName());
+		
+		projectDTO.setfName(fname);
+		projectDTO.setoName(projectDTO.getFileName().getOriginalFilename());
+	
 		
 		int result = projectService.projectUpdate(projectDTO);
 		System.out.println(result);

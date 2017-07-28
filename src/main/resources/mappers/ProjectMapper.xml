@@ -9,28 +9,12 @@
   
  <sql id="search">
 
-
   <if test="project.detailCategory != null">
  	detailCategory=#{project.detailCategory} 
  </if>  
-
    name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
- 
- 
  </sql>
  
- <sql id="search2">
- 	<where>
- 		 <if test="detailCategory != null">
-		 	detailCategory=#{project.detailCategory}
-		 </if> 
-		 <if test="detailCategory == null">
-		   name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
-		 </if>
- 	</where>
- 
- </sql>
-
 
 
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
@@ -38,16 +22,19 @@
   <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
   
   
+  
+  
   <select id="count" parameterType="java.util.HashMap" resultType="int">
   	select count(nvl(projectNum,0)) from project
-	 where detailCategory in('웹', '워드프레스') and 
-	name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'	
-  	 <!-- <if test="detailCategory != null">
-  	 detailCategory=#{project.detailCategory} and name like '%' || #{listInfo.search} || '%'
- 	</if> 
- 	<if test="detailCategory == null">
- 	name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
-  	 </if> -->
+ 	where
+	(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+	<if test="result == 1">
+		 and detailCategory IN 
+		 <foreach collection="array" item="c" open="(" close=")" separator=",">
+		 	#{c}
+		 </foreach>
+		</if>	
+  
   </select>
   
   
@@ -128,9 +115,6 @@
 		 </foreach>
 		</if>
 			
-		
-	<!-- 
-		
 		order by
 		<choose>
 			<when test="arrange=='money'">
@@ -149,7 +133,7 @@
 			projectNum desc
 			</otherwise>
 		</choose>
-		 -->
+
 		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
   	</select>

@@ -570,21 +570,11 @@ background-color: white;
 		
 	</section>
 <script type="text/javascript">
-/* var checkList = $("input[class='dev-chk']:checked");
-var array = new Array();
-var i=0;
-alert("checkList="+checkList);
 
-checkList.each(function(index) {
-	array[index] = $(this).val();
-});
-alert(array);
-
-
-$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&checkList="+array,function(data){
+ var array = new Array();
+$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
 	$(".contents_main").html(data);
 });
- */
 
 
 
@@ -607,14 +597,26 @@ $(".project-title").click(function() {
  
  /* -----total검색기능------- */
 $("#searchBtn").click(function() {
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
 
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+
+	 
 	var searchCon = $("#search").val();
 	alert("검색 : "+searchCon);
 	
 	var arrangeVal = $("#arrange").val();
 	alert(arrangeVal);
 	
-	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal,function(data){
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	$("#search").val(searchCon);
@@ -632,8 +634,20 @@ $("#by-price-desc").click(function() {
 	$("#arrange").val("money");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
+	var array = new Array();
 	
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money",function(data){
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money&array="+array,function(data){
+		alert("금액높은순 들어옴");
 		$(".contents_main").html(data);
 	});
 	
@@ -649,7 +663,19 @@ $("#by-price-asc").click(function() {
 	$("#arrange").val("lowmoney");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney",function(data){
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	
@@ -665,7 +691,19 @@ $("#by-date-curr").click(function() {
 	$("#arrange").val("current");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current",function(data){
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	
@@ -680,7 +718,19 @@ $("#by-date-finish").click(function() {
 	$("#arrange").val("last");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last",function(data){
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	$("#arrange").val("last");
@@ -699,7 +749,7 @@ $("#by-date-finish").click(function() {
  /* 개발자 */
 function devClick() {
 	var devCheck = $("input[class='dev-chk']:checked").length;
-		alert(devCheck);
+		alert("check된거=="+devCheck);
 		if(($(".dev-chk").length)==devCheck){
 			$(".dev-chk").prop("checked", false);
 		}else{
@@ -716,6 +766,8 @@ function devClick() {
 	 $(".detailCategory").val(de_id);
 	 alert("value=="+$(".detailCategory").val()); */
 	 var checkList = $("input[class='dev-chk']:checked");
+	 alert("val은 ="+$("input[class='dev-chk']:checked").val());
+	 
 	 var array = new Array();
 	 var category = "";
 	 var i=0;
@@ -723,17 +775,9 @@ function devClick() {
 	 
 	 checkList.each(function(index) {
 		array[index] = $(this).val();
-		
-		/* 
-		category = category + "'"+$(this).val()+"'";
-		
-		if(checkList.length-1 != index){
-			category = category + ",";
-		}
-		 */
+			
 	});
 	 alert(array);
-	 //alert(category);
 	 
 	 var devCheck = $("input[class='dev-chk']:checked").length;
 	 

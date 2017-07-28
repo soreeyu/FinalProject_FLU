@@ -208,6 +208,20 @@ strong{
 	margin-top: 15px;
 	text-decoration: none;
 }
+.owner-btn{
+	width:230px;
+	height:40px;
+	color: white;
+	background-color: #f1720c;
+	border-color: #f48023;
+	border-radius: 2px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px 12px;
+	margin-top: 15px;
+	text-decoration: none;
+}
 #schedult-btn{
 	width:230px;
 	height:40px;
@@ -473,8 +487,14 @@ background-color: white;
 .project-reply-box-inner{
 	background-color: yellow;
 	min-height: 200px;
-	max-height: 600px;
+	max-height: 300px;
 	height: auto;
+}
+.owner_option{
+	width: 100%;
+}
+.owner_option_btn{
+
 }
 </style>
 
@@ -561,8 +581,12 @@ background-color: white;
 			</div>
 			<div style="clear: both;"></div>
 
+
 			<div class="contents-register">
 				<div class="contents-register-inner" style="text-align: center;">
+				
+				
+				<c:if test="${member.kind=='freelancer'}">
 					<p>프로젝트 지원을 위해
 					<span><a href="#">기본정보</a></span>
 					<span><a href="#">자기소개</a></span>
@@ -571,8 +595,23 @@ background-color: white;
 					을(를) 입력해주세요
 					</p>
 					<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
+				</c:if>
+				
+				<c:if test="${member.email==dto.email}">
+				<p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 </p>
+					<div class="owner_option_btn">
+						<a href="#" class="owner-btn" id="pj-update">Update</a>
+						<a href="#" class="owner-btn" id="pj-delete">Delete</a>
+					</div>
+					</c:if>
+				
 				</div>
 			</div>
+			
+			
+			
+			
+			
 			
 			<div class="project-qna">
 				<div class="project-detail-title">프로젝트 문의 ${dto.projectNum }</div>
@@ -600,10 +639,17 @@ background-color: white;
 				</div>
 				
 				</div>
-				
 			</div>
 			
+			
+					
+
+			
+			
 			</section>
+			
+			
+			
 			
 			<!-- right contents  -->
 			<section class="contents_sub">
@@ -637,55 +683,13 @@ background-color: white;
 		
 			</section>
 		</div>
-		
-
-
-<p>
-
-<c:if test="${member.email==dto.email}">
-<a href="projectUpdate?projectNum=${dto.projectNum}">Update</a>
-</c:if>
-<a href="projectDelete?projectNum=${dto.projectNum}">Delete</a>
-</p>
 
 
 
-<span><strong>재식이꺼</strong></span>
-<p>project View &emsp;
-<c:if test="${dto.state=='done'}">
-검수완료
-</c:if>
-<c:if test="${dto.state=='ing'}">
-진행중
-</c:if>
-</p>
 
-<p>${dto.projectNum}</p>
-<p>${dto.name}</p>
-<p>${dto.category }</p>
-<p>${dto.detailCategory}</p>
-<p>${dto.name}</p>
-<p>${dto.period}</p>
-<p>${dto.startDate}</p>
-<p>${dto.budget }</p>
-<p>${dto.planState }</p>
-<p>${dto.contents }</p>
-<p>${dto.skill }</p>
-<p>${dto.finishDate }</p>
-<p>${dto.meetKind }</p>
-<p>${dto.exp }</p>
-<p>${dto.state }</p>
-<p>${dto.email }</p>
-<p>${dto.quick }</p>
-<p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-<p>${dto.addr_num } ${dto.addr_main } ${dto.addr_detail }
-<p>${dto.reg_date }</p>
 
-<p>클라이언트 부분</p>
-<p><a href="projectUpdate?projectNum=${dto.projectNum}">Update</a></p>
-<p><a href="projectDelete?projectNum=${dto.projectNum}">Delete</a></p>
-<hr>
 
+<p>보배부분아닌데 누구꺼지...?</p>
 <p>관리자 부분</p>
 <form action="../checkProject/checkProjectUpdate" id="frm">
 <input type="hidden" name="state" value="${dto.state}">
@@ -709,6 +713,8 @@ background-color: white;
 
 <script type="text/javascript">
 var projectNum = "${dto.projectNum}";
+var email = "${member.email}";
+var email = "${dto.email}";
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -771,19 +777,29 @@ $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
  });
 	
 
-/* var curPage=1;
-$.ajax({
-	url:"../reply/replyList?projectNum=${dto.projectNum}",
-	type:"GET",
-	success:function(data){
-		alert("yeyyy");
 
-		alert(data);
-		$(".project-reply-box-top").html(data);
+$("#pj-delete").click(function() {
+
+	var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
+	
+	if(ch == true) {
+		$.get("projectDelete?projectNum="+projectNum,function(data){
+			location.href = "projectList";
+		});
+	} else {
+		alert("취소되었습니다.");
+		location.href = "projectView?projectNum="+projectNum;
 	}
-});  */
-
+});
  
+ $("#pj-update").click(function() {
+	location.href = "projectUpdate?projectNum="+projectNum+"&email="+email;
+});
+ 
+ 
+ 
+ 
+ /* 흠?누구꺼디 이거이거잇어야하는거겟쥬? */
 var state = '${dto.state}';
 
 $('#'+state).click(function() {

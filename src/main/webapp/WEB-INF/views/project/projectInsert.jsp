@@ -74,7 +74,7 @@ font-family: -webkit-body;
 }
 
 .cate-select{
-	background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center;
+	/* background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center; */
 	width: 250px;
 	height: 30px;
 }
@@ -198,14 +198,14 @@ label{
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+    /* background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; */
 }
 .progress-bar-in{
 	margin-left: -1px !important;
     margin: 0 !important;
     height: 100% !important;
     /* border: none; */
-    background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+    /* background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; */
 }
 .project-add-helper-bottom{
 	float: right;
@@ -306,8 +306,8 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 제목</label>
 					<div class="category-wrapper">
-						<input id="name" type="text" name="name" style="width: 100%;">
-					<span id="detail">${dto.name}프로젝트 이름을 선택해 주세요</span>
+						<input id="name" type="text" name="name" style="width: 100%;" placeholder="${dto.name}">
+					<span id="detail">프로젝트 이름을 선택해 주세요</span>
 					</div>
 				</div>
 
@@ -315,7 +315,7 @@ label{
 					<label><span>*</span>예상 기간</label>
 					<div class="category-wrapper">
 						<input id="period" type="text" name="period">일
-						<span id="detail">프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
+						<span id="detail">${dto.period }프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
 					</div>
 				</div>
 
@@ -724,9 +724,17 @@ label{
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
-/* alert("type == ${type}"); */
- 
- alert("사용자email = ${member.email}");
+alert("type == ${type}"); 
+alert("사용자email = ${member.email}");
+var dto = "${dto}";
+var name = "${dto.name}";
+var projectNum="${dto.projectNum}";
+var Budget = "${dto.budget}";
+alert(dto);
+alert(name);
+alert(projectNum);
+alert(Budget);
+
 
 	
 
