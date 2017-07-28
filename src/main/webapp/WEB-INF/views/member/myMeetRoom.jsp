@@ -280,8 +280,10 @@
 			<c:if test="${member.kind eq 'admin'}">
 			<div class="search">
 				<select name="kind" id="select_kind">
-					<option value="name">업체명</option>
-					<option value="addr_main">지역</option>
+					<option value="name">방이름</option>
+					<option value="price">가격</option>
+					<option value="reserve_date">예약날짜</option>
+					<option value="reserve_name">예약인원</option>
 				</select>
 				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
 				<input type="button" value="검색" id="search_btn">

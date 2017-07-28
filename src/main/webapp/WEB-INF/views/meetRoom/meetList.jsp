@@ -35,7 +35,7 @@
 }
 
 .meetRoom_header {
-    height: 122px;
+    height: 80px;
     padding: 30px;
     margin-bottom: 20px;
     border: 1px solid #e6e6e6;
@@ -51,14 +51,13 @@
 	font-size: small;
     font-weight: lighter;
 }
+
 .Room{
 	width : 30%;
 	float: left;
 	position: relative;
-	padding: 13px;
-	
+	padding: 13px;	
 }
-
 .search {
 	float: right;
 }
@@ -85,6 +84,7 @@
 	padding-bottom: 10px;
 }
 .pagination-wrapper {
+	display : block;
     text-align: center;
     height: 100px;
 }
