@@ -250,9 +250,11 @@ public class CheckProjectController {
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
 
 	public String update(ProjectDTO projectDTO) throws Exception{
+		System.out.println("gpgpgpgpgpgpgpgpgpgpgpgpgpgpgpgp");
 		
 		int result = checkProjectService.update(projectDTO);
 		if(result>0){
+			
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");

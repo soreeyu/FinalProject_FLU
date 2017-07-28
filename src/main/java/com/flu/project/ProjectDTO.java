@@ -32,7 +32,7 @@ public class ProjectDTO {
 	private String addr_detail;
 
 	private String reg_date;		
-	
+
 
 	public MultipartFile getFileName() {
 		return fileName;
@@ -69,6 +69,20 @@ public class ProjectDTO {
 	}
 	public void setPeriod(String period) {
 		this.period = period;
+	}
+
+	
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getFinishDate() {
+		return finishDate;
+	}
+	public void setFinishDate(String finishDate) {
+		this.finishDate = finishDate;
 	}
 
 
@@ -157,18 +171,6 @@ public class ProjectDTO {
 		this.addr_detail = addr_detail;
 	}
 
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getFinishDate() {
-		return finishDate;
-	}
-	public void setFinishDate(String finishDate) {
-		this.finishDate = finishDate;
-	}
 
 	public String getReg_date() {
 		return reg_date;

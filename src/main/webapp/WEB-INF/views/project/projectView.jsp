@@ -463,6 +463,7 @@ background-color: white;
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
+
 <p>project View &emsp;
 <c:if test="${dto.state=='done'}">
 검수완료
@@ -511,6 +512,7 @@ background-color: white;
 
 
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
+
 
 
 <section class="main_section">

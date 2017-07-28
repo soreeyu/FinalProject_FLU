@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
+
 import com.flu.applicant.ApplicantService;
 import com.flu.checkMember.CheckMemberService;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
-import com.flu.applicant.ApplicantService;
-import com.flu.checkMember.CheckMemberService;
+
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
@@ -30,8 +30,10 @@ public class MemberController {
 	@Inject
 	private MemberService memberService;
 
+
 	@Inject
 	private AlarmService alarmService;
+
 
 	@Inject
 	private CheckMemberService checkMemberService;
