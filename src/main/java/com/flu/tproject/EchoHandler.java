@@ -33,7 +33,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		logger.info("{}로부터 {} 받음", session.getId(),message.getPayload());
 		
 		for(WebSocketSession sess : sessionList){
-			sess.sendMessage(new TextMessage(session.getPrincipal().getName()+"|"+message.getPayload()));
+			sess.sendMessage(new TextMessage("테스트|"+message.getPayload()));
 		}
 	}
 	

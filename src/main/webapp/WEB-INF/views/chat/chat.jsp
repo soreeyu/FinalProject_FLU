@@ -9,6 +9,8 @@
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script type="text/javascript">
     
+    
+    
     var sock;
     //웸소켓을 지정한 url로 연결한다.
     sock = new SockJS("<c:url value="/echo"/>");

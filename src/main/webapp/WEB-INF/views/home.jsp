@@ -22,10 +22,12 @@
     var async_load = function() {
       var s = document.createElement('script');
       s.type = 'text/javascript';
+      alert(s.type);
       s.async = true;
       s.src = '//cdn.channel.io/plugin/ch-plugin-web.js';
       s.charset = 'UTF-8';
       var x = document.getElementsByTagName('script')[0];
+      alert(x);
       x.parentNode.insertBefore(s, x);
     };
     if (window.attachEvent) {

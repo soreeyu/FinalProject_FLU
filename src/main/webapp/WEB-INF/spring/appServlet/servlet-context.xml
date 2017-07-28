@@ -36,7 +36,8 @@
 	
 	<!-- 채팅 -->
 	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/flu/echo"/>
+		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<websocket:sockjs/>
 	</websocket:handlers>
 	
 	
