@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.eachRoom.EachRoomDTO;
 import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.reservation.ReservationDTO;
@@ -34,7 +36,10 @@ public class ReservationController {
 	
 	@Autowired
 	private ReservationService reservaionService;
+	@Autowired
+	private AlarmService alarmService;
 	
+	private AlarmDTO alarmDTO;
 	@RequestMapping(value="reserveList")
 	public void reserveList(ListInfo listInfo){
 		
@@ -107,6 +112,10 @@ public class ReservationController {
 		int result = reservaionService.insert(reservationDTO);
 		if(result>0){
 			System.out.println("예약성공");
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(reservationDTO.getEmail());
+			alarmDTO.setContents("미팅룸 예약이 성공적으로 이루어졌습니다. 변경사항이 있거나 취소를 원할 경우 관리자에게 요청하세요");
+			alarmService.alarmInsert(alarmDTO);
 		}else {
 			System.out.println("예약실패");
 		}

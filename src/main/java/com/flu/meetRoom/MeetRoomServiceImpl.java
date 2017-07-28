@@ -22,6 +22,7 @@ public class MeetRoomServiceImpl implements RoomService{
 		int totalCount = meetRoomDAO.count();
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
+		
 		return meetRoomDAO.list(listInfo);
 	}
 

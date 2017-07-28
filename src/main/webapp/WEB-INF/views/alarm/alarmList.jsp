@@ -47,9 +47,15 @@ section {
 .empty-notification {
 	padding: 20px 30px;
 }
+.notification {
+	padding: 20px 30px;
+}
 .empty-notification-member{
     width: 80%;
     margin: 30px auto;
+}
+.empty-notification-member .alarm_date{
+	float: right;
 }
 .text-center{
 	margin-bottom: 20px;
@@ -169,9 +175,9 @@ section {
 					
 					<div class="notification">
 						<c:forEach items="${alarm}" var="a">
-							<div>
-							<span>${a.contents}</span>
-							<span>${a.reg_date}</span>
+							<div class="empty-notification-member"> 
+							<span class="alarm_contents">${a.contents}</span>
+							<span class="alarm_date">${a.reg_date}</span>
 							</div>
 						</c:forEach>	
 					</div>

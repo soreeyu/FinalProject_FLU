@@ -35,7 +35,7 @@
 }
 
 .meetRoom_header {
-    height: 122px;
+    height: 60px;
     padding: 30px;
     margin-bottom: 20px;
     border: 1px solid #e6e6e6;
@@ -103,7 +103,7 @@
 	<div class="meetRoom_header">
 		<div class="header_txt">
 			<p id="header_tit1">미팅룸 찾기</p>
-			<p id="header_tit2">개의 미팅룸이 있습니다.</p>
+			<p id="header_tit2"><!-- 개의 미팅룸이 있습니다. --></p>
 			
 			<div class="search">
 				<select name="kind" id="select_kind">
