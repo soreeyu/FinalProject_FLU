@@ -33,4 +33,4 @@ public class AlarmDTO {
 		this.reg_date = reg_date;
 	}
 	
-}	
+}

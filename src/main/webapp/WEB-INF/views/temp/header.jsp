@@ -10,10 +10,12 @@
 			</div>
 			<div class="header_menu">
 				<ul>
+					<c:if test="${not empty member || member.kind eq client }">
 					<li><a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록</a></li>
+					</c:if>
 					<li><a href="${pageContext.request.contextPath}/project/projectList">프로젝트 찾기</a></li>
 					<li><a href="${pageContext.request.contextPath}/member/freelancerList">프리랜서 목록</a></li>
-					<li><a href="#">미팅룸 목록</a></li>
+					<li><a href="${pageContext.request.contextPath}/meetRoom/meetList?curPage=1&perPage=10">미팅룸 목록</a></li>
 				</ul>
 				<span class="header_right">
 					<c:choose>

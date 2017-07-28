@@ -1,3 +1,4 @@
+
 package com.flu.alarm;
 
 import java.util.List;
@@ -9,20 +10,20 @@ import org.springframework.stereotype.Service;
 public class AlarmService {
 
 	@Autowired
-	private AlarmDAO alaramDAO;
+	private AlarmDAO alarmDAO;
 	
 	//알람 INSERT
-	public int alaramInsert(AlarmDTO alaramDTO){
-		return 0;
+	public int alarmInsert(AlarmDTO alarmDTO) throws Exception{
+		return alarmDAO.alarmInsert(alarmDTO);
 	}
 	
 	//알람 LIST
-	public List<AlarmDTO> alaramList(){
-		return null;
+	public List<AlarmDTO> alarmList(AlarmDTO alarmDTO) throws Exception{
+		return alarmDAO.alarmList(alarmDTO);
 	}
 	
 	//알람 DELETE
-	public int alaramDelete(int num){
+	public int alarmDelete(int num) throws Exception{
 		return 0;
 	}
 }

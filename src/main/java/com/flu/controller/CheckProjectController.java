@@ -259,11 +259,6 @@ public class CheckProjectController {
 			alarmService.alarmInsert(alarmDTO);
 		}
 
-	public String update(ProjectDTO projectDTO,Model model){
-			
-			checkProjectService.update(projectDTO);
-
-
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
