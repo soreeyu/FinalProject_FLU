@@ -138,7 +138,6 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -157,6 +156,26 @@
 	font-weight: bold;
 }
 
+thead{
+	background-color: #ccddff;
+	font-weight: bold;
+	font-size: 15px;
+}
+tbody{
+	font-size: 15px;
+	text-align: left;
+}
+th, td{
+	padding: 8px;
+	border-left: 1px solid #ccccff;
+	border-bottom: 1px solid #ccccff;
+}
+th{
+	border-top: 2px solid #3377ff;
+}
+th:FIRST-CHILD,td:FIRST-CHILD{
+	border-left: 0;
+}
 #a{
 	background-color: #66b3ff;
 	color: white;
@@ -200,11 +219,14 @@
 									<col width="18%">
 									<col width="*%">
 								</colgroup>
+								<thead>
 								<tr>
 									<th>종류</th>
 									<th>숙련도</th>
 									<th>경험</th>
 								</tr>
+								</thead>
+								<tbody>
 								<c:forEach items="${list }" var="i">
 									<tr>
 										<td>${i.kind }</td>
@@ -212,6 +234,7 @@
 										<td>${i.exp }</td>
 									</tr>
 								</c:forEach>
+								</tbody>
 								</table>
 							</c:if>
 						</div>

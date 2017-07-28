@@ -87,7 +87,7 @@ public class FreelancerController {
 		model.addAttribute("freelancer", freelancerService.freelancerView(this.getEmail(session)));
 		model.addAttribute("portfolio", freelancerService.portfolioList(this.getEmail(session)));
 		model.addAttribute("skills", freelancerService.skillList(this.getEmail(session)));
-		model.addAttribute("acadeic", freelancerService.academicList(this.getEmail(session)));
+		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
 		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
 		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
 		model.addAttribute("evaluation", freelancerService.evaluationView(this.getEmail(session)));
