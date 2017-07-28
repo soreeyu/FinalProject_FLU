@@ -168,15 +168,17 @@ public class MemberController {
 			MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
 			
 			if(memberDTO.getKind().equals("client")){
-				model.addAttribute("active1", "a");
-				return "/member/client/mypage";
+				
+				return "redirect:/member/client/mypage";
 			}else{
-				model.addAttribute("active1", "a");
-				return "/member/freelancer/mypage";
+				return "redirect:/member/freelancermypage";
 			}
 			//model.addAttribute("active1", "a");
 			/*return "/member/freelancer/mypage";*/
 		}
+		
+		
+		
 		
 		//멤버 테스트 페이지
 		@RequestMapping(value="memberTest")

@@ -154,9 +154,25 @@
 						<p><span>클라이언트 정보</span></p>
 						
 						<div class="no_data_wrap">
+							<c:if test="${empty dto.intro }">
 							<div class="no_data">
-								
+								<div class="no_img">
+									<img alt="자기소개" src="${pageContext.request.contextPath }/resources/img/mypage/intro.png">
+									<p>입력된 <span>'자기소개'</span>가 없습니다.</p>
+								</div>
 							</div>
+							</c:if>
+							<c:if test="${not empty dto.intro }">
+								<div>
+									${dto.intro }
+								</div>
+							</c:if>
+							<c:if test="${empty dto.intro }">
+							<a href="clientInsert">입력</a>
+							</c:if>
+							<c:if test="${not empty dto.intro }">
+							<a href="clientUpdate">수정</a>
+							</c:if>
 						</div>
 						
 					</section>

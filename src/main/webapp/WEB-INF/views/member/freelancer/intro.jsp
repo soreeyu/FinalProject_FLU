@@ -138,7 +138,6 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }

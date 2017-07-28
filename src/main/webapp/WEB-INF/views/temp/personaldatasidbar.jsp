@@ -32,7 +32,7 @@
 					var id = $(this).attr("id");
 				
 					if(id != 'a'){
-					$(this).css("background-color", "#dedede");
+					$(this).css("background-color", "#ccddff");
 					}
 				});
 				$(".menu").mouseleave(function() {
