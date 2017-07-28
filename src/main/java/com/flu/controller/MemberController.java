@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import com.flu.applicant.ApplicantService;
+import com.flu.checkMember.CheckMemberService;
+
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantService;
 import com.flu.checkMember.CheckMemberService;
 import com.flu.file.FileSaver;
@@ -23,10 +29,14 @@ public class MemberController {
 
 	@Inject
 	private MemberService memberService;
-	
+
+	@Inject
+	private AlarmService alarmService;
+
 	@Inject
 	private CheckMemberService checkMemberService;
 	
+
 	//AJAX 뒤로가기 테스트
 	@RequestMapping(value="test")
 	public void test(){

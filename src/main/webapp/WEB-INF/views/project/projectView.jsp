@@ -512,6 +512,7 @@ background-color: white;
 
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
+
 <section class="main_section">
 
 		<!--  header -->
