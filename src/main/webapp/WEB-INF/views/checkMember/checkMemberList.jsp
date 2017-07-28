@@ -165,75 +165,9 @@
 		
 	});
 	
-	
-	$('#result').change('select[name=detailCategory]',function() {
-		
-		var board = '${board}';
-		
-		if(board=='check'){
-			$('#frm').prop('action',"./checkProjectCheckList");	
-		}else if(board=='fail'){
-			$('#frm').prop('action',"./checkProjectFailList");	
-		}else{
-			
-		}
-		
-		$('#frm').submit();
 
-	});
-	
- 	$('#result').on('change','select[name=detailCategory]',function(){
-		
- 		var board = '${board}';
-		
-		if(board=='check'){
-			$('#frm').prop('action',"./checkProjectCheckList");	
-		}else if(board=='fail'){
-			$('#frm').prop('action',"./checkProjectFailList");	
-		}else{
-			
-		}
-		
-		$('#frm').submit();
 
-	}); 
-	
-	
-	$('#btn').click(function() {
-		
- 		var board = '${board}';
-		
-		if(board=='check'){
-			$('#frm').prop('action',"./checkProjectCheckList");	
-		}else if(board=='fail'){
-			$('#frm').prop('action',"./checkProjectFailList");	
-		}else{
-			
-		}
-		
-		$('#frm').submit();
-		
-	});
 
-	
-	 $("select[name=category] option").each(function(){
-		    if($(this).val()=="${listInfo.category}"){
-		      $(this).attr("selected","selected"); // attr적용안될경우 prop으로 
-		    }
-	 });
-	
-	 $("select[name=detailCategory] option").each(function(){
-		    if($(this).val()=="${listInfo.detailCategory}"){
-		      $(this).attr("selected","selected"); // attr적용안될경우 prop으로 
-		    }
-	 });
-	 
-	 $("select[name=kind] option").each(function(){
-		    if($(this).val()=="${listInfo.kind}"){
-		      $(this).attr("selected","selected"); // attr적용안될경우 prop으로 
-		    }
-	 });
-	 
 });
 	
 	
@@ -328,9 +262,11 @@
 						<c:forEach items="${list}" var="i">
 							<tr>
 								<td>${i.name }</td>
-								<td><a href="./checkMemberView?email=${i.email}">${i.email }</a></td>
-								<td><c:if test="${i.authenticState=='1'}">신원미상</c:if> <c:if
-										test="${i.authenticState=='2'}">신원확인완료</c:if></td>
+								<td><a href="../member/personaldataView?email=${i.email}">${i.email }</a></td>
+								<td>
+								<c:if test="${i.authenticState=='1'}">신원미상</c:if>
+								<c:if test="${i.authenticState=='2'}">신원확인완료</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 

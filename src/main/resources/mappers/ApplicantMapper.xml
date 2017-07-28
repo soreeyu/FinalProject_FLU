@@ -5,7 +5,11 @@
   
   <mapper namespace="ApplicantMapper">
   	<select id="list" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
+<<<<<<< HEAD
   		select * from applicant where projectNum=#{projectNum} and state in('finish','payFinish')	
+=======
+  		select * from applicant where projectnum=#{projectNum} and state in('finish','payFinish')
+>>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
   	</select>
   
   	<update id="update" parameterType="java.lang.String">
