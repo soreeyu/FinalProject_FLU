@@ -1,5 +1,7 @@
 package com.flu.checkMember;
 
+import java.sql.Date;
+
 import com.flu.profile.TypeInfo;
 
 public class CheckMemberViewDTO{
@@ -21,12 +23,41 @@ public class CheckMemberViewDTO{
 	private String account;
 	private String accountNumber;
 	private String authenticState;
+	private String alarmstate;
+	private String emailcheck;
+	private String name;
+	private String namegender;
+	private Date birth;
+	
 	private TypeInfo typeInfo;
 	
 	private String fname;
 	private String oname;
-	private String name;
-	
+
+	public String getAlarmstate() {
+		return alarmstate;
+	}
+	public void setAlarmstate(String alarmstate) {
+		this.alarmstate = alarmstate;
+	}
+	public String getEmailcheck() {
+		return emailcheck;
+	}
+	public void setEmailcheck(String emailcheck) {
+		this.emailcheck = emailcheck;
+	}
+	public String getNamegender() {
+		return namegender;
+	}
+	public void setNamegender(String namegender) {
+		this.namegender = namegender;
+	}
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
 	public String getKind() {
 		return kind;
 	}

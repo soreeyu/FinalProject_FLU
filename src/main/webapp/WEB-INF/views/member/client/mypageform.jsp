@@ -88,6 +88,10 @@
     
 }
 /******************************** 왼쪽 메뉴 *******************************/
+
+
+
+/******************************** 프로필 정보  *******************************/
 .contents{
 	float: left;
     margin-left: 10px;
@@ -100,40 +104,7 @@
 	background-color: #fff;
     border-radius: 3px;
 }
-.profile_title{
-	border-bottom: 1px dashed #dedede;
-	padding-bottom: 25px;
-}
-.profile_title > p:FIRST-CHILD > a{
-	float: right;
-	margin-top: 7px;
-	padding: 6px 12px;
-    font-size: 14px;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #66b3ff;
-    border-radius: .2em;
-    color: white;
-    line-height: 1.5;
-}
 
-.profile_title > p:FIRST-CHILD{
-	margin-top: 20px;
-}
-.profile_title > p > span {
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.profile_wrap{
-	padding-bottom: 20px;
-	margin-bottom: 20px;
-}
-.profile_wrap > p:FIRST-CHILD{
-	margin-top: 20px;
-	font-size: 18px;
-	font-weight: 700;
-}
 
 
 .no_data_wrap{
@@ -156,31 +127,16 @@
 	font-weight: bold;
 }
 
-thead{
-	background-color: #ccddff;
-	font-weight: bold;
-	font-size: 15px;
-}
-tbody{
-	font-size: 15px;
-	text-align: left;
-}
-th, td{
-	padding: 8px;
-	border-left: 1px solid #ccccff;
-	border-bottom: 1px solid #ccccff;
-}
-th{
-	border-top: 2px solid #3377ff;
-}
-th:FIRST-CHILD,td:FIRST-CHILD{
-	border-left: 0;
-}
+
 #a{
 	background-color: #66b3ff;
 	color: white;
 }
 </style>
+<script type="text/javascript">
+
+	
+</script>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
@@ -188,55 +144,27 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	<section class="main_section">
 		<div class="page_wrap">
 		<div class="page">
-			<c:import url="/WEB-INF/views/temp/mypagesidebar.jsp"></c:import>
+			<c:import url="/WEB-INF/views/temp/mypagesidebar2.jsp"></c:import>
 			
 			<div class="contents">
 				<div class="contents_inner">
-					<section class="profile_title">
-						<c:if test="${empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillInsert" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
-						<c:if test="${not empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillUpdate" style="margin-top: -5px;">업데이트 하기</a></p>
-						</c:if>
-					</section>
+					
 					<section class="profile_wrap">
-						<p><span>보유기술</span></p>
+						<p><span>클라이언트 수정</span></p>
 						
 						<div class="no_data_wrap">
-							<c:if test="${empty list }">
-							<div class="no_data">
-								<div class="no_img">
-									<img alt="기술" src="${pageContext.request.contextPath }/resources/img/mypage/skill.png">
-									<p>등록된 <span>'기술'</span>이 없습니다.</p>
+							<form id="form" action="${path }" method="post">
+								<input type="hidden" name="email" value="${member.email }">
+								<div>
+									<textarea name="intro" rows="10" cols="100">${dto.intro }</textarea>
 								</div>
-							</div>
-							</c:if>
-							<c:if test="${not empty list }">
-								<table style="width: 100%; text-align: left;">
-								<colgroup>
-									<col width="60%">
-									<col width="18%">
-									<col width="*%">
-								</colgroup>
-								<thead>
-								<tr>
-									<th>종류</th>
-									<th>숙련도</th>
-									<th>경험</th>
-								</tr>
-								</thead>
-								<tbody>
-								<c:forEach items="${list }" var="i">
-									<tr>
-										<td>${i.kind }</td>
-										<td>${i.slevel}</td>
-										<td>${i.exp }</td>
-									</tr>
-								</c:forEach>
-								</tbody>
-								</table>
-							</c:if>
+								
+								<div>
+									<p><span>홈페이지</span> <label><input type="text" name="homepage" value="${dto.homepage }"></label> </p>
+									
+								</div>
+								<p><span id="ok">수정 완료</span><span id="cencel">취소</span></p>
+							</form>
 						</div>
 						
 					</section>
@@ -249,4 +177,18 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
+<script type="text/javascript">
+	$(function() {
+		$("#ok").click(function() {
+			
+			$("#form").submit();
+			
+		});
+		
+		$("#cencel").click(function() {
+			history.back();
+		});
+		
+	});
+</script>
 </html>

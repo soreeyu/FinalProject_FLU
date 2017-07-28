@@ -209,8 +209,8 @@
 						</c:if>
 						<c:if test="${not empty list }">
 							<c:forEach items="${list }" var="i">
-							<div>
-								<div style="display:inline-block; height: 200px; width: 200px; margin-right: 50px;">
+							<div style="display: inline-block;">
+								<div style="display:inline-block; height: 200px; width: 200px; margin-right: 30px;">
 									${i.title }
 									<a href="portfolioView?pfNum=${i.pfNum }">${i.title }</a>
 									

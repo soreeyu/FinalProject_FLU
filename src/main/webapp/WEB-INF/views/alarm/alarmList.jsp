@@ -47,9 +47,15 @@ section {
 .empty-notification {
 	padding: 20px 30px;
 }
+.notification {
+	padding: 20px 30px;
+}
 .empty-notification-member{
     width: 80%;
     margin: 30px auto;
+}
+.empty-notification-member .alarm_date{
+	float: right;
 }
 .text-center{
 	margin-bottom: 20px;
@@ -150,7 +156,7 @@ section {
 										<br>
 										지금 바로 프로젝트를 등록해보세요.
 										</h5>
-										<a href="#">프로젝트 등록</a>
+										<a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록</a>
 									</div>
 								</c:when>
 								<c:when test="${member.kind eq 'freelancer'}">
@@ -160,7 +166,7 @@ section {
 										<br>
 										지금 바로 프로젝트에 지원해보세요.
 										</h5>
-										<a href="#">프로젝트 찾기</a>
+										<a href="${pageContext.request.contextPath}/project/projectList">프로젝트 찾기</a>
 									</div>
 								</c:when>
 							</c:choose>
@@ -169,9 +175,9 @@ section {
 					
 					<div class="notification">
 						<c:forEach items="${alarm}" var="a">
-							<div>
-							<span>${a.contents}</span>
-							<span>${a.reg_date}</span>
+							<div class="empty-notification-member"> 
+							<span class="alarm_contents">${a.contents}</span>
+							<span class="alarm_date">${a.reg_date}</span>
 							</div>
 						</c:forEach>	
 					</div>

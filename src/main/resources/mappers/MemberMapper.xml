@@ -10,6 +10,7 @@
 	<if test="kind == 'price'"> price like '%' || #{search} || '%'</if>
 	<if test="kind == 'reserve_date'"> reserve_date like '%' || #{search} || '%'</if>
 	<if test="kind == 'reserve_name'"> reserve_name like '%' || #{search} || '%'</if>
+	<if test="kind == 'human'"> reserve_name like '%' || #{search} || '%'</if>
 	</trim>
 	</sql>
   		

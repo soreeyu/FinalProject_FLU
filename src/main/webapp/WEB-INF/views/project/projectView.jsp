@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <title>Insert title here</title>
 <style type="text/css">
 
@@ -481,6 +481,7 @@ background-color: white;
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
+
 <section class="main_section">
 
 		<!--  header -->
@@ -690,6 +691,7 @@ background-color: white;
 <form action="../checkProject/checkProjectUpdate" id="frm">
 <input type="hidden" name="state" value="${dto.state}">
 <input type="hidden" name="projectNum" value="${dto.projectNum}">
+<input type="hidden" name="email" value="${dto.email}"> 
 <c:if test="${dto.state=='check'}">
 <input type="button" value="프로젝트 검수 완료" id="${dto.state }">
 </c:if>

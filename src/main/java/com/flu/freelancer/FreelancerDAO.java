@@ -36,7 +36,8 @@ public class FreelancerDAO{
 	
 	//totalCount
 	public int totalcount(ListInfo listInfo){
-		return this.getemail(listInfo).size();
+		System.out.println("데이터 갯수 : "+sqlSession.selectOne(NAMESPACE+"freelancerCount", listInfo));
+		return sqlSession.selectOne(NAMESPACE+"freelancerCount", listInfo);
 	}
 	
 	//프리랜서 리스트1 email
