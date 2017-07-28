@@ -344,9 +344,10 @@ cursor: pointer;
 				
 				$('#'+num).on("click",".btn2", function() {
 					var email = $(this).attr('title');
+					var name = $(this).attr('lang');
 					
-					if(confirm(email+"님의 대금처리를 완료하시겠습니까?")){
-						
+					if(confirm(name+"님의 대금처리를 완료하시겠습니까?")){
+						location.href = "../applicant/applicantPayFinish?email="+email;
 					}else{
 						alert("잘생각하셨습니다.");
 					}
@@ -488,6 +489,7 @@ cursor: pointer;
 									<option value="디자인">디자인</option>
 								</select>
 							</td>
+						<c:if test="${board=='check' or board=='fail' or board=='wait'}">
 							<td>기획 상태</td>
 							<td>
 								<select name="planState">
@@ -497,6 +499,11 @@ cursor: pointer;
 									<option value="detail">상세한 기획문서 존재</option>
 								</select>
 							</td>
+						</c:if>
+						<c:if test="${board=='finish'}">
+							<td></td>
+							<td></td>
+						</c:if>	
 						</tr>
 						<tr>
 							<td>2차 분류</td>
@@ -520,24 +527,46 @@ cursor: pointer;
 							<td><input type="text" name="name" id="name"></td>
 						</tr>
 						<tr>
-							<td>프로젝트 시작일</td>
-							<td><input type="date" name="startDate" id="startDate" value="${projectDTO.email}"></td>
+							<td>
+							<c:if test="${board=='check'}">
+							예상 시작일
+							</c:if>
+							<c:if test="${board=='fail' or board=='wait' or board=='finish'}">
+							프로젝트 시작일
+							</c:if>
+							</td>
 							
-
+							<td><input type="date" name="startDate" id="startDate" value="${projectDTO.email}"></td>
+						
+						<c:if test="${board=='check' or board=='fail' or board=='wait'}">
 							<td>담당자 이메일</td>
 							<td><input type="text" name="email" id="email"></td>
-	
+						</c:if>
+						<c:if test="${board=='finish'}">
+							<td>이름</td>
+							<td><input type="text" name="memberName" id="memberName" value="${memberName}"></td>
+						</c:if>
+						
 						</tr>
 						<tr>
-							<td>모집마감일</td>
+							<td>
+							<c:if test="${board=='check'}">
+							모집마감일
+							</c:if>
+							<c:if test="${board=='fail' or board=='wait' or board=='finish'}">
+							프로젝트 종료일
+							</c:if>
+							</td>
 							<td><input type="date" name="finishDate" id="finishDate"></td>
+							
+							
 							<td>등록날짜</td>
 							<td><input type="date" name="reg_date" id="reg_date"></td>
 						</tr>
 						
 					</table>
 						<div id="searchBTN">검색하기</div>
-						이름<input type="text" name="memberName" id="memberName" value="${memberName}">
+						
 					</form>
 				</div>
 				
@@ -564,18 +593,20 @@ cursor: pointer;
 								<td>${i.category}</td>
 								<td>${i.detailCategory}</td>
 								<td>
-								<c:if test="${i.state=='wait' or i.state=='ing'}"> <!-- 임금대기 -->
-									<a href="../checkProject/checkCashView?projectNum=${i.projectNum}">${i.name }</a>
+								<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
+								
+						  <%-- <c:if test="${i.state=='wait' or i.state=='ing'}"> <!-- 임금대기 -->
+									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
 								</c:if>
 								<c:if test="${i.state=='finish' or i.state=='payFinish'}">
-									<span class="bbttnn" title="${i.projectNum}" lang="${i.projectNum}" role="${i.state }">${i.name }</span>
+									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
 								</c:if>
 								<c:if test="${i.state=='fail'}"> <!-- 실패 -->
-									<a href="../checkProject/checkCashView?projectNum=${i.projectNum}">${i.name }</a>
+									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
 								</c:if>
 								<c:if test="${i.state=='check' or i.state=='done'}"> <!-- 검수 -->
 									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
+								</c:if> --%>
 
 								</td>
 								<td>${i.email }</td>
@@ -586,10 +617,13 @@ cursor: pointer;
 									 <c:if test="${i.state=='wait'}">입금대기중</c:if>
 									 <c:if test="${i.state=='ing'}">진행중</c:if>
 									 <c:if test="${i.state=='finish'}">미지급</c:if>
+									 <c:if test="${i.state=='fail'}">모집 실패</c:if>
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
 								 </td>
 								 <td>
+								 <c:if test="${board=='finish' or board=='wait'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
+								 </c:if>
 								 </td>
 							</tr>
 							<tr>

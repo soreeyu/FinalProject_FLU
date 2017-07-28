@@ -22,7 +22,7 @@ import com.flu.member.MemberDTO;
 import com.flu.util.ListInfo;
 
 @Controller
-@RequestMapping("checkMember/**")
+@RequestMapping("/checkMember/**")
 public class CheckMemberController {
 
 	@Inject

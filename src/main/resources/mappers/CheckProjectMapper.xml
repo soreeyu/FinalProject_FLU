@@ -105,10 +105,10 @@
   		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
   		</select>
-<!-- 
-  		<select id="failList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+ 
+  		<select id="failList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
-  		</select> -->
+  		</select> 
   		
   		<select id="waitList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />

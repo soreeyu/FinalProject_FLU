@@ -9,6 +9,11 @@
 <p>은행정보: ${memberList[i.index].bank } ${memberList[i.index].accountNumber }</p>
 <p>급여: <fmt:formatNumber type="currency">${app.pay}</fmt:formatNumber></p>
 <p>최종금액: <fmt:formatNumber type="currency">${app.pay*0.9}</fmt:formatNumber></p>
-<input type="button" title="${memberDTO.email}" class="btn2" value="지급확인">
+<c:if test="${app.state=='finish'}">
+<p><input type="button" lang="${memberList[i.index].name}" title="${memberList[i.index].email}" class="btn2" value="지급확인"></p>
+</c:if>
+<c:if test="${app.state=='payFinish'}">
+<p>지급완료</p>
+</c:if>
 </c:forEach>
 </div>

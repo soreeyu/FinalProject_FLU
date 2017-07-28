@@ -505,10 +505,6 @@ background-color: white;
 <c:if test="${dto.state=='check'}">
 <input type="button" value="프로젝트 검수 완료" id="${dto.state }">
 </c:if>
-<c:if test="${dto.state=='wait'}">
-<input type="button" value="프로젝트 진행하기" id="${dto.state }">
-</c:if>
-
 </form>
 
 <p><a href="">Delete</a></p>

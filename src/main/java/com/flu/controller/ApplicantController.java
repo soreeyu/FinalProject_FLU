@@ -33,7 +33,10 @@ public class ApplicantController {
 		
 		for(int i=0;i<applicantList.size();i++){
 			memberList.add(memberService.memberView(applicantList.get(i).getEmail()));
+			System.out.println(memberList.get(i).getName());
 		}
+		
+		
 		
 		model.addAttribute("memberList", memberList).addAttribute("applicantList", applicantList);
 		
@@ -44,12 +47,12 @@ public class ApplicantController {
 	
 	//지원자의 상태 업데이트 (돈을 지급했다고 payFinish로 변경)
 	@RequestMapping(value="applicantPayFinish")
-	public String checkApplicantUpdate(String email,Integer projectNum){
+	public String checkApplicantUpdate(String email){
 		
 		applicantService.appUpdate(email);
-	
+
 		
-		return "redirect:/checkProject/checkCashView?projectNum="+projectNum;
+		return "redirect:/checkProject/checkProjectFinishList";
 	}
 	
 }
