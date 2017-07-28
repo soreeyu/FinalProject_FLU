@@ -7,7 +7,7 @@
   
   
   
-  	<sql id="project">
+  	<!-- <sql id="project">
 	  	select * from project
 		<choose>
   				<when test="category==null and detailCategory==null">
@@ -43,27 +43,89 @@
 	  				order by reg_date asc
 				</when>
   			</choose>
+	</sql> -->
+	
+	
+  <sql id="project">
+  
+  	<choose>
+  		<when test="projectList==null">
+ 	  	select * from project where state in 
+	  	
+  					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>	  	
+
+	  	and category like '%' || #{projectDTO.category} || '%' 
+	  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
+	  	and name like '%' || #{projectDTO.name} || '%' 
+	  	and email like '%' || #{projectDTO.email} || '%' 
+	  	and planstate like '%' || #{projectDTO.planState} || '%' 
+	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
+	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
+
+	  	order by reg_date asc 		
+  		
+  		</when>
+  		<otherwise>
+	  	select * from project where state in 
+	  	
+  					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>	  	
+
+	  	and category like '%' || #{projectDTO.category} || '%' 
+	  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
+	  	and name like '%' || #{projectDTO.name} || '%' 
+	  	and email like '%' || #{projectDTO.email} || '%' 
+	  	and planstate like '%' || #{projectDTO.planState} || '%' 
+	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
+	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
+	    and projectNum in
+	    
+	      			<foreach collection="projectList" item="item" open="(" separator="," close=")">
+  					#{item}
+  					</foreach>	  	
+	  	
+	  	
+	  	order by reg_date asc
+			
+  		
+  		
+  		</otherwise>
+  	
+  	
+  	</choose>
+  
+
 	</sql>
   
-  
-  		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+  		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
+  			<include refid="project" />
+  		</select>
+ 
+  		<select id="failList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
+  			<include refid="project" />
+  		</select> 
+  		
+  		<select id="waitList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
   		</select>
   		
-  		<select id="failList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
+   		<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
+  		</select> 
+  		
+  		
+  		
+  		
+  		
+  		
+  		<select id="supportList" parameterType="java.lang.String" resultType="java.lang.String">
+  			select projectnum from applicant where email in (select email from member where name like '%' || #{memberName} || '%') and state in ('finish','payFinish')
   		</select>
-  		
-  		<select id="waitList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
-  			<include refid="project" />
-  		</select>
-  		
-  		<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.util.ListInfo">
-  			<include refid="project" />
-  		</select>
-  		
-  		
-  		
   		
   		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">

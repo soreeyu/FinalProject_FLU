@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.flu.applicant.ApplicantService;
+import com.flu.checkMember.CheckMemberService;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
@@ -21,6 +23,9 @@ public class MemberController {
 
 	@Inject
 	private MemberService memberService;
+	
+	@Inject
+	private CheckMemberService checkMemberService;
 	
 	//AJAX 뒤로가기 테스트
 	@RequestMapping(value="test")
@@ -215,11 +220,18 @@ public class MemberController {
 		
 		//계정 정보 뷰
 		@RequestMapping(value="personaldataView", method=RequestMethod.GET)
-		public String personaldataView(Model model, HttpSession session){
+		public String personaldataView(Model model, HttpSession session,String email){
 			
+			if(((MemberDTO)session.getAttribute("member")).getKind().equals("admin")){
+				model.addAttribute("active1", "a");
+				model.addAttribute("dto", checkMemberService.checkView(email));
+				
+			}else{
+				model.addAttribute("active1", "a");
+				model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
+			}
 			
-			model.addAttribute("active1", "a");
-			model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
+
 			return "/member/personaldata";
 		}
 		

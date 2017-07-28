@@ -203,6 +203,7 @@ p span{
 									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/profile/${dto.fProfileImage}">
 								</div>
 								<p><span>프리랜서 형태</span>${dto.type }</p>
+								<p><span>성명 </span>${dto.name }</p>
 								<p><span>닉네임</span>${dto.nickName }</p>
 								<p><span>성별</span>${dto.namegender }</p>
 								<p><span>생년월일</span>${dto.birth }</p>
@@ -229,6 +230,26 @@ p span{
 								<c:if test="${empty dto.fax }">
 								정보가 없습니다.
 								</c:if></p>
+								<c:if test="${member.type=='admin'}">
+								<p>신원 인증 자료: 
+									<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
+								</p>
+								</c:if>
+								
+								<c:if test="${dto.authenticState=='1'}">
+								<form action="../checkMember/checkMemberUpdate" id="frm1">
+									<input type="hidden" name="email" value="${dto.email}">
+									<input type="button" name="check" value="신원확인 완료" id="btn1">
+								</form>
+								</c:if>
+								
+								<c:if test="${dto.authenticState=='2'}">
+								<form action="../checkMember/checkMemberDelete" id="frm2">
+									<input type="hidden" name="email" value="${dto.email}">
+									<input type="button" name="check" value="신원확인 취소하기" id="btn2">
+								</form>
+								</c:if>
+								
 								
 							</div>
 						</div>
@@ -243,4 +264,26 @@ p span{
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
+<script type="text/javascript">
+
+	$("#btn1").click(function() {
+		if(confirm("신원확인을 완료 하시겠습니까?")){
+			$('#frm1').submit();
+		}
+		else{
+			alert("no"); 
+		}
+	});
+	
+	$("#btn2").click(function() {
+		if(confirm("삭제하시면 신원확인이 취소됩니다. 정말 삭제하시겠습니까?")){
+			$('#frm2').submit();
+		}
+		else{
+			alert("no"); 
+		}
+	});
+	
+</script>
+
 </html>

@@ -23,9 +23,7 @@ public class ListInfo {
 	private int perBlock=5;
 
 	//project
-	private String category;
-	private String detailCategory;
-	private String[] project;
+	private String[] project; //지우지말아주시오...ㅜㅜㅜㅜ
 
 
 
@@ -81,22 +79,6 @@ public class ListInfo {
 	}
 
 	
-
-
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-
-	public String getDetailCategory() {
-		return detailCategory;
-	}
-	public void setDetailCategory(String detailCategory) {
-		this.detailCategory = detailCategory;
-	}
 
 
 
