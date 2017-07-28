@@ -189,22 +189,35 @@ section {
 	height: 2000px;
 	margin : 0 auto;
 }
+
+#datepicker{
+margin-top: 45px;
+
+}
 .ui-datepicker{
 font-size: 2em;
-width:270px;
+width:90%;
+height : 380px;
 background-color : white;
 border:0px solid #555;
 color:#333;
+margin: 0 auto;
 }
 
 div.ui-datepicker-header{
 font-size: 2em;
-margin-top:5px;
 text-align:center;
 background:#ddebf7;
 border:0px;
 color:#708af8;
 font-size:14px;
+}
+.ui-datepicker .ui-datepicker-title {
+    margin: 0 2.3em;
+    line-height: 1.8em;
+    text-align: center;
+    font-size : 2.0em;
+    height: 50px;;
 }
 .ui-datepicker-calendar > thead th {
 	color: #949494;

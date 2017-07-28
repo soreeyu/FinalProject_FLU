@@ -63,8 +63,12 @@
 						$("#R"+num).html(data);
 						$("#R"+num).show();
 						$(".box_form").show();
+						var price = $(".ajax_price").val();
+						$(".totalPrice").html(price);
 					}
-				}) 
+				})
+				
+				
 				}
 			})
 
@@ -85,7 +89,6 @@
 		
 		 
 		 //예약하기 버튼을 눌렀을떄
-		 
 		$("#reservation_btn").click(function() {
 			//선택한 방의 넘버를 가져온다.
 
@@ -348,20 +351,21 @@ label {
 		
 		
 		</div>
+		
 		<div id="total_price">
 			<dl class="pull_box">
 				<dt class="pull_left">
 					<strong class="txt_price">\</strong>
 				</dt>
 				<dd class="pull_right">
-					<strong class="txt_price"> </strong>
+					<strong class="txt_price totalPrice"> </strong>
 					<span class="txt_unit">/ 시간(인)</span>
 				</dd>
 			</dl>
 		</div>
 		<input type="button" id="reservation_btn" value="예약하기">
-		<hr>			
-		</div>
+		<input type="hidden" id="each2">
+		</div> 
 		</div>
 
 		

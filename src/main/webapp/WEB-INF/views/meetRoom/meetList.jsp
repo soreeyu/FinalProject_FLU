@@ -83,16 +83,14 @@
 .info {
 	padding-bottom: 10px;
 }
-.pagination-wrapper {
-	display : block;
-    text-align: center;
-    height: 100px;
+.contents_paging{
+	width: 380px;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: bold;
 }
-.pagination {
-	display: inline-block;
-    padding-left: 0;
-    margin: 10px 0;
-    vertical-align: top;
+.contents_paging span{
+	cursor: pointer;
 }
 </style>
 </head>
@@ -135,26 +133,19 @@
 
 
 	
-	
-		<div class="pagination-wrapper">
-			<c:if test="${listInfo.curBlock > 1}">
-				<span class="block">
-				<a href="meetList?curPage=${listInfo.startNum-1}">&lt;
-				Prior
-				</a>
-				</span>
-			</c:if>
-			<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
-				var="y">
-				<span class="pagination"><a href="meetList?curPage=${y}">${y}</a></span>
-			</c:forEach>
-			<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
-				<span class="block">
-				<a href="meetList?curPage=${pageResult.lastNum+1}">Next &gt;</a>
-				</span>
-			</c:if>
-		</div>
-
+<div class="contents_paging">
+				<c:if test="${listInfo.curBlock>1 }">
+				<span id="preview">[이전]</span>		
+				</c:if>
+		
+				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
+					<span class="num" ><a href="meetList?curPage=${i}">${i}</a></span>			
+				</c:forEach>
+		
+				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
+				<span id="nextview">[다음]</span>			
+				</c:if>
+				</div>
 
 		<c:if test="${member.kind eq 'admin'}">
 			<a href="meetInsert" style="float: left;">업체등록</a>	
