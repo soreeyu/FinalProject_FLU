@@ -996,10 +996,58 @@ div{
 
 </style>
 
+<style type="text/css">
+#cklist_section{
+	width: 100%;
+	height: inherit;
+	background: white; /* lightgray; */
+	float: left;
+}
+
+#cklist_table{
+	border: 1px solid black;
+	text-align: center;
+	width: 95%;
+	height: 40%;
+	margin : 10px auto;
+	font-size: 15px;
+}
+
+#cklist_table th{
+	height: 30px;
+	line-height: 30px;
+}
+</style>
+
+<style type="text/css">
+#client_section{
+	width: calc(100% - 20px);
+    padding: 30px 10px;
+    /* height: inherit; */
+    background: white;
+    float: left;
+}
+
+
+</style>
+
+
+
+
+
+
+
+
 <script type="text/javascript">
+function getContextPath(){
+	alert('${pageContext.request.contextPath}');
+	var context = '${pageContext.request.contextPath}';
+	return context;
+}
 
 
 var unitListModal;
+var unitModal;
 
 	$(function() {
 		
@@ -1010,6 +1058,17 @@ var unitListModal;
 		getUserList(scheduleNum);
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
 		
+	
+		
+		jui.ready([ "ui.modal" ], function(modal) {
+		    unitModal = modal("#unitViewModal", {
+		        color: "black",
+		        target: "body",
+		        opacity: 0.5
+		    });
+		});
+		
+		
 		$('ul.tab li').click(function() {
 			//css
 			var activeTab = $(this).attr('data-tab');
@@ -1019,14 +1078,10 @@ var unitListModal;
 			$('#' + activeTab).addClass('current');
 			
 			
-			var url = "/flu/schedule/firstView?scheduleNum="+scheduleNum;
-			
 			
 			if(activeTab == 'tab1'){
-				alert("개요보기");
-				url = "/flu/schedule/firstView?scheduleNum="+scheduleNum;
-				
-				
+				//alert("개요보기");
+
 				
 				////////////////1뷰//////////////
 				//part별 갯수로 설정 //1개 기준 150 + 55px //tw-bar-chart
@@ -1036,17 +1091,17 @@ var unitListModal;
 				alert(fullGraphHeight);
 				$(".tw-bar-chart").css("height",fullGraphHeight);
 				
+				
+				
 				////////////////////1뷰끝/////////////
 				
 				
 				
 			}else if(activeTab == 'tab2'){
-				alert("달력보기");
-				url = "/flu/schedule/secondView?scheduleNum="+scheduleNum;
+				//alert("달력보기");
+				//url = "/flu/schedule/secondView?scheduleNum="+scheduleNum;
 				
-///////////////////2뷰///////////////
-				
-
+				///////////////////2뷰///////////////
 				jui.ready([ "ui.modal" ], function(modal) {
 					alert("모달 생성하기");
 					unitListModal = modal("#unitListModal", {
@@ -1148,13 +1203,13 @@ var unitListModal;
 				
 			}else if(activeTab == 'tab3'){
 				alert("표보기");
-				url = "/flu/schedule/thirdView?scheduleNum="+scheduleNum;
+				//url = "/flu/schedule/thirdView?scheduleNum="+scheduleNum;
 				
 				
-
+				
 				
 				/////////////3뷰////////////////
-				var unitModal;
+				/* var unitModal;
 				
 				jui.ready([ "ui.modal" ], function(modal) {
 				    unitModal = modal("#unitViewModal", {
@@ -1163,7 +1218,7 @@ var unitListModal;
 				        opacity: 0.5
 				    });
 				});
-				
+				 */
 				
 
 				
@@ -1178,49 +1233,6 @@ var unitListModal;
 
 				
 				
-				$(document).on("click",".unit",function(index){
-					alert("unit클릭"+$(this).attr("data-unitnum"));
-					alert("unit 클릭 스케줄 넘"+$("#scheduleNum").val());
-					
-					var unitNum = $(this).attr("data-unitnum");
-					
-					if(unitNum == -1){
-						alert("추가해야징");
-					}else{
-						var scheduleNum = $("#scheduleNum").val();
-						 $.ajax({
-							url: "/flu/schedule/unitOne",
-							type: "POST",
-							data: {
-								unitNum : unitNum,
-								scheduleNum : scheduleNum	
-							},
-							success: function(data){
-								//모달 내용 채워주기
-								alert(JSON.stringify(data));
-								var finishdate = new Date( data.unitFinishDate );
-								var startdate  = new Date( data.unitStartDate );
-			
-							    var year1  = startdate.getFullYear();
-							    var month1 = startdate.getMonth() + 1;
-							    var day1   = startdate.getDate();
-							    var year2  = finishdate.getFullYear();
-							    var month2 = finishdate.getMonth() + 1;
-							    var day2   = finishdate.getDate();
-			
-							      
-							    $("#unitName").html(data.unitName);
-								$("#unitDuration").html(year1+"-"+month1+"-"+day1+" ~ "+year2+"-"+month2+"-"+day2);
-								$("#unitDescribe").html(data.unitDescribe);
-								$("#unitPart").html(data.partNum);
-								$("#unitEmail").html(data.email);
-								unitModal.show(); 
-							}
-					
-						});
-					}
-					
-				}); //unit 클릭이벤트
 				
 				
 				
@@ -1231,60 +1243,7 @@ var unitListModal;
 				
 				
 				
-				//nav 클릭
-				$("#cardKind ul li").click(function(){
-					//alert($(this).text());
-					
-					$(".cardContentWrap").html("");
-					
-					if($(this).text() == "상태별"){
-						
-						getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
-						getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
-						getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
-						getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다
-					
-					}else if($(this).text() == "파트별"){
-							
-						//뿌려논만큼 반복해야지요
-						$(".partNum").each(function(){
-							var partNum = $(this).text();
-							getUnitList(scheduleNum,partNum,'','',"파트별"); //파트갯수만큼 반복문
-						});
-						
-							
-					}else if($(this).text() == "사용자별"){
-						//alert("안나오노1");
-						
-						//뿌려진만큼 반복
-						$(".userEmail").each(function(){
-							var userEmail = $(this).text();
-							//alert("안나오노2"+userEmail);
-							userEmail = userEmail.trim();
-							getUnitList(scheduleNum,-1,userEmail,'',"사용자별"); //파트갯수만큼 반복문
-						});
-						
-					}
-					
-					
-					//데이터 없을 경우
-					if($(".card").length == 0){
-						var makeCard = "";
-						makeCard = makeCard + '<div class="card">';
-						makeCard = makeCard + '<div class="cardTitle_wrap">';
-						makeCard = makeCard + '<span class="cardTitle">'+$(this).text()+'</span></div>';
-						makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';				
-						makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';						
-						makeCard = makeCard + '</div></div></div>';
-						
-						$(".cardContentWrap").append(makeCard);
-					}
-					
-					
-					getUnitList(scheduleNum,-1,'','',''); //전체뷰 볼거
-					
-				}); //card view nav 클릭이벤트 끝
-
+				
 				/////////////////////3뷰끝/////////////////////////////
 				
 				
@@ -1298,8 +1257,8 @@ var unitListModal;
 				
 				
 			}else if(activeTab == 'tab4'){
-				alert("수정하기");
-				url = "";
+				alert("체크리스트");
+				//url = "";
 			}
 			
 			//loadTabContent(url,activeTab);
@@ -1309,11 +1268,141 @@ var unitListModal;
 		
 		
 		
+		
+		
+		
+		//nav 클릭
+		$("#cardKind ul li").click(function(){
+			//alert($(this).text());
+			
+			$(".cardContentWrap").html("");
+			
+			if($(this).text() == "상태별"){
+				
+				getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다
+			
+			}else if($(this).text() == "파트별"){
+					
+				//뿌려논만큼 반복해야지요
+				$(".partNum").each(function(){
+					var partNum = $(this).text();
+					getUnitList(scheduleNum,partNum,'','',"파트별"); //파트갯수만큼 반복문
+				});
+				
+					
+			}else if($(this).text() == "사용자별"){
+				//alert("안나오노1");
+				
+				//뿌려진만큼 반복
+				$(".userEmail").each(function(){
+					var userEmail = $(this).text();
+					//alert("안나오노2"+userEmail);
+					userEmail = userEmail.trim();
+					getUnitList(scheduleNum,-1,userEmail,'',"사용자별"); //파트갯수만큼 반복문
+				});
+				
+			}
+			
+			
+			//데이터 없을 경우
+			if($(".card").length == 0){
+				var makeCard = "";
+				makeCard = makeCard + '<div class="card">';
+				makeCard = makeCard + '<div class="cardTitle_wrap">';
+				makeCard = makeCard + '<span class="cardTitle">'+$(this).text()+'</span></div>';
+				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';				
+				makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';						
+				makeCard = makeCard + '</div></div></div>';
+				
+				$(".cardContentWrap").append(makeCard);
+			}
+			
+			
+			
+			
+			getUnitList(scheduleNum,-1,'','',''); //전체뷰 볼거
+			
+		}); //card view nav 클릭이벤트 끝
+
+		
+		
+		
+		
+		
+		$(document).on("click", ".unit", function(index){
+			alert("unit클릭"+$(this).attr("data-unitnum"));
+			alert("unit 클릭 스케줄 넘"+$("#scheduleNum").val());
+			
+			var unitNum = $(this).attr("data-unitnum");
+			
+			if(unitNum == -1){
+				alert("추가해야징");
+			}else{
+				var scheduleNum = $("#scheduleNum").val();
+				 $.ajax({
+					url: "/flu/schedule/unitOne",
+					type: "POST",
+					data: {
+						unitNum : unitNum,
+						scheduleNum : scheduleNum	
+					},
+					success: function(data){
+						//모달 내용 채워주기
+						alert(JSON.stringify(data));
+						var finishdate = new Date( data.unitFinishDate );
+						var startdate  = new Date( data.unitStartDate );
+	
+					    var year1  = startdate.getFullYear();
+					    var month1 = startdate.getMonth() + 1;
+					    var day1   = startdate.getDate();
+					    var year2  = finishdate.getFullYear();
+					    var month2 = finishdate.getMonth() + 1;
+					    var day2   = finishdate.getDate();
+	
+					      
+					    $("#unitName").html(data.unitName);
+						$("#unitDuration").html(year1+"-"+month1+"-"+day1+" ~ "+year2+"-"+month2+"-"+day2);
+						$("#unitDescribe").html(data.unitDescribe);
+						$("#unitPart").html(data.partNum);
+						$("#unitEmail").html(data.email);
+						unitModal.show(); 
+					}
+			
+				});
+			}
+			
+		}); //unit 클릭이벤트
+		
+		
+		
+		//main insertForm
+		var partCount=1;
+		
+		$("#addPartBtn").click(function(){
+			partCount++;
+			//alert('part 추가');
+			//alert($("#partSection").html());
+			var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
+			partDOM = partDOM + ' part 시작일:<input type="date" class="partStartDate" name="partStartDate">'; 
+			partDOM = partDOM + ' part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">';
+			partDOM = partDOM + ' part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">';
+			partDOM = partDOM + ' <span class="partDel">X</span></div>';
+			$("#partSection").append(partDOM);
+		});
+		
+		$("#partSection").on("click",".partDel",(function(){
+			partCount --;
+			$(this).parent(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
+		}));
+		
 
 
 	}); //function
 	
-	
+	//jsp 임포트해서 피료 노노
 	function loadTabContent(url,activeTab){
 		if(url != ""){
 			
@@ -1365,6 +1454,7 @@ var unitListModal;
 					result = result + "<td class='partNum'> "+ this.partNum + " </td>";
 					result = result + "<td> "+ this.partDescFileO + " </td>";
 					result = result + "</tr>";
+					
 				});
 				result = result + "</table>";
 				$("#partsDiv").html(result); //아래화면에 뿌려주기
@@ -1503,8 +1593,8 @@ var unitListModal;
 						
 					}
 	
+						
 
-			
 				
 				}
 		
@@ -1537,33 +1627,13 @@ var unitListModal;
 			$(".cardContentWrap").css("height","640px");
 		}else if($(".card").length > 6){
 			$(".cardContentWrap").css("height","960px");
+		}else if($(".card").length > 9){
+			$(".cardContentWrap").css("height","1280px");
 		}
 
 		
 	} //makeUnitList 함수 끝
 	
-	
-	
-	
-	/**
-	 * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 
-	 */
-	/* function addEvents(jsonObj){
-		for(var i=0; i<Object.keys(jsonObj).length; i++){
-			//alert('일정추가되고있는가'+i);
-	        $('#schcalendar').fullCalendar('addEventSource', [{
-	            id:          jsonObj[i].scheduleNum+jsonObj[i].partName+jsonObj[i].partNum,
-	            title:       jsonObj[i].partName,
-	            start:       jsonObj[i].partStartDate,
-	            end:         jsonObj[i].partFinishDate,
-	            description: jsonObj[i].partNum, 
-	            color:       jsonObj[i].color,
-	            textColor:   jsonObj[i].textColor,
-	            //url: 'https://www.github.com'
-	        }]);
-	        console.log('달력이벤트 추가 ok');
-	    } 
-	} */
 	
 	
 	
@@ -1617,7 +1687,7 @@ var unitListModal;
 		<div class="header_text">
 			<p id="header_ttt" style="margin-bottom: 20px;">
 				<span>[테스트 프로젝트] 스케줄 </span>
-				<span>2017-08-01-2017-07-31</span>
+				<span>${mainScheduleDTO.startDate} ~ ${mainScheduleDTO.finishDate}</span>
 				<input type="hidden" id="scheduleNum" value="${scheduleNum}">
 			</p>
 			<p id="header_t">
@@ -1636,8 +1706,8 @@ var unitListModal;
 						<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
 						<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
 						<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
-						<li class=""  data-tab="tab4"><span class="taba">일정/업무수정</span></li>
-						<li class=""  data-tab="tab5"><span class="taba">###</span></li>
+						<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
+						<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
 					</ul>
 				</div>
 			</div>
@@ -1645,22 +1715,28 @@ var unitListModal;
 			
 		<div class="tabContentWrap">
 			<div id="tab1" class="tabcontent current">
-				tab1내용 은 개요야 
+				<!-- tab1내용 은 개요야  -->
 				<c:import url="/WEB-INF/views/schedule/firstView.jsp" />
 			</div>
 			
 			<div id="tab2" class="tabcontent">
-				tab2내용 은 달력이야
+				<!-- tab2내용 은 달력이야 -->
 				<c:import url="/WEB-INF/views/schedule/secondView.jsp" />
 			</div>
 			
 			<div id="tab3" class="tabcontent">
-				tab3내용 은 표야 
+				<!-- tab3내용 은 표야  -->
 				<c:import url="/WEB-INF/views/schedule/thirdView.jsp" />
 			</div>
 			
 			<div id="tab4" class="tabcontent">
-				tab4내용 은 수정이야 //클라이언트만 가능 
+				<!-- 프리랜서가 업무 체크 -->
+				<c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" />
+			</div>
+			
+			<div id="tab5" class="tabcontent">
+				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+				<c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" />
 			</div>
 		</div>
 		

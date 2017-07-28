@@ -30,6 +30,12 @@
 		resultType="com.flu.schedule.client.ScheduleMainDTO">
 		select * from scheduleMain where projectnum=#{projectNum}
 	</select>
+	
+	<!-- 스케줄 넘, 시작일, 마감일, 프로젝트 넘 -->
+	<select id="mainSInfo2" parameterType="java.lang.Integer"
+		resultType="com.flu.schedule.client.ScheduleMainDTO">
+		select * from scheduleMain where scheduleNum=#{scheduleNum}
+	</select>
 
 	<!-- 메인스케줄 수정 -->
 	<update id="mainSUpdate" parameterType="com.flu.schedule.client.ScheduleMainDTO">

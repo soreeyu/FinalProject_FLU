@@ -46,6 +46,11 @@ public class ScheduleService {
 	}
 	
 	
+	public ScheduleMainDTO mainScheduleOne(Integer scheduleNum) throws Exception{
+		return scheduleDAO.getSchedule2(scheduleNum);
+	}
+	
+	
 	/*
 	 *  projectNum으로 scheduleMain DB 에 scheduleNum생성
 	 *  return 

@@ -739,7 +739,7 @@ function getScheduleNum(projectNum){
 				getUnitList(scheduleNum,-1,'');// -1 이면 전체가 나온다 
 			}else{
 				alert("스케줄 생성 오류");
-				location.href=getContextPath();
+				//location.href=getContextPath();
 			}
 		}
 	});

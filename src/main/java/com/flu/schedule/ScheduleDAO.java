@@ -44,6 +44,11 @@ public class ScheduleDAO {
 		return sqlSession.selectOne(NAMESPACE+"mainSInfo", projectNum);//만든 scheduleNum을 리던
 	}
 	
+	//등록된 schedulemain 정보를 가져온다 (scheduleNum 으로 불러옴)
+	public ScheduleMainDTO getSchedule2(Integer scheduleNum) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"mainSInfo2", scheduleNum);//만든 scheduleNum을 리던
+	}
+	
 	
 
 	//main스케줄 수정하기 //시작 날짜, 마감날짜만 바꿈

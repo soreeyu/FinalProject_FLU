@@ -39,8 +39,11 @@ public class ScheduleController {
 		
 		
 		@RequestMapping(value="test" , method=RequestMethod.GET)
-		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
 			model.addAttribute("scheduleNum", scheduleNum);
+			
+			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
+			model.addAttribute("mainScheduleDTO", scheduleMainDTO);
 			//return "schedule/firstView";
 			return "schedule/scheduleTemp";
 		}
