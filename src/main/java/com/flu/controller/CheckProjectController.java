@@ -131,8 +131,7 @@ public class CheckProjectController {
 		if(projectDTO.getReg_date()==null){
 			projectDTO.setReg_date("");
 		}
-		
-		
+
 		
 		String [] ar = {"wait","ing"};
 		listInfo.setProject(ar);
@@ -140,6 +139,7 @@ public class CheckProjectController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("listInfo", listInfo);
 		map.put("projectDTO", projectDTO);
+
 		
 		List<ProjectDTO> list = checkProjectService.waitList(map);
 
@@ -149,7 +149,7 @@ public class CheckProjectController {
 
 	//완료된 프로젝트 불러오기 (프리랜서 급여주려고)
 	@RequestMapping(value="checkProjectFinishList", method=RequestMethod.GET)
-	public String checkProjectDoneList(ProjectDTO projectDTO,ListInfo listInfo,Model model){
+	public String checkProjectDoneList(ProjectDTO projectDTO,String memberName, ListInfo listInfo,Model model){
 
 		if(projectDTO.getCategory()==null){
 			projectDTO.setCategory("");
@@ -175,6 +175,16 @@ public class CheckProjectController {
 		if(projectDTO.getReg_date()==null){
 			projectDTO.setReg_date("");
 		}
+		if(memberName == null){
+			memberName="";
+		}
+		
+		
+		List<String> projectList = checkProjectService.supportList(memberName);
+	
+		for(int i=0; i<projectList.size();i++){
+			System.out.println(projectList.get(i));
+		}
 		
 		String [] ar = {"finish"};
 		listInfo.setProject(ar);
@@ -182,6 +192,7 @@ public class CheckProjectController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("listInfo", listInfo);
 		map.put("projectDTO", projectDTO);
+		map.put("projectList", projectList);
 		
 		List<ProjectDTO> list = checkProjectService.finishList(map);
 

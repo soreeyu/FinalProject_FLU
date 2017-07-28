@@ -522,8 +522,11 @@ cursor: pointer;
 						<tr>
 							<td>프로젝트 시작일</td>
 							<td><input type="date" name="startDate" id="startDate" value="${projectDTO.email}"></td>
-							<td>담당자 명</td>
+							
+
+							<td>담당자 이메일</td>
 							<td><input type="text" name="email" id="email"></td>
+	
 						</tr>
 						<tr>
 							<td>모집마감일</td>
@@ -534,6 +537,7 @@ cursor: pointer;
 						
 					</table>
 						<div id="searchBTN">검색하기</div>
+						이름<input type="text" name="memberName" id="memberName" value="${memberName}">
 					</form>
 				</div>
 				

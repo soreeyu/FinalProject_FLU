@@ -85,6 +85,10 @@ public class CheckProjectService {
 	
 	
 	
+	public List<String> supportList(String memberName){
+		return checkProjectDAO.supportList(memberName);
+	}
+	
 	public int update(ProjectDTO projectDTO){
 		return checkProjectDAO.update(projectDTO);
 	}
