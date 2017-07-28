@@ -156,7 +156,7 @@ section {
 										<br>
 										지금 바로 프로젝트를 등록해보세요.
 										</h5>
-										<a href="#">프로젝트 등록</a>
+										<a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록</a>
 									</div>
 								</c:when>
 								<c:when test="${member.kind eq 'freelancer'}">
@@ -166,7 +166,7 @@ section {
 										<br>
 										지금 바로 프로젝트에 지원해보세요.
 										</h5>
-										<a href="#">프로젝트 찾기</a>
+										<a href="${pageContext.request.contextPath}/project/projectList">프로젝트 찾기</a>
 									</div>
 								</c:when>
 							</c:choose>

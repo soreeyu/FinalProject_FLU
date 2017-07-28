@@ -110,15 +110,16 @@ public class ReservationController {
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
 	public String reservePay(ReservationDTO reservationDTO, Model model) throws Exception{
 		int result = reservaionService.insert(reservationDTO);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(reservationDTO.getEmail());
 		if(result>0){
 			System.out.println("예약성공");
-			alarmDTO = new AlarmDTO();
-			alarmDTO.setEmail(reservationDTO.getEmail());
 			alarmDTO.setContents("미팅룸 예약이 성공적으로 이루어졌습니다. 변경사항이 있거나 취소를 원할 경우 관리자에게 요청하세요");
-			alarmService.alarmInsert(alarmDTO);
 		}else {
 			System.out.println("예약실패");
+			alarmDTO.setContents("예약에 실패하였습니다. 관리자에게 문의 하세요.");
 		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:../../member/myMeetRoom";
 	}
 	

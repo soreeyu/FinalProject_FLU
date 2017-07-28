@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.file.FileSaver;
 import com.flu.file.FileService;
 import com.flu.freelancer.FreelancerDTO;
@@ -40,7 +42,10 @@ public class FreelancerController {
 
 	@Inject
 	private FreelancerService freelancerService;
-
+	@Inject
+	private AlarmService alarmService;
+	
+	private AlarmDTO alarmDTO;
 
 	//이메일 가져오는 메서드
 	private String getEmail(HttpSession session){
@@ -57,6 +62,7 @@ public class FreelancerController {
 			
 			return freelancerService.freelancerView(memberDTO.getEmail());
 		}
+		
 		//디티오를 하나 받아 관심분야를 스플릿해서 디티오와 관심분야를 맵으로 가져오는 메서드
 		private Map<String, Object> freelancerview2(String email){
 			Map<String, Object> map = freelancerService.freelancerView2(email);
@@ -124,9 +130,9 @@ public class FreelancerController {
 		model.addAttribute("path", "infoInsert");
 		return "/member/freelancer/freelancerinfo";
 	}
-	//프리샌서 정보 등록
+	//프리랜서 정보 등록
 	@RequestMapping(value="infoInsert", method=RequestMethod.POST)
-	public String freelancerinfoInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes){
+	public String freelancerinfoInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes) throws Exception{
 		
 		System.out.println("등록");
 		System.out.println(freelancerDTO.getEmail());
@@ -137,8 +143,13 @@ public class FreelancerController {
 			freelancerDTO.setInteresting("");
 			
 		}
-		freelancerService.infoUpdate(freelancerDTO);
-		
+		int result=freelancerService.infoUpdate(freelancerDTO);
+		if(result>0){
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(freelancerDTO.getEmail());
+			alarmDTO.setContents("필요한 정보를 등록하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
+		}
 		redirectAttributes.addFlashAttribute("active8", "a");
 		
 		
@@ -157,7 +168,7 @@ public class FreelancerController {
 	
 	//프리랜서 정보 수정
 	@RequestMapping(value="infoUpdate", method=RequestMethod.POST)
-	public String freelancerinfoUpdate(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes){
+	public String freelancerinfoUpdate(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes) throws Exception{
 		
 		System.out.println("수정");
 		System.out.println(freelancerDTO.getEmail());
@@ -169,7 +180,14 @@ public class FreelancerController {
 		System.out.println(freelancerDTO.getInteresting());
 		System.out.println(freelancerDTO.getPossibility());
 		
-		freelancerService.infoUpdate(freelancerDTO);
+		int result = freelancerService.infoUpdate(freelancerDTO);
+		if(result>0){
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(freelancerDTO.getEmail());
+			alarmDTO.setContents("필요한 정보를 수정 하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
+			
+		}
 		
 		redirectAttributes.addFlashAttribute("active8", "a");
 		
@@ -210,15 +228,20 @@ public class FreelancerController {
 	}
 	//자기소개 등록
 	@RequestMapping(value="introInsert", method=RequestMethod.POST)
-	public String introInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes){
+	public String introInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes) throws Exception{
 		int result = freelancerService.introInsert(freelancerDTO);
 		redirectAttributes.addFlashAttribute("active2", "a");
-		
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(freelancerDTO.getEmail());
 		if(result > 0){
 			freelancerDTO = freelancerService.freelancerView(freelancerDTO.getEmail());
 			redirectAttributes.addFlashAttribute("free", freelancerDTO);
+			alarmDTO.setContents("자기소개를 성공적으로 등록하였습니다.");
+			alarmService.alarmInsert(alarmDTO);		
 			return "redirect:/member/introView";
 		}else{
+			alarmDTO.setContents("자기소개 등록에 실패하였습니다. 다시 시도해주세요.");
+			alarmService.alarmInsert(alarmDTO);	
 			return "redirect:/member/introView";
 		}
 		
@@ -248,11 +271,18 @@ public class FreelancerController {
 	}
 	//자기소개 수정
 	@RequestMapping(value="introUpdate", method=RequestMethod.POST)
-	public String introUpdate(HttpSession session, FreelancerDTO freelancerDTO){
+	public String introUpdate(HttpSession session, FreelancerDTO freelancerDTO) throws Exception{
 		int result = freelancerService.introUpdate(freelancerDTO);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(this.getEmail(session));
+		
 		if(result > 0){
+			alarmDTO.setContents("등록된 자기소개를 성공적으로 수정 하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
 			return "redirect:/member/introView";
 		}else{
+			alarmDTO.setContents("등록된 자기소개를 수정하는데 실패하였습니다. 다시 시도해 주세요");
+			alarmService.alarmInsert(alarmDTO);
 			return "redirect:/member/introView";
 		}
 	}
@@ -308,8 +338,15 @@ public class FreelancerController {
 			}
 		}
 		
-		freelancerService.portfolioInsert(portFolio, ar);
-		
+		int result = freelancerService.portfolioInsert(portFolio, ar);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(this.getEmail(session));
+		if(result>0){
+			alarmDTO.setContents("포트폴리오 등록에 성공하였습니다.");
+		}else {
+			alarmDTO.setContents("포트폴리오 등록에 실패하였습니다. 다시 시도해 주세요");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		
 		return "redirect:/member/portfolioList";
 		
@@ -418,8 +455,15 @@ public class FreelancerController {
 				}
 		}
 		}
-		freelancerService.portfolioUpdate(portFolio, ar);
-		
+		int result = freelancerService.portfolioUpdate(portFolio, ar);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(this.getEmail(session));
+		if(result>0){
+			alarmDTO.setContents("포트폴리오를 성공적으로 수정하였습니다.");
+		}else {
+			alarmDTO.setContents("포트폴리오를 수정하는데 실패하였습니다.");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		
 		return "redirect:/member/portfolioList";
 		
@@ -441,7 +485,7 @@ public class FreelancerController {
 	}
 	//보유기술 등록
 	@RequestMapping(value="skillInsert", method=RequestMethod.POST)
-	public String skillInsert(Skill skill){
+	public String skillInsert(Skill skill) throws Exception{
 		System.out.println(skill.getEmail());
 		System.out.println(skill.getKind());
 		System.out.println(skill.getSlevel());
@@ -451,6 +495,8 @@ public class FreelancerController {
 		
 		List<Skill> ar = new ArrayList<Skill>();
 		
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(skill.getEmail());
 		if(skill.getExp().length() > 1){
 			String [] sk1 = skill.getExp().split(",");
 			String [] sk2 = skill.getKind().split(",");
@@ -466,13 +512,26 @@ public class FreelancerController {
 			}
 			
 			
-			freelancerService.skillInsert(ar);
+			int result = freelancerService.skillInsert(ar);
+			if(result>0){
+				alarmDTO.setContents("당신이 등록한 보유기술들은 훌륭합니다.");
+			}else {
+				alarmDTO.setContents("무언가 실패했군요 ㅜㅜ 다시 등록하세요 ");
+			}
+			alarmService.alarmInsert(alarmDTO);
 		}else if(skill.getExp().equals("0")){
 			
 		}else{
 			ar.add(skill);
-			freelancerService.skillInsert(ar);
+			int result = freelancerService.skillInsert(ar);
+			if(result>0){
+				alarmDTO.setContents("당신이 등록한 보유기술들은 훌륭합니다.");
+			}else {
+				alarmDTO.setContents("무언가 실패했군요 ㅜㅜ 다시 등록하세요 ");
+			}
+			alarmService.alarmInsert(alarmDTO);
 		}
+		
 		
 		
 		
@@ -590,7 +649,7 @@ public class FreelancerController {
 	}
 	//경력 등록
 	@RequestMapping(value="carrerInsert", method=RequestMethod.POST)
-	public String carrerInsert(Carrer carrer){
+	public String carrerInsert(Carrer carrer) throws Exception{
 		System.out.println(carrer.getEmail());
 		System.out.println(carrer.getCompanyName());
 		System.out.println(carrer.getDept());
@@ -598,8 +657,15 @@ public class FreelancerController {
 		System.out.println(carrer.getHireDate());
 		System.out.println(carrer.getRetireDate());
 		
-		freelancerService.carrerInsert(carrer);
-		
+		int result = freelancerService.carrerInsert(carrer);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(carrer.getEmail());
+		if(result>0){
+			alarmDTO.setContents("당신의 경력이 등록되었습니다.");
+		}else {
+			alarmDTO.setContents("경력등록에 실패하였습니다. 다시 확인해 주세요");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		
 		return "redirect:/member/carrer";
 	}
@@ -623,16 +689,31 @@ public class FreelancerController {
 	}
 	//경력 수정
 	@RequestMapping(value="carrerUpdate", method=RequestMethod.POST)
-	public String carrerUpdate(Carrer carrer){
-		freelancerService.carrerUpdate(carrer);
-		
+	public String carrerUpdate(Carrer carrer) throws Exception{
+		int result = freelancerService.carrerUpdate(carrer);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(carrer.getEmail());
+		if(result>0){
+			alarmDTO.setContents("당신의 경력을 수정하였습니다.");
+		}else {
+			alarmDTO.setContents("당신의 경력을 수정하는데 실패하였습니다. 다시 확인해 주세요.");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:/member/carrer";
 
 	}
 	//경력 삭제
 	@RequestMapping(value="carrerDelete", method=RequestMethod.GET)
-	public String carrerDelete(Carrer carrer){
-		freelancerService.carrerDelete(carrer);
+	public String carrerDelete(Carrer carrer) throws Exception{
+		int result = freelancerService.carrerDelete(carrer);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(carrer.getEmail());
+		if(result>0){
+			alarmDTO.setContents("당신의 경력을 삭제 했습니다. 다시 등록해주실꺼죠?");
+		}else {
+			alarmDTO.setContents("삭제에 실패했습니다. 가만히 놔두 세요");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:/member/carrer";
 
 	}
@@ -646,9 +727,16 @@ public class FreelancerController {
 	}
 	//학력 등록
 	@RequestMapping(value="academicInsert", method=RequestMethod.POST)
-	public String academicInsert(Academic academic){
-		freelancerService.academicInsert(academic);
-		
+	public String academicInsert(Academic academic) throws Exception{
+		int result = freelancerService.academicInsert(academic);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(academic.getEmail());
+		if(result>0){
+			alarmDTO.setContents("학력을 등록해주셨군요!!!!");
+		}else {
+			alarmDTO.setContents("학력 등록에 실패했어요 ㅜㅜㅜ 다시 등록해주세요 ㅜㅜ");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:/member/carrer";
 	}
 
@@ -669,16 +757,33 @@ public class FreelancerController {
 	
 	//학력 수정
 	@RequestMapping(value="academicUpdate", method=RequestMethod.POST)
-	public String academicUpdate(Academic academic){
+	public String academicUpdate(Academic academic) throws Exception{
 		
-		freelancerService.academicUpdate(academic);
+		int result = freelancerService.academicUpdate(academic);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(academic.getEmail());
+		
+		if(result>0){
+			alarmDTO.setContents("당신의 학력을 수정했어요!!!");
+		}else {
+			alarmDTO.setContents("이런 ㅜㅜ 당신의 학력을 수정하는데 실패 했네요 ㅜㅜ");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:/member/carrer";
 
 	}
 	//학력 삭제
 	@RequestMapping(value="academicDelete", method=RequestMethod.GET)
-	public String academicDelete(Academic academic){
-		freelancerService.academicDelete(academic);
+	public String academicDelete(Academic academic) throws Exception{
+		int result = freelancerService.academicDelete(academic);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(academic.getEmail());
+		if(result>0){
+			alarmDTO.setContents("당신의 학력은 삭제 됬네요. 다시 등록해야 할껄요??");
+		}else {
+			alarmDTO.setContents("다행이네요 삭제가 안됬어요 학력이!!!");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:/member/carrer";
 	}
 	/************************** License *******************************/
@@ -712,13 +817,20 @@ public class FreelancerController {
 	}
 	//자격증 수정
 	@RequestMapping(value="licenseUpdate", method=RequestMethod.POST)
-	public String licenseUpdate(License license){
+	public String licenseUpdate(License license) throws Exception{
 		System.out.println(license.getlName());
 		System.out.println(license.getAgency());
 		System.out.println(license.getPublishDate());
 		System.out.println(license.getSeiralNum());
-		freelancerService.licenseUpdate(license);
-		
+		int result = freelancerService.licenseUpdate(license);
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(license.getEmail());
+		if(result>0){
+			alarmDTO.setContents("당신의 자격증 정보가 수정 되었어요!!");
+		}else {
+			alarmDTO.setContents("당신의 자격증 정보가 뭔가 이상하네요 ㅜㅜ 수정이 안되었어요 ㅜ");
+		}
+		alarmService.alarmInsert(alarmDTO);
 		return "redirect:/member/carrer";
 	}
 	//자격증 삭제
@@ -731,7 +843,7 @@ public class FreelancerController {
 	//평가 정보 등록
 	@RequestMapping(value="evaluationInsert", method=RequestMethod.POST)
 	public void evaluationInsert(Evaluation evaluation){
-
+		
 	}
 
 	//평가 정보 뷰

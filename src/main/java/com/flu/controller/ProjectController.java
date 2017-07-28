@@ -36,6 +36,7 @@ public class ProjectController {
 	
 	@Inject
 	private AlarmService alarmService;
+	private AlarmDTO alarmDTO;
 	/*
 	 // 프로젝트에 생성된 스케줄이 있는지 확인 //1번
       @ResponseBody
@@ -246,10 +247,10 @@ public class ProjectController {
 		
 		if(result==1){
 			message = "success";
-			AlarmDTO alarmDTO = new AlarmDTO();
+			alarmDTO = new AlarmDTO();
 			System.out.println("프로젝트 등록"+((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
-			alarmDTO.setContents("프로젝트를 성공적으로 등록하였습니다.");
+			alarmDTO.setContents("프로젝트를 성공적으로 등록하였습니다. 관리자의 검수를 기다리세요.");
 			alarmService.alarmInsert(alarmDTO);
 		}
 		
@@ -288,7 +289,7 @@ public class ProjectController {
 	
 	//update
 	@RequestMapping(value="projectUpdate", method=RequestMethod.POST)
-	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd){
+	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd) throws Exception{
 		System.out.println("projectUpdate");
 		
 		int result = projectService.projectUpdate(projectDTO);
@@ -297,6 +298,10 @@ public class ProjectController {
 		if(result==1){
 			message = "success";
 			System.out.println("update success");
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(projectDTO.getEmail());
+			alarmDTO.setContents("프로젝트의 정보를 성공적으로 수정하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
 		}
 		rd.addAttribute("message", message);
 		
@@ -306,7 +311,7 @@ public class ProjectController {
 	
 	//delete
 	@RequestMapping(value="projectDelete")
-	public String projectDelete(int projectNum, RedirectAttributes rd){
+	public String projectDelete(int projectNum, RedirectAttributes rd, HttpSession session) throws Exception{
 		System.out.println("projectDelete");
 		
 		int result =projectService.projectDelete(projectNum);
@@ -314,6 +319,9 @@ public class ProjectController {
 		String message="Delete fail";
 		if(result==1){
 			message="Delete success";
+			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+			alarmDTO.setContents("등록하신 프로젝트를 성공적으로 삭제 하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
 		}
 		
 		rd.addAttribute("message", message);

@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.client.ClientDTO;
@@ -31,7 +33,9 @@ public class ClientController {
 	private ProjectService projectService;
 	@Inject
 	private ApplicantService applicantService;
-	
+	@Inject
+	private AlarmService alarmService;
+	private AlarmDTO alarmDTO;
 	
 	private String getEmail(HttpSession session){
 		
@@ -49,13 +53,19 @@ public class ClientController {
 	}
 	//클라이언트 정보 등록
 	@RequestMapping(value="clientInsert" , method=RequestMethod.POST)
-	public String clientInsert(ClientDTO clientDTO){
+	public String clientInsert(ClientDTO clientDTO) throws Exception{
 		
 		System.out.println("이메일 : "+clientDTO.getEmail());
 		System.out.println("인트로 : "+clientDTO.getIntro());
 		System.out.println("홈페이지: "+clientDTO.getHomepage());
 		
-		clientService.clientInsert(clientDTO);
+		int result = clientService.clientInsert(clientDTO);
+		if(result>0){
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(clientDTO.getEmail());
+			alarmDTO.setContents("필요한 정보를 등록하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
+		}
 		
 		return "redirect:/member/client/mypage";
 	}
@@ -71,10 +81,16 @@ public class ClientController {
 	}
 	//클라이언트 정보 수정
 		@RequestMapping(value="clientUpdate", method=RequestMethod.POST)
-		public String clientUpdate(ClientDTO clientDTO){
+		public String clientUpdate(ClientDTO clientDTO) throws Exception{
 			
-			clientService.clientUpdate(clientDTO);
-			
+			int result=clientService.clientUpdate(clientDTO);
+			if(result>0){
+				alarmDTO = new AlarmDTO();
+				alarmDTO.setEmail(clientDTO.getEmail());
+				alarmDTO.setContents("필요한 정보를 수정하였습니다.");
+				alarmService.alarmInsert(alarmDTO);
+				
+			}
 			
 			return "redirect:/member/client/mypage";
 		}
