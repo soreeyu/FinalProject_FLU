@@ -40,15 +40,13 @@ public class CheckProjectController {
 
 	@Inject
 	private ClientService clientService;
-<<<<<<< HEAD
+
 	@Inject
 	private MemberService memberService;
 	@Inject
 	private AlarmService alarmService;
 	private AlarmDTO alarmDTO;
-=======
 
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
 	
 	//검수전 프로젝트 들고오기
 	@RequestMapping(value="checkProjectCheckList", method=RequestMethod.GET)
@@ -250,22 +248,20 @@ public class CheckProjectController {
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
-<<<<<<< HEAD
 	public String update(ProjectDTO projectDTO) throws Exception{
+		System.out.println("gpgpgpgpgpgpgpgpgpgpgpgpgpgpgpgp");
 		
 		int result = checkProjectService.update(projectDTO);
 		if(result>0){
+			
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
 		}
-=======
-	public String update(ProjectDTO projectDTO,Model model){
-			
-			checkProjectService.update(projectDTO);
 
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
+
+
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	

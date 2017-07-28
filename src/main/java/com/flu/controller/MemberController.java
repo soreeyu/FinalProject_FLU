@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
+
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
-=======
+
 import com.flu.applicant.ApplicantService;
 import com.flu.checkMember.CheckMemberService;
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
+
 import com.flu.file.FileSaver;
 import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.meetRoom.MeetRoomServiceImpl;
@@ -37,15 +37,14 @@ public class MemberController {
 
 	@Inject
 	private MemberService memberService;
-<<<<<<< HEAD
 	@Inject
-	AlarmService alarmService;
-=======
+	private AlarmService alarmService;
+
 	
 	@Inject
 	private CheckMemberService checkMemberService;
 	
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
+
 	//AJAX 뒤로가기 테스트
 	@RequestMapping(value="test")
 	public void test(){

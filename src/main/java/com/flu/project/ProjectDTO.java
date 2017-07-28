@@ -30,16 +30,9 @@ public class ProjectDTO {
 	private String addr_num;		
 	private String addr_main;		
 	private String addr_detail;
-<<<<<<< HEAD
-	private String reg_date;		
-	
-	
-	
-=======
-	private String reg_date;			
 
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
-	
+	private String reg_date;		
+
 	public MultipartFile getFileName() {
 		return fileName;
 	}
@@ -76,7 +69,7 @@ public class ProjectDTO {
 	public void setPeriod(String period) {
 		this.period = period;
 	}
-<<<<<<< HEAD
+
 	
 	public String getStartDate() {
 		return startDate;
@@ -90,9 +83,7 @@ public class ProjectDTO {
 	public void setFinishDate(String finishDate) {
 		this.finishDate = finishDate;
 	}
-=======
 
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
 	public int getBudget() {
 		return budget;
 	}
@@ -177,22 +168,7 @@ public class ProjectDTO {
 	public void setAddr_detail(String addr_detail) {
 		this.addr_detail = addr_detail;
 	}
-<<<<<<< HEAD
 
-=======
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getFinishDate() {
-		return finishDate;
-	}
-	public void setFinishDate(String finishDate) {
-		this.finishDate = finishDate;
-	}
->>>>>>> 8675bee91120a48cf318d170e7d75b04f295f640
 	public String getReg_date() {
 		return reg_date;
 	}
