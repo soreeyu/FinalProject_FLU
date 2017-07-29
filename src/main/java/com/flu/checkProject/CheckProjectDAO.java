@@ -25,11 +25,11 @@ public class CheckProjectDAO {
 		return sqlSession.selectList(NAMESPACE+"checkList",map);
 	}
 	
-/*	
-	public List<ProjectDTO>failList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"failList",listInfo);
+	
+	public List<ProjectDTO>failList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"failList",map);
 	}
-		*/
+		
 	
 	//입금대기중 리스트 불러오기
 	public List<ProjectDTO>waitList(Map<String, Object> map){
@@ -47,8 +47,7 @@ public class CheckProjectDAO {
 	public List<String> supportList(String memberName){
 		return sqlSession.selectList(NAMESPACE+"supportList",memberName);
 	}
-	
-	
+
 	public int update(ProjectDTO projectDTO){
 		return sqlSession.update(NAMESPACE+"update",projectDTO);
 	}

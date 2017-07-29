@@ -10,9 +10,9 @@
 			</div>
 			<div class="header_menu">
 				<ul>
-					<li><a href="#">프로젝트 등록</a></li>
-					<li><a href="#">프로젝트 찾기</a></li>
-					<li><a href="#">프리랜서 목록</a></li>
+					<li><a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록</a></li>
+					<li><a href="${pageContext.request.contextPath}/project/projectList">프로젝트 찾기</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/freelancerList">프리랜서 목록</a></li>
 					<li><a href="#">미팅룸 목록</a></li>
 				</ul>
 				<span class="header_right">
@@ -49,10 +49,17 @@
 				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectCheckList">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/checkMember/checkMemberList">회원 관리</a></li>
 			</c:when>
-			<c:otherwise>
-				<li><a href="#">내프로필</a></li>
-				<li><a href="#">내커리어</a></li>
+			<c:when test="${member.kind eq 'freelancer' }">
+				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
 				<li><a href="#">프로젝트 관리</a></li>
+			</c:when>
+			<c:otherwise>
+				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
+				<li><a href="#">프로젝트 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>
+				
 			</c:otherwise>
 			</c:choose>
 			

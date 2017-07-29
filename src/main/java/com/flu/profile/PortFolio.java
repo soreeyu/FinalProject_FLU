@@ -2,6 +2,8 @@ package com.flu.profile;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class PortFolio {
 
 	private String email;
@@ -12,7 +14,9 @@ public class PortFolio {
 	private int percentage;
 	private String pfOname;
 	private String pfFname;
-	private String pfNum;
+	private int pfNum;
+	
+	private MultipartFile [] f1;
 	
 	public String getEmail() {
 		return email;
@@ -62,12 +66,20 @@ public class PortFolio {
 	public void setPfFname(String pfFname) {
 		this.pfFname = pfFname;
 	}
-	public String getPfNum() {
+	public int getPfNum() {
 		return pfNum;
 	}
-	public void setPfNum(String pfNum) {
+	public void setPfNum(int pfNum) {
 		this.pfNum = pfNum;
 	}
+	public MultipartFile [] getF1() {
+		return f1;
+	}
+	public void setF1(MultipartFile [] f1) {
+		this.f1 = f1;
+	}
+	
+	
 	
 	
 }

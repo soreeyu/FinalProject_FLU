@@ -26,7 +26,7 @@
 <p>인증상태: ${checkMember.authenticState}</p>
 <p>타입: ${checkMember.typeInfo}</p>
 
-<p><a href="../file/fileDown?fname=${checkMember.fname}">${checkMember.oname}</a>
+<p><a href="../file/fileDown?fname=${checkMember.fname}">${checkMember.oname}</a></p>
 
 <p>진짜이름: ${checkMember.name}</p>
 

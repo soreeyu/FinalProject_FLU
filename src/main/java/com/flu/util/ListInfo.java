@@ -7,8 +7,10 @@ public class ListInfo {
 
 
 	//row
-	private String search; 
-	private String kind;
+
+	private String kind; //contents인지
+	private String search;//입력한값
+	private String arrange;
 	private int startRow;
 	private int lastRow;
 
@@ -46,7 +48,7 @@ public class ListInfo {
 		//1. totalCount
 		//2. totalPage
 		int totalPage = 0;
-
+		int perBlock=5;
 
 		if(totalCount%this.getPerPage()==0){
 			totalPage=totalCount/this.getPerPage();
@@ -71,6 +73,9 @@ public class ListInfo {
 		if(this.curBlock==this.totalBlock){
 			this.lastNum=totalPage;
 		}
+		if(this.totalBlock==0){
+			this.lastNum = 1;
+		}
 	}
 
 	
@@ -78,18 +83,7 @@ public class ListInfo {
 
 
 
-	public String getSearch() {
-		return search;
-	}
-	public void setSearch(String search) {
-		this.search = search;
-	}
-	public String getKind() {
-		return kind;
-	}
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
+
 	public int getStartRow() {
 		return startRow;
 	}
@@ -132,13 +126,13 @@ public class ListInfo {
 	public void setPerBlock(int perBlock) {
 		this.perBlock = perBlock;
 	}
-	public void setCurPage(Integer curPage) {
-		this.curPage = curPage;
-	}
+
 
 	public void makeRow(){
-		startRow = (this.getCurPage()-1)*this.getPerPage();
-		lastRow = this.getCurPage()*this.getPerPage();
+		startRow=(this.getCurPage()-1)*this.getPerPage()+1;
+		lastRow=this.getCurPage()*this.getPerPage();
+		System.out.println(startRow);
+		System.out.println(lastRow);
 	}
 	public Integer getPerPage() {
 		if(perPage==null){
@@ -155,5 +149,41 @@ public class ListInfo {
 		}
 		return curPage;
 	}
+
+	public void setCurPage(Integer curPage) {
+		if(curPage==null){
+			curPage=1;
+		}
+		this.curPage = curPage;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+
+	public String getKind() {
+		return kind;
+	}
+
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+
+	public String getArrange() {
+		return arrange;
+	}
+
+
+	public void setArrange(String arrange) {
+		this.arrange = arrange;
+	}
+
+
+
 
 }

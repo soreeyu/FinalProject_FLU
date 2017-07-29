@@ -40,10 +40,24 @@ public class CheckProjectService {
 		
 	}
 	
-/*	public List<ProjectDTO> failList(ListInfo listInfo){
-		return checkProjectDAO.failList(listInfo);
+	public List<ProjectDTO> failList(Map<String, Object> map){
+		
+		if(!((ProjectDTO)map.get("projectDTO")).getStartDate().equals("")){
+			((ProjectDTO)map.get("projectDTO")).setStartDate(((ProjectDTO)map.get("projectDTO")).getStartDate().replaceAll("-", "/").substring(2));
+		}
+		
+		if(!((ProjectDTO)map.get("projectDTO")).getFinishDate().equals("")){
+			((ProjectDTO)map.get("projectDTO")).setFinishDate(((ProjectDTO)map.get("projectDTO")).getFinishDate().replaceAll("-", "/").substring(2));
+			
+		}
+		if(!((ProjectDTO)map.get("projectDTO")).getReg_date().equals("")){	
+			((ProjectDTO)map.get("projectDTO")).setReg_date(((ProjectDTO)map.get("projectDTO")).getReg_date().replaceAll("-", "/").substring(2));
+			
+		}
+		
+		return checkProjectDAO.failList(map);
 	}
-		*/
+		
 	public List<ProjectDTO> waitList(Map<String, Object> map){
 		
 		if(!((ProjectDTO)map.get("projectDTO")).getStartDate().equals("")){
@@ -82,12 +96,10 @@ public class CheckProjectService {
 
 	
 	
-	
+
 	public List<String> supportList(String memberName){
-		
 		return checkProjectDAO.supportList(memberName);
 	}
-	
 	
 	public int update(ProjectDTO projectDTO){
 		return checkProjectDAO.update(projectDTO);
