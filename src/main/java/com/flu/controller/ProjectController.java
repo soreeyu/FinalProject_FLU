@@ -120,6 +120,7 @@ public class ProjectController {
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
 	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO){
+		System.out.println("projectView");
 		if(projectNum==null){
 			projectNum=1;
 		}
@@ -129,10 +130,9 @@ public class ProjectController {
 		System.out.println("session의 사진을 불러와보자");
 		memberDTO = (MemberDTO)session.getAttribute("member");
 		
-		
 		model.addAttribute("dto", projectDTO);
 		model.addAttribute("member", memberDTO);
-		
+			
 	}
 	
 	

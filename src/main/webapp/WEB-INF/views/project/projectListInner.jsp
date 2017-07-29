@@ -89,13 +89,30 @@
 
 <script type="text/javascript">
 
-
+/* 기본셋팅 */
 var curBlock="${listInfo.curBlock}";
 var perBlock="${listInfo.perBlock}";
 var curPage="${listInfo.curPage}";
 
 var preview = ((curBlock-2)*perBlock)+1;
 var next = curBlock*perBlock+1;
+
+var searchCon = $("#search").val();
+alert("search=="+searchCon);
+var array = new Array();
+
+var checkList = $("input[class='dev-chk']:checked");
+var array = new Array();
+var i=0;
+var arrangeVal = $("#arrange").val();
+alert(arrangeVal);
+alert("checkList="+checkList);
+
+ checkList.each(function(index) {
+	array[index] = checkList.val(); 
+});
+alert(array); 
+
 
 
 /* 페이징 색상 */
@@ -108,8 +125,9 @@ $(".num").each(function() {
 
 /* 페이징처리 */
 $("#preview").click(function() { 
+	 
 
-	$.get("projectListInner?curPage="+preview+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+	$.get("projectListInner?curPage="+preview+"&search="+searchCon+"&kind=total&arrange=$"+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
 		document.body.scrollTop = 0;
 		});
@@ -117,15 +135,13 @@ $("#preview").click(function() {
 
  $(".num").click(function() {
 	var pageNum = $(this).attr("id");
-	var checkList = $("input[class='dev-chk']:checked");
+/* 	var checkList = $("input[class='dev-chk']:checked");
 	alert("페이징chkeck="+checkList);
 	var searchCon = $("#search").val();
 	alert("search=="+searchCon);
 	var array = new Array();
 	
-	var checkList = $("input[class='dev-chk']:checked");
-	var array = new Array();
-	var i=0;
+
 	var arrangeVal = $("#arrange").val();
 	alert(arrangeVal);
 	alert("checkList="+checkList);
@@ -133,7 +149,7 @@ $("#preview").click(function() {
 	 checkList.each(function(index) {
 		array[index] = checkList.val(); 
 	});
-	alert(array); 
+	alert(array);  */
 	alert("pageNum="+pageNum);
 	$.get("projectListInner?curPage="+pageNum+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
@@ -144,7 +160,22 @@ $("#preview").click(function() {
  
 
  $("#nextview").click(function() {
-		$.get("projectListInner?curPage="+next+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+	/* 	 var searchCon = $("#search").val();
+		alert("search=="+searchCon);
+		var array = new Array();
+		
+		var checkList = $("input[class='dev-chk']:checked");
+		var array = new Array();
+		var i=0;
+		var arrangeVal = $("#arrange").val();
+		alert(arrangeVal);
+		alert("checkList="+checkList);
+
+		 checkList.each(function(index) {
+			array[index] = checkList.val(); 
+		});
+		alert(array);  */
+		$.get("projectListInner?curPage="+next+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 			$(".contents_main").html(data);
 			document.body.scrollTop = 0;
 		});
@@ -155,9 +186,20 @@ $("#preview").click(function() {
  
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");
+	var member = '${member}';
 	var memberEmail = '${member.email}';
+	alert("member="+member);
+	alert(memberEmail);
+	if(member==""){
+		alert("업져");
+		location.href="${pageContext.request.contextPath}/member/login";
+	}else{
+		alert("member="+member);
+		alert(memberEmail);
+		location.href="${pageContext.request.contextPath}/project/projectView?projectNum="+projectNum;
+		
+	}
 	
-	location.href="${pageContext.request.contextPath}/project/projectView?projectNum="+projectNum;
 	
 });
  
