@@ -36,7 +36,7 @@
 }
 
 /* 추가  */
-#header_ttt span:last-child{
+.DateMius{
 	font-size: 14px;
 	background-color: #07b481;
 	vertical-align: middle;
@@ -74,7 +74,7 @@ strong{
 }
 .contents {
 	width: 1260;
-	height: 2700px;
+	height: 2000px;
 	/* min-height: 1200px;
 	max-height: 2700px; */
 }
@@ -166,12 +166,16 @@ strong{
 	width: 135px;
 	padding-top: 10px;
 	padding-left: 15px;
+	font-size: 14px;
 }
 .project-detail{
-	background-color: green;
 	margin-top: 20px;
 	border-bottom: 1px dotted #dedede;
-	min-height: 500px;
+	line-height: 20px;
+	word-spacing: 3px;
+	padding: 30px;
+	height: auto;
+	min-height: 400px;
 }
 .project-detail-title{
 	font-weight: bolder;
@@ -238,7 +242,8 @@ strong{
 }
 .project-qna{
 	margin-top: 10px;
-	height: 600px;
+	height: auto;
+	max-height: 600px;
 	background-color: white;
 	padding: 30px;	
 }
@@ -508,7 +513,7 @@ background-color: white;
 			<div class="header_text">
 				<p id="header_ttt" style="margin-bottom: 20px;">
 				<span>${dto.name}</span>
-				<span>${dto.startDate}-${dto.finishDate }</span>
+				<span class="DateMius"><span class="startDate"></span> - <span class="finishDate"></span></span>
 				</p>
 				<p id="header_t">
 				<span>${dto.category} > ${dto.detailCategory }</span>
@@ -536,11 +541,11 @@ background-color: white;
 					</div>
 					<div class="term">
 						<i class="fa fa-clock-o"></i>
-						<span class="fa">예상기간</span>${dto.period}
+						<span class="fa">예상기간</span>${dto.period}일
 					</div>
 					<div class="deadline">
 						<i class="fa fa-pencil"></i>
-						<span class="fa">모집마감</span>${dto.finishDate}
+						<span class="fa">모집마감</span><span class="finishDate"></span>
 					</div>
 				</div>
 				
@@ -548,19 +553,19 @@ background-color: white;
 				<div class="project-detail-box">
 					<div class="project-detail-top">
 						<div class="detail-title">기획상태</div>
-						<div class="detail-data">${dto.state }</div>
+						<div class="detail-data" id="planState"></div>
 						<div class="detail-title">매니징 경험</div>
-						<div class="detail-data">${dto.exp }</div>
+						<div class="detail-data" id="exp"></div>
 						<div class="detail-title">등록 일자</div>
-						<div class="detail-data">${dto.reg_date }</div>
+						<div class="detail-data" id="reg_date"></div>
 					</div>
 					<div class="project-detail-bottom">
 						<div class="detail-title">예상 시작일</div>
-						<div class="detail-data">${dto.startDate }</div>
+						<div class="detail-data startDate"></div>
 						<div class="detail-title">미팅 방식</div>
-						<div class="detail-data">${dto.meetKind }</div>
-						<div class="detail-title">기획상태</div>
-						<div class="detail-data">${dto.addr_main }</div>
+						<div class="detail-data" id="meetKind"></div>
+						<div class="detail-title">위치</div>
+						<div class="detail-data">${dto.addr_main}</div>
 					</div>
 				</div>
 				
@@ -653,29 +658,28 @@ background-color: white;
 			
 			<!-- right contents  -->
 			<section class="contents_sub">
-			${dto.state }
 				<div class="project-apply-box">
 			<c:if test="${member.kind eq 'freelancer'}">
-				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
+				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
 				<a href="#" id="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
 	 		</c:if> 
 	 		<c:if test="${dto.state eq 'ing'}">
 				<a href="#" id="schedult-btn">프로젝트 스케줄 </a>
 	 		</c:if>
-	 		<c:if test="${dto.state eq 'recruit'|| dto.state eq 'ing'}">
+	 		<c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
 				<a href="#" id="schedult-btn">미팅룸 예약하기 </a>
-	 		</c:if>
-			
-			
+	 		</c:if>			
 				</div>
+				
+				
 				
 				<div class="client-info-box">
 					<div>
-					<div>프로젝트 등록자 : ${dto.email }</div>
-					<div><span>프로젝트 등록</span><span>몇 건 </span></div>
-					<div><span>계약한 프로젝트</span><span>몇 건</span></div>
-					<div><span>진행중인 프로젝트</span><span>몇 건</span></div>
-					<div><span>완료한 프로젝트</span><span>몇 건</span></div>
+					<div>프로젝트 등록자 : ${dto.email}</div>
+					<div><span>프로젝트 등록</span><span id="total_pjcount">건${pjcount}건 </span></div>
+					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">몇 건</span></div>
+					<div><span>진행중인 프로젝트</span><span id="ing_pjcount">몇 건</span></div>
+					<div><span>완료한 프로젝트</span><span id="finish_pjcount">몇 건</span></div>
 					</div>
 				</div>
 
@@ -712,9 +716,86 @@ background-color: white;
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
+
+/* 기본셋팅 */
 var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
-var email = "${dto.email}";
+
+/* 기획상태 뿌려주기 */
+var planState = "${dto.planState}";
+if(planState=='idea'){
+	$("#planState").text("아이디어만 존재");	
+}else if(planState=='simple'){
+	$("#planState").text("필요한 내용 정리");
+}else{
+	$("#planState").text("상세한 기획문서 존재");
+}
+
+
+/* 매니징경험 뿌려주기 */
+ var exp = "${dto.exp}";
+ if(exp=='y'){
+	 $("#exp").text("있음");
+ }else{
+	 $("#exp").text("없음");
+ }
+
+/* 등록일자 뿌려주기 */
+ var rdate = "${dto.reg_date}";
+ var reg_date = new Date(rdate);
+ var reg_Day = reg_date.getDate();
+ var reg_Month = reg_date.getMonth()+1;
+ var reg_Year = reg_date.getFullYear();
+ $("#reg_date").text(reg_Year+"년 "+reg_Month+"월 "+reg_Day+"일");
+
+ 
+ 
+ /* 예상시작일 뿌려주기 */
+ var sdate = "${dto.startDate}";
+ var startDate = new Date(sdate);
+ var startDay = startDate.getDate();
+ var startMonth = startDate.getMonth()+1;
+ var startYear = startDate.getFullYear();
+ $(".startDate").text(startYear+"년 "+startMonth+"월 "+startDay+"일");
+ 
+ 
+ /* 미팅방식 뿌려주기 */
+var meetKind = "${dto.meetKind}";
+if(meetKind=='offline'){
+	$("#meetKind").text("오프라인");
+}else{
+	$("#meetKind").text("온라인");
+}
+
+/* 모집마감일 뿌려주기 */
+ var fdate = "${dto.finishDate}";
+ var finishDate = new Date(fdate);
+ var finishDay = finishDate.getDate();
+ var finishMonth = finishDate.getMonth()+1;
+ var finishYear = finishDate.getFullYear();
+ $(".finishDate").text(finishYear+"년 "+finishMonth+"월 "+finishDay+"일");
+ 
+ 
+
+ /*  */
+ var pjstate = "${dto.state}";
+ if(pjstate== 'check'){
+	 $(".project-apply-box").css("display", "none");
+ }else if(pjstate=='finish'){
+	 $(".project-apply-box").css("display", "none");
+ }else if(pjstate=='sell'){
+	 $(".project-apply-box").css("display", "none");
+ }else if(pjstate=='fail'){
+	 $(".project-apply-box").css("display", "none");
+ }
+ 
+ 
+ 
+ 
+ /* 등록한 프로젝트 갯수 */
+ 
+ 
+ 
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){

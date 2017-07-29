@@ -119,19 +119,20 @@ public class ProjectController {
 
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
-	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO){
+	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo){
 		System.out.println("projectView");
 		if(projectNum==null){
 			projectNum=1;
 		}
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
-
+/*		int pjcount = projectService.clientPjCount(listInfo, memberDTO, projectDTO);*/
 		System.out.println("session의 사진을 불러와보자");
 		memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		model.addAttribute("dto", projectDTO);
 		model.addAttribute("member", memberDTO);
+		/*model.addAttribute("pjcount", pjcount);*/
 			
 	}
 	
@@ -146,16 +147,7 @@ public class ProjectController {
 		memberDTO = (MemberDTO) session.getAttribute("member");
 		System.out.println("email=="+memberDTO.getEmail());
 		
-		System.out.println(memberDTO.getKind());	
-		/*if(memberDTO.getKind().equals("client")){
-			System.out.println("client다");
-		}else if(memberDTO.equals(null)){
-			System.out.println("null");
-			return "index";
-		}else{
-			
-		}*/
-		
+		System.out.println(memberDTO.getKind());		
 		return "project/projectInsert"; 
 		
 	}
@@ -205,11 +197,10 @@ public class ProjectController {
 
 		System.out.println(memberDTO.getKind());	
 		
+		projectDTO = projectService.projectView(projectDTO.getProjectNum());
 		System.out.println("projectNum="+projectDTO.getProjectNum());
-		System.out.println("project-name="+projectDTO.getName());
-		
-		int result = projectService.projectUpdate(projectDTO);
-		/*if(result)*/
+		System.out.println("controller-project-name="+projectDTO.getName());
+	
 		model.addAttribute("type", "update");
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("dto", projectDTO);

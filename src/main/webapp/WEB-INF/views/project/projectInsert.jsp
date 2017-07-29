@@ -306,7 +306,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 제목</label>
 					<div class="category-wrapper">
-						<input id="name" type="text" name="name" style="width: 100%;" placeholder="${dto.name}">
+						<input id="name" type="text" name="name" style="width: 100%;" value="${dto.name }">
 					<span id="detail">프로젝트 이름을 선택해 주세요</span>
 					</div>
 				</div>
@@ -314,15 +314,15 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>예상 기간</label>
 					<div class="category-wrapper">
-						<input id="period" type="text" name="period">일
-						<span id="detail">${dto.period }프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
+						<input id="period" type="text" name="period" value="${dto.period }">일
+						<span id="detail">프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>지출 가능 예산</label>
 					<div class="category-wrapper">
-						<input id="budget" type="number" name="budget">원
+						<input id="budget" type="number" name="budget" value="${dto.budget }">원
 						<span id="detail">지출 가능한 예산을 입력해 주세요. ( 부가세 별도, 예 : 1,000,000)</span>
 					</div>
 				</div>
@@ -357,7 +357,9 @@ label{
 				<div>
 					<label><span>*</span>프로젝트 내용</label>
 					<div>
-						<textarea rows="30" cols="80" name="contents" ></textarea>
+						<textarea rows="30" cols="80" name="contents" >
+						${dto.contents }
+						</textarea>
 					</div>
 				</div>
 				
@@ -613,7 +615,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>모집 마감일자</label>
 					<div class="category-wrapper">
-						<input type="date" name="finishDate" id="finishDate">
+						<input type="date" name="finishDate" id="finishDate" value="${dto.finishDate }">
 					</div>
 				</div>
 
@@ -630,25 +632,25 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>클라이언트 위치</label>
 					<div class="category-wrapper">
-						<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호">
+						<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" value="${dto.addr_num}">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required">
-						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required">
+						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required" value="${addr_main}">
+						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required" value="${addr_detail}">
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br> 예상 시작일</label>
 					<div class="category-wrapper">
-						<input type="date" name="startDate" id="startDate" required="required">
+						<input type="date" name="startDate" id="startDate" required="required" value="${dto.startDate }">
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br>매니징 경험</label>
 					<div class="category-wrapper">
-						<input type="radio" name="exp" value="y">예 <input
-							type="radio" name="exp" value="n">아니오
+						<input type="radio" name="exp" value="y">예 
+						<input type="radio" name="exp" value="n">아니오
 					</div>
 				</div>
 
@@ -724,18 +726,13 @@ label{
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
+/* var fdate = "${dto.finishDate}";
+var fday = new Date(fdate);
+alert("fday=="+fday);
+$("#finishDate").val(fday); */
+
 alert("type == ${type}"); 
 alert("사용자email = ${member.email}");
-var dto = "${dto}";
-var name = "${dto.name}";
-var projectNum="${dto.projectNum}";
-var Budget = "${dto.budget}";
-alert(dto);
-alert(name);
-alert(projectNum);
-alert(Budget);
-
-
 	
 
 

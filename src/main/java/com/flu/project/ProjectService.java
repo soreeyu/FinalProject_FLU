@@ -43,7 +43,7 @@ public class ProjectService {
 	
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
-		//System.out.println("checklist service"+checkList.get(0));
+		
 		System.out.println("service-list-search==="+listInfo.getSearch());
 		System.out.println("projectService-projectList");
 		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
@@ -79,7 +79,7 @@ public class ProjectService {
 		for(int i=0;i<ar.size();i++){
 			System.out.println(ar.get(i).getSkill());
 			String[] parsing = ar.get(i).getSkill().split(",");
-			System.out.println(parsing.length);
+			
 			for(int j=0;j<parsing.length;j++){
 				ar.get(i).setSkills(parsing);				
 			}

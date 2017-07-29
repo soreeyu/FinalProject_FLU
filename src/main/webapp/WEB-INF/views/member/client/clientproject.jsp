@@ -207,12 +207,15 @@
 	float: right;
 	height: 54px;
 	line-height: 13px;
-	background-color: gray;
 }
 .right-contents-sub{
 	border-bottom: 1px solid #dedede;
 	margin-bottom: 5px;
 	height: 20px;
+}
+.deadline{
+	font-weight: bold;
+	margin-left: 5px;
 }
 .project-bottom{
 	margin-top: 10px;
@@ -268,7 +271,15 @@
 	text-align: center;
 	font-weight: bold;
 }
-
+.num{
+	cursor: pointer;
+}
+#preview{
+	cursor: pointer;
+}
+#nextview{
+	cursor: pointer;
+}
 
 </style>
 <body>

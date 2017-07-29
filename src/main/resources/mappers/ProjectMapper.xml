@@ -26,7 +26,7 @@
   
   <select id="count" parameterType="java.util.HashMap" resultType="int">
   	select count(nvl(projectNum,0)) from project
- 	where
+ 	where state='recruit' and
 	(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
 	<if test="result == 1">
 		 and detailCategory IN 
@@ -37,76 +37,17 @@
   
   </select>
   
-  
- 
-  	<!-- 
-  <select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-
-
-		 select * from 
-		(select rownum R, N.* from 
-		(select * from project 
-		
-		<where>
-			<if test="checkList.size()!=0">
-				detailCategory IN
-				<foreach collection="checkList" item="c" open="(" close=")" separator=",">
-					#{c}				
-				</foreach>
-				and
-			</if>
-			name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
-		</where>
-		<if test="project.detailCategory != null">
-		detailCategory=#{project.detailCategory} and name like '%' || #{listInfo.search} || '%'
-	 	</if> 
-	 	<if test="project.detailCategory == null">
-	 	name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
-  	 	</if>
-  	 	
-		where detailCategory in('웹', '워드프레스') and 
-		name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
 	
-		
-		order by
-		<choose>
-			<when test="arrange=='money'">
-			budget desc
-			</when>
-			<when test="arrange=='lowmoney'">
-			budget asc
-			</when>
-			<when test="arrange=='current'">
-			reg_date desc
-			</when>
-			<when test="arrange=='last'">
-			finishDate asc
-			</when>
-			<otherwise>
-			projectNum desc
-			</otherwise>
-		</choose>
-		
-		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
-
-  	</select>
+   	
   	
-  	
-  	
-  	 -->
-  	
-  	
-  	
-  	
-  	
-  	<select id="listMyeon" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+  	<select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
 
 
 		 select * from 
 		(select rownum R, N.* from 
 		(select * from project 
 		
-		where 
+		where state='recruit' and
 		(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
 		<if test="result == 1">
 		 and detailCategory IN 
@@ -137,30 +78,6 @@
 		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
   	</select>
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
   	
   	
   	

@@ -29,6 +29,8 @@ public class ProjectDAO {
 		public int projectUpdate(ProjectDTO projectDTO){
 			System.out.println("dao-projectNum="+projectDTO.getProjectNum());
 			System.out.println("dao-project-name="+projectDTO.getName());
+			System.out.println("dao-project-category="+projectDTO.getCategory());
+			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());
 			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
@@ -68,7 +70,7 @@ public class ProjectDAO {
 				System.out.println("sech==="+listInfo.getSearch());
 			}
 			
-			return sqlSession.selectList(NAMESPACE+"listMyeon", map);
+			return sqlSession.selectList(NAMESPACE+"list", map);
 		}
 		
 		//project Count

@@ -75,6 +75,7 @@
 			<c:if test="${list.size()>0}">
 				<div class="contents_bottom">
 				<div class="contents_paging">
+				
 				<c:if test="${listInfo.curBlock>1 }"> 
 				<span id="preview">[이전]</span>		
 				</c:if>
@@ -87,8 +88,6 @@
 				<span id="nextview">[다음]</span>			
 				</c:if>
 				</div>
-	 
-
 			</div>
 			</c:if>
 	<script type="text/javascript">

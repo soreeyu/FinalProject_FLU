@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="contents">
+<div class="reply-contents">
 
 		<c:forEach items="${replyList}" var="reply">
 		<div>
