@@ -77,6 +77,12 @@ public class ScheduleController {
 			return "schedule/ganttchartTest";
 		}
 		
+		@RequestMapping(value="dhxTest")
+		public String test7(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			//model.addAttribute("scheduleNum", scheduleNum);
+			//return "schedule/ganttchartTest2";
+			return "schedule/dhx_ganttTest";
+		}
 		
 		
 		

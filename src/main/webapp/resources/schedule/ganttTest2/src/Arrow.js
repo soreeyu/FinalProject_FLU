@@ -9,7 +9,7 @@
 		to_task (Bar object)
 */
 
-export default function Arrow(gt, from_task, to_task) {
+function Arrow(gt, from_task, to_task) {
 
 	const self = {};
 
