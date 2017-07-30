@@ -223,11 +223,6 @@ cursor: pointer;
 			$('#finishBTN').children("#finish").css('color', 'white');
 			$('#waitBTN').css('background-color', 'white');
 			$('#waitBTN').children("#wait").css('color', 'black');
-		} else if (board == 'client') {
-			$('#clientBTN').css('background-color', '#446eab');
-			$('#clientBTN').children("#client").css('color', 'white');
-			$('#freelancerBTN').css('background-color', 'white');
-			$('#freelancerBTN').children("#freelancer").css('color', 'black');
 		} else {
 
 		}
