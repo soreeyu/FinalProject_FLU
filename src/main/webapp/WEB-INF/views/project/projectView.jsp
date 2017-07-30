@@ -465,10 +465,13 @@ background-color: white;
 
 <p>project View &emsp;
 <c:if test="${dto.state=='done'}">
-검수완료
+[ 검수완료 ]
 </c:if>
 <c:if test="${dto.state=='ing'}">
-진행중
+[ 진행중 ]
+</c:if>
+<c:if test="${dto.state=='fail'}">
+[ 모집 실패 ]
 </c:if>
 </p>
 
@@ -499,16 +502,23 @@ background-color: white;
 <hr>
 
 <p>관리자 부분</p>
-<form action="../checkProject/checkProjectUpdate" id="frm">
+
+<form action="" id="frm">
+
 <input type="hidden" name="state" value="${dto.state}">
 <input type="hidden" name="projectNum" value="${dto.projectNum}">
+
 <c:if test="${dto.state=='check'}">
-<input type="button" value="프로젝트 검수 완료" id="${dto.state }">
+<input type="button" value="프로젝트 검수 완료" id="doneBTN">
 </c:if>
+
+<c:if test="${dto.state=='fail'}">
+<input type="button" value="프로젝트 연장" id="dateBTN">
+</c:if>
+
+<input type="button" value="프로젝트 삭제" id="deleteBTN">
+
 </form>
-
-<p><a href="">Delete</a></p>
-
 
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
@@ -701,28 +711,31 @@ $.ajax({
 <script type="text/javascript">
 
 	var state = '${dto.state}';
-	
-	$('#'+state).click(function() {
+	var projectNum = '${dto.projectNum}';
 		
-		if(state=='check'){
-			
-			if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-				$('#frm').submit();
-			}
-			else{
-				alert("no"); 
-			}
-
+	$('#deleteBTN').click(function() {
+		
+		if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
+			$('#frm').attr('action','./projectDelete');
+			$('#frm').submit();
 		}else{
-			if(confirm("프로젝트를 진행하시겠습니까??")){
-				$('#frm').submit();
-			}
-			else{
-				alert("no"); 
-			}
-		}
 			
+		}	
+		
 	});
+	
+	
+	$('checkBTN').click(function() {
+		if(confirm("프로젝트 검수를 완료하시겠습니까?")){
+			$('#frm').attr('action','../checkProject/checkProjectUpdate');
+			$('#frm').submit();
+		}
+		else{
+
+		}
+		
+	});
+
 
 </script>
 </html>
