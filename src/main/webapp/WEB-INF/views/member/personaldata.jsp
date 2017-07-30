@@ -223,33 +223,35 @@ p span{
 								<c:if test="${empty dto.phone2 }">
 								정보가 없습니다.
 								</c:if></p>
-								<p><span>패스번호</span>
+								<p><span>팩스번호</span>
 								<c:if test="${not empty dto.fax }">
 								${dto.fax }
 								</c:if>
 								<c:if test="${empty dto.fax }">
 								정보가 없습니다.
 								</c:if></p>
+								
 								<c:if test="${member.type=='admin'}">
-								<p>신원 인증 자료: 
-									<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
-								</p>
+									<p>신원 인증 자료: 
+										<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
+									</p>
+									
+									
+									<c:if test="${dto.authenticState=='1'}">
+									<form action="../checkMember/checkMemberUpdate" id="frm1">
+										<input type="hidden" name="email" value="${dto.email}">
+										<input type="button" name="check" value="신원확인 완료" id="btn1">
+									</form>
+									</c:if>
+									
+									<c:if test="${dto.authenticState=='2'}">
+									<form action="../checkMember/checkMemberDelete" id="frm2">
+										<input type="hidden" name="email" value="${dto.email}">
+										<input type="button" name="check" value="신원확인 취소하기" id="btn2">
+									</form>
+									</c:if>
+									
 								</c:if>
-								
-								<c:if test="${dto.authenticState=='1'}">
-								<form action="../checkMember/checkMemberUpdate" id="frm1">
-									<input type="hidden" name="email" value="${dto.email}">
-									<input type="button" name="check" value="신원확인 완료" id="btn1">
-								</form>
-								</c:if>
-								
-								<c:if test="${dto.authenticState=='2'}">
-								<form action="../checkMember/checkMemberDelete" id="frm2">
-									<input type="hidden" name="email" value="${dto.email}">
-									<input type="button" name="check" value="신원확인 취소하기" id="btn2">
-								</form>
-								</c:if>
-								
 								
 							</div>
 						</div>

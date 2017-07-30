@@ -467,6 +467,9 @@ background-color: white;
 <c:if test="${dto.state=='done'}">
 [ 검수완료 ]
 </c:if>
+<c:if test="${dto.state=='wait'}">
+[ 입금 대기중 ]
+</c:if>
 <c:if test="${dto.state=='ing'}">
 [ 진행중 ]
 </c:if>
@@ -725,7 +728,7 @@ $.ajax({
 	});
 	
 	
-	$('checkBTN').click(function() {
+	$('#doneBTN').click(function() {
 		if(confirm("프로젝트 검수를 완료하시겠습니까?")){
 			$('#frm').attr('action','../checkProject/checkProjectUpdate');
 			$('#frm').submit();
