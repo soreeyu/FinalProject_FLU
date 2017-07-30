@@ -91,7 +91,7 @@
 	width: 248px;
 	padding: 15px 30px;
 	background-color: white;
-	margin-bottom: 20px;
+	margin-bottom: 20px
 	border: 1px solid #dedede;
 }
 
@@ -258,7 +258,12 @@ cursor: pointer;
 				$('#frm').prop('action', "./checkProjectCheckList");
 			} else if (board == 'fail') {
 				$('#frm').prop('action', "./checkProjectFailList");
-			} else {
+			} else if(board=='wait'){
+				$('#frm').prop('action', "./checkProjectWaitList");
+			} else if(board=='finish'){
+				$('#frm').prop('action', "./checkProjectFinishList");
+			}
+			else {
 
 			}
 
@@ -315,6 +320,20 @@ cursor: pointer;
 
 	    $("#reg_date").val('20'+y+"-"+m+"-"+d);
 	    
+	    $("select[name=searchDate] option").each(function() {
+			if($(this).val()=='${searchDate}'){
+				$(this).attr("selected", "selected");
+			}
+	    	
+		$("select[name=type] option").each(function() {
+			
+			if($(this).val()=='${listInfo.type}'){
+				$(this).attr('selected','selected')
+			}
+		})	
+			
+			
+		})
 		
 		//Ajax---------------------------------------------------
 		
@@ -501,8 +520,15 @@ cursor: pointer;
 							</td>
 						</c:if>
 						<c:if test="${board=='finish'}">
-							<td></td>
-							<td></td>
+							<td>사업자 종류</td>
+							<td>
+							<select name="type">
+								<option value="">전체</option>	
+								<option value="개인">개인</option>
+								<option value="팀">팀</option>
+								<option value="사업자">사업자</option>
+							</select>
+							</td>
 						</c:if>	
 						</tr>
 						<tr>
@@ -524,7 +550,7 @@ cursor: pointer;
 								</div>
 							</td>
 							<td>프로젝트 명</td>
-							<td><input type="text" name="name" id="name"></td>
+							<td><input type="text" name="name" id="name" value="${projectDTO.name}"></td>
 						</tr>
 						<tr>
 							<td>
@@ -535,14 +561,14 @@ cursor: pointer;
 							프로젝트 시작일
 							</c:if>
 							</td>
-							<td><input type="date" name="startDate" id="startDate" value="${projectDTO.email}"></td>		
+							<td><input type="date" name="startDate" id="startDate"></td>		
 						<c:if test="${board=='check' or board=='fail' or board=='wait'}">
 							<td>담당자 이메일</td>
-							<td><input type="text" name="email" id="email"></td>
+							<td><input type="text" name="email" id="email" value="${projectDTO.email}"></td>
 						</c:if>
 						<c:if test="${board=='finish'}">
 							<td>이름</td>
-							<td><input type="text" name="memberName" id="memberName" value="${memberName}"></td>
+							<td><input type="text" name="memberName" id="memberName" value="${listInfo.memberName}"></td>
 						</c:if>
 						
 						</tr>
@@ -558,8 +584,17 @@ cursor: pointer;
 							<td><input type="date" name="finishDate" id="finishDate"></td>
 							
 							
-							<td>등록날짜</td>
-							<td><input type="date" name="reg_date" id="reg_date"></td>
+							<td>기간</td>
+							<td>
+							<select name="searchDate">
+								<option value="">전체</option>
+								<option value="week">최근 1주</option>
+								<option value="month">최근 1개월</option>
+								<option value="month3">최근 3개월</option>
+								<option value="month3">최근 6개월</option>
+								<option value="year">최근 1년</option>
+							</select>
+							</td>
 						</tr>
 						
 					</table>
