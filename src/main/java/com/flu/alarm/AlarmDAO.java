@@ -26,8 +26,8 @@ public class AlarmDAO {
 	}
 	
 	//알람 DELETE
-	public int alarmDelete(int num) throws Exception{
-		return 0;
+	public int alarmDelete(Integer num) throws Exception{
+		return sqlSession.delete(NAMESPACE+"AlarmDelete", num);
 	}
 	
 }

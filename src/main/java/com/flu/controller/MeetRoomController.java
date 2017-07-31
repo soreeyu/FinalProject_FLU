@@ -129,8 +129,7 @@ public class MeetRoomController {
 	
 	@RequestMapping(value="meetView", method=RequestMethod.GET)
 	public void meetView(Model model, Integer num) throws Exception{
-		
-		System.out.println(num);
+		System.out.println(num+"널인거냐");
 		
 		MeetRoomDTO meetRoomDTO = (MeetRoomDTO) meetRoomServiceImpl.view(num);
 		String [] time = meetRoomDTO.getTime().split(",");

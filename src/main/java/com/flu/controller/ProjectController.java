@@ -313,7 +313,8 @@ public class ProjectController {
 	
 	//delete
 	@RequestMapping(value="projectDelete")
-	public String projectDelete(int projectNum, RedirectAttributes rd, HttpSession session) throws Exception{
+
+	public String projectDelete(ProjectDTO projectDTO, RedirectAttributes rd, HttpSession session) throws Exception{
 
 		System.out.println("projectDelete");
 		

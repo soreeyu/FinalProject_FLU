@@ -31,21 +31,10 @@ public class ReservationService {
 	}
 
 
-	public int update(ReservationDTO reserve) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	public ReservationDTO view(int num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+	//예약취소하기 삭제
 	public int delete(int num) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return reservationDAO.delete(num);
 	}
 
 	public int count(ListInfo listInfo) throws Exception {
@@ -69,5 +58,8 @@ public class ReservationService {
 	public List<ReservationDTO> reservedTime2(ReservationDTO reservationDTO) throws Exception{
 		return reservationDAO.reservedTime2(reservationDTO);
 	}
-	
+	//예약취소신청하기
+	public int reservationDel(Integer num) throws Exception{
+		return reservationDAO.reservationDel(num);
+	}
 }

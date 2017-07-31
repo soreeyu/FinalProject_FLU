@@ -379,14 +379,14 @@ a {
 		<span>
 			세부공간 명
 		</span>
-		<input type="text" name="name" placeholder="세부 공간명을 입력해주세요." class="eachRoomInfo">
+		<input type="text" name="name" placeholder="세부 공간명을 입력해주세요." class="eachRoomInfo" value="${dto.name}">
 	</div>
 	
 	<div id="eachRoom_contents">
 		<span>
 			세부공간 소개
 		</span>
-		<textarea rows="" cols="" name="contents"></textarea>
+		<textarea rows="" cols="" name="contents">${dto.contents}</textarea>
 	</div>
 	
 	<div class="eachRoom_form">
@@ -400,7 +400,7 @@ a {
 			<div class="inner_img">
 				<div>이미지 파일을 추가해 주세요. (JPG, JPEG, PNG)</div>
 				<div class="result_img" >
-					<img id="output">
+					<img id="output" src="${pageContext.request.contextPath}/resources/upload/${dto.fname}">
 				</div>
 			</div>
 			<div class="btn_box " >
@@ -499,7 +499,12 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
+					<c:if test="${empty dto.human}">
 					<input type="tel" name="human" id="human" class="eachRoomInfo" value="1" min="0">
+					</c:if>
+					<c:if test="${not empty dto.human}">
+					<input type="tel" name="human" id="human" class="eachRoomInfo" value="${dto.human}" min="0">
+					</c:if>
 					<strong class="txt unit">명</strong>
 				</span>
 				<span class="btn_minus" id="human_minus">
@@ -520,7 +525,12 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
-					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" min="1000">
+				<c:if test="${not empty dto.price }">
+				<input type="tel" name="price" id="price" class="eachRoomInfo" value="${dto.price}" step="100" min="1000">
+				</c:if>
+				<c:if test="${empty dto.price}">
+					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" min="1000">				
+				</c:if>
 					<strong class="txt unit">원</strong>
 				</span>
 				<span class="btn_minus" id="price_minus">

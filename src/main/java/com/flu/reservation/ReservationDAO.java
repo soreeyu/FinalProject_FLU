@@ -19,34 +19,16 @@ public class ReservationDAO {
 	private final String NAMESPACE = "ReservationMapper.";
 
 	
-	public List<ReservationDTO> list(ListInfo listInfo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
 	public int insert(ReservationDTO reserve) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.delete(NAMESPACE+"ReservePay", reserve);
 	}
 
-	public int update(ReservationDTO reserve) throws Exception {
+	//예약 취소하기 삭제
+	public int delete(Integer num) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public ReservationDTO view(ReservationDTO reserve) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int delete(ReservationDTO reserve) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	public int count(ListInfo listInfo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete(NAMESPACE+"ReserveDelete", num);
 	}
 	
 	//방정보 불러오기
@@ -65,4 +47,9 @@ public class ReservationDAO {
 	public List<ReservationDTO> reservedTime2(ReservationDTO reservationDTO) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"Reserved_time2", reservationDTO);
 	}
+	//예약취소신청
+	public int reservationDel(Integer num) throws Exception{
+		return sqlSession.update(NAMESPACE+"ReserveDel", num);
+	}
+	
 }

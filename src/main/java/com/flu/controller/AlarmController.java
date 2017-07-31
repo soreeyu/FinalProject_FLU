@@ -22,7 +22,7 @@ public class AlarmController {
 	private AlarmService alarmService;
 	
 	@RequestMapping(value="alarmList", method=RequestMethod.GET)
-	public void alramList(Model model, HttpSession session) throws Exception {
+	public void alarmList(Model model, HttpSession session) throws Exception {
 		System.out.println("세션 이메일"+((MemberDTO)session.getAttribute("member")).getEmail());
 		AlarmDTO alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
@@ -33,5 +33,12 @@ public class AlarmController {
 		}
 		
 		
+	}
+	
+	@RequestMapping(value="alarmDelte", method=RequestMethod.GET)
+	public String alarmDelete(Integer num) throws Exception{
+		int result = alarmService.alarmDelete(num);
+		
+		return "redirect:alarmList";
 	}
 }

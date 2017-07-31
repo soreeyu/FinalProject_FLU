@@ -14,5 +14,8 @@
   		select * from alarm where email=#{email}
   	</select>
   	
-  	
+  	<!-- 알람 지우기  -->
+  	<delete id="AlarmDelete" parameterType="java.lang.Integer">
+  		delete alarm where num=#{num}
+  	</delete>
   </mapper>

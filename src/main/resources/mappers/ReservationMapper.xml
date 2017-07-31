@@ -14,11 +14,17 @@
   		select R.* from reservation R, eachroom E where R.snum=#{snum} and reserve_date=#{reserve_date} and E.num=#{num} and R.name=#{name}
   	</select>
   	
-  	
-  	
   	<!-- 예약하기 -->
   	<insert id="ReservePay" parameterType="com.flu.reservation.ReservationDTO">
-  		insert into reservation values (#{name},#{time},#{reserve_date},#{reserve_name},#{price},#{human},#{email},#{snum},#{phone})
+  		insert into reservation values (#{name},#{time},#{reserve_date},#{reserve_name},#{price},#{human},#{email},#{snum},#{phone}, 'finish', reserve_seq.nextval)
   	</insert>
   	
+  	<!-- 예약취소신청  -->
+  	<update id="ReserveDel" parameterType="java.lang.Integer">
+  		update reservation set state='del' where num=#{num}
+  	</update>
+  	<!-- 예약취소하기 삭제 -->
+  	<delete id="ReserveDelete" parameterType="java.lang.Integer">
+  		delete reservation where num=#{num}
+  	</delete>
   </mapper>

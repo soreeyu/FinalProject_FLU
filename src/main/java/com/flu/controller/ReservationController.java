@@ -26,6 +26,7 @@ import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.eachRoom.EachRoomDTO;
 import com.flu.meetRoom.MeetRoomDTO;
+import com.flu.member.MemberDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.reservation.ReservationService;
 import com.flu.room.RoomDTO;
@@ -87,25 +88,34 @@ public class ReservationController {
 		return "/meetRoom/reservation/reservePayment";
 	}
 	
-	@RequestMapping(value="reserveUpdate",method=RequestMethod.GET)
-	public void reserveUpdate(Integer num){
-		
-	}
+
 	
-	@RequestMapping(value="reserveUpdate",method=RequestMethod.POST)
-	public void reserveUpdate(ReservationDTO reserve){
+	@RequestMapping(value="reservationDel", method=RequestMethod.GET)
+	public String reserveDel(Integer num, HttpSession session) throws Exception{
 		
+		int result = reservaionService.reservationDel(num);
+		if(result>0){
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+			alarmDTO.setContents("예약을 취소하셨습니다. 관리자의 승인을 기다리세요");
+			alarmService.alarmInsert(alarmDTO);
+		}
+		return "redirect:../../member/myMeetRoom";
 	}
 	
 	@RequestMapping(value="reserveDelete")
-	public void reserveDelete(Integer num){
+	public String reserveDelete(Integer num, String email) throws Exception{
+		int result = reservaionService.delete(num);
+		if(result>0){
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(email);
+			alarmDTO.setContents("예약이 성공적으로 취소되었습니다.");
+			alarmService.alarmInsert(alarmDTO);
+		}
+		return "redirect:../../member/myMeetRoom";
 		
 	}
 	
-	@RequestMapping(value="reserveView",method=RequestMethod.GET)
-	public void reserveView(Integer num){
-		
-	}
 	
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
 	public String reservePay(ReservationDTO reservationDTO, Model model) throws Exception{

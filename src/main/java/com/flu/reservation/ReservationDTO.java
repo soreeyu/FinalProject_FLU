@@ -14,7 +14,14 @@ public class ReservationDTO {
 	private String email;
 	private Integer snum;
 	private String phone;
+	private String state;
 	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public int getNum() {
 		return num;
 	}

@@ -76,14 +76,8 @@
 		/* 해당 업체가 보유하고 있는 방 하나의 정보를 수정하는 스크립트 */
 		 $("#eachRoom").on("click", ".update", function() {
 				var num = $(this).attr("id");
+				location.href="eachRoom/eachUpdate?num="+num;
 				
-				$.ajax({
-					url : "eachRoom/eachUpdate?num="+num,
-					type : "GET",
-					success : function(data) {
-						$("#eachRoom").html(data);
-					}
-				})
 			});
 		 /* 해당 업체가 보유하고 있는 방 하나의 정보를 수정하는 스크립트 */
 		

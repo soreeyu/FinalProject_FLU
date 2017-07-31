@@ -16,7 +16,18 @@
 			
 		location.href="myMeetRoom?curPage=1&kind="+kind+"&search="+search;
 		});
-			
+		
+		
+		$(".btn").click(function() {
+			var num = $(this).attr("title");
+			location.href = "../meetRoom/reservation/reservationDel?num="+num;
+		});
+		
+		$(".del_btn").click(function() {
+			var num = $(this).attr("title");
+			var email = $(this).attr("lang");
+			location.href = "../meetRoom/reservation/reserveDelete?num="+num+"&email="+email;
+		});
 		
 	});
 </script>
@@ -233,7 +244,9 @@
 							</c:when>
 						</c:choose>	
 							<h4 class="username">${member.email}</h4>
+							<c:if test="${member.kind eq 'freelancer' || 'client' }">
 							<a class="profile-setting"href="./member/personaldataView">기본 정보 수정</a>					
+							</c:if>
 						</div>
 					</div>
 
@@ -248,7 +261,12 @@
 				<div class="contents-header">
 					<h3 class="header-text">
 						예약현황
-						<small class="small-text">자신이 예약한 미팅룸의 예약 현황을 확인할 수 있습니다.</small>
+						<c:if test="${member.kind eq 'admin' }">
+						<small class="small-text">회원들의 미팅룸 예약 현황을 확인할 수 있습니다.</small>
+						</c:if>
+						<c:if test="${ member.kind eq 'freelancer' || 'client'}">
+						<small class="small-text">자신이 예약한 미팅룸의 현황을 확인할 수 있습니다.</small>
+						</c:if>
 					</h3>
 				</div>
 				<div class="contents-inner">
@@ -269,7 +287,24 @@
 						<td>${i.reserve_date}</td>
 						<td>${i.human}</td>
 						<td>${i.time}</td>
-						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>				
+						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>
+						<c:if test="${i.state eq 'finish'}">
+						<c:if test="${member.kind eq 'freelancer' || 'client' }">
+						<td><input type="button" value="예약취소" class="btn" title="${i.num}"></td>										
+						</c:if>
+						<c:if test="${member.kind eq 'admin' }">
+						<td>결제완료</td>
+						</c:if>
+						</c:if>
+						
+						<c:if test="${i.state eq 'del'}">
+						<c:if test="${member.kind eq 'admin'}">
+						<td><input type="button" value="취소확인" class="del_btn" title="${i.num}" lang="${i.email}"></td>
+						</c:if>
+						<c:if test="${member.kind eq 'freelancer' || 'client'}">
+						<td>예약취소대기중</td>
+						</c:if>
+						</c:if>
 						</tr>					
 					</c:forEach>
 					</table>

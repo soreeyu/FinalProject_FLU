@@ -52,16 +52,18 @@
   		
   		<!-- 예약현황 가져오기 -->
   		<select id="memberReserved" parameterType="com.flu.member.MemberDTO" resultType="com.flu.reservation.ReservationDTO">
-  			select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date from reservation where email=#{email}
+  			select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date, state, num, snum, email from reservation where email=#{email}
   		</select>
   		
   		<!-- 예약현황 리스트 ( 관리자 전용 )  -->
   		<select id="adminReserved" parameterType="com.flu.util.ListInfo" resultType="com.flu.reservation.ReservationDTO"> 
   			select * from
   			(select rownum N, R.* from
-  			(select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date from reservation
+  			(select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date, state, num, snum, email from reservation
   			<include refid="search"/>  			
   			) R)
   			where N between #{startRow} and #{lastRow}
   		</select>
+  		
+  		
   </mapper>

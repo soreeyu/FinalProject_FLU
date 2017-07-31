@@ -7,6 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"/>
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(function() {
+		$(".alarm_del").click(function() {
+			var num = $(this).attr("title");
+			location.href="alarmDelte?num="+num;
+		});
+	});
+</script>
 <style type="text/css">
 section {
 	min-width : 1460px;
@@ -133,6 +141,12 @@ section {
     color: #2099bb;
     text-decoration: none;
 }
+.del {
+	float: right;
+}
+.alarm_del{
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -178,6 +192,9 @@ section {
 							<div class="empty-notification-member"> 
 							<span class="alarm_contents">${a.contents}</span>
 							<span class="alarm_date">${a.reg_date}</span>
+							</div>
+							<div class="del">
+							<span class="alarm_del" title="${a.num}"></span>							
 							</div>
 						</c:forEach>	
 					</div>

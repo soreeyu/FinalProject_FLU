@@ -23,6 +23,6 @@ public class AlarmService {
 	
 	//알람 DELETE
 	public int alarmDelete(int num) throws Exception{
-		return 0;
+		return alarmDAO.alarmDelete(num);
 	}
 }

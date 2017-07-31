@@ -69,11 +69,11 @@ public class EachRoomController {
 	}
 	
 	@RequestMapping(value="eachUpdate",method=RequestMethod.GET)
-	public void eachUpdate(Integer num, Model model) throws Exception{
+	public String eachUpdate(Integer num, Model model) throws Exception{
 		//세부공간 정보 수정 폼
 		EachRoomDTO eachRoomDTO = (EachRoomDTO)eachRoomServiceImpl.view(num);
 		model.addAttribute("dto", eachRoomDTO);
-		
+		return "meetRoom/eachRoom/eachInsert";
 	}
 	
 	@RequestMapping(value="eachUpdate",method=RequestMethod.POST)

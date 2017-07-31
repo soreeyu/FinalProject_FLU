@@ -61,6 +61,9 @@
 		
 	})
 	
+	/* $(".holiday").click(function() {
+		
+	}) */
 	
 	})
 </script>
@@ -281,23 +284,13 @@ input[type="checkbox"]{
     border: 1px solid #e0e0e0;
     background-color: #fff;
 }
-.check_list.week li input+label {
+.check_list .week li input+label {
     padding: 16px 0;
-    min-height: 50px;
     font-size: 15px;
 }
-.check_list li input+label {
-    width: 100%;
-    padding: 23px 0;
-    min-height: 64px;
-    font-size: 20px;
-    color: #656565;
-    border-left: 0;
-    background-color: #fff;
-}
+
 .check_list li input+label {
     display: block;
-    width: 100%;
     padding: 11px 10px;
     min-height: 37px;
     font-size: 13px;
@@ -331,7 +324,7 @@ input[type="checkbox"]{
 }
 .box_file {
 	position: relative;
-    margin-top: 55px;
+    margin-top: 100px;
 }
 .box_file .tit{
     line-height: 50px;
@@ -411,6 +404,13 @@ input[type=text]{
 .input inpu:first-child {
 	width: 50%;
 }
+
+.check_list li input:checked+label {
+    border-color: #5940ac;
+    background-color: #704de4;
+    color: #fff;
+}
+
 </style>
 </head>
 <body>
@@ -490,25 +490,25 @@ input[type=text]{
 						<option value="매월 마지막주">매월 마지막주</option>
 					</select>				
 				</div>
-					 <ul class="check_list week" id="holiday_select_day">
-							<li><input type="checkbox" name="holiday" id="date_MON" value="월요일"> <label for="date_MON">월</label></li>
-							<li><input type="checkbox" name="holiday" id="date_TUE" value="화요일"> <label for="date_TUE">화</label></li>
-							<li><input type="checkbox" name="holiday" id="date_WED" value="수요일"> <label for="date_WED">수</label></li>
-							<li><input type="checkbox" name="holiday" id="date_THU" value="목요일"> <label for="date_THU">목</label></li>
-							<li><input type="checkbox" name="holiday" id="date_FRI" value="금요일"> <label for="date_FRI">금</label></li>
-							<li><input type="checkbox" name="holiday" id="date_SAT" value="토요일"> <label for="date_SAT">토</label></li>
-							<li><input type="checkbox" name="holiday" id="date_SUN" value="일요일"> <label for="date_SUN">일</label></li>
+					 <ul class="check_list week" id="holiday_select_day" style="display: block;">
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_MON" value="월요일"> <label for="date_MON">월</label></li>
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_TUE" value="화요일"> <label for="date_TUE">화</label></li>
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_WED" value="수요일"> <label for="date_WED">수</label></li>
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_THU" value="목요일"> <label for="date_THU">목</label></li>
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_FRI" value="금요일"> <label for="date_FRI">금</label></li>
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_SAT" value="토요일"> <label for="date_SAT">토</label></li>
+							<li><input type="checkbox" name="holiday" class="holiday" id="date_SUN" value="일요일"> <label for="date_SUN">일</label></li>
 					</ul>		
 			</div>
 		</div>
 	</div>
 	
 		
-		<div class="box_file">
+		<div class="box_file" style="display: block;">
 			<span class="tit">
 				대표이미지 	
 			</span>
-			<span class="option">
+			<span class="option" > 
 				2048 *1158 권장, 한 장당 최대 10MB
 			</span>
 			<div class="file">
@@ -554,7 +554,7 @@ input[type=text]{
 		홈페이지
 		<input type="text" name="homePage" class="meetRoomInfo" value="${dto.homePage}">		
 		</div>
-		<input type="button" id="savebutton" value="전송">
+		<input type="button" id="savebutton" value="공간등록" style="margin-top: 50px; width: 100%;">
 	</form>
 	</section>
 	<c:import url="../temp/footer.jsp"/>
