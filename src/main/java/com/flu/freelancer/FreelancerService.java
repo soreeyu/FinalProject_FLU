@@ -176,7 +176,35 @@ public class FreelancerService{
 	//보유기술 리스트
 	public List<Skill> skillList(String email){
 		
-		return freelancerDAO.skillList(email);
+		List<Skill> ar = freelancerDAO.skillList(email);
+		
+		if(ar.size() > 0){
+			for(int i = 0; i< ar.size(); i++){
+				if(ar.get(i).getSlevel().equals("1")){
+					ar.get(i).setSlevel("초급");
+				}else if(ar.get(i).getSlevel().equals("2")){
+					ar.get(i).setSlevel("중급");
+				}else if(ar.get(i).getSlevel().equals("3")){
+					ar.get(i).setSlevel("고급");
+				}else{
+					ar.get(i).setSlevel("특급");
+				}
+				if(ar.get(i).getExp().equals("1")){
+					ar.get(i).setExp("1년미만");
+				}else if(ar.get(i).getExp().equals("2")){
+					ar.get(i).setExp("1년이상 3년미만");
+				}else if(ar.get(i).getExp().equals("3")){
+					ar.get(i).setExp("3년이상 5년미만");
+				}else if(ar.get(i).getExp().equals("4")){
+					ar.get(i).setExp("5년이상 10년미만");
+				}else{
+					ar.get(i).setExp("10년이상");
+				}
+				
+			}
+		}
+		
+		return ar;
 	}
 	//기술 리스트 파싱 작업
 	public Map<String, Object> myskillList(String email){
@@ -308,6 +336,48 @@ public class FreelancerService{
 
 		return null;
 	}
+	
+	//나에대한 평가 정보 리스트의 평균
+	public Map<String, Object> evaluationList(String email){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Evaluation> ar = freelancerDAO.evaluationList(email);
+		
+		int professional = 0;
+		int satisfy = 0;
+		int communication = 0;
+		int schedule = 0;
+		int passion = 0;
+		
+		if(ar.size() > 0){
+			for(int i = 0; i< ar.size(); i++){
+				professional = professional + ar.get(i).getProfessional();
+				satisfy = satisfy + ar.get(i).getSatisfy();
+				communication = communication + ar.get(i).getCommunication();
+				schedule = schedule + ar.get(i).getSchedule();
+				passion = passion + ar.get(i).getPassion();
+				
+			}
+			professional = professional/ar.size();
+			satisfy = satisfy/ar.size();
+			communication = communication/ar.size();
+			schedule = schedule/ar.size();
+			passion = passion/ar.size();
+			
+		}
+		map.put("professional", professional);
+		map.put("satisfy", satisfy);
+		map.put("communication", communication);
+		map.put("schedule", schedule);
+		map.put("passion", passion);
+		map.put("totalavr", (professional+satisfy+communication+schedule+passion)/5);
+		map.put("projectList", ar.size());
+		
+		
+		return map;
+	}
+	
+	
+	
 	//평가 정보 수정
 	public int evaluationUpdate(Evaluation evaluation){
 
@@ -319,7 +389,29 @@ public class FreelancerService{
 		return 0;
 	}
 
-	
+	/****************************** 내 프로젝트 *********************************/
+	public Map<String, Object> myprojectList(String email){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> ar = freelancerDAO.myprojectList2(email);
+		int count1 = 0;
+		int count2 = 0;
+		if(ar.size() >= 1){
+			for(int i = 0; i < ar.size(); i++){
+				System.out.println(ar.get(i));
+				if(ar.get(i).equals("개발")){
+					count1++;
+				}else{
+					count2++;
+				}
+			}
+		
+		}
+		map.put("category1", count1);
+		map.put("category2", count2);
+		map.put("projectList", ar.size());
+		
+		return map;
+	}
 	
 
 

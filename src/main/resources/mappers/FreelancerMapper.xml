@@ -204,5 +204,31 @@
   			delete license where email = #{email} and num = #{num}
   		</delete>
   		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmyProjectㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		<!-- 마이 프로젝트 갯수 -->
+  		<select id="myproject" resultType="java.lang.String" parameterType="java.lang.String">
+  			select projectnum from applicant where email = #{email}
+  		</select>
+  		
+  		<!-- 내 프로젝트 -->
+  		<select id="myprojectList" resultType="java.lang.String" parameterType="java.util.Map">
+  			select category from project 
+  			<where>
+  			projectnum in 
+  			<foreach collection="projectNum" item="item" open="(" separator="," close=")">
+  			#{item}
+  			</foreach>
+  			</where> 
+  		
+  		</select>
+  		
+  		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ Evaluation ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		
+  		<!-- 나에 대한 평가 점수 리스트 -->
+  		<select id="evaluationList" resultType="com.flu.profile.Evaluation" parameterType="java.lang.String">
+  			select * from evaluation where toemail = #{email}
+  		</select>
+  		
+  		
   		
   </mapper>

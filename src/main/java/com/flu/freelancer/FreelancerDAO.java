@@ -18,6 +18,7 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -312,6 +313,13 @@ public class FreelancerDAO{
 		
 		return null;
 	}
+	
+	//나에대한 평가 정보 리스트
+	public List<Evaluation> evaluationList(String email){
+		
+		return sqlSession.selectList(NAMESPACE+"evaluationList", email);
+	}
+	
 	//평가 정보 수정
 	public int evaluationUpdate(Evaluation evaluation){
 		
@@ -322,6 +330,26 @@ public class FreelancerDAO{
 		
 		return 0;
 	}
+	/************************* myProject ********************************/
+	
+	//내 프로젝트 리스트
+	public List<String> myprojectList(String email){
+		
+		sqlSession.selectList(NAMESPACE+"myproject", email);
+		
+		return sqlSession.selectList(NAMESPACE+"myproject", email);
+	}
+	
+	//프로젝트 개발/디자인 구분리스트
+	public List<String> myprojectList2(String email){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNum",this.myprojectList(email));
+		
+		
+		
+		return sqlSession.selectList(NAMESPACE+"myprojectList", map);
+	}
+	
 	/************************** Authentic *******************************/
 
 }

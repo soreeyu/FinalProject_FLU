@@ -5,11 +5,13 @@ public class Evaluation {
 	private int projectNum;
 	private String fromEmail;
 	private String toEmail;
+	
 	private int professional;
 	private int satisfy;
 	private int communication;
 	private int schedule;
 	private int passion;
+	
 	public int getProjectNum() {
 		return projectNum;
 	}

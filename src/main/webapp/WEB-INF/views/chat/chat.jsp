@@ -47,12 +47,12 @@
       	var message = null;
       	
       	 $("#data").append(data);
-      	
+      /* 	
       	var strArray = data.split(':');
       	
-      	for(var i=0; i<srtArray.length;i++){
+      	 for(var i=0; i<srtArray.length;i++){
       		console.log('str['+i+']: '+srtArray[i]);
-      	}
+      	} 
       	
       	var curId = $('#curId').val();
         console.log('curId:'+curId);
@@ -80,7 +80,7 @@
        }
        
        console.log('chatData:'+data); 
-      
+       */
     }
     
     function onClose(evt){

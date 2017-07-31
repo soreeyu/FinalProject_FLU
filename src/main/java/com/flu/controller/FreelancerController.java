@@ -90,7 +90,8 @@ public class FreelancerController {
 		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
 		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
 		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
-		model.addAttribute("evaluation", freelancerService.evaluationView(this.getEmail(session)));
+		model.addAttribute("evaluation", freelancerService.evaluationList(this.getEmail(session)));
+		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
 		
 		return "/member/freelancer/mypage";
 	}

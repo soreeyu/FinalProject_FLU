@@ -6,7 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
-
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+     google.charts.load('current', {packages: ['corechart']});     
+   </script>
 <title>Insert title here</title>
 <style type="text/css">
 .main_section{
@@ -289,10 +292,7 @@
 .chart-penta{
 	display: inline-block;
 }
-.chart-penta p{
-	padding-left: 30px;
-    margin-top: 20px;
-}
+
 .chart-penta{
    display: inline-block;
 }
@@ -556,6 +556,35 @@ $(function(){
     ctx.stroke();
     
     
+    
+    
+    function drawChart() {
+    	   // Define the chart to be drawn.
+    	   var data = google.visualization.arrayToDataTable([
+    	      ['star', '인원'],
+    		  ['★★★★★',  1],
+    	      ['☆★★★★',  2],
+    	      ['☆☆★★★',  0],
+    	      ['☆☆☆★★',  0],
+    	      ['☆☆☆☆★',  0]
+    	      ]);
+
+    	   var options = {
+    	      title: '평점 분포도',
+    	      bar:{
+    	    	  groupWidth:'60%'
+    	      },
+    	      hAxis:{
+    	    	  format:'#,#'
+    	      }
+    	   }; 
+
+    	   // Instantiate and draw the chart.
+    	   var chart = new google.visualization.BarChart(document.getElementById('star_bar'));
+    	   chart.draw(data, options);
+    	}
+    	google.charts.setOnLoadCallback(drawChart);
+    
 });
 </script>
 </head>
@@ -607,7 +636,7 @@ $(function(){
 							</div>
 							<div class="chart-star">
 								<p>평점 분포</p>
-								<ul>
+								<%-- <ul>
 									<li class="star5">
 										<img alt="1점" src="${pageContext.request.contextPath}/resources/img/mypage/star.png">
 										<img alt="1점" src="${pageContext.request.contextPath}/resources/img/mypage/star.png">
@@ -643,14 +672,16 @@ $(function(){
 										<img alt="1점" src="${pageContext.request.contextPath}/resources/img/mypage/star2.png">
 										<img alt="1점" src="${pageContext.request.contextPath}/resources/img/mypage/star2.png">
 									</li>
-								</ul>
-								<ul>
+								</ul> --%>
+								<div id="star_bar" style="width: 350px; height: 250px; float: left;">
+								</div>
+								 <ul>
 									<li class="star_value"><span>0명</span></li>
 									<li class="star_value"><span>0명</span></li>
 									<li class="star_value"><span>0명</span></li>
 									<li class="star_value"><span>0명</span></li>
 									<li class="star_value"><span>0명</span></li>
-								</ul>
+								</ul> 
 							</div>
 							</div>
 							<div class="evaluation_div">

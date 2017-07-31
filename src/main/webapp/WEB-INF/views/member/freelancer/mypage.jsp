@@ -207,6 +207,9 @@
 	border-right: 1px solid #dedede;
 	float: left;
 }
+.wrap_1:LAST-CHILD{
+	border: 0;
+}
 
 .ooo{
 	display: inline-block;
@@ -364,14 +367,87 @@ $(function(){
     //2점 좌표 {(100,60),(61,88),(76,134),(124,134),(139,88)}
     //1점 좌표 {(100,75),(75,93),(85,123),(115,123),(125,93)}
     
+    var professional = ${evaluation.professional };
+    var passion = ${evaluation.passion};
+    var schedule = ${evaluation.schedule };
+    var communication = ${evaluation.communication };
+   	var satisfy = ${evaluation.satisfy };
+    
+    
     
     ctx.strokeStyle = "yellow";
     ctx.beginPath();
-    ctx.moveTo(100,60);
-    ctx.lineTo(47,84);
-    ctx.lineTo(58,157);
-    ctx.lineTo(151,169);
-    ctx.lineTo(181,75);
+    
+    if(professional==5){
+    	ctx.moveTo(100,15); 
+    }else if(professional==4){
+    	ctx.moveTo(100,30);
+    }else if(professional==3){
+    	ctx.moveTo(100,45);
+    }else if(professional==2){
+    	ctx.moveTo(100,60);
+    }else if(professional==1){
+    	ctx.moveTo(100,75);
+    }else{
+    	ctx.moveTo(100,100);
+    }
+    
+    if(passion==5){
+    	ctx.lineTo(19,75);
+    }else if(passion==4){
+    	ctx.lineTo(33,79);
+    }else if(passion==3){
+    	ctx.lineTo(47,84);
+    }else if(passion==2){
+    	ctx.lineTo(61,88);
+    }else if(passion==1){
+    	ctx.lineTo(75,93);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    if(schedule==5){
+    	ctx.lineTo(49,169);
+    }else if(schedule==4){
+    	ctx.lineTo(58,157);
+    }else if(schedule==3){
+    	ctx.lineTo(67,146);
+    }else if(schedule==2){
+    	ctx.lineTo(76,134);
+    }else if(schedule==1){
+    	ctx.lineTo(85,123);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    if(communication==5){
+    	ctx.lineTo(151,169);
+    }else if(communication==4){
+    	ctx.lineTo(142,157);
+    }else if(communication==3){
+    	ctx.lineTo(133,146);
+    }else if(communication==2){
+    	ctx.lineTo(124,134);
+    }else if(communication==1){
+    	ctx.lineTo(115,123);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    if(satisfy==5){
+    	ctx.lineTo(181,75);
+    }else if(satisfy==4){
+    	ctx.lineTo(167,79);
+    }else if(satisfy==3){
+    	ctx.lineTo(153,84);
+    }else if(satisfy==2){
+    	ctx.lineTo(139,88);
+    }else if(satisfy==1){
+    	ctx.lineTo(125,93);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
     ctx.fillStyle = "yellow";
     ctx.globalAlpha = "0.7";
     ctx.fill();
@@ -383,20 +459,21 @@ $(function(){
     //차트
     
     function drawChart() {
-    		var chart = '${dto.so}';
+    		var chart1 = ${myproject.category1};
+    		var chart2 = ${myproject.category2};
     	   // Define the chart to be drawn.
     	   var data = new google.visualization.DataTable();
-    	   data.addColumn('string', 'Browser');
+    	   data.addColumn('string', 'jobKind');
     	   data.addColumn('number', 'Percentage');
     	   data.addRows([
-    	      ['개발', 10],
-    	      ['디자인', 40]
+    	      ['개발', chart1],
+    	      ['디자인', chart2]
     	      
     	   ]);
     	   
     	   
     	   // Set chart options
-    	   var options = {'title':'진행한 프로젝트',
+    	   var options = {'title':'내 프로젝트',
     	      'width':220,
     	      'height':200};
 
@@ -495,36 +572,35 @@ $(function(){
 								<div style="width: 220px; height: 218px; display: inline-block;">
 									<p style="margin-top: 20px;">
 						<span>
-						<c:if test="${starpoint eq 0 }">
+						<c:if test="${evaluation.totalavr eq 0 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/0.png">
 						</c:if>
-						<c:if test="${starpoint eq 1 }">
+						<c:if test="${evaluation.totalavr eq 1 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/1.png">
 						</c:if>
-						<c:if test="${starpoint eq 2 }">
+						<c:if test="${evaluation.totalavr eq 2 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/2.png">
 						</c:if>
-						<c:if test="${starpoint eq 3 }">
+						<c:if test="${evaluation.totalavr eq 3 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/3.png">
 						</c:if>
-						<c:if test="${starpoint eq 4 }">
+						<c:if test="${evaluation.totalavr eq 4 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/4.png">
 						</c:if>
-						<c:if test="${starpoint eq 5 }">
+						<c:if test="${evaluation.totalavr eq 5 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
 						</c:if>
-						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
 						</span>
 						<span style="line-height: 30px; vertical-align: top; float: right; margin-right: 10px;">
 							
 						</span>
 						</p>
 						<p style="margin-top:20px; margin-left: 20px;">
-							<span>평균평점 </span> &nbsp;&nbsp;&nbsp;0
-							/<span>&nbsp;&nbsp;평가</span> <span style="float: right;">0개</span>
+							<span>평균평점 </span> &nbsp;&nbsp;&nbsp;${evaluation.totalavr}
+							/<span>&nbsp;&nbsp;평가</span> <span style="float: right;">${evaluation.projectList }개</span>
 						</p>
 						<p style="margin-left: 20px; margin-top: 20px;">
-							<span>계약한 프로젝트 </span><span style="float: right;">0건</span>
+							<span>계약한 프로젝트 </span><span style="float: right;">${myproject.projectList }건</span>
 						</p>
 						
 						<p style="margin-left: 20px; margin-top: 20px;">
@@ -545,7 +621,7 @@ $(function(){
 					<section class="profile_wrap">
 						<p><span>자기소개</span><a href="introView" style="margin-top: -5px;">업데이트 하기</a></p>
 						
-						<div class="no_data_wrap">
+						<div class="no_data_wrap" style="text-align: left;">
 							<c:if test="${empty freelancer.intro }">
 							<div class="no_data">
 								<div class="no_img">
