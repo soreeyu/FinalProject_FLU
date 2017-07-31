@@ -50,185 +50,73 @@ public class CheckProjectController {
 	
 	//검수전 프로젝트 들고오기
 	@RequestMapping(value="checkProjectCheckList", method=RequestMethod.GET)
-	public String checkProjectCheckList(ListInfo listInfo,ProjectDTO projectDTO,Model model) throws Exception{
+	public String checkProjectCheckList(ListInfo listInfo,ProjectDTO projectDTO,String searchDate,Model model) throws Exception{
 		
-		
-		if(projectDTO.getCategory()==null){
-			projectDTO.setCategory("");
-		}
-		if(projectDTO.getDetailCategory()==null){
-			projectDTO.setDetailCategory("");
-		}
-		if(projectDTO.getPlanState()==null){
-			projectDTO.setPlanState("");
-		}
-		if(projectDTO.getName()==null){
-			projectDTO.setName("");
-		}
-		if(projectDTO.getEmail()==null){
-			projectDTO.setEmail("");
-		}
-		if(projectDTO.getStartDate()==null){
-			projectDTO.setStartDate("");
-		}
-		if(projectDTO.getFinishDate()==null){
-			projectDTO.setFinishDate("");
-		}
-		if(projectDTO.getReg_date()==null){
-			projectDTO.setReg_date("");
-		}
-		
+
 		String [] ar = {"check","done"};
 		listInfo.setProject(ar);
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("projectDTO", projectDTO);
 		
-		List<ProjectDTO> list = checkProjectService.checkList(map);
+		List<ProjectDTO> list = checkProjectService.checkList(projectDTO,listInfo,searchDate);
 		
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "check").addAttribute("projectDTO", projectDTO);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "check").addAttribute("searchDate", searchDate);
 		
 		return "checkProject/checkList";
 	}
 
 	//모집 실패한 프로젝트 들고오기
 	@RequestMapping(value="checkProjectFailList", method=RequestMethod.GET)
-	public String checkProjectFailList(ProjectDTO projectDTO, ListInfo listInfo,Model model){
-
-		if(projectDTO.getCategory()==null){
-			projectDTO.setCategory("");
-		}
-		if(projectDTO.getDetailCategory()==null){
-			projectDTO.setDetailCategory("");
-		}
-		if(projectDTO.getPlanState()==null){
-			projectDTO.setPlanState("");
-		}
-		if(projectDTO.getName()==null){
-			projectDTO.setName("");
-		}
-		if(projectDTO.getEmail()==null){
-			projectDTO.setEmail("");
-		}
-		if(projectDTO.getStartDate()==null){
-			projectDTO.setStartDate("");
-		}
-		if(projectDTO.getFinishDate()==null){
-			projectDTO.setFinishDate("");
-		}
-		if(projectDTO.getReg_date()==null){
-			projectDTO.setReg_date("");
-		}
+	public String checkProjectFailList(ProjectDTO projectDTO, ListInfo listInfo,String searchDate,Model model){
 		
 		String [] ar = {"fail"};
 		listInfo.setProject(ar);
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("projectDTO", projectDTO);
 		
-		List<ProjectDTO> list = checkProjectService.failList(map);
+		List<ProjectDTO> list = checkProjectService.failList(projectDTO,listInfo,searchDate);
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "fail");
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "fail").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 	
 	//입금대기중인 프로젝트 불러오기
 	@RequestMapping(value="checkProjectWaitList", method=RequestMethod.GET)
-	public String checkProjectWaitList(ProjectDTO projectDTO, ListInfo listInfo,Model model){
+	public String checkProjectWaitList(ProjectDTO projectDTO, ListInfo listInfo,Model model,String searchDate){
 
-		if(projectDTO.getCategory()==null){
-			projectDTO.setCategory("");
-		}
-		if(projectDTO.getDetailCategory()==null){
-			projectDTO.setDetailCategory("");
-		}
-		if(projectDTO.getPlanState()==null){
-			projectDTO.setPlanState("");
-		}
-		if(projectDTO.getName()==null){
-			projectDTO.setName("");
-		}
-		if(projectDTO.getEmail()==null){
-			projectDTO.setEmail("");
-		}
-		if(projectDTO.getStartDate()==null){
-			projectDTO.setStartDate("");
-		}
-		if(projectDTO.getFinishDate()==null){
-			projectDTO.setFinishDate("");
-		}
-		if(projectDTO.getReg_date()==null){
-			projectDTO.setReg_date("");
-		}
-
-		
 		String [] ar = {"wait","ing"};
 		listInfo.setProject(ar);
+	
+		List<ProjectDTO> list = checkProjectService.waitList(projectDTO,listInfo,searchDate);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("projectDTO", projectDTO);
-
-		
-		List<ProjectDTO> list = checkProjectService.waitList(map);
-
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "wait");
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "wait").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 
 	//완료된 프로젝트 불러오기 (프리랜서 급여주려고)
 	@RequestMapping(value="checkProjectFinishList", method=RequestMethod.GET)
-	public String checkProjectDoneList(ProjectDTO projectDTO,String memberName, ListInfo listInfo,Model model){
-
-		if(projectDTO.getCategory()==null){
-			projectDTO.setCategory("");
+	public String checkProjectDoneList(ProjectDTO projectDTO, ListInfo listInfo,Model model,String searchDate){
+		
+		if(listInfo.getMemberName()==null){
+			listInfo.setMemberName("");
 		}
-		if(projectDTO.getDetailCategory()==null){
-			projectDTO.setDetailCategory("");
-		}
-		if(projectDTO.getPlanState()==null){
-			projectDTO.setPlanState("");
-		}
-		if(projectDTO.getName()==null){
-			projectDTO.setName("");
-		}
-		if(projectDTO.getEmail()==null){
-			projectDTO.setEmail("");
-		}
-		if(projectDTO.getStartDate()==null){
-			projectDTO.setStartDate("");
-		}
-		if(projectDTO.getFinishDate()==null){
-			projectDTO.setFinishDate("");
-		}
-		if(projectDTO.getReg_date()==null){
-			projectDTO.setReg_date("");
-		}
-		if(memberName == null){
-			memberName="";
+		if(listInfo.getType()==null){
+			listInfo.setType("");
 		}
 		
+		System.out.println("컨트롤러-------------------------------------------");
+		System.out.println("카테고리:"+projectDTO.getCategory());
+		System.out.println("디테일카테고리:"+projectDTO.getDetailCategory());
+		System.out.println("프로젝트명:"+projectDTO.getName());
+		System.out.println("프리랜서명:"+listInfo.getMemberName());
+		System.out.println("프리랜서 종류:"+listInfo.getType());
+		System.out.println("기간: "+searchDate);
 		
-		List<String> projectList = checkProjectService.supportList(memberName);
-	
-		for(int i=0; i<projectList.size();i++){
-			System.out.println(projectList.get(i));
-		}
+		List<String> projectList = checkProjectService.supportList(listInfo);
 		
 		String [] ar = {"finish"};
 		listInfo.setProject(ar);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("projectDTO", projectDTO);
-		map.put("projectList", projectList);
+		List<ProjectDTO> list = checkProjectService.finishList(projectDTO,listInfo,searchDate,projectList);
 		
-		List<ProjectDTO> list = checkProjectService.finishList(map);
-
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "finish");
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "finish").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 

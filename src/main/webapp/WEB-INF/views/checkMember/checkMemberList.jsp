@@ -192,10 +192,10 @@
 				<div class="history">
 					<c:if test="${board=='client' or board=='freelancer'}">
 						<p id="clientBTN">
-							<a id="client" href="./checkProjectClientList">클라이언트 관리</a>
+							<a id="client" href="./checkMemberClientList">클라이언트 관리</a>
 						</p>
 						<p id="freelancerBTN">
-							<a id="freelancer" href="./checkProjectFreelancerList">프리랜서
+							<a id="freelancer" href="./checkMemberFreelancerList">프리랜서
 								관리</a>
 						</p>
 					</c:if>

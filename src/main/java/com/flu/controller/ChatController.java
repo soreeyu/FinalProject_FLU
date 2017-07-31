@@ -22,7 +22,7 @@ public class ChatController {
 	@RequestMapping(value="chatDo")
 	public ModelAndView chatDo(ModelAndView mv,HttpSession session){
 		
-		mv.setViewName("chat/chatView");
+		mv.setViewName("chat/chat");
 		
 		String user = ((MemberDTO)(session.getAttribute("member"))).getEmail();
 		System.out.println("유저아이디:"+user);

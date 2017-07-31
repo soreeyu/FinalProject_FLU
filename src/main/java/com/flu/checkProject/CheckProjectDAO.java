@@ -44,10 +44,10 @@ public class CheckProjectDAO {
 	
 	
 	
-	public List<String> supportList(String memberName){
-		return sqlSession.selectList(NAMESPACE+"supportList",memberName);
+	public List<String> supportList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"supportList",listInfo);
 	}
-	
+
 	public int update(ProjectDTO projectDTO){
 		return sqlSession.update(NAMESPACE+"update",projectDTO);
 	}

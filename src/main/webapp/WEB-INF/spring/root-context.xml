@@ -7,32 +7,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- AOP -->
-	<!-- 공통 로직 -->
-	<!-- <bean class="com.choa.aspect.CardCheck" id="cardCheck"/> -->
-	
-	
-	<!-- <aop:config>
-		<aop:aspect id="cardAspect" ref="cardCheck"> cardCheck가 aspect역할을 해줄 것이다 라고 정의
-			
-				.. : 하위의 모든 디렉터리
-				*() : 하위의 모든 메서드
-				(..) : 매개변수가 있든 없든 모든 것
-			Transport 밑에 모든 메서드 ()는 매개변수 없는것 (..)는 매개변수가 몇개 있던 노상관
-			
-			<aop:pointcut expression="execution(* com.choa.aspect..Transport.*(..))" id="trans"/> experssion = 패턴을 가진 모든 것에 적용
-			<aop:around method="check" pointcut-ref="trans" /> 전 후로 모두 사용 하기 위해 around
-			
-		</aop:aspect>
-		
-		<aop:aspect id="cardReserve" ref="cardCheck"> aop가 하나 더 있다면 하나 더사용 
-			<aop:pointcut expression="execution(* com.choa.aspect..Trip.*(..))" id="trip"/>
-			<aop:before method="reservation" pointcut-ref="trip"/>  전에만 사용 하기 위해 before
-		</aop:aspect> 
-	</aop:config> -->
-	
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- 디비를 property를 이용해서 아무나 내 디비 정보를 알 수 없게 하기 위해 -->

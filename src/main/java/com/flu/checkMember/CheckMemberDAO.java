@@ -24,10 +24,16 @@ public class CheckMemberDAO {
 		return sqlSession.insert(NAMESPACE+"insert",checkMemberDTO);
 	}
 	
-	//list 신원확인 요청리스트로 name, email 만 뿌려주기 
-	public List<CheckMemberViewDTO> list(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"list",listInfo);
+	//list 클라이언트 리스트 뿌려주기
+	public List<CheckMemberViewDTO> clientList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"clientList",listInfo);
 	}
+	
+	//list 프리랜서 리스트 뿌려주기
+	public List<CheckMemberViewDTO> freelancerList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"freelancerList",listInfo);
+	}
+	
 	
 	//신원인증을 위한 폼 들어갈때 약간의 기본정보 들고와서 뿌려주기
 	public MemberDTO view(String email){

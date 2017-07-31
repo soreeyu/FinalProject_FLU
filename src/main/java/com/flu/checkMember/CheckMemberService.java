@@ -37,9 +37,14 @@ public class CheckMemberService {
 	}
 	
 	
-	public List<CheckMemberViewDTO> list(ListInfo listInfo){
-		return checkMemberDAO.list(listInfo);
+	public List<CheckMemberViewDTO> clientList(ListInfo listInfo){
+		return checkMemberDAO.clientList(listInfo);
 	}
+	
+	public List<CheckMemberViewDTO> freelancerList(ListInfo listInfo){
+		return checkMemberDAO.freelancerList(listInfo);
+	}
+	
 
 	public MemberDTO view(String email){
 		return checkMemberDAO.view(email);

@@ -49,7 +49,7 @@
   <sql id="project">
   
   	<choose>
-  		<when test="projectList==null">
+  		<when test="board==null">
  	  	select * from project where state in 
 	  	
   					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
@@ -63,13 +63,14 @@
 	  	and planstate like '%' || #{projectDTO.planState} || '%' 
 	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
 	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
-	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
+	  	and reg_date between #{projectDTO.reg_date} and sysdate
 
 	  	order by reg_date asc 		
   		
   		</when>
   		<otherwise>
-	  	select * from project where state in 
+  		
+  		select * from project where state in 
 	  	
   					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
   					#{item}
@@ -78,29 +79,22 @@
 	  	and category like '%' || #{projectDTO.category} || '%' 
 	  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
 	  	and name like '%' || #{projectDTO.name} || '%' 
-	  	and email like '%' || #{projectDTO.email} || '%' 
-	  	and planstate like '%' || #{projectDTO.planState} || '%' 
 	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
 	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
-	  	and reg_date like '%' || #{projectDTO.reg_date} || '%' 
-	    and projectNum in
-	    
-	      			<foreach collection="projectList" item="item" open="(" separator="," close=")">
-  					#{item}
-  					</foreach>	  	
-	  	
-	  	
+	  	and reg_date between #{projectDTO.reg_date} and sysdate 
+	    and projectNum in	    
+	  	<foreach collection="projectList" item="item" open="(" separator="," close=")">
+  		#{item}
+  		</foreach>	  
+	
 	  	order by reg_date asc
-			
-  		
-  		
+	
   		</otherwise>
-  	
-  	
+ 
   	</choose>
-  
-
+ 
 	</sql>
+
   
   		<select id="checkList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
@@ -120,13 +114,11 @@
   		
   		
   		
-  		
-  		
-  		
-  		<select id="supportList" parameterType="java.lang.String" resultType="java.lang.String">
-  			select projectnum from applicant where email in (select email from member where name like '%' || #{memberName} || '%') and state in ('finish','payFinish')
+
+  		<select id="supportList" parameterType="com.flu.util.ListInfo" resultType="java.lang.String">
+  			select projectnum from applicant where email in (select email from member where name like '%' || #{memberName} || '%' and type like '%' || #{type} || '%') and state in ('finish','payFinish')
   		</select>
-  		
+  		<!-- 만약 type에 해당되는게 하나도 없어서 projectnum으로 오는게 없으면 에러뜸 -->
   		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">
   			update project set 

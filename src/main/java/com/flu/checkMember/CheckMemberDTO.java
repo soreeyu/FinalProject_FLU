@@ -1,11 +1,22 @@
 package com.flu.checkMember;
 
+import java.sql.Date;
+
 public class CheckMemberDTO {
 	
 	private String email;
 	private String fname;
 	private String oname;
 	private String name;
+	private Date reg_date;
+	
+	
+	public Date getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
 	public String getEmail() {
 		return email;
 	}
