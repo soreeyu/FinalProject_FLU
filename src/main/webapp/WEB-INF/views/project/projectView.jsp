@@ -621,10 +621,12 @@ background-color: white;
 			<div class="project-qna">
 				<div class="project-detail-title">프로젝트 문의 ${dto.projectNum }</div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
+				
 				<div style="margin-top: 30px;" class="project-reply-box">
 				<div class="project-reply-box-inner">
 					<div class="project-reply-box-top">
 					 
+					<!-- Reply 가 들어가는 부분-->
 					
 					</div>
 				</div>
@@ -676,6 +678,7 @@ background-color: white;
 				<div class="client-info-box">
 					<div>
 					<div>프로젝트 등록자 : ${dto.email}</div>
+					
 					<div><span>프로젝트 등록</span><span id="total_pjcount">건${pjcount}건 </span></div>
 					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">몇 건</span></div>
 					<div><span>진행중인 프로젝트</span><span id="ing_pjcount">몇 건</span></div>
@@ -720,6 +723,13 @@ background-color: white;
 /* 기본셋팅 */
 var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
+
+
+/* reply ajax */
+$.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
+	$(".project-reply-box-top").html(data);
+});
+
 
 /* 기획상태 뿌려주기 */
 var planState = "${dto.planState}";
@@ -777,7 +787,7 @@ if(meetKind=='offline'){
  
  
 
- /*  */
+ /* 프로젝트 상태에 따른 옆에박스  */
  var pjstate = "${dto.state}";
  if(pjstate== 'check'){
 	 $(".project-apply-box").css("display", "none");
@@ -796,11 +806,6 @@ if(meetKind=='offline'){
  
  
  
-
-/* reply ajax */
-$.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
-	$(".project-reply-box-top").html(data);
-});
 
 
 
@@ -824,7 +829,9 @@ $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
 	$("#frm").submit();
 });
 
- $(".contents").on("click",".listReply",function() {
+
+/* 답글버튼 */
+ $(".project-reply-box-top").on("click",".listReply",function() {
 
 	 	/* 답글클릭했을때 replyNum */
 		alert($(this).attr("data-id"));
@@ -839,23 +846,25 @@ $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
 		
 		$(".listReply").html("");
 					
-		$("."+testId).html('<input type="text" name="contents"><input type="button" value="댓글달기"><input type="button" class="cancle" value="취소">');
-		$(this).attr("data-on", "on");
+		$("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" data-id="d" value="취소">');
+
 		
-		
-		
-		/* $.ajax({
-			url:"../reply/replyInsert",
-			type:"POST",
-			success:function(data){
-				alert("Insert들어옴");
-			}
-		}); */
 	});
  
- $(".contents").on("click",".cancle",function() {
+ $(".project-reply-box-top").on("click",".cancle",function() {
+	var testId = $(this).attr("data-id");
+	alert(testId);
 	alert("취소합시다");
+	$("."+testId).html();
+	
  });
+ 
+  $(".project-reply-box-top").on("click", ".replybtn", function() {
+		
+	 alert("ddd");
+	 alert($("#recontents").val());
+	 /* $("#frm").submit(); */
+  });
 	
 
 

@@ -15,21 +15,24 @@
 
 		<c:forEach items="${replyList}" var="reply">
 		<div>
-			<%-- <c:if test="${reply.replyChk=='false'}"> --%>
+			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
 			<span>${reply.writer}</span>
 			<span>${reply.contents}</span>
 			<span>${reply.reg_date}</span>
 			<span>${reply.replyChk}</span>
-			<%-- </c:if> --%>
-			<%-- <c:if test="${reply.replyChk=='true'}">
+			</c:if>
+			<c:if test="${reply.replyChk=='true'}">
 			<span>비공개 댓글입니다.</span>
 			<span>${reply.replyChk}</span>
-			</c:if> --%>
+			</c:if> 
 			
+			<c:if test="${reply.writer==member.email}">
 			<span class="listDelete" id="${reply.num}">X</span>
-			<c:if test="${reply.replyChk=='false'}">
+			</c:if>
 			
-			<span class="listReply" id="listReply${reply.num}" data-id="${reply.num}" data-on="off">답글</span>
+			<!-- 비공개일때는 client에게만 답글보여주기 -->
+			<c:if test="${member.email==project.email}">
+			<span class="listReply" id="listReply${reply.num}" data-id="${reply.num}">답글</span>
 			</c:if>
 			<p>
 			
@@ -74,6 +77,8 @@
 
 
 <script type="text/javascript">
+alert("project등록한사람==${project.email}");
+alert("member==${member.email}");
 $(".rereply").css("display", "none");
 		
 		/* reply 삭제 */
