@@ -26,7 +26,7 @@
 		</div>
 		
 		<c:if test="${member.kind eq 'admin' }">
-		<span id="D${E.num}" class="del"> 삭제 </span>
-		<span id="U${E.num}" class="update"> 수정 </span>
+		<span id="${E.num}" class="del"> 삭제 </span>
+		<span id="${E.num}" class="update"> 수정 </span>
 		</c:if>
 	</c:forEach>

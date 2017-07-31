@@ -35,7 +35,9 @@
     
     	//편의시설 하나 클릭 했을때
     	var convenience = document.getElementsByName("convenience");
+    	var check=0;
 		$(".fa").click(function() {
+			check++;
 			
 			var title = $(this).attr("title");
 			
@@ -66,7 +68,7 @@
 			}else if(title=="PC/노트북"){
 				convenience[6].value=title;
 				alert(convenience[6].value);
-				$("#laptop").css("background-color", "white");
+				$("#laptop").css("background-color", "white"); 
 			}
 			
 		});
@@ -491,7 +493,7 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
-					<input type="tel" name="human" id="human" class="eachRoomInfo" value="1">
+					<input type="tel" name="human" id="human" class="eachRoomInfo" value="1" min="0">
 					<strong class="txt unit">명</strong>
 				</span>
 				<span class="btn_minus" id="human_minus">
@@ -512,7 +514,7 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
-					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" >
+					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" min="0">
 					<strong class="txt unit">원</strong>
 				</span>
 				<span class="btn_minus" id="price_minus">

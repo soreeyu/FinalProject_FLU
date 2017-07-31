@@ -311,6 +311,7 @@ input[type="checkbox"]{
     border-top: 0;
     position: relative;
     float: left;
+    vertical-align : middle;
     text-align: center;
 }
 .check_list:after{
@@ -402,7 +403,12 @@ input[type="checkbox"]{
     margin-left: 10px;
     overflow: hidden;
 }
-
+.flex_wrap .tit {
+	line-height: 50px;
+    font-size: 18px;
+    margin-bottom: 0;
+    padding: 0;
+}
 </style>
 </head>
 <body>

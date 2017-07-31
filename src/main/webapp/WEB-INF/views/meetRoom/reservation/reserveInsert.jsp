@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <script type='text/javascript' src='../../resources/js/jquery.mousewheel.min.js'></script>
+<script type="text/javascript" src="../../resources/js/scroll.js"></script>
 <title>Insert title here</title>
 <script>
     $.datepicker.setDefaults({
@@ -344,13 +345,10 @@ font-size:14px;
 .list_detail li .data {
 	vertical-align: top;
 }
-.convenience_wrap {
-	padding: 0 0 3px;
-    margin: -2px 0 0 20px;
-}
+
 </style>
 </head>
-<body>
+<body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
 	<c:import url="../../temp/header.jsp"/>
 	<section>
 	<div class="contents_box">
@@ -396,15 +394,12 @@ font-size:14px;
 			<span class="tit">운영시간</span>
 			<span class="data">${map.each.time}</span>
 		</li>
+		<li>
+			<span class="tit">편의시설</span>
+			<span class="data">${map.each.convenience}</span>			
+		</li>
 		
 	</ul>
-		<div class="convenience_wrap">
-		<ul>
-		
-		</ul>
-		편의 시설
-			${map.each.convenience}
-		</div>
 	</div>
 	
 	<div id="datepicker" >
@@ -497,7 +492,22 @@ font-size:14px;
 		</div>
 		
 		<div>금액 : <span class="final_price"></span></div>
-		<input type="button" value="예약하기" id="reserve_btn">			
+		<input type="button" value="예약하기" id="reserve_btn">	
+		
+		
+		<div id="Layer1">
+		<div id="eachRoomTit">
+		<h3>세부공간 선택</h3>
+		<span id="choice">필수선택</span>
+		</div>
+		<div id="eachRoomContents">
+		<c:if test="${member.kind eq 'admin' }">
+		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>		
+		</c:if>
+		<div class="respond_info">
+			<p>지금 바로 예약하세요!</p>
+		</div>
+		</div>		
 	</div>
 	</form>
 	</div>
