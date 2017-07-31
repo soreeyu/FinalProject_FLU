@@ -54,7 +54,7 @@
   			select * from 
   			(select m.*, rownum R from 
   			(select j.email from 
-  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.emailcheck = 1) j  
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.kind = 'freelancer' and m.emailcheck = 1) j  
 			 <include refid="search"/>  
 			) m) where R between #{startRow} and #{lastRow}
   		</select>

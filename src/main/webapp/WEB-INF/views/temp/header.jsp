@@ -10,7 +10,7 @@
 			</div>
 			<div class="header_menu">
 				<ul>
-					<c:if test="${not empty member || member.kind eq client }">
+					<c:if test="${not empty member && member.kind eq client }">
 					<li><a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록</a></li>
 					</c:if>
 					<li><a href="${pageContext.request.contextPath}/project/projectList">프로젝트 찾기</a></li>

@@ -750,7 +750,7 @@ public class FreelancerController {
 	@RequestMapping(value="myproject")
 	public String myproject(Model model){
 		model.addAttribute("active7", "a");
-		return "/member/freelancer/myproject";
+		return "/member/evaluationform";
 	}
 	
 }

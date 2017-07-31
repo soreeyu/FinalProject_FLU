@@ -507,9 +507,9 @@ body{
 					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
 					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
 					<div class="user_name">
-						<img alt="프로필 사진" src="${pageContext.request.contextPath}/resources/img/FLU.png">
-						<span>닉네임</span>
-						<a><span>기본 정보 수정</span></a>
+						<img alt="프로필 사진" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}">
+						<span>${member.nickName }</span>
+						<a href="/flu/member/personaldataView"><span>기본 정보 수정</span></a>
 						
 					</div>
 				</div>

@@ -466,6 +466,7 @@ p input[type=date]{
 							<div style="margin-bottom: 20px;">
 								<div style="width: 210px; height: 200px; margin: 0 auto;">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
+								
 									<c:if test="${not empty dto.fProfileImage }">
 									<div class="fileinput-new thumbnail img1"  style="display: none;">
 										<img src="${pageContext.request.contextPath }/resources/img/img.PNG" alt="...">
@@ -474,7 +475,8 @@ p input[type=date]{
 										<img style="max-height: 140px;" src="${pageContext.request.contextPath }/resources/profile/${dto.fProfileImage}">
 									</div>
 									</c:if>
-									<c:if test="">
+									
+									<c:if test="${empty dto.fProfileImage }">
 									<div class="fileinput-new thumbnail img1">
 										<img src="${pageContext.request.contextPath }/resources/img/img.PNG" alt="...">
 									</div>
@@ -484,10 +486,10 @@ p input[type=date]{
 									
 									<div style="margin-top: 10px;">
 										<span class="btn btn-default btn-file">
-										<span class="fileinput-new">Select image</span>
-										<span class="fileinput-exists">Change</span>
+										<span class="fileinput-new">이미지 선택</span>
+										<span class="fileinput-exists">변경</span>
 										<input type="file" id="profile_img" name="f1"></span>
-										<a style="float: right;" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+										<a style="float: right;" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">이미지 삭제</a>
 									</div>
 								</div>
 								</div>
