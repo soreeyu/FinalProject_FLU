@@ -63,13 +63,6 @@
 	</div>
 </c:if>
 
-<c:if test="${replyList.size()==0}">
-	<div class="contents_bottom">
-		<div class="contents_paging">
-		<span class="num" id="${i}">0</span>
-		</div>
-	</div>		
-</c:if>
 </div>
 	
 

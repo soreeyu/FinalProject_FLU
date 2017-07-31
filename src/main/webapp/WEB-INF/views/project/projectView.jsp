@@ -626,6 +626,7 @@ background-color: white;
 				<div style="border-bottom: 1px dotted #dedede;"></div>
 				
 				<div style="margin-top: 30px;" class="project-reply-box">
+
 				<div class="project-reply-box-inner">
 					<div class="project-reply-box-top">
 					 
@@ -635,18 +636,19 @@ background-color: white;
 				</div>
 				
 				
-				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
 				<form action="../reply/replyInsert" id="frm" method="post">
+				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
 					<input type="hidden" name="projectNum" value="${dto.projectNum}">
 					
 					<!-- member의 img를 넣자 -->
+				
 					
 					<input type="text" name="contents">
 					<input type="checkbox" id="reply_check">비공개 설정
 					<input type="hidden" name="replyChk" id="replyChk" value="true">
 					<input type="button" id="btn" value="작성">
-				</form>
 				</div>
+				</form>
 				
 				</div>
 			</div>
@@ -719,6 +721,8 @@ background-color: white;
 				
 				<div class="client-info-box">
 					<div>
+					<%-- ${member.oProfileImage }
+					${member.fProfileImage } --%>
 					<div>프로젝트 등록자 : ${dto.email}</div>
 					
 					<div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
@@ -744,6 +748,7 @@ var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
 var state = '${dto.state}';
 alert(state);
+alert("${member.oProfileImage }");
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -807,29 +812,6 @@ if(meetKind=='offline'){
  
  
 
- /* 프로젝트 상태에 따른 옆에박스  */
-/*  var pjstate = "${dto.state}";
- if(pjstate== 'check'){
-	 $(".project-apply-box").css("display", "none");
- }else if(pjstate=='finish'){
-	 $(".project-apply-box").css("display", "none");
- }else if(pjstate=='sell'){
-	 $(".project-apply-box").css("display", "none");
- }else if(pjstate=='fail'){
-	 $(".project-apply-box").css("display", "none");
- }
- */ 
- 
- 
- 
- /* 등록한 프로젝트 갯수 */
- 
- 
- 
-
-
-
-
 
 /* reply 작성 */
  $("#btn").click(function() {
@@ -873,7 +855,7 @@ if(meetKind=='offline'){
  
  $(".project-reply-box-top").on("click",".cancle",function() {
 	var testId = $(this).attr("data-id");
-	alert(testId);
+	alert("testid=="+testId);
 	alert("취소합시다");
 	$("."+testId).html();
 	
