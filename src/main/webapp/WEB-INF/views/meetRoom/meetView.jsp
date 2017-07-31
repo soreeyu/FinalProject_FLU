@@ -290,6 +290,7 @@ label {
 }
 .pull_box {
     padding: 19px 0 23px;
+    height: 30px;
 }
 .pull_left {
     width: 30px;
@@ -357,9 +358,9 @@ label {
 				</dd>
 			</dl>
 		</div>
-		<input type="button" id="reservation_btn" value="예약하기">
 		<input type="hidden" id="each2">
 		</div> 
+		<input type="button" id="reservation_btn" value="예약하기" style="width: 100%;">
 		</div>
 
 		

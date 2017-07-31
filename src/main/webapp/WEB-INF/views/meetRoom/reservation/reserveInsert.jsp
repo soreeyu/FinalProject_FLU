@@ -349,6 +349,27 @@ font-size:14px;
 .list_detail li .data {
 	vertical-align: top;
 }
+#Layer1 {
+	position : relative;
+	width : 350px;
+	float: right;
+	z-index: 1;
+	left: 0;
+	top: 170;
+	background-color: "white";
+}
+.scroll_box{
+	background-color: #fff;
+	position: relative;
+}
+.reserve_Info{
+	padding: 0 20px 0;
+	padding-right: 104px;
+}
+.serve_Info input{
+	height: 50px;
+	width: 30%;
+}
 </style>
 </head>
 <body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
@@ -356,6 +377,21 @@ font-size:14px;
 	<section>
 	<div class="contents_box">
 	<form action="reserveInsert" method="post" id="frm" name="frm_check">
+		<div id="Layer1" class="scroll_box">
+		<div class="heading">
+		<h3>예약정보 입력</h3>		
+		</div>
+		<div class="reserve_Info">
+		인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}">  *최대 수용 인원 : ${map.each.human}
+		예약자 : <input type="text" name="reserve_name" class="reserve_Info"> 
+		연락처 : <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> 
+		이메일 : <input type="text" name="email" class="reserve_Info" value="${member.email}"> 		
+		</div>
+		
+		<!--세션에서 예약자 정보 가져오기  -->
+		<div>금액 : <span class="final_price"></span></div>
+		<input type="button" value="예약하기" id="reserve_btn">	
+		</div>
 	<div class="detail_form">
 	<c:forEach items="${map.reserved}" var="r">
 	<input type="hidden" id="reserved_name" value="${r.name}">
@@ -435,7 +471,7 @@ font-size:14px;
 	<!-- DB에 들어갈 내용은 아니고 업체의 간단한 정보확인용 뷰  -->
 	
 	<!-- 예약 주의사항 및 환불 규정 뷰-->
-	<!-- <div class="heading">
+	 <div class="heading">
 		<h3>예약시 주의사항</h3>
 	</div>
 	<div class="list_wrap">
@@ -447,56 +483,7 @@ font-size:14px;
 			<li><span class="num">5</span> 중복 예약으로 인해 부득이하게 취소되어야 할 경우 바로연락드리며&#44; 100% 환불해 드립니다. (저녁 9시 이후 결제 시 중복 예약이 확인 될 경우 다음날 아침에연락드립니다.)</li>
 		</ol>
 	</div>
-		<div class="heading">
-			<h3>환불규정 안내</h3>
-		</div>
-		<div class="list_wrap">
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 8일 전</dt>
-				<dd class="flex">총 금액의 100% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 7일 전</dt>
-				<dd class="flex">총 금액의 100% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 6일 전</dt>
-				<dd class="flex">총 금액의 100% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 5일 전</dt>
-				<dd class="flex">총 금액의 100% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 4일 전</dt>
-				<dd class="flex">총 금액의 100% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 3일 전</dt>
-				<dd class="flex">총 금액의 100% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 2일 전</dt>
-				<dd class="flex">총 금액의 70% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 전날</dt>
-				<dd class="flex">총 금액의 50% 환불</dd>
-			</dl>
-			<dl class="flex_box refund">
-				<dt class="flex tit">이용 당일</dt>
-				<dd class="flex">총 금액의 20% 환불</dd>
-			</dl>
-		</div> -->
-		<div class="reserve_info" style="margin-top: 45px;">
-		<p>인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}">  *최대 수용 인원 : ${map.each.human}</p>
-		<!--세션에서 예약자 정보 가져오기  -->
-		<p>예약자 : <input type="text" name="reserve_name" class="reserve_Info"> </p>
-		<p>연락처 : <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> </p>
-		<p>이메일 : <input type="text" name="email" class="reserve_Info" value="${member.email}"> </p>
-		</div>
-		<div>금액 : <span class="final_price"></span></div>
-		<input type="button" value="예약하기" id="reserve_btn">	
+		
 		
 		
 	</div>		

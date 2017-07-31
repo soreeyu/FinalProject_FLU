@@ -26,8 +26,13 @@
 					</span>
 					</c:when>
 					<c:otherwise>
+					<c:if test="${empty alarm}">
+					<span class="alarmCount">새로운 소식 [0] </span>					
+					</c:if>
+					<c:if test="${not empty alarm }">
+					<span class="alarmCount">새로운 소식 [${alarm}] </span>
+					</c:if>
 					<span>
-						<span class="alarmCount">새로운 소식 [${alarm}] </span>
 						<a href="${pageContext.request.contextPath}/alarm/alarmList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alarm/alarm.png"></a>
 					</span>
 					<span class="header_sign_up">	

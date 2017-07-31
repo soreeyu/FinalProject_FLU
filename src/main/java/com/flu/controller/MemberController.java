@@ -152,6 +152,7 @@ public class MemberController {
 				message= "1";
 				alarmDTO.setEmail(memberDTO.getEmail());
 				mv.addObject("alarm", alarmService.alarmCount(alarmDTO));
+				System.out.println(alarmService.alarmCount(alarmDTO));
 				mv.setViewName("/member/myflu");
 				return mv;
 			}else{

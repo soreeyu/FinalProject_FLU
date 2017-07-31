@@ -31,7 +31,7 @@ public class AlarmDAO {
 	}
 	
 	//헤더에 읽지 않은 알람 보여주기
-	public AlarmDTO alarmCount(AlarmDTO alarmDTO) throws Exception{
+	public int alarmCount(AlarmDTO alarmDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"AlarmCount", alarmDTO);
 	}
 	//알람 카운트 업데이트
