@@ -187,7 +187,9 @@ public class ProjectController {
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
 
+
 		System.out.println("session의 사진을 불러와보자");
+
 		memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		
@@ -312,9 +314,11 @@ public class ProjectController {
 	//delete
 	@RequestMapping(value="projectDelete")
 	public String projectDelete(int projectNum, RedirectAttributes rd, HttpSession session) throws Exception{
+
 		System.out.println("projectDelete");
 		
-		int result =projectService.projectDelete(projectNum);
+		int result =projectService.projectDelete(projectDTO.getProjectNum());
+		//관리자가 지웠을때 관리자 리스트로도 가게하려고 state가 필요해서 DTO로 크게 받는게 어떨까요?
 		
 		String message="Delete fail";
 		if(result==1){
@@ -326,7 +330,13 @@ public class ProjectController {
 		
 		rd.addAttribute("message", message);
 		
-		return "redirect:/project/projectList";
+		String path = "redirect:/project/projectList";
+		
+		if(projectDTO.getState().equals("fail")){ //만약 넘어온 상태가 fail이라면 관리자 모집실패 페이지로 주소 변경
+			path = "redirect:/checkProject/checkProjectFailList";
+		}
+		
+		return path;
 	}
 
 

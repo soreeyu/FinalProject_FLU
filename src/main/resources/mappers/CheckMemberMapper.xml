@@ -12,9 +12,14 @@
   		insert into checkmember values(#{email},#{fname},#{oname},#{name},sysdate)
   	</insert>
   	
-  	<select id="list" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.util.ListInfo">
-  		select * from checkmember A, member B where A.email=B.email order by reg_date asc
+  	<select id="clientList" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.util.ListInfo">
+  		select * from checkmember A, member B where A.email=B.email and B.kind='client' order by reg_date asc
   	</select>
+  	
+  	<select id="freelancerList" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.util.ListInfo">
+  		select * from checkmember A, member B where A.email=B.email and B.kind='freelancer' order by reg_date asc
+  	</select>
+  	
   	
   	<update id="checkUpdate" parameterType="com.flu.member.MemberDTO">
   		update member set authenticstate= #{authenticState} where email= #{email}
