@@ -54,7 +54,7 @@ $(function() {
 			    		data: formData,
 			    		type:'POST',
 			    		success:function(result){
-			    			$("#data").append(result);
+			    			sock.send(result);
 			    		}
 			    	
 			    	 });
