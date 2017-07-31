@@ -26,6 +26,7 @@ public class AlarmController {
 		System.out.println("세션 이메일"+((MemberDTO)session.getAttribute("member")).getEmail());
 		AlarmDTO alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+		alarmService.alarmCountUpdate(alarmDTO);
 		List<AlarmDTO> ar =  alarmService.alarmList(alarmDTO);
 		
 		if(ar!=null){
@@ -41,4 +42,5 @@ public class AlarmController {
 		
 		return "redirect:alarmList";
 	}
+	
 }

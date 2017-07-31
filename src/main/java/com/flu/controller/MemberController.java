@@ -40,10 +40,10 @@ public class MemberController {
 	@Inject
 	private AlarmService alarmService;
 
-	
 	@Inject
 	private CheckMemberService checkMemberService;
 	
+	private AlarmDTO alarmDTO;
 
 	//AJAX 뒤로가기 테스트
 	@RequestMapping(value="test")
@@ -142,13 +142,16 @@ public class MemberController {
 		
 		//로그인 
 		@RequestMapping(value="login", method=RequestMethod.POST)
-		public ModelAndView login(MemberDTO memberDTO, HttpSession session){
+		public ModelAndView login(MemberDTO memberDTO, HttpSession session) throws Exception{
 			ModelAndView mv = new ModelAndView();
 			memberDTO = memberService.login(memberDTO);
 			String message = "0";
 			if(memberDTO != null){
+				alarmDTO = new AlarmDTO();
 				session.setAttribute("member", memberDTO);
 				message= "1";
+				alarmDTO.setEmail(memberDTO.getEmail());
+				mv.addObject("alarm", alarmService.alarmCount(alarmDTO));
 				mv.setViewName("/member/myflu");
 				return mv;
 			}else{

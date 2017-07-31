@@ -25,4 +25,13 @@ public class AlarmService {
 	public int alarmDelete(int num) throws Exception{
 		return alarmDAO.alarmDelete(num);
 	}
+	
+	//읽지 않은 알람 뿌려주기
+	public AlarmDTO alarmCount(AlarmDTO alarmDTO) throws Exception{
+		return alarmDAO.alarmCount(alarmDTO);
+	}
+	//알람 카운트 업데이트
+	public int alarmCountUpdate(AlarmDTO alarmDTO) throws Exception{
+		return alarmDAO.alarmCountUpdate(alarmDTO);
+	}
 }

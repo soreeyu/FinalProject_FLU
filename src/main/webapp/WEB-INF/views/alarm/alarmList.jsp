@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function() {
@@ -141,11 +142,12 @@ section {
     color: #2099bb;
     text-decoration: none;
 }
-.del {
-	float: right;
-}
+
 .alarm_del{
 	cursor: pointer;
+}
+.empty-notification-member span {
+	text-align: center;
 }
 </style>
 </head>
@@ -191,11 +193,10 @@ section {
 						<c:forEach items="${alarm}" var="a">
 							<div class="empty-notification-member"> 
 							<span class="alarm_contents">${a.contents}</span>
+							<span class="alarm_del" title="${a.num}"><i class="fa fa-trash-o" style="font-size:24px" ></i></span>
 							<span class="alarm_date">${a.reg_date}</span>
 							</div>
-							<div class="del">
-							<span class="alarm_del" title="${a.num}"></span>							
-							</div>
+							
 						</c:forEach>	
 					</div>
 				</div>
