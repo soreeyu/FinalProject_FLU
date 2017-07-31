@@ -99,4 +99,12 @@ public class ProjectService {
 		System.out.println("service부분="+count);
 		return projectDAO.clientPjCount(listInfo, memberDTO, projectDTO);
 	}
+	
+	
+	public int contractCount(ProjectDTO projectDTO){
+		System.out.println("contractCount Service 들어옴");
+		
+		return projectDAO.contractCount(projectDTO);
+	}
+	
 }

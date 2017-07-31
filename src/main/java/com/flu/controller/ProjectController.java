@@ -127,16 +127,20 @@ public class ProjectController {
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
 
-		/*int pjcount = projectService.clientPjCount(listInfo, memberDTO, projectDTO);*/
+		
 		System.out.println("session의 사진을 불러와보자");
 
 		memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		int contractResult = projectService.contractCount(projectDTO);
+		System.out.println("계약한 갯수="+contractResult);
 		
 		System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
 		System.out.println("프로젝트 이름="+projectDTO.getName());
 		model.addAttribute("dto", projectDTO);
 		model.addAttribute("member", memberDTO);
-		/*model.addAttribute("pjcount", pjcount);*/
+		model.addAttribute("conCount", contractResult);
+
 			
 	}
 	

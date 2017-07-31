@@ -119,5 +119,11 @@ public class ProjectDAO {
 			
 		}
 		
+		public int contractCount(ProjectDTO projectDTO){
+			System.out.println("contractCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"contractcount", projectDTO);
+		}
+		
 		
 }

@@ -198,7 +198,7 @@ strong{
 	text-decoration: none;
 	color: #2099bb;
 }
-#register-btn{
+.register-btn{
 	width:230px;
 	height:40px;
 	color: white;
@@ -226,7 +226,7 @@ strong{
 	margin-top: 15px;
 	text-decoration: none;
 }
-#schedult-btn{
+.schedule-btn{
 	width:230px;
 	height:40px;
 	color: white;
@@ -506,72 +506,7 @@ background-color: white;
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
-<<<<<<< HEAD
-=======
 
-<p>project View &emsp;
-<c:if test="${dto.state=='done'}">
-[ 검수완료 ]
-</c:if>
-<c:if test="${dto.state=='wait'}">
-[ 입금 대기중 ]
-</c:if>
-<c:if test="${dto.state=='ing'}">
-[ 진행중 ]
-</c:if>
-<c:if test="${dto.state=='fail'}">
-[ 모집 실패 ]
-</c:if>
-</p>
-
-<p>${dto.projectNum}</p>
-<p>${dto.name}</p>
-<p>${dto.category }</p>
-<p>${dto.detailCategory}</p>
-<p>${dto.name}</p>
-<p>${dto.period}</p>
-<p>${dto.startDate}</p>
-<p>${dto.budget }</p>
-<p>${dto.planState }</p>
-<p>${dto.contents }</p>
-<p>${dto.skill }</p>
-<p>${dto.finishDate }</p>
-<p>${dto.meetKind }</p>
-<p>${dto.exp }</p>
-<p>${dto.state }</p>
-<p>${dto.email }</p>
-<p>${dto.quick }</p>
-<p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-<p>${dto.addr_num } ${dto.addr_main } ${dto.addr_detail }
-<p>${dto.reg_date }</p>
-
-<p>클라이언트 부분</p>
-<p><a href="projectUpdate?projectNum=${dto.projectNum}">Update</a></p>
-<p><a href="projectDelete?projectNum=${dto.projectNum}">Delete</a></p>
-<hr>
-
-<p>관리자 부분</p>
-
-<form action="" id="frm">
-
-<input type="hidden" name="state" value="${dto.state}">
-<input type="hidden" name="projectNum" value="${dto.projectNum}">
-
-<c:if test="${dto.state=='check'}">
-<input type="button" value="프로젝트 검수 완료" id="doneBTN">
-</c:if>
-
-<c:if test="${dto.state=='fail'}">
-<input type="button" value="프로젝트 연장" id="dateBTN">
-</c:if>
-
-<input type="button" value="프로젝트 삭제" id="deleteBTN">
-
-</form>
-
-<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
-
->>>>>>> 3588a58c7c2724337a78a2f2dc8b3570df5d1771
 <section class="main_section">
 
 		<!--  header -->
@@ -656,7 +591,9 @@ background-color: white;
 			<div class="contents-register">
 				<div class="contents-register-inner" style="text-align: center;">
 				
-				
+				<c:if test="${member.kind=='admin' }">
+					<p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
+				</c:if>
 				<c:if test="${member.kind=='freelancer'}">
 					<p>프로젝트 지원을 위해
 					<span><a href="#">기본정보</a></span>
@@ -665,7 +602,7 @@ background-color: white;
 					<span><a href="#">포트폴리오</a></span>
 					을(를) 입력해주세요
 					</p>
-					<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
+					<a href="#" class="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
 				</c:if>
 				
 				<c:if test="${member.email==dto.email}">
@@ -725,20 +662,59 @@ background-color: white;
 			
 			
 			<!-- right contents  -->
-			<section class="contents_sub">
-				<div class="project-apply-box">
-			<c:if test="${member.kind eq 'freelancer'}">
-				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
-				<a href="#" id="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
-	 		</c:if> 
-	 		<c:if test="${dto.state eq 'ing'}">
-				<a href="#" id="schedult-btn">프로젝트 스케줄 </a>
-	 		</c:if>
-	 		<c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
-				<a href="#" id="schedult-btn">미팅룸 예약하기 </a>
-	 		</c:if>			
-				</div>
+		<section class="contents_sub">
+			<div class="project-apply-box">
 				
+			<c:if test="${member.kind eq 'freelancer'}">
+				<a href="#" class="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
+				<a href="#" class="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
+	 		</c:if> 
+	 		
+	 		<c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
+				<a href="#" class="schedule-btn">프로젝트 스케줄 </a>
+	 		</c:if>
+	 		
+	 		<c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
+				<a href="#" class="schedule-btn">미팅룸 예약하기 </a>
+	 		</c:if>	
+	 		
+	 		<c:if test="${member.kind eq 'admin'}">
+	 		
+				<input type="hidden" name="state" value="${dto.state}">
+				<input type="hidden" name="projectNum" value="${dto.projectNum}">
+
+		 		<c:if test="${dto.state=='done'}">
+				프로젝트 상태 : <strong>검수완료</strong> 
+				</c:if>
+				<c:if test="${dto.state=='wait'}">
+				프로젝트 상태 : <strong>입금 대기중</strong>
+				</c:if>
+				<c:if test="${dto.state=='ing'}">
+				프로젝트 상태 : <strong>진행중</strong>
+				</c:if>
+				<c:if test="${dto.state=='fail'}">
+				프로젝트 상태 : <strong>모집 실패</strong>
+				</c:if>
+				
+	 			
+	 			<form action="" id="frmm" method="get">
+
+				<c:if test="${dto.state eq 'check'}">
+				<input type="button" class="register-btn" value="프로젝트 검수 완료" id="doneBTN">
+				</c:if>
+				
+				<c:if test="${dto.state eq 'fail'}">
+				<input type="button" class="register-btn" value="프로젝트 연장" id="dateBTN">
+				</c:if>
+				
+				<input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
+				
+				</form>
+	 		</c:if>
+			</div>
+				
+				
+			
 				
 				
 				<div class="client-info-box">
@@ -746,7 +722,7 @@ background-color: white;
 					<div>프로젝트 등록자 : ${dto.email}</div>
 					
 					<div><span>프로젝트 등록</span><span id="total_pjcount">건${pjcount}건 </span></div>
-					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">몇 건</span></div>
+					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">몇${conCount } 건</span></div>
 					<div><span>진행중인 프로젝트</span><span id="ing_pjcount">몇 건</span></div>
 					<div><span>완료한 프로젝트</span><span id="finish_pjcount">몇 건</span></div>
 					</div>
@@ -758,29 +734,6 @@ background-color: white;
 		</div>
 
 
-
-
-
-
-<p>보배부분아닌데 누구꺼지...?</p>
-<p>관리자 부분</p>
-<form action="../checkProject/checkProjectUpdate" id="frm">
-<input type="hidden" name="state" value="${dto.state}">
-<input type="hidden" name="projectNum" value="${dto.projectNum}">
-<c:if test="${dto.state=='check'}">
-<input type="button" value="프로젝트 검수 완료" id="${dto.state }">
-</c:if>
-<c:if test="${dto.state=='wait'}">
-<input type="button" value="프로젝트 진행하기" id="${dto.state }">
-</c:if>
-
-</form>
-
-<p><a href="">Delete</a></p>
-
-
-
-
 </section>
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
@@ -789,7 +742,8 @@ background-color: white;
 /* 기본셋팅 */
 var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
-
+var state = '${dto.state}';
+alert(state);
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -854,7 +808,7 @@ if(meetKind=='offline'){
  
 
  /* 프로젝트 상태에 따른 옆에박스  */
- var pjstate = "${dto.state}";
+/*  var pjstate = "${dto.state}";
  if(pjstate== 'check'){
 	 $(".project-apply-box").css("display", "none");
  }else if(pjstate=='finish'){
@@ -864,7 +818,7 @@ if(meetKind=='offline'){
  }else if(pjstate=='fail'){
 	 $(".project-apply-box").css("display", "none");
  }
- 
+ */ 
  
  
  
@@ -954,31 +908,32 @@ $("#pj-delete").click(function() {
  
 $('#'+state).click(function() {
 	
-	var state = '${dto.state}';
+
 	var projectNum = '${dto.projectNum}';
 		
 	$('#deleteBTN').click(function() {
 		
 		if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
-			$('#frm').attr('action','./projectDelete');
-			$('#frm').submit();
+			$('#frmm').attr('action','./projectDelete');
+			$('#frmm').submit();
 		}else{
 			
 		}	
 		
 	});
-	
+});	
 	
 	$('#doneBTN').click(function() {
 		if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-			$('#frm').attr('action','../checkProject/checkProjectUpdate');
-			$('#frm').submit();
+			$('#frmm').attr('action','../checkProject/checkProjectUpdate');
+			$('#frmm').submit();
 		}
 		else{
 
 		}
 		
 	});
+
 
 </script>
 </body>
