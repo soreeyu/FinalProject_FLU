@@ -32,7 +32,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		
 		for(WebSocketSession sess : sessionList){
-			sess.sendMessage(new TextMessage(message.getPayload()));
+			sess.sendMessage(new TextMessage(session.getRemoteAddress().getHostName()+":"+message.getPayload()));
 		}
 	}
 	

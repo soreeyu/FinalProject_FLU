@@ -24,6 +24,7 @@ public class ChatController {
 		mv.setViewName("chat/chat");
 		
 		String user = ((MemberDTO)(session.getAttribute("member"))).getName();
+		//String ip = session에서 IP꺼내기
 		
 		mv.addObject("user", user);
 		

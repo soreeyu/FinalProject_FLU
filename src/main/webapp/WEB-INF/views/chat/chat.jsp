@@ -79,9 +79,17 @@ $(function() {
     
     //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
     function onMessage(evt){
-      	var sessionId = null;
-      	var message = evt.data;
-
+		var data = evt.data;
+		
+		var array = data.split(":");
+		alert(array[0]);
+		alert(array[1]);
+		
+		var curIP = 
+		
+		var message = 
+		
+			
       	var curId = '${user}';
 
     	   var print = "<div>";
