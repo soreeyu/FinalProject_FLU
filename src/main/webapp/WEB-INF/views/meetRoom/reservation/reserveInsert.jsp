@@ -154,9 +154,12 @@
     		load(reserve_date, name, snum);
     	})
      	
+    	
+     	
     	$("#people").blur(function() {
 			var price = $("#price").val();
-			var final_price = ($(this).val()*1)*(price*1);
+			var time = (($("#out").val()*1)+1)-($("#in").val()*1);
+			var final_price = ($(this).val()*1)*(price*1)*(time*1);
 			$("#rprice").val(final_price);
 			$(".final_price").append(final_price);
 		});
@@ -279,6 +282,7 @@ font-size:14px;
 	padding: 100px 0 0 0;
 	width: 1152px;
 	margin: 0 auto;
+	display: inline-block;
 }
 .detail_form{
 	position: relative;
@@ -345,7 +349,6 @@ font-size:14px;
 .list_detail li .data {
 	vertical-align: top;
 }
-
 </style>
 </head>
 <body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
@@ -416,9 +419,9 @@ font-size:14px;
 	<div id="timeresult">
 		<input type="hidden" name="time" id="in" class="reserve_Info">
 		<input type="hidden" name="time" id="out" class="reserve_Info">
-		<input type="button" id="reset_btn" value="RESET">
+		<input type="button" id="reset_btn" value="RESET" style="margin-top: 20px;">
 		</div>
-	<div class="color_desc">
+	<div class="color_desc" style="margin-top: 45px;">
 		<img alt="" src="${pageContext.request.contextPath}/resources/img/meetroom/예약불가.png">
 		<span class="color_disable">예약불가</span>
 		<img alt="" src="${pageContext.request.contextPath}/resources/img/meetroom/예약가능.png">
@@ -427,17 +430,12 @@ font-size:14px;
 		<span class="color_select">선택</span>
 	</div>
 	
-	<p>인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}"> *최대 수용 인원 : ${map.each.human}</p>
 	
-	<!--세션에서 예약자 정보 가져오기  -->
-	<p>예약자 : <input type="text" name="reserve_name" class="reserve_Info"> </p>
-	<p>연락처 : <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> </p>
-	<p>이메일 : <input type="text" name="email" class="reserve_Info" value="${member.email}"> </p>
 
 	<!-- DB에 들어갈 내용은 아니고 업체의 간단한 정보확인용 뷰  -->
 	
 	<!-- 예약 주의사항 및 환불 규정 뷰-->
-	<div class="heading">
+	<!-- <div class="heading">
 		<h3>예약시 주의사항</h3>
 	</div>
 	<div class="list_wrap">
@@ -489,26 +487,19 @@ font-size:14px;
 				<dt class="flex tit">이용 당일</dt>
 				<dd class="flex">총 금액의 20% 환불</dd>
 			</dl>
+		</div> -->
+		<div class="reserve_info" style="margin-top: 45px;">
+		<p>인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}">  *최대 수용 인원 : ${map.each.human}</p>
+		<!--세션에서 예약자 정보 가져오기  -->
+		<p>예약자 : <input type="text" name="reserve_name" class="reserve_Info"> </p>
+		<p>연락처 : <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> </p>
+		<p>이메일 : <input type="text" name="email" class="reserve_Info" value="${member.email}"> </p>
 		</div>
-		
 		<div>금액 : <span class="final_price"></span></div>
 		<input type="button" value="예약하기" id="reserve_btn">	
 		
 		
-		<div id="Layer1">
-		<div id="eachRoomTit">
-		<h3>세부공간 선택</h3>
-		<span id="choice">필수선택</span>
-		</div>
-		<div id="eachRoomContents">
-		<c:if test="${member.kind eq 'admin' }">
-		<a href="eachRoom/eachInsert?num=${dto.num}">세부공간 등록</a>		
-		</c:if>
-		<div class="respond_info">
-			<p>지금 바로 예약하세요!</p>
-		</div>
-		</div>		
-	</div>
+	</div>		
 	</form>
 	</div>
 	</section>

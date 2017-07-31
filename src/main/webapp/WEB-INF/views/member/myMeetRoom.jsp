@@ -259,18 +259,17 @@
 							<td>예약날짜</td>
 							<td>예약인원</td>
 							<td>예약시간</td>
-							<td>가격</td>		
+							<td>가격</td>
+							<td>비고</td>		
 						</tr>
 					<c:forEach items="${list}" var="i">
 						<tr class="reserve_body">
 						<td>${i.reserve_name}</td>
 						<td><a href="../meetRoom/meetView?num=${i.snum}">${i.name}</a></td>
-						<td>
-						${i.reserve_date}
-						</td>
+						<td>${i.reserve_date}</td>
 						<td>${i.human}</td>
-						<td>${i.time}</td>					
-						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>					
+						<td>${i.time}</td>
+						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>				
 						</tr>					
 					</c:forEach>
 					</table>

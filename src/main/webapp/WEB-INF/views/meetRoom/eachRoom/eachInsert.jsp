@@ -71,7 +71,9 @@
 		$("#human_minus").click(function() {
 			var num = $("#human").val();
 			num--;
-		
+			if(num<0){
+				num=(num*1)*0;
+			}
 			$("#human").val(num);
 		});
 		$("#human_plus").click(function() {
@@ -89,7 +91,7 @@
 			var num = $("#price").val();
 			num = (num*1)-100;
 			if(num<0){
-				$("#price").val(0);	
+				num=(num*1)*0;
 			}
 			$("#price").val(num);
 		});
@@ -110,7 +112,7 @@
 	$("#reset_btn").click(function() {
 		for(var i=0;i<convenience.length;i++){
 			$(".icon").css("background-color", "#f2f2f2");
-			$(".fa").val("");
+			convenience[i].value= " ";
 		}
 	});				
 			
@@ -501,10 +503,10 @@ a {
 					<strong class="txt unit">명</strong>
 				</span>
 				<span class="btn_minus" id="human_minus">
-					<i class="fa fa-minus" style="font-size:48px"></i>
+					<i class="fa fa-minus" style="font-size:48px; cursor: pointer;"></i>
 				</span>
 				<span class="btn_plus" id="human_plus">
-					<i class="fa fa-plus" style="font-size:48px"></i>
+					<i class="fa fa-plus" style="font-size:48px; cursor: pointer;"></i>
 				</span>
 			</div>
 		</dd>
@@ -518,14 +520,14 @@ a {
 		<dd class="pull_right">
 			<div class="box_setting">
 				<span class="input won">
-					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" min="0">
+					<input type="tel" name="price" id="price" class="eachRoomInfo" value="1000" step="100" min="1000">
 					<strong class="txt unit">원</strong>
 				</span>
 				<span class="btn_minus" id="price_minus">
-					<i class="fa fa-minus" style="font-size:48px"></i>
+					<i class="fa fa-minus" style="font-size:48px; cursor:pointer;"></i>
 				</span>
 				<span class="btn_plus" id="price_plus">
-					<i class="fa fa-plus" style="font-size:48px"></i>
+					<i class="fa fa-plus" style="font-size:48px; cursor: pointer;"></i>
 				</span>
 			</div>
 		</dd>
