@@ -101,10 +101,10 @@ public class ProjectService {
 	}
 	
 	
-	public int contractCount(ProjectDTO projectDTO){
+/*	public int contractCount(ProjectDTO projectDTO){
 		System.out.println("contractCount Service 들어옴");
 		
 		return projectDAO.contractCount(projectDTO);
-	}
+	}*/
 	
 }

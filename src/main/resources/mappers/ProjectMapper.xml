@@ -100,9 +100,9 @@
   	where R between #{listInfo.startRow} and #{listInfo.lastRow}
   	</select>
   	
-<select id="contractcount" parameterType="com.flu.project.projectDTO">
+<!-- <select id="contractcount" parameterType="com.flu.project.projectDTO">
 	select count(nvl(projectNum,0)) from project where email=#{email} and state=#{state}
-</select>
+</select>  -->
   
   
   

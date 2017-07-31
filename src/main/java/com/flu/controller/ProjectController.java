@@ -1,8 +1,5 @@
 package com.flu.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -132,15 +127,15 @@ public class ProjectController {
 
 		memberDTO = (MemberDTO)session.getAttribute("member");
 		
-		int contractResult = projectService.contractCount(projectDTO);
-		System.out.println("계약한 갯수="+contractResult);
-		
+		/*int contractResult = projectService.contractCount(projectDTO);*/
+		/*System.out.println("계약한 갯수="+contractResult);
+		*/
 		System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
 		System.out.println("프로젝트 이름="+projectDTO.getName());
 		model.addAttribute("dto", projectDTO);
 		model.addAttribute("member", memberDTO);
-		model.addAttribute("conCount", contractResult);
-
+		/*model.addAttribute("conCount", contractResult);
+*/
 			
 	}
 	
