@@ -18,6 +18,7 @@ import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
 import com.flu.profile.TypeInfo;
+import com.flu.util.ListInfo;
 
 @Service
 public class FreelancerService{
@@ -33,10 +34,15 @@ public class FreelancerService{
 	public int freelancerInsert(FreelancerDTO freelancerDTO){
 		return 0;
 	}
+	
+	//totalCount
+	public int totalcount(ListInfo listInfo){
+		return freelancerDAO.totalcount(listInfo);
+	}
 
 	//프리랜서 리스트
-	public Map<String, Object> freelancerList(String search){
-		return freelancerDAO.freelancerList(search);
+	public Map<String, Object> freelancerList(ListInfo listInfo){
+		return freelancerDAO.freelancerList(listInfo);
 	}
 
 	//프리랜서 뷰
@@ -45,19 +51,22 @@ public class FreelancerService{
 		return freelancerDAO.freelancerView(email);
 	}
 	
+	
 	//관심분야를 가져서와서 리스트에 담는 뷰
 	public Map<String, Object> freelancerView2(String email){
+		System.out.println("내 이메일 :"+email);
 		FreelancerDTO freelancerDTO = freelancerDAO.freelancerView(email);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		List<String> ar = new ArrayList<String>();
+		List<String> ar2 = new ArrayList<String>();
+		if(freelancerDTO.getInteresting() != null){
 		String interesting = freelancerDTO.getInteresting();
 		String [] interestingArray = interesting.split(",");
 		
 		String [] interestingArray2 = null;
 		
-		List<String> ar = new ArrayList<String>();
-		List<String> ar2 = new ArrayList<String>();
 		for(int i = 0; i< interestingArray.length; i++){
 			interestingArray2 = interestingArray[i].split("_");
 			
@@ -73,6 +82,11 @@ public class FreelancerService{
 		map.put("interesting", ar);
 		map.put("interesting2", ar2);
 		map.put("dto", freelancerDAO.freelancerView(email));
+		}else{
+			map.put("dto", freelancerDAO.freelancerView(email));
+			map.put("interesting", ar);
+			map.put("interesting2", ar2);
+		}
 		
 		return map;
 	}

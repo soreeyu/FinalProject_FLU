@@ -6,8 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sockjs-1.0.3.min.js" ></script>
+<!-- <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script> -->
 <script type="text/javascript">
+    
+    
     
     var sock;
     //웸소켓을 지정한 url로 연결한다.
@@ -33,6 +36,7 @@
     function sendMessage(){
             /*소켓으로 보내겠다.  */
             sock.send($("#message").val());
+
     }
    
     
@@ -42,7 +46,9 @@
       	var sessionId = null;
       	var message = null;
       	
-      	var strArray = data.split('|');
+      	 $("#data").append(data);
+      	
+      	var strArray = data.split(':');
       	
       	for(var i=0; i<srtArray.length;i++){
       		console.log('str['+i+']: '+srtArray[i]);
@@ -55,25 +61,25 @@
        message = strArray[1]; 
       	
        if(sessionId==curId){
-    	   var print = "<div class='well'>";
+    	   var print = "<div>";
     	   print += "<div>";
-    	   print += "<strong>["+sessionId+"]:"+message+"</strong>";
+    	   print += "<p>["+sessionId+"]:"+message+"</p>";
     	   print += "</div>";
   		   print += "</div>";
   		   
   		 $("#data").append(print);
        
        }else{
-    	   var print = "<div class='well'>";
+    	   var print = "<div>";
     	   print += "<div>";
-    	   print += "<strong>["+sessionId+"]:"+message+"</strong>";
+    	   print += "<p>["+sessionId+"]:"+message+"</p>";
     	   print += "</div>";
   		   print += "</div>";
   		   
   		 $("#data").append(print);
        }
        
-       console.log('chatData:'+data);
+       console.log('chatData:'+data); 
       
     }
     

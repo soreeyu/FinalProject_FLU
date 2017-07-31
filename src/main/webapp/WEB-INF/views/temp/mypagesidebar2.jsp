@@ -17,8 +17,8 @@
 				</div>
 				<div class="sidebar_menu">
 					<ul>
-						<li><a id="${active1}" class="menu" href="mypage">클라이언트 소개</a></li>
-						<li><a id="${active2}" class="menu" href="introView">프로젝트 히스토리</a></li>
+						<li><a id="${active1}" class="menu" href="mypage">클라이언트 정보</a></li>
+						<li><a id="${active2}" class="menu" href="history">프로젝트 히스토리</a></li>
 					</ul>
 				</div>
 			</div>

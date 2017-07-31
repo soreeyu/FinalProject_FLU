@@ -22,22 +22,25 @@ public class ListInfo {
 	private int perBlock=5;
 
 	//project
-	private String category;
-	private String detailCategory;
-	private String[] project;
-
-
-
-
-
-
+	private String[] project; //지우지말아주시오...ㅜㅜㅜㅜ
+	private String memberName;
+	private String type;
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public String[] getProject() {
 		return project;
 	}
-
-
-
-
 	public void setProject(String[] project) {
 		this.project = project;
 	}
@@ -74,25 +77,12 @@ public class ListInfo {
 		if(this.curBlock==this.totalBlock){
 			this.lastNum=totalPage;
 		}
+		if(this.totalBlock==0){
+			this.lastNum = 1;
+		}
 	}
 
 	
-
-
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-
-	public String getDetailCategory() {
-		return detailCategory;
-	}
-	public void setDetailCategory(String detailCategory) {
-		this.detailCategory = detailCategory;
-	}
 
 
 

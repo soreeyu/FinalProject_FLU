@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,6 +30,7 @@ import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
+
 import com.flu.util.ListInfo;
 
 @Controller
@@ -38,6 +40,11 @@ public class FreelancerController {
 	@Inject
 	private FreelancerService freelancerService;
 
+
+	//이메일 가져오는 메서드
+	private String getEmail(HttpSession session){
+		return ((MemberDTO)session.getAttribute("member")).getEmail();
+	}
 
 	
 	
@@ -58,13 +65,39 @@ public class FreelancerController {
 
 	//프리랜서 리스트
 	@RequestMapping(value="freelancerList", method=RequestMethod.GET)
-	public String freelancerList(Model model){
+	public String freelancerList(ListInfo listInfo, Model model){
 		
-		Map<String, Object> map = freelancerService.freelancerList("웹");
+		if(listInfo.getSearch() == null){
+			listInfo.setSearch("");
+		}
 		
-		model.addAttribute("list", map);
+		
+		int totalCount = freelancerService.totalcount(listInfo);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		System.out.println("총 갯수 : "+totalCount);
+		model.addAttribute("listinfo", listInfo);
+		model.addAttribute("count", totalCount);
+		model.addAttribute("map",freelancerService.freelancerList(listInfo));
+		
+		
 		
 		return "/member/freelancer/freelancerlist";
+	}
+	//프리랜서 마이페이지
+	@RequestMapping(value="freelancermypage")
+	public String freelancermypage(Model model, HttpSession session){
+		
+		model.addAttribute("active1", "a");
+		model.addAttribute("freelancer", freelancerService.freelancerView(this.getEmail(session)));
+		model.addAttribute("portfolio", freelancerService.portfolioList(this.getEmail(session)));
+		model.addAttribute("skills", freelancerService.skillList(this.getEmail(session)));
+		model.addAttribute("acadeic", freelancerService.academicList(this.getEmail(session)));
+		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
+		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
+		model.addAttribute("evaluation", freelancerService.evaluationView(this.getEmail(session)));
+		
+		return "/member/freelancer/mypage";
 	}
 
 
@@ -78,7 +111,7 @@ public class FreelancerController {
 		
 		
 		model.addAttribute("active8", "a");
-		model.addAttribute("free", this.freelancerview2((this.freelancerview(session)).getEmail()));
+		model.addAttribute("free", this.freelancerview2((this.getEmail(session))));
 		return "/member/freelancer/freelancerinfoView";
 	}
 	
@@ -99,7 +132,10 @@ public class FreelancerController {
 		System.out.println(freelancerDTO.getJobKind());
 		System.out.println(freelancerDTO.getInteresting());
 		System.out.println(freelancerDTO.getPossibility());
-		
+		if(freelancerDTO.getInteresting() == null){
+			freelancerDTO.setInteresting("");
+			
+		}
 		freelancerService.infoUpdate(freelancerDTO);
 		
 		redirectAttributes.addFlashAttribute("active8", "a");
@@ -114,7 +150,7 @@ public class FreelancerController {
 
 		model.addAttribute("active8", "a");
 		model.addAttribute("path", "infoUpdate");
-		model.addAttribute("free", this.freelancerview2((this.freelancerview(session)).getEmail()));
+		model.addAttribute("free", this.freelancerview2((this.getEmail(session))));
 		return "/member/freelancer/freelancerinfo";
 	}
 	
@@ -125,6 +161,10 @@ public class FreelancerController {
 		System.out.println("수정");
 		System.out.println(freelancerDTO.getEmail());
 		System.out.println(freelancerDTO.getJobKind());
+		if(freelancerDTO.getInteresting() == null){
+			freelancerDTO.setInteresting("");
+			
+		}
 		System.out.println(freelancerDTO.getInteresting());
 		System.out.println(freelancerDTO.getPossibility());
 		
@@ -287,7 +327,7 @@ public class FreelancerController {
 	@RequestMapping(value="portfolioList", method=RequestMethod.GET)
 	public String portfolioList(HttpSession session, Model model){
 		model.addAttribute("active3", "a");
-		model.addAttribute("list", freelancerService.portfolioList(this.freelancerview(session).getEmail()));
+		model.addAttribute("list", freelancerService.portfolioList(this.getEmail(session)));
 		return "/member/freelancer/portfolio";
 	}
 	//포트폴리오 수정 폼
@@ -454,7 +494,7 @@ public class FreelancerController {
 			
 		
 		model.addAttribute("active4", "a");
-		model.addAttribute("list", freelancerService.skillList(this.freelancerview(session).getEmail()));
+		model.addAttribute("list", freelancerService.skillList(this.getEmail(session)));
 		
 		return "/member/freelancer/skill";
 	}
@@ -463,7 +503,7 @@ public class FreelancerController {
 	@RequestMapping(value="myskillList", method=RequestMethod.GET)
 	public String myskillList(Model model, HttpSession session){
 		
-		model.addAttribute("list", freelancerService.skillList(this.freelancerview(session).getEmail()));
+		model.addAttribute("list", freelancerService.skillList(this.getEmail(session)));
 		
 		return "/member/freelancer/myskillList";
 	}
@@ -477,7 +517,7 @@ public class FreelancerController {
 		model.addAttribute("path", "skillUpdate");
 		model.addAttribute("data", "0");
 		
-		Map<String, Object> map = freelancerService.myskillList(this.freelancerview(session).getEmail());
+		Map<String, Object> map = freelancerService.myskillList(this.getEmail(session));
 		
 		model.addAttribute("slevel", map.get("slevel"));
 		model.addAttribute("exp", map.get("exp"));
@@ -533,9 +573,9 @@ public class FreelancerController {
 	public String carrer(String email, Model model, HttpSession session){
 		model.addAttribute("active5", "a");
 		
-		model.addAttribute("carrer", freelancerService.carrerList(this.freelancerview(session).getEmail()));
-		model.addAttribute("academic", freelancerService.academicList(this.freelancerview(session).getEmail()));
-		model.addAttribute("license", freelancerService.licenseList(this.freelancerview(session).getEmail()));
+		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
+		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
+		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
 		return "/member/freelancer/carrer";
 		
 	}

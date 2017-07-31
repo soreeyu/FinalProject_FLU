@@ -23,7 +23,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		logger.info("{} 연결됨", session.getId());
 
 		
-		System.out.println("채팅방 입장자: "+session.getPrincipal().getName());
+		//System.out.println("채팅방 입장자: "+session.getPrincipal().getName());
 		
 	}
 	
@@ -33,7 +33,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		logger.info("{}로부터 {} 받음", session.getId(),message.getPayload());
 		
 		for(WebSocketSession sess : sessionList){
-			sess.sendMessage(new TextMessage(session.getPrincipal().getName()+"|"+message.getPayload()));
+			sess.sendMessage(new TextMessage(session.getRemoteAddress().getHostName()+":"+message.getPayload()));
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		sessionList.remove(session);
 		logger.info("{} 연결끊김", session.getId());
 		
-		System.out.println("채팅방 퇴장자: "+session.getPrincipal().getName());
+		//System.out.println("채팅방 퇴장자: "+session.getPrincipal().getName());
 		
 	}
 	

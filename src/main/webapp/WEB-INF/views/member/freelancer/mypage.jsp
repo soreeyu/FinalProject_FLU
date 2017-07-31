@@ -220,7 +220,7 @@
 				<div class="contents_inner">
 					<section class="profile_title">
 						
-						<p><span>soreeyu</span><span class="availability">활동여부</span><a href="infoUpdate" >업데이트 하기</a></p>
+						<p><span>${dto.nickName }</span><span class="availability">${dto.possibility }</span><a href="infoUpdate" >업데이트 하기</a></p>
 						<p><span><i class="fa fa-keyboard-o"></i><span>개발자<span class="bar">|</span></span></span>
 						<span><i class="fa fa-user"></i><span>개인<span class="bar">|</span></span></span>
 						<span><i class="fa fa-address-card"></i><span>신원 확인 여부<span class="bar">|</span></span></span>

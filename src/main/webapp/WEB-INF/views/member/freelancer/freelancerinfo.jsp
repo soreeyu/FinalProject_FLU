@@ -313,39 +313,43 @@
 		
 		});
 		
-		
+		var interesting3 = "${free.interesting.size()}";
+		if(interesting3 == ""){
+			interesting3 = 0;
+		}
 		//관심 분야 개발쪽 체크
-		for(var i = 0; i < ${free.interesting.size()}; i++){
+		for(var i = 0; i < interesting3; i++){
 			var interesting = "${free.interesting}";
 			
 			interesting = interesting.split(",");
-			if(${free.interesting.size()} > 2){
+			if(interesting3 > 2){
 				if(i == 0){
-	
-					interesting[0] = interesting[0].substr(1);
-				}else if(i == ${free.interesting.size()-1}){
 					
-					interesting[${free.interesting.size()-1}] = interesting[${free.interesting.size()-1}].trim();
-					interesting[${free.interesting.size()-1}] = interesting[${free.interesting.size()-1}].split("]",1);
+					interesting[0] = interesting[0].substr(1);
+				}else if(i == interesting3-1){
+					
+					interesting[interesting3-1] = interesting[interesting3-1].trim();
+					interesting[interesting3-1] = interesting[interesting3-1].split("]",1);
 				}
 			
-			}else if(${free.interesting.size()} == 1){
+			}else if(interesting3 == 1){
 				interesting[0] = interesting[0].substr(1);
 				interesting[0] = interesting[0].split("]",1);
-			}else if(${free.interesting2.size()} == 2){
+			}else if(interesting3 == 2){
+			
 				if(i == 0){
 					interesting[0] = interesting[0].substr(1);
 				}else if(i == 1){
-					interesting[${free.interesting.size()-1}] = interesting[${free.interesting.size()-1}].trim();
-					interesting[${free.interesting.size()-1}] = interesting[${free.interesting.size()-1}].split("]",1);
+					interesting[interesting3-1] = interesting[interesting3-1].trim();
+					interesting[interesting3-1] = interesting[interesting3-1].split("]",1);
 				}
 			}
 			
 			var interclass = $(".ch1").attr("title");
-			if(i !=${free.interesting.size()-1}){
+			if(i !=interesting3-1){
 			interesting[i] = interesting[i].trim();
 			}
-			
+		
 			$(".ch1").each(function() {
 				if($(this).attr("title") == interesting[i]){
 					$(this).prop("checked", true);
@@ -354,38 +358,38 @@
 			
 			
 		}
-		
-		
+		var interesting4 = "${free.interesting2.size()}";
+		if(interesting4 == ""){
+			interesting4 = 0;
+		}
 		//관심 분야 디자인쪽 체크
-		for(var i = 0; i < ${free.interesting2.size()}; i++){
+		for(var i = 0; i < interesting4; i++){
 			var interesting2 = "${free.interesting2}";
 			var interclass = $(".ch2").attr("title");
 			
 			
 			interesting2 = interesting2.split(",");
-			if(${free.interesting2.size()} > 2){
+			if(interesting4 > 2){
 			if(i == 0){
-
 			interesting2[0] = interesting2[0].substr(1);
-			}else if(i == ${free.interesting2.size()-1}){
-				
-			interesting2[${free.interesting2.size()-1}] = interesting2[${free.interesting2.size()-1}].trim();
-			interesting2[${free.interesting2.size()-1}] = interesting2[${free.interesting2.size()-1}].split("]",1);
+			}else if(i == interesting4){
+			interesting2[interesting4-1] = interesting2[interesting4-1].trim();
+			interesting2[interesting4-1] = interesting2[interesting4-1].split("]",1);
 			}
 				
-			}else if(${free.interesting2.size()} == 1){
+			}else if(interesting4 == 1){
 				interesting2[0] = interesting2[0].substr(1);
 				interesting2[0] = interesting2[0].split("]",1);
-			}else if(${free.interesting2.size()} == 2){
+			}else if(interesting4 == 2){
 				if(i == 0){
 					interesting2[0] = interesting2[0].substr(1);
 				}else if(i == 1){
-					interesting2[${free.interesting2.size()-1}] = interesting2[${free.interesting2.size()-1}].trim();
-					interesting2[${free.interesting2.size()-1}] = interesting2[${free.interesting2.size()-1}].split("]",1);
+					interesting2[interesting4-1] = interesting2[interesting4-1].trim();
+					interesting2[interesting4-1] = interesting2[interesting4-1].split("]",1);
 				}
 			}
 			
-			if(i !=${free.interesting2.size()-1}){
+			if(i !=interesting4-1){
 			interesting2[i] = interesting2[i].trim();
 			}
 			

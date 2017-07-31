@@ -4,16 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="FreelancerMapper">
-  		<resultMap type="com.flu.member.MemberDTO" id="member">
-  		<!-- <id column="vnum" property="num"/> --> 			<!-- 컬럼명과 DTO 이름이 다를때 매핑 시켜주는 방법 -->
-  		<!-- 아무것도 작성안하면 키값과 벨류값이 자동으로 입력됨  -->
-  		</resultMap>
-  		<resultMap type="com.flu.freelancer.FreelancerDTO" id="freelancer">
   		
-  		</resultMap>
-  		<resultMap type="com.flu.profile.Evaluation" id="evaluation">
-  		</resultMap>
+  		 <sql id="search">
+ 			where j.intro like '%' || #{search } || '%' or j.INTERESTING like '%' || #{search} || '%' or j.nickname like '%' || #{search} || '%' 
+ 		</sql>
   		
+  		
+  		<!-- 프리랜서 생성 -->
+  		<insert id="freelancerInsert" parameterType="java.lang.String">
+  			insert into freelancer values(#{email},null,null,null,null)
+  		</insert>
   		
   		<!-- 프리랜서가 없을 때 자기소개 등록-->
   		<insert id="introInsert" parameterType="com.flu.freelancer.FreelancerDTO">
@@ -39,9 +39,34 @@
   			select * from freelancer where email = #{email}
   		</select>
   		
-  		<!-- 프리랜서 리스트 -->
-  		<select id="freelancerList" statementType="CALLABLE" parameterType="java.util.Map">
-  			{ call freelancer_list(#{search, mode=IN},#{member, mode=OUT,jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=member},#{freelancer, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=freelancer},#{evaluation, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=evaluation}) }
+  		<!-- 프리랜서 totalCount -->
+  		<select id="freelancerCount" resultType="java.lang.Integer" parameterType="com.flu.util.ListInfo">
+  			select count(nvl(m.email,0)) from 
+  			(select j.email from 
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.emailcheck = 1) j
+  			  <include refid="search"/> 
+  			 ) m
+  		</select>
+  		
+  		
+  		<!-- 프리랜서 리스트1 검색키워드별 email 가져오기 -->
+  		<select id="freelancerList_email" resultType="java.lang.String" parameterType="com.flu.util.ListInfo">
+  			select * from 
+  			(select m.*, rownum R from 
+  			(select j.email from 
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.emailcheck = 1) j  
+			 <include refid="search"/>  
+			) m) where R between #{startRow} and #{lastRow}
+  		</select>
+  		<!-- 프리랜서 리스트2 각 리스트 가져오기 -->
+  		<select id="freelancerList_member" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
+  			select * from member where email = #{email}
+  		</select>
+  		<select id="freelancerList_freelancer" resultType="com.flu.freelancer.FreelancerDTO" parameterType="java.lang.String">
+  			select * from freelancer where email = #{email}
+  		</select>
+  		<select id="freelancerList_evaluation" resultType="com.flu.profile.Evaluation" parameterType="java.lang.String">
+  			select * from evaluation where toemail = #{email}
   		</select>
   		
   		

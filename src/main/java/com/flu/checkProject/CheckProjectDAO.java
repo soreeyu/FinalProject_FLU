@@ -1,6 +1,7 @@
 package com.flu.checkProject;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -20,28 +21,33 @@ public class CheckProjectDAO {
 	//**********프로젝트 검수 관리**************
 	
 	//검수 전 프로젝트 리스트 들고오기
-	public List<ProjectDTO> checkList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"checkList",listInfo);
+	public List<ProjectDTO> checkList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"checkList",map);
 	}
 	
 	
-	public List<ProjectDTO>failList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"failList",listInfo);
+	public List<ProjectDTO>failList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"failList",map);
+	}
+		
+	
+	//입금대기중 리스트 불러오기
+	public List<ProjectDTO>waitList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"waitList",map);
 	}
 	
-	public List<ProjectDTO>waitList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"waitList",listInfo);
+	public List<ProjectDTO>finishList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"finishList",map);
 	}
+
 	
-	public List<ProjectDTO>finishList(ListInfo listInfo){
-		return sqlSession.selectList(NAMESPACE+"finishList",listInfo);
+	
+	
+	
+	public List<String> supportList(ListInfo listInfo){
+		return sqlSession.selectList(NAMESPACE+"supportList",listInfo);
 	}
-	
-	
-	
-	
-	
-	
+
 	public int update(ProjectDTO projectDTO){
 		return sqlSession.update(NAMESPACE+"update",projectDTO);
 	}

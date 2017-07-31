@@ -22,7 +22,7 @@ import com.flu.member.MemberDTO;
 import com.flu.util.ListInfo;
 
 @Controller
-@RequestMapping("checkMember/**")
+@RequestMapping("/checkMember/**")
 public class CheckMemberController {
 
 	@Inject
@@ -36,7 +36,7 @@ public class CheckMemberController {
 	}
 	
 	//신원확인 등록하기
-	@RequestMapping(value="memberCheckInsert", method=RequestMethod.POST)
+	@RequestMapping(value="memberCheckInsert", method=RequestMethod.POST) //인터셉터 관리자에서 제외시키기 위한 메소드명
 	public String insert(CheckMemberDTO checkMemberDTO,HttpSession session, MultipartHttpServletRequest request,Model model) throws Exception{
 		MultipartFile multi = request.getFile("file1");
 		String realPath = session.getServletContext().getRealPath("resources/upload");
@@ -64,11 +64,23 @@ public class CheckMemberController {
 		
 	}
 	
-	//신원확인 리스트 뿌려오기
-	@RequestMapping(value="checkMemberList")
-	public void list(ListInfo listInfo, Model model){
-		model.addAttribute("list",checkMemberService.list(listInfo));
+	//클라이언트 리스트 뿌려오기
+	@RequestMapping(value="checkMemberClientList")
+	public String clientlist(ListInfo listInfo, Model model){
+		model.addAttribute("list",checkMemberService.clientList(listInfo)).addAttribute("board", "client");
+		
+		return "checkMember/checkMemberList";
 	}
+	
+	//프리랜서 리스트 뿌려오기
+	@RequestMapping(value="checkMemberFreelancerList")
+	public String freelancerlist(ListInfo listInfo, Model model){
+		model.addAttribute("list",checkMemberService.freelancerList(listInfo)).addAttribute("board", "freelancer");
+		
+		return "checkMember/checkMemberList";
+	}
+	
+	
 	
 	//한명의 신원확인 페이지로 가기
 	@RequestMapping(value="checkMemberView")
