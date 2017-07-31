@@ -99,11 +99,24 @@
   	(select * from project where email=#{member.email} and state=#{project.state}) P) 
   	where R between #{listInfo.startRow} and #{listInfo.lastRow}
   	</select>
-  	
-<!-- <select id="contractcount" parameterType="com.flu.project.projectDTO">
-	select count(nvl(projectNum,0)) from project where email=#{email} and state=#{state}
-</select>  -->
-  
+
+
+<!-- View에서 뿌려질 해당 프로젝트를 등록한 클라이언트에 대한 갯수들 -->
+<select id="pjcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email}
+</select>
+<select id="contractcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email} and state='recurit'
+</select> 
+<select id="ingcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email} and state='ing'
+</select>
+<select id="finishcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email} and state='finish'
+</select>
+
+ 
+
   
   
   

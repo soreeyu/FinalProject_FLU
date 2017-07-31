@@ -119,11 +119,29 @@ public class ProjectDAO {
 			
 		}
 		
-		/*public int contractCount(ProjectDTO projectDTO){
+		public int contractCount(ProjectDTO projectDTO){
 			System.out.println("contractCount dao 들어옴");
 			
 			return sqlSession.selectOne(NAMESPACE+"contractcount", projectDTO);
 		}
-		*/
+		
+		public int ingCount(ProjectDTO projectDTO){
+			System.out.println("ingCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"ingcount", projectDTO);
+		}
+		
+		public int finishCount(ProjectDTO projectDTO){
+			System.out.println("finishCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"finishcount", projectDTO);
+		}
+		
+		public int pjCount(ProjectDTO projectDTO){
+			System.out.println("pjCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"pjcount", projectDTO);
+		}
+	
 		
 }

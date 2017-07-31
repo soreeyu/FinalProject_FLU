@@ -127,15 +127,26 @@ public class ProjectController {
 
 		memberDTO = (MemberDTO)session.getAttribute("member");
 		
-		/*int contractResult = projectService.contractCount(projectDTO);*/
-		/*System.out.println("계약한 갯수="+contractResult);
-		*/
+		int contractResult = projectService.contractCount(projectDTO);
+		System.out.println("계약한 갯수="+contractResult);
+		int ingResult = projectService.ingCount(projectDTO);
+		System.out.println("진행중 프로젝트갯수="+ingResult);
+		int finishResult = projectService.finishCount(projectDTO);
+		System.out.println("완료된 프로젝트=="+finishResult);
+		int totalResult = projectService.pjCount(projectDTO);
+		System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
+		
 		System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
 		System.out.println("프로젝트 이름="+projectDTO.getName());
+		
+		
 		model.addAttribute("dto", projectDTO);
 		model.addAttribute("member", memberDTO);
-		/*model.addAttribute("conCount", contractResult);
-*/
+		model.addAttribute("conCount", contractResult);
+		model.addAttribute("ingCount", ingResult);
+		model.addAttribute("finishCount", finishResult);
+		model.addAttribute("totalCount", totalResult);
+
 			
 	}
 	

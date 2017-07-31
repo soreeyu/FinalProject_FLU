@@ -101,10 +101,28 @@ public class ProjectService {
 	}
 	
 	
-/*	public int contractCount(ProjectDTO projectDTO){
+	public int contractCount(ProjectDTO projectDTO){
 		System.out.println("contractCount Service 들어옴");
 		
 		return projectDAO.contractCount(projectDTO);
-	}*/
+	}
+	
+	public int ingCount(ProjectDTO projectDTO){
+		System.out.println("ingCount Service 들어옴");
+		
+		return projectDAO.ingCount(projectDTO);
+	}
+	
+	public int finishCount(ProjectDTO projectDTO){
+		System.out.println("finishCount Service 들어옴");
+		
+		return projectDAO.finishCount(projectDTO);
+	}
+	
+	public int pjCount(ProjectDTO projectDTO){
+		System.out.println("pjCount Service 들어옴");
+		
+		return projectDAO.pjCount(projectDTO);
+	}
 	
 }

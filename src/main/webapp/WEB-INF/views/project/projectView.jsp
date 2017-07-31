@@ -579,7 +579,7 @@ background-color: white;
 				
 				<div>
 					<div class="project-detail-title" style="margin-top: 20px;">관련 기술</div>
-					<span class="project-skill">${dto.skill}</span>
+					<span class="project-skill">${dto.skills}</span>
 		
 					
 					
@@ -721,10 +721,10 @@ background-color: white;
 					<div>
 					<div>프로젝트 등록자 : ${dto.email}</div>
 					
-					<div><span>프로젝트 등록</span><span id="total_pjcount">건${pjcount}건 </span></div>
-					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">몇${conCount } 건</span></div>
-					<div><span>진행중인 프로젝트</span><span id="ing_pjcount">몇 건</span></div>
-					<div><span>완료한 프로젝트</span><span id="finish_pjcount">몇 건</span></div>
+					<div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
+					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
+					<div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
+					<div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
 					</div>
 				</div>
 
