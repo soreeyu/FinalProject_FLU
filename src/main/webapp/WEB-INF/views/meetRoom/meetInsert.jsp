@@ -141,7 +141,7 @@ label {
 .meetRoom_name > input {
 	display: inline-block;
     position: relative;
-    width: 100%;
+    width: 97%;
     border: 1px solid #e0e0e0;
     background-color: #fff;
     line-height: 50px;
@@ -162,6 +162,16 @@ label {
 .flex_wrap{
     margin: 44px 0 0;
     height : 133px;
+    position: relative;
+    margin-top: 45px;
+}
+.flex_wrap .tit {
+    line-height: 50px;
+    font-size: 18px;
+    margin-bottom: 0;
+    padding: 0;
+    display: block;
+    
 }
 .flex_wrap .column2 {
     margin-left: 0;
@@ -389,25 +399,17 @@ input[type="checkbox"]{
 	border: 1px white solid;
 }
 
-
-.address_box > input:first-child{
-	width : 50%;
-	
-}
-.addr_btn {
-	width: 154px;
+input[type=text]{
+	height: 50px;
+    padding: 0 16px;
     line-height: 50px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-left: 10px;
-    overflow: hidden;
+
 }
-.flex_wrap .tit {
-	line-height: 50px;
-    font-size: 18px;
-    margin-bottom: 0;
-    padding: 0;
+.box_file .input{
+	margin-top: 10px;
+}
+.input inpu:first-child {
+	width: 50%;
 }
 </style>
 </head>
@@ -525,24 +527,24 @@ input[type="checkbox"]{
 			</div>
 		</div>
 		
-		<div class="flex_wrap">
+		<div class="box_file">
 			<span class="tit">
 				<label>
 				주소(위치)				
 				</label>
 			</span>
 			
-			<div class="address_box">
+			<div class="file">
 				<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" class="meetRoomInfo" value="${dto.addr_num}">
-				<div class="addr_btn">
-				<label>
+				<div class="btn_box">
+				<label class="btn">
 					<div>우편번호 찾기</div>
-					<input type="button" onclick="sample6_execDaumPostcode()">													
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" accept='image/*'>																		
 				</label>
 				</div>
-				<input type="text" name="addr_main" id="sample6_address" placeholder="주소" class="meetRoomInfo" value="${dto.addr_main}">
 			</div>
 			<div class="input">
+				<input type="text" name="addr_main" id="sample6_address" placeholder="주소" class="meetRoomInfo" value="${dto.addr_main}">
 				<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" class="meetRoomInfo" value="${dto.addr_detail}">						
 			</div>
 		</div>

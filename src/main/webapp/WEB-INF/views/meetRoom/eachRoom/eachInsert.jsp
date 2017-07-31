@@ -35,48 +35,43 @@
     
     	//편의시설 하나 클릭 했을때
     	var convenience = document.getElementsByName("convenience");
-    	var check=0;
 		$(".fa").click(function() {
-			check++;
+
 			
 			var title = $(this).attr("title");
-			
+
 			if(title=="TV/프로젝터"){
 				convenience[0].value=title;
-				alert(convenience[0].value);
-				$("#tv").css("background-color", "white");				
+				$("#tv").css("background-color", "white");
 			}else if(title=="인터넷/WIFI"){
 				convenience[1].value=title;
-				alert(convenience[1].value);
 				$("#wifi").css("background-color", "white");
 			}else if(title=="복사/인쇄기"){
 				convenience[2].value=title;
-				alert(convenience[2].value);
 				$("#print").css("background-color", "white");
 			}else if(title=="음향/마이크"){
 				convenience[3].value=title;
-				alert(convenience[3].value);
 				$("#mic").css("background-color", "white");
 			}else if(title=="주차"){
 				convenience[4].value=title;
-				alert(convenience[4].value);
 				$("#parking").css("background-color", "white");
 			}else if(title=="금연"){
 				convenience[5].value=title;
-				alert(convenience[5].value);
 				$("#nosomking").css("background-color", "white");
 			}else if(title=="PC/노트북"){
 				convenience[6].value=title;
-				alert(convenience[6].value);
-				$("#laptop").css("background-color", "white"); 
+				$("#laptop").css("background-color", "white");
 			}
+
+			
 			
 		});
-
+		
 		
 		$("#human_minus").click(function() {
 			var num = $("#human").val();
 			num--;
+		
 			$("#human").val(num);
 		});
 		$("#human_plus").click(function() {
@@ -93,6 +88,9 @@
 		$("#price_minus").click(function() {
 			var num = $("#price").val();
 			num = (num*1)-100;
+			if(num<0){
+				$("#price").val(0);	
+			}
 			$("#price").val(num);
 		});
 		
@@ -109,7 +107,12 @@
 			
 		})
 			
-				
+	$("#reset_btn").click(function() {
+		for(var i=0;i<convenience.length;i++){
+			$(".icon").css("background-color", "#f2f2f2");
+			$(".fa").val("");
+		}
+	});				
 			
 			
 	
@@ -427,54 +430,55 @@ a {
 			<ul class="inner">
 				<li style="display: list-item;">	
 					<input type="checkbox" name="convenience" id="1">
-					<label for="1" id="tv">
+					<label for="1" id="tv" class="icon">
 						<i class="fa fa-television" style="font-size:36px" title="TV/프로젝터"></i>
 						<span>TV/프로젝터</span>
 					</label>
 				</li>
 				<li style="display: list-item;">	
 					<input type="checkbox" name="convenience" id="2">
-					<label for="2" id="wifi">
+					<label for="2" id="wifi" class="icon">
 						<i class="fa material-icons" style="font-size:36px" title="인터넷/WIFI">wifi</i>
 						<span>인터넷/WIFI</span>
 					</label>
 				</li>
 				<li style="display: list-item;">	
 					<input type="checkbox" name="convenience" id="3">
-					<label for="3" id="print">
+					<label for="3" id="print" class="icon">
 						<i class="fa fa-print" style="font-size:36px" title="복사/인쇄기"></i>
 						<span>복사/인쇄기</span>
 					</label>
 				</li>
 				<li style="display: list-item;">	
 					<input type="checkbox" name="convenience" id="4">
-					<label for="4" id="mic">
+					<label for="4" id="mic" class="icon">
 						<i class="fa fa-microphone" style="font-size:36px" title="음향/마이크"></i>
 						<span>음향/마이크</span>
 					</label>
 				</li>
 				<li style="display: list-item;">	
 					<input type="checkbox" name="convenience" id="5">
-					<label for="5" id="parking">
+					<label for="5" id="parking" class="icon">
 						<i class="fa material-icons" style="font-size:36px" title="주차">local_parking</i>
 						<span>주차</span>
 					</label>
 				</li>
 				<li style="display: list-item;">	
 					<input type="checkbox" name="convenience" id="6">
-					<label for="6" id="nosomking">
+					<label for="6" id="nosomking" class="icon">
 						<i class="fa material-icons" style="font-size:36px" title="금연">smoke_free</i>
 						<span>금연</span>
 					</label>
 				</li>
 				<li style="display: list-item;" >	
 					<input type="checkbox" name="convenience" id="7">
-					<label for="7" id="laptop">
+					<label for="7" id="laptop" class="icon">
 						<i class="fa fa-laptop" style="font-size:36px" title="PC/노트북"></i>
 						<span>PC/노트북</span>
 					</label>
 				</li>
 			</ul>
+			<input type="button" value="RESET" id="reset_btn">
 		</div>
 	</div>
 	
