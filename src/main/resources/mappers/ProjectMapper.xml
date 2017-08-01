@@ -8,11 +8,13 @@
   <!-- 검색도 넣기 -->
   
  <sql id="search">
-  <if test="kind=='total'">
-  	where name like '%' || #{search} || '%' or  contents like '%' || #{search} || '%'
-  </if>
- </sql>
 
+  <if test="project.detailCategory != null">
+ 	detailCategory=#{project.detailCategory} 
+ </if>  
+   name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
+ </sql>
+ 
 
 
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
@@ -20,23 +22,40 @@
   <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
   
   
-  <select id="count" parameterType="com.flu.util.ListInfo" resultType="int">
+  
+  
+  <select id="count" parameterType="java.util.HashMap" resultType="int">
   	select count(nvl(projectNum,0)) from project
-<include refid="search"/>
+ 	where state='recruit' and
+	(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+	<if test="result == 1">
+		 and detailCategory IN 
+		 <foreach collection="array" item="c" open="(" close=")" separator=",">
+		 	#{c}
+		 </foreach>
+		</if>	
+  
   </select>
   
-  
- 
+	
+   	
   	
-  <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
+  	<select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
 
 
 		 select * from 
 		(select rownum R, N.* from 
 		(select * from project 
 		
-		<include refid="search"/>
-		
+		where state='recruit' and
+		(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+		<if test="result == 1">
+		 and detailCategory IN 
+		 <foreach collection="array" item="c" open="(" close=")" separator=",">
+		 	#{c}
+		 </foreach>
+		</if>
+			
 		order by
 		<choose>
 			<when test="arrange=='money'">
@@ -55,13 +74,16 @@
 			projectNum desc
 			</otherwise>
 		</choose>
-		
-		
-			<!-- and startDate >= sysdate order by startDate asc -->
 
-		  ) N) where R between #{startRow} and #{lastRow}
+		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
   	</select>
+  	
+  	
+  	
+  	
+  	
+  	
   	
 
 
@@ -72,16 +94,36 @@
     
     
   	<select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-  	
   	select * from 
   	(select rownum R, P.* from 
   	(select * from project where email=#{member.email} and state=#{project.state}) P) 
   	where R between #{listInfo.startRow} and #{listInfo.lastRow}
   	</select>
-  	
-  
-  
-  
+
+
+<!-- View에서 뿌려질 해당 프로젝트를 등록한 클라이언트에 대한 갯수들 -->
+<select id="pjcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email}
+</select>
+<select id="contractcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email} and state='recurit'
+</select> 
+<select id="ingcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email} and state='ing'
+</select>
+<select id="finishcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum,0)) from project where email=#{email} and state='finish'
+</select>
+
+ 
+ 
+ <!-- 판매중인 디자인 혹은 개발 리스트 보기 -->
+ <select id="sellList" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+ 	select * from project where state=#{project.state} and category=#{project.category}
+ </select>
+<select id="sellCount" parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum, 0)) from project where state='sell' and category=#{category}
+</select>
   
   
   

@@ -46,7 +46,6 @@ public class FreelancerController {
 	private AlarmService alarmService;
 	
 	private AlarmDTO alarmDTO;
-
 	//이메일 가져오는 메서드
 	private String getEmail(HttpSession session){
 		return ((MemberDTO)session.getAttribute("member")).getEmail();

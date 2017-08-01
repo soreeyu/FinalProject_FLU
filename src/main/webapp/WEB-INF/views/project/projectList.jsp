@@ -329,6 +329,7 @@ background-color: white;
 					
 					<input type="hidden" name="kind" value="total">
 					 <input type="hidden" name="arrange" id="arrange">
+					 <input type="hidden" name="detailSkill" id="detailSkill">
 					<input type="text" name="search" id="search"> <input type="button" id="searchBtn" value="SEARCH">
 
 
@@ -464,7 +465,20 @@ background-color: white;
 				
 			<div class="clean"></div>
 			
+			
 			<div class="project-sort-box">
+				<div class="project-sort-text">판매중인 프로젝트${sellcount }</div>
+				<div class="place-sort-box">
+					<button id="dev-btn">개발</button>
+					<button id="design-btn">디자인</button>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			<!-- <div class="project-sort-box">
 				<div class="project-sort-text">미팅진행 지역</div>
 				<div class="place-sort-box">
 				
@@ -476,7 +490,7 @@ background-color: white;
 				<ul class="dropdown-selecter" id="addr_list">
 					<li class="dropdown-scroll">
 						<input name="address" type="checkbox">
-						<!-- 전체 선택해주는 전체선택  -->
+						전체 선택해주는 전체선택 
 						<label class="address-select-label" for="address">전체 선택</label>
 						<ul class="address-list">
 							<li>
@@ -552,7 +566,7 @@ background-color: white;
 				</ul>
 			
 				</div>
-			</div>
+			</div> -->
 				
 		</section>
 
@@ -570,10 +584,10 @@ background-color: white;
 	</section>
 <script type="text/javascript">
 
-$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+ var array = new Array();
+$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
 	$(".contents_main").html(data);
 });
-
 
 
 
@@ -596,14 +610,26 @@ $(".project-title").click(function() {
  
  /* -----total검색기능------- */
 $("#searchBtn").click(function() {
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
 
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+
+	 
 	var searchCon = $("#search").val();
 	alert("검색 : "+searchCon);
 	
 	var arrangeVal = $("#arrange").val();
 	alert(arrangeVal);
 	
-	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal,function(data){
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	$("#search").val(searchCon);
@@ -621,8 +647,20 @@ $("#by-price-desc").click(function() {
 	$("#arrange").val("money");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
+	var array = new Array();
 	
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money",function(data){
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money&array="+array,function(data){
+		alert("금액높은순 들어옴");
 		$(".contents_main").html(data);
 	});
 	
@@ -638,7 +676,19 @@ $("#by-price-asc").click(function() {
 	$("#arrange").val("lowmoney");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney",function(data){
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	
@@ -654,7 +704,19 @@ $("#by-date-curr").click(function() {
 	$("#arrange").val("current");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current",function(data){
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	
@@ -669,7 +731,19 @@ $("#by-date-finish").click(function() {
 	$("#arrange").val("last");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
-	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last",function(data){
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last&array="+array,function(data){
 		$(".contents_main").html(data);
 	});
 	$("#arrange").val("last");
@@ -684,9 +758,11 @@ $("#by-date-finish").click(function() {
 
 
 /* =================프로젝트 카테고리 체크박스 설정================= */
+ 
+ /* 개발자 */
 function devClick() {
 	var devCheck = $("input[class='dev-chk']:checked").length;
-		alert(devCheck);
+		alert("check된거=="+devCheck);
 		if(($(".dev-chk").length)==devCheck){
 			$(".dev-chk").prop("checked", false);
 		}else{
@@ -694,18 +770,45 @@ function devClick() {
 		}
 	
 }
- $(".dev-chk").click(function() { 
+ $(".dev-chk").click(function() {
+	 
 	 var de_id = $(this).val();
-	 alert(de_id);
+	 var checkList = $("input[class='dev-chk']:checked");
+	 alert("val은 ="+$("input[class='dev-chk']:checked").val());
+	 
+	 var array = new Array();
+	 var category = "";
+	 var i=0;
+	 alert("checkList="+checkList);
+	 
+	 checkList.each(function(index) {
+		array[index] = $(this).val();
+			
+	});
+	 alert(array);
+	 
 	 var devCheck = $("input[class='dev-chk']:checked").length;
-	 alert(devCheck);
+	 
+	 
+	 var arrangeVal = $("#arrange").val();
+	 var searchCon = $("#search").val();
+	alert("arrangeValue="+arrangeVal);
+	alert("클릭한 프로젝트종류="+de_id);
+	
 	if(($(".dev-chk").length)==devCheck){
 		$("#dev").prop("checked", true);
 	}else{
 		$("#dev").prop("checked", false);
 	}
+	alert("클릭한 프로젝트종류="+de_id);
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
+		 alert("웹들어옴");
+		 $(".contents_main").html(data);
+	}); 
 });
 
+ 
+ /* 디자인 */
   function designClick() {
 		
 	var designCheck = $("input[class='design-chk']:checked").length;
@@ -720,9 +823,7 @@ function devClick() {
 
 $(".design-chk").click(function() { 
 	 var de_id = $(this).val();
-	 alert(de_id);
 	 var designCheck = $("input[class='design-chk']:checked").length;
-	 alert(designCheck);
 	if(($(".design-chk").length)==designCheck){
 		$("#design").prop("checked", true);
 	}else{
@@ -730,19 +831,26 @@ $(".design-chk").click(function() {
 	}
 }); 
 
-
-
-
-/* ======================왼쪽 주소체크박스=================== */
-$(".address-select-btn").click(function() {
-	if($(".address-select-btn").attr("data-on")=="off"){
-		$("#addr_list").css("visibility", "visible");			
-		$(".address-select-btn").attr("data-on", "on");
-	}else if($(".address-select-btn").attr("data-on")=="on"){
-		$("#addr_list").css("visibility", "hidden");
-		$(".address-select-btn").attr("data-on", "off");
-	}
+/* 판매중인 개발카테고리 */
+ 
+ $("#dev-btn").click(function() {
+	alert("개발");
+	$.get("sellList?curPage=1&category=개발&state=sell",function(data){
+		alert(data);
+		$(".contents_main").html(data);
+	});
+	
 });
+
+ $("#design-btn").click(function() {
+		alert("디자인");
+		$.get("sellList?curPage=1&category=디자인&state=sell",function(data){
+			alert(data);
+			$(".contents_main").html(data);
+		});
+		
+	});
+
 
 
 	

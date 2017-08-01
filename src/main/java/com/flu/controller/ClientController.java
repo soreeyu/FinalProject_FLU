@@ -128,18 +128,6 @@ public class ClientController {
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		System.out.println("myProject의 email="+memberDTO.getEmail());
 		
-		
-		/*int totalCount =  projectService.clientPjCount(memberDTO);
-		System.out.println("client의 project count="+totalCount);
-		
-		listInfo.makePage(totalCount);
-		listInfo.makeRow();
-		
-		List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
-		
-	/*
-		model.addAttribute("list", ar);
-		model.addAttribute("count", totalCount);*/
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("listInfo", listInfo);
 		model.addAttribute("active7", "a");

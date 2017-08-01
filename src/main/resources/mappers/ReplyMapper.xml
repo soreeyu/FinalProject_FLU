@@ -16,15 +16,16 @@
   <select id="list" parameterType="java.util.HashMap" resultType="com.flu.reply.ReplyDTO">
        select * from 
        (select rownum R, P.* from
-       (select * from reply where projectNum=#{project.projectNum}) P)
+       (select * from reply where projectNum=#{project.projectNum} order by num desc) P)
         where R between #{listInfo.startRow} and #{listInfo.lastRow}
+        
   	</select>
   	
   
   
   <insert id="insert" parameterType="com.flu.reply.ReplyDTO">
 insert into reply (num, writer,contents,reg_date,projectNum,ref,step,depth,replyChk) 
-values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum} ,0,0,0,#{replyChk})
+values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum} ,reply_seq.nextval,0,0,#{replyChk})
   </insert>
 
  
@@ -37,5 +38,9 @@ values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum} ,0,0,0
   	delete reply where num=#{num}
   </delete>
  
+ <insert id="replyinsert" parameterType="com.flu.reply.ReplyDTO">
+ 	insert into reply (num, writer,contents,reg_date,projectNum,ref,step,depth,replyChk) 
+	values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum} , #{ref},#{step},#{depth},#{replyChk})
+ </insert>
   
   </mapper>

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
 import com.flu.reply.ReplyDTO;
 import com.flu.reply.ReplyService;
 import com.flu.util.ListInfo;
@@ -27,7 +28,8 @@ public class ReplyController {
 
 	@Inject
 	private ReplyService replyService;
-	
+	@Inject
+	private ProjectService projectService;
 
 	
 	
@@ -56,12 +58,7 @@ public class ReplyController {
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
-	
-/*	@RequestMapping(value="replyUpdate")
-	public String ReplyUpdate(ReplyDTO replyDTO){
-		return "";
-	}*/
-	
+		
 	@RequestMapping(value="replyDelete", method=RequestMethod.GET)
 	public String ReplyDelete(int num, RedirectAttributes rd){
 		System.out.println("replyDelete");
@@ -88,9 +85,13 @@ public class ReplyController {
 
 		List<ReplyDTO> ar = replyService.replyList(listInfo, projectDTO);
 		
+		projectDTO = projectService.projectView(projectDTO.getProjectNum());
 		model.addAttribute("replyList", ar);
 		model.addAttribute("listInfo", listInfo);
 		model.addAttribute("replycount", totalCount);
+		model.addAttribute("project", projectDTO);
+		System.out.println("project Num="+projectDTO.getProjectNum());
+		System.out.println("project-email = "+projectDTO.getEmail());
 
 		for(int i=0;i<ar.size();i++){
 			System.out.println(ar.get(i).getNum());

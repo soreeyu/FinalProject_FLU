@@ -24,10 +24,8 @@
 						<a href="${pageContext.request.contextPath}/member/MemberJoin">회원가입</a>
 					</span>
 					</c:when>
-					<c:otherwise>
-					
-					<span class="alarmCount"></span>
-					
+					<c:otherwise>				
+					<span class="alarmCount"></span>	
 					<span>
 						<a href="${pageContext.request.contextPath}/alarm/alarmList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alarm/alarm.png"></a>
 					</span>
@@ -67,6 +65,7 @@
 				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/client/clientproject">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>
+
 			</c:otherwise>
 			</c:choose>
 			

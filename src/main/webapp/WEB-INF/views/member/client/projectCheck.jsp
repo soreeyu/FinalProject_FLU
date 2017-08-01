@@ -54,8 +54,8 @@
 						<div style="clear: both;"></div>
 						
 						<div class="project-bottom">
-							<span class="main-cate">개발</span>
-							<span class="sub-cate">애플리케이션</span>
+							<span class="main-cate">${dto.category }</span>
+							<span class="sub-cate">${dto.detailCategory }</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
 						
@@ -75,6 +75,7 @@
 			<c:if test="${list.size()>0}">
 				<div class="contents_bottom">
 				<div class="contents_paging">
+				
 				<c:if test="${listInfo.curBlock>1 }"> 
 				<span id="preview">[이전]</span>		
 				</c:if>
@@ -87,8 +88,6 @@
 				<span id="nextview">[다음]</span>			
 				</c:if>
 				</div>
-	 
-
 			</div>
 			</c:if>
 	<script type="text/javascript">

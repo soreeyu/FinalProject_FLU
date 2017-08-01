@@ -27,6 +27,10 @@ public class ProjectDAO {
 		
 		//project update
 		public int projectUpdate(ProjectDTO projectDTO){
+			System.out.println("dao-projectNum="+projectDTO.getProjectNum());
+			System.out.println("dao-project-name="+projectDTO.getName());
+			System.out.println("dao-project-category="+projectDTO.getCategory());
+			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());
 			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
@@ -41,13 +45,53 @@ public class ProjectDAO {
 		}
 		
 		//project List
-		public List<ProjectDTO> projectList(ListInfo listInfo){
-			return sqlSession.selectList(NAMESPACE+"list", listInfo);
+		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
+
+			System.out.println("projectDAO-projectList들어옴");
+			System.out.println("dao-list- arrange=="+listInfo.getArrange());
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("listInfo", listInfo);
+			map.put("project", projectDTO);
+			map.put("arrange", listInfo.getArrange());
+			map.put("array", array);
+			if(array.size() == 0){
+				map.put("result", 0);
+				System.out.println("zz"+array.size());
+			}else{
+				map.put("result", 1);
+				System.out.println("zz"+array.size());
+			}
+			System.out.println("dao-list-search==="+listInfo.getSearch());
+			if(listInfo.getSearch() == null){
+				map.put("sech", 0);
+				System.out.println("sech==="+listInfo.getSearch());
+			}else{
+				map.put("sech", 1);
+				System.out.println("sech==="+listInfo.getSearch());
+			}
+			
+			return sqlSession.selectList(NAMESPACE+"list", map);
 		}
 		
 		//project Count
-		public int projectCount(ListInfo listInfo){
-			return sqlSession.selectOne(NAMESPACE+"count", listInfo);
+		public int projectCount(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
+			System.out.println("dao-projectCount");
+			System.out.println("dao-count- arrange=="+listInfo.getArrange());
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("listInfo", listInfo);
+			map.put("project", projectDTO);
+			map.put("arrange", listInfo.getArrange());
+			map.put("array", array);
+			if(array.size() == 0){
+				map.put("result", 0);
+				System.out.println("zz"+array.size());
+			}else{
+				map.put("result", 1);
+				System.out.println("zz"+array.size());
+			}
+			System.out.println("dao-count-search==="+listInfo.getSearch());
+			System.out.println("dao-projectCount="+sqlSession.selectOne(NAMESPACE+"count", map));
+			return sqlSession.selectOne(NAMESPACE+"count", map);
 		}
 		
 		//Client가 mypage에서 확인하는 myprojectList
@@ -75,5 +119,54 @@ public class ProjectDAO {
 			
 		}
 		
+		public int contractCount(ProjectDTO projectDTO){
+			System.out.println("contractCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"contractcount", projectDTO);
+		}
+		
+		public int ingCount(ProjectDTO projectDTO){
+			System.out.println("ingCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"ingcount", projectDTO);
+		}
+		
+		public int finishCount(ProjectDTO projectDTO){
+			System.out.println("finishCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"finishcount", projectDTO);
+		}
+		
+		public int pjCount(ProjectDTO projectDTO){
+			System.out.println("pjCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"pjcount", projectDTO);
+		}
+		
+		
+
+		public int sellCount(ProjectDTO projectDTO){
+			System.out.println("sellCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"sellCount", projectDTO);
+		}
+		
+		public List<ProjectDTO> sellList(ProjectDTO projectDTO, ListInfo listInfo){
+			System.out.println("sellList dao 들어옴");
+			System.out.println(projectDTO.getCategory());
+			System.out.println("state=="+projectDTO.getState());
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("listInfo", listInfo);
+			map.put("project", projectDTO);
+			
+			return sqlSession.selectList(NAMESPACE+"sellList", map);
+		}
+		
+		
+		
+		
+		
+	
 		
 }

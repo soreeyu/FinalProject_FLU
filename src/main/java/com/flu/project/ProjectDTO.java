@@ -31,6 +31,7 @@ public class ProjectDTO {
 	private String addr_main;		
 	private String addr_detail;
 
+
 	private String reg_date;		
 
 	public MultipartFile getFileName() {
@@ -69,7 +70,6 @@ public class ProjectDTO {
 	public void setPeriod(String period) {
 		this.period = period;
 	}
-
 	
 	public String getStartDate() {
 		return startDate;

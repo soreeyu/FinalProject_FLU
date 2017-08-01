@@ -74,7 +74,7 @@ font-family: -webkit-body;
 }
 
 .cate-select{
-	background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center;
+	/* background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center; */
 	width: 250px;
 	height: 30px;
 }
@@ -198,14 +198,14 @@ label{
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+    /* background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; */
 }
 .progress-bar-in{
 	margin-left: -1px !important;
     margin: 0 !important;
     height: 100% !important;
     /* border: none; */
-    background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+    /* background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; */
 }
 .project-add-helper-bottom{
 	float: right;
@@ -306,15 +306,15 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 제목</label>
 					<div class="category-wrapper">
-						<input id="name" type="text" name="name" style="width: 100%;">
-					<span id="detail">${dto.name}프로젝트 이름을 선택해 주세요</span>
+						<input id="name" type="text" name="name" style="width: 100%;" value="${dto.name }">
+					<span id="detail">프로젝트 이름을 선택해 주세요</span>
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>예상 기간</label>
 					<div class="category-wrapper">
-						<input id="period" type="text" name="period">일
+						<input id="period" type="text" name="period" value="${dto.period }">일
 						<span id="detail">프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
 					</div>
 				</div>
@@ -322,7 +322,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>지출 가능 예산</label>
 					<div class="category-wrapper">
-						<input id="budget" type="number" name="budget">원
+						<input id="budget" type="number" name="budget" value="${dto.budget }">원
 						<span id="detail">지출 가능한 예산을 입력해 주세요. ( 부가세 별도, 예 : 1,000,000)</span>
 					</div>
 				</div>
@@ -357,7 +357,9 @@ label{
 				<div>
 					<label><span>*</span>프로젝트 내용</label>
 					<div>
-						<textarea rows="30" cols="80" name="contents" ></textarea>
+						<textarea rows="30" cols="80" name="contents" >
+						${dto.contents }
+						</textarea>
 					</div>
 				</div>
 				
@@ -613,7 +615,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>모집 마감일자</label>
 					<div class="category-wrapper">
-						<input type="date" name="finishDate" id="finishDate">
+						<input type="date" name="finishDate" id="finishDate" value="${dto.finishDate }">
 					</div>
 				</div>
 
@@ -630,25 +632,25 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>클라이언트 위치</label>
 					<div class="category-wrapper">
-						<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호">
+						<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" value="${dto.addr_num}">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required">
-						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required">
+						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required" value="${addr_main}">
+						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required" value="${addr_detail}">
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br> 예상 시작일</label>
 					<div class="category-wrapper">
-						<input type="date" name="startDate" id="startDate" required="required">
+						<input type="date" name="startDate" id="startDate" required="required" value="${dto.startDate }">
 					</div>
 				</div>
 
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br>매니징 경험</label>
 					<div class="category-wrapper">
-						<input type="radio" name="exp" value="y">예 <input
-							type="radio" name="exp" value="n">아니오
+						<input type="radio" name="exp" value="y">예 
+						<input type="radio" name="exp" value="n">아니오
 					</div>
 				</div>
 
@@ -724,10 +726,13 @@ label{
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
-/* alert("type == ${type}"); */
- 
- alert("사용자email = ${member.email}");
+/* var fdate = "${dto.finishDate}";
+var fday = new Date(fdate);
+alert("fday=="+fday);
+$("#finishDate").val(fday); */
 
+alert("type == ${type}"); 
+alert("사용자email = ${member.email}");
 	
 
 
@@ -743,7 +748,7 @@ label{
 	alert("btn");
 	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
 		alert("옵션 선택좀");
-	}else if(document.frm.name.value==""){
+	} else if(document.frm.name.value==""){
 		alert("제목을 입력하세요");
 	}else if(document.frm.period.value==""){
 		alert("기간을 입력하세요");
@@ -753,10 +758,13 @@ label{
 		alert("기획상태를 입력하세요");
 	}else if(document.frm.contents.value==""){
 		alert("내용을 입력하세요");
-	}/* else if(document.frm.skill.value==""){
+	} 
+	
+	/* else if($(".chk").prop("checked")==false){
 		alert("skill을 입력하세요");
-	} */
-	else if(document.frm.fileName.value==""){
+	}  */
+	
+	  else if(document.frm.fileName.value==""){
 		alert("File을 선택해주세요");
 	}else if(document.frm.finishDate.value==""){
 		alert("마감일을 선택해주세요");
@@ -769,7 +777,7 @@ label{
 		alert("매니징 경험을 선택해주세요");
 	}else if(document.frm.quick.value==""){
 		alert("급구 여부를 선택해주세요");
-	}else if(document.frm.finishDate.value!=""){
+	} else if(document.frm.finishDate.value!=""){
 		var finishDate = $("#finishDate").val();
 		 alert("finishDate="+finishDate); 
 		 var finish = new Date(finishDate);
@@ -781,6 +789,16 @@ label{
 		 alert("leftDate="+leftDate);
 		 if(leftDate<7){
 			 alert("마감일은 최소 1주일입니다.");
+			 
+			 
+	/* 	  $(".chk").each(function() {
+			
+			 if($(this).prop("checked")==false){
+				  alert($(this).val()); 
+			 }
+		});  */
+			 
+			 
 		 }else{
 			 alert("마감일 괜춘");
 			 if(document.frm.startDate.value!=""){
