@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDAO;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
@@ -38,6 +40,12 @@ public class CheckProjectController {
 
 	@Inject
 	private ClientService clientService;
+
+	@Inject
+	private MemberService memberService;
+	@Inject
+	private AlarmService alarmService;
+	private AlarmDTO alarmDTO;
 
 	
 	//검수전 프로젝트 들고오기
@@ -128,9 +136,20 @@ public class CheckProjectController {
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
-	public String update(ProjectDTO projectDTO,Model model){
+	public String update(ProjectDTO projectDTO, RedirectAttributes ra) throws Exception{
+		System.out.println("gpgpgpgpgpgpgpgpgpgpgpgpgpgpgpgp");
+		
+		int result = checkProjectService.update(projectDTO);
+		if(result>0){
 			
-			checkProjectService.update(projectDTO);
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(projectDTO.getEmail());
+			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
+			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+		}
+
+
 
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}

@@ -110,9 +110,13 @@
 }
 
 .intro{
-	height: 42px;
+	height:23px;
 	display: inline-block;
 	font-size: 13px;
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space: nowrap;
+	width: 100%;
 }
 
 

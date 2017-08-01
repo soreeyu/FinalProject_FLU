@@ -1,5 +1,6 @@
 package com.flu.project;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.flu.member.MemberDTO;
+import com.flu.reply.ReplyDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -39,25 +42,55 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo){
 		
-		System.out.println("projectSkillparsing");
-		
 		List<ProjectDTO> list = projectDAO.projectList(listInfo);
 		
 		for(int i=0;i<list.size();i++){
 			String[] parsing = list.get(i).getSkill().split(",");
 			list.get(i).setSkills(parsing);
-			/*System.out.println(parsing[i]);*/
+		
 		}
 		
-		
-		//return projectDAO.projectList(listInfo);
 		return list;
 	}
-	
 	
 
 	//project Count
 	public int projectCount(ListInfo listInfo){
 		return projectDAO.projectCount(listInfo);
+	}
+	
+	
+	
+	
+	
+	
+	//Client가 mypage에서 확인하는 myprojectList
+	public List<ProjectDTO> clientPjList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
+
+		
+		List<ProjectDTO> ar =  projectDAO.clientPjList(listInfo, memberDTO, projectDTO);
+		System.out.println("service의 ar=="+ar);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println(ar.get(i).getSkill());
+			String[] parsing = ar.get(i).getSkill().split(",");
+			System.out.println(parsing.length);
+			for(int j=0;j<parsing.length;j++){
+				ar.get(i).setSkills(parsing);				
+			}
+			System.out.println(ar.get(i).getSkills());
+		}
+		
+	
+		return ar;
+	}
+	
+	//Client ProjectList의 Count
+	public int clientPjCount(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
+		System.out.println("service들어옴");
+		
+		int count = projectDAO.clientPjCount(listInfo, memberDTO, projectDTO);
+		System.out.println("service부분="+count);
+		return projectDAO.clientPjCount(listInfo, memberDTO, projectDTO);
 	}
 }

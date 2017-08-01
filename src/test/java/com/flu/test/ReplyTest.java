@@ -41,12 +41,7 @@ public class ReplyTest extends MyAbstract {
 		projectDTO.setProjectNum(5000);
 		/*replyDTO.setProjectNum(5000);*/
 		int result = replyDAO.replyCount(listInfo, projectDTO);
-		//List<ReplyDTO> ar = replyDAO.replyList(listInfo, projectDTO);
-			
-		
-		/*assertEquals(14, result);*/
-		//assertNotNull(ar);
-		
+
 	}
 
 }

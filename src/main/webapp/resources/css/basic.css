@@ -59,9 +59,9 @@ header{
 }
 .header_right a{
 	display: block;
-	
 	color: white;
 }
+
 .header_login a{
 	background-color: #797f86;
 	padding: 5px 10px 5px 10px;
@@ -105,6 +105,8 @@ header{
 }
 
 /********** 로그인 후 ************/
+
+
 
 /******************************** 여기까지 헤더 ********************************/
 

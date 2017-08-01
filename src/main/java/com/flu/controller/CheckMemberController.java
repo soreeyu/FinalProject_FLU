@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 import com.flu.checkMember.CheckMemberDTO;
 import com.flu.checkMember.CheckMemberService;
 import com.flu.file.FileSaver;
@@ -27,8 +30,9 @@ public class CheckMemberController {
 
 	@Inject
 	private CheckMemberService checkMemberService;
-	
-	
+	@Inject
+	private AlarmService alarmService;
+	private AlarmDTO alarmDTO;
 	//신원확인 insert FORM으로 가기 
 	@RequestMapping(value="memberCheckInsert", method=RequestMethod.GET)
 	public void insert(){
@@ -57,6 +61,12 @@ public class CheckMemberController {
 		if(result>0){	
 			message = "신청 완료되었습니다";
 			String path = "../";
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+			alarmDTO.setContents("신원확인 신청 하셨습니다. 관리자가 승인을 기다려 주세요.");
+			alarmService.alarmInsert(alarmDTO);
+			
+			model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			model.addAttribute("message",message).addAttribute("path",path);
 		}
 		
@@ -92,10 +102,14 @@ public class CheckMemberController {
 	
 	//신원확인을 완료시켜주는 것 
 	@RequestMapping(value="checkMemberUpdate")
-	public String update(String email){
+	public String update(String email, RedirectAttributes ra) throws Exception{
 		
 		checkMemberService.update(email);
-		
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(email);
+		alarmDTO.setContents("신원확인이 완료 되었습니다. 프로젝트 등록 및 지원이 가능합니다.");
+		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/checkMember/checkMemberList";
 	}
 	

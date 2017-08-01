@@ -1,16 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	
-	<c:forEach items="${each}" var="E">
-		<p>방이름 : ${E.name}</p>
-		<p>세부내용 : ${E.contents}</p>
-		<p>예약가능시간 : ${E.time}</p>
-		<p>대표사진 : ${E.oname}</p>
-		<p>공간유형 : ${E.type}</p>
-		<p>수용인원 : ${E.human}</p>
-		 <p>편의시설 : ${E.convenience}</p>
-		 <p>가격 : ${E.price}</p>
-		 <span id="${E.num}" class="del"> 삭제 </span>
-		 <span id="${E.num}" class="update"> 수정 </span>
+	<c:forEach items="${each}" var="E" varStatus="e">
+		<input type="hidden" id="eachRoom_num${E.num}" value="${E.num}">
+		<input type="hidden" id="eachRoom_name${E.num}" value="${E.name}"> 
+		<div class="box_form">
+		<ul class="reserve_lst">
+			<li class="lst">
+				<div class="flex_box">
+					<div class="flex">
+						<input  type="radio" name="eachRoom" value="${E.num}" id="eachRoom_${E.num}" title="${e.index}" class="eachRoom_class" >
+						<label id="${E.name}${E.num}"> ${E.name} [${E.human}인실]</label>
+					</div>
+					<div class="flex_right">
+						<strong>\ ${E.price}</strong>
+						<span class="tit_unit">/시간(인)</span>
+					</div>
+				</div>
+				<!--ajax  로 정보 뿌려주는 div  -->
+				<div class="flex_info" style="display: none;" id="R${E.num}">
+					
+				</div>
+			</li>
+		</ul>
+		</div>
+		
+		<c:if test="${member.kind eq 'admin' }">
+		<span id="${E.num}" class="del"> 삭제 </span>
+		<span id="${E.num}" class="update"> 수정 </span>
+		</c:if>
 	</c:forEach>

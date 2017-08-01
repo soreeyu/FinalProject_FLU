@@ -196,6 +196,31 @@
 	width: 100%;
 }
 
+
+thead{
+	background-color: #ccddff;
+	font-weight: bold;
+	font-size: 15px;
+}
+tbody{
+	font-size: 15px;
+	text-align: left;
+}
+th, td{
+	padding: 8px;
+	border-left: 1px solid #ccccff;
+	border-bottom: 1px solid #ccccff;
+}
+th{
+	border-top: 2px solid #3377ff;
+}
+th:FIRST-CHILD,td:FIRST-CHILD{
+	border-left: 0;
+}
+table {
+	width: 100%;
+}
+
 </style>
 </head>
 <body>
@@ -231,12 +256,14 @@
 							<c:otherwise>
 								<table>
 									<colgroup>
-										<col width="30%">
+										<col width="27%">
 										<col width="20%">
 										<col width="10%">
-										<col width="20%">
+										<col width="15%">
+										<col width="15%">
 										<col width="*%">
 									</colgroup>
+									<thead>
 									<tr style="text-align: left;">
 										<th>회사명</th>
 										<th>부서명</th>
@@ -245,6 +272,8 @@
 										<th>퇴사일</th>
 										<th>도구</th>
 									</tr>
+									</thead>
+									<tbody>
 								<c:forEach items="${carrer }" var="i">
 									<tr>
 										<td>${i.companyName }</td>
@@ -255,6 +284,7 @@
 										<td><span class="cUpdate" id="${i.companyName }">수정</span><span class="cDelete" title="${i.num }">삭제</span></td>
 									</tr>
 								</c:forEach>
+								</tbody>
 								</table>
 							</c:otherwise>
 							</c:choose>
@@ -277,12 +307,14 @@
 							<c:otherwise>
 								<table>
 									<colgroup>
-										<col width="30%">
-										<col width="20%">
+										<col width="25%">
 										<col width="10%">
-										<col width="20%">
+										<col width="10%">
+										<col width="15%">
+										<col width="15%">
 										<col width="*%">
 									</colgroup>
+									<thead>
 									<tr style="text-align: left;">
 										<th>분류</th>
 										<th>상태</th>
@@ -292,6 +324,8 @@
 										<th>졸업일</th>
 										<th>도구</th>
 									</tr>
+									</thead>
+									<tbody>
 								<c:forEach items="${academic }" var="i">
 									<tr>
 										<td>${i.school }</td>
@@ -303,6 +337,7 @@
 										<td><span class="aUpdate" id="${i.sName }">수정</span><span class="aDelete" title="${i.num }">삭제</span></td>
 									</tr>
 								</c:forEach>
+								</tbody>
 								</table>
 							</c:otherwise>
 							</c:choose>
@@ -326,12 +361,13 @@
 							<c:otherwise>
 								<table>
 									<colgroup>
-										<col width="30%">
+										<col width="25%">
 										<col width="20%">
-										<col width="10%">
-										<col width="20%">
+										<col width="15%">
+										<col width="25%">
 										<col width="*%">
 									</colgroup>
+									<thead>
 									<tr style="text-align: left;">
 										<th>자격증명</th>
 										<th>발급기관</th>
@@ -339,6 +375,8 @@
 										<th>일련번호</th>
 										<th>도구</th>
 									</tr>
+									</thead>
+									<tbody>
 								<c:forEach items="${license }" var="i">
 									<tr>
 										<td>${i.lName }</td>
@@ -348,6 +386,7 @@
 										<td><span class="lUpdate" id="${i.lName }">수정</span><span class="lDelete" title="${i.num }">삭제</span></td>
 									</tr>
 								</c:forEach>
+								</tbody>
 								</table>
 							</c:otherwise>
 							</c:choose>

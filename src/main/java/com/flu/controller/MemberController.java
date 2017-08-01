@@ -1,5 +1,7 @@
 package com.flu.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -10,12 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.flu.alarm.AlarmDTO;
+import com.flu.alarm.AlarmService;
 
 import com.flu.applicant.ApplicantService;
 import com.flu.checkMember.CheckMemberService;
+
 import com.flu.file.FileSaver;
+import com.flu.meetRoom.MeetRoomDTO;
+import com.flu.meetRoom.MeetRoomServiceImpl;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
+
+import com.flu.reservation.ReservationDTO;
+import com.flu.room.RoomDTO;
+
+import com.flu.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/member/**")
@@ -23,10 +37,14 @@ public class MemberController {
 
 	@Inject
 	private MemberService memberService;
-	
+	@Inject
+	private AlarmService alarmService;
+
 	@Inject
 	private CheckMemberService checkMemberService;
 	
+	private AlarmDTO alarmDTO;
+
 	//AJAX 뒤로가기 테스트
 	@RequestMapping(value="test")
 	public void test(){
@@ -47,13 +65,21 @@ public class MemberController {
 		}
 		//사이트 회원 가입
 		@RequestMapping(value="MemberJoin", method=RequestMethod.POST)
-		public String MemberJoin(MemberDTO memberDTO){
+		public String MemberJoin(MemberDTO memberDTO) throws Exception{
 			
-			
-			int result =memberService.memberInsert(memberDTO);
+
+			int result = memberService.memberInsert(memberDTO);
+
 			if(result > 0){
 				this.EmailAccess(memberDTO.getEmail());
 			}
+			
+			
+			//알람 디비에 인서트
+			AlarmDTO alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(memberDTO.getEmail());
+			alarmDTO.setContents("회원가입이 성공적으로 이루어졌습니다.");
+			alarmService.alarmInsert(alarmDTO);
 			System.out.println("회원가입 성공");
 			return "/member/emailCK";
 		}
@@ -116,13 +142,17 @@ public class MemberController {
 		
 		//로그인 
 		@RequestMapping(value="login", method=RequestMethod.POST)
-		public ModelAndView login(MemberDTO memberDTO, HttpSession session){
+		public ModelAndView login(MemberDTO memberDTO, HttpSession session) throws Exception{
 			ModelAndView mv = new ModelAndView();
 			memberDTO = memberService.login(memberDTO);
 			String message = "0";
 			if(memberDTO != null){
+				alarmDTO = new AlarmDTO();
 				session.setAttribute("member", memberDTO);
 				message= "1";
+				alarmDTO.setEmail(memberDTO.getEmail());
+				mv.addObject("alarmCount", alarmService.alarmCount(alarmDTO));
+				System.out.println(alarmService.alarmCount(alarmDTO));
 				mv.setViewName("/member/myflu");
 				return mv;
 			}else{
@@ -182,7 +212,7 @@ public class MemberController {
 		}
 		//계정 등록(내정보 수정)
 		@RequestMapping(value="personaldataInsert", method=RequestMethod.POST)
-		public String psersonaldataInsert(MemberDTO memberDTO, Model model, HttpSession session)
+		public String psersonaldataInsert(MemberDTO memberDTO, Model model, HttpSession session) throws Exception
 		{
 			System.out.println(memberDTO.getEmail());
 			System.out.println(memberDTO.getType());
@@ -212,9 +242,17 @@ public class MemberController {
 			System.out.println(memberDTO.getfProfileImage());
 			System.out.println(memberDTO.getoProfileImage());
 			
-			memberService.memberUpdate(memberDTO);
-			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
-			
+			int result = memberService.memberUpdate(memberDTO);
+			if(result>0){
+				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+				//알람 디비에 인서트
+				AlarmDTO alarmDTO = new AlarmDTO();
+				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setContents("개인정보를 성공적으로 등록 하셨습니다.");
+				alarmService.alarmInsert(alarmDTO);
+				
+			}
+			model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			return "redirect:/member/personaldataView";
 		}
 		
@@ -248,7 +286,7 @@ public class MemberController {
 		
 		//내정보 수정
 		@RequestMapping(value="personaldataUpdate", method=RequestMethod.POST)
-		public String personaldataUpdate(MemberDTO memberDTO, HttpSession session){
+		public String personaldataUpdate(MemberDTO memberDTO, HttpSession session, RedirectAttributes ra) throws Exception{
 			
 			System.out.println(memberDTO.getEmail());
 			System.out.println(memberDTO.getType());
@@ -283,11 +321,55 @@ public class MemberController {
 			System.out.println(memberDTO.getfProfileImage());
 			System.out.println(memberDTO.getoProfileImage());
 			
-			memberService.memberUpdate(memberDTO);
-			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+			
+			int result = memberService.memberUpdate(memberDTO);
+			if(result>0){
+				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+				//알람 디비에 인서트
+				AlarmDTO alarmDTO = new AlarmDTO();
+				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
+				alarmService.alarmInsert(alarmDTO);
+				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+			}
 
 			return "redirect:/member/personaldataView";
 		}
 		
+		
+
+		//미팅룸 예약 현황 가져오기 
+		@RequestMapping(value="myMeetRoom", method=RequestMethod.GET)
+		public void MemberReservedList(HttpSession session, ListInfo listInfo, Model model) throws Exception{
+			
+			//관리자를 위한 미팅룸 예약현황 리스트 가져오기 reservation 테이블에 있는 모든 데이터를 가져온다.
+			List<ReservationDTO> ar = null;
+			//세션이 사용자 인경우
+			if(!((MemberDTO)session.getAttribute("member")).getEmail().equals("admin")){
+				System.out.println("세션이 회원입니다.");
+				MemberDTO memberDTO = new MemberDTO();
+				memberDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				
+				ar = memberService.memberReservedList(memberDTO);
+				
+			//세션이 관리자인경우	
+			}else if(((MemberDTO)session.getAttribute("member")).getEmail().equals("admin")){
+				System.out.println("세션이 관리자 입니다.");
+				ar =  memberService.adminReservedlist(listInfo);
+				
+			}
+			
+			if(ar!=null){
+				for(int i=0;i<ar.size();i++){
+					ar.get(i).setTime(ar.get(i).getTime().replaceAll(",", "~"));
+					
+				}
+				
+				model.addAttribute("list", ar);
+				model.addAttribute("listInfo", listInfo);
+			}				
+			
+		}
+
 		
 }

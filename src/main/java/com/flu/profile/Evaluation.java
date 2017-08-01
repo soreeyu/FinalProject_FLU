@@ -28,7 +28,6 @@ public class Evaluation {
 	public void setToEmail(String toEmail) {
 		this.toEmail = toEmail;
 	}
-	
 	public int getProfessional() {
 		return professional;
 	}

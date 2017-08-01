@@ -7,7 +7,16 @@ public class AlarmDTO {
 	private String contents;
 	private Date reg_date;
 	private int num;
+	private Integer count;
+
 	
+	
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	public int getNum() {
 		return num;
 	}
