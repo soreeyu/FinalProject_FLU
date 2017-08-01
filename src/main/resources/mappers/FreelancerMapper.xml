@@ -229,6 +229,18 @@
   			select * from evaluation where toemail = #{email}
   		</select>
   		
+  		<!-- 프리랜서에 대한 평가 점수 뷰 -->
+  		<select id="evaluationView1" resultType="com.flu.profile.Evaluation" parameterType="com.flu.profile.Evaluation">
+  			select * from evaluation where projectnum = #{projectNum} and toemail = #{toEamil}
+  		</select>
+  		
+  		<!-- 클라이언트에 대한 평가 점수 뷰 -->
+  		
+  		<!-- 평가한 프로젝트 뷰 -->
+  		<select id="getProjectName" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.profile.Evaluation">
+  			select * from project p inner join evaluation e on p.projectnum = e.projectnum where e.toemail = #{toEmail} and e.projectnum = #{projectNum}
+  		</select>
+  		
   		
   		
   </mapper>

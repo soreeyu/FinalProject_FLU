@@ -24,14 +24,51 @@
     sock.onclose = onClose;
     
         
-    $(function() {
+$(function() {
 	
-        $("#sendBtn").click(function(){
-            sendMessage();
-        });
+    	var check = 0;
+    	
+		$('#file2').change(function() {
+			
+	    	alert("check=1");
+	    	check = 1;
+		
+		});		
+	    		
+	        $("#sendBtn").click(function(){
+	            sendMessage();
+	            $("#message").val("");
+	        
+	            
+	            if(check==1){
 
-	});
-    
+		        	alert("파일을 업로드하러 들어왔도다");
+			    	var from = $('#frm')[0];
+			    	var formData = new FormData(from);
+			    	
+			    	$.ajax({
+			    		
+			    		url:'./chatFile',
+			    		processData: false,
+			    		contentType: false,
+			    		data: formData,
+			    		type:'POST',
+			    		success:function(result){
+			    			sock.send(result);
+			    		}
+			    	
+			    	 });
+			    	
+			    	
+		        }else{
+		        
+		        }
+	        
+	        });
+	             
+});
+	        
+		    	
     
     function sendMessage(){
             /*소켓으로 보내겠다.  */
@@ -42,59 +79,35 @@
     
     //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
     function onMessage(evt){
-        var data = evt.data;
-      	var sessionId = null;
-      	var message = null;
-      	
-      	 $("#data").append(data);
-      /* 	
-      	var strArray = data.split(':');
-      	
-      	 for(var i=0; i<srtArray.length;i++){
-      		console.log('str['+i+']: '+srtArray[i]);
-      	} 
-      	
-      	var curId = $('#curId').val();
-        console.log('curId:'+curId);
-      	
-       sessionId = strArray[0];
-       message = strArray[1]; 
-      	
-       if(sessionId==curId){
+
+      	var message = evt.data;
+      	var curId = '${user}';
+
     	   var print = "<div>";
-    	   print += "<div>";
-    	   print += "<p>["+sessionId+"]:"+message+"</p>";
-    	   print += "</div>";
+    	   print += "<p>["+curId+"]:"+message+"</p>";
   		   print += "</div>";
-  		   
+
   		 $("#data").append(print);
+
        
-       }else{
-    	   var print = "<div>";
-    	   print += "<div>";
-    	   print += "<p>["+sessionId+"]:"+message+"</p>";
-    	   print += "</div>";
-  		   print += "</div>";
-  		   
-  		 $("#data").append(print);
-       }
        
-       console.log('chatData:'+data); 
-       */
     }
     
     function onClose(evt){
         $("#data").append("연결 끊김");
     }
+
+    
     
 </script>
-
 <title>Insert title here</title>
 </head>
 <body>
-<input type="text" value="${member.email}" id="curId">
-<input type="text" id="message"/>
+<input type="text" id="message" value=""/>
 <input type="button" id="sendBtn" value="전송"/>
+<form id="frm" method="post" enctype="multipart/form-data">
+<input type="file" name="file2" id="file2"/>
+</form>
 <div id="data">
 
 </div>

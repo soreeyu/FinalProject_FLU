@@ -14,11 +14,11 @@ public class adminInterceptor extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
-		String type = ((MemberDTO)(request.getSession().getAttribute("member"))).getType();
+		String kind = ((MemberDTO)(request.getSession().getAttribute("member"))).getKind();
 		
-		System.out.println("check관련 접근자:"+type);
+		System.out.println("check관련 접근자:"+kind);
 		
-		if(!type.equals("admin")){
+		if(!kind.equals("admin")){
 			modelAndView.setViewName("error/noAccess");
 		}
 		

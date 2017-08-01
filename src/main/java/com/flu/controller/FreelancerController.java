@@ -729,10 +729,14 @@ public class FreelancerController {
 
 	}
 
-	//평가 정보 뷰
+	//평가 정보 리스트 - 클라이언트의 평가 항목
 	@RequestMapping(value="evaluationView", method=RequestMethod.GET)
-	public String evaluationView(String email, Model model){
+	public String evaluationView(HttpSession session, Model model){
 		model.addAttribute("active6", "a");
+		model.addAttribute("evaluation", freelancerService.evaluationList2(this.getEmail(session)));
+		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
+		model.addAttribute("projectName", freelancerService.getProjectName(this.getEmail(session)));
+		
 		return "/member/freelancer/evaluation";
 	}
 	//평가 정보 수정

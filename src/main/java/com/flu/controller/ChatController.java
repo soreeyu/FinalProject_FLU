@@ -1,37 +1,62 @@
 package com.flu.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.flu.chat.ChatDTO;
+import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 
 @Controller
 @RequestMapping("/chat/*")
 public class ChatController {
-
-	@RequestMapping(value="chatView")
-	public String chatView(){
-		
-		return "chat/chat";
-	}
-	
 	
 	@RequestMapping(value="chatDo")
-	public ModelAndView chatDo(ModelAndView mv,HttpSession session){
+	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request){
+		
+		System.out.println(request.getRemoteAddr());
+		System.out.println(request.getLocalAddr());
+		System.out.println(request.getLocalName());
+		System.out.println(request.getRemoteHost());
+		
 		
 		mv.setViewName("chat/chat");
 		
-		String user = ((MemberDTO)(session.getAttribute("member"))).getEmail();
-		System.out.println("유저아이디:"+user);
+		String user = ((MemberDTO)(session.getAttribute("member"))).getName();
 		
-		mv.addObject("userID", user);
+		mv.addObject("user", user);
 		
 		return mv;
 	}
 	
-	
+	@RequestMapping(value="chatFile", method=RequestMethod.POST)
+	public ModelAndView chatFile(ModelAndView mv,MultipartHttpServletRequest multipartHttpServletRequest,HttpSession session) throws Exception{
+
+		MultipartFile multi = multipartHttpServletRequest.getFile("file2");
+		String realPath = session.getServletContext().getRealPath("resources/upload");
+		
+		FileSaver fileSaver = new FileSaver();
+		ChatDTO chatDTO = new ChatDTO();
+		
+
+			String fileName = fileSaver.fileSave(realPath, multi);
+			
+			chatDTO.setWho(((MemberDTO)(session.getAttribute("member"))).getName());
+			chatDTO.setFname(fileName);
+			chatDTO.setOname(multi.getOriginalFilename());
+		
+		mv.setViewName("chat/fileInfo");
+		mv.addObject("chatDTO",chatDTO);
+		
+		return mv;
+	}
 	
 }

@@ -308,8 +308,8 @@ public class FreelancerDAO{
 		return 0;
 	}
 	
-	//평가 정보 뷰
-	public Evaluation evaluationView(String email){
+	//프리랜서에 대한 평가 정보 뷰
+	public Evaluation evaluationView1(String email){
 		
 		return null;
 	}
@@ -330,12 +330,29 @@ public class FreelancerDAO{
 		
 		return 0;
 	}
+	
+	//프로젝트 이름,넘버 가져오기
+	public Map<String, Object> getProjectName(String email){
+		List<Evaluation> ar = this.evaluationList(email);
+		List<List<ProjectDTO>> ar2 = new ArrayList<List<ProjectDTO>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(ar.size() > 0){
+			for(int i = 0; i< ar.size(); i++){
+				List<ProjectDTO> arr = sqlSession.selectList(NAMESPACE+"getProjectName", ar.get(i));
+				ar2.add(arr);
+			}
+			
+		}
+		map.put("projectName", ar2);
+		
+		return map;
+	}
+	
 	/************************* myProject ********************************/
 	
 	//내 프로젝트 리스트
 	public List<String> myprojectList(String email){
 		
-		sqlSession.selectList(NAMESPACE+"myproject", email);
 		
 		return sqlSession.selectList(NAMESPACE+"myproject", email);
 	}
