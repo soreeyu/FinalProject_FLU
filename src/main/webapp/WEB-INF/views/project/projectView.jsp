@@ -802,8 +802,6 @@ background-color: white;
 <p><a href="">Delete</a></p>
 
 
-=======
->>>>>>> origin/bobae
 
 
 </section>
