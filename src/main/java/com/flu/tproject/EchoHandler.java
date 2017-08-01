@@ -21,7 +21,6 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		sessionList.add(session);
 		logger.info("{} 연결됨", session.getId());
-		System.out.println(session.getId()+"들어옴");
 
 	}
 	

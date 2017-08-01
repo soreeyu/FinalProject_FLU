@@ -110,8 +110,12 @@ public class CheckProjectService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("listInfo", listInfo);
 		map.put("projectDTO", projectDTO);
+		
+		int totalCount = checkCount(map);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
 			
-			return checkProjectDAO.checkList(map);
+		return checkProjectDAO.checkList(map);
 		
 	}
 	
@@ -189,7 +193,9 @@ public class CheckProjectService {
 		return checkProjectDAO.update(projectDTO);
 	}
 	
-	
+	public int checkCount(Map<String, Object> map){
+		return checkProjectDAO.checkCount(map);
+	}
 
 	
 	

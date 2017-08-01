@@ -197,6 +197,17 @@ cursor: pointer;
 	
 }
 
+
+.contents_paging{
+	width: 380px;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: bold;
+}
+.contents_paging span{
+	cursor: pointer;
+}
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -664,8 +675,20 @@ cursor: pointer;
 
 					</table>
 					
-					<!-- 페이징 -->
-
+				<!-- 페이징 -->
+				<div class="contents_paging">
+					<c:if test="${listInfo.curBlock>1 }">
+					<span id="preview">[이전]</span>		
+					</c:if>
+			
+					<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
+						<span class="num" ><a href="meetList?curPage=${i}">${i}</a></span>			
+					</c:forEach>
+			
+					<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
+					<span id="nextview">[다음]</span>			
+					</c:if>
+				</div>
 					
 					
 					
