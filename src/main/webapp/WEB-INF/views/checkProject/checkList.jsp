@@ -663,6 +663,15 @@ cursor: pointer;
 						</c:forEach>
 
 					</table>
+					
+					<!-- 페이징 -->
+
+					
+					
+					
+					
+					
+					
 				</div>
 
 			</article>
