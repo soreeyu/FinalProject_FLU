@@ -165,6 +165,9 @@
 		
 		$(this).html(leftDate+"일");
 		 
+		if(leftDate<7){
+			$(".deadline").css("color", "red");
+		}
 	});
 
 	

@@ -502,6 +502,17 @@ background-color: white;
 .owner_option_btn{
 
 }
+.dto_profile_box{
+	padding: 10px 20px 10px 20px;
+	width: 100%;
+	height: 250px;
+	background-color: blue;
+}
+.dto_profile{
+	background-color: yellow;
+	height: 100%;
+	width: 100%;
+}
 </style>
 
 </head>
@@ -521,7 +532,7 @@ background-color: white;
 				<span>${dto.category} > ${dto.detailCategory }</span>
 				<span>
 				<img src="${pageContext.request.contextPath}/resources/img/project/proposal.png">
-				총<strong>1명</strong>지원</span>
+				총<strong>N명</strong>지원</span>
 				</p>
 			</div>
 		</div>
@@ -607,7 +618,7 @@ background-color: white;
 				</c:if>
 				
 				<c:if test="${member.email==dto.email}">
-				<p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 </p>
+				<p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 </p> ${dto.projectNum }
 					<div class="owner_option_btn">
 						<a href="#" class="owner-btn" id="pj-update">Update</a>
 						<a href="#" class="owner-btn" id="pj-delete">Delete</a>
@@ -621,9 +632,9 @@ background-color: white;
 			
 			
 			
-			
+			<c:if test="${dto.state eq 'ing' || dto.state eq 'recruit'}">
 			<div class="project-qna">
-				<div class="project-detail-title">프로젝트 문의 ${dto.projectNum }</div>
+				<div class="project-detail-title">프로젝트 문의 </div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
 				
 				<div style="margin-top: 30px;" class="project-reply-box">
@@ -653,6 +664,7 @@ background-color: white;
 				
 				</div>
 			</div>
+			</c:if>
 			
 			
 					
@@ -724,12 +736,16 @@ background-color: white;
 					<div>
 					<%-- ${member.oProfileImage }
 					${member.fProfileImage } --%>
-					<div>프로젝트 등록자 : ${dto.email}</div>
-					
-					<div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
-					<div><span>계약한 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
-					<div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
-					<div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
+					<div class="dto_profile_box">
+						<div class="dto_profile"></div>
+					</div>
+					<div class="dto_profile_detail">
+						<div>프로젝트 등록자 : ${dto.email}</div>
+						<div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
+						<div><span>계약한 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
+						<div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
+						<div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
+					</div>
 					</div>
 				</div>
 

@@ -15,7 +15,7 @@
 	min-width: 1160px;
 	width: 1160px;
 	height: auto;
-	min-height: 2300px;
+	min-height: 2600px;
 	margin: 0 auto;
 	margin-top: 30px;
 }
@@ -46,6 +46,27 @@
 	min-height: 1200px;
 	max-height: 2700px;
 	
+}
+.contents_quick{
+
+	height: auto;
+	min-height: 300px;
+	background-color: yellow;
+	margin-bottom: 30px;
+	padding: 20px 0px 20px 0px;
+}
+.quick_content{
+	width: 19.3%;
+	height: 250px;
+	background-color: gray;
+	float: left;
+	display: block;
+	margin-right: 5px;
+	margin-left: 3px;
+}
+.quick_content:last-child{
+	margin-right: 3px;
+	float: right;
 }
 
 .clean{
@@ -338,6 +359,17 @@ background-color: white;
 		</div>
 
 
+<div class="contents_quick"> 
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+
+</div>
+
+
+
 		<div class="contents">
 
 		
@@ -467,106 +499,22 @@ background-color: white;
 			
 			
 			<div class="project-sort-box">
-				<div class="project-sort-text">판매중인 프로젝트${sellcount }</div>
+			<c:if test="${member.kind=='client'}">
+				<div class="project-sort-text">판매중인 프로젝트</div>
 				<div class="place-sort-box">
 					<button id="dev-btn">개발</button>
 					<button id="design-btn">디자인</button>
 				</div>
-			</div>
-			
-			
-			
-			
-			
-			<!-- <div class="project-sort-box">
-				<div class="project-sort-text">미팅진행 지역</div>
+			</c:if>
+			<c:if test="${member.kind!='client'}">
+				<div class="project-sort-text">판매중인 프로젝트</div>
 				<div class="place-sort-box">
-				
-				<button class="btn btn-default address-select-btn" data-on="off">
-					<span>전체 선택</span>
-					<span class="fa fa-sort"></span>
-				</button>
-				
-				<ul class="dropdown-selecter" id="addr_list">
-					<li class="dropdown-scroll">
-						<input name="address" type="checkbox">
-						전체 선택해주는 전체선택 
-						<label class="address-select-label" for="address">전체 선택</label>
-						<ul class="address-list">
-							<li>
-								<input type="checkbox" name="addr_main" id="address-1">
-								<label class="address-select-label" for="address-1">서울시</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-2">
-								<label class="address-select-label" for="address-2">경기도</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-3">
-								<label class="address-select-label" for="address-3">인천</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-4">
-								<label class="address-select-label" for="address-4">부산</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-5">
-								<label class="address-select-label" for="address-5">대구</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-6">
-								<label class="address-select-label" for="address-6">광주</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-7">
-								<label class="address-select-label" for="address-7">대전</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-8">
-								<label class="address-select-label" for="address-8">울산</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-9">
-								<label class="address-select-label" for="address-9">세종</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-10">
-								<label class="address-select-label" for="address-10">강원도</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-11">
-								<label class="address-select-label" for="address-11">충북</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-12">
-								<label class="address-select-label" for="address-12">충남</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-13">
-								<label class="address-select-label" for="address-13">전북</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-14">
-								<label class="address-select-label" for="address-14">전남</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-15">
-								<label class="address-select-label" for="address-15">경북</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-16">
-								<label class="address-select-label" for="address-16">경남</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-17">
-								<label class="address-select-label" for="address-17">제주도</label>
-							</li>
-						
-						</ul>
-				</ul>
-			
+					판매중인 프로젝트를 보고싶다면 
+					클라이언트로 로그인 해주세요.
 				</div>
-			</div> -->
+			</c:if>
+			</div>
+	
 				
 		</section>
 

@@ -24,7 +24,7 @@
 <c:if test="${list ne null}">
 <c:forEach items="${list}"  var="dto">
 			
-				<div class="project-unit">
+				<div class="project-unit ${dto.projectNum}">
 					<div class="project-head">
 						<div class="project-title" id="${dto.projectNum}">${dto.name}</div>
 					</div>
@@ -42,6 +42,14 @@
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
 							총지원 <strong>몇명</strong></div>
+							
+							
+							
+							<div class="right-contents-sub">
+							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
+							 급구여부 : <strong class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></strong></div>
+							 
+							 
 						</div>
 						
 						<div style="clear: both;"></div>
@@ -114,6 +122,18 @@ alert("checkList="+checkList);
 alert(array); 
 
 
+$(".quick").each(function() {
+	var q = $(this).attr("id");
+	var qdata = $(this).attr("data-id");	//projectNum이 들어가있음
+	if(q==1){
+		$(this).html("급구");
+		$("."+qdata).css("background", "#ffcccc");
+	}else{
+		$(this).html("급구x");
+	}
+});
+
+
 
 /* 페이징 색상 */
 $(".num").each(function() {
@@ -135,21 +155,7 @@ $("#preview").click(function() {
 
  $(".num").click(function() {
 	var pageNum = $(this).attr("id");
-/* 	var checkList = $("input[class='dev-chk']:checked");
-	alert("페이징chkeck="+checkList);
-	var searchCon = $("#search").val();
-	alert("search=="+searchCon);
-	var array = new Array();
-	
 
-	var arrangeVal = $("#arrange").val();
-	alert(arrangeVal);
-	alert("checkList="+checkList);
-
-	 checkList.each(function(index) {
-		array[index] = checkList.val(); 
-	});
-	alert(array);  */
 	alert("pageNum="+pageNum);
 	$.get("projectListInner?curPage="+pageNum+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
@@ -160,21 +166,7 @@ $("#preview").click(function() {
  
 
  $("#nextview").click(function() {
-	/* 	 var searchCon = $("#search").val();
-		alert("search=="+searchCon);
-		var array = new Array();
-		
-		var checkList = $("input[class='dev-chk']:checked");
-		var array = new Array();
-		var i=0;
-		var arrangeVal = $("#arrange").val();
-		alert(arrangeVal);
-		alert("checkList="+checkList);
-
-		 checkList.each(function(index) {
-			array[index] = checkList.val(); 
-		});
-		alert(array);  */
+	
 		$.get("projectListInner?curPage="+next+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 			$(".contents_main").html(data);
 			document.body.scrollTop = 0;
@@ -216,7 +208,7 @@ $("#preview").click(function() {
 		var leftDate = Math.ceil(left/(24*60*60*1000));
 		
 		$(this).html(leftDate+"일");
-		 
+		
 	});
 
  
