@@ -19,6 +19,10 @@
 		<span class="type_tit">수용인원</span>
 		<span>${dto.human}</span>
 	</li>
+	<li>
+		<span class="type_tit">편의시설</span>
+		<span>${dto.convenience}</span>
+	</li>
 </ul>
 <input type="hidden" value="${dto.price}" id="${dto.price}" class="ajax_price">
 <!--편의시설  -->

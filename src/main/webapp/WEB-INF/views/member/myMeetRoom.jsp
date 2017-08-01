@@ -337,7 +337,7 @@
 				</c:if>
 				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}"
 					var="y">
-					<span class="pagination"><a href="meetList?curPage=${y}">${y}</a></span>
+					<span class="pagination"><a href="myMeetRoom?curPage=${y}">${y}</a></span>
 				</c:forEach>
 				<c:if test="${listInfo.curBlock < listInfo.totalBlock}">
 					<span class="block">

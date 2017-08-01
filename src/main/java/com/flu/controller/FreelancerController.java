@@ -149,7 +149,9 @@ public class FreelancerController {
 			alarmDTO.setEmail(freelancerDTO.getEmail());
 			alarmDTO.setContents("필요한 정보를 등록하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			
 		}
+		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		redirectAttributes.addFlashAttribute("active8", "a");
 		
 		
@@ -188,7 +190,7 @@ public class FreelancerController {
 			alarmService.alarmInsert(alarmDTO);
 			
 		}
-		
+		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		redirectAttributes.addFlashAttribute("active8", "a");
 		
 		return "redirect:/member/myinfoView";
@@ -238,6 +240,7 @@ public class FreelancerController {
 			redirectAttributes.addFlashAttribute("free", freelancerDTO);
 			alarmDTO.setContents("자기소개를 성공적으로 등록하였습니다.");
 			alarmService.alarmInsert(alarmDTO);		
+			redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			return "redirect:/member/introView";
 		}else{
 			alarmDTO.setContents("자기소개 등록에 실패하였습니다. 다시 시도해주세요.");
@@ -271,7 +274,7 @@ public class FreelancerController {
 	}
 	//자기소개 수정
 	@RequestMapping(value="introUpdate", method=RequestMethod.POST)
-	public String introUpdate(HttpSession session, FreelancerDTO freelancerDTO) throws Exception{
+	public String introUpdate(HttpSession session, FreelancerDTO freelancerDTO, RedirectAttributes ra) throws Exception{
 		int result = freelancerService.introUpdate(freelancerDTO);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(this.getEmail(session));
@@ -279,6 +282,7 @@ public class FreelancerController {
 		if(result > 0){
 			alarmDTO.setContents("등록된 자기소개를 성공적으로 수정 하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			return "redirect:/member/introView";
 		}else{
 			alarmDTO.setContents("등록된 자기소개를 수정하는데 실패하였습니다. 다시 시도해 주세요");
@@ -347,7 +351,7 @@ public class FreelancerController {
 			alarmDTO.setContents("포트폴리오 등록에 실패하였습니다. 다시 시도해 주세요");
 		}
 		alarmService.alarmInsert(alarmDTO);
-		
+		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/portfolioList";
 		
 	}
@@ -464,7 +468,7 @@ public class FreelancerController {
 			alarmDTO.setContents("포트폴리오를 수정하는데 실패하였습니다.");
 		}
 		alarmService.alarmInsert(alarmDTO);
-		
+		model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/portfolioList";
 		
 		
@@ -485,7 +489,7 @@ public class FreelancerController {
 	}
 	//보유기술 등록
 	@RequestMapping(value="skillInsert", method=RequestMethod.POST)
-	public String skillInsert(Skill skill) throws Exception{
+	public String skillInsert(Skill skill, RedirectAttributes ra) throws Exception{
 		System.out.println(skill.getEmail());
 		System.out.println(skill.getKind());
 		System.out.println(skill.getSlevel());
@@ -519,6 +523,7 @@ public class FreelancerController {
 				alarmDTO.setContents("무언가 실패했군요 ㅜㅜ 다시 등록하세요 ");
 			}
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}else if(skill.getExp().equals("0")){
 			
 		}else{
@@ -530,6 +535,7 @@ public class FreelancerController {
 				alarmDTO.setContents("무언가 실패했군요 ㅜㅜ 다시 등록하세요 ");
 			}
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 		
 		
@@ -649,7 +655,7 @@ public class FreelancerController {
 	}
 	//경력 등록
 	@RequestMapping(value="carrerInsert", method=RequestMethod.POST)
-	public String carrerInsert(Carrer carrer) throws Exception{
+	public String carrerInsert(Carrer carrer, RedirectAttributes ra) throws Exception{
 		System.out.println(carrer.getEmail());
 		System.out.println(carrer.getCompanyName());
 		System.out.println(carrer.getDept());
@@ -666,7 +672,7 @@ public class FreelancerController {
 			alarmDTO.setContents("경력등록에 실패하였습니다. 다시 확인해 주세요");
 		}
 		alarmService.alarmInsert(alarmDTO);
-		
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 	}
 
@@ -689,7 +695,7 @@ public class FreelancerController {
 	}
 	//경력 수정
 	@RequestMapping(value="carrerUpdate", method=RequestMethod.POST)
-	public String carrerUpdate(Carrer carrer) throws Exception{
+	public String carrerUpdate(Carrer carrer, RedirectAttributes ra) throws Exception{
 		int result = freelancerService.carrerUpdate(carrer);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(carrer.getEmail());
@@ -699,12 +705,13 @@ public class FreelancerController {
 			alarmDTO.setContents("당신의 경력을 수정하는데 실패하였습니다. 다시 확인해 주세요.");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 
 	}
 	//경력 삭제
 	@RequestMapping(value="carrerDelete", method=RequestMethod.GET)
-	public String carrerDelete(Carrer carrer) throws Exception{
+	public String carrerDelete(Carrer carrer, RedirectAttributes ra) throws Exception{
 		int result = freelancerService.carrerDelete(carrer);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(carrer.getEmail());
@@ -714,6 +721,7 @@ public class FreelancerController {
 			alarmDTO.setContents("삭제에 실패했습니다. 가만히 놔두 세요");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 
 	}
@@ -727,7 +735,7 @@ public class FreelancerController {
 	}
 	//학력 등록
 	@RequestMapping(value="academicInsert", method=RequestMethod.POST)
-	public String academicInsert(Academic academic) throws Exception{
+	public String academicInsert(Academic academic, RedirectAttributes ra) throws Exception{
 		int result = freelancerService.academicInsert(academic);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(academic.getEmail());
@@ -737,6 +745,7 @@ public class FreelancerController {
 			alarmDTO.setContents("학력 등록에 실패했어요 ㅜㅜㅜ 다시 등록해주세요 ㅜㅜ");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 	}
 
@@ -757,7 +766,7 @@ public class FreelancerController {
 	
 	//학력 수정
 	@RequestMapping(value="academicUpdate", method=RequestMethod.POST)
-	public String academicUpdate(Academic academic) throws Exception{
+	public String academicUpdate(Academic academic, RedirectAttributes ra) throws Exception{
 		
 		int result = freelancerService.academicUpdate(academic);
 		alarmDTO = new AlarmDTO();
@@ -769,12 +778,13 @@ public class FreelancerController {
 			alarmDTO.setContents("이런 ㅜㅜ 당신의 학력을 수정하는데 실패 했네요 ㅜㅜ");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 
 	}
 	//학력 삭제
 	@RequestMapping(value="academicDelete", method=RequestMethod.GET)
-	public String academicDelete(Academic academic) throws Exception{
+	public String academicDelete(Academic academic, RedirectAttributes ra) throws Exception{
 		int result = freelancerService.academicDelete(academic);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(academic.getEmail());
@@ -784,6 +794,7 @@ public class FreelancerController {
 			alarmDTO.setContents("다행이네요 삭제가 안됬어요 학력이!!!");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 	}
 	/************************** License *******************************/
@@ -796,10 +807,16 @@ public class FreelancerController {
 	}
 	//자격증 등록
 	@RequestMapping(value="licenseInsert", method=RequestMethod.POST)
-	public String licenseInsert(License license){
+	public String licenseInsert(License license, RedirectAttributes ra) throws Exception{
 		
-		freelancerService.licenseInsert(license);
-		
+		int result = freelancerService.licenseInsert(license);
+		if(result>0){
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(license.getEmail());
+			alarmDTO.setContents("자격증을 등록하셨습니다.");
+			alarmService.alarmInsert(alarmDTO);
+		}
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 	}
 
@@ -817,7 +834,7 @@ public class FreelancerController {
 	}
 	//자격증 수정
 	@RequestMapping(value="licenseUpdate", method=RequestMethod.POST)
-	public String licenseUpdate(License license) throws Exception{
+	public String licenseUpdate(License license, RedirectAttributes ra) throws Exception{
 		System.out.println(license.getlName());
 		System.out.println(license.getAgency());
 		System.out.println(license.getPublishDate());
@@ -831,6 +848,7 @@ public class FreelancerController {
 			alarmDTO.setContents("당신의 자격증 정보가 뭔가 이상하네요 ㅜㅜ 수정이 안되었어요 ㅜ");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:/member/carrer";
 	}
 	//자격증 삭제

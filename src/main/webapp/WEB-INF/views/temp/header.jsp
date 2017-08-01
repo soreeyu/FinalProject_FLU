@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
     <header>
 	<div class ="header">
 		<div class="header_wrap">
@@ -26,12 +25,9 @@
 					</span>
 					</c:when>
 					<c:otherwise>
-					<c:if test="${empty alarm}">
-					<span class="alarmCount">새로운 소식 [0] </span>					
-					</c:if>
-					<c:if test="${not empty alarm }">
-					<span class="alarmCount">새로운 소식 [${alarm}] </span>
-					</c:if>
+					
+					<span class="alarmCount"></span>
+					
 					<span>
 						<a href="${pageContext.request.contextPath}/alarm/alarmList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alarm/alarm.png"></a>
 					</span>
@@ -77,4 +73,15 @@
 			</ul>
 		</div>
 	</section>
-	</c:if>
+	</c:if>	
+	
+<script type="text/javascript">
+
+	$.ajax({
+		url : "${pageContext.request.contextPath}/alarm/alarmCount",
+		type : "POST",
+		success : function(data) {
+			$(".alarmCount").html("새로운 소식 ["+data+"]");
+		} 
+	})
+</script>    

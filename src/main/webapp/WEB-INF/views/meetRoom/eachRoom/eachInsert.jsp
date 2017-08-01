@@ -386,7 +386,7 @@ a {
 		<span>
 			세부공간 소개
 		</span>
-		<textarea rows="" cols="" name="contents">${dto.contents}</textarea>
+		<textarea rows="" cols="" name="contents" style="height: 108px;">${dto.contents}</textarea>
 	</div>
 	
 	<div class="eachRoom_form">
@@ -400,7 +400,14 @@ a {
 			<div class="inner_img">
 				<div>이미지 파일을 추가해 주세요. (JPG, JPEG, PNG)</div>
 				<div class="result_img" >
-					<img id="output" src="${pageContext.request.contextPath}/resources/upload/${dto.fname}">
+				<c:choose>
+					<c:when test="${not empty dto.fname}">
+					<img id="output" src="${pageContext.request.contextPath}/resources/upload/${dto.fname}">					
+					</c:when>
+					<c:otherwise>
+					<img id="output">
+					</c:otherwise>
+				</c:choose>
 				</div>
 			</div>
 			<div class="btn_box " >
@@ -546,7 +553,7 @@ a {
 	
 	</div>
 	
-	<input type="button" id="savebutton" value="방 등록">
+	<input type="button" id="savebutton" value="방 등록" style="margin-top: 50px; width: 100%;">
 
 
 	<input type="hidden" name="snum" value="${num}">

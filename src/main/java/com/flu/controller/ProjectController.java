@@ -254,6 +254,7 @@ public class ProjectController {
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setContents("프로젝트를 성공적으로 등록하였습니다. 관리자의 검수를 기다리세요.");
 			alarmService.alarmInsert(alarmDTO);
+			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 		
 		rd.addFlashAttribute("message", message);
@@ -304,6 +305,7 @@ public class ProjectController {
 			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("프로젝트의 정보를 성공적으로 수정하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 		rd.addAttribute("message", message);
 		
@@ -327,6 +329,7 @@ public class ProjectController {
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setContents("등록하신 프로젝트를 성공적으로 삭제 하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 		
 		rd.addAttribute("message", message);

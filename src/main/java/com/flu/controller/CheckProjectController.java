@@ -136,7 +136,7 @@ public class CheckProjectController {
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
-	public String update(ProjectDTO projectDTO) throws Exception{
+	public String update(ProjectDTO projectDTO, RedirectAttributes ra) throws Exception{
 		System.out.println("gpgpgpgpgpgpgpgpgpgpgpgpgpgpgpgp");
 		
 		int result = checkProjectService.update(projectDTO);
@@ -146,6 +146,7 @@ public class CheckProjectController {
 			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 
 

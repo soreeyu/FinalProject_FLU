@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
@@ -53,7 +54,7 @@ public class ClientController {
 	}
 	//클라이언트 정보 등록
 	@RequestMapping(value="clientInsert" , method=RequestMethod.POST)
-	public String clientInsert(ClientDTO clientDTO) throws Exception{
+	public String clientInsert(ClientDTO clientDTO, RedirectAttributes ra) throws Exception{
 		
 		System.out.println("이메일 : "+clientDTO.getEmail());
 		System.out.println("인트로 : "+clientDTO.getIntro());
@@ -65,6 +66,7 @@ public class ClientController {
 			alarmDTO.setEmail(clientDTO.getEmail());
 			alarmDTO.setContents("필요한 정보를 등록하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alramCount", alarmService.alarmCount(alarmDTO));
 		}
 		
 		return "redirect:/member/client/mypage";
@@ -97,7 +99,11 @@ public class ClientController {
 	
 	//클라이언트 정보 뷰
 	@RequestMapping(value="client/mypage")
-	public String mypage(Model model, HttpSession session){
+	public String mypage(Model model, HttpSession session) throws Exception{
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(this.getEmail(session));
+		
+		model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		model.addAttribute("active1", "a");
 		model.addAttribute("dto",clientService.clientView(this.getEmail(session)));
 		

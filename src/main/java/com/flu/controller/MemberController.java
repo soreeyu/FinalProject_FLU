@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
@@ -151,7 +151,7 @@ public class MemberController {
 				session.setAttribute("member", memberDTO);
 				message= "1";
 				alarmDTO.setEmail(memberDTO.getEmail());
-				mv.addObject("alarm", alarmService.alarmCount(alarmDTO));
+				mv.addObject("alarmCount", alarmService.alarmCount(alarmDTO));
 				System.out.println(alarmService.alarmCount(alarmDTO));
 				mv.setViewName("/member/myflu");
 				return mv;
@@ -250,8 +250,9 @@ public class MemberController {
 				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 				alarmDTO.setContents("개인정보를 성공적으로 등록 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
+				
 			}
-			
+			model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			return "redirect:/member/personaldataView";
 		}
 		
@@ -285,7 +286,7 @@ public class MemberController {
 		
 		//내정보 수정
 		@RequestMapping(value="personaldataUpdate", method=RequestMethod.POST)
-		public String personaldataUpdate(MemberDTO memberDTO, HttpSession session) throws Exception{
+		public String personaldataUpdate(MemberDTO memberDTO, HttpSession session, RedirectAttributes ra) throws Exception{
 			
 			System.out.println(memberDTO.getEmail());
 			System.out.println(memberDTO.getType());
@@ -329,6 +330,7 @@ public class MemberController {
 				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
+				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			}
 
 			return "redirect:/member/personaldataView";

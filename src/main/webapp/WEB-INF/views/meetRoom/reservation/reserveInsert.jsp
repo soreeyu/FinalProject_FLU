@@ -159,9 +159,13 @@
     	$("#people").blur(function() {
 			var price = $("#price").val();
 			var time = (($("#out").val()*1)+1)-($("#in").val()*1);
+			if(time!=1){
 			var final_price = ($(this).val()*1)*(price*1)*(time*1);
 			$("#rprice").val(final_price);
-			$(".final_price").append(final_price);
+			$(".final_price").html(final_price);				
+			}else {
+				alert("날짜와 시간을 먼저 선택해주세요.");
+			}
 		});
     	
     	$("#reserve_btn").click(function() {
@@ -351,7 +355,8 @@ font-size:14px;
 }
 #Layer1 {
 	position : relative;
-	width : 350px;
+	width : 380px;
+	height : 430px;
 	float: right;
 	z-index: 1;
 	left: 0;
@@ -364,11 +369,19 @@ font-size:14px;
 }
 .reserve_Info{
 	padding: 0 20px 0;
-	padding-right: 104px;
+	margin-top: 20px;
 }
-.serve_Info input{
-	height: 50px;
-	width: 30%;
+.reserve_Info input{
+	line-height : 50px;
+	width: 100%;
+}
+.reserve_detail_info{
+	margin-bottom: 20px;
+}
+.total_price{
+	padding: 0 20px 0;
+	margin-top: 30px;
+	font-weight: bold;
 }
 </style>
 </head>
@@ -379,18 +392,31 @@ font-size:14px;
 	<form action="reserveInsert" method="post" id="frm" name="frm_check">
 		<div id="Layer1" class="scroll_box">
 		<div class="heading">
-		<h3>예약정보 입력</h3>		
+		<h3 class="reserve_space">예약정보 입력</h3>		
 		</div>
 		<div class="reserve_Info">
-		인원 선택 <input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}">  *최대 수용 인원 : ${map.each.human}
-		예약자 : <input type="text" name="reserve_name" class="reserve_Info"> 
-		연락처 : <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> 
-		이메일 : <input type="text" name="email" class="reserve_Info" value="${member.email}"> 		
+		<table>
+			<tr>
+				<td class="reserve_detail_info">인원</td>
+				<td class="reserve_detail_info"><input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}" placeholder="*최대 수용 인원 : ${map.each.human}">   </td>
+			</tr>
+			<tr>
+				<td class="reserve_detail_info">예약자</td>
+				<td class="reserve_detail_info"><input type="text" name="reserve_name" class="reserve_Info"></td>
+			</tr>
+			<tr>
+				<td class="reserve_detail_info">연락처</td>
+				<td class="reserve_detail_info"> <input type="text" name="phone" class="reserve_Info" value="${member.phone}"> </td>
+			</tr>
+			<tr>
+				<td class="reserve_detail_info">이메일</td>
+				<td class="reserve_detail_info"> <input type="text" name="email" class="reserve_Info" value="${member.email}"> </td>
+			</tr>
+		</table>
+		  		
 		</div>
-		
-		<!--세션에서 예약자 정보 가져오기  -->
-		<div>금액 : <span class="final_price"></span></div>
-		<input type="button" value="예약하기" id="reserve_btn">	
+		<div class="total_price">금액 : <span class="final_price"></span></div>
+		<input type="button" value="예약하기" id="reserve_btn" style="margin-top: 45px; width: 100%;">	
 		</div>
 	<div class="detail_form">
 	<c:forEach items="${map.reserved}" var="r">

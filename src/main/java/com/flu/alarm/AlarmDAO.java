@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.flu.util.ListInfo;
 
+
 @Repository
 public class AlarmDAO {
-	
+		
 	@Autowired
 	private SqlSession sqlSession;
 	private final String NAMESPACE="AlarmMapper.";

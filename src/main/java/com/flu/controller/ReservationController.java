@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
@@ -91,7 +92,7 @@ public class ReservationController {
 
 	
 	@RequestMapping(value="reservationDel", method=RequestMethod.GET)
-	public String reserveDel(Integer num, HttpSession session) throws Exception{
+	public String reserveDel(Integer num, HttpSession session, RedirectAttributes ra) throws Exception{
 		
 		int result = reservaionService.reservationDel(num);
 		if(result>0){
@@ -99,18 +100,20 @@ public class ReservationController {
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setContents("예약을 취소하셨습니다. 관리자의 승인을 기다리세요");
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 		return "redirect:../../member/myMeetRoom";
 	}
 	
 	@RequestMapping(value="reserveDelete")
-	public String reserveDelete(Integer num, String email) throws Exception{
+	public String reserveDelete(Integer num, String email, RedirectAttributes ra) throws Exception{
 		int result = reservaionService.delete(num);
 		if(result>0){
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(email);
 			alarmDTO.setContents("예약이 성공적으로 취소되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
+			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 		return "redirect:../../member/myMeetRoom";
 		
@@ -118,7 +121,7 @@ public class ReservationController {
 	
 	
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
-	public String reservePay(ReservationDTO reservationDTO, Model model) throws Exception{
+	public String reservePay(ReservationDTO reservationDTO, Model model, RedirectAttributes ra) throws Exception{
 		int result = reservaionService.insert(reservationDTO);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(reservationDTO.getEmail());
@@ -130,6 +133,7 @@ public class ReservationController {
 			alarmDTO.setContents("예약에 실패하였습니다. 관리자에게 문의 하세요.");
 		}
 		alarmService.alarmInsert(alarmDTO);
+		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		return "redirect:../../member/myMeetRoom";
 	}
 	
