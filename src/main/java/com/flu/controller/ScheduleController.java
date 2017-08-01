@@ -84,6 +84,11 @@ public class ScheduleController {
 			return "schedule/dhx_ganttTest";
 		}
 		
+		@RequestMapping(value="test8")
+		public String test8(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			//model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/firstViewTestGoogleChart";
+		}
 		
 		
 		

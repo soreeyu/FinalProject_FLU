@@ -1270,6 +1270,9 @@ var unitModal;
 				alert("간트2");
 				location.href="/flu/schedule/dhxTest";
 				//url = "";
+			}else if(activeTab == 'tab8'){
+				location.href="/flu/schedule/test8";
+				//url = "";
 			}
 			
 			//loadTabContent(url,activeTab);
@@ -1721,6 +1724,7 @@ var unitModal;
 						<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
 						<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
 						<li class=""  data-tab="tab7"><span class="taba">간트차트2</span></li>
+						<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
 					</ul>
 				</div>
 			</div>
