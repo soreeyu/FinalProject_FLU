@@ -91,10 +91,12 @@ public class ProjectController {
 				
 		List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
 				
+		//List<ProjectDTO> sellar = projectService.sellList(projectDTO);
+		
 		System.out.println("projectListInner의 ar="+ar);
 		System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
 		
-		//System.out.println("chekcLsit찍어보자="+checkList.size());
+		
 		System.out.println("=====================");
 		System.out.println("detailCategory="+ar.get(0).getDetailCategory());
 		System.out.println("search="+listInfo.getSearch());
@@ -109,6 +111,7 @@ public class ProjectController {
 		model.addAttribute("pjcount", totalCount);
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("listInfo", listInfo);
+		//model.addAttribute("sellar", sellar);
 		}
 	
 
@@ -140,12 +143,14 @@ public class ProjectController {
 		System.out.println("프로젝트 이름="+projectDTO.getName());
 		
 		
+		
 		model.addAttribute("dto", projectDTO);
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("conCount", contractResult);
 		model.addAttribute("ingCount", ingResult);
 		model.addAttribute("finishCount", finishResult);
 		model.addAttribute("totalCount", totalResult);
+
 
 			
 	}
@@ -275,6 +280,23 @@ public class ProjectController {
 	}
 
 
+	
+	@RequestMapping(value="sellList")
+	public String sellList(ProjectDTO projectDTO, ListInfo listInfo, Model model){
+		System.out.println("sell List service들어옴");
+		
+		int count = projectService.sellCount(projectDTO);
+		listInfo.makePage(count);
+		listInfo.makeRow();
+		List<ProjectDTO> sellar =  projectService.sellList(projectDTO, listInfo);
+		
+		
+		model.addAttribute("list", sellar);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("pjcount", count);
+		
+		return "project/projectListInner";
+	}
 
 	//Test
 	//Client가 mypage에서 확인하는 myprojectList

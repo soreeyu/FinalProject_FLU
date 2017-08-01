@@ -125,4 +125,16 @@ public class ProjectService {
 		return projectDAO.pjCount(projectDTO);
 	}
 	
+	public int sellCount(ProjectDTO projectDTO){
+		System.out.println("sellCount service 들어옴");
+		
+		return projectDAO.sellCount(projectDTO);
+	}
+	
+	public List<ProjectDTO> sellList(ProjectDTO projectDTO, ListInfo listInfo){
+		System.out.println("sellList service 들어옴");
+		
+		return projectDAO.sellList(projectDTO, listInfo);
+	}
+	
 }

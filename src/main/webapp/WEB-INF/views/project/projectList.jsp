@@ -465,7 +465,20 @@ background-color: white;
 				
 			<div class="clean"></div>
 			
+			
 			<div class="project-sort-box">
+				<div class="project-sort-text">판매중인 프로젝트${sellcount }</div>
+				<div class="place-sort-box">
+					<button id="dev-btn">개발</button>
+					<button id="design-btn">디자인</button>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			<!-- <div class="project-sort-box">
 				<div class="project-sort-text">미팅진행 지역</div>
 				<div class="place-sort-box">
 				
@@ -477,7 +490,7 @@ background-color: white;
 				<ul class="dropdown-selecter" id="addr_list">
 					<li class="dropdown-scroll">
 						<input name="address" type="checkbox">
-						<!-- 전체 선택해주는 전체선택  -->
+						전체 선택해주는 전체선택 
 						<label class="address-select-label" for="address">전체 선택</label>
 						<ul class="address-list">
 							<li>
@@ -553,7 +566,7 @@ background-color: white;
 				</ul>
 			
 				</div>
-			</div>
+			</div> -->
 				
 		</section>
 
@@ -760,11 +773,6 @@ function devClick() {
  $(".dev-chk").click(function() {
 	 
 	 var de_id = $(this).val();
-	 /* if(de_id==null){
-		 de_id = "";
-	 }
-	 $(".detailCategory").val(de_id);
-	 alert("value=="+$(".detailCategory").val()); */
 	 var checkList = $("input[class='dev-chk']:checked");
 	 alert("val은 ="+$("input[class='dev-chk']:checked").val());
 	 
@@ -823,20 +831,26 @@ $(".design-chk").click(function() {
 	}
 }); 
 
-/* 프로젝트 카테고리에서 체크로 검색정렬 */
-
-
-
-/* ======================왼쪽 주소체크박스=================== */
-$(".address-select-btn").click(function() {
-	if($(".address-select-btn").attr("data-on")=="off"){
-		$("#addr_list").css("visibility", "visible");			
-		$(".address-select-btn").attr("data-on", "on");
-	}else if($(".address-select-btn").attr("data-on")=="on"){
-		$("#addr_list").css("visibility", "hidden");
-		$(".address-select-btn").attr("data-on", "off");
-	}
+/* 판매중인 개발카테고리 */
+ 
+ $("#dev-btn").click(function() {
+	alert("개발");
+	$.get("sellList?curPage=1&category=개발&state=sell",function(data){
+		alert(data);
+		$(".contents_main").html(data);
+	});
+	
 });
+
+ $("#design-btn").click(function() {
+		alert("디자인");
+		$.get("sellList?curPage=1&category=디자인&state=sell",function(data){
+			alert(data);
+			$(".contents_main").html(data);
+		});
+		
+	});
+
 
 
 	

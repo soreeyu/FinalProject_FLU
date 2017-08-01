@@ -116,7 +116,14 @@
 </select>
 
  
-
+ 
+ <!-- 판매중인 디자인 혹은 개발 리스트 보기 -->
+ <select id="sellList" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+ 	select * from project where state=#{project.state} and category=#{project.category}
+ </select>
+<select id="sellCount" parameterType="com.flu.project.ProjectDTO" resultType="int">
+	select count(nvl(projectNum, 0)) from project where state='sell' and category=#{category}
+</select>
   
   
   

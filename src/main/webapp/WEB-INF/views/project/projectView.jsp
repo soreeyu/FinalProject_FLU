@@ -164,6 +164,7 @@ strong{
 .detail-data{
 	float: left;
 	width: 135px;
+	height: 40px;
 	padding-top: 10px;
 	padding-left: 15px;
 	font-size: 14px;
@@ -566,7 +567,7 @@ background-color: white;
 						<div class="detail-title">미팅 방식</div>
 						<div class="detail-data" id="meetKind"></div>
 						<div class="detail-title">위치</div>
-						<div class="detail-data">${dto.addr_main}</div>
+						<div class="detail-data" style="overflow: hidden;">${dto.addr_main}</div>
 					</div>
 				</div>
 				
@@ -835,32 +836,28 @@ if(meetKind=='offline'){
 /* 답글버튼 */
  $(".project-reply-box-top").on("click",".listReply",function() {
 
-	 	/* 답글클릭했을때 replyNum */
-		alert($(this).attr("data-id"));
-		var replyId = $(this).attr("data-id");
-		
+		alert($(this).attr("id"));
 		var testId = $(this).attr("id");
-		
-		
-		/* 해당하는 답글 아래의 id에 replyNum셋팅 */
-		$(".rereply").attr("id", replyId);
-		alert($(".rereply").attr("id"));
-		
-		$(".listReply").html("");
-					
-		$("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" data-id="d" value="취소">');
 
-		
+			$(".rere").html("");
+			$("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" id="'+testId+'" value="취소">');
+			$(".listReply").attr("data-on", "off");
+			$(this).attr("data-on", "on");
+			
 	});
- 
+	
+ /* 댓글 취소 */
  $(".project-reply-box-top").on("click",".cancle",function() {
-	var testId = $(this).attr("data-id");
+	var testId = $(this).attr("id");
 	alert("testid=="+testId);
 	alert("취소합시다");
-	$("."+testId).html();
+	$("."+testId).html("");
+	$(".listReply").show();
 	
  });
  
+ 
+ /* 댓글달기 버튼클릭 */
   $(".project-reply-box-top").on("click", ".replybtn", function() {
 		
 	 alert("ddd");
@@ -887,6 +884,9 @@ $("#pj-delete").click(function() {
  $("#pj-update").click(function() {
 	location.href = "projectUpdate?projectNum="+projectNum+"&email="+email;
 });
+ 
+ 
+ 
  
 $('#'+state).click(function() {
 	

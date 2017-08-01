@@ -142,6 +142,31 @@ public class ProjectDAO {
 			
 			return sqlSession.selectOne(NAMESPACE+"pjcount", projectDTO);
 		}
+		
+		
+
+		public int sellCount(ProjectDTO projectDTO){
+			System.out.println("sellCount dao 들어옴");
+			
+			return sqlSession.selectOne(NAMESPACE+"sellCount", projectDTO);
+		}
+		
+		public List<ProjectDTO> sellList(ProjectDTO projectDTO, ListInfo listInfo){
+			System.out.println("sellList dao 들어옴");
+			System.out.println(projectDTO.getCategory());
+			System.out.println("state=="+projectDTO.getState());
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("listInfo", listInfo);
+			map.put("project", projectDTO);
+			
+			return sqlSession.selectList(NAMESPACE+"sellList", map);
+		}
+		
+		
+		
+		
+		
 	
 		
 }

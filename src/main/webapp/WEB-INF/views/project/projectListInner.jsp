@@ -47,7 +47,7 @@
 						<div style="clear: both;"></div>
 						
 						<div class="project-bottom">
-							<span class="main-cate">개발</span>
+							<span class="main-cate">${dto.category }</span>
 							<span class="sub-cate">${dto.detailCategory }</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
