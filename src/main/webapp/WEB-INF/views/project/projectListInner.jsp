@@ -11,8 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<c:if test="${list.size()==0}">
+<c:if test="${pjcount==0}">
 
 	<div class="project-unit" style="height: 100px;">
 	<div class="non-project">
@@ -25,14 +24,14 @@
 <c:if test="${list ne null}">
 <c:forEach items="${list}"  var="dto">
 			
-				<div class="project-unit">
+				<div class="project-unit ${dto.projectNum}">
 					<div class="project-head">
 						<div class="project-title" id="${dto.projectNum}">${dto.name}</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
 							<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
-							<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
+							<div class="fa fa-clock-o">예상기간 ${dto.period}</div>
 							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
 						</div>
 						<div class="project-contents">${dto.contents }</div>
@@ -43,13 +42,21 @@
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
 							총지원 <strong>몇명</strong></div>
+							
+							
+							
+							<div class="right-contents-sub">
+							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
+							 급구여부 : <strong class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></strong></div>
+							 
+							 
 						</div>
 						
 						<div style="clear: both;"></div>
 						
 						<div class="project-bottom">
-							<span class="main-cate">개발</span>
-							<span class="sub-cate">애플리케이션</span>
+							<span class="main-cate">${dto.category }</span>
+							<span class="sub-cate">${dto.detailCategory }</span>
 							<div class="skill-box">
 								<span class="skill-main">요구기술</span>
 						
@@ -90,13 +97,43 @@
 
 <script type="text/javascript">
 
-
+/* 기본셋팅 */
 var curBlock="${listInfo.curBlock}";
 var perBlock="${listInfo.perBlock}";
 var curPage="${listInfo.curPage}";
 
 var preview = ((curBlock-2)*perBlock)+1;
 var next = curBlock*perBlock+1;
+
+var searchCon = $("#search").val();
+alert("search=="+searchCon);
+var array = new Array();
+
+var checkList = $("input[class='dev-chk']:checked");
+var array = new Array();
+var i=0;
+var arrangeVal = $("#arrange").val();
+alert(arrangeVal);
+alert("checkList="+checkList);
+
+ checkList.each(function(index) {
+	array[index] = checkList.val(); 
+});
+alert(array); 
+
+
+$(".quick").each(function() {
+	var q = $(this).attr("id");
+	var qdata = $(this).attr("data-id");	//projectNum이 들어가있음
+	if(q==1){
+		$(this).html("급구");
+		$("."+qdata).css("background", "#ffcccc");
+	}else{
+		$(this).html("급구x");
+	}
+});
+
+
 
 /* 페이징 색상 */
 $(".num").each(function() {
@@ -108,7 +145,9 @@ $(".num").each(function() {
 
 /* 페이징처리 */
 $("#preview").click(function() { 
-	$.get("projectListInner?curPage="+preview+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+	 
+
+	$.get("projectListInner?curPage="+preview+"&search="+searchCon+"&kind=total&arrange=$"+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
 		document.body.scrollTop = 0;
 		});
@@ -116,8 +155,9 @@ $("#preview").click(function() {
 
  $(".num").click(function() {
 	var pageNum = $(this).attr("id");
-	
-	$.get("projectListInner?curPage="+pageNum+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+
+	alert("pageNum="+pageNum);
+	$.get("projectListInner?curPage="+pageNum+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 		$(".contents_main").html(data);
 	
 		document.body.scrollTop = 0;
@@ -126,7 +166,8 @@ $("#preview").click(function() {
  
 
  $("#nextview").click(function() {
-		$.get("projectListInner?curPage="+next+"&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}",function(data){
+	
+		$.get("projectListInner?curPage="+next+"&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
 			$(".contents_main").html(data);
 			document.body.scrollTop = 0;
 		});
@@ -137,9 +178,20 @@ $("#preview").click(function() {
  
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");
+	var member = '${member}';
 	var memberEmail = '${member.email}';
+	alert("member="+member);
+	alert(memberEmail);
+	if(member==""){
+		alert("업져");
+		location.href="${pageContext.request.contextPath}/member/login";
+	}else{
+		alert("member="+member);
+		alert(memberEmail);
+		location.href="${pageContext.request.contextPath}/project/projectView?projectNum="+projectNum;
+		
+	}
 	
-	location.href="${pageContext.request.contextPath}/project/projectView?projectNum="+projectNum;
 	
 });
  
@@ -156,7 +208,7 @@ $("#preview").click(function() {
 		var leftDate = Math.ceil(left/(24*60*60*1000));
 		
 		$(this).html(leftDate+"일");
-		 
+		
 	});
 
  

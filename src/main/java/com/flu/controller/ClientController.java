@@ -21,6 +21,8 @@ import com.flu.alarm.AlarmService;
 import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
 import com.flu.member.MemberDTO;
+import com.flu.project.ProjectDTO;
+import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
 
 @Controller
@@ -107,6 +109,22 @@ public class ClientController {
 		return "/member/client/history";
 	}
 	
+	
+	//클라이언트 프로젝트 페이지
+	@RequestMapping(value="clientproject")
+	public String myproject(Model model, HttpSession session, ListInfo listInfo, ProjectDTO projectDTO){
+		
+		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println("myProject의 email="+memberDTO.getEmail());
+		
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("active7", "a");
+		
+		
+		return "/member/client/clientproject";
+	}
+
 
 	
 	

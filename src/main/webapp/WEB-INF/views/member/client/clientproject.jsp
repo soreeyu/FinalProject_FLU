@@ -12,14 +12,11 @@
 </head>
 <style type="text/css">
 .main_section {
-/* 	min-width: 1460px;
-	width: 100%;
-	min-height: 1000px;
-	background-color: #f2f2f2; */
-		min-width: 1160px;
+	min-width: 1160px;
 	width: 1160px;
 	height: auto;
 	min-height: 2300px;
+	max-height: 2600px;
 	margin: 0 auto;
 	margin-top: 30px;
 }
@@ -207,12 +204,15 @@
 	float: right;
 	height: 54px;
 	line-height: 13px;
-	background-color: gray;
 }
 .right-contents-sub{
 	border-bottom: 1px solid #dedede;
 	margin-bottom: 5px;
 	height: 20px;
+}
+.deadline{
+	font-weight: bold;
+	margin-left: 5px;
 }
 .project-bottom{
 	margin-top: 10px;
@@ -268,7 +268,15 @@
 	text-align: center;
 	font-weight: bold;
 }
-
+.num{
+	cursor: pointer;
+}
+#preview{
+	cursor: pointer;
+}
+#nextview{
+	cursor: pointer;
+}
 
 </style>
 <body>
@@ -309,6 +317,8 @@
 				</div>
 
 			</div>
+			
+			
 			<div class="right">
 				<div class="title">
 					

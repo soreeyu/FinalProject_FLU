@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.member.MemberDTO;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
@@ -474,6 +475,20 @@ public class FreelancerService{
 		return map;
 	}
 	
+	/************************** freelancer Project *******************************/
 
 
+	//freelancer 나의 전체 프로젝트리스트
+		public List<ProjectDTO> listAll(MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
+			System.out.println("service의 state="+applicantDTO.getState());
+
+			return freelancerDAO.listAll(memberDTO, listInfo, applicantDTO);
+		}
+		
+		public int countAll(MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
+			return freelancerDAO.countAll(memberDTO, listInfo, applicantDTO);
+		}
+		
+		
+	
 }

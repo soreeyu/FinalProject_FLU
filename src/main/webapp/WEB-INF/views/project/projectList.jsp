@@ -15,7 +15,7 @@
 	min-width: 1160px;
 	width: 1160px;
 	height: auto;
-	min-height: 2300px;
+	min-height: 2600px;
 	margin: 0 auto;
 	margin-top: 30px;
 }
@@ -46,6 +46,27 @@
 	min-height: 1200px;
 	max-height: 2700px;
 	
+}
+.contents_quick{
+
+	height: auto;
+	min-height: 300px;
+	background-color: yellow;
+	margin-bottom: 30px;
+	padding: 20px 0px 20px 0px;
+}
+.quick_content{
+	width: 19.3%;
+	height: 250px;
+	background-color: gray;
+	float: left;
+	display: block;
+	margin-right: 5px;
+	margin-left: 3px;
+}
+.quick_content:last-child{
+	margin-right: 3px;
+	float: right;
 }
 
 .clean{
@@ -377,12 +398,25 @@ background-color: white;
 					
 					<input type="hidden" name="kind" value="total">
 					 <input type="hidden" name="arrange" id="arrange">
-					<input type="text" name="search"> <input type="submit" value="SEARCH">
+
+					 <input type="hidden" name="detailSkill" id="detailSkill">
+					<input type="text" name="search" id="search"> <input type="button" id="searchBtn" value="SEARCH">
 
 
 				</div>
 			</div>
 		</div>
+
+
+<div class="contents_quick"> 
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+<div class="quick_content"></div>
+
+</div>
+
 
 
 		<div class="contents">
@@ -511,95 +545,24 @@ background-color: white;
 				
 			<div class="clean"></div>
 			
-			<div class="project-sort-box">
-				<div class="project-sort-text">미팅진행 지역</div>
-				<div class="place-sort-box">
-				
-				<button class="btn btn-default address-select-btn" data-on="off">
-					<span>전체 선택</span>
-					<span class="fa fa-sort"></span>
-				</button>
-				
-				<ul class="dropdown-selecter" id="addr_list">
-					<li class="dropdown-scroll">
-						<input name="address" type="checkbox">
-						<!-- 전체 선택해주는 전체선택  -->
-						<label class="address-select-label" for="address">전체 선택</label>
-						<ul class="address-list">
-							<li>
-								<input type="checkbox" name="addr_main" id="address-1">
-								<label class="address-select-label" for="address-1">서울시</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-2">
-								<label class="address-select-label" for="address-2">경기도</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-3">
-								<label class="address-select-label" for="address-3">인천</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-4">
-								<label class="address-select-label" for="address-4">부산</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-5">
-								<label class="address-select-label" for="address-5">대구</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-6">
-								<label class="address-select-label" for="address-6">광주</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-7">
-								<label class="address-select-label" for="address-7">대전</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-8">
-								<label class="address-select-label" for="address-8">울산</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-9">
-								<label class="address-select-label" for="address-9">세종</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-10">
-								<label class="address-select-label" for="address-10">강원도</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-11">
-								<label class="address-select-label" for="address-11">충북</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-12">
-								<label class="address-select-label" for="address-12">충남</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-13">
-								<label class="address-select-label" for="address-13">전북</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-14">
-								<label class="address-select-label" for="address-14">전남</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-15">
-								<label class="address-select-label" for="address-15">경북</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-16">
-								<label class="address-select-label" for="address-16">경남</label>
-							</li>
-							<li>
-								<input type="checkbox" name="addr_main" id="address-17">
-								<label class="address-select-label" for="address-17">제주도</label>
-							</li>
-						
-						</ul>
-				</ul>
 			
+			<div class="project-sort-box">
+			<c:if test="${member.kind=='client'}">
+				<div class="project-sort-text">판매중인 프로젝트</div>
+				<div class="place-sort-box">
+					<button id="dev-btn">개발</button>
+					<button id="design-btn">디자인</button>
 				</div>
+			</c:if>
+			<c:if test="${member.kind!='client'}">
+				<div class="project-sort-text">판매중인 프로젝트</div>
+				<div class="place-sort-box">
+					판매중인 프로젝트를 보고싶다면 
+					클라이언트로 로그인 해주세요.
+				</div>
+			</c:if>
 			</div>
+	
 				
 		</section>
 
@@ -682,6 +645,7 @@ background-color: white;
 	</section>
 <script type="text/javascript">
 
+<<<<<<< HEAD
 
 $("#by-price-desc").click(function() {
 	alert("click");
@@ -714,6 +678,88 @@ $("#by-price-desc").click(function() {
 	});  */
 });  
 	/* alert("click");
+=======
+ var array = new Array();
+$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
+	$(".contents_main").html(data);
+});
+
+
+
+/* 로그인해야 projectView 진입 가능 */
+$(".project-title").click(function() {
+	var projectNum=$(this).attr("id");
+	var memberEmail = '${member.email}';
+	if(memberEmail == ""){
+		location.href="../member/login";
+	} else { 
+		location.href="projectView?projectNum="+projectNum;
+		
+	}
+});
+
+
+
+/* ========================검색========================== */
+ 
+ 
+ /* -----total검색기능------- */
+$("#searchBtn").click(function() {
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+
+	 
+	var searchCon = $("#search").val();
+	alert("검색 : "+searchCon);
+	
+	var arrangeVal = $("#arrange").val();
+	alert(arrangeVal);
+	
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
+		$(".contents_main").html(data);
+	});
+	$("#search").val(searchCon);
+	alert($("#search").val());
+});
+
+
+
+
+
+/* --------프로젝트 정렬---------- */
+
+$("#by-price-desc").click(function() {
+	alert("금액높은순");
+	$("#arrange").val("money");
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money&array="+array,function(data){
+		alert("금액높은순 들어옴");
+		$(".contents_main").html(data);
+	});
+	
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 	$("#arrange").val("money");
 	alert($("#arrange").val());
 	$.get("arrangeMoney?search=${listInfo.search}&kind=${listinfo.kind}&arrange=money",function(data){
@@ -738,19 +784,85 @@ $("#by-price-desc").click(function() {
 
 $("#by-price-asc").click(function() {
 	alert("금액낮은순");
+<<<<<<< HEAD
 	$("#arrange").val("mm");
+=======
+	$("#arrange").val("lowmoney");
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney&array="+array,function(data){
+		$(".contents_main").html(data);
+	});
+	
+	$("#arrange").val("lowmoney");
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 	alert($("#arrange").val());
 	$("#frm").submit();
 });
 $("#by-date-curr").click(function() {
 	alert("최신등록순");
 	$("#arrange").val("current");
+<<<<<<< HEAD
+=======
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current&array="+array,function(data){
+		$(".contents_main").html(data);
+	});
+	
+	$("#arrange").val("current");
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 	alert($("#arrange").val());
 	$("#frm").submit();
 });
 $("#by-date-finish").click(function() {
 	alert("마감임박순");
 	$("#arrange").val("last");
+<<<<<<< HEAD
+=======
+	alert("search의 value="+$("#search").val());
+	var searchCon = $("#search").val();
+	var array = new Array();
+	
+	var checkList = $("input[class='dev-chk']:checked");
+	var array = new Array();
+	var i=0;
+	alert("checkList="+checkList);
+
+	 checkList.each(function(index) {
+		array[index] = checkList.val(); 
+	});
+	alert(array); 
+	 
+	$.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last&array="+array,function(data){
+		$(".contents_main").html(data);
+	});
+	$("#arrange").val("last");
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 	alert($("#arrange").val());
 	$("#frm").submit();
 });
@@ -758,10 +870,20 @@ $("#by-date-finish").click(function() {
 
 
 
+<<<<<<< HEAD
 /* 프로젝트 카테고리 체크박스 설정 */
+=======
+
+
+
+
+/* =================프로젝트 카테고리 체크박스 설정================= */
+ 
+ /* 개발자 */
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 function devClick() {
 	var devCheck = $("input[class='dev-chk']:checked").length;
-		alert(devCheck);
+		alert("check된거=="+devCheck);
 		if(($(".dev-chk").length)==devCheck){
 			$(".dev-chk").prop("checked", false);
 		}else{
@@ -769,18 +891,45 @@ function devClick() {
 		}
 	
 }
- $(".dev-chk").click(function() { 
+ $(".dev-chk").click(function() {
+	 
 	 var de_id = $(this).val();
-	 alert(de_id);
+	 var checkList = $("input[class='dev-chk']:checked");
+	 alert("val은 ="+$("input[class='dev-chk']:checked").val());
+	 
+	 var array = new Array();
+	 var category = "";
+	 var i=0;
+	 alert("checkList="+checkList);
+	 
+	 checkList.each(function(index) {
+		array[index] = $(this).val();
+			
+	});
+	 alert(array);
+	 
 	 var devCheck = $("input[class='dev-chk']:checked").length;
-	 alert(devCheck);
+	 
+	 
+	 var arrangeVal = $("#arrange").val();
+	 var searchCon = $("#search").val();
+	alert("arrangeValue="+arrangeVal);
+	alert("클릭한 프로젝트종류="+de_id);
+	
 	if(($(".dev-chk").length)==devCheck){
 		$("#dev").prop("checked", true);
 	}else{
 		$("#dev").prop("checked", false);
 	}
+	alert("클릭한 프로젝트종류="+de_id);
+	 $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
+		 alert("웹들어옴");
+		 $(".contents_main").html(data);
+	}); 
 });
 
+ 
+ /* 디자인 */
   function designClick() {
 		
 	var designCheck = $("input[class='design-chk']:checked").length;
@@ -795,9 +944,7 @@ function devClick() {
 
 $(".design-chk").click(function() { 
 	 var de_id = $(this).val();
-	 alert(de_id);
 	 var designCheck = $("input[class='design-chk']:checked").length;
-	 alert(designCheck);
 	if(($(".design-chk").length)==designCheck){
 		$("#design").prop("checked", true);
 	}else{
@@ -805,10 +952,29 @@ $(".design-chk").click(function() {
 	}
 }); 
 
+/* 판매중인 개발카테고리 */
+ 
+ $("#dev-btn").click(function() {
+	alert("개발");
+	$.get("sellList?curPage=1&category=개발&state=sell",function(data){
+		alert(data);
+		$(".contents_main").html(data);
+	});
+	
+});
+
+ $("#design-btn").click(function() {
+		alert("디자인");
+		$.get("sellList?curPage=1&category=디자인&state=sell",function(data){
+			alert(data);
+			$(".contents_main").html(data);
+		});
+		
+	});
 
 
 
-
+<<<<<<< HEAD
 
 
 
@@ -824,6 +990,11 @@ $(".address-select-btn").click(function() {
 	}
 });
 
+=======
+	
+
+
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 </script>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>

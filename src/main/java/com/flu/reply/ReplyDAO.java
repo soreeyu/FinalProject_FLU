@@ -23,6 +23,10 @@ public class ReplyDAO {
 		return sqlSession.insert(NAMESPACE+"insert", replyDTO);
 	}
 	
+	public int replyReInsert(ReplyDTO replyDTO){
+		return sqlSession.insert(NAMESPACE+"replyinsert", replyDTO);
+	}
+	
 	public int replyUpdate(ReplyDTO replyDTO){
 		return sqlSession.update(NAMESPACE+"update", replyDTO);
 	}

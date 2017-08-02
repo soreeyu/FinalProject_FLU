@@ -1,8 +1,5 @@
 package com.flu.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+
+import com.flu.applicant.ApplicantDTO;
+
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -33,77 +33,31 @@ public class ProjectController {
 	
 	@Inject
 	private ProjectService projectService;
+
 	@Inject
 	private AlarmService alarmService;
 	private AlarmDTO alarmDTO;
-	/*
-	 // 프로젝트에 생성된 스케줄이 있는지 확인 //1번
-      @ResponseBody
-      @RequestMapping(value="check", method=RequestMethod.GET)
-      public Map<String, Object> checkSchedule(Integer projectNum){
-         System.out.println("check하러옴");
-         System.out.println("projectNum = "+projectNum);
-         Map<String, Object> map = new HashMap<String, Object>();
-         ScheduleMainDTO result = null;
-         try {
-            result = scheduleService.checkSchedule(projectNum);
 
-            System.out.println("check의 result = "+result);
-            if(result != null){ //스케줄이 있음
-               map.put("schedule", "y");
-               
-               String[] test = {"ajax","json","spring"};
-               List<String> bobaelistString = new ArrayList<String>();
-               bobaelistString.add("하이1");
-               bobaelistString.add("하이2");
-               map.put("bobaelistString", bobaelistString);
-               List<SchedulePartDTO> bobaelist = scheduleService.partList(66);
-               map.put("bobaelist", bobaelist);
-               map.put("testbobae", test);
-               
-               map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
-               //model.addAttribute("schedule", "y");
-               //model.addAttribute("scheduleMainDTO", result); 
-               System.out.println("스케줄있음");
+	
 
-            }else{//스케줄이 없음 
-               map.put("schedule", "n");
-               map.put("projectNum", projectNum);
-               //model.addAttribute("schedule", "n");
-               //model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
-               System.out.println("스케줄없음");
-            }
-            //map.put("", "schedule/scheduleMain")
-         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println("check할때 오류임 ");
-            map.put("schedule", "error");
-            e.printStackTrace();
-         }
-         return map;
-
-      }
-	 * 
-	 * */
 	//@ResponseBody
 	@RequestMapping(value="projectMap", method=RequestMethod.GET)
-	public Map<String, Object> projectMap(ListInfo listInfo){
+	public Map<String, Object> projectMap(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
 		
-		System.out.println("들어옴");
+		System.out.println("controller-projectMap");
 		
 
-		int totalCount = projectService.projectCount(listInfo);
+		int totalCount = projectService.projectCount(listInfo, projectDTO, array);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
-        List<ProjectDTO> pjlist = projectService.projectList(listInfo);
+        List<ProjectDTO> pjlist = projectService.projectList(listInfo, projectDTO, array);
         
         map.put("pjlist", pjlist);
         
- 
 
        
         System.out.println("list="+pjlist);
@@ -116,22 +70,58 @@ public class ProjectController {
 	
 	//list
 	@RequestMapping(value="projectList", method=RequestMethod.GET)
-	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO){
+	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
 
-		String sk2=null;
-		int totalCount = projectService.projectCount(listInfo);
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+	
+		
+		
+		return "project/projectList";
+	}
+	
+	
+	//project 리스트 AJAX
+	@RequestMapping(value="projectListInner", method=RequestMethod.GET)
+	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
+		System.out.println("projectListInner요");
+	
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		 System.out.println("controller-search==="+listInfo.getSearch());
+			
+		int totalCount =  projectService.projectCount(listInfo, projectDTO, array);
+		System.out.println("projectListInner의 project count="+totalCount);
+				
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
-		List<ProjectDTO> ar = projectService.projectList(listInfo);
+				
+		List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
+				
+		//List<ProjectDTO> sellar = projectService.sellList(projectDTO);
+		
+		System.out.println("projectListInner의 ar="+ar);
+		System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
+		
+		
+		System.out.println("=====================");
+		System.out.println("detailCategory="+ar.get(0).getDetailCategory());
+		System.out.println("search="+listInfo.getSearch());
+		System.out.println("kind="+listInfo.getKind());
+		System.out.println("arrange="+listInfo.getArrange());
+		System.out.println("curPage="+listInfo.getCurPage());
+		System.out.println("=====================");	
+		
+
 		
 	
 		model.addAttribute("list", ar);
 		model.addAttribute("type", "list");
 		model.addAttribute("pjcount", totalCount);
 		model.addAttribute("listInfo", listInfo);
-		
-		
-		return "project/projectList";
+
 	}
 	
 	
@@ -145,27 +135,50 @@ public class ProjectController {
 		System.out.println(listInfo.getCurPage());
 		System.out.println("=====================");	
 	}
+
 	
+
+
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
-	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO){
+	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
+		System.out.println("projectView");
 		if(projectNum==null){
 			projectNum=1;
 		}
 		
 		ProjectDTO projectDTO = projectService.projectView(projectNum);
 
+		
 		System.out.println("session의 사진을 불러와보자");
 
 		memberDTO = (MemberDTO)session.getAttribute("member");
-/*		System.out.println("profileOname="+memberDTO.getoProfileImage());
-		System.out.println("profileOname="+memberDTO.getfProfileImage());*/
+		/*System.out.println("member의 이메일-"+memberDTO.getEmail());
+		applicantDTO.setEmail(memberDTO.getEmail());*/
+		System.out.println("applicant의 state를 봅시다="+applicantDTO.getState());
+		
+		int contractResult = projectService.contractCount(projectDTO);
+		System.out.println("계약한 갯수="+contractResult);
+		int ingResult = projectService.ingCount(projectDTO);
+		System.out.println("진행중 프로젝트갯수="+ingResult);
+		int finishResult = projectService.finishCount(projectDTO);
+		System.out.println("완료된 프로젝트=="+finishResult);
+		int totalResult = projectService.pjCount(projectDTO);
+		System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
+		
+		System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
+		System.out.println("프로젝트 이름="+projectDTO.getName());
+		
 		
 		
 		model.addAttribute("dto", projectDTO);
-		
-		
-		
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("conCount", contractResult);
+		model.addAttribute("ingCount", ingResult);
+		model.addAttribute("finishCount", finishResult);
+		model.addAttribute("totalCount", totalResult);
+		model.addAttribute("applicant", applicantDTO);
+
 	}
 	
 	
@@ -178,16 +191,9 @@ public class ProjectController {
 		
 		memberDTO = (MemberDTO) session.getAttribute("member");
 		System.out.println("email=="+memberDTO.getEmail());
-		
-		System.out.println(memberDTO.getKind());	
-		/*if(memberDTO.getKind().equals("client")){
-			System.out.println("client다");
-		}else if(memberDTO.equals(null)){
-			System.out.println("null");
-			return "index";
-		}else{
-			
-		}*/
+
+		System.out.println(memberDTO.getKind());		
+
 		return "project/projectInsert"; 
 		
 	}
@@ -240,31 +246,38 @@ public class ProjectController {
 		System.out.println("projectUpdateForm");
 
 		memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("email=="+memberDTO.getEmail());
-		System.out.println(projectDTO.getEmail());
-		if(memberDTO.getEmail()==projectDTO.getEmail()){
-		
-			System.out.println(memberDTO.getKind());	
-			System.out.println("수정가능");
-		}else{
-			
+		System.out.println("member의 email=="+memberDTO.getEmail());
+		System.out.println("project의 email=="+projectDTO.getEmail());
 
-			System.out.println(memberDTO.getKind());	
-			System.out.println("수정 불가능");
-		}
+		System.out.println(memberDTO.getKind());	
 		
+		projectDTO = projectService.projectView(projectDTO.getProjectNum());
+		System.out.println("projectNum="+projectDTO.getProjectNum());
+		System.out.println("controller-project-name="+projectDTO.getName());
 	
-		
 		model.addAttribute("type", "update");
+		model.addAttribute("member", memberDTO);
 		model.addAttribute("dto", projectDTO);
 		
 		return "project/projectInsert";
 	}
 	
-	//update
+	
+	//update 하기
 	@RequestMapping(value="projectUpdate", method=RequestMethod.POST)
-	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd) throws Exception{
+
+	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
+
 		System.out.println("projectUpdate");
+		
+		String realPath = session.getServletContext().getRealPath("resources/upload");
+		
+		FileSaver fileSaver = new FileSaver();
+		String fname = fileSaver.fileSave(realPath, projectDTO.getFileName());
+		
+		projectDTO.setfName(fname);
+		projectDTO.setoName(projectDTO.getFileName().getOriginalFilename());
+	
 		
 		int result = projectService.projectUpdate(projectDTO);
 		System.out.println(result);
@@ -317,6 +330,50 @@ public class ProjectController {
 		
 		return path;
 	}
+
+
+	
+	@RequestMapping(value="sellList")
+	public String sellList(ProjectDTO projectDTO, ListInfo listInfo, Model model){
+		System.out.println("sell List service들어옴");
+		
+		int count = projectService.sellCount(projectDTO);
+		listInfo.makePage(count);
+		listInfo.makeRow();
+		List<ProjectDTO> sellar =  projectService.sellList(projectDTO, listInfo);
+		
+		
+		model.addAttribute("list", sellar);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("pjcount", count);
+		
+		return "project/projectListInner";
+	}
+
+	//Test
+	//Client가 mypage에서 확인하는 myprojectList
+	//@RequestMapping(value="projectView")
+	/*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
+		System.out.println("Client ProjectList");
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		int totalCount = projectService.clientPjCount(listInfo, memberDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
+		
+		System.out.println("totalCount="+totalCount);
+		System.out.println("arsize="+ar.size());
+	
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", totalCount);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+		
+		return "project/clientProjectList";
+	}*/
+	
 
 	
 }

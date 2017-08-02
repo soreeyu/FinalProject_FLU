@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <title>Insert title here</title>
 <style type="text/css">
-
+ 
 .main_section {
 	min-width: 1160px;
 	width: 1160px;
@@ -20,7 +19,7 @@
 	margin: 0 auto;
 	margin-top: 30px;
 }
-
+ 
 .project_header {
 	height:122px;
 	padding: 30px;
@@ -29,15 +28,15 @@
 	margin-bottom: 30px;
 	background-color: white;
 }
-
+ 
 #header_ttt {
 	font-size: 24px;
 	font-weight: bolder;
 	margin-bottom: 20px;
 }
-
+ 
 /* 추가  */
-#header_ttt span:last-child{
+.DateMius{
 	font-size: 14px;
 	background-color: #07b481;
 	vertical-align: middle;
@@ -49,14 +48,14 @@
 	line-height: 15px;
 	padding: 2px 3px;
 }
-
+ 
 /* 추가 */
 #header_t {
 	font-size: medium;
 	font-weight: lighter;
 	color: #666;
 }
-
+ 
 /* 추가  */
 #header_t span:last-child{
 	font-size: 20px;
@@ -66,7 +65,7 @@
 	float: right;
 	height: 20px;
 	line-height: 20px;
-
+ 
 }
 strong{
 	color: #f48023;
@@ -75,7 +74,7 @@ strong{
 }
 .contents {
 	width: 1260;
-	height: 2700px;
+	height: 2000px;
 	/* min-height: 1200px;
 	max-height: 2700px; */
 }
@@ -165,14 +164,19 @@ strong{
 .detail-data{
 	float: left;
 	width: 135px;
+	height: 40px;
 	padding-top: 10px;
 	padding-left: 15px;
+	font-size: 14px;
 }
 .project-detail{
-	background-color: green;
 	margin-top: 20px;
 	border-bottom: 1px dotted #dedede;
-	min-height: 500px;
+	line-height: 20px;
+	word-spacing: 3px;
+	padding: 30px;
+	height: auto;
+	min-height: 400px;
 }
 .project-detail-title{
 	font-weight: bolder;
@@ -180,7 +184,7 @@ strong{
 	margin-bottom: 20px;
 }
 .project-skill{
-	background-color: #666;
+/* 	background-color: #666; */
 	color: white;
 	border-radius: 2px;
 }
@@ -195,7 +199,7 @@ strong{
 	text-decoration: none;
 	color: #2099bb;
 }
-#register-btn{
+.register-btn{
 	width:230px;
 	height:40px;
 	color: white;
@@ -207,34 +211,68 @@ strong{
 	vertical-align: middle;
 	padding: 10px 12px;
 	margin-top: 15px;
+	text-decoration: none;
+}
+ 
+.register-btn:p{
+	text-decoration: none;
+}
+.owner-btn{
+	width:230px;
+	height:40px;
+	color: white;
+	background-color: #f1720c;
+	border-color: #f48023;
+	border-radius: 2px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px 12px;
+	margin-top: 15px;
+	text-decoration: none;
+}
+.schedule-btn{
+	width:230px;
+	height:40px;
+	color: white;
+	background-color: #f1720c;
+	border-color: #f48023;
+	border-radius: 2px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px 12px;
+	margin-top: 15px;
+	text-decoration: none;
 }
 .project-qna{
 	margin-top: 10px;
-	height: 350px;
+	height: auto;
+	max-height: 600px;
 	background-color: white;
 	padding: 30px;	
 }
 .project-apply-box{
 	width: 100%;
-	height: 140px;
+	height: auto;
 	border: 1px solid #dedede;
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
-	padding: 5px 9px;
+	margin-bottom: 20px;
+	padding: 5px 9px 20px;
 }
 .client-info-box{
 	background-color: white;
 	min-height: 450px;
-	margin-top: 20px;
 	border: 1px solid #dedede;
 }
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
 .project-sort-text{
 	height: 40px;
 	margin-bottom: 15px;
@@ -318,7 +356,7 @@ strong{
 	display: block;
 }
 .cate-list li label{
-
+ 
 	font-weight: normal;
 	margin-left: 10px;
 	display: block;
@@ -359,12 +397,11 @@ background-color: white;
 }
 .project-head{
 	height: 27px;
-	background-color: yellow;
 	margin-bottom: 5px;
 }
 .project-title{
-	color: blue;
-	font-size: 15px;
+	color: #15647a;
+	font-size: 18px;
 	font-weight: bold;
 }
 .project-body{
@@ -376,7 +413,7 @@ background-color: white;
 	width: 100%;
 	margin-bottom: 10px;
 }
-
+ 
 .fa-reg_date{
 	padding-left: 10px;
 	font-size: small;
@@ -394,6 +431,7 @@ background-color: white;
 	float: left;
 	height: 60px;
 	background-color: red;
+	padding-top: 5px;
 }
 .project-contents-right{
 	font-size: 13px;
@@ -401,7 +439,6 @@ background-color: white;
 	float: right;
 	height: 54px;
 	line-height: 13px;
-	background-color: gray;
 }
 .right-contents-sub{
 	border-bottom: 1px solid #dedede;
@@ -457,89 +494,49 @@ background-color: white;
 	width: 100%;
 	height: 300px;
 }
+.project-reply-box-inner{
+	background-color: yellow;
+	min-height: 200px;
+	max-height: 300px;
+	height: auto;
+}
+.owner_option{
+	width: 100%;
+}
+.owner_option_btn{
+ 
+}
+.dto_profile_box{
+	padding: 10px 20px 10px 20px;
+	width: 100%;
+	height: 250px;
+	background-color: blue;
+}
+.dto_profile{
+	background-color: yellow;
+	height: 100%;
+	width: 100%;
+}
 </style>
-
+ 
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
-
-<p>project View &emsp;
-<c:if test="${dto.state=='done'}">
-[ 검수완료 ]
-</c:if>
-<c:if test="${dto.state=='wait'}">
-[ 입금 대기중 ]
-</c:if>
-<c:if test="${dto.state=='ing'}">
-[ 진행중 ]
-</c:if>
-<c:if test="${dto.state=='fail'}">
-[ 모집 실패 ]
-</c:if>
-</p>
-
-<p>${dto.projectNum}</p>
-<p>${dto.name}</p>
-<p>${dto.category }</p>
-<p>${dto.detailCategory}</p>
-<p>${dto.name}</p>
-<p>${dto.period}</p>
-<p>${dto.startDate}</p>
-<p>${dto.budget }</p>
-<p>${dto.planState }</p>
-<p>${dto.contents }</p>
-<p>${dto.skill }</p>
-<p>${dto.finishDate }</p>
-<p>${dto.meetKind }</p>
-<p>${dto.exp }</p>
-<p>${dto.state }</p>
-<p>${dto.email }</p>
-<p>${dto.quick }</p>
-<p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-<p>${dto.addr_num } ${dto.addr_main } ${dto.addr_detail }
-<p>${dto.reg_date }</p>
-
-<p>클라이언트 부분</p>
-<p><a href="projectUpdate?projectNum=${dto.projectNum}">Update</a></p>
-<p><a href="projectDelete?projectNum=${dto.projectNum}">Delete</a></p>
-<hr>
-
-<p>관리자 부분</p>
-
-<form action="" id="frm">
-
-<input type="hidden" name="state" value="${dto.state}">
-<input type="hidden" name="projectNum" value="${dto.projectNum}">
-
-<c:if test="${dto.state=='check'}">
-<input type="button" value="프로젝트 검수 완료" id="doneBTN">
-</c:if>
-
-<c:if test="${dto.state=='fail'}">
-<input type="button" value="프로젝트 연장" id="dateBTN">
-</c:if>
-
-<input type="button" value="프로젝트 삭제" id="deleteBTN">
-
-</form>
-
-<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
-
-
+ 
 <section class="main_section">
-
+ 
 		<!--  header -->
 		<div class="project_header">
 			<div class="header_text">
 				<p id="header_ttt" style="margin-bottom: 20px;">
 				<span>${dto.name}</span>
-				<span>${dto.startDate}-${dto.finishDate }</span>
+				<span class="DateMius"><span class="startDate"></span> - <span class="finishDate"></span></span>
 				</p>
 				<p id="header_t">
 				<span>${dto.category} > ${dto.detailCategory }</span>
 				<span>
 				<img src="${pageContext.request.contextPath}/resources/img/project/proposal.png">
-				총<strong>1명</strong>지원</span>
+				총<strong>N명</strong>지원</span>
 				</p>
 			</div>
 		</div>
@@ -561,11 +558,11 @@ background-color: white;
 					</div>
 					<div class="term">
 						<i class="fa fa-clock-o"></i>
-						<span class="fa">예상기간</span>${dto.period}
+						<span class="fa">예상기간</span>${dto.period}일
 					</div>
 					<div class="deadline">
 						<i class="fa fa-pencil"></i>
-						<span class="fa">모집마감</span>${dto.finishDate}
+						<span class="fa">모집마감</span><span class="finishDate"></span>
 					</div>
 				</div>
 				
@@ -573,19 +570,19 @@ background-color: white;
 				<div class="project-detail-box">
 					<div class="project-detail-top">
 						<div class="detail-title">기획상태</div>
-						<div class="detail-data">${dto.state }</div>
+						<div class="detail-data" id="planState"></div>
 						<div class="detail-title">매니징 경험</div>
-						<div class="detail-data">${dto.exp }</div>
+						<div class="detail-data" id="exp"></div>
 						<div class="detail-title">등록 일자</div>
-						<div class="detail-data">${dto.reg_date }</div>
+						<div class="detail-data" id="reg_date"></div>
 					</div>
 					<div class="project-detail-bottom">
 						<div class="detail-title">예상 시작일</div>
-						<div class="detail-data">${dto.startDate }</div>
+						<div class="detail-data startDate"></div>
 						<div class="detail-title">미팅 방식</div>
-						<div class="detail-data">${dto.meetKind }</div>
-						<div class="detail-title">기획상태</div>
-						<div class="detail-data">${dto.addr_main }</div>
+						<div class="detail-data" id="meetKind"></div>
+						<div class="detail-title">위치</div>
+						<div class="detail-data" style="overflow: hidden;">${dto.addr_main}</div>
 					</div>
 				</div>
 				
@@ -598,16 +595,22 @@ background-color: white;
 				
 				<div>
 					<div class="project-detail-title" style="margin-top: 20px;">관련 기술</div>
-					<span class="project-skill">${dto.skill}</span>
+					<span class="project-skill">${dto.skills}</span>
 		
 					
 					
 				</div>
 			</div>
 			<div style="clear: both;"></div>
-
+ 
+ 
 			<div class="contents-register">
 				<div class="contents-register-inner" style="text-align: center;">
+				
+				<c:if test="${member.kind=='admin' }">
+					<p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
+				</c:if>
+				<c:if test="${member.kind=='freelancer'}">
 					<p>프로젝트 지원을 위해
 					<span><a href="#">기본정보</a></span>
 					<span><a href="#">자기소개</a></span>
@@ -615,132 +618,231 @@ background-color: white;
 					<span><a href="#">포트폴리오</a></span>
 					을(를) 입력해주세요
 					</p>
-					<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
+					<a href="#" class="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
+				</c:if>
+				
+				<c:if test="${member.email==dto.email}">
+				<p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 </p> ${dto.projectNum }
+					<div class="owner_option_btn">
+						<a href="#" class="owner-btn" id="pj-update">Update</a>
+						<a href="#" class="owner-btn" id="pj-delete">Delete</a>
+					</div>
+					</c:if>
+				
 				</div>
 			</div>
 			
+			
+			
+			
+			
+			<c:if test="${dto.state eq 'ing' || dto.state eq 'recruit'}">
 			<div class="project-qna">
-				<div class="project-detail-title">프로젝트 문의</div>
+				<div class="project-detail-title">프로젝트 문의 </div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
+				
 				<div style="margin-top: 30px;" class="project-reply-box">
+ 
 				<div class="project-reply-box-inner">
 					<div class="project-reply-box-top">
-					<div>writer</div><div>contents</div><div>reg_date</div><div>삭제</div>
-						<c:forEach items="${replylist}" var="reply">
-						<div>${reply.writer}</div><div>${reply.contents}</div><div>${reply.reg_date}</div><div>삭제</div>
-						</c:forEach>
+					 
+					<!-- Reply 가 들어가는 부분-->
 					
 					</div>
 				</div>
-				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
+				
+				
 				<form action="../reply/replyInsert" id="frm" method="post">
+				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
 					<input type="hidden" name="projectNum" value="${dto.projectNum}">
 					
 					<!-- member의 img를 넣자 -->
+				
 					
 					<input type="text" name="contents">
 					<input type="checkbox" id="reply_check">비공개 설정
 					<input type="hidden" name="replyChk" id="replyChk" value="true">
 					<input type="button" id="btn" value="작성">
+				</div>
 				</form>
-				</div>
 				
 				</div>
-				
 			</div>
+			</c:if>
+			
+			
+					
+ 
+			
 			
 			</section>
+			
+			
+			
 			
 			<!-- right contents  -->
-			<section class="contents_sub">
-				<div class="project-apply-box">
-				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
-				<a href="#" id="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
-				</div>
+		<section class="contents_sub">
+			<div class="project-apply-box">
+				
+			<c:if test="${member.kind eq 'freelancer' && (applicant.state eq 'app' || dto.state eq 'recruit')}">
+				<a href="#" class="register-btn" id="btn_apply">
+				<img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
+				<a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
+				<i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
+	 		</c:if> 
+	 		
+	 		<c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
+				<a href="#" class="schedule-btn">프로젝트 스케줄 </a>
+	 		</c:if>
+	 		
+	 		<c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
+				<a href="#" class="schedule-btn">미팅룸 예약하기 </a>
+	 		</c:if>	
+	 		
+	 		<c:if test="${member.kind eq 'admin'}">
+	 		
+				<input type="hidden" name="state" value="${dto.state}">
+				<input type="hidden" name="projectNum" value="${dto.projectNum}">
+ 
+		 		<c:if test="${dto.state=='done'}">
+				프로젝트 상태 : <strong>검수완료</strong> 
+				</c:if>
+				<c:if test="${dto.state=='wait'}">
+				프로젝트 상태 : <strong>입금 대기중</strong>
+				</c:if>
+				<c:if test="${dto.state=='ing'}">
+				프로젝트 상태 : <strong>진행중</strong>
+				</c:if>
+				<c:if test="${dto.state=='fail'}">
+				프로젝트 상태 : <strong>모집 실패</strong>
+				</c:if>
+				
+	 			
+	 			<form action="" id="frmm" method="get">
+ 
+				<c:if test="${dto.state eq 'check'}">
+				<input type="button" class="register-btn" value="프로젝트 검수 완료" id="doneBTN">
+				</c:if>
+				
+				<c:if test="${dto.state eq 'fail'}">
+				<input type="button" class="register-btn" value="프로젝트 연장" id="dateBTN">
+				</c:if>
+				
+				<input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
+				
+				</form>
+	 		</c:if>
+			</div>
+				
+				
+			
+				
 				
 				<div class="client-info-box">
-				
+					<div>
+					<%-- ${member.oProfileImage }
+					${member.fProfileImage } --%>
+					<div class="dto_profile_box">
+						<div class="dto_profile"></div>
+					</div>
+					<div class="dto_profile_detail">
+						<div>프로젝트 등록자 : ${dto.email}</div>
+						<div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
+						<div><span>계약한 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
+						<div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
+						<div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
+					</div>
+					</div>
 				</div>
+ 
+				
+		
 			</section>
 		</div>
-
-<p>
-
-<c:if test="${member.email==dto.email}">
-<a href="projectUpdate?projectNum=${dto.projectNum}">Update</a>
-</c:if>
-<a href="projectDelete?projectNum=${dto.projectNum}">Delete</a>
-</p>
-
-
-
-
-<span><strong>재식이꺼</strong></span>
-<p>project View &emsp;
-<c:if test="${dto.state=='done'}">
-검수완료
-</c:if>
-<c:if test="${dto.state=='ing'}">
-진행중
-</c:if>
-</p>
-
-<p>${dto.projectNum}</p>
-<p>${dto.name}</p>
-<p>${dto.category }</p>
-<p>${dto.detailCategory}</p>
-<p>${dto.name}</p>
-<p>${dto.period}</p>
-<p>${dto.startDate}</p>
-<p>${dto.budget }</p>
-<p>${dto.planState }</p>
-<p>${dto.contents }</p>
-<p>${dto.skill }</p>
-<p>${dto.finishDate }</p>
-<p>${dto.meetKind }</p>
-<p>${dto.exp }</p>
-<p>${dto.state }</p>
-<p>${dto.email }</p>
-<p>${dto.quick }</p>
-<p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-<p>${dto.addr_num } ${dto.addr_main } ${dto.addr_detail }
-<p>${dto.reg_date }</p>
-
-<p>클라이언트 부분</p>
-<p><a href="projectUpdate?projectNum=${dto.projectNum}">Update</a></p>
-<p><a href="projectDelete?projectNum=${dto.projectNum}">Delete</a></p>
-<hr>
-
-<p>관리자 부분</p>
-<form action="../checkProject/checkProjectUpdate" id="frm">
-<input type="hidden" name="state" value="${dto.state}">
-<input type="hidden" name="projectNum" value="${dto.projectNum}">
-<input type="hidden" name="email" value="${dto.email}"> 
-<c:if test="${dto.state=='check'}">
-<input type="button" value="프로젝트 검수 완료" id="${dto.state }">
-</c:if>
-<c:if test="${dto.state=='wait'}">
-<input type="button" value="프로젝트 진행하기" id="${dto.state }">
-</c:if>
-
-</form>
-
-<p><a href="">Delete</a></p>
-
-
-
-
-=======
->>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
+ 
+ 
 </section>
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
-
+ 
 <script type="text/javascript">
+ 
+/* 기본셋팅 */
+var projectNum = "${dto.projectNum}";
+var email = "${member.email}";
+var state = '${dto.state}';
+alert(state);
+alert("${member.oProfileImage }");
+ 
+/* reply ajax */
+$.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
+	$(".project-reply-box-top").html(data);
+});
+ 
+ 
+/* 기획상태 뿌려주기 */
+var planState = "${dto.planState}";
+if(planState=='idea'){
+	$("#planState").text("아이디어만 존재");	
+}else if(planState=='simple'){
+	$("#planState").text("필요한 내용 정리");
+}else{
+	$("#planState").text("상세한 기획문서 존재");
+}
+ 
+ 
+/* 매니징경험 뿌려주기 */
+ var exp = "${dto.exp}";
+ if(exp=='y'){
+	 $("#exp").text("있음");
+ }else{
+	 $("#exp").text("없음");
+ }
+ 
+/* 등록일자 뿌려주기 */
+ var rdate = "${dto.reg_date}";
+ var reg_date = new Date(rdate);
+ var reg_Day = reg_date.getDate();
+ var reg_Month = reg_date.getMonth()+1;
+ var reg_Year = reg_date.getFullYear();
+ $("#reg_date").text(reg_Year+"년 "+reg_Month+"월 "+reg_Day+"일");
+ 
+ 
+ 
+ /* 예상시작일 뿌려주기 */
+ var sdate = "${dto.startDate}";
+ var startDate = new Date(sdate);
+ var startDay = startDate.getDate();
+ var startMonth = startDate.getMonth()+1;
+ var startYear = startDate.getFullYear();
+ $(".startDate").text(startYear+"년 "+startMonth+"월 "+startDay+"일");
+ 
+ 
+ /* 미팅방식 뿌려주기 */
+var meetKind = "${dto.meetKind}";
+if(meetKind=='offline'){
+	$("#meetKind").text("오프라인");
+}else{
+	$("#meetKind").text("온라인");
+}
+ 
+/* 모집마감일 뿌려주기 */
+ var fdate = "${dto.finishDate}";
+ var finishDate = new Date(fdate);
+ var finishDay = finishDate.getDate();
+ var finishMonth = finishDate.getMonth()+1;
+ var finishYear = finishDate.getFullYear();
+ $(".finishDate").text(finishYear+"년 "+finishMonth+"월 "+finishDay+"일");
+ 
+ 
+ 
+ 
+/* reply 작성 */
  $("#btn").click(function() {
 	 alert("yes");
 	var chk = $("#reply_check").prop("checked");
 	alert(chk);
-	/* check되있으면 true, 아니면 false값 */
+	
+	/* 비밀글이면 true, 공개댓글이면 false값 */
 	if(chk==true){
 		alert("true");
 		alert($("#replyChk").val());
@@ -749,84 +851,113 @@ background-color: white;
 		alert("false");
 		$("#replyChk").prop("value", "false");
 	}
-	var kk = "${replylist}";
-	alert(kk);
-	
-/* $.get("../reply/replyList",function(data){
-	alert("repyl");
-	
-}); */
-var curPage=1;
-$.ajax({
-	url:"../reply/replyList",
-	type:"GET",
-	success:function(result){
-		alert("yeyyy");
-
-		alert(result);
-		$(".project-reply-box-top").html(result);
-	}
-<<<<<<< HEAD
-});  */
-
- 
-var state = '${dto.state}';
-
-<<<<<<< HEAD
-$('#'+state).click(function() {
-	
-	if(state=='check'){
-		
-		if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-			$('#frm').submit();
-		}
-		else{
-			alert("no"); 
-		}
-=======
-}); 
->>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
-
+	$("#frm").submit();
 });
  
-<<<<<<< HEAD
-=======
-=======
-</script>
-</body>
-<script type="text/javascript">
-
->>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
-	var state = '${dto.state}';
+ 
+/* 답글버튼 */
+ $(".project-reply-box-top").on("click",".listReply",function() {
+ 
+		alert($(this).attr("id"));
+		var testId = $(this).attr("id");
+ 
+			$(".rere").html("");
+			$("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" id="'+testId+'" value="취소">');
+			$(".listReply").attr("data-on", "off");
+			$(this).attr("data-on", "on");
+			
+	});
+	
+ /* 댓글 취소 */
+ $(".project-reply-box-top").on("click",".cancle",function() {
+	var testId = $(this).attr("id");
+	alert("testid=="+testId);
+	alert("취소합시다");
+	$("."+testId).html("");
+	$(".listReply").show();
+	
+ });
+ 
+ 
+ /* 댓글달기 버튼클릭 */
+  $(".project-reply-box-top").on("click", ".replybtn", function() {
+		
+	 alert("ddd");
+	 alert($("#recontents").val());
+	 /* $("#frm").submit(); */
+  });
+	
+ 
+/* 관심 프로젝트 추가하기  */
+ 
+ $("#btn_like").click(function() {
+	alert("관심 추가하기");
+	/*  */
+});
+ 
+ 
+ /* 프로젝트 지원하기 */
+ $("#btn_apply").click(function() {
+	alert("프로젝트 지원!");
+});
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+$("#pj-delete").click(function() {
+ 
+	var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
+	
+	if(ch == true) {
+		$.get("projectDelete?projectNum="+projectNum,function(data){
+			location.href = "projectList";
+		});
+	} else {
+		alert("취소되었습니다.");
+		location.href = "projectView?projectNum="+projectNum;
+	}
+});
+ 
+ $("#pj-update").click(function() {
+	location.href = "projectUpdate?projectNum="+projectNum+"&email="+email;
+});
+ 
+ 
+ 
+ 
+$('#'+state).click(function() {
+	
+ 
 	var projectNum = '${dto.projectNum}';
 		
 	$('#deleteBTN').click(function() {
 		
 		if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
-			$('#frm').attr('action','./projectDelete');
-			$('#frm').submit();
+			$('#frmm').attr('action','./projectDelete');
+			$('#frmm').submit();
 		}else{
 			
 		}	
 		
 	});
-	
+});	
 	
 	$('#doneBTN').click(function() {
 		if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-			$('#frm').attr('action','../checkProject/checkProjectUpdate');
-			$('#frm').submit();
+			$('#frmm').attr('action','../checkProject/checkProjectUpdate');
+			$('#frmm').submit();
 		}
 		else{
-
+ 
 		}
 		
 	});
-
-
-<<<<<<< HEAD
->>>>>>> 3588a58c7c2724337a78a2f2dc8b3570df5d1771
-=======
->>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
+ 
+ 
 </script>
+</body>
 </html>

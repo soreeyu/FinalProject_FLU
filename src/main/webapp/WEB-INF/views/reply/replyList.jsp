@@ -11,48 +11,44 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>List</h2>
-	<div>
-		<span>writer</span>
-		<span>contents</span>
-		<span>reg_date</span>
-		<span>X</span>
-
-		<span>${replyList}</span>
-		<span>${project}</span>
-		<span>${listInfo}</span>
-		<p></p>
-		<span>${map}</span>
-		<span>${map.project }</span>
-		<span>${map.project.projectNum }</span>
-		<span>${map.project.contents }</span>
-		<p></p>
-		<span>${map.listInfo.curPage}</span>
-		<span>${map.listInfo.perPage}</span>
-		<span>${map.listInfo.lastNum}</span>
-		
-		<%-- <c:forEach items="${map.project}" var="project">
-		
-			<span>${reply.projectNum}</span>
-			<span>${reply.contents}</span>
-			<span>${reply.reg_date}</span>
-			<span>X</span>
-		
-		</c:forEach>  --%>
-		
-		<%-- <c:forEach items="${replyList}" var="reply">
-		<p>
+<div class="reply-contents">
+ 
+		<c:forEach items="${replyList}" var="reply">
+		<div>
+			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
 			<span>${reply.writer}</span>
 			<span>${reply.contents}</span>
 			<span>${reply.reg_date}</span>
-			<span>X</span>
+			<span>${reply.replyChk}</span>
+			</c:if>
+			<c:if test="${reply.replyChk=='true'}">
+			<span>비공개 댓글입니다.</span>
+			<span>${reply.replyChk}</span>
+			</c:if> 
+			
+			<c:if test="${reply.writer==member.email}">
+			<span class="listDelete" id="${reply.num}">X</span>
+			</c:if>
+			
+			<!-- 비공개일때는 client에게만 답글보여주기 -->
+			<c:if test="${member.email==project.email}">
+			<input type="button" class="listReply" id="listReply${reply.num}" data-on="off" style="height: 22px; width: 55px;" value="답글">
+			</c:if>
+			<p>
+			
+			<div class="listReply${reply.num} rere" data-id="${reply.num}">
+			
+			</div>
 			</p>
-		</c:forEach> --%>
-
-	</div>
+			
+		</div>
+		</c:forEach> 
+ 
+ 
+<c:if test="${replyList.size()>0}">
 	<div class="contents_bottom">
 				<div class="contents_paging">
-				<c:if test="${listInfo.curBlock>1 }"> -
+				<c:if test="${listInfo.curBlock>1 }">
 				<span id="preview">[이전]</span>		
 				</c:if>
 		
@@ -64,32 +60,58 @@
 				<span id="nextview">[다음]</span>			
 				</c:if>
 				</div>
-	 
-				<div>
-					<p>curPage : ${listInfo.curPage}</p>
-					<p>startNum : ${listInfo.startNum}   lastNum : ${listInfo.lastNum}</p>
-					<p>startRow : ${listInfo.startRow}   lastRow : ${listInfo.lastRow}</p>
-					<p>curBlock : ${listInfo.curBlock }      perPage : ${listInfo.perPage}</p>
-				</div>
-
-			</div>
-
-	<div class="project-reply-box-bottom">
-		<form action="../reply/replyInsert" id="frm" method="post">
-			<input type="hidden" name="projectNum" value="${dto.projectNum}">
-
-			<!-- member의 img를 넣자 -->
-
-			<input type="text" name="contents"> <input type="checkbox"
-				id="reply_check">비공개 설정 <input type="hidden" name="replyChk"
-				id="replyChk" value="true"> <input type="button" id="btn"
-				value="작성">
-		</form>
-		</div>
-		<script type="text/javascript">
-		 alert("List");
-		 
-		 alert("${replylist}");
+	</div>
+</c:if>
+ 
+</div>
+	
+ 
+ 
+ 
+ 
+<script type="text/javascript">
+alert("project등록한사람==${project.email}");
+alert("member==${member.email}");
+$(".rereply").css("display", "none");
+		
+		/* reply 삭제 */
+		 $(".listDelete").click(function() {
+		 var data_id = $(this).attr("id");
+		 alert(data_id);
+ 
+		   var r = confirm("삭제하시겠습니까?");
+			if(r == true) {
+				$.get("../reply/replyDelete?num="+data_id,function(data){
+					window.location.reload(true);
+				});
+			} else {
+				alert("취소되었습니다.");
+			}  
+		});
+		
+		
+		
+		/* 페이징처리 */
+		$("#preview").click(function() { 
+			alert("preview");
+			
+		});
+		 $(".num").click(function() {
+			var pageNum = $(this).attr("id");
+			alert(pageNum);
+			alert(projectNum);
+			   $.get("../reply/replyList?projectNum="+projectNum+"&curPage="+pageNum, function(data) {
+				$(".project-reply-box-top").html(data);
+			});   
+		});
+		 $("#nextview").click(function() {
+				alert("nextview")
+				
+			});
+		
+ 
+ 
+		
 		</script>
 </body>
 </html>

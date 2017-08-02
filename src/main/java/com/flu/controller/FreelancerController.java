@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.ApplicantDTO;
 import com.flu.file.FileSaver;
 import com.flu.file.FileService;
 import com.flu.freelancer.FreelancerDTO;
@@ -30,6 +31,9 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
+
 import com.flu.util.ListInfo;
 
 @Controller
@@ -41,13 +45,13 @@ public class FreelancerController {
 	@Inject
 	private AlarmService alarmService;
 	private AlarmDTO alarmDTO;
-	
+
+
 	//이메일 가져오는 메서드
 	private String getEmail(HttpSession session){
 		return ((MemberDTO)session.getAttribute("member")).getEmail();
 	}
-	
-	
+
 	//세션에서 이메일 가져와 프리랜서 뷰 하나 가져오는 메서드
 		private MemberDTO freelancerview(HttpSession session){
 			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
@@ -921,11 +925,54 @@ public class FreelancerController {
 	}
 	/************************* myproject *******************************/
 	
+	
 	//내가 FLU 에서 진행한 프로젝트
 	@RequestMapping(value="myproject")
-	public String myproject(Model model){
-		model.addAttribute("active7", "a");
-		return "/member/evaluationform";
+	public String myproject(Model model, HttpSession session, ListInfo listInfo){
+	
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+
+		System.out.println("member가 뭘까="+memberDTO.getEmail());
+		
+		/*int totalCount = freelancerService.countAll(memberDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = freelancerService.listAll(memberDTO, listInfo);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
+		}
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("listInfo", listInfo);*/
+		
+		return "/member/freelancer/myproject";
+
 	}
+	
+	@RequestMapping(value="myprojectInner")
+	public void myprojectInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO, MemberDTO memberDTO, ApplicantDTO applicantDTO){
+		System.out.println("myprojectInner 들어옴");
+		System.out.println("state는 ="+applicantDTO.getState());
+		memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println("접속한 projectInner - member-email은 = "+memberDTO.getEmail());
+		
+		int totalCount = freelancerService.countAll(memberDTO, listInfo, applicantDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = freelancerService.listAll(memberDTO, listInfo, applicantDTO);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
+		}
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("applicant", applicantDTO);
+		
+	}
+	
+	
 	
 }
