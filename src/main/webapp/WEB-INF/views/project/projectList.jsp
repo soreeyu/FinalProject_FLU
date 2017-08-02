@@ -645,40 +645,6 @@ background-color: white;
 	</section>
 <script type="text/javascript">
 
-<<<<<<< HEAD
-
-$("#by-price-desc").click(function() {
-	alert("click");
-	/*  $.ajax({
-	    url: "projectMap",
-	    type: "GET",
- 
-	    success: function(data){
-	       alert(JSON.stringify(data));
-	       		
-	    alert("skill="+data.sk);
-	       alert(JSON.stringify(data.sk)); 
-	       
-	          alert("pjlist="+data.pjlist);
-	          alert(JSON.stringify(data.pjlist));
-	          alert("pjlist[4].name="+data.pjlist[5].name);
-	          alert("pjlist[0].budget="+data.pjlist[0].budget);
-	          alert("pjlist[0].period="+data.pjlist[0].period);
-	          alert("pjlist[0].reg_date="+data.pjlist[0].reg_date);
-	          alert("pjlist[0].contents="+data.pjlist[0].contents);
-	          alert("pjlist[4].skill="+data.pjlist[5].skill);
-	          alert("skills[4]="+data.pjlist[5].skills[0]);
-	          alert("skills.length="+data.pjlist[5].skills.length);
-				
-			$(".project-unit").html(
-				
-			);
-	    }
-		
-	});  */
-});  
-	/* alert("click");
-=======
  var array = new Array();
 $.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
 	$(".contents_main").html(data);
@@ -759,7 +725,6 @@ $("#by-price-desc").click(function() {
 		$(".contents_main").html(data);
 	});
 	
->>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 	$("#arrange").val("money");
 	alert($("#arrange").val());
 	$.get("arrangeMoney?search=${listInfo.search}&kind=${listinfo.kind}&arrange=money",function(data){
@@ -784,9 +749,7 @@ $("#by-price-desc").click(function() {
 
 $("#by-price-asc").click(function() {
 	alert("금액낮은순");
-<<<<<<< HEAD
-	$("#arrange").val("mm");
-=======
+
 	$("#arrange").val("lowmoney");
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
@@ -807,15 +770,14 @@ $("#by-price-asc").click(function() {
 	});
 	
 	$("#arrange").val("lowmoney");
->>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
+
 	alert($("#arrange").val());
 	$("#frm").submit();
 });
 $("#by-date-curr").click(function() {
 	alert("최신등록순");
 	$("#arrange").val("current");
-<<<<<<< HEAD
-=======
+
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
 	var array = new Array();
@@ -835,15 +797,14 @@ $("#by-date-curr").click(function() {
 	});
 	
 	$("#arrange").val("current");
->>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
+
 	alert($("#arrange").val());
 	$("#frm").submit();
 });
 $("#by-date-finish").click(function() {
 	alert("마감임박순");
 	$("#arrange").val("last");
-<<<<<<< HEAD
-=======
+
 	alert("search의 value="+$("#search").val());
 	var searchCon = $("#search").val();
 	var array = new Array();
@@ -862,7 +823,7 @@ $("#by-date-finish").click(function() {
 		$(".contents_main").html(data);
 	});
 	$("#arrange").val("last");
->>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
+
 	alert($("#arrange").val());
 	$("#frm").submit();
 });
@@ -870,17 +831,12 @@ $("#by-date-finish").click(function() {
 
 
 
-<<<<<<< HEAD
-/* 프로젝트 카테고리 체크박스 설정 */
-=======
-
-
 
 
 /* =================프로젝트 카테고리 체크박스 설정================= */
  
  /* 개발자 */
->>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
+
 function devClick() {
 	var devCheck = $("input[class='dev-chk']:checked").length;
 		alert("check된거=="+devCheck);
