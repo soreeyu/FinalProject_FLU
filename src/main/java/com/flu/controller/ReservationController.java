@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,13 @@ import com.flu.room.RoomDTO;
 @RequestMapping("/meetRoom/reservation/**")
 public class ReservationController {
 	
-	@Autowired
+	@Inject
 	private ReservationService reservaionService;
-	@Autowired
+	@Inject
 	private AlarmService alarmService;
 	
 	private AlarmDTO alarmDTO;
+	
 	@RequestMapping(value="reserveList")
 	public void reserveList(ListInfo listInfo){
 		
@@ -56,6 +58,11 @@ public class ReservationController {
 		Date da = new Date(ca.getTimeInMillis());
 		reservationDTO.setReserve_date(da.toString());
 		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);//방 이름과 업체 번호를 가지고와서 해당 업체의 선택한 방의 예약된 정보를 가져온다.
+		
+		
+		System.out.println("업체 휴무일 : "+meetRoomDTO.getHoliday());
+		//업체가 정한 휴무일을 받아와서 DATE 형식으로 변환
+		
 		
 		String [] reserved_time = null;
 		ArrayList<String> in = new ArrayList<String>();

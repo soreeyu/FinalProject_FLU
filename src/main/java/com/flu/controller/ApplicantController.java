@@ -14,6 +14,8 @@ import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
+import com.flu.checkMember.CheckMemberDTO;
+import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 
@@ -34,7 +36,7 @@ public class ApplicantController {
 
 		List<ApplicantDTO> applicantList = applicantService.list(projectNum);
 
-		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
+		List<CheckMemberViewDTO> memberList = new ArrayList<CheckMemberViewDTO>();
 		
 		for(int i=0;i<applicantList.size();i++){
 			memberList.add(memberService.memberView(applicantList.get(i).getEmail()));

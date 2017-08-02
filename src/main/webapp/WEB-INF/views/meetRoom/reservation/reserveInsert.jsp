@@ -23,6 +23,7 @@
         dayNamesShort: ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'],
         dayNamesMin: ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'],
         showMonthAfterYear: true,
+        
         yearSuffix: '.'
        	
     });
@@ -38,6 +39,7 @@
         $("#datepicker").datepicker({
         	altField : "#day",
         	minDate :0,
+        	maxDate :90,
         	onSelect : function(data){    							//해당 페이지의 방 이름;
         		$("#day").val(data);// 클릭한 날짜
         		accessTime(snum);
@@ -244,6 +246,8 @@ font-size:14px;
 #reserve_time {
 	width : 100%;
 	overflow: hidden;
+	background-color: #fff;
+    border-bottom: 1px solid #ebebeb;
 }
 /* 달력이랑 시간 부분 css  */
 
@@ -382,6 +386,15 @@ font-size:14px;
 	padding: 0 20px 0;
 	margin-top: 30px;
 	font-weight: bold;
+}
+.timeCss{
+	width: 86px;
+    padding: 20px 0 30px;
+}
+.timeNum {
+	top: -34px;
+    left: -10px;
+    width: 20px;
 }
 </style>
 </head>

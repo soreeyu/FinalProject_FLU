@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.checkMember.CheckMemberDTO;
+import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
@@ -48,7 +50,7 @@ public class MemberDAO {
 	}
 
 	//회원 정보
-	public MemberDTO memberView(String email) {
+	public CheckMemberViewDTO memberView(String email) {
 		System.out.println("view를 하러 왔음");
 		return sqlSession.selectOne(NAMESPACE+"memberView", email);
 	}

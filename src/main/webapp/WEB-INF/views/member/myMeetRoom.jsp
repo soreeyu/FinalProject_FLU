@@ -125,7 +125,7 @@
     padding: 4px 0;
 }
 .side-bar .side-bar-nav ul a:hover {
-    background-color: #dedede;
+    background-color: #66b3ff;
     color: #fff;
 }
 .side-bar .side-bar-nav ul li a {
@@ -135,6 +135,7 @@
     font-size: 14px;
     color: #999;
     width: 100%;
+    cursor: pointer;
 }
 .contents{
 	display: inline;

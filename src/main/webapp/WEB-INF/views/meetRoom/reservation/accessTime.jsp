@@ -5,7 +5,7 @@
 		<thead>
 			<tr>
 				<c:forEach begin="0" end="24" var="i" step="1">
-					<td>${i}</td>
+					<td class="timeNum">${i}</td>
 				</c:forEach>
 			</tr>
 		</thead>
@@ -15,12 +15,12 @@
 				<c:forEach begin="0" end="23" var="i" step="1" varStatus="r">
 					<c:choose>
 						<c:when test="${access[0]<=r.index && access[1]>=r.index}" >
-							<td>
+							<td class="timeCss">
 								<div id="reserve${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: yellow; margin-left: 10px;" ></div>
 							</td>								
 						</c:when>
 						<c:otherwise>
-							<td>
+							<td class="timeCss">
 								<div id="${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: gray; margin-left: 10px;" ></div>
 							</td>
 						</c:otherwise>

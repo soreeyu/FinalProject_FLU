@@ -14,6 +14,8 @@ import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.checkMember.CheckMemberDTO;
+import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.util.ListInfo;
 
@@ -100,7 +102,7 @@ public class MemberService {
 	
 	
 	//회원 정보
-	public MemberDTO memberView(String email){
+	public CheckMemberViewDTO memberView(String email){
 		return memberDAO.memberView(email);
 	}
 	

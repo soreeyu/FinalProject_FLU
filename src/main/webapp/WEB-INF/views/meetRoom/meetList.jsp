@@ -57,6 +57,7 @@
 	float: left;
 	position: relative;
 	padding: 13px;	
+	
 }
 .search {
 	float: right;
@@ -67,8 +68,10 @@
     overflow: hidden;
 	width: 345px;
 	height: 261px;
+	box-shadow: 2px 2px 8px grey;
+	border-radius: 10px;
 }
-.Room_Img > img {
+.Room_Img  img {
 	width : 100%;
 	height: 100%;
 }
@@ -79,6 +82,9 @@
     overflow : hidden;
     white-space: nowrap;
 	text-overflow : ellipsis;  
+	box-shadow: 2px 2px 8px grey;
+	border-radius: 10px;
+	margin-top: 10px;
 }
 .info {
 	padding-bottom: 10px;
@@ -104,12 +110,12 @@
 			<p id="header_tit2"><!-- 개의 미팅룸이 있습니다. --></p>
 			
 			<div class="search">
-				<select name="kind" id="select_kind">
+				<select name="kind" id="select_kind" style="height: 25px; vertical-align: top;">
 					<option value="name">업체명</option>
 					<option value="addr_main">지역</option>
 				</select>
-				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
-				<input type="button" value="검색" id="search_btn">
+				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search" style="height: 20px; vertical-align: top;">
+				<input type="button" value="검색" id="search_btn" style="height: 25px; vertical-align: top;">
 			</div>	
 		</div>
 		
@@ -120,7 +126,9 @@
 	<c:forEach items="${list}" var="i">
 	<div class="Room">
 		<div class="Room_Img" >
+		<a href="meetView?num=${i.num}">
 		<img alt="" src="${pageContext.request.contextPath}/resources/upload/${i.fname}">
+		</a>
 		</div>
 		<div class="InfoArea">
 		<a href="meetView?num=${i.num}" class="info">${i.name}</a><br>

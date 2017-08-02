@@ -19,7 +19,7 @@ import com.flu.alarm.AlarmService;
 
 import com.flu.applicant.ApplicantService;
 import com.flu.checkMember.CheckMemberService;
-
+import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.file.FileSaver;
 import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.meetRoom.MeetRoomServiceImpl;
@@ -116,9 +116,7 @@ public class MemberController {
 		//Email 인증 확인
 		@RequestMapping(value="EmailAccessCk")
 		public String EmailAccessCk(String num, String email){
-			
-			System.out.println(memberService.memberView(email).getEmail());
-			System.out.println(memberService.memberView(email).getEmailcheck());
+		
 			
 			if(num.equals(memberService.memberView(email).getEmailcheck()) && email.equals(memberService.memberView(email).getEmail())){
 				MemberDTO memberDTO = new MemberDTO();
@@ -260,7 +258,7 @@ public class MemberController {
 		@RequestMapping(value="personaldataView", method=RequestMethod.GET)
 		public String personaldataView(Model model, HttpSession session,String email){
 			
-			if(((MemberDTO)session.getAttribute("member")).getType().equals("admin")){
+			if(((MemberDTO)session.getAttribute("member")).getKind().equals("admin")){
 				model.addAttribute("active1", "a");
 				model.addAttribute("dto", checkMemberService.checkView(email));
 				
@@ -327,7 +325,7 @@ public class MemberController {
 				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setEmail(((CheckMemberViewDTO)session.getAttribute("member")).getEmail());
 				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
