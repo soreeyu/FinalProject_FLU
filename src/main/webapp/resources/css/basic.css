@@ -104,6 +104,7 @@ header{
 	font-size: 14px;
 }
 
+
 /********** 로그인 후 ************/
 
 
@@ -187,7 +188,12 @@ footer{
 	height: 200px;
 	background-color: black;
 }
-
+.footer .footer_wrap{
+	width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+	
+}
 
 
 /************************************* 여기까지 푸터 ************************************/

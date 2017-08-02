@@ -423,7 +423,7 @@ input[type=text]{
 	<form action="meetInsert" method="post" enctype="multipart/form-data" id="frm">	
 	</c:if>
 	<c:if test="${not empty dto.num }">
-	<form action="meetInsert" method="post" enctype="multipart/form-data" id="frm">
+	<form action="meetUpdate" method="post" enctype="multipart/form-data" id="frm">
 	</c:if>
 	<div class="meetRoom_name">
 		<div class="tit">
