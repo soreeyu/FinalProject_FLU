@@ -684,7 +684,7 @@ background-color: white;
       <section class="contents_sub">
          <div class="project-apply-box">
             
-         <c:if test="${member.kind eq 'freelancer' && (applicant.state eq 'app' || dto.state eq 'recruit')}">
+         <c:if test="${member.kind eq 'freelancer' && dto.state eq 'recruit'}">
             <a href="#" class="register-btn" id="btn_apply">
             <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
             <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">

@@ -40,7 +40,7 @@
 						</div>
 						<div class="project-contents">${dto.contents }</div>
 						
-						<c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
+						<c:if test="${applicant.state eq 'app' || dto.state eq 'ing' }">
 						<div class="project-contents-right">
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">

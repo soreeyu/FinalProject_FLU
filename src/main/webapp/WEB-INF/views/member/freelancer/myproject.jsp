@@ -22,7 +22,7 @@
 }
 
 .page {
-	width: 1152px;
+	width: 1160px;
 	display: inline-block;
 	margin-top: 30px;
 }
@@ -96,7 +96,7 @@
 	float: left;
 	margin-left: 10px;
 	margin-right: 10px;
-	width: 790px;
+	width: 870px;
 }
 
 .contents_inner {
