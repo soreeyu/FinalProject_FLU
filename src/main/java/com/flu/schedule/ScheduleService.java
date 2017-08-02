@@ -1,9 +1,13 @@
 package com.flu.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -204,6 +208,109 @@ public class ScheduleService {
 		//원하는 조건에 해당하는 unit들
 		public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 			return scheduleDAO.unitList(scheduleUnitDTO);
+		}
+		
+		public int unitListInsert(ArrayList<ScheduleUnitDTO> list) throws Exception{
+			int result = 0;
+			
+			for(int i=0;i<list.size();i++){
+				result = this.unitInsert(list.get(i));
+			}
+			
+			return result;
+		}
+		
+		//초기인서트
+		public int setUnits(String jsonData) throws Exception{
+
+
+			JSONObject object = (JSONObject)JSONValue.parse(jsonData);
+			JSONArray data = (JSONArray) object.get("data");
+
+			ArrayList<ScheduleUnitDTO> unitlist = new ArrayList<ScheduleUnitDTO>();
+			ArrayList<SchedulePartDTO> partlist = new ArrayList<SchedulePartDTO>();
+			ScheduleUnitDTO scheduleUnitDTO = null;
+			SchedulePartDTO schedulePartDTO = null;
+
+			for(int i=0; i<data.size();i++){
+				JSONObject oneUnit = (JSONObject)data.get(i);
+
+				System.out.println(oneUnit.get("id").toString()); // scheduleNum_partNum_unitNum
+				String[] nums = oneUnit.get("id").toString().split("_");
+				
+				for(String num:nums){
+					System.out.println("num들 = "+num);
+				}
+				
+				System.out.println("내용 = " + oneUnit.get("text").toString());
+				System.out.println("시작일 = " + oneUnit.get("start_date").toString());
+				System.out.println("마감일= " + oneUnit.get("end_date").toString());
+				System.out.println("타입 = " + oneUnit.get("type")); //part 는 0 unit 1 
+				//System.out.println(oneUnit.get("color").toString()); //없을수도있음 
+				System.out.println("브모 = " + oneUnit.get("parent").toString());
+
+				if( (Integer.parseInt((oneUnit.get("type").toString()))) == 1){
+					System.out.println("unit임 ");
+					//unit들 
+					scheduleUnitDTO = new ScheduleUnitDTO();
+					int scheduleNum = Integer.parseInt(nums[0]);
+					int partNum = Integer.parseInt(nums[1]);
+					int unitNum = Integer.parseInt(nums[2]);
+					String unitName = oneUnit.get("text").toString();
+
+					String unitStartDate = oneUnit.get("start_date").toString();
+					String unitFinishDate = oneUnit.get("end_date").toString();
+
+					// ((MemberDTO)session.getAttribute("member")).getEmail()
+					//scheduleUnitDTO.setEmail(); //담당자 정해서 넘겨야된다 
+
+					scheduleUnitDTO.setScheduleNum(scheduleNum);
+					scheduleUnitDTO.setPartNum(partNum);
+					scheduleUnitDTO.setUnitNum(unitNum);
+					//scheduleUnitDTO.setUnitDescribe(unitDescribe);
+					scheduleUnitDTO.setUnitName(unitName);
+					scheduleUnitDTO.setUnitFinishDate(unitFinishDate);
+					scheduleUnitDTO.setUnitStartDate(unitStartDate);
+					scheduleUnitDTO.setUnitState("할일");
+
+
+					unitlist.add(scheduleUnitDTO);
+					
+				}else if(Integer.parseInt((oneUnit.get("type").toString())) == 0){
+					System.out.println("part임 ");
+					
+					//unit들 
+					schedulePartDTO = new SchedulePartDTO();
+					int scheduleNum = Integer.parseInt(nums[0]);
+					int partNum = Integer.parseInt(nums[1]);
+					
+					String partName = oneUnit.get("text").toString();
+
+					String partStartDate = oneUnit.get("start_date").toString();
+					String partFinishDate = oneUnit.get("end_date").toString();
+
+					// ((MemberDTO)session.getAttribute("member")).getEmail()
+					schedulePartDTO.setScheduleNum(scheduleNum);
+					schedulePartDTO.setPartNum(partNum);
+					schedulePartDTO.setPartName(partName);
+					schedulePartDTO.setPartFinishDate(partFinishDate);
+					schedulePartDTO.setPartStartDate(partStartDate);
+
+
+					
+					partlist.add(schedulePartDTO);
+					
+					
+				}
+				
+			}//for문 끝
+
+
+			System.out.println(" 만들어진 unit 리스트 "+unitlist.toString());
+			System.out.println(" 만들어진 part 리스트 "+partlist.toString());
+			//int result = (partlist); //파트 먼저 insert
+			int result = this.unitListInsert(unitlist);
+			return 0;
 		}
 		
 		

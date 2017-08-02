@@ -1,12 +1,15 @@
 package com.flu.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -457,10 +460,15 @@ public class ScheduleController {
 		
 		
 		@RequestMapping(value="setUnits",method=RequestMethod.POST)
-		public void setUnits(String jsonData){
-			System.out.println("받아온 json데이터"+jsonData);
-			//JSONObject obj = jsonData; //new JSONObject();
+		public void setUnits(String jsonData, HttpSession session) throws Exception{
 			
+			
+			
+			System.out.println("받아온 json데이터"+jsonData);
+			
+			int result = scheduleService.setUnits(jsonData);
+			
+
 		}
 
 

@@ -114,7 +114,7 @@
 		(schedulenum, unitnum, unitname,
 		unitdescribe,unitstartDate,unitfinishdate, partnum, email, unitstate)
 		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit
-		where schedulenum=#{scheduleNum}),0), #{unitName}, #{unitDescribe},
+		where schedulenum=#{scheduleNum}),0), #{unitName}, '설명들어가야하는디',
 		#{unitStartDate}, #{unitFinishDate}, #{partNum}, #{email}, '할일')
 	</insert>
 
