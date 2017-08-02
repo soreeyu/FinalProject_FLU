@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.flu.eachRoom.EachRoomDTO;
 import com.flu.eachRoom.EachRoomServiceImpl;
 import com.flu.file.FileSaver;
-import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.meetRoom.MeetRoomServiceImpl;
 import com.flu.room.RoomDTO;
 
@@ -38,12 +37,9 @@ public class EachRoomController {
 	}
 	
 	@RequestMapping(value="eachInsert", method=RequestMethod.GET)
-	public void eachInsert(int num, Model model) throws Exception{
+	public void eachInsert(int num, Model model){
 		//세부공간 등록 폼
 		model.addAttribute("num", num);
-		MeetRoomDTO meetRoomDTO = eachRoomServiceImpl.time(num);
-		String [] time = meetRoomDTO.getTime().split(",");
-		model.addAttribute("time", time);
 		
 	}
 	
@@ -110,9 +106,8 @@ public class EachRoomController {
 	}
 	
 	@RequestMapping(value="eachView",method=RequestMethod.GET)
-	public void eachView(Integer num, Model model) throws Exception{
-		EachRoomDTO eachRoomDTO =(EachRoomDTO)eachRoomServiceImpl.view(num);
-		model.addAttribute("dto", eachRoomDTO);
+	public void eachView(Integer num){
+		
 	}
 	
 	

@@ -18,6 +18,7 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -307,11 +308,18 @@ public class FreelancerDAO{
 		return 0;
 	}
 	
-	//평가 정보 뷰
-	public Evaluation evaluationView(String email){
+	//프리랜서에 대한 평가 정보 뷰
+	public Evaluation evaluationView1(String email){
 		
 		return null;
 	}
+	
+	//나에대한 평가 정보 리스트
+	public List<Evaluation> evaluationList(String email){
+		
+		return sqlSession.selectList(NAMESPACE+"evaluationList", email);
+	}
+	
 	//평가 정보 수정
 	public int evaluationUpdate(Evaluation evaluation){
 		
@@ -322,6 +330,43 @@ public class FreelancerDAO{
 		
 		return 0;
 	}
+	
+	//프로젝트 이름,넘버 가져오기
+	public Map<String, Object> getProjectName(String email){
+		List<Evaluation> ar = this.evaluationList(email);
+		List<List<ProjectDTO>> ar2 = new ArrayList<List<ProjectDTO>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(ar.size() > 0){
+			for(int i = 0; i< ar.size(); i++){
+				List<ProjectDTO> arr = sqlSession.selectList(NAMESPACE+"getProjectName", ar.get(i));
+				ar2.add(arr);
+			}
+			
+		}
+		map.put("projectName", ar2);
+		
+		return map;
+	}
+	
+	/************************* myProject ********************************/
+	
+	//내 프로젝트 리스트
+	public List<String> myprojectList(String email){
+		
+		
+		return sqlSession.selectList(NAMESPACE+"myproject", email);
+	}
+	
+	//프로젝트 개발/디자인 구분리스트
+	public List<String> myprojectList2(String email){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNum",this.myprojectList(email));
+		map.put("length", this.myprojectList(email).size());
+		System.out.println("랭스 길이 : "+this.myprojectList(email).size());
+		
+		return sqlSession.selectList(NAMESPACE+"myprojectList", map);
+	}
+	
 	/************************** Authentic *******************************/
 
 }

@@ -38,7 +38,6 @@ public class MeetRoomController {
 	@RequestMapping(value="meetList")
 	public void meetList(Model model, ListInfo listInfo) throws Exception{
 		List<RoomDTO> ar = meetRoomServiceImpl.list(listInfo);
-		
 		model.addAttribute("list", ar);
 		model.addAttribute("listInfo", listInfo);
 		
@@ -72,12 +71,10 @@ public class MeetRoomController {
 	}
 	
 	@RequestMapping(value="meetUpdate",method=RequestMethod.GET)
-	public String meetUpdate(Integer num, Model model) throws Exception{
+	public void meetUpdate(Integer num, Model model) throws Exception{
 		//update form
 		MeetRoomDTO meetRoomDTO = (MeetRoomDTO)meetRoomServiceImpl.view(num);
 		model.addAttribute("dto", meetRoomDTO);
-		
-		return "meetRoom/meetInsert";
 	}
 	
 	@RequestMapping(value="meetUpdate",method=RequestMethod.POST)
@@ -132,9 +129,8 @@ public class MeetRoomController {
 		System.out.println(num+"널인거냐");
 		
 		MeetRoomDTO meetRoomDTO = (MeetRoomDTO) meetRoomServiceImpl.view(num);
-		String [] time = meetRoomDTO.getTime().split(",");
+		
 		model.addAttribute("dto", meetRoomDTO);
-		model.addAttribute("time", time);
 		
 	}
 	

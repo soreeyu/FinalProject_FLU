@@ -6,6 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+     google.charts.load('current', {packages: ['corechart']});     
+   </script>
 
 <title>Insert title here</title>
 <style type="text/css">
@@ -197,6 +201,24 @@
 .no_img p span{
 	font-weight: bold;
 }
+.wrap_1{
+	display:inline-block; 
+	padding-right: 20px; 
+	border-right: 1px solid #dedede;
+	float: left;
+}
+.wrap_1:LAST-CHILD{
+	border: 0;
+}
+
+.ooo{
+	display: inline-block;
+}
+.wrap_1 img{
+	margin-left: 15px;
+	width: 200px;
+	height: 37px;
+}
 
 /** 자기소개 **/
 .introform{
@@ -238,7 +260,271 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 </style>
 <script type="text/javascript">
 
-	
+$(function(){
+    //canvas요소에 대한 Context 개체 가져오기            
+    var ctx = document.getElementById('mycanvas').getContext('2d');
+    if(!ctx) {
+        return;
+    }
+   
+   
+    ctx.strokeStyle ='gray';
+    
+    ctx.beginPath();
+    ctx.moveTo(100,15);
+    ctx.lineTo(100,100);
+    ctx.fillText("전문성",85,10);
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(100,100);
+    ctx.lineTo(19,75);
+    ctx.fillText("적극성",0,65);
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(100,100);
+    ctx.lineTo(49,169);
+    ctx.fillText("일정 준수",25,179);
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(100,100);
+    ctx.lineTo(151,169);
+    ctx.fillText("의사소통",135,179);
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(100,100);
+    ctx.lineTo(181,75);
+    ctx.fillText("만족도",168,65);
+    ctx.closePath();
+    ctx.stroke();
+  
+    
+    //5
+    ctx.beginPath();
+    ctx.moveTo(100,15);
+    ctx.lineTo(19,75);
+    ctx.lineTo(49,169);
+    ctx.lineTo(151,169);
+    ctx.lineTo(181,75);
+    ctx.closePath();
+    ctx.stroke();
+    
+    //4
+    ctx.beginPath();
+    ctx.moveTo(100,30);
+    ctx.lineTo(33,79);
+    ctx.lineTo(58,157);
+    ctx.lineTo(142,157);
+    ctx.lineTo(167,79);
+    ctx.closePath();
+    ctx.stroke();
+    
+    //3
+    ctx.beginPath();
+    ctx.moveTo(100,45);
+    ctx.lineTo(47,84);
+    ctx.lineTo(67,146);
+    ctx.lineTo(133,146);
+    ctx.lineTo(153,84);
+    ctx.closePath();
+    ctx.stroke();
+    
+    //2
+    ctx.beginPath();
+    ctx.moveTo(100,60);
+    ctx.lineTo(61,88);
+    ctx.lineTo(76,134);
+    ctx.lineTo(124,134);
+    ctx.lineTo(139,88);
+    ctx.closePath();
+    ctx.stroke();
+    
+    //1
+    ctx.beginPath();
+    ctx.moveTo(100,75);
+    ctx.lineTo(75,93);
+    ctx.lineTo(85,123);
+    ctx.lineTo(115,123);
+    ctx.lineTo(125,93);
+    ctx.closePath();
+    ctx.stroke();
+    
+ 	 
+
+    //내 평점
+    //위에서부터 왼쪽으로
+    //			전문성	적극성	일정준수	  의사소통		만족도
+    //5점 좌표 {(100,15),(19,75),(49,169),(151,169),(181,75)}
+    //4점 좌표 {(100,30),(33,79),(58,157),(142,157),(167,79)}
+    //3점 좌표 {(100,45),(47,84),(67,146),(133,146),(153,84)}
+    //2점 좌표 {(100,60),(61,88),(76,134),(124,134),(139,88)}
+    //1점 좌표 {(100,75),(75,93),(85,123),(115,123),(125,93)}
+    
+    var professional = ${evaluation.professional };
+    var passion = ${evaluation.passion};
+    var schedule = ${evaluation.schedule };
+    var communication = ${evaluation.communication };
+   	var satisfy = ${evaluation.satisfy };
+    
+    
+    
+    ctx.strokeStyle = "yellow";
+    ctx.beginPath();
+    
+    if(professional==5){
+    	ctx.moveTo(100,15); 
+    }else if(professional==4){
+    	ctx.moveTo(100,30);
+    }else if(professional==3){
+    	ctx.moveTo(100,45);
+    }else if(professional==2){
+    	ctx.moveTo(100,60);
+    }else if(professional==1){
+    	ctx.moveTo(100,75);
+    }else{
+    	ctx.moveTo(100,100);
+    }
+    
+    if(passion==5){
+    	ctx.lineTo(19,75);
+    }else if(passion==4){
+    	ctx.lineTo(33,79);
+    }else if(passion==3){
+    	ctx.lineTo(47,84);
+    }else if(passion==2){
+    	ctx.lineTo(61,88);
+    }else if(passion==1){
+    	ctx.lineTo(75,93);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    if(schedule==5){
+    	ctx.lineTo(49,169);
+    }else if(schedule==4){
+    	ctx.lineTo(58,157);
+    }else if(schedule==3){
+    	ctx.lineTo(67,146);
+    }else if(schedule==2){
+    	ctx.lineTo(76,134);
+    }else if(schedule==1){
+    	ctx.lineTo(85,123);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    if(communication==5){
+    	ctx.lineTo(151,169);
+    }else if(communication==4){
+    	ctx.lineTo(142,157);
+    }else if(communication==3){
+    	ctx.lineTo(133,146);
+    }else if(communication==2){
+    	ctx.lineTo(124,134);
+    }else if(communication==1){
+    	ctx.lineTo(115,123);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    if(satisfy==5){
+    	ctx.lineTo(181,75);
+    }else if(satisfy==4){
+    	ctx.lineTo(167,79);
+    }else if(satisfy==3){
+    	ctx.lineTo(153,84);
+    }else if(satisfy==2){
+    	ctx.lineTo(139,88);
+    }else if(satisfy==1){
+    	ctx.lineTo(125,93);
+    }else{
+    	ctx.lineTo(100,100);
+    }
+    
+    ctx.fillStyle = "yellow";
+    ctx.globalAlpha = "0.7";
+    ctx.fill();
+    ctx.closePath();
+    ctx.stroke();
+    
+    
+    
+    //차트
+    	var chart1 = ${myproject.category1};
+    	var chart2 = ${myproject.category2};
+    function drawChart() {
+    		
+    	   // Define the chart to be drawn.
+    	   var data = new google.visualization.DataTable();
+    	   data.addColumn('string', 'jobKind');
+    	   data.addColumn('number', 'Percentage');
+    	   data.addRows([
+    	      ['개발', chart1],
+    	      ['디자인', chart2]
+    	      
+    	   ]);
+    	   
+    	   
+    	   // Set chart options
+    	   var options = {'title':'내 프로젝트',
+    	      'width':220,
+    	      'height':200,
+    	      legend :{
+    		    	position: 'top',
+    		    	textStyle : {
+    		    		fontSize: 12
+    		    	}
+    		      },};
+
+    	   // Instantiate and draw the chart.
+    	   var chart = new google.visualization.PieChart(document.getElementById('chart'));
+    	   chart.draw(data, options);
+    	}
+    function drawChart2() {
+		
+	   // Define the chart to be drawn.
+	   var data = new google.visualization.DataTable();
+	   data.addColumn('string', 'jobKind');
+	   data.addColumn('number', 'Percentage');
+	   data.addRows([
+	      ['진행한 프로젝트 없음', 1]
+	      
+	   ]);
+	   
+	   
+	   // Set chart options
+	   var options = {
+	      'width':220,
+	      'height':200,
+	      legend :{
+	    	position: 'top',
+	    	textStyle : {
+	    		fontSize: 12
+	    	}
+	      },
+	      slices: {
+	            0: { color: 'gray' },
+	          }};
+
+	   // Instantiate and draw the chart.
+	   var chart = new google.visualization.PieChart(document.getElementById('chart2'));
+	   chart.draw(data, options);
+	}
+    if(chart1 == 0 && chart2 ==0){
+  		google.charts.setOnLoadCallback(drawChart2);
+    }else{
+    	google.charts.setOnLoadCallback(drawChart);
+    }
+    
+    
+});
 </script>
 </head>
 <body>
@@ -309,16 +595,76 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 						</span>
 						</p>
 					</section>
-					<section class="profile_wrap">
+					
+					<section class="profile_wrap ooo">
 						<div class="profile_1">
+							<div class="wrap_1">
+								<p style="margin-left: 10px; font-weight: bold; font-size: 17px;">항목 평가</p>
+								<div class="canvas_div">
+								<canvas  id="mycanvas" width="200" height="200">
+									
+								</canvas>
+								
+								</div>
+							</div>
+							<div class="wrap_1">
+								<p style="margin-left: 20px; font-weight: bold; font-size: 17px;">활동 요약 정보</p>
+								<div style="width: 220px; height: 218px; display: inline-block;">
+									<p style="margin-top: 20px;">
+						<span>
+						<c:if test="${evaluation.totalavr eq 0 }">
+						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/0.png">
+						</c:if>
+						<c:if test="${evaluation.totalavr eq 1 }">
+						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/1.png">
+						</c:if>
+						<c:if test="${evaluation.totalavr eq 2 }">
+						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/2.png">
+						</c:if>
+						<c:if test="${evaluation.totalavr eq 3 }">
+						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/3.png">
+						</c:if>
+						<c:if test="${evaluation.totalavr eq 4 }">
+						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/4.png">
+						</c:if>
+						<c:if test="${evaluation.totalavr eq 5 }">
+						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
+						</c:if>
+						</span>
+						<span style="line-height: 30px; vertical-align: top; float: right; margin-right: 10px;">
+							
+						</span>
+						</p>
+						<p style="margin-top:20px; margin-left: 20px;">
+							<span>평균평점 </span> &nbsp;&nbsp;&nbsp;${evaluation.totalavr}
+							/<span>&nbsp;&nbsp;평가</span> <span style="float: right;">${evaluation.projectList }개</span>
+						</p>
+						<p style="margin-left: 20px; margin-top: 20px;">
+							<span>계약한 프로젝트 </span><span style="float: right;">${myproject.projectList }건</span>
+						</p>
 						
+						<p style="margin-left: 20px; margin-top: 20px;">
+							<span>포트폴리오</span><span style="float: right;">${portfolio.size()}개</span>
+						</p>
+						
+								</div>
+							</div>
+							<div  class="wrap_1">
+								<p style="margin-left: 20px; font-weight: bold; font-size: 17px; margin-bottom: 10px;">진행한 프로젝트</p>
+								<div id="chart">
+								
+								</div>
+								<div id="chart2">
+								
+								</div>
+							</div>
 						</div>
-						활동 요약 정보,세부 항복 평가, 진행한 카테고리
 					</section>
+					
 					<section class="profile_wrap">
 						<p><span>자기소개</span><a href="introView" style="margin-top: -5px;">업데이트 하기</a></p>
 						
-						<div class="no_data_wrap">
+						<div class="no_data_wrap" style="text-align: left;">
 							<c:if test="${empty freelancer.intro }">
 							<div class="no_data">
 								<div class="no_img">

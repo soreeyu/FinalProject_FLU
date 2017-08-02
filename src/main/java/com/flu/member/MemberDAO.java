@@ -7,8 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.flu.reservation.ReservationDTO;
-import com.flu.util.ListInfo;
+import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.util.RowMaker;
 
 @Repository
@@ -48,9 +47,12 @@ public class MemberDAO {
 	}
 
 	//회원 정보
-	public MemberDTO memberView(String email) {
+	public CheckMemberViewDTO memberView(String email) {
 		System.out.println("view를 하러 왔음");
 		return sqlSession.selectOne(NAMESPACE+"memberView", email);
+	}
+	public MemberDTO memberView2(String email){
+		return sqlSession.selectOne(NAMESPACE+"memberView2", email);
 	}
 
 	//이메일 인증 시 난수 저장 , 인증 성공시 값이 1로 변경
@@ -88,20 +90,5 @@ public class MemberDAO {
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
 	}
 	
-	//예약현황 리스트
-	public List<ReservationDTO> memberReservedList(MemberDTO memberDTO) throws Exception{
-		return sqlSession.selectList(NAMESPACE+"memberReserved", memberDTO);
-	}
-	
-	//예약현황 리스트 ( 관리자 전용 ) 
-	public List<ReservationDTO> adminReservedList(ListInfo listInfo) throws Exception{
-		return sqlSession.selectList(NAMESPACE+"adminReserved", listInfo);
-	}
-	
-	//리스트를 가져오기 위한 count
-	public int totalCount() throws Exception{
-		return sqlSession.selectOne("MeetRoomMapper.MeetRoomCount");
-		
-	}
 	
 }

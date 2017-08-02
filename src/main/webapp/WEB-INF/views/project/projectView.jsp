@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -179,7 +180,7 @@ strong{
 	margin-bottom: 20px;
 }
 .project-skill{
-/* 	background-color: #666; */
+	background-color: #666;
 	color: white;
 	border-radius: 2px;
 }
@@ -206,41 +207,26 @@ strong{
 	vertical-align: middle;
 	padding: 10px 12px;
 	margin-top: 15px;
-	text-decoration: none;
-}
-#schedult-btn{
-	width:230px;
-	height:40px;
-	color: white;
-	background-color: #f1720c;
-	border-color: #f48023;
-	border-radius: 2px;
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	padding: 10px 12px;
-	margin-top: 15px;
-	text-decoration: none;
 }
 .project-qna{
 	margin-top: 10px;
-	height: 600px;
+	height: 350px;
 	background-color: white;
 	padding: 30px;	
 }
 .project-apply-box{
 	width: 100%;
-	height: auto;
+	height: 140px;
 	border: 1px solid #dedede;
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
-	margin-bottom: 20px;
-	padding: 5px 9px 20px;
+	padding: 5px 9px;
 }
 .client-info-box{
 	background-color: white;
 	min-height: 450px;
+	margin-top: 20px;
 	border: 1px solid #dedede;
 }
 
@@ -373,11 +359,12 @@ background-color: white;
 }
 .project-head{
 	height: 27px;
+	background-color: yellow;
 	margin-bottom: 5px;
 }
 .project-title{
-	color: #15647a;
-	font-size: 18px;
+	color: blue;
+	font-size: 15px;
 	font-weight: bold;
 }
 .project-body{
@@ -407,7 +394,6 @@ background-color: white;
 	float: left;
 	height: 60px;
 	background-color: red;
-	padding-top: 5px;
 }
 .project-contents-right{
 	font-size: 13px;
@@ -415,6 +401,7 @@ background-color: white;
 	float: right;
 	height: 54px;
 	line-height: 13px;
+	background-color: gray;
 }
 .right-contents-sub{
 	border-bottom: 1px solid #dedede;
@@ -470,17 +457,12 @@ background-color: white;
 	width: 100%;
 	height: 300px;
 }
-.project-reply-box-inner{
-	background-color: yellow;
-	min-height: 200px;
-	max-height: 600px;
-	height: auto;
-}
 </style>
 
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
+
 <p>project View &emsp;
 <c:if test="${dto.state=='done'}">
 [ 검수완료 ]
@@ -638,17 +620,18 @@ background-color: white;
 			</div>
 			
 			<div class="project-qna">
-				<div class="project-detail-title">프로젝트 문의 ${dto.projectNum }</div>
+				<div class="project-detail-title">프로젝트 문의</div>
 				<div style="border-bottom: 1px dotted #dedede;"></div>
 				<div style="margin-top: 30px;" class="project-reply-box">
 				<div class="project-reply-box-inner">
 					<div class="project-reply-box-top">
-					 
+					<div>writer</div><div>contents</div><div>reg_date</div><div>삭제</div>
+						<c:forEach items="${replylist}" var="reply">
+						<div>${reply.writer}</div><div>${reply.contents}</div><div>${reply.reg_date}</div><div>삭제</div>
+						</c:forEach>
 					
 					</div>
 				</div>
-				
-				
 				<div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
 				<form action="../reply/replyInsert" id="frm" method="post">
 					<input type="hidden" name="projectNum" value="${dto.projectNum}">
@@ -670,38 +653,16 @@ background-color: white;
 			
 			<!-- right contents  -->
 			<section class="contents_sub">
-			${dto.state }
 				<div class="project-apply-box">
-			<c:if test="${member.kind eq 'freelancer'}">
 				<a href="#" id="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
 				<a href="#" id="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
-	 		</c:if> 
-	 		<c:if test="${dto.state eq 'ing'}">
-				<a href="#" id="schedult-btn">프로젝트 스케줄 </a>
-	 		</c:if>
-	 		<c:if test="${dto.state eq 'recruit'|| dto.state eq 'ing'}">
-				<a href="#" id="schedult-btn">미팅룸 예약하기 </a>
-	 		</c:if>
-			
-			
 				</div>
 				
 				<div class="client-info-box">
-					<div>
-					<div>프로젝트 등록자 : ${dto.email }</div>
-					<div><span>프로젝트 등록</span><span>몇 건 </span></div>
-					<div><span>계약한 프로젝트</span><span>몇 건</span></div>
-					<div><span>진행중인 프로젝트</span><span>몇 건</span></div>
-					<div><span>완료한 프로젝트</span><span>몇 건</span></div>
-					</div>
-				</div>
-
 				
-		
+				</div>
 			</section>
 		</div>
-		
-
 
 <p>
 
@@ -710,6 +671,7 @@ background-color: white;
 </c:if>
 <a href="projectDelete?projectNum=${dto.projectNum}">Delete</a>
 </p>
+
 
 
 
@@ -768,28 +730,17 @@ background-color: white;
 
 
 
+=======
+>>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
 </section>
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
-var projectNum = "${dto.projectNum}";
-
-/* reply ajax */
-$.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
-	$(".project-reply-box-top").html(data);
-});
-
-
-
-
-
-/* reply 작성 */
  $("#btn").click(function() {
 	 alert("yes");
 	var chk = $("#reply_check").prop("checked");
 	alert(chk);
-	
-	/* 비밀글이면 true, 공개댓글이면 false값 */
+	/* check되있으면 true, 아니면 false값 */
 	if(chk==true){
 		alert("true");
 		alert($("#replyChk").val());
@@ -798,53 +749,24 @@ $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
 		alert("false");
 		$("#replyChk").prop("value", "false");
 	}
-	$("#frm").submit();
-});
-
- $(".contents").on("click",".listReply",function() {
-
-	 	/* 답글클릭했을때 replyNum */
-		alert($(this).attr("data-id"));
-		var replyId = $(this).attr("data-id");
-		
-		var testId = $(this).attr("id");
-		
-		
-		/* 해당하는 답글 아래의 id에 replyNum셋팅 */
-		$(".rereply").attr("id", replyId);
-		alert($(".rereply").attr("id"));
-		
-		$(".listReply").html("");
-					
-		$("."+testId).html('<input type="text" name="contents"><input type="button" value="댓글달기"><input type="button" class="cancle" value="취소">');
-		$(this).attr("data-on", "on");
-		
-		
-		
-		/* $.ajax({
-			url:"../reply/replyInsert",
-			type:"POST",
-			success:function(data){
-				alert("Insert들어옴");
-			}
-		}); */
-	});
- 
- $(".contents").on("click",".cancle",function() {
-	alert("취소합시다");
- });
+	var kk = "${replylist}";
+	alert(kk);
 	
-
-/* var curPage=1;
+/* $.get("../reply/replyList",function(data){
+	alert("repyl");
+	
+}); */
+var curPage=1;
 $.ajax({
-	url:"../reply/replyList?projectNum=${dto.projectNum}",
+	url:"../reply/replyList",
 	type:"GET",
-	success:function(data){
+	success:function(result){
 		alert("yeyyy");
 
-		alert(data);
-		$(".project-reply-box-top").html(data);
+		alert(result);
+		$(".project-reply-box-top").html(result);
 	}
+<<<<<<< HEAD
 });  */
 
  
@@ -861,19 +783,20 @@ $('#'+state).click(function() {
 		else{
 			alert("no"); 
 		}
+=======
+}); 
+>>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
 
-	}else{
-		if(confirm("프로젝트를 진행하시겠습니까??")){
-			$('#frm').submit();
-		}
-		else{
-			alert("no"); 
-		}
-	}
-		
 });
  
+<<<<<<< HEAD
 =======
+=======
+</script>
+</body>
+<script type="text/javascript">
+
+>>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
 	var state = '${dto.state}';
 	var projectNum = '${dto.projectNum}';
 		
@@ -901,7 +824,9 @@ $('#'+state).click(function() {
 	});
 
 
+<<<<<<< HEAD
 >>>>>>> 3588a58c7c2724337a78a2f2dc8b3570df5d1771
+=======
+>>>>>>> 61eb0864cfab9fd9d8eccec0ba6454602ab78b5f
 </script>
-</body>
 </html>

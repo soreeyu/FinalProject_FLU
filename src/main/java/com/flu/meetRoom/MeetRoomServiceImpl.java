@@ -19,8 +19,7 @@ public class MeetRoomServiceImpl implements RoomService{
 	
 	@Override
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
-		int totalCount = meetRoomDAO.count();
-		listInfo.makePage(totalCount);
+		// TODO Auto-generated method stub
 		listInfo.makeRow();
 		
 		return meetRoomDAO.list(listInfo);
@@ -53,7 +52,10 @@ public class MeetRoomServiceImpl implements RoomService{
 	public List<RoomDTO> eachSelect(int num) throws Exception{
 		return meetRoomDAO.eachSelect(num);
 	}
-	
+	public int count(ListInfo listInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	public int delete2(int num) throws Exception {
 		return meetRoomDAO.delete2(num);

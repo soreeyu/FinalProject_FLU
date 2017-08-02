@@ -1,6 +1,5 @@
 package com.flu.member;
 
-import java.util.List;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -14,8 +13,7 @@ import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
 
-import com.flu.reservation.ReservationDTO;
-import com.flu.util.ListInfo;
+import com.flu.checkMember.CheckMemberViewDTO;
 
 @Service
 public class MemberService {
@@ -100,8 +98,11 @@ public class MemberService {
 	
 	
 	//회원 정보
-	public MemberDTO memberView(String email){
+	public CheckMemberViewDTO memberView(String email){
 		return memberDAO.memberView(email);
+	}
+	public MemberDTO memberView2(String email){
+		return memberDAO.memberView2(email);
 	}
 	
 
@@ -109,16 +110,5 @@ public class MemberService {
 	public int memberUpdate(MemberDTO memberDTO){
 		return memberDAO.memberUpdate(memberDTO);
 	}
-	
-	//예약현황 리스트
-	public List<ReservationDTO> memberReservedList(MemberDTO memberDTO) throws Exception{
-		return memberDAO.memberReservedList(memberDTO);
-	}
-	//예약현황 리스트 ( 관리자 전용 )
-	public List<ReservationDTO> adminReservedlist(ListInfo listInfo) throws  Exception{
-		int totalCount = memberDAO.totalCount();
-		listInfo.makePage(totalCount);
-		listInfo.makeRow();
-		return memberDAO.adminReservedList(listInfo);
-	}
+
 }

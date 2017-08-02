@@ -158,11 +158,9 @@ overflow-y: auto;
 	        
 	            
 	            
-	        });
-	             
+	        });          
 	        
-	        
-	        $('#fileStart').click(function() {
+	     $('#fileStart').click(function() {
 	        	
 	        	alert("check=1");
 	        	$('#fileForm').css("visibility","visible");
@@ -178,12 +176,8 @@ overflow-y: auto;
 	        	
 			});
 	        
-	        
-
-	       
-	        
-});
-	   
+    
+	});  
 
 
 </script>

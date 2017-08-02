@@ -52,6 +52,7 @@
   		<when test="board==null">
  	  	select * from (select A.*,rownum R from (select * from project where state in 
 	  	
+	 			 	
   					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
   					#{item}
   					</foreach>	  	

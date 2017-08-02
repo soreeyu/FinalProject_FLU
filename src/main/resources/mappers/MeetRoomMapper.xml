@@ -3,12 +3,6 @@
   
   
   <mapper namespace="MeetRoomMapper">
-  	<sql id="search">
-	<trim prefix="where" prefixOverrides="and || or">
-	<if test="kind == 'name'"> name like '%' || #{search} || '%'</if>
-	<if test="kind == 'addr_main'"> addr_main like '%' || #{search} || '%'</if>
-	</trim>
-	</sql> 
   	
   	<!-- 업체 등록  -->
   	<insert id="MeetInsert" parameterType="com.flu.meetRoom.MeetRoomDTO" >
@@ -19,9 +13,7 @@
   	<select id="MeetList" resultType="com.flu.meetRoom.MeetRoomDTO" parameterType="com.flu.util.ListInfo">
   		select * from
   		(select rownum R, M.* from
-  		(select * from meetroom 
-  		<include refid="search"/>
-  		order by num desc) M)
+  		(select * from meetroom order by num desc) M)
   		where R between #{startRow} and #{lastRow}
   	</select>
 
@@ -38,7 +30,6 @@
 	<select id="MeetDelete_eachRoom" parameterType="java.lang.Integer" resultType="com.flu.eachRoom.EachRoomDTO">
 		select * from eachroom where snum=#{num}
 	</select>
-	
 	<!-- 업체정보 수정 -->
 	<update id="MeetUpdate" parameterType="com.flu.meetRoom.MeetRoomDTO">
 		update meetroom set name=#{name}, contents=#{contents}, time=#{time}, fname=#{fname}, oname=#{oname}, holiday=#{holiday}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail}, homepage=#{homePage} where num=#{num}
@@ -49,11 +40,5 @@
 	<delete id="EachDelete" parameterType="java.lang.Integer">
 		delete eachroom where snum=#{num}
 	</delete>
-	
-	<!-- 업체 페이징 처리를 위한 토탈카운트 가져오기-->
-	<select id="MeetRoomCount" resultType="java.lang.Integer">
-		select nvl(count(num), 0) from meetroom
-		<!-- <include refid="search"/> -->
-	</select>
 	
   </mapper>

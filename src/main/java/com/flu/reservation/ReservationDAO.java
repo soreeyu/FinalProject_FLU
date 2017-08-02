@@ -22,7 +22,7 @@ public class ReservationDAO {
 
 	public int insert(ReservationDTO reserve) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.delete(NAMESPACE+"ReservePay", reserve);
+		return 0;
 	}
 
 	//예약 취소하기 삭제
@@ -31,6 +31,7 @@ public class ReservationDAO {
 		return sqlSession.delete(NAMESPACE+"ReserveDelete", num);
 	}
 	
+
 	//방정보 불러오기
 	public EachRoomDTO eachView(int num) throws Exception{
 		return sqlSession.selectOne("EachRoomMapper.EachView", num);
@@ -51,5 +52,5 @@ public class ReservationDAO {
 	public int reservationDel(Integer num) throws Exception{
 		return sqlSession.update(NAMESPACE+"ReserveDel", num);
 	}
-	
+
 }

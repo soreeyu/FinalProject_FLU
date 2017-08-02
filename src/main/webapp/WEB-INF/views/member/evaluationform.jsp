@@ -138,7 +138,6 @@
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -157,11 +156,43 @@
 	font-weight: bold;
 }
 
-#a{
-	color: white;
-	background-color: #66b3ff;
+
+.eval{
+	margin-bottom: 10px;
+	padding: 5px;
+}
+.eval label{
+	margin-left: 25%;
+	display: inline-block;
 }
 
+.evname{
+	width: 150px;
+	display: inline-block;
+}
+.eval input {
+    height: 22px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #666;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #dedede;
+    border-radius: 2px;
+}
+#btn{
+	float: right;
+	width: 100px;
+	height: 30px;
+	border: 0;
+	cursor: pointer;
+}
+
+#a{
+	background-color: #66b3ff;
+	color: white;
+}
 </style>
 </head>
 <body>
@@ -175,18 +206,27 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<p><span>ㅁㅁㅁ의 평가</span><a href="#" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>프리랜서 평가</span>
+						
+						</p>
 					</section>
 					<section class="profile_wrap">
-						<p><span>자기소개</span></p>
+						<p></p>
 						
 						<div class="no_data_wrap">
-							<div class="no_data">
-								<div class="no_img">
-									<img alt="자기소개" src="${pageContext.request.contextPath }/resources/img/mypage/intro.png">
-									<p>입력된 <span>'자기소개'</span>가 없습니다.</p>
-								</div>
-							</div>
+							<form action="" method="post">
+								<input type="hidden" name="projectNum" value="${projectNum }" >
+								<input type="hidden" name="fromEmail" value="${member.email}">
+								<input type="hidden" name="toEmail" value="${email}">
+								
+								<p class="eval"><label><span class="evname">전문성</span><input type="number" name="professional" max="5"></label></p>
+								<p class="eval"><label><span class="evname">만족도</span><input type="number" name="satisfy" max="5"></label></p>
+								<p class="eval"><label><span class="evname">의사소통</span><input type="number" name="communication" max="5"></label></p>
+								<p class="eval"><label><span class="evname">일정준수</span><input type="number" name="schedule" max="5"></label></p>
+								<p class="eval"><label><span class="evname">적극성</span><input type="number" name="passion" max="5"></label></p>
+								
+								<p><input type="button" id="btn" value="등록"></p>
+							</form>
 						</div>
 						
 					</section>
@@ -199,4 +239,22 @@
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
+<script type="text/javascript">
+
+	$("#btn").click(function() {
+		var professional = $("input[name='professional']").val();
+		var satisfy = $("input[name='satisfy']").val();
+		var communication = $("input[name='communication']").val();
+		var schedule = $("input[name='schedule']").val();
+		var passion = $("input[name='passion']").val();
+		
+		if(professional =="" || satisfy =="" || communication =="" || schedule =="" || passion ==""){
+			alert("항목을 모두 채워주세요");
+		}else{
+			submit;
+		}
+	});
+</script>
+
+
 </html>

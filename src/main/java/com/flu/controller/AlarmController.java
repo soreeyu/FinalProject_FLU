@@ -37,6 +37,7 @@ public class AlarmController {
 		
 		
 	}
+
 	
 	@RequestMapping(value="alarmDelte", method=RequestMethod.GET)
 	public String alarmDelete(Integer num) throws Exception{
@@ -59,3 +60,4 @@ public class AlarmController {
 	}
 	
 }
+

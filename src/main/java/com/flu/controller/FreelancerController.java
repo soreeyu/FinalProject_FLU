@@ -30,10 +30,6 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
-
-import com.flu.project.ProjectDTO;
-import com.flu.project.ProjectService;
-
 import com.flu.util.ListInfo;
 
 @Controller
@@ -44,14 +40,12 @@ public class FreelancerController {
 	private FreelancerService freelancerService;
 	@Inject
 	private AlarmService alarmService;
-	
 	private AlarmDTO alarmDTO;
-
+	
 	//이메일 가져오는 메서드
 	private String getEmail(HttpSession session){
 		return ((MemberDTO)session.getAttribute("member")).getEmail();
 	}
-
 	
 	
 	//세션에서 이메일 가져와 프리랜서 뷰 하나 가져오는 메서드
@@ -62,7 +56,6 @@ public class FreelancerController {
 			
 			return freelancerService.freelancerView(memberDTO.getEmail());
 		}
-		
 		//디티오를 하나 받아 관심분야를 스플릿해서 디티오와 관심분야를 맵으로 가져오는 메서드
 		private Map<String, Object> freelancerview2(String email){
 			Map<String, Object> map = freelancerService.freelancerView2(email);
@@ -102,7 +95,8 @@ public class FreelancerController {
 		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
 		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
 		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
-		model.addAttribute("evaluation", freelancerService.evaluationView(this.getEmail(session)));
+		model.addAttribute("evaluation", freelancerService.evaluationList(this.getEmail(session)));
+		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
 		
 		return "/member/freelancer/mypage";
 	}
@@ -130,9 +124,9 @@ public class FreelancerController {
 		model.addAttribute("path", "infoInsert");
 		return "/member/freelancer/freelancerinfo";
 	}
-	//프리랜서 정보 등록
+	//프리샌서 정보 등록
 	@RequestMapping(value="infoInsert", method=RequestMethod.POST)
-	public String freelancerinfoInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes) throws Exception{
+	public String freelancerinfoInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes)throws Exception{
 		
 		System.out.println("등록");
 		System.out.println(freelancerDTO.getEmail());
@@ -143,6 +137,7 @@ public class FreelancerController {
 			freelancerDTO.setInteresting("");
 			
 		}
+
 		int result=freelancerService.infoUpdate(freelancerDTO);
 		if(result>0){
 			alarmDTO = new AlarmDTO();
@@ -152,6 +147,9 @@ public class FreelancerController {
 			
 		}
 		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		freelancerService.infoUpdate(freelancerDTO);
+
 		redirectAttributes.addFlashAttribute("active8", "a");
 		
 		
@@ -170,7 +168,7 @@ public class FreelancerController {
 	
 	//프리랜서 정보 수정
 	@RequestMapping(value="infoUpdate", method=RequestMethod.POST)
-	public String freelancerinfoUpdate(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes) throws Exception{
+	public String freelancerinfoUpdate(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes)throws Exception{
 		
 		System.out.println("수정");
 		System.out.println(freelancerDTO.getEmail());
@@ -182,6 +180,7 @@ public class FreelancerController {
 		System.out.println(freelancerDTO.getInteresting());
 		System.out.println(freelancerDTO.getPossibility());
 		
+
 		int result = freelancerService.infoUpdate(freelancerDTO);
 		if(result>0){
 			alarmDTO = new AlarmDTO();
@@ -191,6 +190,10 @@ public class FreelancerController {
 			
 		}
 		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		freelancerService.infoUpdate(freelancerDTO);
+		
+
 		redirectAttributes.addFlashAttribute("active8", "a");
 		
 		return "redirect:/member/myinfoView";
@@ -230,21 +233,20 @@ public class FreelancerController {
 	}
 	//자기소개 등록
 	@RequestMapping(value="introInsert", method=RequestMethod.POST)
-	public String introInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes) throws Exception{
+	public String introInsert(FreelancerDTO freelancerDTO, RedirectAttributes redirectAttributes)throws Exception{
 		int result = freelancerService.introInsert(freelancerDTO);
 		redirectAttributes.addFlashAttribute("active2", "a");
-		alarmDTO = new AlarmDTO();
-		alarmDTO.setEmail(freelancerDTO.getEmail());
+		
 		if(result > 0){
 			freelancerDTO = freelancerService.freelancerView(freelancerDTO.getEmail());
 			redirectAttributes.addFlashAttribute("free", freelancerDTO);
+
 			alarmDTO.setContents("자기소개를 성공적으로 등록하였습니다.");
 			alarmService.alarmInsert(alarmDTO);		
 			redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 			return "redirect:/member/introView";
 		}else{
-			alarmDTO.setContents("자기소개 등록에 실패하였습니다. 다시 시도해주세요.");
-			alarmService.alarmInsert(alarmDTO);	
 			return "redirect:/member/introView";
 		}
 		
@@ -274,19 +276,18 @@ public class FreelancerController {
 	}
 	//자기소개 수정
 	@RequestMapping(value="introUpdate", method=RequestMethod.POST)
+
 	public String introUpdate(HttpSession session, FreelancerDTO freelancerDTO, RedirectAttributes ra) throws Exception{
+
 		int result = freelancerService.introUpdate(freelancerDTO);
-		alarmDTO = new AlarmDTO();
-		alarmDTO.setEmail(this.getEmail(session));
-		
 		if(result > 0){
+
 			alarmDTO.setContents("등록된 자기소개를 성공적으로 수정 하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 			return "redirect:/member/introView";
 		}else{
-			alarmDTO.setContents("등록된 자기소개를 수정하는데 실패하였습니다. 다시 시도해 주세요");
-			alarmService.alarmInsert(alarmDTO);
 			return "redirect:/member/introView";
 		}
 	}
@@ -342,6 +343,7 @@ public class FreelancerController {
 			}
 		}
 		
+
 		int result = freelancerService.portfolioInsert(portFolio, ar);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(this.getEmail(session));
@@ -352,6 +354,10 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		freelancerService.portfolioInsert(portFolio, ar);
+		
+		
 		return "redirect:/member/portfolioList";
 		
 	}
@@ -459,6 +465,7 @@ public class FreelancerController {
 				}
 		}
 		}
+
 		int result = freelancerService.portfolioUpdate(portFolio, ar);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(this.getEmail(session));
@@ -469,6 +476,10 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		freelancerService.portfolioUpdate(portFolio, ar);
+		
+		
 		return "redirect:/member/portfolioList";
 		
 		
@@ -489,7 +500,9 @@ public class FreelancerController {
 	}
 	//보유기술 등록
 	@RequestMapping(value="skillInsert", method=RequestMethod.POST)
+
 	public String skillInsert(Skill skill, RedirectAttributes ra) throws Exception{
+
 		System.out.println(skill.getEmail());
 		System.out.println(skill.getKind());
 		System.out.println(skill.getSlevel());
@@ -499,8 +512,6 @@ public class FreelancerController {
 		
 		List<Skill> ar = new ArrayList<Skill>();
 		
-		alarmDTO = new AlarmDTO();
-		alarmDTO.setEmail(skill.getEmail());
 		if(skill.getExp().length() > 1){
 			String [] sk1 = skill.getExp().split(",");
 			String [] sk2 = skill.getKind().split(",");
@@ -515,7 +526,6 @@ public class FreelancerController {
 				ar.add(skill2);
 			}
 			
-			
 			int result = freelancerService.skillInsert(ar);
 			if(result>0){
 				alarmDTO.setContents("당신이 등록한 보유기술들은 훌륭합니다.");
@@ -524,10 +534,14 @@ public class FreelancerController {
 			}
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+			freelancerService.skillInsert(ar);
+
 		}else if(skill.getExp().equals("0")){
 			
 		}else{
 			ar.add(skill);
+
 			int result = freelancerService.skillInsert(ar);
 			if(result>0){
 				alarmDTO.setContents("당신이 등록한 보유기술들은 훌륭합니다.");
@@ -536,8 +550,10 @@ public class FreelancerController {
 			}
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+			freelancerService.skillInsert(ar);
+
 		}
-		
 		
 		
 		
@@ -655,7 +671,9 @@ public class FreelancerController {
 	}
 	//경력 등록
 	@RequestMapping(value="carrerInsert", method=RequestMethod.POST)
+
 	public String carrerInsert(Carrer carrer, RedirectAttributes ra) throws Exception{
+
 		System.out.println(carrer.getEmail());
 		System.out.println(carrer.getCompanyName());
 		System.out.println(carrer.getDept());
@@ -673,6 +691,9 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		freelancerService.carrerInsert(carrer);
+		
 		return "redirect:/member/carrer";
 	}
 
@@ -706,6 +727,7 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 		return "redirect:/member/carrer";
 
 	}
@@ -722,6 +744,7 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 		return "redirect:/member/carrer";
 
 	}
@@ -746,6 +769,7 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 		return "redirect:/member/carrer";
 	}
 
@@ -766,6 +790,7 @@ public class FreelancerController {
 	
 	//학력 수정
 	@RequestMapping(value="academicUpdate", method=RequestMethod.POST)
+
 	public String academicUpdate(Academic academic, RedirectAttributes ra) throws Exception{
 		
 		int result = freelancerService.academicUpdate(academic);
@@ -779,11 +804,13 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 		return "redirect:/member/carrer";
 
 	}
 	//학력 삭제
 	@RequestMapping(value="academicDelete", method=RequestMethod.GET)
+
 	public String academicDelete(Academic academic, RedirectAttributes ra) throws Exception{
 		int result = freelancerService.academicDelete(academic);
 		alarmDTO = new AlarmDTO();
@@ -795,6 +822,7 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 		return "redirect:/member/carrer";
 	}
 	/************************** License *******************************/
@@ -834,11 +862,14 @@ public class FreelancerController {
 	}
 	//자격증 수정
 	@RequestMapping(value="licenseUpdate", method=RequestMethod.POST)
+
 	public String licenseUpdate(License license, RedirectAttributes ra) throws Exception{
+
 		System.out.println(license.getlName());
 		System.out.println(license.getAgency());
 		System.out.println(license.getPublishDate());
 		System.out.println(license.getSeiralNum());
+
 		int result = freelancerService.licenseUpdate(license);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(license.getEmail());
@@ -849,6 +880,10 @@ public class FreelancerController {
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		freelancerService.licenseUpdate(license);
+		
+
 		return "redirect:/member/carrer";
 	}
 	//자격증 삭제
@@ -861,13 +896,17 @@ public class FreelancerController {
 	//평가 정보 등록
 	@RequestMapping(value="evaluationInsert", method=RequestMethod.POST)
 	public void evaluationInsert(Evaluation evaluation){
-		
+
 	}
 
-	//평가 정보 뷰
+	//평가 정보 리스트 - 클라이언트의 평가 항목
 	@RequestMapping(value="evaluationView", method=RequestMethod.GET)
-	public String evaluationView(String email, Model model){
+	public String evaluationView(HttpSession session, Model model){
 		model.addAttribute("active6", "a");
+		model.addAttribute("evaluation", freelancerService.evaluationList2(this.getEmail(session)));
+		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
+		model.addAttribute("projectName", freelancerService.getProjectName(this.getEmail(session)));
+		
 		return "/member/freelancer/evaluation";
 	}
 	//평가 정보 수정
@@ -884,12 +923,9 @@ public class FreelancerController {
 	
 	//내가 FLU 에서 진행한 프로젝트
 	@RequestMapping(value="myproject")
-	public String myproject(Model model, HttpSession session, ListInfo listInfo){
-		
-		
-				
+	public String myproject(Model model){
 		model.addAttribute("active7", "a");
-		return "/member/freelancer/myproject";
+		return "/member/evaluationform";
 	}
 	
 }

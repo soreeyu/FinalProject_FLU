@@ -54,7 +54,7 @@
   			select * from 
   			(select m.*, rownum R from 
   			(select j.email from 
-  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.emailcheck = 1) j  
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.kind = 'freelancer' and m.emailcheck = 1) j  
 			 <include refid="search"/>  
 			) m) where R between #{startRow} and #{lastRow}
   		</select>
@@ -203,6 +203,51 @@
   		<delete id="licenseDelete" parameterType="com.flu.profile.License">
   			delete license where email = #{email} and num = #{num}
   		</delete>
+  		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmyProjectㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		<!-- 마이 프로젝트 갯수 -->
+  		<select id="myproject" resultType="java.lang.String" parameterType="java.lang.String">
+  			select projectnum from applicant where email = #{email}
+  		</select>
+  		
+  		<!-- 내 프로젝트 -->
+  		<select id="myprojectList" resultType="java.lang.String" parameterType="java.util.Map">
+  			select category from project 
+  			
+  			<if test="length > 0">
+  			<where>
+  			projectnum in 
+  			<foreach collection="projectNum" item="item" open="(" separator="," close=")">
+  			#{item}
+  			</foreach>
+  			</where> 
+  			</if>
+  			<if test="length == 0">
+  			<where>
+  				projectnum = 0
+  			</where>
+  			</if>
+  		</select>
+  		
+  		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ Evaluation ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  		
+  		<!-- 나에 대한 평가 점수 리스트 -->
+  		<select id="evaluationList" resultType="com.flu.profile.Evaluation" parameterType="java.lang.String">
+  			select * from evaluation where toemail = #{email}
+  		</select>
+  		
+  		<!-- 프리랜서에 대한 평가 점수 뷰 -->
+  		<select id="evaluationView1" resultType="com.flu.profile.Evaluation" parameterType="com.flu.profile.Evaluation">
+  			select * from evaluation where projectnum = #{projectNum} and toemail = #{toEamil}
+  		</select>
+  		
+  		<!-- 클라이언트에 대한 평가 점수 뷰 -->
+  		
+  		<!-- 평가한 프로젝트 뷰 -->
+  		<select id="getProjectName" resultType="com.flu.project.ProjectDTO" parameterType="com.flu.profile.Evaluation">
+  			select * from project p inner join evaluation e on p.projectnum = e.projectnum where e.toemail = #{toEmail} and e.projectnum = #{projectNum}
+  		</select>
+  		
   		
   		
   </mapper>

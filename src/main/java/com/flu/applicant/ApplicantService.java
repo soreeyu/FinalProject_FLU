@@ -6,8 +6,6 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.flu.util.ListInfo;
-
 @Service
 public class ApplicantService {
 	
@@ -25,7 +23,5 @@ public class ApplicantService {
 	public int appUpdate(String email){
 		return applicantDAO.appUpdate(email);
 	}
-
 	
-
 }

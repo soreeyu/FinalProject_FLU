@@ -44,7 +44,7 @@
 	<!-- Interceptor -->
 	<beans:bean class="com.flu.interceptor.adminInterceptor" id="adminInterceptor"></beans:bean>
 	<beans:bean class="com.flu.interceptor.memberInterceptor" id="memberInterceptor"></beans:bean>
-	
+	<beans:bean class="com.flu.interceptor.LoginInterceptor" id="loginInterceptor"></beans:bean>
 	
 	<interceptors>
 		<interceptor>
@@ -54,6 +54,16 @@
 		<interceptor>
 			<mapping path="/*/*Insert"/>
 			<beans:ref bean="memberInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/*/*"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/project/projectList"/>
+			<exclude-mapping path="/member/freelancerList"/>
+			<exclude-mapping path="/member/login"/>
+			<exclude-mapping path="/member/MemberJoin"/>
+			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 	</interceptors>
 	
