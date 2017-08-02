@@ -457,10 +457,10 @@ $(function(){
     
     
     //차트
-    
+    	var chart1 = ${myproject.category1};
+    	var chart2 = ${myproject.category2};
     function drawChart() {
-    		var chart1 = ${myproject.category1};
-    		var chart2 = ${myproject.category2};
+    		
     	   // Define the chart to be drawn.
     	   var data = new google.visualization.DataTable();
     	   data.addColumn('string', 'jobKind');
@@ -475,13 +475,53 @@ $(function(){
     	   // Set chart options
     	   var options = {'title':'내 프로젝트',
     	      'width':220,
-    	      'height':200};
+    	      'height':200,
+    	      legend :{
+    		    	position: 'top',
+    		    	textStyle : {
+    		    		fontSize: 12
+    		    	}
+    		      },};
 
     	   // Instantiate and draw the chart.
     	   var chart = new google.visualization.PieChart(document.getElementById('chart'));
     	   chart.draw(data, options);
     	}
+    function drawChart2() {
+		
+	   // Define the chart to be drawn.
+	   var data = new google.visualization.DataTable();
+	   data.addColumn('string', 'jobKind');
+	   data.addColumn('number', 'Percentage');
+	   data.addRows([
+	      ['진행한 프로젝트 없음', 1]
+	      
+	   ]);
+	   
+	   
+	   // Set chart options
+	   var options = {
+	      'width':220,
+	      'height':200,
+	      legend :{
+	    	position: 'top',
+	    	textStyle : {
+	    		fontSize: 12
+	    	}
+	      },
+	      slices: {
+	            0: { color: 'gray' },
+	          }};
+
+	   // Instantiate and draw the chart.
+	   var chart = new google.visualization.PieChart(document.getElementById('chart2'));
+	   chart.draw(data, options);
+	}
+    if(chart1 == 0 && chart2 ==0){
+  		google.charts.setOnLoadCallback(drawChart2);
+    }else{
     	google.charts.setOnLoadCallback(drawChart);
+    }
     
     
 });
@@ -612,6 +652,9 @@ $(function(){
 							<div  class="wrap_1">
 								<p style="margin-left: 20px; font-weight: bold; font-size: 17px; margin-bottom: 10px;">진행한 프로젝트</p>
 								<div id="chart">
+								
+								</div>
+								<div id="chart2">
 								
 								</div>
 							</div>

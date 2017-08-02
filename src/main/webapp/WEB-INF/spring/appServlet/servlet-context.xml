@@ -62,6 +62,7 @@
 			<exclude-mapping path="/project/projectList"/>
 			<exclude-mapping path="/member/freelancerList"/>
 			<exclude-mapping path="/member/login"/>
+			<exclude-mapping path="/member/MemberJoin"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 	</interceptors>

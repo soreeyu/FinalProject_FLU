@@ -13,6 +13,8 @@ import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.checkMember.CheckMemberViewDTO;
+
 @Service
 public class MemberService {
 	
@@ -96,8 +98,11 @@ public class MemberService {
 	
 	
 	//회원 정보
-	public MemberDTO memberView(String email){
+	public CheckMemberViewDTO memberView(String email){
 		return memberDAO.memberView(email);
+	}
+	public MemberDTO memberView2(String email){
+		return memberDAO.memberView2(email);
 	}
 	
 

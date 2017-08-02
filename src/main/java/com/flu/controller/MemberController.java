@@ -103,10 +103,10 @@ public class MemberController {
 		@RequestMapping(value="EmailAccessCk")
 		public String EmailAccessCk(String num, String email){
 			
-			System.out.println(memberService.memberView(email).getEmail());
-			System.out.println(memberService.memberView(email).getEmailcheck());
+			System.out.println(memberService.memberView2(email).getEmail());
+			System.out.println(memberService.memberView2(email).getEmailcheck());
 			
-			if(num.equals(memberService.memberView(email).getEmailcheck()) && email.equals(memberService.memberView(email).getEmail())){
+			if(num.equals(memberService.memberView2(email).getEmailcheck()) && email.equals(memberService.memberView2(email).getEmail())){
 				MemberDTO memberDTO = new MemberDTO();
 				memberDTO.setEmail(email);
 				memberDTO.setEmailcheck("1");
@@ -225,7 +225,7 @@ public class MemberController {
 			System.out.println(memberDTO.getoProfileImage());
 			
 			memberService.memberUpdate(memberDTO);
-			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+			session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
 			
 			return "redirect:/member/personaldataView";
 		}
@@ -234,13 +234,13 @@ public class MemberController {
 		@RequestMapping(value="personaldataView", method=RequestMethod.GET)
 		public String personaldataView(Model model, HttpSession session,String email){
 			
-			if(((MemberDTO)session.getAttribute("member")).getType().equals("admin")){
+			if(((MemberDTO)session.getAttribute("member")).getKind().equals("admin")){
 				model.addAttribute("active1", "a");
 				model.addAttribute("dto", checkMemberService.checkView(email));
 				
 			}else{
 				model.addAttribute("active1", "a");
-				model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
+				model.addAttribute("dto", memberService.memberView2(this.getEmail(session)));
 			}
 			
 
@@ -252,7 +252,7 @@ public class MemberController {
 		public String personaldataUpdate(Model model, HttpSession session){
 			
 			
-			model.addAttribute("dto", memberService.memberView(this.getEmail(session)));
+			model.addAttribute("dto", memberService.memberView2(this.getEmail(session)));
 			model.addAttribute("path", "personaldataUpdate");
 			model.addAttribute("active1", "a");
 			return "/member/personaldataform";
@@ -296,7 +296,7 @@ public class MemberController {
 			System.out.println(memberDTO.getoProfileImage());
 			
 			memberService.memberUpdate(memberDTO);
-			session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+			session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
 
 			return "redirect:/member/personaldataView";
 		}

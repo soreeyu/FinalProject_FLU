@@ -11,7 +11,10 @@
   		</update>
   		
   		<!-- 멤버 뷰 -->
-  		<select id="memberView" resultType="com.flu.member.MemberDTO" parameterType="com.flu.member.MemberDTO">
+  		<select id="memberView" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.member.MemberDTO">
+  			select * from member M, checkmember A where M.email = #{email} and M.email=A.email
+  		</select>
+  		<select id="memberView2" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
   			select * from member where email = #{email}
   		</select>
   		

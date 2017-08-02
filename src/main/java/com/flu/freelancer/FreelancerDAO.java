@@ -361,8 +361,8 @@ public class FreelancerDAO{
 	public List<String> myprojectList2(String email){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNum",this.myprojectList(email));
-		
-		
+		map.put("length", this.myprojectList(email).size());
+		System.out.println("랭스 길이 : "+this.myprojectList(email).size());
 		
 		return sqlSession.selectList(NAMESPACE+"myprojectList", map);
 	}

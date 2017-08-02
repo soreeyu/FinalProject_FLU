@@ -213,13 +213,20 @@
   		<!-- 내 프로젝트 -->
   		<select id="myprojectList" resultType="java.lang.String" parameterType="java.util.Map">
   			select category from project 
+  			
+  			<if test="length > 0">
   			<where>
   			projectnum in 
   			<foreach collection="projectNum" item="item" open="(" separator="," close=")">
   			#{item}
   			</foreach>
   			</where> 
-  		
+  			</if>
+  			<if test="length == 0">
+  			<where>
+  				projectnum = 0
+  			</where>
+  			</if>
   		</select>
   		
   		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ Evaluation ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
