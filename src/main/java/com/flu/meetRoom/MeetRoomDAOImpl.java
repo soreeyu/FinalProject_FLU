@@ -23,8 +23,7 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	
 	@Override
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
-		System.out.println(listInfo.getSearch());
-		System.out.println(listInfo.getKind());
+		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+"MeetList", listInfo);
 	}
 	
@@ -61,10 +60,9 @@ public class MeetRoomDAOImpl implements RoomDAO{
 		// 업체 삭제시 자동으로 업체에 속해있는 방들을 삭제
 		return sqlSession.delete(NAMESPACE+"EachDelete", num);
 	}
-	
-	//업체 페이징을 위한 카운트 가져오기 // 검색추가를 위해  listinfo를 추가로 넣어야함 일단 보류
-	public int count() throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"MeetRoomCount");
+	public int count(ListInfo listInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

@@ -58,8 +58,7 @@ public class CheckProjectController {
 		
 		List<ProjectDTO> list = checkProjectService.checkList(projectDTO,listInfo,searchDate);
 		
-
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "check").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Check").addAttribute("searchDate", searchDate);
 		
 		return "checkProject/checkList";
 	}
@@ -73,7 +72,7 @@ public class CheckProjectController {
 		
 		List<ProjectDTO> list = checkProjectService.failList(projectDTO,listInfo,searchDate);
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "fail").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Fail").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 	
@@ -86,7 +85,7 @@ public class CheckProjectController {
 	
 		List<ProjectDTO> list = checkProjectService.waitList(projectDTO,listInfo,searchDate);
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "wait").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Wait").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 
@@ -116,7 +115,7 @@ public class CheckProjectController {
 		
 		List<ProjectDTO> list = checkProjectService.finishList(projectDTO,listInfo,searchDate,projectList);
 		
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "finish").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Finish").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 
@@ -136,8 +135,8 @@ public class CheckProjectController {
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
+
 	public String update(ProjectDTO projectDTO, RedirectAttributes ra) throws Exception{
-		System.out.println("gpgpgpgpgpgpgpgpgpgpgpgpgpgpgpgp");
 		
 		int result = checkProjectService.update(projectDTO);
 		if(result>0){
@@ -148,8 +147,6 @@ public class CheckProjectController {
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
-
-
 
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
@@ -168,9 +165,5 @@ public class CheckProjectController {
 		model.addAttribute("member", member);
 	
 	}
-	
-
-	
-
 	
 }

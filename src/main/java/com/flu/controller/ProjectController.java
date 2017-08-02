@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+
+import com.flu.applicant.ApplicantDTO;
+
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -26,6 +30,7 @@ import com.flu.util.ListInfo;
 @Controller
 @RequestMapping(value="/project/**")
 public class ProjectController {
+<<<<<<< HEAD
    
    @Inject
    private ProjectService projectService;
@@ -40,6 +45,17 @@ public class ProjectController {
       
       System.out.println("controller-projectMap");
       
+=======
+	
+	@Inject
+	private ProjectService projectService;
+
+	@Inject
+	private AlarmService alarmService;
+	private AlarmDTO alarmDTO;
+
+	
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8
 
       int totalCount = projectService.projectCount(listInfo, projectDTO, array);
       listInfo.makePage(totalCount);
@@ -59,6 +75,7 @@ public class ProjectController {
         System.out.println("getName="+pjlist.get(0).getName());
         
         return map;
+<<<<<<< HEAD
    }
    
    
@@ -183,6 +200,148 @@ public class ProjectController {
       
       System.out.println("projectInsert");
       
+=======
+	}
+	
+	
+	//list
+	@RequestMapping(value="projectList", method=RequestMethod.GET)
+	public String projectList(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
+
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+	
+		
+		
+		return "project/projectList";
+	}
+	
+	
+	//project 리스트 AJAX
+	@RequestMapping(value="projectListInner", method=RequestMethod.GET)
+	public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
+		System.out.println("projectListInner요");
+	
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		 System.out.println("controller-search==="+listInfo.getSearch());
+			
+		int totalCount =  projectService.projectCount(listInfo, projectDTO, array);
+		System.out.println("projectListInner의 project count="+totalCount);
+				
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+				
+		List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
+				
+		//List<ProjectDTO> sellar = projectService.sellList(projectDTO);
+		
+		System.out.println("projectListInner의 ar="+ar);
+		System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
+		
+		
+		System.out.println("=====================");
+		System.out.println("detailCategory="+ar.get(0).getDetailCategory());
+		System.out.println("search="+listInfo.getSearch());
+		System.out.println("kind="+listInfo.getKind());
+		System.out.println("arrange="+listInfo.getArrange());
+		System.out.println("curPage="+listInfo.getCurPage());
+		System.out.println("=====================");	
+		
+
+		
+	
+		model.addAttribute("list", ar);
+		model.addAttribute("type", "list");
+		model.addAttribute("pjcount", totalCount);
+		model.addAttribute("listInfo", listInfo);
+
+	}
+	
+	
+	@RequestMapping(value="arrangeMoney", method=RequestMethod.GET)
+	public void arrangeMoney(Model model, ListInfo listInfo){
+		System.out.println("=====================");
+		System.out.println("arrangeMoney");
+		System.out.println(listInfo.getSearch());
+		System.out.println(listInfo.getKind());
+		System.out.println(listInfo.getArrange());
+		System.out.println(listInfo.getCurPage());
+		System.out.println("=====================");	
+	}
+
+	
+
+
+	//view
+	@RequestMapping(value="projectView", method=RequestMethod.GET)
+	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
+		System.out.println("projectView");
+		if(projectNum==null){
+			projectNum=1;
+		}
+		
+		ProjectDTO projectDTO = projectService.projectView(projectNum);
+
+		
+		System.out.println("session의 사진을 불러와보자");
+
+		memberDTO = (MemberDTO)session.getAttribute("member");
+		/*System.out.println("member의 이메일-"+memberDTO.getEmail());
+		applicantDTO.setEmail(memberDTO.getEmail());*/
+		System.out.println("applicant의 state를 봅시다="+applicantDTO.getState());
+		
+		int contractResult = projectService.contractCount(projectDTO);
+		System.out.println("계약한 갯수="+contractResult);
+		int ingResult = projectService.ingCount(projectDTO);
+		System.out.println("진행중 프로젝트갯수="+ingResult);
+		int finishResult = projectService.finishCount(projectDTO);
+		System.out.println("완료된 프로젝트=="+finishResult);
+		int totalResult = projectService.pjCount(projectDTO);
+		System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
+		
+		System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
+		System.out.println("프로젝트 이름="+projectDTO.getName());
+		
+		
+		
+		model.addAttribute("dto", projectDTO);
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("conCount", contractResult);
+		model.addAttribute("ingCount", ingResult);
+		model.addAttribute("finishCount", finishResult);
+		model.addAttribute("totalCount", totalResult);
+		model.addAttribute("applicant", applicantDTO);
+
+	}
+	
+	
+	
+	//projectInsert Form
+	@RequestMapping(value="projectInsert", method=RequestMethod.GET)
+	public String projectInsert(Model model, HttpSession session, MemberDTO memberDTO){
+		System.out.println("projectInsertForm");
+		model.addAttribute("type", "insert");
+		
+		memberDTO = (MemberDTO) session.getAttribute("member");
+		System.out.println("email=="+memberDTO.getEmail());
+
+		System.out.println(memberDTO.getKind());		
+
+		return "project/projectInsert"; 
+		
+	}
+	
+	
+	//project Insert
+	@RequestMapping(value="projectInsert", method=RequestMethod.POST)
+	public String projectInsert(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
+		
+		System.out.println("projectInsert");
+		
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8
 
       
       //MultipartFile multi = multipartHttpServletRequest.getFile("fName");
@@ -196,6 +355,7 @@ public class ProjectController {
       projectDTO.setoName(projectDTO.getFileName().getOriginalFilename());
    
 
+<<<<<<< HEAD
       int result = projectService.projectInsert(projectDTO);
       
       String message = "fail";
@@ -203,11 +363,22 @@ public class ProjectController {
       if(result==1){
          message = "success";
          alarmDTO = new AlarmDTO();
+=======
+		int result = projectService.projectInsert(projectDTO);
+		
+		String message = "fail";
+		
+		if(result==1){
+			message = "success";
+
+			alarmDTO = new AlarmDTO();
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8
 			System.out.println("프로젝트 등록"+((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setContents("프로젝트를 성공적으로 등록하였습니다. 관리자의 검수를 기다리세요.");
 			alarmService.alarmInsert(alarmDTO);
 			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+<<<<<<< HEAD
          
          
       }
@@ -222,11 +393,27 @@ public class ProjectController {
    @RequestMapping(value="projectUpdate", method=RequestMethod.GET)
    public String projectUpdate(Model model, ProjectDTO projectDTO, MemberDTO memberDTO, HttpSession session){
       System.out.println("projectUpdateForm");
+=======
+
+		}
+		
+		rd.addFlashAttribute("message", message);
+		
+		return "redirect:/project/projectList";
+	}
+	
+	
+	//update form (insert form 공유)
+	@RequestMapping(value="projectUpdate", method=RequestMethod.GET)
+	public String projectUpdate(Model model, ProjectDTO projectDTO, MemberDTO memberDTO, HttpSession session){
+		System.out.println("projectUpdateForm");
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8
 
       memberDTO = (MemberDTO) session.getAttribute("member");
       System.out.println("member의 email=="+memberDTO.getEmail());
       System.out.println("project의 email=="+projectDTO.getEmail());
 
+<<<<<<< HEAD
       System.out.println(memberDTO.getKind());   
       
       projectDTO = projectService.projectView(projectDTO.getProjectNum());
@@ -262,10 +449,51 @@ public class ProjectController {
          message = "success";
          System.out.println("update success");
          alarmDTO = new AlarmDTO();
+=======
+		System.out.println(memberDTO.getKind());	
+		
+		projectDTO = projectService.projectView(projectDTO.getProjectNum());
+		System.out.println("projectNum="+projectDTO.getProjectNum());
+		System.out.println("controller-project-name="+projectDTO.getName());
+	
+		model.addAttribute("type", "update");
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("dto", projectDTO);
+		
+		return "project/projectInsert";
+	}
+	
+	
+	//update 하기
+	@RequestMapping(value="projectUpdate", method=RequestMethod.POST)
+
+	public String projectUpdate(ProjectDTO projectDTO, RedirectAttributes rd, MultipartHttpServletRequest multipartHttpServletRequest, HttpSession session)throws Exception{
+
+		System.out.println("projectUpdate");
+		
+		String realPath = session.getServletContext().getRealPath("resources/upload");
+		
+		FileSaver fileSaver = new FileSaver();
+		String fname = fileSaver.fileSave(realPath, projectDTO.getFileName());
+		
+		projectDTO.setfName(fname);
+		projectDTO.setoName(projectDTO.getFileName().getOriginalFilename());
+	
+		
+		int result = projectService.projectUpdate(projectDTO);
+		System.out.println(result);
+		String message = "fail";
+		if(result==1){
+			message = "success";
+			System.out.println("update success");
+
+			alarmDTO = new AlarmDTO();
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8
 			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("프로젝트의 정보를 성공적으로 수정하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+<<<<<<< HEAD
       }
       rd.addAttribute("message", message);
       
@@ -296,6 +524,47 @@ public class ProjectController {
       
       return path;
    }
+=======
+		}
+		rd.addAttribute("message", message);
+		
+		return "redirect:/project/projectList";
+	}
+	
+	
+	//delete
+	@RequestMapping(value="projectDelete")
+
+
+	public String projectDelete(ProjectDTO projectDTO, RedirectAttributes rd, HttpSession session) throws Exception{
+
+		System.out.println("projectDelete");
+		
+		int result =projectService.projectDelete(projectDTO.getProjectNum());
+		//관리자가 지웠을때 관리자 리스트로도 가게하려고 state가 필요해서 DTO로 크게 받는게 어떨까요?
+		
+		String message="Delete fail";
+		if(result==1){
+			message="Delete success";
+
+			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+			alarmDTO.setContents("등록하신 프로젝트를 성공적으로 삭제 하였습니다.");
+			alarmService.alarmInsert(alarmDTO);
+			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
+		}
+		
+		rd.addAttribute("message", message);
+		
+		String path = "redirect:/project/projectList";
+		
+		if(projectDTO.getState().equals("fail")){ //만약 넘어온 상태가 fail이라면 관리자 모집실패 페이지로 주소 변경
+			path = "redirect:/checkProject/checkProjectFailList";
+		}
+		
+		return path;
+	}
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8
 
 
    
@@ -341,6 +610,11 @@ public class ProjectController {
    }*/
    
 
+<<<<<<< HEAD
 
    
 }
+=======
+	
+}
+>>>>>>> 385112756c62e806b41ed6a9883e0312741902f8

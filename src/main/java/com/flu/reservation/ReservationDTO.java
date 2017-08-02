@@ -13,6 +13,7 @@ public class ReservationDTO {
 	private Integer human;
 	private String email;
 	private Integer snum;
+
 	private String phone;
 	private String state;
 	
@@ -34,6 +35,7 @@ public class ReservationDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getName() {
 		return name;
 	}
@@ -46,6 +48,7 @@ public class ReservationDTO {
 	public void setTime(String time) {
 		this.time = time;
 	}
+
 	public String getReserve_date() {
 		return reserve_date;
 	}

@@ -1,10 +1,6 @@
 package com.flu.controller;
 
-import com.flu.util.ListInfo;
-
 import java.sql.Date;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -14,14 +10,11 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
@@ -31,24 +24,27 @@ import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.member.MemberDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.reservation.ReservationService;
-import com.flu.room.RoomDTO;
+import com.flu.util.ListInfo;
+
+
 
 @Controller
 @RequestMapping("/meetRoom/reservation/**")
 public class ReservationController {
-	
+
 	@Inject
 	private ReservationService reservaionService;
+
 	@Inject
 	private AlarmService alarmService;
-	
 	private AlarmDTO alarmDTO;
-	
+
 	@RequestMapping(value="reserveList")
 	public void reserveList(ListInfo listInfo){
 		
 	}
 	
+
 	@RequestMapping(value="reserveInsert", method=RequestMethod.GET)
 	public void reserveInsert(Model model, ReservationDTO reservationDTO) throws Exception{
 		EachRoomDTO eachRoomDTO =  reservaionService.eachView(reservationDTO.getNum());//방 번호를 가지고 해당 방의 정보를 뿌려준다.
@@ -83,17 +79,12 @@ public class ReservationController {
 		map.put("each", eachRoomDTO);
 		map.put("reserved", ar);
 		map.put("access", access);
-		
-		model.addAttribute("map", map );//운영시간
-
+	
 	}
 	
 	@RequestMapping(value="reserveInsert",method=RequestMethod.POST)
-	public String reserveInsert(ReservationDTO reserve, Model model){
-		model.addAttribute("reserveInfo", reserve);
-		model.addAttribute("time", reserve.getTime().split(","));
+	public void reserveInsert(ReservationDTO reserve){
 		
-		return "/meetRoom/reservation/reservePayment";
 	}
 	
 
@@ -125,7 +116,6 @@ public class ReservationController {
 		return "redirect:../../member/myMeetRoom";
 		
 	}
-	
 	
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
 	public String reservePay(ReservationDTO reservationDTO, Model model, RedirectAttributes ra) throws Exception{
@@ -174,4 +164,5 @@ public class ReservationController {
 		}
 		return map;
 	}
+
 }

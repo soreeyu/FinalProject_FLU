@@ -1,7 +1,5 @@
 package com.flu.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,15 +51,16 @@ public class ReplyController {
 			System.out.println("replySuccess");
 		}
 		
-		System.out.println("email="+memberDTO.getEmail());
-		System.out.println("projectNum="+projectDTO.getProjectNum());
-		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		return "redirect:/project/projectView";
 	}
 	
-		
+	public String ReplyUpdate(ReplyDTO replyDTO){
+		return "";
+	}
+
 	@RequestMapping(value="replyDelete", method=RequestMethod.GET)
 	public String ReplyDelete(int num, RedirectAttributes rd){
-		System.out.println("replyDelete");
+		System.out.println("projectDelete");
 		
 		int result =replyService.replyDelete(num);
 		
@@ -82,24 +81,32 @@ public class ReplyController {
 		int totalCount = replyService.replyCount(listInfo, projectDTO);
 		listInfo.makePage(totalCount);
 		listInfo.makeRow();
-
-		List<ReplyDTO> ar = replyService.replyList(listInfo, projectDTO);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("project", projectDTO);
+		List<ReplyDTO> ar = replyService.replyList(map);
 		
 		projectDTO = projectService.projectView(projectDTO.getProjectNum());
 		model.addAttribute("replyList", ar);
-		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("listInfo", map.get("listInfo"));
 		model.addAttribute("replycount", totalCount);
+
+		model.addAttribute("project", map.get("project"));
+		model.addAttribute("map", map);
+
 		model.addAttribute("project", projectDTO);
 		System.out.println("project Num="+projectDTO.getProjectNum());
 		System.out.println("project-email = "+projectDTO.getEmail());
 
-		for(int i=0;i<ar.size();i++){
-			System.out.println(ar.get(i).getNum());
-		}
+		System.out.println("ar=="+ar);
+		System.out.println("map1="+map);
+		System.out.println("map2="+map.size());
+		System.out.println("map3="+map.get("project"));
+		System.out.println("map3="+map.get("listInfo"));
+		
 		System.out.println("start="+listInfo.getStartRow());
 		System.out.println("last="+listInfo.getLastRow());
-		System.out.println("perPage="+listInfo.getPerPage());
-		System.out.println("totalCount="+totalCount);
 		return "reply/replyList"; 
 	}
 	

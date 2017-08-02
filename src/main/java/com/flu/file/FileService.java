@@ -5,14 +5,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
-
-
 import java.io.File;
 
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +23,8 @@ public class FileService {
 		boolean result = f.delete();
 		return result;
 	}
+	
+	
 	//save
 		public String fileSave2(MultipartFile m , HttpSession session) throws Exception{
 			FileSaver fileSaver = new FileSaver();

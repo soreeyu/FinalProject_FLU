@@ -33,6 +33,7 @@ public class CheckMemberController {
 	@Inject
 	private AlarmService alarmService;
 	private AlarmDTO alarmDTO;
+	
 	//신원확인 insert FORM으로 가기 
 	@RequestMapping(value="memberCheckInsert", method=RequestMethod.GET)
 	public void insert(){
@@ -61,12 +62,14 @@ public class CheckMemberController {
 		if(result>0){	
 			message = "신청 완료되었습니다";
 			String path = "../";
+
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 			alarmDTO.setContents("신원확인 신청 하셨습니다. 관리자가 승인을 기다려 주세요.");
 			alarmService.alarmInsert(alarmDTO);
 			
 			model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 			model.addAttribute("message",message).addAttribute("path",path);
 		}
 		
@@ -77,7 +80,7 @@ public class CheckMemberController {
 	//클라이언트 리스트 뿌려오기
 	@RequestMapping(value="checkMemberClientList")
 	public String clientlist(ListInfo listInfo, Model model){
-		model.addAttribute("list",checkMemberService.clientList(listInfo)).addAttribute("board", "client");
+		model.addAttribute("list",checkMemberService.clientList(listInfo)).addAttribute("board", "Client");
 		
 		return "checkMember/checkMemberList";
 	}
@@ -85,7 +88,7 @@ public class CheckMemberController {
 	//프리랜서 리스트 뿌려오기
 	@RequestMapping(value="checkMemberFreelancerList")
 	public String freelancerlist(ListInfo listInfo, Model model){
-		model.addAttribute("list",checkMemberService.freelancerList(listInfo)).addAttribute("board", "freelancer");
+		model.addAttribute("list",checkMemberService.freelancerList(listInfo)).addAttribute("board", "Freelancer");
 		
 		return "checkMember/checkMemberList";
 	}
@@ -102,6 +105,7 @@ public class CheckMemberController {
 	
 	//신원확인을 완료시켜주는 것 
 	@RequestMapping(value="checkMemberUpdate")
+
 	public String update(String email, RedirectAttributes ra) throws Exception{
 		
 		checkMemberService.update(email);
@@ -110,6 +114,7 @@ public class CheckMemberController {
 		alarmDTO.setContents("신원확인이 완료 되었습니다. 프로젝트 등록 및 지원이 가능합니다.");
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+
 		return "redirect:/checkMember/checkMemberList";
 	}
 	

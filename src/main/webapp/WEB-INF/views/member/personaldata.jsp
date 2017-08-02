@@ -200,14 +200,37 @@ p span{
 							<div>
 								<div>
 									<p style="display: inline-block; vertical-align: top;"><span>프로필 사진</span></p>
+									<c:if test="${not empty dto.fProfileImage }">
 									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/profile/${dto.fProfileImage}">
+									</c:if>
+									<c:if test="${empty dto.fProfileImage }">
+									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/img/FLU.png">
+									</c:if>
 								</div>
-								<p><span>프리랜서 형태</span>${dto.type }</p>
-								<p><span>성명 </span>${dto.name }</p>
-								<p><span>닉네임</span>${dto.nickName }</p>
-								<p><span>성별</span>${dto.namegender }</p>
-								<p><span>생년월일</span>${dto.birth }</p>
-								<p><span>상세주소</span>${dto.addr_main }&nbsp;${dto.addr_detail}</p>
+								<p><span>프리랜서 형태</span>
+								<c:if test="${not empty dto.type }">${dto.type }</c:if>
+								<c:if test="${empty dto.type }">정보가 없습니다.</c:if>
+								</p>
+								<p><span>성명 </span>
+								<c:if test="${not empty dto.name }">${dto.name }</c:if>
+								<c:if test="${empty dto.name }">정보가 없습니다.</c:if>
+								</p>
+								<p><span>닉네임</span>
+								<c:if test="${not empty dto.nickName }">${dto.nickName }</c:if>
+								<c:if test="${empty dto.nickName }">정보가 없습니다.</c:if>
+								</p>
+								<p><span>성별</span>
+								<c:if test="${not empty dto.namegender }">${dto.namegender }</c:if>
+								<c:if test="${empty dto.namegender }">정보가 없습니다.</c:if>
+								</p>
+								<p><span>생년월일</span>
+								<c:if test="${not empty dto.birth }">${dto.birth }</c:if>
+								<c:if test="${empty dto.birth }">정보가 없습니다.</c:if>
+								</p>
+								<p><span>상세주소</span>
+								<c:if test="${not empty dto.addr_main }">${dto.addr_main }&nbsp;${dto.addr_detail}</c:if>
+								<c:if test="${empty dto.addr_main }">정보가 없습니다.</c:if>
+								</p>
 								<p><span>핸드폰번호</span>
 								<c:if test="${not empty dto.phone }">
 								${dto.phone }

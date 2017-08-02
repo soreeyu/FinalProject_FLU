@@ -196,6 +196,7 @@ $(function() {
 				</div>
 			</div>
 		</div>
+					<c:catch>
 					<c:forEach begin="0" end="${map.member.size()-1 }" var="i">
 					<c:if test="${map.member[i].emailcheck eq 1}">
 			<div class="freelancerListform">
@@ -313,6 +314,7 @@ $(function() {
 			</div>
 				</c:if>
 					</c:forEach>
+					</c:catch>
 		</div>
 		<div>
 			<div class="contents_paging">

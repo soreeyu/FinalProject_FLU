@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="reply-contents">
-
+ 
 		<c:forEach items="${replyList}" var="reply">
 		<div>
 			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
@@ -43,8 +43,8 @@
 			
 		</div>
 		</c:forEach> 
-
-
+ 
+ 
 <c:if test="${replyList.size()>0}">
 	<div class="contents_bottom">
 				<div class="contents_paging">
@@ -62,13 +62,13 @@
 				</div>
 	</div>
 </c:if>
-
+ 
 </div>
 	
-
-
-
-
+ 
+ 
+ 
+ 
 <script type="text/javascript">
 alert("project등록한사람==${project.email}");
 alert("member==${member.email}");
@@ -78,7 +78,7 @@ $(".rereply").css("display", "none");
 		 $(".listDelete").click(function() {
 		 var data_id = $(this).attr("id");
 		 alert(data_id);
-
+ 
 		   var r = confirm("삭제하시겠습니까?");
 			if(r == true) {
 				$.get("../reply/replyDelete?num="+data_id,function(data){
@@ -109,8 +109,8 @@ $(".rereply").css("display", "none");
 				
 			});
 		
-
-
+ 
+ 
 		
 		</script>
 </body>

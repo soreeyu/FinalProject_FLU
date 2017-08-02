@@ -1,6 +1,5 @@
 package com.flu.project;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.flu.member.MemberDTO;
-import com.flu.reply.ReplyDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -44,18 +42,24 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
 		
+		System.out.println("projectSkillparsing");
+		
 		System.out.println("service-list-search==="+listInfo.getSearch());
 		System.out.println("projectService-projectList");
 		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
+
 		
 		for(int i=0;i<list.size();i++){
 			String[] parsing = list.get(i).getSkill().split(",");
 			list.get(i).setSkills(parsing);
-		
+			/*System.out.println(parsing[i]);*/
 		}
 		
+		
+		//return projectDAO.projectList(listInfo);
 		return list;
 	}
+	
 	
 
 	//project Count
@@ -63,11 +67,7 @@ public class ProjectService {
 		System.out.println("service-count-search==="+listInfo.getSearch());
 		return projectDAO.projectCount(listInfo, projectDTO, array);
 	}
-	
-	
-	
-	
-	
+
 	
 	//Client가 mypage에서 확인하는 myprojectList
 	public List<ProjectDTO> clientPjList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){

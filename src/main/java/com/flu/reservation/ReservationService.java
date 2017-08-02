@@ -27,11 +27,23 @@ public class ReservationService {
 
 	public int insert(ReservationDTO reserve) throws Exception {
 		// TODO Auto-generated method stub
-		return reservationDAO.insert(reserve);
+		return 0;
+	}
+	
+	//예약취소하기 삭제
+
+	public int update(ReservationDTO reserve) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
-	//예약취소하기 삭제
+	public ReservationDTO view(ReservationDTO reserve) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	public int delete(int num) throws Exception {
 		// TODO Auto-generated method stub
 		return reservationDAO.delete(num);
@@ -41,6 +53,7 @@ public class ReservationService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	
 	//방정보 불러오기
 	public EachRoomDTO eachView (int num) throws Exception{
@@ -62,4 +75,5 @@ public class ReservationService {
 	public int reservationDel(Integer num) throws Exception{
 		return reservationDAO.reservationDel(num);
 	}
+
 }

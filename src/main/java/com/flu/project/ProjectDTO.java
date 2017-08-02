@@ -30,8 +30,6 @@ public class ProjectDTO {
 	private String addr_num;		
 	private String addr_main;		
 	private String addr_detail;
-
-
 	private String reg_date;		
 
 	public MultipartFile getFileName() {
@@ -70,7 +68,6 @@ public class ProjectDTO {
 	public void setPeriod(String period) {
 		this.period = period;
 	}
-	
 	public String getStartDate() {
 		return startDate;
 	}
@@ -83,7 +80,6 @@ public class ProjectDTO {
 	public void setFinishDate(String finishDate) {
 		this.finishDate = finishDate;
 	}
-
 	public int getBudget() {
 		return budget;
 	}
@@ -168,7 +164,6 @@ public class ProjectDTO {
 	public void setAddr_detail(String addr_detail) {
 		this.addr_detail = addr_detail;
 	}
-
 	public String getReg_date() {
 		return reg_date;
 	}

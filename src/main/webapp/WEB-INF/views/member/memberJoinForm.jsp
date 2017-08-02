@@ -1,12 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 <style type="text/css">
+.main_section{
+	min-width: 1460px;
+	width: 100%;
+	height: 800px;
+}
+.main_wrap{
+	width: 1152px;
+	margin: 0 auto;
+}
+.header_section{
+	margin-top: 20px;
+	padding: 30px;
+	margin-bottom: 10px;
+	background-color: white;
+	border: 1px solid #dedede;
+	box-shadow: 1px 2px 0px 0px lightgray;
+}
+.contents_section{
+	padding: 30px;
+	background-color: white;
+	border: 1px solid #dedede;
+	box-shadow: 1px 2px 0px 0px lightgray;
+}
+
 
 .p_label{
 	color: red;
@@ -17,10 +41,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h1>MemberJoinForm</h1>
-	<div>
+<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
+	<section class="main_section">
+	<div class="main_wrap">
+	<div class="header_section">
+		<p>회원가입</p>
+		<p>FLU에 오신것을 환영합니다.</p>
+	</div>
+	<div class="contents_section">
 	<form id ="form" action="MemberJoin" method="post">
+		<label>
+		<span> 클라이언트 : <input type="radio" class="kind" name="kind" value="client"></span>
+		</label>
 		<p> 클라이언트 : <input type="radio" class="kind" name="kind" value="client"> 프리랜서 : <input type="radio" class="kind" name="kind" value="freelancer"></p>
 		<p class="p_label" id="p_kind"></p>
 		<p>E-mail : <input type="text" id="email" name="email" required="required"></p>
@@ -34,6 +66,9 @@
 		<p><input type="button" id="btn_member" value="회원 가입"></p>
 	</form>
 	</div>
+	</div>
+	</section>
+	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
 <script type="text/javascript">
 $("#btn_member").click(function() {

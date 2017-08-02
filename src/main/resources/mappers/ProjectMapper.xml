@@ -8,15 +8,12 @@
   <!-- 검색도 넣기 -->
   
  <sql id="search">
-
   <if test="project.detailCategory != null">
  	detailCategory=#{project.detailCategory} 
  </if>  
    name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
  </sql>
  
-
-
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
   <!-- where가 들어가는 상황이면 where가 추가되고, and가 나올상황이면 알아서 지워주는 where태그  -->
   <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
@@ -26,6 +23,11 @@
   
   <select id="count" parameterType="java.util.HashMap" resultType="int">
   	select count(nvl(projectNum,0)) from project
+<include refid="search"/>
+  </select>
+    
+    
+  <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
  	where state='recruit' and
 	(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
 	<if test="result == 1">
@@ -41,8 +43,6 @@
    	
   	
   	<select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-
-
 		 select * from 
 		(select rownum R, N.* from 
 		(select * from project 
@@ -61,14 +61,14 @@
 			<when test="arrange=='money'">
 			budget desc
 			</when>
-			<when test="arrange=='lowmoney'">
+			<when test="arrange=='mm'">
 			budget asc
 			</when>
 			<when test="arrange=='current'">
 			reg_date desc
 			</when>
 			<when test="arrange=='last'">
-			finishDate asc
+			startDate asc
 			</when>
 			<otherwise>
 			projectNum desc
@@ -78,11 +78,6 @@
 		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
   	</select>
-  	
-  	
-  	
-  	
-  	
   	
   	
 

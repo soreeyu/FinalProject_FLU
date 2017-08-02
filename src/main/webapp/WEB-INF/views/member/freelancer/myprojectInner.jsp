@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +20,7 @@
 	</div>
 
 </c:if> 
+
 
 <c:if test="${list ne null}">
 
@@ -97,6 +98,7 @@
 	var perBlock="${listInfo.perBlock}";
 	var curPage="${listInfo.curPage}";
 	var state = "${list[0].state}";
+	var applicantState = "${applicant.state}";
 	var preview = ((curBlock-2)*perBlock)+1;
 	var next = curBlock*perBlock+1;
 	
@@ -110,10 +112,10 @@
 	
 	/* 페이징처리 */
 	$("#preview").click(function() { 
-			$.get("projectCheck?curPage="+preview+"&state="+state, function(data) {
+			/* $.get("projectCheck?curPage="+preview+"&state="+state, function(data) {
 				$(".contents").html(data);
 				
-			}); 
+			});  */
 			
 		});
 	
@@ -121,20 +123,20 @@
 		var pageNum = $(this).attr("id");
 		alert(pageNum);
 		
-		   $.get("projectCheck?curPage="+pageNum+"&state="+state, function(data) {
+		  /*  $.get("projectCheck?curPage="+pageNum+"&state="+state, function(data) {
 			$(".contents").html(data);
 			document.body.scrollTop = 0;
-		});   
+		});    */
 	});
 	 
 	
 	 $("#nextview").click(function() {
 			alert("nextview");
-			$.get("projectCheck?curPage="+next+"&state="+state, function(data) {
+			/* $.get("projectCheck?curPage="+next+"&state="+state, function(data) {
 				   alert("다음블록")
 				$(".contents").html(data);
 				  
-			}); 
+			});  */
 			
 		});
 	 
@@ -145,7 +147,8 @@
 	var projectNum=$(this).attr("id");
 	var memberEmail = '${member.email}';
 	
-	location.href="../../project/projectView?projectNum="+projectNum;
+	alert(applicantState);
+	location.href="../../project/projectView?projectNum="+projectNum+"&state="+applicantState; 
 	
 });
 	 
@@ -170,10 +173,8 @@
 		}
 	});
 
-	
 
-	 
-	
 	</script>
+
 </body>
 </html>

@@ -10,7 +10,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.flu.meetRoom.MeetRoomDTO;
 import com.flu.room.RoomDAO;
 import com.flu.room.RoomDTO;
 
@@ -55,10 +54,6 @@ public class EachRoomDAOImpl implements RoomDAO{
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	public MeetRoomDTO time(int num) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"time", num);
 	}
 	
 	

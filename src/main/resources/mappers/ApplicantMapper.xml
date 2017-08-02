@@ -12,7 +12,4 @@
   		update applicant set state = 'payFinish' where email=#{email}
   	</update>
   
-  
-  
-  
   </mapper>

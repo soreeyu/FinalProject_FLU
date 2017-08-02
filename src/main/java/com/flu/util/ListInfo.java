@@ -7,8 +7,9 @@ public class ListInfo {
 
 
 	//row
-	private String search;//입력한값
+
 	private String kind; //contents인지
+	private String search;//입력한값
 	private String arrange;
 	private int startRow;
 	private int lastRow;
@@ -135,8 +136,8 @@ public class ListInfo {
 	public void makeRow(){
 		startRow=(this.getCurPage()-1)*this.getPerPage()+1;
 		lastRow=this.getCurPage()*this.getPerPage();
-		System.out.println(startRow);
-		System.out.println(lastRow);
+		System.out.println("스타트로우: "+startRow);
+		System.out.println("라스트로우: "+lastRow);
 	}
 	public Integer getPerPage() {
 		if(perPage==null){
@@ -177,6 +178,7 @@ public class ListInfo {
 		this.kind = kind;
 	}
 
+
 	public String getArrange() {
 		return arrange;
 	}
@@ -185,6 +187,7 @@ public class ListInfo {
 	public void setArrange(String arrange) {
 		this.arrange = arrange;
 	}
+
 
 
 

@@ -53,9 +53,7 @@ font-family: -webkit-body;
 	padding: 30px;
 }
 .contents_sub{
-	border-left: 1px solid #dedede;
-	padding: 20px;
-	width: 300px;
+	width: 350px;
 	height: 100%;
 	display: block;
 	background-color: red;
@@ -165,30 +163,7 @@ label{
 }
 .btn{
 	margin: 0 auto;
-	text-align: center;
-}
-
-.sub_process_first{
-	padding-top: 10px;
-	margin-bottom: 20px;
-	padding-bottom: 20px;
-	border-bottom: 1px #dedede solid;
-}
-.sub_process_bar{
-	border-bottom: 1px #dedede solid;
-	padding-bottom: 30px;
-}
-.project-add-helper-title{
-	margin-bottom: 15px;
-	font-weight: bold;
-	display: block;
-}
-.fa{
-	margin-right: 7px;
-}
-.project-add-time{
-	margin-bottom: 10px;
-	font-size: 13px;
+	text-align: ce
 }
 .progress-bar{
 	height: 1em !important;
@@ -615,6 +590,7 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>모집 마감일자</label>
 					<div class="category-wrapper">
+
 						<input type="date" name="finishDate" id="finishDate" value="${dto.finishDate }">
 					</div>
 				</div>
@@ -642,7 +618,9 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br> 예상 시작일</label>
 					<div class="category-wrapper">
+
 						<input type="date" name="startDate" id="startDate" required="required" value="${dto.startDate }">
+
 					</div>
 				</div>
 
@@ -668,57 +646,12 @@ label{
 				
 				<input type="button" class="btn btn-default" onclick="check_submit()" value="등록">
 				</form>
+				
+				
 			</section>
 			<section class="contents_sub">
-			<div class="sub_process_first">
-				<img src="${pageContext.request.contextPath}/resources/img/project/project-process.png" style="vertical-align: middle; width:80%;">
-			</div>
-			<div class="sub_process_bar">
-				<div class="project-add-helper-title">
-				<i class="fa fa-clock-o"></i>작성 완료까지 걸리는 시간
-				</div>
-				<div class="project-add-time">약 4분 소요 예정</div>
-				<div class="progress-bar">
-					<div class="progress-bar-in"></div>
-				</div>
-				<div class="project-add-helper-bottom">
-					최대 10분
-				</div>
-			</div>
-			<div class="project-add-info-box">
-				<div class="project-add-info-data">
-					<img src="${pageContext.request.contextPath}/resources/img/project/process-one.png" class="info-data-img">
-					<div class="project-info-text">
-					FLU는 클라이언트님께 무료로 제공 됩니다.
-					</div>
-				</div>
-				<div>
-					<img src="${pageContext.request.contextPath}/resources/img/project/process-two.png" class="info-data-img">
-					<div class="project-info-text">
-					다양한 지원자들의 견적과 포트폴리오를 한눈에 비교할 수 있습니다.
-					</div>
-				</div>
-				<div>
-					<img src="${pageContext.request.contextPath}/resources/img/project/process-three.png" class="info-data-img">
-					<div class="project-info-text">
-					온/오프라인 미팅을 통해 마음에 드는 지원자를 선택합니다.
-					</div>
-				</div>
-				<div>
-					<img src="${pageContext.request.contextPath}/resources/img/project/process-four.png" class="info-data-img">
-					<div class="project-info-text">
-					대금 보호 시스템을 통해 돈 문제 없는 안전한 계약이 가능합니다.
-					</div>
-				</div>
-				<div>
-					<img src="${pageContext.request.contextPath}/resources/img/project/process-five.png" class="info-data-img">
-					<div class="project-info-text">
-					클라이언트님의 승인 후에 파트너에게 대금이 지급됩니다.
-					</div>
-				</div>
-			</div>
 				
-				
+				<!-- 옆구리 CSS껴넣기 사진들 -->
 			</section>
 		</div>
 
@@ -726,6 +659,7 @@ label{
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 
 <script type="text/javascript">
+
 /* var fdate = "${dto.finishDate}";
 var fday = new Date(fdate);
 alert("fday=="+fday);
@@ -735,15 +669,7 @@ alert("type == ${type}");
 alert("사용자email = ${member.email}");
 	
 
-
-
-
- 
-
-
  function check_submit() {
-	
-
 	
 	alert("btn");
 	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
@@ -768,7 +694,6 @@ alert("사용자email = ${member.email}");
 		alert("File을 선택해주세요");
 	}else if(document.frm.finishDate.value==""){
 		alert("마감일을 선택해주세요");
-
 	}else if(document.frm.addr_main.value==""){
 		alert("주소를 입력해주세요");
 	}else if(document.frm.startDate.value==""){
@@ -777,6 +702,10 @@ alert("사용자email = ${member.email}");
 		alert("매니징 경험을 선택해주세요");
 	}else if(document.frm.quick.value==""){
 		alert("급구 여부를 선택해주세요");
+<<<<<<< HEAD
+	}else{
+		document.frm.submit();
+=======
 	} else if(document.frm.finishDate.value!=""){
 		var finishDate = $("#finishDate").val();
 		 alert("finishDate="+finishDate); 
@@ -818,14 +747,9 @@ alert("사용자email = ${member.email}");
 				 }
 			 }
 		 }
+>>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
 	}
 }
-
-
-
-
-
-
 
 
 

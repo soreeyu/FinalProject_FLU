@@ -1,5 +1,6 @@
 package com.flu.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -19,19 +20,22 @@ import com.flu.member.MemberDTO;
 public class ChatController {
 	
 	@RequestMapping(value="chatDo")
-	public ModelAndView chatDo(ModelAndView mv,HttpSession session){
+	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request){
 		
 		mv.setViewName("chat/chat");
 		
+		String clientIP = request.getRemoteAddr();
+		String serverIP = request.getLocalAddr();
 		String user = ((MemberDTO)(session.getAttribute("member"))).getName();
+		//String ip = session에서 IP꺼내기
 		
-		mv.addObject("user", user);
+		mv.addObject("user", user).addObject("clientIP",clientIP).addObject("serverIP",serverIP);
 		
 		return mv;
 	}
 	
 	@RequestMapping(value="chatFile", method=RequestMethod.POST)
-	public ModelAndView chatFile(ModelAndView mv,MultipartHttpServletRequest multipartHttpServletRequest,HttpSession session) throws Exception{
+	public ModelAndView chatFile(HttpServletRequest request,ModelAndView mv,MultipartHttpServletRequest multipartHttpServletRequest,HttpSession session) throws Exception{
 
 		MultipartFile multi = multipartHttpServletRequest.getFile("file2");
 		String realPath = session.getServletContext().getRealPath("resources/upload");
@@ -45,7 +49,7 @@ public class ChatController {
 			chatDTO.setWho(((MemberDTO)(session.getAttribute("member"))).getName());
 			chatDTO.setFname(fileName);
 			chatDTO.setOname(multi.getOriginalFilename());
-		
+
 		mv.setViewName("chat/fileInfo");
 		mv.addObject("chatDTO",chatDTO);
 		

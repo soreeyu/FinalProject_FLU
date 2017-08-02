@@ -52,6 +52,9 @@ public class CheckProjectDAO {
 		return sqlSession.update(NAMESPACE+"update",projectDTO);
 	}
 
+	public int checkCount(Map<String, Object> map){
+		return sqlSession.selectOne(NAMESPACE+"checkCount",map);
+	}
 	
 	
 	

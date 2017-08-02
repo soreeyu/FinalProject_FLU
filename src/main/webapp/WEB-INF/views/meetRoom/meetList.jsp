@@ -141,7 +141,7 @@
 
 
 	
-<div class="contents_paging">
+		<div class="contents_paging">
 				<c:if test="${listInfo.curBlock>1 }">
 				<span id="preview">[이전]</span>		
 				</c:if>
@@ -153,7 +153,7 @@
 				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
 				<span id="nextview">[다음]</span>			
 				</c:if>
-				</div>
+		</div>
 
 		<c:if test="${member.kind eq 'admin'}">
 			<a href="meetInsert" style="float: left;">업체등록</a>	

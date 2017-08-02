@@ -21,7 +21,6 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		sessionList.add(session);
 		logger.info("{} 연결됨", session.getId());
-		
 
 	}
 	
@@ -32,8 +31,11 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		
 		for(WebSocketSession sess : sessionList){
-			sess.sendMessage(new TextMessage(message.getPayload()));
+			sess.sendMessage(new TextMessage(session.getRemoteAddress().getHostName()+":"+message.getPayload()));
 		}
+		
+		System.out.println(session.getId()+"가 메세지보냄");
+		
 	}
 	
 	@Override

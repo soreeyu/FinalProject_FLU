@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.flu.member.MemberDTO;
-import com.flu.reply.ReplyDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -165,8 +164,5 @@ public class ProjectDAO {
 		
 		
 		
-		
-		
 	
-		
 }

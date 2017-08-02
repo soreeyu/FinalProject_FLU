@@ -1,5 +1,3 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div>
-<p>[${chatDTO.who}]:<a href="../file/fileDown?fname=${chatDTO.fname }">${chatDTO.oname }</a></p>
-</div>
+<a href="../file/fileDown?fname=${chatDTO.fname }">${chatDTO.oname }</a>

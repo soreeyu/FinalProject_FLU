@@ -14,9 +14,7 @@ import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
-import com.flu.checkMember.CheckMemberDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
-import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 
 @Controller
@@ -40,10 +38,7 @@ public class ApplicantController {
 		
 		for(int i=0;i<applicantList.size();i++){
 			memberList.add(memberService.memberView(applicantList.get(i).getEmail()));
-			System.out.println(memberList.get(i).getName());
 		}
-		
-		
 		
 		model.addAttribute("memberList", memberList).addAttribute("applicantList", applicantList);
 		

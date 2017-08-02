@@ -12,7 +12,7 @@
 						<c:if test="${not empty member.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
 						</c:if>
-						<p><span>닉네임</span></p>
+						<p><span>${member.nickName }</span></p>
 					</div>
 				</div>
 				<div class="sidebar_menu">
