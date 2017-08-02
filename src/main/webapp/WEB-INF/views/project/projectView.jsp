@@ -213,6 +213,10 @@ strong{
 	margin-top: 15px;
 	text-decoration: none;
 }
+
+.register-btn:p{
+	text-decoration: none;
+}
 .owner-btn{
 	width:230px;
 	height:40px;
@@ -681,8 +685,10 @@ background-color: white;
 			<div class="project-apply-box">
 				
 			<c:if test="${member.kind eq 'freelancer'}">
-				<a href="#" class="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
-				<a href="#" class="register-btn" style="background-color: navy;"><i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
+				<a href="#" class="register-btn" id="btn_apply">
+				<img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
+				<a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
+				<i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
 	 		</c:if> 
 	 		
 	 		<c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
@@ -882,7 +888,26 @@ if(meetKind=='offline'){
   });
 	
 
+/* 관심 프로젝트 추가하기  */
 
+ $("#btn_like").click(function() {
+	alert("관심 추가하기");
+	/*  */
+});
+ 
+ 
+ /* 프로젝트 지원하기 */
+ $("#btn_apply").click(function() {
+	alert("프로젝트 지원!");
+});
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 $("#pj-delete").click(function() {
 
 	var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");

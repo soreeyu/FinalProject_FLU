@@ -205,4 +205,11 @@
   		</delete>
   		
   		
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡProjectㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  
+  	<!-- <select id="project_list" parameterType="com.flu.member.MemberDTO" resultType="">
+  		select * from applicant where email=#{email};
+  	
+  	</select>	 -->
+  		
   </mapper>
