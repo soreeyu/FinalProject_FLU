@@ -22,7 +22,13 @@
 	margin-bottom: 10px;
 	background-color: white;
 	border: 1px solid #dedede;
-	box-shadow: 2px 2px 0px 0px lightgray;
+	box-shadow: 1px 2px 0px 0px lightgray;
+}
+.contents_section{
+	padding: 30px;
+	background-color: white;
+	border: 1px solid #dedede;
+	box-shadow: 1px 2px 0px 0px lightgray;
 }
 
 
@@ -42,8 +48,11 @@
 		<p>회원가입</p>
 		<p>FLU에 오신것을 환영합니다.</p>
 	</div>
-	<div class="">
+	<div class="contents_section">
 	<form id ="form" action="MemberJoin" method="post">
+		<label>
+		<span> 클라이언트 : <input type="radio" class="kind" name="kind" value="client"></span>
+		</label>
 		<p> 클라이언트 : <input type="radio" class="kind" name="kind" value="client"> 프리랜서 : <input type="radio" class="kind" name="kind" value="freelancer"></p>
 		<p class="p_label" id="p_kind"></p>
 		<p>E-mail : <input type="text" id="email" name="email" required="required"></p>
