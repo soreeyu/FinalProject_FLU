@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 
+import com.flu.applicant.ApplicantDAO;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.freelancer.FreelancerDAO;
 import com.flu.freelancer.FreelancerDTO;
@@ -24,6 +25,8 @@ public class FreelancerTest extends MyAbstract{
 	@Inject
 	private FreelancerDAO freelancerDAO;
 	
+	@Inject
+	private ApplicantDAO applicantDAO;
 	/*
 	@Test
 	public void test22(){
@@ -62,7 +65,7 @@ public class FreelancerTest extends MyAbstract{
 		System.out.println(eval.get(0).getToEmail());
 		
 	}*/
-	@Test
+	/*@Test
 	public void Test4(){
 		MemberDTO memberDTO = new MemberDTO();
 		ListInfo listInfo = new ListInfo();
@@ -72,6 +75,16 @@ public class FreelancerTest extends MyAbstract{
 		int result= freelancerDAO.countAll(memberDTO, listInfo, applicantDTO);
 		
 		assertEquals(4, result);
+	}*/
+	@Test
+	public void Test5(){
+		ApplicantDTO applicantDTO = new ApplicantDTO();
+		applicantDTO.setProjectNum(201);
+		applicantDTO.setState("app");
+		applicantDTO.setEmail("bobobo");
+		applicantDTO.setPay(3000);
+		int result = applicantDAO.insertApplicant(applicantDTO);
+		
+		assertEquals(1, result);
 	}
-	
 }

@@ -899,6 +899,9 @@ if(meetKind=='offline'){
  /* 프로젝트 지원하기 */
  $("#btn_apply").click(function() {
    alert("프로젝트 지원!");
+  /*  $.get("insertApplicant?projectNum="+projectNum,function(data){
+       location.href = "projectList";
+    }); */
 });
  
  

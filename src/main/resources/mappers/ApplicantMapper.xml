@@ -12,4 +12,9 @@
   		update applicant set state = 'payFinish' where email=#{email}
   	</update>
   
+  
+  <!-- 지원하기 눌렀을 때, 지원자 추가하기 -->
+  <insert id="insertApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
+  insert into applicant (projectNum, email, state, pay) values (#{projectNum}, #{email}, 'app', #{pay})
+  </insert>
   </mapper>

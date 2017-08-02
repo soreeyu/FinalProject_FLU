@@ -23,4 +23,9 @@ public class ApplicantService {
 		return applicantDAO.appUpdate(email);
 	}
 	
+	
+	//지원하기 누르면 지원자 추가
+	public int insertApplicant(ApplicantDTO applicantDTO){
+		return applicantDAO.insertApplicant(applicantDTO);
+	}
 }

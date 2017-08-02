@@ -64,4 +64,12 @@ public class ApplicantController {
 		return "redirect:/checkProject/checkProjectFinishList";
 	}
 	
+	
+	//지원하기누르면 지원추가하기
+	public void insertApplicant(Model model, ApplicantDTO applicantDTO){
+		
+		System.out.println("applicant 추가하기 들어옴");
+		applicantService.insertApplicant(applicantDTO);
+		
+	}
 }

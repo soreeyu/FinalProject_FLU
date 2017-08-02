@@ -27,6 +27,11 @@ public class ApplicantDAO {
 	}
 	
 	
+	//지원하기누르면 추가되는 insert
+	public int insertApplicant(ApplicantDTO applicantDTO){
+		return sqlSession.insert(NAMESPACE+"insertApplicant", applicantDTO);
+	}
+	
 	
 	
 }
