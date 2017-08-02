@@ -1268,10 +1268,10 @@ var unitModal;
 				//url = "";
 			}else if(activeTab == 'tab7'){
 				alert("간트2");
-				location.href="/flu/schedule/dhxTest";
+				location.href="/flu/schedule/dhxTest?scheduleNum="+scheduleNum;
 				//url = "";
 			}else if(activeTab == 'tab8'){
-				location.href="/flu/schedule/test8";
+				location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
 				//url = "";
 			}
 			

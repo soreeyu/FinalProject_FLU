@@ -31,10 +31,30 @@ html, body {
 
 
   <script type="text/javascript">
+  var memberKind = '${member.kind}';
+  alert("memberKind = " + memberKind);
+  
+  var scheduleNum = ${scheduleNum};
+  alert("scheduleNum = "+scheduleNum);
+  
 			$(function() {
+				
+				//member의 kind에 따른 간트차트 옵션 설정
+				if(memberKind == 'freelancer'){
+					alert("프리랜서입장");
+					gantt.config.readonly = true; //true 면 전체가 수정은 불가 
+				}else if(memberKind == 'client'){
+					alert("클라이언트입장");
+					gantt.config.readonly = false;
+				}else if(memberKind == 'admin'){
+					alert("관리자입장");
+				}else{//아무것도 아닐때
+					alert("접근불가합니다");
+					location.href="/flu";
+				}
 
-				gantt.config.readonly = false; //굉장히 중요하오
-
+				
+				//grid 파트 설정
 				gantt.config.columns = [ {
 					name : "text",
 					label : "업무 내용",
@@ -60,17 +80,31 @@ html, body {
 					label : "",
 					width : '50'
 				} ];
+				
+				
+				//공통의 옵션
 
 				gantt.config.xml_date = "%Y-%m-%d";
 				gantt.config.task_height = 20;
-				gantt.config.fit_tasks = true;
-
 				gantt.config.fit_tasks = true;
 
 				gantt.config.drag_progress = false;
 				gantt.config.drag_resize = true;
 				gantt.config.drag_move = true;
 				gantt.config.drag_links = false;
+				
+				
+				
+				
+				gantt.config.work_time = true;
+				gantt.config.correct_work_time = true;
+				
+				
+			
+				
+				
+				
+				
 
 				//gantt.config.readonly_property = "property_name";
 
@@ -135,7 +169,7 @@ html, body {
 				  gantt.attachEvent(myEvent);
 				 */
 
-				//part들시간도 알아서 변하도록 하는것
+				//part에 대해서 move 하면 하위 unit들도 같이 움직인다  //사실 안필요할지도 //시간관련이 필요
 				gantt.attachEvent("onTaskDrag", function(id, mode, task,
 						original) {
 					var modes = gantt.config.drag_mode;
@@ -168,8 +202,10 @@ html, body {
 						}, id);
 					}
 				});
-				//part들시간도 알아서 변하도록 하는것 끝
+				//unit도 알아서 움직이는것
 
+				
+				
 				//업무에 올렷을때
 				gantt.templates.tooltip_text = function(start, end, task) {
 					var tooltipText = "<b>Task:</b> " + task.text
@@ -195,9 +231,11 @@ html, body {
 
 				});
 
+				
+				
 				//addTask 안되게하기
 				gantt.templates.grid_row_class = function(start, end, task) {
-					if (task.$level > 0) {
+					if (task.$level > 0) { //레벨에 따라서
 						return "nested_task" //이걸 통해서 add 버튼을 숨긴다 
 						/* 
 						css
@@ -233,12 +271,38 @@ html, body {
 							//e - a native event object
 							alert("클릭함");
 						});
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+		
 				// gantt.attachEvent(testEvent);
 
 				$("#test").click(function() {
 					alert("저장할란다");
 					var json = gantt.serialize();
+					
 					alert(JSON.stringify(json));
+					json  = JSON.stringify(json);
+					$.ajax({
+						url: "./setUnits",
+						data:{
+							jsonData : json
+						},
+						type: "POST",
+						success: function(data){
+							alert("데이터 넘기기 성공");
+						}
+					});
+					
 				});
 
 				
@@ -272,11 +336,11 @@ html, body {
 				
 				
 				//파트가져와서 업무에 추가해주기
-				var resultJson = getPartList(141);
+				var resultJson = getPartList(scheduleNum);
 				changeJsonDataForGanttTask(resultJson);
 
 				//unit가져와서 업무에 추가해주기 
-				var resultJsonUnit = getUnitList(141, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
+				var resultJsonUnit = getUnitList(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
 				changeJsonDataForGanttTaskUnit(resultJsonUnit);
 
 				
@@ -287,8 +351,53 @@ html, body {
 				
 				
 				
+				var full_lightbox =[
+				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true},
+				    {name:"time",        height:72, map_to:"auto", type:"duration"}
+				];
+				var restricted_lightbox = [
+				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true}
+				];
+				 
+				gantt.attachEvent("onBeforeLightbox", function(task_id) {
+				    gantt.resetLightbox(); 
+				    var task = gantt.getTask(task_id);  
+				    if (task.restricted ==true){
+				        gantt.config.lightbox.sections = restricted_lightbox;
+				    } else {
+				        gantt.config.lightbox.sections = full_lightbox;
+				    };   
+				    return true;
+				});
 				
 				
+				gantt.eachTask(function(task){
+					alert(task.text);
+				});
+				
+				//+버튼 클릭이벤트
+				gantt.attachEvent("onTaskCreated", function(task){
+				   //if(task.type == 0){
+				    	alert("하나 만들어짐"+task.id);
+				    	return true;
+				    	
+				    	//안만들어진거라서 안됨
+				    	var pId = gantt.getParent(task.id); //task 의 부모
+				    	var id = pId+"_1";
+				    	var taskId = gantt.createTask({
+				    	    id:id,
+				    	    text:"상세일정추가(할일)",
+				    	    start_date:pId.start_date,
+				    	    type: 1,
+				    	    duration:2
+				    	}, pId , 0);
+				    	alert("taskId"+task.id+" pId"+pId); 
+				    	
+				 // }
+				    
+				    
+				    
+				});
 				
 				
 				
@@ -382,8 +491,7 @@ html, body {
 
 				var partsJSONArray = new Array();
 
-				$
-						.ajax({
+				$.ajax({
 							url : "/flu/schedule/unitList",
 							type : "POST",
 							async : false,

@@ -6,9 +6,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,10 +79,9 @@ public class ScheduleController {
 			return "schedule/ganttchartTest";
 		}
 		
-		@RequestMapping(value="dhxTest")
+		@RequestMapping(value="dhxTest" , method=RequestMethod.GET)
 		public String test7(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
-			//model.addAttribute("scheduleNum", scheduleNum);
-			//return "schedule/ganttchartTest2";
+			model.addAttribute("scheduleNum", scheduleNum);
 			return "schedule/dhx_ganttTest";
 		}
 		
@@ -409,13 +410,6 @@ public class ScheduleController {
 			return list;
 		} 
 
-		public void userOne(){}
-
-		public void userWrite(){}
-
-		public void userUpdate(){}
-
-		public void userDelete(){}
 
 
 
@@ -461,6 +455,13 @@ public class ScheduleController {
 			return 0;
 		}
 		
+		
+		@RequestMapping(value="setUnits",method=RequestMethod.POST)
+		public void setUnits(String jsonData){
+			System.out.println("받아온 json데이터"+jsonData);
+			//JSONObject obj = jsonData; //new JSONObject();
+			
+		}
 
 
 		

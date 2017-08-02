@@ -34,14 +34,23 @@
     <script type="text/javascript">
      var data;
      var chart;
-
+     var willCount = 1;
+     var ingCount = 12;
+     var finCount = 5;
+     var warnCount = 9;
+     var index=0;
       // Load the Visualization API and the piechart package.
       google.charts.load('current', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart1);
+      for(var i=0;i<2;i++){
+    	 
+    	  google.charts.setOnLoadCallback(drawChart1);
+    	  
+      }
       
-      google.charts.setOnLoadCallback(drawChart2);
+      
+      //google.charts.setOnLoadCallback(drawChart2);
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
@@ -60,47 +69,35 @@
           var data = new google.visualization.DataTable(jsonData);  
     	   */
 
-
+    	if(index==1){
+        	  willCount = 14;
+        	  ingCount = 12;
+        	  finCount = 1;
+        	  warnCount = 1;
+        }
         var data = google.visualization.arrayToDataTable([
           ['Task'	, 'Hours per Day'],
-          ['할일' 	,	10],
-          ['진행중'	,	10],
-          ['완료'	,	10],
-          ['마감일 지남', 10]
+          ['할일' 	,	willCount],
+          ['진행중'	,	ingCount],
+          ['완료'	,	finCount],
+          ['마감일 지남', warnCount]
         ]);
 
         var options = {
           width: 400,
           height: 240,
-          title: 'User',
+          title: 'User'+(index+1),
           pieHole: 0.9,
           colors: ['rgb(255, 176, 36)', 'rgb(176, 180, 187)', 'rgb(39, 182, 186)', 'rgb(233, 94, 81)']
         };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart1'));
+		var id= 'donutchart'+(index+1);
+		alert(id);
+        var chart = new google.visualization.PieChart(document.getElementById(id));
         chart.draw(data, options);
+        index++;
       }
       
-      function drawChart2() {
-          var data = google.visualization.arrayToDataTable([
-            ['Task'	, 'Hours per Day'],
-            ['할일' 	,	10],
-            ['진행중'	,	10],
-            ['완료'	,	10],
-            ['마감일 지남', 10]
-          ]);
-
-          var options = {
-            width: 400,
-            height: 240,
-            title: 'User',
-            pieHole: 0.9,
-            colors: ['rgb(255, 176, 36)', 'rgb(176, 180, 187)', 'rgb(39, 182, 186)', 'rgb(233, 94, 81)']
-          };
-
-          var chart = new google.visualization.PieChart(document.getElementById('donutchart2'));
-          chart.draw(data, options);
-        }
+   
 
       function selectHandler() {
         var selectedItem = chart.getSelection()[0];
