@@ -103,6 +103,7 @@
 	padding: 15px 30px 30px 30px;
 	background-color: #fff;
 	border-radius: 3px;
+	margin-bottom: 20px;
 }
 
 .title {
@@ -128,51 +129,122 @@
 .title>p:FIRST-CHILD {
 	margin-top: 20px;
 }
-
-.profile_title>p>span {
-	font-size: 28px;
+.project-unit{
+	padding: 25px;
+	border: 1px solid #eeeeee;
+	height: 180px;
+	margin-bottom: 10px;
+	background-color: white;
+}
+.project-head{
+	height: 27px;
+	margin-bottom: 5px;
+}
+.project-title{
+	color: #3385ff;
+	font-size: 18px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.project-body{
+	width: 100%;
+	height: 120px;
+}
+.project-info{
+	width: 100%;
+	margin-bottom: 10px;
+}
+.fa{
+	padding-right: 10px;
+	padding-left: 10px;
+	border-right: 1px solid #dedede;
+	font-size: 14px;
 	font-weight: bold;
 }
-
-.profile_wrap {
-	padding-bottom: 20px;
-	margin-bottom: 20px;
+.fa-reg_date{
+	padding-left: 10px;
+	font-size: small;
+	color: #ccc;
+	font-size: 12px;
+	display: inline-block;
 }
-
-.profile_wrap>p:FIRST-CHILD {
-	margin-top: 20px;
-	font-size: 18px;
-	font-weight: 700;
+.project-contents{
+	width: 630px;
+	color: #999;
+	font-size: 13px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-height: 60px;
+	float: left;
+	height: 53px;
+	vertical-align: middle;
+	
 }
-
-.no_data_wrap {
-	width: 100%;
-	height: 170px;
-	padding-top: 15px;
-	padding-bottom: 15px;
+.project-contents-right{
+	font-size: 13px;
+	width: 150px;
+	float: right;
+	height: 54px;
+	line-height: 13px;
 }
-
-.no_data {
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	margin: 0 auto;
+.right-contents-sub{
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 5px;
+	height: 20px;
 }
-
-.no_img p {
-	font-size: 14px;
-	margin-top: 15px;
+.deadline{
+	font-weight: bold;
+	margin-left: 5px;
+}
+.project-bottom{
+	margin-top: 10px;
+	line-height: 2px;
+	background-color: white;
+}
+.main-cate{
 	color: #999;
 }
-
-.no_img p span {
+.sub-cate{
+	border-right: 1px solid #dedede;
+	color: #666;
+	margin-right: 10px;
+	padding-right: 10px;	
+}
+.skill-box{
+	display: inline-block;
+}
+.skill-title{
+	margin-left: 10px;
+	color: #666;
+}
+.skill-name{
+	background-color: #a1a7ad;
+	padding: 2px 3px;
+}
+.skill-box span{
+	color: #999;
+}
+.contents_bottom{
+	margin-top: 30px;
+	width: 100%;
+}
+.contents_paging{
+	width: 380px;
+	margin: 0 auto;
+	text-align: center;
 	font-weight: bold;
 }
-
-#a {
-	color: white;
-	background-color: #66b3ff;
+.num{
+	cursor: pointer;
 }
+#preview{
+	cursor: pointer;
+}
+#nextview{
+	cursor: pointer;
+}
+
+
 </style>
 </head>
 <body>
@@ -201,10 +273,12 @@
 					</div>
 					<div class="sidebar_menu">
 						<ul>
-							<li><a class="menu" id="project_list" href="mypage">나의 프로젝트</a></li>
+							<li><a class="menu" id="project_list">나의 프로젝트</a></li>
 							<li><a class="menu" id="project_like">관심 프로젝트</a></li>
+							<li><a class="menu" id="project_app">지원한 프로젝트</a></li>
 							<li><a class="menu" id="project_ing">진행중인 프로젝트</a></li>
 							<li><a class="menu" id="project_finish">완료된 프로젝트</a></li>
+							<li><a class="menu" id="project_end">종료된 프로젝트</a></li>
 						</ul>
 					</div>
 				</div>
@@ -243,11 +317,53 @@
 </body>
 
 <script type="text/javascript">
-/*
- project_list 
- project_like
- project_ing
- project_finish*/
+/* 기본적인 세팅 */
+
+$.get("myprojectInner?curPage=1", function(data){
+	 alert(data);
+		$(".contents").html(data);
+}); 
+	
+$("#project_list").click(function() {
+	 $.get("myprojectInner?curPage=1", function(data){
+		 alert(data);
+			$(".contents").html(data);
+		}); 
+});
+$("#project_like").click(function() {
+	alert("DB만들어야하나 체크해보기");
+});
+$("#project_app").click(function() {
+	alert("지원한 프로젝트");
+	$.get("myprojectInner?curPage=1&state=app", function(data){
+		 alert(data);
+			$(".contents").html(data);
+		}); 
+});
+$("#project_ing").click(function() {
+	alert("진행중인 내 프로젝트");
+	$.get("myprojectInner?curPage=1&state=ing", function(data){
+		 alert(data);
+			$(".contents").html(data);
+		}); 
+});
+
+$("#project_finish").click(function() {
+	alert("완료된 내 프로젝트");
+	$.get("myprojectInner?curPage=1&state=finish", function(data){
+		 alert(data);
+			$(".contents").html(data);
+		}); 
+});
+
+$("#project_end").click(function() {
+	alert("종료된 내 프로젝트");
+	$.get("myprojectInner?curPage=1&state=payFinish", function(data){
+		 alert(data);
+			$(".contents").html(data);
+		}); 
+});
+
 
 
 </script>

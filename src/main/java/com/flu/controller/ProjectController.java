@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -117,7 +118,7 @@ public class ProjectController {
 
 	//view
 	@RequestMapping(value="projectView", method=RequestMethod.GET)
-	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo){
+	public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
 		System.out.println("projectView");
 		if(projectNum==null){
 			projectNum=1;
@@ -129,6 +130,9 @@ public class ProjectController {
 		System.out.println("session의 사진을 불러와보자");
 
 		memberDTO = (MemberDTO)session.getAttribute("member");
+		/*System.out.println("member의 이메일-"+memberDTO.getEmail());
+		applicantDTO.setEmail(memberDTO.getEmail());*/
+		System.out.println("applicant의 state를 봅시다="+applicantDTO.getState());
 		
 		int contractResult = projectService.contractCount(projectDTO);
 		System.out.println("계약한 갯수="+contractResult);
@@ -150,6 +154,7 @@ public class ProjectController {
 		model.addAttribute("ingCount", ingResult);
 		model.addAttribute("finishCount", finishResult);
 		model.addAttribute("totalCount", totalResult);
+		model.addAttribute("applicant", applicantDTO);
 
 
 			

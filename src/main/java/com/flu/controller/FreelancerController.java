@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.file.FileSaver;
 import com.flu.file.FileService;
 import com.flu.freelancer.FreelancerDTO;
@@ -755,11 +756,49 @@ public class FreelancerController {
 	//내가 FLU 에서 진행한 프로젝트
 	@RequestMapping(value="myproject")
 	public String myproject(Model model, HttpSession session, ListInfo listInfo){
+	
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+
+		System.out.println("member가 뭘까="+memberDTO.getEmail());
 		
+		/*int totalCount = freelancerService.countAll(memberDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = freelancerService.listAll(memberDTO, listInfo);
 		
-				
+		for(int i=0;i<ar.size();i++){
+			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
+		}
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("listInfo", listInfo);*/
 		
 		return "/member/freelancer/myproject";
 	}
+	
+	@RequestMapping(value="myprojectInner")
+	public void myprojectInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO, MemberDTO memberDTO, ApplicantDTO applicantDTO){
+		System.out.println("myprojectInner 들어옴");
+		System.out.println("state는 ="+applicantDTO.getState());
+		memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println("접속한 projectInner - member-email은 = "+memberDTO.getEmail());
+		
+		int totalCount = freelancerService.countAll(memberDTO, listInfo, applicantDTO);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		List<ProjectDTO> ar = freelancerService.listAll(memberDTO, listInfo, applicantDTO);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
+		}
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("applicant", applicantDTO);
+		
+	}
+	
+	
 	
 }

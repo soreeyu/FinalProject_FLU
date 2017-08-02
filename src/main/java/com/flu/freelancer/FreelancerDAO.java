@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.member.MemberDTO;
 import com.flu.profile.Academic;
 import com.flu.profile.Carrer;
@@ -18,6 +19,7 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
+import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -327,8 +329,29 @@ public class FreelancerDAO{
 	
 	/************************** myproject *******************************/
 	
-	//client 나의 프로젝트리스트
 	
+	
+	//freelancer 나의 프로젝트리스트
+	public List<ProjectDTO> listAll(MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
+		
+		System.out.println("freelancer dao - memberEmail="+memberDTO.getEmail());
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("member", memberDTO);
+		map.put("applicant", applicantDTO);
+		
+		return sqlSession.selectList(NAMESPACE+"project_list", map);
+	}
+	
+	public int countAll(MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("member", memberDTO);
+		map.put("applicant", applicantDTO);
+		
+		return sqlSession.selectOne(NAMESPACE+"project_count", map);
+	}
 	
 	
 	
