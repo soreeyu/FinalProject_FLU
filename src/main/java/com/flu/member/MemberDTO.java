@@ -30,9 +30,7 @@ public class MemberDTO {
 	private String name;
 	private String namegender;
 	private Date birth;
-	
 	private MultipartFile f1;
-	
 	
 	
 	public String getName() {
@@ -173,10 +171,7 @@ public class MemberDTO {
 	public void setF1(MultipartFile f1) {
 		this.f1 = f1;
 	}
-	
 
-	
-	
-	
+   
 
 }

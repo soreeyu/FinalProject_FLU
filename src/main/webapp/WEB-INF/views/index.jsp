@@ -15,6 +15,12 @@
 	background-color: aqua;
 }
 </style>
+<script type="text/javascript">
+	var message = '${message}';
+	if(message!=''){
+		alert(message);
+	}
+</script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
@@ -26,7 +32,13 @@
 		</div>
 		<div class="project_quantity_div">
 			등록된 프로젝트 갯수
-		</div>
+			<p><a href="./schedule/create?projectNum=4000">스케줄 생성하기</a></p>
+			<p><a href="./schedule/partView?scheduleNum=66">66번 파트 보기</a></p>
+			<p><a href="./schedule?projectNum=3000">스케줄화면가기</a></p>
+			<br/>
+			<p><a href="./schedule/create?projectNum=6000">스케줄 생성하기</a></p>
+			<p><a href="./schedule/test">css</a></p>
+			<p><a href="./schedule/testProjectView">프로젝트뷰라고가정하고</a></p>
 	</section>
 	<section class="project">
 		<div class="project_div">
@@ -37,9 +49,9 @@
 	</section>
 	<section class="freelancer">
 		<div class="freelancer_div">
-			등록된 프리랜서
-			
-			더보기
+				등록된 프리랜서
+				
+				더보기
 		</div>
 	</section>
 	<section class="process">

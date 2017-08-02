@@ -306,7 +306,6 @@ public class FreelancerController {
 		
 		FileService fileService = new FileService();
 		List<PortFolioImg> ar = new ArrayList<PortFolioImg>();
-		
 		int arrage = 1;
 		
 		//파일 갯수만큼 업로드 및 객체에 이름 담기
@@ -314,12 +313,12 @@ public class FreelancerController {
 		
 		if(!portFolio.getF1()[i].getOriginalFilename().equals("")){
 			if(i == 0){
-			portFolio.setPfFname(fileService.fileSave(portFolio.getF1()[i], session));
+			portFolio.setPfFname(fileService.fileSave2(portFolio.getF1()[i], session));
 			portFolio.setPfOname(portFolio.getF1()[i].getOriginalFilename());
 			}else if(i == 1){
 				
 				PortFolioImg portFolioImg = new PortFolioImg();
-				portFolioImg.setFimage(fileService.fileSave(portFolio.getF1()[i], session));
+				portFolioImg.setFimage(fileService.fileSave2(portFolio.getF1()[i], session));
 				portFolioImg.setOimage(portFolio.getF1()[i].getOriginalFilename());
 				portFolioImg.setContents(contents1);
 				portFolioImg.setArrage(Integer.toString(arrage));
@@ -327,7 +326,7 @@ public class FreelancerController {
 				arrage++;
 			}else if(i == 2){
 				PortFolioImg portFolioImg = new PortFolioImg();
-				portFolioImg.setFimage(fileService.fileSave(portFolio.getF1()[i], session));
+				portFolioImg.setFimage(fileService.fileSave2(portFolio.getF1()[i], session));
 				portFolioImg.setOimage(portFolio.getF1()[i].getOriginalFilename());
 				portFolioImg.setContents(contents2);
 				portFolioImg.setArrage(Integer.toString(arrage));
@@ -395,12 +394,12 @@ public class FreelancerController {
 		
 		if(!portFolio.getF1()[i].getOriginalFilename().equals("")){
 			if(i == 0){
-			portFolio.setPfFname(fileService.fileSave(portFolio.getF1()[i], session));
+			portFolio.setPfFname(fileService.fileSave2(portFolio.getF1()[i], session));
 			portFolio.setPfOname(portFolio.getF1()[i].getOriginalFilename());
 			}else if(i ==1){
 				System.out.println("여기냐1");
 				PortFolioImg portFolioImg = new PortFolioImg();
-				portFolioImg.setFimage(fileService.fileSave(portFolio.getF1()[i], session));
+				portFolioImg.setFimage(fileService.fileSave2(portFolio.getF1()[i], session));
 				portFolioImg.setOimage(portFolio.getF1()[i].getOriginalFilename());
 				portFolioImg.setContents(contents1);
 				portFolioImg.setArrage(Integer.toString(arrage));
@@ -409,7 +408,7 @@ public class FreelancerController {
 			}else if(i ==2){
 				System.out.println("저기냐1");
 				PortFolioImg portFolioImg = new PortFolioImg();
-				portFolioImg.setFimage(fileService.fileSave(portFolio.getF1()[i], session));
+				portFolioImg.setFimage(fileService.fileSave2(portFolio.getF1()[i], session));
 				portFolioImg.setOimage(portFolio.getF1()[i].getOriginalFilename());
 				portFolioImg.setContents(contents2);
 				portFolioImg.setArrage(Integer.toString(arrage));

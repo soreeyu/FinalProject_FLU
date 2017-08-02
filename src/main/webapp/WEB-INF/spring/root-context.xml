@@ -41,34 +41,25 @@
 	</bean>
 	
 	<!-- Transaction -->
-	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="txManager">
-		<property name="dataSource" ref="dataSource"/>
+	<!-- 			transaction 처리하기 			 -->
+	<tx:annotation-driven /><!-- annotation 사용하기 -->
+	
+	
+	<!-- Connection 가진 dataSource 와 연결해주기 -->
+	<!-- 이것이 공통 로직들어가는 객체다 -->
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
 	
-	<tx:annotation-driven transaction-manager="txManager"/>
 	
 	
-<!-- 	<tx:advice id="txAdvise" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="*" rollback-for="Exception"/>
-		</tx:attributes>
-	</tx:advice>
-	
-	<aop:config>
-		<aop:pointcut expression="execution(* com.flu.checkMember..CheckMemberService.*Tran(..))" id="txPoint"/>
-		<aop:advisor advice-ref="txAdvise" pointcut-ref="txPoint"/>
-	</aop:config> -->
-	
-	
-	
+
 	<!-- Upload -->
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
-	</beans>
 
-
-
-
+	
+</beans>
 

@@ -569,15 +569,55 @@ background-color: white;
 			</div> -->
 				
 		</section>
-
+</div>
+</section>
 		
 		
 		<!-- 프로젝트 리스트 뿌려주는부분  -->
 			<section class="contents_main">
+
+		<!-- 프로젝트 각각 -->	
+			<c:forEach items="${list}"  var="dto">
 			
-		
-			</section>
-		</div>
+				<div class="project-unit">
+					<div class="project-head">
+						<div class="project-title" id="${dto.projectNum}">${dto.name}</div>
+					</div>
+					<div class="project-body">
+						<div class="project-info">
+							<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
+							<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
+							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
+						</div>
+						<div class="project-contents">${dto.contents }</div>
+						<div class="project-contents-right">
+							<div class="right-contents-sub">
+							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
+							마감<strong>${dto.finishDate}</strong></div>
+							<div class="right-contents-sub">
+							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
+							총지원 <strong>몇명</strong></div>
+						</div>
+						
+						<div style="clear: both;"></div>
+						
+						<div class="project-bottom">
+							<span class="main-cate">개발</span>
+							<span class="sub-cate">애플리케이션</span>
+							<div class="skill-box">
+								<span class="skill-main">요구기술</span>
+						
+							<c:forEach items="${dto.skills}" var="sk">
+								 <span class="skill-name">sk = ${sk}</span>
+							
+							</c:forEach>
+							
+							</div>
+						</div>
+					</div>
+				</div>	
+			</c:forEach>
+
 
 		
 		
@@ -593,7 +633,8 @@ $.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind
 
 /* 로그인해야 projectView 진입 가능 */
 $(".project-title").click(function() {
-	var projectNum=$(this).attr("id");
+	var projectNum = $(this).attr("id");
+
 	var memberEmail = '${member.email}';
 	if(memberEmail == ""){
 		location.href="../member/login";

@@ -4,93 +4,146 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="ScheduleMapper">
-  
-  	<select id="createS" statementType="CALLABLE" parameterType="java.util.Map">
-	 { call add_schedule(#{projectNum,mode=IN},#{startDate,mode=IN},#{finishDate,mode=IN},#{result, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer},#{scheduleNum, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer}) } 
+
+	<!-- project 존재여부 -->
+	<select id="checkP" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		select count(projectNum) from project where projectnum=#{projectNum} and state='ing'
 	</select>
-	
-	
-  
-    <!-- 제대로 가져와졌으면 스케줄 존재, null이면 해당프로젝트에 스케줄 없음  -->
-  	<select id="checkS" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.ScheduleMainDTO">
+
+
+	<!-- 프로젝트에대한 스케줄 존재 여부 -->
+	<select id="checkS" parameterType="java.lang.Integer"
+		resultType="com.flu.schedule.client.ScheduleMainDTO">
 		select * from scheduleMain where projectnum=#{projectNum}
 	</select>
-	
-	
-	<insert id="addMainS" parameterType="com.flu.schedule.client.ScheduleMainDTO">
-		insert into schedulemain (schedulenum,  startdate, finishdate, projectnum) values 
-		(schedule_seq.nextval, #{startDate},#{finishDate}, #{projectNum})
+
+	<!-- 시퀀스를 사용한 스케줄 생성 //날짜는 변경 할 수 있어야함 -->
+	<insert id="createS" parameterType="java.lang.Integer">
+		insert into schedulemain
+		(schedulenum, startdate, finishdate, projectnum) values
+		(schedule_seq.nextval, sysdate, sysdate, #{projectNum})
 	</insert>
-	
-	<select id="getSNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-		select schedulenum from schedulemain where projectnum=#{projectNum}
-	</select>
-	
-	
-	<select id="projectInfo" parameterType="java.lang.Integer" resultType="com.flu.project.ProjectDTO">
+
+	<!-- 스케줄 넘, 시작일, 마감일, 프로젝트 넘 -->
+	<select id="mainSInfo" parameterType="java.lang.Integer"
+		resultType="com.flu.schedule.client.ScheduleMainDTO">
 		select * from scheduleMain where projectnum=#{projectNum}
 	</select>
 	
-	
-	
+	<!-- 스케줄 넘, 시작일, 마감일, 프로젝트 넘 -->
+	<select id="mainSInfo2" parameterType="java.lang.Integer"
+		resultType="com.flu.schedule.client.ScheduleMainDTO">
+		select * from scheduleMain where scheduleNum=#{scheduleNum}
+	</select>
+
+	<!-- 메인스케줄 수정 -->
+	<update id="mainSUpdate" parameterType="com.flu.schedule.client.ScheduleMainDTO">
+		update schedulemain set
+		startdate=#{startDate}, finishdate=#{finishDate} where
+		scheduleNum=#{scheduleNum}
+	</update>
+
   
-  	<select id="onePart" resultType="com.flu.schedule.client.SchedulePartDTO">
+	<!--************************* part *********************-->
+	<select id="partCount" parameterType="com.flu.schedule.client.SchedulePartDTO" 
+  		resultType="java.lang.Integer">
+  		select count(scheduleNum) from schedulepart where schedulenum=#{scheduleNum}
+  	</select>
+	
+  	<select id="partOne" resultType="com.flu.schedule.client.SchedulePartDTO">
   		select * from schedulepart where chedulenum=#{scheduleNum} and partnum=#{partNum}
   	</select>
   
-	<select id="listPart" resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select * from schedulepart
+	<select id="partList" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.SchedulePartDTO">
+		select * from schedulepart where schedulenum=#{scheduleNum} order by partstartdate asc
 	</select>
 
 	
-	<insert id="addPart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		insert into schedulepart (schedulenum, name, startdate, finishdate, partnum) values 
-		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, #{partNum})
+	<insert id="partInsert" parameterType="com.flu.schedule.client.SchedulePartDTO">
+		insert into schedulepart (schedulenum, partname, partstartdate, partfinishdate, partnum ,partdescfileo, partdescfilef) values 
+		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, nvl((select max(partNum)+1 from schedulepart
+		where schedulenum=45),0), #{partDescFileO}, #{partDescFileF})
 	</insert>
 	
-	<update id="updatePart" parameterType="com.flu.schedule.client.SchedulePartDTO">
-		update schedulepart set name=#{partName}, startdate=#{partStartDate}, finishdate=#{partFinishDate} 
+	<update id="partUpdate" parameterType="com.flu.schedule.client.SchedulePartDTO">
+		update schedulepart set partname=#{partName}, partstartdate=#{partStartDate}, partfinishdate=#{partFinishDate},
+		partdescfileO=#{partDescFileO}, partdescfileF=#{partDescFileF}
 		where schedulenum=#{scheduleNum} and partnum=#{partNum}
 	</update>
 	
-	<delete id="deletePart" parameterType="com.flu.schedule.client.SchedulePartDTO">
+	<delete id="partDelete" parameterType="com.flu.schedule.client.SchedulePartDTO">
 		delete * schedulepart where schedulenum=#{scheduleNum} and partnum=#{partNum}
 	</delete>
 	
 	
 	
-	
-	
-	
-	
-	<select id="oneUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO" resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select * from scheduleunit where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+  
+  	<!--************************* unit *********************-->
+  	<select id="unitCount" parameterType="com.flu.schedule.client.ScheduleUnitDTO" 
+  		resultType="java.lang.Integer">
+  		select count(scheduleNum) from scheduleunit where schedulenum=#{scheduleNum} 
+		and email like '%'||#{email}||'%'
+		and unitstate like '%'||#{unitState}||'%'
+		<if test="partNum != -1">
+			and partnum in #{partNum}
+		</if>
+  	</select>
+  	
+  	
+	<select id="unitList" parameterType="com.flu.schedule.client.ScheduleUnitDTO"
+		resultType="com.flu.schedule.client.ScheduleUnitDTO">
+		select * from scheduleunit where schedulenum=#{scheduleNum} 
+		and email like '%'||#{email}||'%'
+		and unitstate like '%'||#{unitState}||'%'
+		<if test="partNum != -1">
+			and partnum in #{partNum}
+		</if>
+		order by unitstartdate asc
 	</select>
-	
-	<select id="listUnit" resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select * from scheduleunit
+
+	<select id="unitOne" parameterType="com.flu.schedule.client.ScheduleUnitDTO"
+		resultType="com.flu.schedule.client.ScheduleUnitDTO">
+		select * from scheduleunit where schedulenum=#{scheduleNum}
+		and unitNum=#{unitNum}
 	</select>
-	
-	
-	<insert id="addUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
-		insert into scheduleunit (schedulenum, unitnum, unitname, unitdescribe, unitfinishdate, unitdescfileO, unitdescfileF, partName, email, unitstate)
-		values (#{scheduleNum}, #{unitNum}, #{unitName}, #{unitDescribe}, #{unitFinishDate}, #{unitDescFileO}, #{unitDescFileF}, #{partName}, #{email}, #{unitState})
+
+
+	<insert id="unitInsert" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
+		insert into scheduleunit
+		(schedulenum, unitnum, unitname,
+		unitdescribe,unitstartDate,unitfinishdate, partnum, email, unitstate)
+		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit
+		where schedulenum=#{scheduleNum}),0), #{unitName}, '설명들어가야하는디',
+		#{unitStartDate}, #{unitFinishDate}, #{partNum}, #{email}, '할일')
 	</insert>
-	
-	<update id="updateUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
-		update scheduleunit set 
-		unitname=#{unitName}, unitdescribe=#{unitDescribe}, unitfinishdate=#{unitFinishDate}, 
-		unitdescfileO=#{unitDescFileO}, unitdescfileF=#{unitDescFileF}, partName=#{partName}, 
-		email=#{email}, unitstate=#{unitState}
-		where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+
+	<update id="unitUpdate" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
+		update scheduleunit set
+		unitname=#{unitName}, unitdescribe=#{unitDescribe},
+		unitstartdate=#{unitStartDate},
+		unitfinishdate=#{unitFinishDate},
+		partnum=#{partNum},
+		email=#{email},
+		where schedulenum=#{scheduleNum} and
+		unitNum=#{unitNum}
 	</update>
-	
-	<delete id="deleteUnit" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
-		delete * from scheduleunit where where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
+
+	<delete id="unitDelete" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
+		delete * from scheduleunit
+		where schedulenum=#{scheduleNum} and unitNum=#{unitNum}
 	</delete>
 	
 	
+	<!--************************* user *********************-->
+	<select id="userList" parameterType="java.lang.Integer" resultType="com.flu.member.MemberDTO">
+		 select M.*,A.* from member M,applicant A where A.projectNum=(select projectNum from schedulemain where schedulenum=#{scheduleNum}) and A.email=M.email and A.state='ing'
+	</select>
 	
+	
+	<update id="stateChange" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
+		update scheduleunit set unitstate='#{unitState}' where schedulenum=#{scheduleNum} and unitnum=#{unitNum}
+	</update>
 	
   	
 

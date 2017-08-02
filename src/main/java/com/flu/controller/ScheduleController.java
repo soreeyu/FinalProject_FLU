@@ -1,14 +1,31 @@
 package com.flu.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.file.FileService;
+import com.flu.member.MemberDTO;
 import com.flu.schedule.ScheduleService;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
+import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
 @Controller
@@ -18,50 +35,232 @@ public class ScheduleController {
 		@Autowired
 		private ScheduleService scheduleService;
 		
-		
-		// 프로젝트에 생성된 스케줄이 있는지 확인
-		@RequestMapping(value="create", method=RequestMethod.GET)
-		public String checkSchedule(Integer projectNum, Model model){
-			//있으면 바로 스케줄메인화면
-			//없으면
-			//시작날짜,마감날짜,파트 입력화면
-			ScheduleMainDTO result = scheduleService.checkSchedule(projectNum);
-			String path = "redirect:/";
-			if(result != null){
-				model.addAttribute("scheduleMainDTO", result); //있을 경우 일단 home으로 보내기 
-			}else{
-				model.addAttribute("projectNum", projectNum);
-				path = "schedule/mainInsertForm";
-			}
-			
-			return path;
-			
+		//이게 보배언니의 프로젝트 뷰 라고 가정한다 
+		@RequestMapping(value="testProjectView")
+		public String testProjectView(){
+			return "schedule/testProjectView";
 		}
 		
 		
 		
-		//make Schedule1 //애초에 이 작업이 제대로 진행안되면 스케줄이 아예 생성이 안된다고 보면됨
-		@RequestMapping(value="create", method=RequestMethod.POST)
-		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model){ //넘어온 projectNum 이 저장되어있다 
+		@RequestMapping(value="test" , method=RequestMethod.GET)
+		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
+			model.addAttribute("scheduleNum", scheduleNum);
 			
-			
-			//시퀀스 사용하여 스케줄테이블에 하나가 생성된다 
-			int result =  scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO);
-			System.out.println("Controller insertMainS result = " + result);
-			
-			if(result > 0){
-				
-				model.addAttribute("scheduleNum", result);
-				return "schedule/main";
-				
-			}else{
-				return "redirect:/";
+			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
+			model.addAttribute("mainScheduleDTO", scheduleMainDTO);
+			//return "schedule/firstView";
+			return "schedule/scheduleTemp";
+		}
+		
+		@RequestMapping(value="firstView" , method=RequestMethod.GET)
+		public String test3(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/firstView";
+		}
+		
+		
+		
+		@RequestMapping(value="secondView")
+		public String test2(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/secondView";
+		}
+		
+		
+		@RequestMapping(value="thirdView")
+		public String test4(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/thirdView";
+		}
+		
+		
+		@RequestMapping(value="sixthView")
+		public String test6(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			//model.addAttribute("scheduleNum", scheduleNum);
+			//return "schedule/ganttchartTest2";
+			return "schedule/ganttchartTest";
+		}
+		
+		@RequestMapping(value="dhxTest" , method=RequestMethod.GET)
+		public String test7(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/dhx_ganttTest";
+		}
+		
+		@RequestMapping(value="test8")
+		public String test8(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			//model.addAttribute("scheduleNum", scheduleNum);
+			return "schedule/firstViewTestGoogleChart";
+		}
+		
+		
+		
+		/*
+		 * /schedule 로 접근할때 동작 //url 쳤을때 프로젝트가 있는지 확인해주는 것
+		 * projectNum으로 project DB 에 존재하고 state가 ing인지 체크 
+		 * 
+		 * 		부재 : index.jsp 
+		 * 		존재 : schedule메인화면(firstView)으로 이동 
+		 * */
+		@RequestMapping(method=RequestMethod.GET)
+		public String scheduleMain(@RequestParam(defaultValue="0") Integer projectNum, Model model, RedirectAttributes rd) throws Exception{ //넘어온 projectNum 이 저장되어있다 
+			//project가 있는지 확인해야한다 
+			String path = "redirect:/";
+			int result = scheduleService.checkProject(projectNum);
+			if(result>0){ //프로젝트가 있으면
+				//model.addAttribute("projectNum", projectNum);
+				path = "schedule/testProjectView";//firstView로 수정해야함
+			}else{ //프로젝트가 없으면
+				rd.addFlashAttribute("message", "해당 프로젝트가 존재하지 않습니다");
 			}
-			
+			return path;
+		}
+		
+		
+
+
+		//ajax로 불려져서 json 보내줌 
+		// 프로젝트에 생성된 스케줄이 있는지 확인 //1번
+		@ResponseBody
+		@RequestMapping(value="check", method=RequestMethod.GET)
+		public Map<String, Object> checkSchedule(Integer projectNum){ //Exception 던지기
+			System.out.println("스케줄 있는지 check하러옴 Controller");
+			System.out.println("projectNum = "+projectNum);
+			Map<String, Object> map = new HashMap<String, Object>();
+			ScheduleMainDTO result = null;
+			try {
+				result = scheduleService.checkSchedule(projectNum);
+
+				System.out.println("check의 result = "+result);
+				if(result != null){ //스케줄이 있음
+					map.put("schedule", "y");
+					map.put("scheduleMainDTO", result);//있을경우는 scheduleNum을 보내줌  
+					//model.addAttribute("schedule", "y");
+					//model.addAttribute("scheduleMainDTO", result); 
+					System.out.println("스케줄있음");
+
+				}else{//스케줄이 없음 
+					map.put("schedule", "n");
+					map.put("projectNum", projectNum);
+					//model.addAttribute("schedule", "n");
+					//model.addAttribute("projectNum", projectNum); //없으면 없으니까 만들건지 물어보기
+					System.out.println("스케줄없음");
+				}
+				//map.put("", "schedule/scheduleMain")
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("check할때 오류임 ");
+				map.put("schedule", "error");
+				e.printStackTrace();
+			}
+			return map;
+
 		}
 
 		
 		
+
+		
+		//프로젝트뷰에서 호출함
+		//스케줄 없을 경우 //서비스에서 먼저 main을 만들어서 생성후(시작,마감일은 당일로 우선 설정) 가져온다 
+		@ResponseBody
+		@RequestMapping(value="create", method=RequestMethod.GET)
+		public Map<String, Object> createSchedule(Integer projectNum, Model model) throws Exception{
+			int scheduleNum = scheduleService.createSchedule(projectNum);
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(scheduleNum > 0){ //생성 성공
+				map.put("result", "y");
+				map.put("scheduleNum", scheduleNum);
+			}else{ //생성실패
+				map.put("result", "n");
+			}
+			return map;
+		}
+		
+
+		
+		
+		
+		//파트 입력 받는 폼 
+		@RequestMapping(value="create", method=RequestMethod.POST)
+		public String insertMainSchedule(ScheduleMainDTO scheduleMainDTO,SchedulePartArrayDTO schedulePartArrayDTO, Model model ,HttpSession session) throws Exception{ 
+			System.out.println("컨트롤러");
+	
+			//int result = 0;//업데이트 해야할듯 scheduleService.insertMainSchedule(scheduleMainDTO,schedulePartArrayDTO, session);
+			int result = scheduleService.insertMainPartSchedule(scheduleMainDTO, schedulePartArrayDTO, session);
+			System.out.println("Controller insertMainS result = " + result);
+
+			if(result > 0){
+				//model.addAttribute("scheduleNum", result);
+				return "schedule/scheduleMain";
+
+			}else{
+				return "redirect:/";
+			}
+
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		//상세파일 등록 테스트
+		@RequestMapping(value="testUnit", method=RequestMethod.GET)
+		public String insertUnitScheduleT(){ //넘어온 projectNum 이 저장되어있다 
+			return "schedule/testInsertUnit";
+		}
+		
+
+		//테스트
+		//넘어온 파일 확인하기 
+		@RequestMapping(value="createT", method=RequestMethod.POST)
+		public String insertMainScheduleT(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
+			FileService fileService = new FileService();
+			
+			for(int i=0;i<schedulePartArrayDTO.getPartDescFileO().length;i++){
+				System.out.println(i+1+"번째 파일 이름 = "+ (schedulePartArrayDTO.getPartDescFile())[i].getOriginalFilename());
+				
+				String fileNameF = fileService.fileSave((schedulePartArrayDTO.getPartDescFile())[i], session);
+			}
+			
+			
+
+			return "";
+
+		}
+		
+		
+		
+		/////////////////////////////////////////////
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+
 
 		
 		//main스케줄 수정하기 //시작 날짜, 마감날짜가 바뀐다 
@@ -75,28 +274,49 @@ public class ScheduleController {
 		
 
 		
-		
-		//저장된 part들 가져오기 //세부사항 등록시 필요
-		public void partList(int scheduleNum){
-			//List<SchedulePartDTO>
+		//json으로 넘어감 //jaskson api
+		//저장된 partList 가져오기 //세부사항 등록시 필요
+		@ResponseBody
+		@RequestMapping(value="partList",method=RequestMethod.GET)
+		public List<SchedulePartDTO> partList(Integer scheduleNum, Model model) throws Exception{
+		//public String partList(int scheduleNum, Model model){
+			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
+			System.out.println("컨트롤러 에서 part리스트"+partList);
+			//model.addAttribute("partList",partList);
+			//model.addAttribute("scheduleNum",scheduleNum);
+			
+			//return "schedule/partView";
+			return partList;
 		} 
 		
-		public void partOne(){}
+		
+		
+		public void partOne(){
+			
+		}
 		
 		
 		//DTO내의 배열에 각각 값이 저장됨
 		@RequestMapping(value="addPart", method=RequestMethod.POST)
-		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO){
+		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO) throws Exception{
 			int result =  scheduleService.insertPart(schedulePartArrayDTO);
 
 			System.out.println("part등록 Controller result = "+result);
 
-			return "schedule/main";
+			return "schedule/main"; 
 		}
 		
-		public void partUpdate(){}
+		@RequestMapping(value="partUpdate", method=RequestMethod.GET)
+		public void partUpdate(SchedulePartDTO schedulePartDTO){
+			
+		}
 		
-		public void partDelete(){}
+		@RequestMapping(value="partDelete", method=RequestMethod.POST)
+		public String partDelete(SchedulePartDTO schedulePartDTO) throws Exception{
+			System.out.println("ScheduleNum="+schedulePartDTO.getScheduleNum()+", partNum="+schedulePartDTO.getPartNum());
+			int result = scheduleService.deletePart(schedulePartDTO);
+			return "schedule/partView";
+		}
 		
 		
 		
@@ -105,16 +325,71 @@ public class ScheduleController {
 		
 		
 		//할일 리스트 뿌려주기 
-		public void unitList(int scheduleNum){ 
-			//List<ScheduleUnitDTO>
+		@ResponseBody
+		@RequestMapping(value="unitList", method=RequestMethod.POST)
+		public List<ScheduleUnitDTO> unitList(ScheduleUnitDTO scheduleUnitDTO) throws Exception{ 
+			System.out.println("schduleNum_partNum "+scheduleUnitDTO.getScheduleNum()+"_"+scheduleUnitDTO.getPartNum());
+			System.out.println("email "+scheduleUnitDTO.getEmail());
+			System.out.println("unitState "+scheduleUnitDTO.getUnitState());
+			List<ScheduleUnitDTO> list = scheduleService.unitList(scheduleUnitDTO);
+			for(int i=0;i<list.size();i++){
+				System.out.println(i+"번째 할일이름 = "+list.get(i).getUnitName());
+			}
+			return list;
 		}
 		
-		public void unitOne(){}
+		@ResponseBody
+		@RequestMapping(value="unitOne",method=RequestMethod.POST)
+		public ScheduleUnitDTO unitOne(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			System.out.println("unitOne정보보기");
+			System.out.println("ggg"+scheduleUnitDTO.getScheduleNum()+" "+scheduleUnitDTO.getUnitNum());
+			ScheduleUnitDTO dto = scheduleService.unitOne(scheduleUnitDTO);	
+			System.out.println("unitOne정보보기다녀옴");
+			return dto;
+			
+		}
+		
+		/*
+		@RequestMapping(value="unitWrite", method=RequestMethod.GET)
+		public String unitWrite(){
+			System.out.println("unit 등록하러옴 ");
+			return "index";
+		}
+		*/
+		
+		@ResponseBody //이건 리턴을 json으로 해주는애임
+		@RequestMapping(value="unitWrite", method=RequestMethod.POST)
+		public Map<String, Object> unitWrite(ScheduleUnitDTO scheduleUnitDTO,Model model) throws Exception{
+			System.out.println("scheduleUnit scheduleNum "+scheduleUnitDTO.getScheduleNum());
+			System.out.println("scheduleUnit unitname "+scheduleUnitDTO.getUnitName());
+			System.out.println("scheduleUnit username"+scheduleUnitDTO.getEmail());
+			System.out.println("scheduleUnit partnum"+scheduleUnitDTO.getPartNum());
+			System.out.println("unit 등록하러옴 내용가지고");
+			//System.out.println("파일 "+scheduleUnitDTO.getUnitDescFile().getOriginalFilename());
+			
+			int result = scheduleService.unitInsert(scheduleUnitDTO);
+			if(result > 0){
+				
+			}else{
+				System.out.println("내용등록 실패");
+			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("result", result);
+			return map;
+			/*
+			model.addAttribute("message", "힘들다");
+			model.addAttribute("path", "/flu/schedule/main");
+			return "common/result";
+			*/
+		}
 		
 		
-		public void unitWrite(){}
 		
-		public void unitUpdate(){}
+		@RequestMapping(value="unitUpdate", method=RequestMethod.POST)
+		public String unitUpdate(ScheduleUnitDTO scheduleUnitDTO){
+			System.out.println("unit 수정하러옴");
+			return "schedule/main";
+		}
 		
 		public void unitDelete(){}
 		
@@ -122,17 +397,22 @@ public class ScheduleController {
 		
 
 		//참여하고 있는 프리랜서 목록 가져오기 
-		public void userList(int projectNum){ //재식친구의 DTO 리스트
-			//List<MemberDTO> 
+		@ResponseBody
+		@RequestMapping(value="userList", method=RequestMethod.GET)
+		public List<MemberDTO> userList(Integer scheduleNum) throws Exception{ 
+			List<MemberDTO> list = scheduleService.userList(scheduleNum);
+			
+			System.out.println("해당 스케줄의 사용자들 데려오기");
+			
+			if(list != null && list.size() >0){
+				System.out.println("사용자 list = "+list.get(0).getEmail());
+			}else{
+				System.out.println("사용자가 없네");
+			}
+	
+			return list;
 		} 
 
-		public void userOne(){}
-
-		public void userWrite(){}
-
-		public void userUpdate(){}
-
-		public void userDelete(){}
 
 
 
@@ -178,6 +458,18 @@ public class ScheduleController {
 			return 0;
 		}
 		
+		
+		@RequestMapping(value="setUnits",method=RequestMethod.POST)
+		public void setUnits(String jsonData, HttpSession session) throws Exception{
+			
+			
+			
+			System.out.println("받아온 json데이터"+jsonData);
+			
+			int result = scheduleService.setUnits(jsonData);
+			
+
+		}
 
 
 		

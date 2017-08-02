@@ -1,14 +1,11 @@
 package com.flu.schedule.client;
 
-import java.sql.Date;
-
-
 public class SchedulePartDTO {
 	
 	private int scheduleNum; //MainDTO의 것과 엮임
 	private String partName; 
-	private Date partStartDate;
-	private Date partFinishDate;
+	private String partStartDate;
+	private String partFinishDate;
 	private String partDescFileO;
 	private String partDescFileF;
 	private Integer partNum; // 동일한 스케줄내에서 part에 접근하기 위한 변수 
@@ -45,16 +42,16 @@ public class SchedulePartDTO {
 	public void setPartName(String partName) {
 		this.partName = partName;
 	}
-	public Date getPartStartDate() {
+	public String getPartStartDate() {
 		return partStartDate;
 	}
-	public void setPartStartDate(Date partStartDate) {
+	public void setPartStartDate(String partStartDate) {
 		this.partStartDate = partStartDate;
 	}
-	public Date getPartFinishDate() {
+	public String getPartFinishDate() {
 		return partFinishDate;
 	}
-	public void setPartFinishDate(Date partFinishDate) {
+	public void setPartFinishDate(String partFinishDate) {
 		this.partFinishDate = partFinishDate;
 	}
 	

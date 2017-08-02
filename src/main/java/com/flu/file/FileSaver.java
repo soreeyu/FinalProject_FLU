@@ -14,6 +14,7 @@ public class FileSaver {
 	public String fileSave(String realPath, MultipartFile multi) throws Exception{
 
 		System.out.println(realPath);
+		
 		File f = new File(realPath);
 		if(!f.exists()){
 			f.mkdirs();
