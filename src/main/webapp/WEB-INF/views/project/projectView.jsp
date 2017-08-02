@@ -701,9 +701,7 @@ background-color: white;
           
           <c:if test="${member.kind eq 'admin'}">
           
-            <input type="hidden" name="state" value="${dto.state}">
-            <input type="hidden" name="projectNum" value="${dto.projectNum}">
-
+           
              <c:if test="${dto.state=='done'}">
             프로젝트 상태 : <strong>검수완료</strong> 
             </c:if>
@@ -719,7 +717,9 @@ background-color: white;
             
              
              <form action="" id="frmm" method="get">
-
+			 <input type="hidden" name="state" value="${dto.state}">
+            <input type="hidden" name="projectNum" value="${dto.projectNum}">
+			
             <c:if test="${dto.state eq 'check'}">
             <input type="button" class="register-btn" value="프로젝트 검수 완료" id="doneBTN">
             </c:if>

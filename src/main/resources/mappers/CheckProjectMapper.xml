@@ -121,6 +121,7 @@
   		</select>
   		<!-- 만약 type에 해당되는게 하나도 없어서 projectnum으로 오는게 없으면 에러뜸 -->
   		
+  		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">
   			update project set 
   				<if test="state=='check'">

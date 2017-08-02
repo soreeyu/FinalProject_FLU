@@ -8,12 +8,15 @@
   <!-- 검색도 넣기 -->
   
  <sql id="search">
+
   <if test="project.detailCategory != null">
- 	detailCategory=#{project.detailCategory} 
+    detailCategory=#{project.detailCategory} 
  </if>  
    name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%'
  </sql>
  
+
+
    <!-- '%' || #{find} || '%' 이게 싫으면 넘어올때 앞뒤로%를 붙여서 넘겨준다 -->
   <!-- where가 들어가는 상황이면 where가 추가되고, and가 나올상황이면 알아서 지워주는 where태그  -->
   <!-- 불필요한 ,(콤마)를 삭제해주는 <set>태그  -->
@@ -22,102 +25,104 @@
   
   
   <select id="count" parameterType="java.util.HashMap" resultType="int">
-  	select count(nvl(projectNum,0)) from project
-<include refid="search"/>
-  </select>
-    
-    
-  <select id="list" parameterType="com.flu.util.ListInfo" resultType="com.flu.project.ProjectDTO">
- 	where state='recruit' and
-	(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
-	<if test="result == 1">
-		 and detailCategory IN 
-		 <foreach collection="array" item="c" open="(" close=")" separator=",">
-		 	#{c}
-		 </foreach>
-		</if>	
+     select count(nvl(projectNum,0)) from project
+    where state='recruit' and
+   (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+   <if test="result == 1">
+       and detailCategory IN 
+       <foreach collection="array" item="c" open="(" close=")" separator=",">
+          #{c}
+       </foreach>
+      </if>   
   
   </select>
   
-	
-   	
-  	
-  	<select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-		 select * from 
-		(select rownum R, N.* from 
-		(select * from project 
-		
-		where state='recruit' and
-		(name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
-		<if test="result == 1">
-		 and detailCategory IN 
-		 <foreach collection="array" item="c" open="(" close=")" separator=",">
-		 	#{c}
-		 </foreach>
-		</if>
-			
-		order by
-		<choose>
-			<when test="arrange=='money'">
-			budget desc
-			</when>
-			<when test="arrange=='mm'">
-			budget asc
-			</when>
-			<when test="arrange=='current'">
-			reg_date desc
-			</when>
-			<when test="arrange=='last'">
-			startDate asc
-			</when>
-			<otherwise>
-			projectNum desc
-			</otherwise>
-		</choose>
+   
+      
+     
+     <select id="list" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
 
-		  ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
-  	</select>
-  	
-  	
+       select * from 
+      (select rownum R, N.* from 
+      (select * from project 
+      
+      where state='recruit' and
+      (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+      <if test="result == 1">
+       and detailCategory IN 
+       <foreach collection="array" item="c" open="(" close=")" separator=",">
+          #{c}
+       </foreach>
+      </if>
+         
+      order by
+      <choose>
+         <when test="arrange=='money'">
+         budget desc
+         </when>
+         <when test="arrange=='lowmoney'">
+         budget asc
+         </when>
+         <when test="arrange=='current'">
+         reg_date desc
+         </when>
+         <when test="arrange=='last'">
+         finishDate asc
+         </when>
+         <otherwise>
+         projectNum desc
+         </otherwise>
+      </choose>
+
+        ) N) where R between #{listInfo.startRow} and #{listInfo.lastRow}
+
+     </select>
+     
+     
+     
+     
+     
+     
+     
 
 
   <!-- client페이지에서 보여지는 state에 따른 리스트들 -->
     <select id="clientcount" parameterType="java.util.HashMap" resultType="int">
-    	select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state}
+       select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state}
     </select>
     
     
-  	<select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-  	select * from 
-  	(select rownum R, P.* from 
-  	(select * from project where email=#{member.email} and state=#{project.state}) P) 
-  	where R between #{listInfo.startRow} and #{listInfo.lastRow}
-  	</select>
+     <select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
+     select * from 
+     (select rownum R, P.* from 
+     (select * from project where email=#{member.email} and state=#{project.state}) P) 
+     where R between #{listInfo.startRow} and #{listInfo.lastRow}
+     </select>
 
 
 <!-- View에서 뿌려질 해당 프로젝트를 등록한 클라이언트에 대한 갯수들 -->
 <select id="pjcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
-	select count(nvl(projectNum,0)) from project where email=#{email}
+   select count(nvl(projectNum,0)) from project where email=#{email}
 </select>
 <select id="contractcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
-	select count(nvl(projectNum,0)) from project where email=#{email} and state='recurit'
+   select count(nvl(projectNum,0)) from project where email=#{email} and state='recurit'
 </select> 
 <select id="ingcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
-	select count(nvl(projectNum,0)) from project where email=#{email} and state='ing'
+   select count(nvl(projectNum,0)) from project where email=#{email} and state='ing'
 </select>
 <select id="finishcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
-	select count(nvl(projectNum,0)) from project where email=#{email} and state='finish'
+   select count(nvl(projectNum,0)) from project where email=#{email} and state='finish'
 </select>
 
  
  
  <!-- 판매중인 디자인 혹은 개발 리스트 보기 -->
  <select id="sellList" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
- 	select * from project where state=#{project.state} and category=#{project.category}
+    select * from project where state=#{project.state} and category=#{project.category}
  </select>
 <select id="sellCount" parameterType="com.flu.project.ProjectDTO" resultType="int">
-	select count(nvl(projectNum, 0)) from project where state='sell' and category=#{category}
+   select count(nvl(projectNum, 0)) from project where state='sell' and category=#{category}
 </select>
   
   
@@ -125,29 +130,29 @@
   
   
   <insert id="insert" parameterType="com.flu.project.ProjectDTO">
-  	insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
-  	meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date) 
-  	values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 
-  	#{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate)
+     insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
+     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date) 
+     values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 
+     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate)
   </insert>
   
   
   <select id="view" parameterType="java.lang.Integer" resultType="com.flu.project.ProjectDTO">
-  	select * from project where projectNum=#{projectNum}
+     select * from project where projectNum=#{projectNum}
   </select>
   
   
   <!-- email은 변경불가 -->
   <update id="update" parameterType="com.flu.project.ProjectDTO">
-  	update project set category=#{category}, detailCategory=#{detailCategory}, name=#{name}, period=#{period}, startDate=#{startDate}, budget=#{budget},
-  	planState=#{planState}, contents=#{contents}, skill=#{skill}, finishDate=#{finishDate}, meetKind=#{meetKind}, exp=#{exp}, state=#{state},
-  	quick=#{quick}, fName=#{fName}, oName=#{oName}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail} 
-  	where projectNum=#{projectNum}
+     update project set category=#{category}, detailCategory=#{detailCategory}, name=#{name}, period=#{period}, startDate=#{startDate}, budget=#{budget},
+     planState=#{planState}, contents=#{contents}, skill=#{skill}, finishDate=#{finishDate}, meetKind=#{meetKind}, exp=#{exp}, state=#{state},
+     quick=#{quick}, fName=#{fName}, oName=#{oName}, addr_num=#{addr_num}, addr_main=#{addr_main}, addr_detail=#{addr_detail} 
+     where projectNum=#{projectNum}
   </update>
   
   
   <delete id="delete" parameterType="java.lang.Integer">
-  	delete project where projectNum=#{projectNum}
+     delete project where projectNum=#{projectNum}
   </delete>
  
   

@@ -3,7 +3,15 @@
   
   
   <mapper namespace="MeetRoomMapper">
-  	
+  	<sql id="search">
+   <trim prefix="where" prefixOverrides="and || or">
+   <if test="kind == 'name'"> name like '%' || #{search} || '%'</if>
+   <if test="kind == 'price'"> price like '%' || #{search} || '%'</if>
+   <if test="kind == 'reserve_date'"> reserve_date like '%' || #{search} || '%'</if>
+   <if test="kind == 'reserve_name'"> reserve_name like '%' || #{search} || '%'</if>
+   <if test="kind == 'human'"> reserve_name like '%' || #{search} || '%'</if>
+   </trim>
+   </sql>
   	<!-- 업체 등록  -->
   	<insert id="MeetInsert" parameterType="com.flu.meetRoom.MeetRoomDTO" >
   		insert into meetroom values (meetroom_seq.nextval, #{name}, #{contents}, #{time}, #{fname}, #{oname}, #{holiday}, #{addr_num}, #{addr_main}, #{addr_detail}, #{homePage})

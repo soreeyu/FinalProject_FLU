@@ -14,7 +14,7 @@
   		select * from eachroom where snum=#{num} order by num asc
   	</select>
 
-	<!-- 세부공간 하나 보기  -->
+	<!-- 세부공간 정보 보기  -->
 	<select id="EachView" parameterType="java.lang.Integer" resultType="com.flu.eachRoom.EachRoomDTO">
 		select * from eachroom where num=#{num}
 	</select>
@@ -30,4 +30,9 @@
 	<update id="EachUpdate" parameterType="com.flu.eachRoom.EachRoomDTO">
 		update eachroom set name=#{name}, contents=#{contents}, time=#{time}, fname=#{fname}, oname=#{oname}, type=#{type}, human=#{human}, convenience=#{convenience}, price=#{price} where num=#{num}
 	</update>
+	
+	<!-- 세부공간 등록할때 업체의 영업시간을 가져온다  -->
+	<select id="time" parameterType="java.lang.Integer" resultType="com.flu.meetRoom.MeetRoomDTO">
+		select time from meetroom where num=#{num}
+	</select>
   </mapper>

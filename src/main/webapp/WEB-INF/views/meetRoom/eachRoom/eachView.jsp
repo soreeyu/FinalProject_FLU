@@ -25,7 +25,3 @@
 	</li>
 </ul>
 <input type="hidden" value="${dto.price}" id="${dto.price}" class="ajax_price">
-<!--편의시설  -->
-<ul>
-		
-</ul>
