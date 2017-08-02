@@ -14,7 +14,6 @@ public class ApplicantService {
 	
 	//applicant List
 	public List<ApplicantDTO> list(int projectNum){
-	
 		return applicantDAO.list(projectNum);
 	}
 	

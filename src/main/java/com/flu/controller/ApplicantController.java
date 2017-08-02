@@ -35,13 +35,11 @@ public class ApplicantController {
 
 		List<ApplicantDTO> applicantList = applicantService.list(projectNum);
 
-		List<CheckMemberViewDTO> memberList = new ArrayList<CheckMemberViewDTO>();
+		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
 		
 		for(int i=0;i<applicantList.size();i++){
-			memberList.add(memberService.memberView(applicantList.get(i).getEmail()));
+			memberList.add(memberService.memberView2(applicantList.get(i).getEmail()));
 		}
-		
-		
 		
 		model.addAttribute("memberList", memberList).addAttribute("applicantList", applicantList);
 		

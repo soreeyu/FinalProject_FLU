@@ -137,8 +137,6 @@ public class CheckProjectController {
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
 
 	public String update(ProjectDTO projectDTO, RedirectAttributes ra) throws Exception{
-
-		System.out.println("gpgpgpgpgpgpgpgpgpgpgpgpgpgpgpgp");
 		
 		int result = checkProjectService.update(projectDTO);
 		if(result>0){
