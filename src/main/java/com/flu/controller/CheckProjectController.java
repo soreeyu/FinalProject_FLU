@@ -58,8 +58,7 @@ public class CheckProjectController {
 		
 		List<ProjectDTO> list = checkProjectService.checkList(projectDTO,listInfo,searchDate);
 		
-
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "check").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Check").addAttribute("searchDate", searchDate);
 		
 		return "checkProject/checkList";
 	}
@@ -73,7 +72,7 @@ public class CheckProjectController {
 		
 		List<ProjectDTO> list = checkProjectService.failList(projectDTO,listInfo,searchDate);
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "fail").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Fail").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 	
@@ -86,7 +85,7 @@ public class CheckProjectController {
 	
 		List<ProjectDTO> list = checkProjectService.waitList(projectDTO,listInfo,searchDate);
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "wait").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Wait").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 
@@ -116,7 +115,7 @@ public class CheckProjectController {
 		
 		List<ProjectDTO> list = checkProjectService.finishList(projectDTO,listInfo,searchDate,projectList);
 		
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "finish").addAttribute("searchDate", searchDate);
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Finish").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
 

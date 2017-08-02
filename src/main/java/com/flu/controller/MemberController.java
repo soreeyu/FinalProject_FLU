@@ -260,7 +260,7 @@ public class MemberController {
 		@RequestMapping(value="personaldataView", method=RequestMethod.GET)
 		public String personaldataView(Model model, HttpSession session,String email){
 			
-			if(((MemberDTO)session.getAttribute("member")).getType().equals("admin")){
+			if(((MemberDTO)session.getAttribute("member")).getKind().equals("admin")){
 				model.addAttribute("active1", "a");
 				model.addAttribute("dto", checkMemberService.checkView(email));
 				

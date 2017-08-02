@@ -53,7 +53,7 @@ public class CheckProjectDAO {
 	}
 
 	public int checkCount(Map<String, Object> map){
-		return sqlSession.update(NAMESPACE+"checkCount",map);
+		return sqlSession.selectOne(NAMESPACE+"checkCount",map);
 	}
 	
 	

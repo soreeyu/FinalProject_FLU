@@ -77,7 +77,7 @@ public class CheckMemberController {
 	//클라이언트 리스트 뿌려오기
 	@RequestMapping(value="checkMemberClientList")
 	public String clientlist(ListInfo listInfo, Model model){
-		model.addAttribute("list",checkMemberService.clientList(listInfo)).addAttribute("board", "client");
+		model.addAttribute("list",checkMemberService.clientList(listInfo)).addAttribute("board", "Client");
 		
 		return "checkMember/checkMemberList";
 	}
@@ -85,7 +85,7 @@ public class CheckMemberController {
 	//프리랜서 리스트 뿌려오기
 	@RequestMapping(value="checkMemberFreelancerList")
 	public String freelancerlist(ListInfo listInfo, Model model){
-		model.addAttribute("list",checkMemberService.freelancerList(listInfo)).addAttribute("board", "freelancer");
+		model.addAttribute("list",checkMemberService.freelancerList(listInfo)).addAttribute("board", "Freelancer");
 		
 		return "checkMember/checkMemberList";
 	}

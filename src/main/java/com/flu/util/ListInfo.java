@@ -135,8 +135,8 @@ public class ListInfo {
 	public void makeRow(){
 		startRow=(this.getCurPage()-1)*this.getPerPage()+1;
 		lastRow=this.getCurPage()*this.getPerPage();
-		System.out.println(startRow);
-		System.out.println(lastRow);
+		System.out.println("스타트로우: "+startRow);
+		System.out.println("라스트로우: "+lastRow);
 	}
 	public Integer getPerPage() {
 		if(perPage==null){

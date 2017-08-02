@@ -214,22 +214,22 @@ cursor: pointer;
 
 		var board = '${board}';
 
-		if (board == 'check') {
+		if (board == 'Check') {
 			$('#checkBTN').css('background-color', '#446eab');
 			$('#checkBTN').children("#check").css('color', 'white');
 			$('#failBTN').css('background-color', 'white');
 			$('#failBTN').children("#fail").css('color', 'black');
-		} else if (board == 'fail') {
+		} else if (board == 'Fail') {
 			$('#failBTN').css('background-color', '#446eab');
 			$('#failBTN').children("#fail").css('color', 'white');
 			$('#checkBTN').css('background-color', 'white');
 			$('#checkBTN').children("#check").css('color', 'black');
-		} else if (board == 'wait') {
+		} else if (board == 'Wait') {
 			$('#waitBTN').css('background-color', '#446eab');
 			$('#waitBTN').children("#wait").css('color', 'white');
 			$('#finishBTN').css('background-color', 'white');
 			$('#finishBTN').children("#finish").css('color', 'black');
-		} else if (board == 'finish') {
+		} else if (board == 'Finish') {
 			$('#finishBTN').css('background-color', '#446eab');
 			$('#finishBTN').children("#finish").css('color', 'white');
 			$('#waitBTN').css('background-color', 'white');
@@ -260,13 +260,13 @@ cursor: pointer;
 
 			var board = '${board}';
 
-			if (board == 'check') {
+			if (board == 'Check') {
 				$('#frm').prop('action', "./checkProjectCheckList");
-			} else if (board == 'fail') {
+			} else if (board == 'Fail') {
 				$('#frm').prop('action', "./checkProjectFailList");
-			} else if(board=='wait'){
+			} else if(board=='Wait'){
 				$('#frm').prop('action', "./checkProjectWaitList");
-			} else if(board=='finish'){
+			} else if(board=='Finish'){
 				$('#frm').prop('action', "./checkProjectFinishList");
 			}
 			else {
@@ -350,8 +350,7 @@ cursor: pointer;
 			var num = $(this).attr('lang');
 			var state = $(this).attr('role');
 
-			if('${board}'=='finish'){
-				
+			if('${board}'=='Finish'){
 				
 			 	$.ajax({
 					
@@ -427,6 +426,33 @@ cursor: pointer;
 		});
 		
 	
+	    //paging
+	    
+	    $('.page').click(function() {
+	    	
+	    	var board = '${board}';
+	    	var curPage = $(this).attr('title');
+	    	
+	    	$('input[name=curPage]').val(curPage);
+	    	
+			if (board == 'Check') {
+				$('#frm').prop('action', "./checkProjectCheckList");
+			} else if (board == 'Fail') {
+				$('#frm').prop('action', "./checkProjectFailList");
+			} else if(board=='Wait'){
+				$('#frm').prop('action', "./checkProjectWaitList");
+			} else if(board=='Finish'){
+				$('#frm').prop('action', "./checkProjectFinishList");
+			}
+			else {
+
+			}
+
+			$('#frm').submit();
+	    	
+		});
+	    
+	    
 		
 	});
 </script>
@@ -447,7 +473,7 @@ cursor: pointer;
 					</div>
 				</div>
 				<div class="history">
-					<c:if test="${board=='check' or board=='fail'}">
+					<c:if test="${board=='Check' or board=='Fail'}">
 						<p id="checkBTN">
 							<a id="check" href="./checkProjectCheckList">검수 전 프로젝트</a>
 						</p>
@@ -455,7 +481,7 @@ cursor: pointer;
 							<a id="fail" href="./checkProjectFailList">모집실패 프로젝트</a>
 						</p>
 					</c:if>
-					<c:if test="${board=='wait' or board=='finish'}">
+					<c:if test="${board=='Wait' or board=='Finish'}">
 						<p id="waitBTN">
 							<a id="wait" href="./checkProjectWaitList">입금대기 프로젝트</a>
 						</p>
@@ -463,7 +489,7 @@ cursor: pointer;
 							<a id="finish" href="./checkProjectFinishList">프리랜서 대금관리</a>
 						</p>
 					</c:if>
-					<c:if test="${board=='client' or board=='freelancer'}">
+					<c:if test="${board=='Client' or board=='Freelancer'}">
 						<p id="clientBTN">
 							<a id="client" href="./checkProjectClientList">클라이언트 관리</a>
 						</p>
@@ -476,34 +502,34 @@ cursor: pointer;
 			</article>
 			<article class="right">
 				<div class="title">
-					<c:if test="${board=='check'}">
+					<c:if test="${board=='Check'}">
 						<p id="t1">검수 전 프로젝트</p>
 						<p id="t2">클라이언트로부터 등록된 프로젝트를 검수하는 곳입니다.</p>
 					</c:if>
-					<c:if test="${board=='fail'}">
+					<c:if test="${board=='Fail'}">
 						<p id="t1">모집종료 프로젝트</p>
 						<p id="t2">기간이 완료되어 모집종료된 프로젝트를 보여주는 곳입니다.</p>
 					</c:if>
-					<c:if test="${board=='wait'}">
+					<c:if test="${board=='Wait'}">
 						<p id="t1">입급대기 프로젝트</p>
 						<p id="t2">미팅이 완료된 프로젝트를 보여주는 곳입니다. 프로젝트 진행여부를 결정할 수 있습니다.</p>
 					</c:if>
-					<c:if test="${board=='finish'}">
+					<c:if test="${board=='Finish'}">
 						<p id="t1">프리랜서 대금관리</p>
 						<p id="t2">프로젝트를 완료한 회원들에게 급여를 지급하는 곳입니다.</p>
 					</c:if>
-					<c:if test="${board=='client'}">
+					<c:if test="${board=='Client'}">
 						<p id="t1">클라이언트 신원확인</p>
 						<p id="t2">클라이언트들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
 					</c:if>
-					<c:if test="${board=='freelancer'}">
+					<c:if test="${board=='Freelancer'}">
 						<p id="t1">프리랜서 신원확인</p>
 						<p id="t2">프리랜서들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
 					</c:if>
 				</div>
 				
-				<div id="searchForm">
-					<form id="frm" action="">
+			<form id="frm" action="">
+					<div id="searchForm">
 						<table id="tb">
 						<tr>
 							<td>1차 분류</td>
@@ -514,7 +540,7 @@ cursor: pointer;
 									<option value="디자인">디자인</option>
 								</select>
 							</td>
-						<c:if test="${board=='check' or board=='fail' or board=='wait'}">
+						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
 							<td>기획 상태</td>
 							<td>
 								<select name="planState">
@@ -525,7 +551,7 @@ cursor: pointer;
 								</select>
 							</td>
 						</c:if>
-						<c:if test="${board=='finish'}">
+						<c:if test="${board=='Finish'}">
 							<td>사업자 종류</td>
 							<td>
 							<select name="type">
@@ -560,19 +586,19 @@ cursor: pointer;
 						</tr>
 						<tr>
 							<td>
-							<c:if test="${board=='check'}">
+							<c:if test="${board=='Check'}">
 							예상 시작일
 							</c:if>
-							<c:if test="${board=='fail' or board=='wait' or board=='finish'}">
+							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish'}">
 							프로젝트 시작일
 							</c:if>
 							</td>
 							<td><input type="date" name="startDate" id="startDate"></td>		
-						<c:if test="${board=='check' or board=='fail' or board=='wait'}">
+						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
 							<td>담당자 이메일</td>
 							<td><input type="text" name="email" id="email" value="${projectDTO.email}"></td>
 						</c:if>
-						<c:if test="${board=='finish'}">
+						<c:if test="${board=='Finish'}">
 							<td>이름</td>
 							<td><input type="text" name="memberName" id="memberName" value="${listInfo.memberName}"></td>
 						</c:if>
@@ -580,10 +606,10 @@ cursor: pointer;
 						</tr>
 						<tr>
 							<td>
-							<c:if test="${board=='check'}">
+							<c:if test="${board=='Check'}">
 							모집마감일
 							</c:if>
-							<c:if test="${board=='fail' or board=='wait' or board=='finish'}">
+							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish'}">
 							프로젝트 종료일
 							</c:if>
 							</td>
@@ -605,7 +631,7 @@ cursor: pointer;
 						
 					</table>
 						<div id="searchBTN">검색하기</div>
-					</form>
+					
 				</div>
 				
 				
@@ -659,7 +685,7 @@ cursor: pointer;
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
 								 </td>
 								 <td>
-								 <c:if test="${board=='finish' or board=='wait'}">
+								 <c:if test="${board=='Finish' or board=='Wait'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
 								 </c:if>
 								 </td>
@@ -682,9 +708,9 @@ cursor: pointer;
 					</c:if>
 			
 					<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
-						<span class="num" ><a href="meetList?curPage=${i}">${i}</a></span>			
+						<span class="num" ><a class="page" title="${i}">${i}</a></span>	
 					</c:forEach>
-			
+					<input type="hidden" name="curPage" value=""> <!-- 페이징을 위해 반드시 필요 지우지 말것 -->
 					<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
 					<span id="nextview">[다음]</span>			
 					</c:if>
@@ -696,7 +722,9 @@ cursor: pointer;
 					
 					
 				</div>
-
+			</form>
+			
+			
 			</article>
 
 

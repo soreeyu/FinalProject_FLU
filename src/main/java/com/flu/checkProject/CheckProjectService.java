@@ -90,9 +90,11 @@ public class CheckProjectService {
 		
 		if(searchDate==null){
 			projectDTO.setReg_date("91/12/11");
+			System.out.println("최종 검색 범위"+projectDTO.getReg_date());
 			
 		}else if(searchDate.equals("")){
 			projectDTO.setReg_date("91/12/11");
+			System.out.println("최종 검색 범위"+projectDTO.getReg_date());
 			
 		}else{
 			projectDTO.setReg_date(simpleDateFormat.format(ca.getTime()));
@@ -102,6 +104,17 @@ public class CheckProjectService {
 		
 	}
 	
+	private void count(Map<String, Object> map,ListInfo listInfo){
+		
+		int totalCount = checkProjectDAO.checkCount(map);
+		System.out.println("토탈카운트:"+totalCount);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		
+	}
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////
 	
 	public List<ProjectDTO> checkList(ProjectDTO projectDTO,ListInfo listInfo,String searchDate) throws Exception{
 		
@@ -111,10 +124,11 @@ public class CheckProjectService {
 		map.put("listInfo", listInfo);
 		map.put("projectDTO", projectDTO);
 		
-		int totalCount = checkCount(map);
-		listInfo.makePage(totalCount);
-		listInfo.makeRow();
-			
+		count(map, listInfo);
+		
+		System.out.println(((ListInfo)(map.get("listInfo"))).getStartRow());
+		System.out.println(((ListInfo)(map.get("listInfo"))).getLastRow());
+		
 		return checkProjectDAO.checkList(map);
 		
 	}
@@ -126,6 +140,8 @@ public class CheckProjectService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("listInfo", listInfo);
 		map.put("projectDTO", projectDTO);
+		
+		count(map, listInfo);
 		
 		return checkProjectDAO.failList(map);
 	}
@@ -140,6 +156,7 @@ public class CheckProjectService {
 		map.put("listInfo", listInfo);
 		map.put("projectDTO", projectDTO);
 		
+		count(map, listInfo);
 		
 		return checkProjectDAO.waitList(map);
 	}
@@ -177,6 +194,7 @@ public class CheckProjectService {
 		map.put("projectList", projectList);
 		map.put("board", "finish");
 		
+		count(map, listInfo);
 		
 		return checkProjectDAO.finishList(map);
 		
@@ -192,11 +210,6 @@ public class CheckProjectService {
 	public int update(ProjectDTO projectDTO){
 		return checkProjectDAO.update(projectDTO);
 	}
-	
-	public int checkCount(Map<String, Object> map){
-		return checkProjectDAO.checkCount(map);
-	}
-
 	
 	
 }

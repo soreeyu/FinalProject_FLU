@@ -38,7 +38,6 @@ public class ApplicantController {
 		
 		for(int i=0;i<applicantList.size();i++){
 			memberList.add(memberService.memberView(applicantList.get(i).getEmail()));
-			System.out.println(memberList.get(i).getName());
 		}
 		
 		
