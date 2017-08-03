@@ -17,4 +17,10 @@
   <insert id="insertApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
   insert into applicant (projectNum, email, state, pay) values (#{projectNum}, #{email}, 'app', #{pay})
   </insert>
+  
+  <select id="checkApplicant" parameterType="com.flu.applicant.ApplicantDTO" resultType="int">	
+	select count(nvl(projectNum,0)) from applicant where projectNum=#{projectNum} and email=#{email}
+  </select>
+  
+  
   </mapper>

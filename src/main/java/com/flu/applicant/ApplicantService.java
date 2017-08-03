@@ -26,6 +26,14 @@ public class ApplicantService {
 	
 	//지원하기 누르면 지원자 추가
 	public int insertApplicant(ApplicantDTO applicantDTO){
+		System.out.println("applicant-service");
 		return applicantDAO.insertApplicant(applicantDTO);
 	}
+	
+	//지원했는지 체크해보기
+		public int checkApplicant(ApplicantDTO applicantDTO){
+			System.out.println("checkApplicant-service");
+			return applicantDAO.checkApplicant(applicantDTO);
+		}
+	
 }

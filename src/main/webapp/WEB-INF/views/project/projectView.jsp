@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
-
+  
 .main_section {
    min-width: 1160px;
    width: 1160px;
@@ -517,6 +518,16 @@ background-color: white;
    height: 100%;
    width: 100%;
 }
+.modal-header, h4, .close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+
 </style>
 
 </head>
@@ -685,11 +696,75 @@ background-color: white;
          <div class="project-apply-box">
             
          <c:if test="${member.kind eq 'freelancer' && dto.state eq 'recruit'}">
-            <a href="#" class="register-btn" id="btn_apply">
-            <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
+            <a href="#" class="register-btn" id="btn_apply" data-toggle="modal" data-target="#Model_Te">
+            <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">
+            <c:if test="${check eq 0 && checkCount eq 0}">
+            프로젝트 지원하기
+            </c:if>
+            <c:if test="${check eq 1 || checkCount eq 1}">
+            프로젝트 지원 완료
+            </c:if>
+             </a>
             <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
             <i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
           </c:if> 
+          
+
+          <!----------------------- Modal ---------------------------------->
+        
+
+  <!-- Modal -->
+  <div class="modal fade" id="App_Modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-edit"></span>  Application</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" action="../applicant/insertApplicant">
+            <div class="form-group">
+            <input type="hidden" name="projectNum" value="${dto.projectNum }">
+            <input type="hidden" name="state" value="app">
+            <input type="hidden" name="email" value="${member.email}">
+            <div>프로젝트Num : ${dto.projectNum }</div>
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Applicant email</label>
+              <div>${member.email}</div>
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> pay</label>
+              <input type="number" class="form-control" name="pay" placeholder="Enter pay">
+            </div>
+         
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Apply</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      
+          <p>프로젝트 미팅시 조율이 있을 수 있습니다.</p>
+         
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           
           <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
             <a href="#" class="schedule-btn">프로젝트 스케줄 </a>
@@ -770,8 +845,12 @@ background-color: white;
 var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
 var state = '${dto.state}';
+var check = "${check}";
 alert(state);
 alert("${member.oProfileImage }");
+alert("중복인가="+check);
+/* alert($("#btn_apply").html()); */
+
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -896,71 +975,70 @@ if(meetKind=='offline'){
 });
  
  
- /* 프로젝트 지원하기 */
- $("#btn_apply").click(function() {
-   alert("프로젝트 지원!");
-  /*  $.get("insertApplicant?projectNum="+projectNum,function(data){
-       location.href = "projectList";
-    }); */
-});
- 
- 
- 
- 
- 
- 
- 
- 
-$("#pj-delete").click(function() {
-
-   var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
-   
-   if(ch == true) {
-      $.get("projectDelete?projectNum="+projectNum,function(data){
-         location.href = "projectList";
-      });
-   } else {
-      alert("취소되었습니다.");
-      location.href = "projectView?projectNum="+projectNum;
-   }
-});
- 
- $("#pj-update").click(function() {
-   location.href = "projectUpdate?projectNum="+projectNum+"&email="+email;
-});
- 
- 
- 
- 
-$('#'+state).click(function() {
-   
-
-   var projectNum = '${dto.projectNum}';
-      
-   $('#deleteBTN').click(function() {
-      
-      if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
-         $('#frmm').attr('action','./projectDelete');
-         $('#frmm').submit();
-      }else{
-         
-      }   
-      
-   });
-});   
-   
-   $('#doneBTN').click(function() {
-      if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
-         $('#frmm').submit();
-      }
-      else{
-
-      }
-      
-   });
 
 
+	/* 프로젝트 지원하기 */
+	(function($) {
+		$("#btn_apply").click(function() {
+			
+			if(check==1){
+				alert("이미 지원한 프로젝트");
+			}else{
+		
+			alert("프로젝트 지원!");
+			$("#App_Modal").modal();
+		}
+		});
+	})(jQuery);
+
+	
+	
+	
+	$("#pj-delete").click(function() {
+
+		var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
+
+		if (ch == true) {
+			$.get("projectDelete?projectNum=" + projectNum, function(data) {
+				location.href = "projectList";
+			});
+		} else {
+			alert("취소되었습니다.");
+			location.href = "projectView?projectNum=" + projectNum;
+		}
+	});
+
+	$("#pj-update").click(
+			function() {
+				location.href = "projectUpdate?projectNum=" + projectNum
+						+ "&email=" + email;
+			});
+
+	$('#' + state).click(function() {
+
+		var projectNum = '${dto.projectNum}';
+
+		$('#deleteBTN').click(function() {
+
+			if (confirm("정말로 프로젝트를 삭제하시겠습니까?")) {
+				$('#frmm').attr('action', './projectDelete');
+				$('#frmm').submit();
+			} else {
+
+			}
+
+		});
+	});
+
+	$('#doneBTN').click(function() {
+		if (confirm("프로젝트 검수를 완료하시겠습니까?")) {
+			$('#frmm').attr('action', '../checkProject/checkProjectUpdate');
+			$('#frmm').submit();
+		} else {
+
+		}
+
+	});
 </script>
 </body>
 </html>

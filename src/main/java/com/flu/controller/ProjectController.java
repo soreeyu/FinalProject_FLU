@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantService;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -32,6 +34,10 @@ public class ProjectController {
    
    @Inject
 	private AlarmService alarmService;
+   @Inject
+   private ApplicantService applicantService;
+   
+   
 	private AlarmDTO alarmDTO;
 
    //@ResponseBody
@@ -122,7 +128,7 @@ public class ProjectController {
 
    //view
    @RequestMapping(value="projectView", method=RequestMethod.GET)
-   public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo){
+   public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
       if(projectNum==null){
          projectNum=1;
@@ -130,10 +136,19 @@ public class ProjectController {
       
       ProjectDTO projectDTO = projectService.projectView(projectNum);
 
+      memberDTO = (MemberDTO)session.getAttribute("member");
+      ApplicantDTO applicantDTO = new ApplicantDTO();
+      applicantDTO.setEmail(memberDTO.getEmail());
+      applicantDTO.setProjectNum(projectNum);
+      int checkCount = applicantService.checkApplicant(applicantDTO);
       
+      System.out.println("check값은??=="+check);
+      if(check==null){
+    	  check=0;
+      }
+      System.out.println("check값은2??=="+check);
       System.out.println("session의 사진을 불러와보자");
 
-      memberDTO = (MemberDTO)session.getAttribute("member");
       
       int contractResult = projectService.contractCount(projectDTO);
       System.out.println("계약한 갯수="+contractResult);
@@ -155,7 +170,8 @@ public class ProjectController {
       model.addAttribute("ingCount", ingResult);
       model.addAttribute("finishCount", finishResult);
       model.addAttribute("totalCount", totalResult);
-
+      model.addAttribute("check", check);
+      model.addAttribute("checkCount", checkCount);
 
          
    }
