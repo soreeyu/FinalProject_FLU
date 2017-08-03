@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="MemberMapper">
+  		
+  		<sql id="search">
+	   <trim prefix="where" prefixOverrides="and || or">
+	   <if test="kind == 'name'"> name like '%' || #{search} || '%'</if>
+	   <if test="kind == 'price'"> price like '%' || #{search} || '%'</if>
+	   <if test="kind == 'reserve_date'"> reserve_date like '%' || #{search} || '%'</if>
+	   <if test="kind == 'reserve_name'"> reserve_name like '%' || #{search} || '%'</if>
+	   <if test="kind == 'human'"> reserve_name like '%' || #{search} || '%'</if>
+	   </trim>
+	   </sql>
+	  		
+  		<!-- 이메일 인증 상태 업데이트 -->
+  		<update id="emailUpdate" parameterType="com.flu.member.MemberDTO">
+  			update member set emailcheck = #{emailcheck} where email = #{email}
+  		</update>
+  		
+  		<!-- 멤버 뷰 -->
+  		<select id="memberView" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.member.MemberDTO">
+  			select * from member M, checkmember A where M.email = #{email} and M.email=A.email
+  		</select>
+  		
+  		<select id="memberView2" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
+  			select * from member where email = #{email}
+  		</select>
+  		
+  		<!-- 이메일 중복확인 -->
+  		<select id="memberEmail" resultType="java.lang.String" parameterType="java.lang.String">
+  			select email from member where email = #{email}
+  		</select>
+  		<select id="freelancerEmail" resultType="java.lang.String" parameterType="java.lang.String">
+  			select email from freelancer where email = #{email}
+  		</select>
+  		
+  		<!-- 회원 가입 -->
+  		<insert id="memberInsert" parameterType="com.flu.member.MemberDTO">
+  			insert into member values(#{kind}, #{email}, #{pw}, #{nickName}, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null)
+  		</insert>
+  		
+  		<!-- 로그인 -->
+  		<select id="memberLogin" resultType="com.flu.member.MemberDTO" parameterType="com.flu.member.MemberDTO">
+  			select * from member where email = #{email} and pw = #{pw}
+  		</select>
+  		
+  		<!-- 정보 수정 -->
+  		<update id="memberUpdate" parameterType="com.flu.member.MemberDTO">
+  			update member set type=#{type} , oprofileimage = #{oProfileImage} , 
+  			fprofileimage = #{fProfileImage}, addr_num = #{addr_num}, addr_main = #{addr_main}, 
+  			addr_detail = #{addr_detail}, phone = #{phone}, phone2 = #{phone2}, fax = #{fax}, 
+  			name = #{name}, namegender = #{namegender}, birth = #{birth} where email = #{email}
+  		</update>
+
+  		<!-- 예약현황 가져오기 -->
+  		<select id="memberReserved" parameterType="com.flu.member.MemberDTO" resultType="com.flu.reservation.ReservationDTO">
+  			select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date, state, num, snum, email from reservation where email=#{email}
+  		</select>
+  		
+  		<!-- 예약현황 리스트 ( 관리자 전용 )  -->
+  		<select id="adminReserved" parameterType="com.flu.util.ListInfo" resultType="com.flu.reservation.ReservationDTO"> 
+  			select * from
+  			(select rownum N, R.* from
+  			(select reserve_name, name, human, time, price, to_char(reserve_date, 'yyyy/MM/dd') reserve_date, state, num, snum, email from reservation
+  			<include refid="search"/>  			
+  			) R)
+  			where N between #{startRow} and #{lastRow}
+  		</select>
+  
+  </mapper>
