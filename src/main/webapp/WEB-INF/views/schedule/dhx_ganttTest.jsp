@@ -85,7 +85,7 @@ html, body {
 				//공통의 옵션
 
 				gantt.config.xml_date = "%Y-%m-%d";
-				gantt.config.task_height = 20;
+				gantt.config.task_height = 30;
 				gantt.config.fit_tasks = true;
 
 				gantt.config.drag_progress = false;
@@ -99,8 +99,104 @@ html, body {
 				gantt.config.work_time = true;
 				gantt.config.correct_work_time = true;
 				
+				///////////////////////////////////////tooltip///////////////////////////
+				//tooltip설정 // task 마다 할당되는
+				// offset은 위치가 떨어지는것
+				gantt.config.tooltip_offset_x = 0; 
+				gantt.config.tooltip_offset_y = 0; 
+				gantt.templates.tooltip_date_format=function (date){
+				    var formatFunc = gantt.date.date_to_str("%Y-%m-%d");
+				    return formatFunc(date);
+				};
+				gantt.templates.tooltip_text = function(start,end,task){
+				    var tooltipText = "";
+					tooltipText = tooltipText + "<b>Task:</b> " + task.text;
+					tooltipText = tooltipText + "<br/><b>Start date:</b> " + gantt.templates.tooltip_date_format(start);  
+					tooltipText = tooltipText + "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end);
+					tooltipText = tooltipText + "<br/><b>Duration:</b> " + task.duration;
+					tooltipText = tooltipText + "<br/><b>ID :</b> " + task.id;
+					tooltipText = tooltipText + "<br/><b>TYPE :</b> " + task.type;
+					tooltipText = tooltipText + "<hr> <div>내용을 추가해야되</div>";
+					tooltipText = tooltipText + " <a href='/flu'>홈갈래</a>";
+					tooltipText = tooltipText + "<br/><select><option>할일</option>";
+					tooltipText = tooltipText + "<option>진행중</option><option>완료</option></select>";
+					
+					//alert("task= "+task);
+					return tooltipText;
+				};
+				//gantt.config.tooltip_hide_timeout = 5000; //다른 곳으로 이동해도 5초는 띄워두겠다는 설정
 				
-			
+				
+				
+				
+				//////////////////////////////////lightbox//////////////////////
+				
+				//안되넹...//var opts = ["할일","진행중","완료"];
+				/* 
+				gantt.config.lightbox.sections = [
+				    {name:"description", height:38, map_to:"text", type:"textarea",focus:true},
+				   // {name:"priority", height:22, map_to:"priority",type:"select",options:opts},                                                                        
+				     {name:"time", height:72, type:"duration", map_to:"auto",time_format:["%Y","%m","%d"]}
+				   // {name:"description", height:70, map_to:"text", type:"textarea", focus:true},
+				   // {name:"time",        height:72, map_to:"auto", type:"duration"}
+				];
+				
+				 */
+				
+				
+				
+				
+				
+	
+				//duration,parent,select,template,textarea,time,typeselect
+				var full_lightbox =[
+				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true},
+				    {name:"details",     height:38, map_to:"text", type:"textarea"}, 
+				    {name:"type", type:"typeselect", map_to:"type"},  
+				    /* {name:"parent", type:"parent",  filter:function(id, task){ 
+				        if(task.$level > 0){         
+				            return false;     
+				        }else{  
+				            return true; 
+				        } 
+				    }}, */
+				    {name:"parent", type:"parent",  template(start,end,ev){
+				        var title = ev.id+"."+ev.text;
+				        return title;
+				    	},filter:function(id, task){ 
+					        if(task.$level > 0){         
+					            return false;     
+					        }else{  
+					            return true; 
+					        } 
+				    	}
+				    }, 
+				    {name:"time",        height:72, map_to:"auto", type:"duration",time_format:["%Y","%m","%d"]}
+				];
+				
+				gantt.locale.labels["section_parent"] = "Part 선택";
+				gantt.locale.labels.section_details = "Details";
+				
+				var restricted_lightbox = [
+				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true}
+				];
+				 
+				gantt.attachEvent("onBeforeLightbox", function(task_id) {
+					gantt.alert("라잇박스전이벤트");
+				    gantt.resetLightbox(); 
+				    var task = gantt.getTask(task_id);  
+				    if (task.restricted == true){
+				        gantt.config.lightbox.sections = restricted_lightbox;
+				    } else {
+				        gantt.config.lightbox.sections = full_lightbox;
+				    };   
+				    return true;
+				});
+				
+				
+				
+				
+				
 				
 				
 				
@@ -206,19 +302,11 @@ html, body {
 
 				
 				
-				//업무에 올렷을때
-				gantt.templates.tooltip_text = function(start, end, task) {
-					var tooltipText = "<b>Task:</b> " + task.text
-					+ "<br/><b>Duration:</b> " + task.duration
-					+ "<br/><b>ID :</b> " + task.id
-					+ "<br/><b>TYPE :</b> " + task.type;
-					tooltipText = tooltipText
-							+ "<hr> <div>내용을 추가해야되</div> <a href='/flu'>홈갈래</a>";
-							
-					return tooltipText;
-				};
-				gantt.config.tooltip_hide_timeout = 1000; //다른 곳으로 이동해도 5초는 띄워두겠다는 설정
 
+				
+
+				
+				
 				gantt.attachEvent("onAfterTaskAdd", function(id, item) {
 					//이게 반복적으로 돌면서 이벤트를 붙여주는거 같아요 
 					//여기서 unit 부분은 + 가 안되도록 설정해주면 좋겠네요 
@@ -266,25 +354,16 @@ html, body {
 				 */
 				// gantt.eachTask(function(task){alert(task.text);}) //각업무에 대한 반복문
 
-				var testEvent = gantt.attachEvent("#test", "click",
+					
+				var testEvent = gantt.attachEvent("test", "click",
 						function(e) {
 							//e - a native event object
-							alert("클릭함");
+							gantt.alert("클릭함");
 						});
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-		
-				// gantt.attachEvent(testEvent);
+				gantt.attachEvent(testEvent);
+				
+				
+				
 
 				$("#test").click(function() {
 					alert("저장할란다");
@@ -349,50 +428,34 @@ html, body {
 				
 				
 				
-				
-				
-				var full_lightbox =[
-				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true},
-				    {name:"time",        height:72, map_to:"auto", type:"duration"}
-				];
-				var restricted_lightbox = [
-				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true}
-				];
-				 
-				gantt.attachEvent("onBeforeLightbox", function(task_id) {
-				    gantt.resetLightbox(); 
-				    var task = gantt.getTask(task_id);  
-				    if (task.restricted ==true){
-				        gantt.config.lightbox.sections = restricted_lightbox;
-				    } else {
-				        gantt.config.lightbox.sections = full_lightbox;
-				    };   
-				    return true;
-				});
-				
-				
+			
+				// task반복문
 				gantt.eachTask(function(task){
-					alert(task.text);
+					//alert(task.text);
 				});
+				
+				
+				
 				
 				//+버튼 클릭이벤트
 				gantt.attachEvent("onTaskCreated", function(task){
 				   //if(task.type == 0){
-				    	alert("하나 만들어짐"+task.id);
-				    	return true;
+				    	gantt.alert("하나 만들어짐"+task.id);
+				    	
 				    	
 				    	//안만들어진거라서 안됨
 				    	var pId = gantt.getParent(task.id); //task 의 부모
 				    	var id = pId+"_1";
-				    	var taskId = gantt.createTask({
+				    	/* var taskId = gantt.createTask({
 				    	    id:id,
 				    	    text:"상세일정추가(할일)",
 				    	    start_date:pId.start_date,
 				    	    type: 1,
 				    	    duration:2
-				    	}, pId , 0);
-				    	alert("taskId"+task.id+" pId"+pId); 
+				    	}, pId , 0); */
+				    	gantt.alert("taskId"+task.id+" pId"+pId); 
 				    	
+				    	return true;
 				 // }
 				    
 				    
@@ -540,12 +603,15 @@ html, body {
 <%-- <c:import url="../temp/header.jsp"></c:import> --%>
 
 <section class="main_section">
- <div id="gantt_here" style='width:1500px; height:500px; margin:0 auto;'>
+ <div id="gantt_header" style="width:100%; height:100px; background:orange; ">
+ 	<span style="display:block; width:200px; height:100px; line-height:100px; background:yellow; margin-left:100px; ">프로젝트 진행창</span>
+ </div>
+ <div id="gantt_here" style='width:100%; height:500px; margin:0 auto; overflow:hidden;'>
  
 
  </div>
  
-  <div id="test" style='width:200px; height:200px; background:orange;'></div>
+ <div id="test" style='width:200px; height:200px; background:orange;'></div>
  
  </section>
  

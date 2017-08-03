@@ -272,11 +272,15 @@ public class ScheduleService {
 					scheduleUnitDTO.setUnitFinishDate(unitFinishDate);
 					scheduleUnitDTO.setUnitStartDate(unitStartDate);
 					scheduleUnitDTO.setUnitState("할일");
+					
+					scheduleUnitDTO.setUnitDescFileO("");
+					scheduleUnitDTO.setUnitDescFileF("");
+					scheduleUnitDTO.setEmail("myeon01@flu.com");
 
 
 					unitlist.add(scheduleUnitDTO);
 					
-				}else if(Integer.parseInt((oneUnit.get("type").toString())) == 0){
+				}else if(Integer.parseInt((oneUnit.get("type").toString())) == 0){ 
 					System.out.println("part임 ");
 					
 					//unit들 
@@ -295,6 +299,10 @@ public class ScheduleService {
 					schedulePartDTO.setPartName(partName);
 					schedulePartDTO.setPartFinishDate(partFinishDate);
 					schedulePartDTO.setPartStartDate(partStartDate);
+					
+					schedulePartDTO.setPartDescFileF("");
+					schedulePartDTO.setPartDescFileO("");
+					
 
 
 					
