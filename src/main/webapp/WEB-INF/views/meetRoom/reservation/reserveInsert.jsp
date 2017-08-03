@@ -149,6 +149,7 @@
     			$("#in").val(index1);
     			$("#out").val(index2+1);    			  			
     		}
+    		
     	} 
      	
      	$("#reset_btn").click(function() {
@@ -156,7 +157,19 @@
     		load(reserve_date, name, snum);
     	})
      	
-    	
+    	$("#people").click(function() {
+ 			
+    		if($("#in").val()=="" || $("#out").val()==""){
+    			alert("시간과 날짜를 먼저 선택하세요.");
+    			accessTime(snum);
+	    		load(reserve_date, name, snum);
+    		}else if($("#out").val()==""){
+				alert("최소 예약 시간은 2시간 입니다.");
+				accessTime(snum);
+	    		load(reserve_date, name, snum);
+			} 
+    		
+		});
      	
     	$("#people").change(function() {
     		var max = $(this).attr("max");
@@ -181,19 +194,19 @@
     		var totalPrice = $("#rprice").val();
     		
     		if(reserve_Info[0].value==""){
-    			alert("날짜를 선택하세요");
-    		}else if(reserve_Info[1].value==""){
-    			alert("입실 시간을 정해주세요");
-    		}else if(reserve_Info[2].value==""){
-    			alert("퇴실 시간을 정해주세요");
-    		}else if(reserve_Info[3].value==""){
     			alert("인원을 정해주세요.");
-    		}else if(reserve_Info[4].value==""){
+    		}else if(reserve_Info[1].value==""){
     			alert("예약자 이름을 입력 해주세요.");
-    		}else if(reserve_Info[5].value==""){
+    		}else if(reserve_Info[2].value==""){
     			alert("연락처를 입력 해주세요.");
-    		}else if(reserve_Info[6].value==""){
+    		}else if(reserve_Info[3].value==""){
     			alert("이메일을 입력 해주세요");
+    		}else if(reserve_Info[4].value==""){
+    			alert("날짜를 선택하세요");
+    		}else if(reserve_Info[5].value==""){
+    			alert("입실 시간을 정해주세요");
+    		}else if(reserve_Info[6].value==""){
+    			alert("퇴실 시간을 정해주세요");
     		}else if(totalPrice==null){
     			alert("정보를 다시 입력해주세요");
     		}else { 
@@ -388,6 +401,8 @@ font-size:14px;
 .reservation_Info input{
 	line-height : 50px;
 	width: 100%;
+	margin-left: 40px;
+    margin-bottom: 20px;
 }
 .reserve_detail_info{
 	margin-bottom: 20px;

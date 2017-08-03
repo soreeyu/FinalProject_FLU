@@ -160,6 +160,13 @@ public class MemberController {
 		//MY FLU
 		@RequestMapping(value="myflu")
 		public void myflu(){
+			//멤버, 클라이언트, 프리랜서, 어플리켄트, 프로젝트 테이블 정보 모두 가져오기
+			//로그인한사람의 테이블 정보를 모두 가져옴
+			
+			
+			
+			
+			
 			
 		}
 		
@@ -353,7 +360,7 @@ public class MemberController {
 							ar.get(i).setTime(ar.get(i).getTime().replaceAll(",", "~"));
 							
 						}
-						
+						System.out.println("상태:"+ar.get(1).getState());
 						model.addAttribute("list", ar);
 						model.addAttribute("listInfo", listInfo);
 					}				

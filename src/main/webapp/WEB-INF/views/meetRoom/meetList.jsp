@@ -59,6 +59,11 @@
 	padding: 13px;	
 	
 }
+.Room:after {
+	content: " ";
+	clear: both;
+	display: table;
+}
 .search {
 	float: right;
 }
@@ -147,7 +152,7 @@
 				</c:if>
 		
 				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
-					<span class="num" ><a href="meetList?curPage=${i}">${i}</a></span>			
+					<span class="num"><a href="meetList?curPage=${i}">${i}</a></span>			
 				</c:forEach>
 		
 				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
