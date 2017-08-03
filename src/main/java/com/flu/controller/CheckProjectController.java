@@ -166,4 +166,16 @@ public class CheckProjectController {
 	
 	}
 	
+	
+	@RequestMapping(value="moreDate")
+	public void moreDate(){
+		
+	}
+	
+	
+	//연습
+	@RequestMapping(value="practice")
+	public void practice(){
+		
+	}
 }

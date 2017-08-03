@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -725,7 +726,7 @@ background-color: white;
             </c:if>
             
             <c:if test="${dto.state eq 'fail'}">
-            <input type="button" class="register-btn" value="프로젝트 연장" id="dateBTN">
+            <input type="button" class="register-btn" value="프로젝트 기간변경" id="dateBTN">
             </c:if>
             
             <input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
@@ -956,6 +957,16 @@ $('#'+state).click(function() {
       }
       
    });
+   
+   $('#dateBTN').click(function name() {
+	
+	   var url="../checkProject/moreDate";
+	   var option = "width=500,height=500,top=100,left=300";
+	  
+	   window.open(url,'moreDate',option);
+	   
+	   
+	});
 
 
 </script>
