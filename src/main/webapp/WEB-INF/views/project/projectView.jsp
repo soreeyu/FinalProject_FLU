@@ -719,7 +719,7 @@ background-color: white;
              <form action="" id="frmm" method="get">
 			 <input type="hidden" name="state" value="${dto.state}">
             <input type="hidden" name="projectNum" value="${dto.projectNum}">
-			
+            <input type="hidden" name="email" value="${dto.email}">
             <c:if test="${dto.state eq 'check'}">
             <input type="button" class="register-btn" value="프로젝트 검수 완료" id="doneBTN">
             </c:if>

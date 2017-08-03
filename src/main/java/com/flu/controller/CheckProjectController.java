@@ -1,9 +1,6 @@
 package com.flu.controller;
 
-import java.sql.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,14 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
-import com.flu.applicant.ApplicantDAO;
-import com.flu.applicant.ApplicantDTO;
-import com.flu.applicant.ApplicantService;
 import com.flu.checkProject.CheckProjectService;
 import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
@@ -142,7 +135,7 @@ public class CheckProjectController {
 		if(result>0){
 			
 			alarmDTO = new AlarmDTO();
-			alarmDTO.setEmail("pkjuno@nate.com");
+			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));

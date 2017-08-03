@@ -59,6 +59,14 @@
 	padding: 13px;	
 	
 }
+<<<<<<< HEAD
+=======
+.Room:after {
+	content: " ";
+	clear: both;
+	display: table;
+}
+>>>>>>> parent of 7bb8f5d... no message
 .search {
 	float: right;
 }
@@ -147,7 +155,11 @@
 				</c:if>
 		
 				<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
+<<<<<<< HEAD
 					<span class="num" ><a href="meetList?curPage=${i}">${i}</a></span>			
+=======
+					<span class="num"><a href="meetList?curPage=${i}">${i}</a></span>			
+>>>>>>> parent of 7bb8f5d... no message
 				</c:forEach>
 		
 				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
