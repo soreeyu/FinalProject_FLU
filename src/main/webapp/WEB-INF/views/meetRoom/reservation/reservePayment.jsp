@@ -10,14 +10,7 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function() {
-<<<<<<< HEAD
-		$("#btn").click(function() {
-			var result = confirm("예약하시겠습니까?");
-			if(result){
-				$("#frm").submit();
-			}
-		});
-=======
+
 		$(".credit").hide();
 		$(".digit").hide();
 		

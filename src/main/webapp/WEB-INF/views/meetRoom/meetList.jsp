@@ -59,14 +59,6 @@
 	padding: 13px;	
 	
 }
-<<<<<<< HEAD
-=======
-.Room:after {
-	content: " ";
-	clear: both;
-	display: table;
-}
->>>>>>> parent of 7bb8f5d... no message
 .search {
 	float: right;
 }
