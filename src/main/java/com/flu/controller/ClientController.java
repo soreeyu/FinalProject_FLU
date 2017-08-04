@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantService;
 import com.flu.client.ClientDTO;
 import com.flu.client.ClientService;
 import com.flu.member.MemberDTO;
@@ -38,6 +40,9 @@ public class ClientController {
 	private ProjectService projectService;
 	@Inject
 	private AlarmService alarmService;
+	@Inject
+	private ApplicantService applicantService;
+	
 	private AlarmDTO alarmDTO;
 	
 	private String getEmail(HttpSession session){
@@ -134,7 +139,7 @@ public class ClientController {
 	
 	 //project state에 따른 리스트 불러오는 부분
 	   @RequestMapping(value="projectCheck", method=RequestMethod.GET)
-	   public void projectCheck(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO){
+	   public void projectCheck(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO, ApplicantDTO applicantDTO){
 	      System.out.println("projectCheck요");
 	       MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 	         System.out.println("myProject의 email="+memberDTO.getEmail());
@@ -149,13 +154,20 @@ public class ClientController {
 	         
 	         List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
 	         
+	         for(int i=0;i<ar.size();i++){
+	        	 
+	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
+	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
+	         System.out.println("ar의 appCount=="+ar.get(i).getAppCount());
+	         }
+	         applicantDTO.setProjectNum(projectDTO.getProjectNum());
 	         
-	         System.out.println("clientController의 ar="+ar);
-
+	         
 	         model.addAttribute("list", ar);
 	         model.addAttribute("count", totalCount);
 	         model.addAttribute("member", memberDTO);
 	         model.addAttribute("listInfo", listInfo);
+	       
 	   }
 	
 	

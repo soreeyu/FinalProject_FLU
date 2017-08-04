@@ -21,6 +21,9 @@
   <select id="checkApplicant" parameterType="com.flu.applicant.ApplicantDTO" resultType="int">	
 	select count(nvl(projectNum,0)) from applicant where projectNum=#{projectNum} and email=#{email}
   </select>
+ <select id="countApplicant" parameterType="int" resultType="int">
+  	select count(nvl(projectNum, 0)) from applicant where projectNum=#{projectNum} 
+  </select> 
   
   
   </mapper>
