@@ -387,7 +387,7 @@
 	display: block;
 	width: 100%;
 	text-align: right;
-	margin-right: 5px;
+	margin-right: 10px;
 	margin-top: 5px;
 }
 .quick_leftDay{

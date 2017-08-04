@@ -156,13 +156,10 @@ public class ProjectController {
 
    //view
    @RequestMapping(value="projectView", method=RequestMethod.GET)
-   public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
+   public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
-      if(projectNum==null){
-         projectNum=1;
-      }
       
-      ProjectDTO projectDTO = projectService.projectView(projectNum);
+      projectDTO = projectService.projectView(projectNum, projectDTO);
 
       memberDTO = (MemberDTO)session.getAttribute("member");
       ApplicantDTO applicantDTO = new ApplicantDTO();
@@ -282,7 +279,7 @@ public class ProjectController {
 
       System.out.println(memberDTO.getKind());   
       
-      projectDTO = projectService.projectView(projectDTO.getProjectNum());
+      projectDTO = projectService.projectView(projectDTO.getProjectNum(), projectDTO);
       System.out.println("projectNum="+projectDTO.getProjectNum());
       System.out.println("controller-project-name="+projectDTO.getName());
    
