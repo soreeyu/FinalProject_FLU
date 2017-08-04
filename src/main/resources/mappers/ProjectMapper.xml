@@ -154,6 +154,11 @@
   <delete id="delete" parameterType="java.lang.Integer">
      delete project where projectNum=#{projectNum}
   </delete>
+  
+  <update id="moreDateUpdate" parameterType="com.flu.project.ProjectDTO">
+  		update project set startDate=#{startDate}, finishDate=#{finishDate},state='done' where projectNum=#{projectNum}
+  </update>
+  
  
   
   </mapper>

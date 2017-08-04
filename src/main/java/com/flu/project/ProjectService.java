@@ -137,4 +137,9 @@ public class ProjectService {
 		return projectDAO.sellList(projectDTO, listInfo);
 	}
 	
+	//기간연장
+	public int moreDateUpdate(ProjectDTO projectDTO){
+		return projectDAO.moreDateUpdate(projectDTO);
+	}
+	
 }

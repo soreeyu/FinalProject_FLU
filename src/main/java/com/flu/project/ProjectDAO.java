@@ -162,7 +162,10 @@ public class ProjectDAO {
 			return sqlSession.selectList(NAMESPACE+"sellList", map);
 		}
 		
-		
+		//기간연장
+		public int moreDateUpdate(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"moreDateUpdate", projectDTO);
+		}
 		
 	
 }

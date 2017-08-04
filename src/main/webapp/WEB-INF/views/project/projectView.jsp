@@ -525,7 +525,7 @@ background-color: white;
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 <section class="main_section">
-
+	<input type="hidden" id="opener" value="${dto.projectNum}"> <!-- 연장할때 필요 지우지마셈 -->
       <!--  header -->
       <div class="project_header">
          <div class="header_text">
@@ -949,7 +949,7 @@ $('#'+state).click(function() {
    
    $('#doneBTN').click(function() {
       if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
+         $('#frmm').attr('action','../checkProject/checkProjectUpdate'); //frmm 맞음.... 오타아님
          $('#frmm').submit();
       }
       else{
@@ -959,8 +959,8 @@ $('#'+state).click(function() {
    });
    
    $('#dateBTN').click(function name() {
-	
-	   var url="../checkProject/moreDate";
+
+	   var url="./moreDate";
 	   var option = "width=500,height=500,top=100,left=300";
 	  
 	   window.open(url,'moreDate',option);
