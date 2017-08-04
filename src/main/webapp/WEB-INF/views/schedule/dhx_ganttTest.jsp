@@ -39,12 +39,7 @@ html, body {
   
 			$(function() {
 				
-				
-				
-		
-				
-				
-				
+			
 				//member의 kind에 따른 간트차트 옵션 설정
 				if(memberKind == 'freelancer'){
 					alert("프리랜서입장");
@@ -147,19 +142,6 @@ html, body {
 				
 				
 				//////////////////////////////////lightbox//////////////////////
-				
-				//안되넹...//var opts = ["할일","진행중","완료"];
-				/* 
-				gantt.config.lightbox.sections = [
-				    {name:"description", height:38, map_to:"text", type:"textarea",focus:true},
-				   // {name:"priority", height:22, map_to:"priority",type:"select",options:opts},                                                                        
-				     {name:"time", height:72, type:"duration", map_to:"auto",time_format:["%Y","%m","%d"]}
-				   // {name:"description", height:70, map_to:"text", type:"textarea", focus:true},
-				   // {name:"time",        height:72, map_to:"auto", type:"duration"}
-				];
-				
-				 */
-				
 				
 				
 				 var opts = [
@@ -439,19 +421,7 @@ html, body {
 				
 
 				
-				/////////일추가햇을 때 이벤트
-				gantt.attachEvent("onAfterTaskAdd", function(id, item) {
-					//이게 반복적으로 돌면서 이벤트를 붙여주는거 같아요 
-					//여기서 unit 부분은 + 가 안되도록 설정해주면 좋겠네요 
-					//alert("추가했음="+id);
-					//alert("내용="+item.id);
-					
-					if (item.type == 1) {
-						//gantt.getTask(id).readonly = true;//unit들은 수정이 안되도록 해보겟어요 //걍 설정에서 editable: false 하면됨
-						//gantt.config.readonly = true;  //이거로하면 전체에 적용이되버림
-					}
-
-				});
+				
 				
 				
 				
@@ -480,32 +450,63 @@ html, body {
 				
 				
 		
-				
+				/////////////////////////////////////여기 처리좀 어떻게 제발 ////////////////지금할것///////////
 				//+버튼 클릭이벤트
 				gantt.attachEvent("onTaskCreated", function(task){
 				   //if(task.type == 0){
-				    	gantt.alert("하나 만들어짐"+task.id);
+				    	gantt.alert("하나 만드는중"+task.id);
 				    	
 				    	
 				    	//안만들어진거라서 안됨
-				    	var pId = gantt.getParent(task.id); //task 의 부모
-				    	var id = pId+"_1";
-				    	/* var taskId = gantt.createTask({
-				    	    id:id,
-				    	    text:"상세일정추가(할일)",
-				    	    start_date:pId.start_date,
-				    	    type: 1,
-				    	    duration:2
-				    	}, pId , 0); */
-				    	gantt.alert("taskId"+task.id+" pId"+pId); 
+				    	//var pId = gantt.getParent(task.id); //task 의 부모
+				    	//gantt.alert("하나 만들어짐"+pId);
+				    	//var id = pId+"_1";
+				    	
+				    	//gantt.alert("taskId"+task.id+" pId"+pId); 
 				    	
 				    	return true;
 				 // }
-				    
-				    
-				    
-			});
+				});
 				
+				/////////일추가햇을 때 이벤트
+				gantt.attachEvent("onAfterTaskAdd", function(id, item) {
+					//이게 반복적으로 돌면서 이벤트를 붙여주는거 같아요 
+					//여기서 unit 부분은 + 가 안되도록 설정해주면 좋겠네요 
+					//alert("추가했음="+id);
+					//alert("내용="+item.id);
+					
+					/// 여기서 설정해주기 
+					if (item.type == null) {
+						gantt.alert("task가 처음 만들어졌어요");
+						var taskId = gantt.addTask({
+						    id:10,
+						    text:"Task #10",
+						    start_date:"02-04-2013",
+						    duration:8,
+						    parent:1
+						});
+						 
+					gantt.updateTask(taskId);
+						
+						
+						//gantt.getTask(id).readonly = true;//unit들은 수정이 안되도록 해보겟어요 //걍 설정에서 editable: false 하면됨
+						//gantt.config.readonly = true;  //이거로하면 전체에 적용이되버림
+					}
+
+				});
+				
+	
+					
+				
+				/* 
+				var taskId = gantt.createTask({
+		    	    id:id,
+		    	    text:"상세일정추가(할일)",
+		    	    start_date: new Date(),
+		    	    type: 1,
+		    	    duration:2
+		    	}, 0 , 0); 
+				 */
 				
 				
 				
@@ -649,7 +650,7 @@ html, body {
 							}
 
 						});
-				alert("ajax아래 함수안에 data unit //동기로 했음        "
+				alert("ajax아래 함수안에 data unit //동기로 했음"
 						+ JSON.stringify(partsJSONArray));
 				return partsJSONArray;
 
@@ -663,7 +664,6 @@ html, body {
 </head>
 <body>
 
-<%-- <c:import url="../temp/header.jsp"></c:import> --%>
 
 <section class="main_section">
  <div id="gantt_header" style="width:100%; height:100px; background:orange; ">
@@ -671,14 +671,14 @@ html, body {
  </div>
  <div id="gantt_here" style='width:100%; height:500px; margin:0 auto; overflow:hidden;'>
  
-
  </div>
  
- <div id="test" style='width:200px; height:200px; background:orange;'></div>
+<div id="test" style='width:200px; height:200px; background:orange;'></div>
+ 
  
  </section>
  
-<%--  <c:import url="../temp/footer.jsp"></c:import>  --%>
+
     
 </body>
 </html>
