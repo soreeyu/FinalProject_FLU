@@ -167,6 +167,21 @@ public class ProjectDAO {
 			return sqlSession.selectOne(NAMESPACE+"projectImg", projectDTO);
 		}
 		
-		
+		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+		public int projectListcount(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectcount", projectDTO);
+		}
 	
+		//프로젝트 리스트에서 뿌려주는 급구리스트
+		public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
+			return sqlSession.selectList(NAMESPACE+"quickList", listInfo);
+		}
+		
+		//프로젝트 리스트에서 뿌려주는 급구리스트 카운트
+		public int quickCount(ProjectDTO projectDTO){
+			System.out.println("quickCount-dao");
+			return sqlSession.selectOne(NAMESPACE+"quickCount", projectDTO);
+		}
+		
+		
 }

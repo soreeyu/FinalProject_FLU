@@ -57,8 +57,18 @@
    color: #666;
 }
 
+.header_category{
+	font-size: 20px;
+   vertical-align: middle;
+   margin-top: 5px;
+   margin-right:50px;
+   float: left;
+   height: 20px;
+   line-height: 20px;
+}
+
 /* 추가  */
-#header_t span:last-child{
+.header_apply{
    font-size: 20px;
    vertical-align: middle;
    margin-top: 5px;
@@ -543,10 +553,15 @@ background-color: white;
             <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
             </p>
             <p id="header_t">
-            <span>${dto.category} > ${dto.detailCategory }</span>
-            <span>
+            <span class="header_category">${dto.category} > ${dto.detailCategory }</span>
+            
+            <c:if test="${dto.state eq 'recruit' }">
+            <span class="header_apply">
             <img src="${pageContext.request.contextPath}/resources/img/project/proposal.png">
-            총<strong>N명</strong>지원</span>
+         		   총<strong>${applyCount}명</strong>지원</span>
+            </c:if>
+            
+            
             </p>
          </div>
       </div>

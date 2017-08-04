@@ -74,16 +74,44 @@ public class ProjectController {
       
       MemberDTO memberDTO = new MemberDTO();
       memberDTO= (MemberDTO)session.getAttribute("member");
-
-
+      
+     int pjcount = projectService.projectListcount(projectDTO);
+      /*int pjcount = projectService.projectCount(listInfo, projectDTO, array);*/
+     
+   
+     
+     
       model.addAttribute("listInfo", listInfo);
       model.addAttribute("member", memberDTO);
-   
+      model.addAttribute("pjcount", pjcount);
+
       
       
       return "project/projectList";
    }
    
+   
+   //급구 project 리스트 AJAX
+   @RequestMapping(value="quickListInner", method=RequestMethod.GET)
+   	public void quickListInner(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
+   		System.out.println("quickListInner요");
+   		
+   		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+   		System.out.println("count들어가기전");
+   		int quickCount = projectService.quickCount(projectDTO);
+   		System.out.println("quickCount=="+quickCount);
+   		System.out.println("count들어간후");
+   		listInfo.makePage(quickCount);
+   		listInfo.makeRow();
+   		System.out.println("여기는");
+        List<ProjectDTO> ar = projectService.quickList(projectDTO, listInfo);
+        System.out.println("급구리스트 사이즈==="+ar.size());     
+        
+        model.addAttribute("quicklist", ar);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("quickCount", ar.size());
+   		
+   	}
    
    //project 리스트 AJAX
    @RequestMapping(value="projectListInner", method=RequestMethod.GET)
@@ -149,10 +177,12 @@ public class ProjectController {
       System.out.println("check값은2??=="+check);
       System.out.println("session의 사진을 불러와보자");
 
+      int applyCount = applicantService.countApplicant(projectNum);
+      
       MemberDTO mem = projectService.projectImg(projectDTO);
-      System.out.println("프로젝트 등록한사람=="+mem.getEmail());
+      /*System.out.println("프로젝트 등록한사람=="+mem.getEmail());
       System.out.println("프로젝트 등록한사람=="+mem.getfProfileImage());
-      System.out.println("프로젝트 등록한사람=="+mem.getoProfileImage());
+      System.out.println("프로젝트 등록한사람=="+mem.getoProfileImage());*/
       
       
       int sellResult = projectService.sellingCount(projectDTO);
@@ -178,6 +208,7 @@ public class ProjectController {
       model.addAttribute("check", check);
       model.addAttribute("checkCount", checkCount);
       model.addAttribute("mem", mem);
+      model.addAttribute("applyCount", applyCount);
 
          
    }

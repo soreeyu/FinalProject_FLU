@@ -154,4 +154,35 @@ public class ProjectService {
 		return projectDAO.projectImg(projectDTO);
 	}
 	
+	
+	//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+	public int projectListcount(ProjectDTO projectDTO){
+		return projectDAO.projectListcount(projectDTO);
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 급구리스트
+	public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
+		
+		List<ProjectDTO> ar =  projectDAO.quickList(projectDTO, listInfo);
+		System.out.println("service의 quick-ar=="+ar);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println(ar.get(i).getSkill());
+			String[] parsing = ar.get(i).getSkill().split(",");
+			
+			for(int j=0;j<parsing.length;j++){
+				ar.get(i).setSkills(parsing);				
+			}
+			System.out.println(ar.get(i).getSkills());
+		}
+		return ar;
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 급구리스트 카운트
+	public int quickCount(ProjectDTO projectDTO){
+		System.out.println("quickCount-service");
+		return projectDAO.quickCount(projectDTO);
+	}
 }
