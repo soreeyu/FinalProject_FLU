@@ -86,7 +86,7 @@ public class ProjectService {
 			System.out.println(ar.get(i).getSkills());
 		}
 		
-		System.out.println("dao-detailCategory="+ar.get(0).getDetailCategory());
+		//System.out.println("dao-detailCategory="+ar.get(0).getDetailCategory());
 	
 		return ar;
 	}

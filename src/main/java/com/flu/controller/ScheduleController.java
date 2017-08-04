@@ -463,7 +463,7 @@ public class ScheduleController {
 			
 			int result = scheduleService.setUnits(jsonData);
 			
-
+				
 		}
 
 

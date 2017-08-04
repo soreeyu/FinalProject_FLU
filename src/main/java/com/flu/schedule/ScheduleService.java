@@ -220,6 +220,13 @@ public class ScheduleService {
 			return result;
 		}
 		
+		
+		
+		
+		
+		
+		
+		
 		//초기인서트
 		public int setUnits(String jsonData) throws Exception{
 
@@ -242,7 +249,8 @@ public class ScheduleService {
 					System.out.println("num들 = "+num);
 				}
 				
-				System.out.println("내용 = " + oneUnit.get("text").toString());
+				System.out.println("할일제목 = " + oneUnit.get("text").toString());
+				System.out.println("홀더  (상세설명 폼이어야할듯하오 ) " + oneUnit.get("holder"));//없는것도 있음...
 				System.out.println("시작일 = " + oneUnit.get("start_date").toString());
 				System.out.println("마감일= " + oneUnit.get("end_date").toString());
 				System.out.println("타입 = " + oneUnit.get("type")); //part 는 0 unit 1 
@@ -317,7 +325,7 @@ public class ScheduleService {
 			System.out.println(" 만들어진 unit 리스트 "+unitlist.toString());
 			System.out.println(" 만들어진 part 리스트 "+partlist.toString());
 			//int result = (partlist); //파트 먼저 insert
-			int result = this.unitListInsert(unitlist);
+			//int result = this.unitListInsert(unitlist);
 			return 0;
 		}
 		

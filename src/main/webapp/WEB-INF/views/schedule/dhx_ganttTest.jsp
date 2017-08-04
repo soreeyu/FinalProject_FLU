@@ -39,10 +39,27 @@ html, body {
   
 			$(function() {
 				
+				
+				
+		
+				
+				
+				
 				//member의 kind에 따른 간트차트 옵션 설정
 				if(memberKind == 'freelancer'){
 					alert("프리랜서입장");
 					gantt.config.readonly = true; //true 면 전체가 수정은 불가 
+					
+					/* 
+					//프리랜서는 수정이 불가하게 해줘야한다
+					//반복문 
+					gantt.eachTask(function(task){
+						alert(task.text);
+						gantt.getTask(task.id).restricted = true; //changes task's data
+						gantt.updateTask(task.id); //renders the updated task
+					});
+ */
+					
 				}else if(memberKind == 'client'){
 					alert("클라이언트입장");
 					gantt.config.readonly = false;
@@ -116,7 +133,7 @@ html, body {
 					tooltipText = tooltipText + "<br/><b>Duration:</b> " + task.duration;
 					tooltipText = tooltipText + "<br/><b>ID :</b> " + task.id;
 					tooltipText = tooltipText + "<br/><b>TYPE :</b> " + task.type;
-					tooltipText = tooltipText + "<hr> <div>내용을 추가해야되</div>";
+					tooltipText = tooltipText + "<hr> <b>holder는 뭐징</b>" + task.holder;
 					tooltipText = tooltipText + " <a href='/flu'>홈갈래</a>";
 					tooltipText = tooltipText + "<br/><select><option>할일</option>";
 					tooltipText = tooltipText + "<option>진행중</option><option>완료</option></select>";
@@ -145,45 +162,66 @@ html, body {
 				
 				
 				
-				
+				 var opts = [
+					    { key:"할일", label: "할일" },                                            
+					    { key:"진행중", label: "진행중" },                                         
+					    { key:"완료", label: "완료" }                                            
+					];
 				
 	
 				//duration,parent,select,template,textarea,time,typeselect
 				var full_lightbox =[
 				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true},
-				    {name:"details",     height:38, map_to:"text", type:"textarea"}, 
+				    {name:"details",     height:38, map_to:"holder", type:"textarea"}, 
+				    {name:"testSec",     height:38, map_to:"testSec", type:"textarea"},
+				    {name:"description", height:130, map_to:"text", type:"textarea", button:"help"},
 				    {name:"type", type:"typeselect", map_to:"type"},  
-				    /* {name:"parent", type:"parent",  filter:function(id, task){ 
+				    {name:"parent", type:"parent",  filter:function(id, task){ 
 				        if(task.$level > 0){         
 				            return false;     
 				        }else{  
 				            return true; 
 				        } 
-				    }}, */
-				    {name:"parent", type:"parent",  template(start,end,ev){
-				        var title = ev.id+"."+ev.text;
-				        return title;
-				    	},filter:function(id, task){ 
+				    }}, 
+				   /*  {name:"parent", type:"parent"
+				    	,filter: function(id, task){ 
 					        if(task.$level > 0){         
 					            return false;     
 					        }else{  
 					            return true; 
 					        } 
 				    	}
-				    }, 
-				    {name:"time",        height:72, map_to:"auto", type:"duration",time_format:["%Y","%m","%d"]}
+				    	,template(start,end,ev){		    
+					        var title = ev.id+"."+ev.text;
+					        return title;
+				    	}
+				    }, */
+				    {name:"priority",    height:22, type:"select",   map_to:"priority", options:opts, default_value:"할일"}, //여기서설정해주느 value는 option의 key임                        
+				    {name:"time", height:72, map_to:"auto", type:"duration",time_format:["%Y","%m","%d"]}
 				];
 				
 				gantt.locale.labels["section_parent"] = "Part 선택";
-				gantt.locale.labels.section_details = "Details";
+				gantt.locale.labels.section_details = "설명";
+				gantt.locale.labels.section_priority = "상태";
+				gantt.locale.labels.section_testSec = "테스트";
+				//'help' is the value of the 'button' property
+				gantt.locale.labels.button_help="Help label";
+				
+				
+				gantt.form_blocks.textarea.button_click=function(index,button,shead,sbody){
+				    //뭘까
+				    gantt.alert("버튼 눌렷을 때인건가"+index+button+shead+sbody);
+				}
+			
 				
 				var restricted_lightbox = [
 				    {name:"description", height:70, map_to:"text", type:"textarea", focus:true}
 				];
 				 
 				gantt.attachEvent("onBeforeLightbox", function(task_id) {
-					gantt.alert("라잇박스전이벤트");
-				    gantt.resetLightbox(); 
+					gantt.alert("라잇박스 열리기직전에 발생하는 이벤트");
+				    gantt.resetLightbox(); //lightbox를 리셋해줌
+	
 				    var task = gantt.getTask(task_id);  
 				    if (task.restricted == true){
 				        gantt.config.lightbox.sections = restricted_lightbox;
@@ -193,9 +231,16 @@ html, body {
 				    return true;
 				});
 				
+				/* 
 				
+				//lightbox 
+				//to get the value
+				var value = gantt.getLightboxSection('description').getValue();
+				 
+				//to set the value
+				gantt.getLightboxSection('description').setValue('abc');
 				
-				
+				 */
 				
 				
 				
@@ -305,19 +350,6 @@ html, body {
 
 				
 
-				
-				
-				gantt.attachEvent("onAfterTaskAdd", function(id, item) {
-					//이게 반복적으로 돌면서 이벤트를 붙여주는거 같아요 
-					//여기서 unit 부분은 + 가 안되도록 설정해주면 좋겠네요 
-					//alert("추가했음="+id);
-					//alert("내용="+item.id);
-					if (item.type == 1) {
-						//gantt.getTask(id).readonly = true;//unit들은 수정이 안되도록 해보겟어요 //걍 설정에서 editable: false 하면됨
-						//gantt.config.readonly = true;  //이거로하면 전체에 적용이되버림
-					}
-
-				});
 
 				
 				
@@ -352,10 +384,11 @@ html, body {
 				     }
 				 });
 				 */
-				// gantt.eachTask(function(task){alert(task.text);}) //각업무에 대한 반복문
-
+				 
+				 
+			
 					
-				var testEvent = gantt.attachEvent("test", "click",
+				var testEvent = gantt.attachEvent("#test", "click",
 						function(e) {
 							//e - a native event object
 							gantt.alert("클릭함");
@@ -389,7 +422,7 @@ html, body {
 				
 				
 				
-				
+				//////////today 마커
 				var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
 				 
 				var id = gantt.addMarker({ start_date: new Date(), css: "today", title:date_to_str( new Date())});
@@ -404,31 +437,33 @@ html, body {
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				//파트가져와서 업무에 추가해주기
-				var resultJson = getPartList(scheduleNum);
-				changeJsonDataForGanttTask(resultJson);
-
-				//unit가져와서 업무에 추가해주기 
-				var resultJsonUnit = getUnitList(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
-				changeJsonDataForGanttTaskUnit(resultJsonUnit);
 
 				
+				/////////일추가햇을 때 이벤트
+				gantt.attachEvent("onAfterTaskAdd", function(id, item) {
+					//이게 반복적으로 돌면서 이벤트를 붙여주는거 같아요 
+					//여기서 unit 부분은 + 가 안되도록 설정해주면 좋겠네요 
+					//alert("추가했음="+id);
+					//alert("내용="+item.id);
+					
+					if (item.type == 1) {
+						//gantt.getTask(id).readonly = true;//unit들은 수정이 안되도록 해보겟어요 //걍 설정에서 editable: false 하면됨
+						//gantt.config.readonly = true;  //이거로하면 전체에 적용이되버림
+					}
+
+				});
 				
 				
 				
+				//////////업무수정됬을때
+				gantt.attachEvent("onAfterTaskUpdate", function(id,item){
+					gantt.alert("엄마 이름만 불러도 왜이렇게 가슴이 아프죠"+id+"    item = "+item.priority);
+					//여기서 ajax로 해줘야할것만 같아요 
+					
+				});
 				
 				
-			
+				
 				// task반복문
 				gantt.eachTask(function(task){
 					//alert(task.text);
@@ -436,6 +471,15 @@ html, body {
 				
 				
 				
+				
+				
+				
+				
+				
+
+				
+				
+		
 				
 				//+버튼 클릭이벤트
 				gantt.attachEvent("onTaskCreated", function(task){
@@ -460,11 +504,28 @@ html, body {
 				    
 				    
 				    
-				});
+			});
 				
 				
 				
 				
+		
+				
+				//파트가져와서 업무에 추가해주기
+				var resultJson = getPartList(scheduleNum);
+				changeJsonDataForGanttTask(resultJson);
+
+				//unit가져와서 업무에 추가해주기 
+				var resultJsonUnit = getUnitList(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
+				changeJsonDataForGanttTaskUnit(resultJsonUnit);
+
+				
+				
+					
+				
+				
+				
+			
 				
 				
 				
@@ -483,7 +544,8 @@ html, body {
 						type : 0,
 						color : "black",
 						//parent: "141_1", // unit 넣을때 이런식으로 체크하면 좋겟다
-						open : true
+						open : true,
+						restricted : false
 					});
 
 				} //for문 끝 
@@ -505,7 +567,8 @@ html, body {
 						parent : jsonObj[i].scheduleNum + "_"
 								+ jsonObj[i].partNum,
 						open : true,
-						editable : false
+						editable : false,
+						restricted : false
 					//unit은 수정안되요
 					});
 
