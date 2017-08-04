@@ -118,10 +118,10 @@ public class ProjectDAO {
 			
 		}
 		
-		public int contractCount(ProjectDTO projectDTO){
-			System.out.println("contractCount dao 들어옴");
+		public int sellingCount(ProjectDTO projectDTO){
+			System.out.println("sellingCount dao 들어옴");
 			
-			return sqlSession.selectOne(NAMESPACE+"contractcount", projectDTO);
+			return sqlSession.selectOne(NAMESPACE+"sellingCount", projectDTO);
 		}
 		
 		public int ingCount(ProjectDTO projectDTO){
@@ -162,6 +162,10 @@ public class ProjectDAO {
 			return sqlSession.selectList(NAMESPACE+"sellList", map);
 		}
 		
+		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
+		public MemberDTO projectImg(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectImg", projectDTO);
+		}
 		
 		
 	

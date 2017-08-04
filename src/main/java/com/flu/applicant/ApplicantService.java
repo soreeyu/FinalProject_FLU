@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.project.ProjectDTO;
+
 @Service
 public class ApplicantService {
 	
@@ -31,9 +33,16 @@ public class ApplicantService {
 	}
 	
 	//지원했는지 체크해보기
-		public int checkApplicant(ApplicantDTO applicantDTO){
-			System.out.println("checkApplicant-service");
-			return applicantDAO.checkApplicant(applicantDTO);
-		}
+	public int checkApplicant(ApplicantDTO applicantDTO){
+		System.out.println("checkApplicant-service");
+		return applicantDAO.checkApplicant(applicantDTO);
+	}
 	
+	//지원자 수 카운트하기
+	public int countApplicant(int projectNum){			
+		System.out.println("countApplicant-service");
+	
+
+		return applicantDAO.countApplicant(projectNum);
+	}
 }

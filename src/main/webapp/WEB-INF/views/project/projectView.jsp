@@ -26,7 +26,7 @@
    padding: 30px;
    margin-bottom: 20px;
    border: 1px solid #e6e6e6;
-   margin-bottom: 30px;
+   margin-bottom: 20px;
    background-color: white;
 }
 
@@ -184,16 +184,13 @@ strong{
    font-size: 20px;
    margin-bottom: 20px;
 }
-.project-skill{
-/*    background-color: #666; */
-   color: white;
-   border-radius: 2px;
-}
+
 .contents-register{
    background-color: white;
    margin-top: 10px;
    padding: 25px;
    border: 1px solid #dedede;
+   margin-bottom: 30px;
 }
 .contents-register-inner span a{
    font-weight: bold;
@@ -467,12 +464,7 @@ background-color: white;
    margin-left: 10px;
    color: #666;
 }
-.skill-name{
-   background-color: #a1a7ad;
-}
-.skill-box span{
-   color: #999;
-}
+
 .contents_bottom{
    margin-top: 30px;
    width: 100%;
@@ -528,6 +520,13 @@ background-color: white;
       background-color: #f9f9f9;
   }
 
+.reply_img{
+	height: 30px;
+	width: 30px;
+	margin-right: 10px;
+	border-radius: 2px;
+	display: inline;
+}
 </style>
 
 </head>
@@ -541,7 +540,7 @@ background-color: white;
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
             <span>${dto.name}</span>
-            <span class="DateMius"><span class="startDate"></span> - <span class="finishDate"></span></span>
+            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
             </p>
             <p id="header_t">
             <span>${dto.category} > ${dto.detailCategory }</span>
@@ -551,6 +550,39 @@ background-color: white;
             </p>
          </div>
       </div>
+      
+      <c:if test="${dto.state=='check'}">
+      <div class="contents-register">
+            <div class="contents-register-inner" style="text-align: center;">
+            
+            <c:if test="${member.kind=='admin' }">
+               <p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
+            </c:if>
+            <c:if test="${member.kind=='freelancer'}">
+               <p>프로젝트 지원을 위해
+               <span><a href="../member/personaldataView">기본정보</a></span>
+               <span><a href="../member/introView">자기소개</a></span>
+               <span><a href="../member/skillList">보유기술</a></span>
+               <span><a href="../member/portfolioList">포트폴리오</a></span>
+               을(를) 입력해주세요
+               </p>
+              
+            </c:if>
+            
+            <c:if test="${member.email==dto.email}">
+            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
+               <div class="owner_option_btn">
+                  <a href="#" class="owner-btn" id="pj-update">Update</a>
+                  <a href="#" class="owner-btn" id="pj-delete">Delete</a>
+               </div>
+               </c:if>
+            
+            </div>
+         </div>
+      </c:if>
+      
+      
+      
       
       <!-- contents -->
       <div class="contents">
@@ -606,7 +638,14 @@ background-color: white;
             
             <div>
                <div class="project-detail-title" style="margin-top: 20px;">관련 기술</div>
-               <span class="project-skill">${dto.skills}</span>
+               <span class="project-skill">
+               
+               <c:forEach items="${dto.skills}" var="sk">
+					<span class="skill-name">${sk}</span>
+							
+							</c:forEach>
+               
+               </span>
       
                
                
@@ -614,34 +653,6 @@ background-color: white;
          </div>
          <div style="clear: both;"></div>
 
-
-         <div class="contents-register">
-            <div class="contents-register-inner" style="text-align: center;">
-            
-            <c:if test="${member.kind=='admin' }">
-               <p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-            </c:if>
-            <c:if test="${member.kind=='freelancer'}">
-               <p>프로젝트 지원을 위해
-               <span><a href="#">기본정보</a></span>
-               <span><a href="#">자기소개</a></span>
-               <span><a href="#">보유기술</a></span>
-               <span><a href="#">포트폴리오</a></span>
-               을(를) 입력해주세요
-               </p>
-               <a href="#" class="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
-            </c:if>
-            
-            <c:if test="${member.email==dto.email}">
-            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 </p> ${dto.projectNum }
-               <div class="owner_option_btn">
-                  <a href="#" class="owner-btn" id="pj-update">Update</a>
-                  <a href="#" class="owner-btn" id="pj-delete">Delete</a>
-               </div>
-               </c:if>
-            
-            </div>
-         </div>
          
          
          
@@ -669,7 +680,7 @@ background-color: white;
                
                <!-- member의 img를 넣자 -->
             
-               
+               <div class="reply_img_box"><img style="height: 30px; width: 30px; border-radius: 3px; margin-right: 10px;" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}"></div>
                <input type="text" name="contents">
                <input type="checkbox" id="reply_check">비공개 설정
                <input type="hidden" name="replyChk" id="replyChk" value="true">
@@ -693,6 +704,9 @@ background-color: white;
          
          <!-- right contents  -->
       <section class="contents_sub">
+      
+      <c:if test="${dto.state ne 'check' && dto.state ne 'finish' && dto.state ne 'sell' }">
+      
          <div class="project-apply-box">
             
          <c:if test="${member.kind eq 'freelancer' && dto.state eq 'recruit'}">
@@ -810,7 +824,7 @@ background-color: white;
             </form>
           </c:if>
          </div>
-            
+            </c:if>
             
          
             
@@ -820,14 +834,16 @@ background-color: white;
                <%-- ${member.oProfileImage }
                ${member.fProfileImage } --%>
                <div class="dto_profile_box">
-                  <div class="dto_profile"></div>
+                  <div class="dto_profile">
+                  	<img style="width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/profile/${mem.fProfileImage}">
+                  </div>
                </div>
                <div class="dto_profile_detail">
                   <div>프로젝트 등록자 : ${dto.email}</div>
                   <div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
-                  <div><span>계약한 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
                   <div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
                   <div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
+                  <div><span>판매중인 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
                </div>
                </div>
             </div>
@@ -887,7 +903,7 @@ if(planState=='idea'){
  var reg_Month = reg_date.getMonth()+1;
  var reg_Year = reg_date.getFullYear();
  $("#reg_date").text(reg_Year+"년 "+reg_Month+"월 "+reg_Day+"일");
-
+ $(".regDate").text(reg_Year+"년 "+reg_Month+"월 "+reg_Day+"일");
  
  
  /* 예상시작일 뿌려주기 */
@@ -1005,8 +1021,8 @@ if(meetKind=='offline'){
 		var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
 
 		if (ch == true) {
-			$.get("projectDelete?projectNum=" + projectNum, function(data) {
-				location.href = "projectList";
+			$.get("projectDelete?projectNum=" + projectNum+"&state="+state, function(data) {
+				location.href = "../member/client/clientproject";
 			});
 		} else {
 			alert("취소되었습니다.");
