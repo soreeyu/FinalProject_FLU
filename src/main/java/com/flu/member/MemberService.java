@@ -1,6 +1,7 @@
 package com.flu.member;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -89,7 +90,6 @@ public class MemberService {
 	
 	//로그인
 	public MemberDTO login(MemberDTO memberDTO){
-		System.out.println("카인드 뭐야 : "+memberDAO.login(memberDTO).getKind());
 		return memberDAO.login(memberDTO);
 	}
 	
@@ -107,7 +107,10 @@ public class MemberService {
 	public MemberDTO memberView2(String email){
 		return memberDAO.memberView2(email);
 	}
-	
+	//회원 리스트(회원가입폼에 뿌려줌)
+	public Map<String, Object> memberList(){
+		return memberDAO.memberList();
+	}
 
 	//회원 정보 수정
 	public int memberUpdate(MemberDTO memberDTO){

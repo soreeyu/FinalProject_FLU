@@ -55,7 +55,10 @@ public class MemberController {
 	
 	//사이트 회원 가입폼 이동
 		@RequestMapping(value="MemberJoin", method=RequestMethod.GET)
-		public String MemberJoin(){
+		public String MemberJoin(Model model){
+			
+			model.addAttribute("memberList", memberService.memberList());
+			
 			return "member/memberJoinForm";
 		}
 		//사이트 회원 가입

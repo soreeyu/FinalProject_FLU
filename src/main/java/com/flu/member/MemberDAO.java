@@ -1,6 +1,8 @@
 package com.flu.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -37,9 +39,12 @@ public class MemberDAO {
 
 
 	//회원리스트
-	public List<MemberDTO> memberList(RowMaker rowmaker){
-
-		return null;
+	public Map<String, Object> memberList(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("freelancer", sqlSession.selectList(NAMESPACE+"memberList", "freelancer"));
+		map.put("client", sqlSession.selectList(NAMESPACE+"memberList", "client"));
+		
+		return map;
 	}
 
 	//회원 탈퇴
