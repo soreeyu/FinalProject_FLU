@@ -265,11 +265,21 @@ html, body {
 			} else if (item.unitState == '마감일 지남') {
 				item.color = "rgb(233, 94, 81)";
 			} else {
-				alert("니상태는 뭐니");
+				//alert("니상태는 뭐니");
 			}
 		//});
 	});
 	
+	
+	gantt.attachEvent("onGridHeaderClick", function(name, e){
+	    alert("name "+name+ " e "+e);
+	    return true;
+	});
+	
+	gantt.attachEvent("onTaskRowClick", function(id,row){
+		alert("id "+id+ " row "+row);
+	   // return true;
+	});
 	
 	
 	
