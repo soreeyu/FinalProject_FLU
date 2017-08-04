@@ -698,9 +698,11 @@ background-color: white;
          <c:if test="${member.kind eq 'freelancer' && dto.state eq 'recruit'}">
             <a href="#" class="register-btn" id="btn_apply" data-toggle="modal" data-target="#Model_Te">
             <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">
+            <span id="span_apply">
             <c:if test="${check eq 0 && checkCount eq 0}">
             프로젝트 지원하기
             </c:if>
+            </span>
             <c:if test="${check eq 1 || checkCount eq 1}">
             프로젝트 지원 완료
             </c:if>
@@ -846,10 +848,11 @@ var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
 var state = '${dto.state}';
 var check = "${check}";
+var apply_check = $("#btn_apply").text().trim();
 alert(state);
 alert("${member.oProfileImage }");
 alert("중복인가="+check);
-/* alert($("#btn_apply").html()); */
+alert(apply_check);
 
 
 /* reply ajax */
@@ -983,6 +986,9 @@ if(meetKind=='offline'){
 			
 			if(check==1){
 				alert("이미 지원한 프로젝트");
+			}else if(apply_check=="프로젝트 지원 완료"){
+				alert("이미 지원한 프로젝트")
+				
 			}else{
 		
 			alert("프로젝트 지원!");
