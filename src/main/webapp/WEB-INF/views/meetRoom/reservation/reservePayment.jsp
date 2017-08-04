@@ -10,12 +10,34 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function() {
+		$(".credit").hide();
+		$(".digit").hide();
+		
+		var credit_Info = document.getElementsByClassName("credit_Info");
+		var digit_Info = document.getElementsByClassName("digit_Info");
+		
+		$("#creditCard").click(function() {
+			if($(".digit").show()){
+				$(".digit").hide();
+			}
+			$(".credit").show();
+		});
+		
+		$("#checkCard").click(function() {
+			if($(".credit").show()){
+				$(".credit").hide();
+			}
+			$(".digit").show();
+		});
+		
 		$("#btn").click(function() {
 			var result = confirm("예약하시겠습니까?");
 			if(result){
 				$("#frm").submit();
 			}
 		});
+		
+		
 	})
 </script>
 <style type="text/css">
@@ -138,9 +160,9 @@
 	<hr>
 	<h1>결제방법</h1>
 	<!-- 결제 방법 선택시 ajax로 각 결제 방법에 맞는 정보 입력하는 창 불러오기 -->
-	<input type="radio" name="payment" value="신용카드">
+	<input type="radio" name="payment" value="신용카드" id="creditCard">
 	신용카드
-	<input type="radio" name="payment" value="실시간 계좌이체">
+	<input type="radio" name="payment" value="실시간 계좌이체" id="checkCard">
 	실시간 계좌이체
 		<input type="hidden" name="name" value="${reserveInfo.name}">
 		<input type="hidden" name="reserve_date" value="${reserveInfo.reserve_date}">
@@ -159,32 +181,32 @@
 		<div class="credit">
 			<div class="type">
 				<span>
-					<input type="radio" name="type"> 개인
+					<input type="radio" name="type" class="credit_Info"> 개인
 				</span>
 				<span>
-					<input type="radio" name="type"> 법인
+					<input type="radio" name="type" class="credit_Info"> 법인
 				</span>
-				<select>
-					<option>신한카드</option>
-					<option>현대카드</option>
-					<option>비씨카드</option>
-					<option>삼성카드</option>
-					<option>롯데카드</option>	
+				<select class="credit_Info">
+					<option value="신한카드">신한카드</option>
+					<option value="현대카드">현대카드</option>
+					<option value="비씨카드">비씨카드</option>
+					<option value="삼성카드">삼성카드</option>
+					<option value="롯데카드">롯데카드</option>	
 				</select>
 			</div>
 			<div class="card_contents">
 				<table>
 					<tr>
 						<td>카드번호</td>
-						<td><input type="text" placeholder="카드번호 입력"> </td>
+						<td><input type="text" placeholder="카드번호 입력 '-'제외" class="credit_Info"> </td>
 					</tr>
 					<tr>
 						<td>유효기간</td>
-						<td><input type="text" placeholder="월"> <input type="text" placeholder="년"> </td>
+						<td><input type="text" placeholder="월" class="credit_Info"> <input type="text" placeholder="년" class="credit_Info"> </td>
 					</tr>
 					<tr>
 						<td>비밀번호</td>
-						<td><input type="text" placeholder="비밀번호"> </td>
+						<td><input type="text" placeholder="비밀번호" class="credit_Info"> </td>
 					</tr>
 				</table>
 			</div>
@@ -198,12 +220,12 @@
 						출금은행
 					</td>
 					<td>
-						<select>
-							<option>신한은행</option>
-							<option>우리은행</option>
-							<option>국민은행</option>
-							<option>하나은행</option>
-							<option>농협</option>
+						<select class="digit_Info">
+							<option value="신한은행">신한은행</option>
+							<option value="우리은행">우리은행</option>
+							<option value="국민은행">국민은행</option>
+							<option value="하나은행">하나은행</option>
+							<option value="농협">농협</option>
 						</select>
 					</td>	
 				</tr>
@@ -212,7 +234,7 @@
 						계좌번호
 					</td>
 					<td>
-						<input type="text" placeholder="계좌번호 입력">
+						<input type="text" placeholder="계좌번호 입력" class="digit_Info">
 					</td>
 				</tr>
 				<tr>
@@ -220,7 +242,7 @@
 						계좌비밀번호
 					</td>
 					<td>
-						<input type="text" placeholder="계좌비밀번호 입력">
+						<input type="text" placeholder="계좌비밀번호 입력" class="digit_Info">
 					</td>
 				</tr>	
 			</table>

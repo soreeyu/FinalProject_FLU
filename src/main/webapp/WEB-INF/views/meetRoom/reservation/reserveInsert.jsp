@@ -23,7 +23,6 @@
         dayNamesShort: ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'],
         dayNamesMin: ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'],
         showMonthAfterYear: true,
-        
         yearSuffix: '.'
        	
     });
@@ -157,35 +156,56 @@
     	})
      	
     	
+    	$("#people").click(function() {
+			if($("#in").val()=="" || $("#out").val()==""){
+				alert("시간과 날짜를 먼저 선택하세요.");
+				accessTime(snum);
+	    		load(reserve_date, name, snum);
+			}else if($("#in").val()!="" && $("#out").val()==""){
+				alert("최소 예약 시간은 2시간 입니다.");
+				accessTime(snum);
+	    		load(reserve_date, name, snum);
+			}
+		});
      	
-    	$("#people").blur(function() {
+    	$("#people").change(function() {
+    		var max = $(this).attr("max")*1;
 			var price = $("#price").val();
 			var time = (($("#out").val()*1)+1)-($("#in").val()*1);
-			if(time!=1){
 			var final_price = ($(this).val()*1)*(price*1)*(time*1);
-			$("#rprice").val(final_price);
-			$(".final_price").html(final_price);				
-			}else {
-				alert("날짜와 시간을 먼저 선택해주세요.");
-			}
+			
+    		if($(this).val()*1>max){
+    			final_price=($(this).attr("max")*1)*(price*1)*(time*1);
+    			$(this).val(max);
+    			$("#rprice").val(final_price);
+				$(".final_price").html(final_price);	
+    		}else {
+			if(time!=1){
+				$("#rprice").val(final_price);
+				$(".final_price").html(final_price);				
+				}
+    		}
 		});
     	
     	$("#reserve_btn").click(function() {
     		var reserve_Info = document.getElementsByClassName("reserve_Info");
+    		var totalPrice = $("#rprice").val();
     		if(reserve_Info[0].value==""){
-    			alert("날짜를 선택하세요");
-    		}else if(reserve_Info[1].value==""){
-    			alert("입실 시간을 정해주세요");
-    		}else if(reserve_Info[2].value==""){
-    			alert("퇴실 시간을 정해주세요");
-    		}else if(reserve_Info[3].value==""){
     			alert("인원을 정해주세요.");
-    		}else if(reserve_Info[4].value==""){
-    			alert("예약자 이름을 입력 해주세요.");
-    		}else if(reserve_Info[5].value==""){
+    		}else if(reserve_Info[1].value==""){
     			alert("연락처를 입력 해주세요.");
-    		}else if(reserve_Info[6].value==""){
+    		}else if(reserve_Info[2].value==""){
+    			alert("예약자 이름을 입력 해주세요.");
+    		}else if(reserve_Info[3].value==""){
     			alert("이메일을 입력 해주세요");
+    		}else if(reserve_Info[4].value==""){
+    			alert("날짜를 선택하세요");
+    		}else if(reserve_Info[5].value==""){
+    			alert("입실 시간을 정해주세요");
+    		}else if(reserve_Info[6].value==""){
+    			alert("퇴실 시간을 정해주세요");
+    		}else if(totalPrice==null){
+    			alert("정보를 다시 입력해주세요.");
     		}else { 
 	    		$("#frm").submit();    			
     		}   		
@@ -411,7 +431,7 @@ font-size:14px;
 		<table>
 			<tr>
 				<td class="reserve_detail_info">인원</td>
-				<td class="reserve_detail_info"><input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}" placeholder="*최대 수용 인원 : ${map.each.human}">   </td>
+				<td class="reserve_detail_info"><input type="number" name="human" id="people"class="reserve_Info" min="0" max="${map.each.human}" placeholder="*최대 수용 인원 : ${map.each.human}" tabindex="-1">   </td>
 			</tr>
 			<tr>
 				<td class="reserve_detail_info">예약자</td>

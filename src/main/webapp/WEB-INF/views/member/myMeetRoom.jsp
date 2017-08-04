@@ -245,7 +245,7 @@
 							</c:when>
 						</c:choose>	
 							<h4 class="username">${member.email}</h4>
-							<c:if test="${member.kind eq 'freelancer' || 'client' }">
+							<c:if test="${member.kind ne 'admin' }">
 							<a class="profile-setting"href="./member/personaldataView">기본 정보 수정</a>					
 							</c:if>
 						</div>
@@ -265,7 +265,7 @@
 						<c:if test="${member.kind eq 'admin' }">
 						<small class="small-text">회원들의 미팅룸 예약 현황을 확인할 수 있습니다.</small>
 						</c:if>
-						<c:if test="${ member.kind eq 'freelancer' || 'client'}">
+						<c:if test="${ member.kind ne 'admin'}">
 						<small class="small-text">자신이 예약한 미팅룸의 현황을 확인할 수 있습니다.</small>
 						</c:if>
 					</h3>
@@ -290,7 +290,7 @@
 						<td>${i.time}</td>
 						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>
 						<c:if test="${i.state eq 'finish'}">
-						<c:if test="${member.kind eq 'freelancer' || 'client' }">
+						<c:if test="${member.kind ne 'admin' }">
 						<td><input type="button" value="예약취소" class="btn" title="${i.num}"></td>										
 						</c:if>
 						<c:if test="${member.kind eq 'admin' }">
@@ -302,7 +302,7 @@
 						<c:if test="${member.kind eq 'admin'}">
 						<td><input type="button" value="취소확인" class="del_btn" title="${i.num}" lang="${i.email}"></td>
 						</c:if>
-						<c:if test="${member.kind eq 'freelancer' || 'client'}">
+						<c:if test="${member.kind ne 'admin'}">
 						<td>예약취소대기중</td>
 						</c:if>
 						</c:if>

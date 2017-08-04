@@ -9,7 +9,9 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
+import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
@@ -106,11 +108,36 @@ public class MemberDAO {
 		return sqlSession.selectList(NAMESPACE+"adminReserved", listInfo);
 	}
 
-	//리스트를 가져오기 위한 count
+	//예약리스트를 가져오기 위한 count
 	public int totalCount() throws Exception{
 		return sqlSession.selectOne("MeetRoomMapper.MeetRoomCount");
 
 	}
+	
+	//진행중인 프로젝트 가져오기
+	public List<ProjectDTO> memberProjectList_ING(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_ING", email);
+	}
+	//지원한 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_APP(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_APP", email);
+	}
+	//완료한 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_FIN(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_FIN", email);
+	}
 
-
+	//검수중인 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjecttList_CHK(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjecttList_CHK", email);
+	}
+	//지원자 모집중인 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_REC(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_REC", email);
+	}
+	//진행중인 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_INGC(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_INGC", email);
+	}
+	
 }
