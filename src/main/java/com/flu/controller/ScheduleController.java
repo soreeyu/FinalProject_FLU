@@ -454,15 +454,16 @@ public class ScheduleController {
 		}
 		
 		
+		@ResponseBody
 		@RequestMapping(value="setUnits",method=RequestMethod.POST)
-		public void setUnits(String jsonData, HttpSession session) throws Exception{
+		public int setUnits(String jsonData, HttpSession session) throws Exception{
 			
 			
 			
 			System.out.println("받아온 json데이터"+jsonData);
 			
 			int result = scheduleService.setUnits(jsonData);
-			
+			return 1;
 				
 		}
 

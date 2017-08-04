@@ -56,7 +56,7 @@
   	</select>
   
 	<select id="partList" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.SchedulePartDTO">
-		select * from schedulepart where schedulenum=#{scheduleNum} order by partstartdate asc
+		select * from schedulepart where schedulenum=#{scheduleNum} order by partNum asc
 	</select>
 
 	
@@ -99,7 +99,7 @@
 		<if test="partNum != -1">
 			and partnum in #{partNum}
 		</if>
-		order by unitstartdate asc
+		order by unitNum asc
 	</select>
 
 	<select id="unitOne" parameterType="com.flu.schedule.client.ScheduleUnitDTO"

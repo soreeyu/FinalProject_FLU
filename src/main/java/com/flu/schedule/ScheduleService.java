@@ -227,7 +227,7 @@ public class ScheduleService {
 		
 		
 		
-		//초기인서트
+		//insert
 		public int setUnits(String jsonData) throws Exception{
 
 
@@ -250,7 +250,7 @@ public class ScheduleService {
 				}
 				
 				System.out.println("할일제목 = " + oneUnit.get("text").toString());
-				System.out.println("홀더  (상세설명 폼이어야할듯하오 ) " + oneUnit.get("holder"));//없는것도 있음...
+				//System.out.println("홀더  (상세설명 폼이어야할듯하오 ) " + oneUnit.get("holder"));//없는것도 있음...
 				System.out.println("시작일 = " + oneUnit.get("start_date").toString());
 				System.out.println("마감일= " + oneUnit.get("end_date").toString());
 				System.out.println("타입 = " + oneUnit.get("type")); //part 는 0 unit 1 

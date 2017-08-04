@@ -72,7 +72,7 @@ public class ScheduleDAO {
 	//저장된 part들 가져오기 //세부사항 등록시 필요
 	public List<SchedulePartDTO> partList(int scheduleNum) throws Exception{
 		List<SchedulePartDTO> ar = sqlSession.selectList(NAMESPACE+"partList", scheduleNum);
-		System.out.println("part list 확인 dao 0번째이름 "+ar.get(0).getPartName());
+		//System.out.println("part list 확인 dao 0번째이름 "+ar.get(0).getPartName());
 		return sqlSession.selectList(NAMESPACE+"partList", scheduleNum); 	
 	} 
 	
