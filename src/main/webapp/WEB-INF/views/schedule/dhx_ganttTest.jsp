@@ -237,8 +237,25 @@ html, body {
 		return "";
 	};
 
-	
-	
+	///////////////////////////////////////////////레벨계산하기
+	gantt.attachEvent("onTaskCreated", function(task){
+		 var level = gantt.calculateTaskLevel(task),
+		   types = gantt.config.types;
+		 
+		 //assign task type based on task level
+		 switch (level){
+		  case 0:
+		   task.type = types.project;
+		   break;
+		  case 1:
+		   task.type = types.subproject;
+		   break;
+		  default:
+		   task.type = types.task;
+		   break;
+		 }
+		 return true;
+		});
 	
 
 

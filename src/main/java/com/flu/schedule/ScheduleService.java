@@ -366,6 +366,164 @@ public class ScheduleService {
 			return scheduleDAO.stateChange(scheduleUnitDTO);
 		}	
 	
+		
+		
+		
+		public ScheduleSummaryDTO getfirstViewData(int scheduleNum) throws Exception{
+			System.out.println("첫번째뷰를 위한 서비스  스케줄넘 " + scheduleNum);
+
+			
+			//배열 4개
+			
+			
+			//1 part별 상태갯수 
+			//part 1 > 할일 3개 , 진행중 2개 , 완료 1개  , total몇개  
+			//part 2 > 할일 ~ 
+			
+			
+			//2 멤버별 상태 갯수 
+			// member 1 > 할일 5개 , 진행중 3개, 완료 1 개 , total 몇개 
+			
+			
+			//part의 갯수와 member의 수가 동적임 //list로 뿌려주는것이 좋겠다 
+			
+			
+			
+			//3 상태별 
+			//할일 몇개 진행중 몇개 완료 몇개  total몇개
+			//단순히 하나만 있으면 됨 
+			
+			//여기서 scheduleSummary 채우기
+			
+			ScheduleSummaryDTO scheduleSummaryDTO = new ScheduleSummaryDTO();
+			int [] totalCount = new int[4];
+			int [] stateCountPerPart = new int [4];
+			int [] stateCountPerUser = new int [4];
+			ArrayList<int []> countParts = new ArrayList<int[]>();
+			ArrayList<int []> countUsers = new ArrayList<int[]>();
+			ArrayList<String> partNames = new ArrayList<String>();
+			ArrayList<String> userNames = new ArrayList<String>();
+			
+			
+			
+			ScheduleUnitDTO dto = new ScheduleUnitDTO();
+			dto.setPartNum(-1);
+			dto.setScheduleNum(scheduleNum);
+			dto.setEmail("");
+			
+			dto.setUnitState("할일");
+			int count = scheduleDAO.unitCount(dto); 
+			System.out.println("전체할일파할일 수="+count);
+			totalCount[0] = count;
+			
+			dto.setUnitState("진행중");
+			count = scheduleDAO.unitCount(dto); 
+			System.out.println("전체진행중 수="+count);
+			totalCount[1] = count;
+			
+			dto.setUnitState("완료");
+			count = scheduleDAO.unitCount(dto); 
+			System.out.println("전체완료 수="+count);
+			totalCount[2] = count;
+			
+			dto.setUnitState("");
+			count = scheduleDAO.unitCount(dto); 
+			System.out.println("할일파트할일 수="+count);
+			totalCount[3] = count;
+			
+			//일단 전체적인 것 구하고
+			
+			
+			
+			//part를 구하고
+			List<SchedulePartDTO> parts = scheduleDAO.partList(scheduleNum);
+			for(int i=0;i<parts.size();i++){
+				
+				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+				scheduleUnitDTO.setPartNum(parts.get(i).getPartNum());
+				scheduleUnitDTO.setScheduleNum(scheduleNum);
+				scheduleUnitDTO.setEmail("");
+				
+				scheduleUnitDTO.setUnitState("할일");
+				int num = scheduleDAO.unitCount(scheduleUnitDTO); 
+				System.out.println("할일파트할일 수"+i+"="+num);
+				stateCountPerPart[0] = num;
+				
+				scheduleUnitDTO.setUnitState("진행중");
+				int num2 = scheduleDAO.unitCount(scheduleUnitDTO); 
+				System.out.println("진행중파트할일 수"+i+"="+num2);
+				stateCountPerPart[1] = num2;
+				
+				scheduleUnitDTO.setUnitState("완료");
+				int num3 = scheduleDAO.unitCount(scheduleUnitDTO); 
+				System.out.println("완료파트할일 수"+i+"="+num3);
+				stateCountPerPart[2] = num3;
+				
+				scheduleUnitDTO.setUnitState("");
+				int num4 = scheduleDAO.unitCount(scheduleUnitDTO); 
+				System.out.println("전체파트할일 수"+i+"="+num4);
+				stateCountPerPart[3] = num4;
+				
+				countParts.add(stateCountPerPart);
+				partNames.add(parts.get(i).getPartName());
+			}
+			
+			
+			////////////////////////////user를 구하고
+			List<MemberDTO> users = scheduleDAO.userList(scheduleNum);
+			for(int i=0;i<users.size();i++){
+				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+				scheduleUnitDTO.setPartNum(-1);
+				scheduleUnitDTO.setScheduleNum(scheduleNum);
+				scheduleUnitDTO.setEmail(users.get(i).getEmail());
+				
+				
+				scheduleUnitDTO.setUnitState("할일");
+				int num = scheduleDAO.unitCount(scheduleUnitDTO);
+				System.out.println("할일유저할일 수"+i+"="+num);
+				stateCountPerUser[0] = num;
+				
+				scheduleUnitDTO.setUnitState("진행중");
+				int num2 = scheduleDAO.unitCount(scheduleUnitDTO);
+				System.out.println("진행중유저할일 수"+i+"="+num2);
+				stateCountPerUser[1] = num2;
+				
+				scheduleUnitDTO.setUnitState("완료");
+				int num3 = scheduleDAO.unitCount(scheduleUnitDTO);
+				System.out.println("완료유저할일 수"+i+"="+num3);
+				stateCountPerUser[2] = num3;
+				
+				scheduleUnitDTO.setUnitState("");
+				int num4 = scheduleDAO.unitCount(scheduleUnitDTO);
+				System.out.println("전체유저할일 수"+i+"="+num4);
+				stateCountPerUser[3] = num4;
+		
+				countUsers.add(stateCountPerUser);
+				userNames.add(users.get(i).getEmail());
+			}
+
+			for(int i=0;i<countParts.size();i++){
+				for(int j=0;j<4;j++){
+					System.out.println("결론 파트"+i+"의 "+j+" = "+countParts.get(i)[j]);									
+				}
+			}
+			
+			for(int i=0;i<countUsers.size();i++){
+				for(int j=0;j<4;j++){
+					System.out.println("결론 사용자"+i+"의 "+j+" = "+countUsers.get(i)[j]);									
+				}
+			}
+
+	
+			scheduleSummaryDTO.setStateCountPerPart(countParts);
+			scheduleSummaryDTO.setStateCountPerUser(countUsers);
+			scheduleSummaryDTO.setStateCount(totalCount);
+			scheduleSummaryDTO.setUserNames(userNames);
+			scheduleSummaryDTO.setPartNames(partNames);
+			
+			return scheduleSummaryDTO;
+			
+		}
 	
 	
 	

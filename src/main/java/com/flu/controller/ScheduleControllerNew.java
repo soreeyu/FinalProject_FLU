@@ -18,42 +18,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.flu.file.FileService;
 import com.flu.member.MemberDTO;
 import com.flu.schedule.ScheduleService;
-import com.flu.schedule.ScheduleSummaryDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
 @Controller
-@RequestMapping(value="/schedule/**")
-public class ScheduleController {
+@RequestMapping(value="/scheduleNew/**")
+public class ScheduleControllerNew {
 	
 		@Autowired
 		private ScheduleService scheduleService;
+
 		
-		//이게 보배언니의 프로젝트 뷰 라고 가정한다 
-		@RequestMapping(value="testProjectView")
-		public String testProjectView(){
-			return "schedule/testProjectView";
-		}
-		
-		
-		
-		@RequestMapping(value="test" , method=RequestMethod.GET)
-		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
+		@RequestMapping(value="main" , method=RequestMethod.GET)
+		public String main(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
 			model.addAttribute("scheduleNum", scheduleNum);
 			
 			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
 			model.addAttribute("mainScheduleDTO", scheduleMainDTO);
-			//return "schedule/firstView";
-			return "schedule/scheduleTemp";
+			return "schedule/scheduleMain";
 		}
 		
 		
 		
 		@RequestMapping(value="firstView" , method=RequestMethod.GET)
-		public String test3(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
-	
+		public String test3(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
 			model.addAttribute("scheduleNum", scheduleNum);
 			return "schedule/firstView";
 		}
@@ -88,21 +78,9 @@ public class ScheduleController {
 		}
 		
 		@RequestMapping(value="test8")
-		public String test8(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
-			model.addAttribute("scheduleNum", scheduleNum);
-			ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //개요를 위한 아이
-			model.addAttribute("summary",scheduleSummaryDTO);
+		public String test8(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
+			//model.addAttribute("scheduleNum", scheduleNum);
 			return "schedule/firstViewTestGoogleChart";
-		}
-		
-		@ResponseBody
-		@RequestMapping(value="test8Json",method=RequestMethod.POST)
-		public HashMap<String, Object> test8Json(@RequestParam(defaultValue="0") Integer scheduleNum) throws Exception{
-			System.out.println("json보내주러 들어옴");
-			ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //개요를 위한 아이
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("summary2", scheduleSummaryDTO);
-			return map;
 		}
 		
 		
