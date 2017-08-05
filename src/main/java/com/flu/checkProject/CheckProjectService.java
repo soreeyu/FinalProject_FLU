@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.flu.client.ClientDAO;
@@ -210,6 +211,10 @@ public class CheckProjectService {
 	public int update(ProjectDTO projectDTO){
 		return checkProjectDAO.update(projectDTO);
 	}
+	
+
+
+	
 	
 	
 }

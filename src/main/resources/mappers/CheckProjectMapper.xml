@@ -184,7 +184,10 @@
 	  	</choose>
   			
   		</select>
-  		
+    		
 
+		<update id="makeFail" parameterType="java.lang.String">
+			update project set state='fail' where finishDate=#{finishDate}
+		</update>   
   		
   </mapper>

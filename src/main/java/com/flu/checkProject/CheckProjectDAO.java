@@ -55,7 +55,9 @@ public class CheckProjectDAO {
 	public int checkCount(Map<String, Object> map){
 		return sqlSession.selectOne(NAMESPACE+"checkCount",map);
 	}
-	
-	
-	
+
+	public int makeFail(String finishDate){
+		return sqlSession.update(NAMESPACE+"makeFail",finishDate);
+	}
+
 }

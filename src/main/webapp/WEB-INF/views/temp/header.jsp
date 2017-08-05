@@ -49,7 +49,7 @@
 		<div class="profile_div">
 			<ul>
 			<c:choose>
-			<c:when test="${member.type=='admin'}">
+			<c:when test="${member.kind=='admin'}">
 				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectWaitList">대금 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectCheckList">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>
