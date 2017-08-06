@@ -152,6 +152,11 @@
 
 /* dddddddddddddddddddddddddddddddddd */
 
+html {
+    font-size: 62.5%;
+    -webkit-tap-highlight-color: transparent;
+    height: 100%;
+}
 
 element.style {
     margin-bottom: 15px;
@@ -177,6 +182,189 @@ body {
 }
 
 
+.process-guide-box .process-guide-up {
+    margin-top: 16px;
+    margin-bottom: 15px;
+}
+
+.process-guide-box .process-guide-up .process-guide-up-title {
+    margin-bottom: 7px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 1;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+p {
+    display: block;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+b, strong {
+    font-weight: bold;
+}
+
+
+.process-guide-box .process-guide-header-border {
+    width: 676px;
+    margin: 0 auto;
+    border-top: 1px dashed #dedede;
+}
+
+.process-guide-box .process-guide-body-content-box {
+    margin-bottom: 11px;
+    padding-left: 30px;
+}
+
+element.style {
+    color: #2099bb;
+}
+
+
+
+.process-guide-box .process-guide-body-table {
+    margin-left: 53px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.process-guide-box .process-guide-body-content-box {
+    margin-bottom: 11px;
+    padding-left: 30px;
+}
+
+.process-guide-box .process-guide-body-content-box:before, .process-guide-box .process-guide-body-content-box:after {
+    content: " ";
+    display: table;
+    line-height: 0;
+}
+
+.process-guide-box .process-guide-body-content-box .process-guide-body-image-container {
+    float: left;
+}
+
+.process-guide-box .process-guide-body-content-box .process-guide-body-image-container img {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+.process-guide-box img {
+    float: left;
+    margin: 15px 20px 0 20px;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.process-guide-box .process-guide-body-content-box .process-guide-body-paragraph {
+    float: left;
+    color: #333333;
+    line-height: 1;
+}
+
+element.style {
+    margin-bottom: 0;
+}
+
+.process-guide-box .process-guide-body-content-box:after {
+    clear: both;
+}
+
+.process-guide-box .process-guide-body-content-box:before, .process-guide-box .process-guide-body-content-box:after {
+    content: " ";
+    display: table;
+    line-height: 0;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.process-guide-box .process-guide-body-table tr {
+    border-top: 2px solid #2099bb;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.process-guide-box .process-guide-body-table tr td {
+    padding: 14px 20px;
+}
+
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+element.style {
+    border-right: none;
+}
+
+
+.process-guide-box .process-guide-header-border {
+    width: 676px;
+    margin: 0 auto;
+    border-top: 1px dashed #dedede;
+}
+
+.process-guide-box .process-guide-body-content-box .process-guide-body-paragraph .process-guide-body-paragraph-title {
+    margin-bottom: 7px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.process-guide-box .process-guide-body-content-box .process-guide-body-paragraph .process-guide-body-paragraph-content {
+    margin-bottom: 0;
+    line-height: 22px;
+}
+
+.process-guide-box .process-guide-body-content-box:after {
+    clear: both;
+}
+
+.process-guide-box .process-guide-body-table tr .odd {
+    font-weight: bold;
+    background: #f5f5f5;
+}
+
+.strong_title{
+	font-size: 1.2em;
+
+}
+
+#sleep{
+
+	width: 750px;
+	height: 600px;
+	margin: 0 auto;
+	margin-top: 25px;
+
+}
 
 </style>
 </head>
@@ -254,13 +442,14 @@ body {
 
 <div class="contents">
 
+<div id="sleep">
 	<div class="process-guide-box" style="margin-bottom: 15px;">
 		<img
 			src="${pageContext.servletContext.contextPath}/resources/img/checkMember/process-guide-success.png"
 			style="margin-right: 15px;" />
 		<div class="process-guide-up">
 			<p class="process-guide-up-title">
-				<strong>[ 인증 서류 관리 가이드 ]</strong>
+				<strong class="strong_title">[ 인증 서류 관리 가이드 ]</strong>
 			</p>
 			<p class="process-guide-up-content">
 				제출한 인증 서류는 <strong style="color: #2099bb"> <a
@@ -284,7 +473,7 @@ body {
 		<table class="process-guide-body-table">
 			<tbody>
 				<tr>
-					<td class="odd">법인 사업자 , 개인 사업자</td>
+					<td class="odd">사업자</td>
 					<td class="even">사업자 등록증</td>
 					<td class="odd">개인 , 팀</td>
 					<td class="even" style="border-right: none;">주민등록증, 운전면허증</td>
@@ -299,7 +488,7 @@ body {
 				<p class="process-guide-body-paragraph-title">신원 인증 처리 중</p>
 				<p class="process-guide-body-paragraph-content">
 					신원 인증 처리에는 <strong>최대 24시간이 소요</strong>됩니다.<br /> 인증 서류에 문제가 있을
-					경우에는 <strong>위시켓 팀에서 이메일로 연락</strong>을 드립니다.
+					경우에는 <strong>플루 팀에서 이메일로 연락</strong>을 드립니다.
 				</p>
 			</div>
 		</div>
@@ -316,6 +505,7 @@ body {
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 </article>
 
