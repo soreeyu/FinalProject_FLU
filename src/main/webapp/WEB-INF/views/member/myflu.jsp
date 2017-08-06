@@ -342,9 +342,7 @@ body{
 	<div class="page">
 		
 		<div class="contents">
-			<div class="contents_header">
-				
-				
+			<div class="contents_header">			
 				<p><span style="font-weight: bold; font-size: 26px;">MY FLU</span></p>
 			</div>
 			<div class="contents_inner">
@@ -497,6 +495,7 @@ body{
 								</tr>
 							</thead>
 							<tbody>
+
 							<c:if test="${not empty ingList && member.kind eq 'freelancer'}">
 								<c:forEach begin="0" end="3" var="i">
 								<tr>

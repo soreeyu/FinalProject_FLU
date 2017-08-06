@@ -104,4 +104,7 @@
 		<select id="memberProjectList_INGC" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
 			select P.name, P.budget, P.period, P.Finishdate from project P, member M where P.state='ing' and P.email=#{email} and P.email=M.email
 		</select>
+		
+		<!-- 프로젝트 갯수 가져오기  -->
+		
   </mapper>
