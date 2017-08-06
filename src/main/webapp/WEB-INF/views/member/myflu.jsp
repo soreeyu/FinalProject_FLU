@@ -563,7 +563,14 @@ body{
 					<span class="alarm_header">새로운 소식</span>
 					<div class="alarm_body">
 						<ul>
-							<li>새로운 소식이 없습니다.</li>
+							<c:if test="${not empty alrList}">
+								<c:forEach begin="0" end="5" var="a">
+									<li>${alrList[a].contents}</li>
+								</c:forEach>
+							</c:if>
+							<c:if test="${empty alrList}">
+							<li>새로운 소식이 없습니다.</li>							
+							</c:if>
 						</ul>
 					</div>					
 				</div>
@@ -575,20 +582,6 @@ body{
 
 <c:import url="../temp/footer.jsp"></c:import>
 
-<script type="text/javascript">
-	/* $("#detail1").click(function () {
-		var kind = '${member.kind}';
-		if(kind=='freelancer'){
-			location.href=""
-		}
-	}); */
-	$.ajax({
-		url : "${pageContext.request.contextPath}/alarm/alarmList",
-		type : "POST",
-		success : function(data) {
-			$(".alarm_body").html(data);
-		} 
-	});
-</script>
+
 </body>
 </html>

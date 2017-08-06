@@ -106,4 +106,10 @@
 		</select>
 		
 		<!-- 프로젝트 갯수 가져오기  -->
+		
+		<!-- 알람 리스트 myflu에 뿌려질 -->
+		<select id="memberAlarmList" resultType="com.flu.alarm.AlarmDTO" parameterType="java.lang.String">
+			select contents from alarm where email=#{email}
+		</select>
+		
   </mapper>

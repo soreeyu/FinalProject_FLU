@@ -15,6 +15,7 @@ import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.alarm.AlarmDTO;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.project.ProjectDTO;
@@ -156,5 +157,9 @@ public class MemberService {
 	//진행중인 프로젝트 리스트
 	public List<ProjectDTO> memberProjectList_INGC(String email) throws Exception{
 		return memberDAO.memberProjectList_INGC(email);
+	}
+	//myflu에 뿌려질 알람 리스트
+	public List<AlarmDTO> memberAlarmList(String email) throws Exception{
+		return memberDAO.memberAlarmList(email);
 	}
 }

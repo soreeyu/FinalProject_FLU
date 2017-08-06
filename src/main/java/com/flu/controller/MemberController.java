@@ -147,6 +147,10 @@ public class MemberController {
 				System.out.println(alarmService.alarmCount(alarmDTO));
 				mv.addObject("message", message);
 				mv.setViewName("/member/myflu");
+				//관리자 로그인시 리턴하는 주소는 인덱스 myflu가 아님
+				if(memberDTO.getKind().equals("admin")){
+					mv.setViewName("/index");
+				}
 				return mv;
 			}else{
 				mv.addObject("message", message);
@@ -166,6 +170,12 @@ public class MemberController {
 		//MY FLU
 		@RequestMapping(value="myflu")
 		public void myflu(HttpSession session, Model model) throws Exception{
+			//알람 List
+			List<AlarmDTO> ar = memberService.memberAlarmList(((MemberDTO)session.getAttribute("member")).getEmail());
+			
+			for(int i=0;i<ar.size();i++){
+				System.out.println(ar.get(i).getContents());
+			}
 			
 			//로그인한 사람이 프리랜서일 경우 아래의 코드 실행
 			if(((MemberDTO)session.getAttribute("member")).getKind().equals("freelancer")){
@@ -176,9 +186,11 @@ public class MemberController {
 				//완료한 프로젝트 List
 				List<ProjectDTO> far3 = memberService.memberProjectList_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
 				
+				
 				model.addAttribute("ingList", far);
 				model.addAttribute("appList", far2);			
 				model.addAttribute("finList", far3);
+				
 				//로그인한 사람이 클라이언트일 경우 아래의 코드를 실행
 			}else if(((MemberDTO)session.getAttribute("member")).getKind().equals("client")){
 				//검수중인 프로젝트 List
@@ -192,7 +204,7 @@ public class MemberController {
 				model.addAttribute("recList", car2);
 				model.addAttribute("ingcList", car3);
 			}
-			
+			model.addAttribute("alrList", ar);
 			
 		}
 		

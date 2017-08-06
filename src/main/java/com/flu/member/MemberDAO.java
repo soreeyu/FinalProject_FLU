@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.alarm.AlarmDTO;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.project.ProjectDTO;
@@ -139,5 +140,8 @@ public class MemberDAO {
 	public List<ProjectDTO> memberProjectList_INGC(String email) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"memberProjectList_INGC", email);
 	}
-	
+	//myflu에 뿌려질 알람 리스트
+	public List<AlarmDTO> memberAlarmList(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberAlarmList", email);
+	}
 }
