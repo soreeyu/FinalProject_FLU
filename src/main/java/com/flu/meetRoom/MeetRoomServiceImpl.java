@@ -20,11 +20,8 @@ public class MeetRoomServiceImpl implements RoomService{
 	@Override
 	public List<RoomDTO> list(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
-
-		int totalCount = meetRoomDAO.count(listInfo);
-		listInfo.makePage(totalCount);
 		listInfo.makeRow();
-
+		
 		return meetRoomDAO.list(listInfo);
 	}
 

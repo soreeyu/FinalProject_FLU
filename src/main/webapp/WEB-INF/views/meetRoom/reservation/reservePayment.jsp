@@ -10,14 +10,11 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function() {
-
 		$(".credit").hide();
 		$(".digit").hide();
 		
 		var credit_Info = document.getElementsByClassName("credit_Info");
 		var digit_Info = document.getElementsByClassName("digit_Info");
-		
-		
 		
 		$("#creditCard").click(function() {
 			if($(".digit").show()){
@@ -26,7 +23,6 @@
 			$(".credit").show();
 		});
 		
-		
 		$("#checkCard").click(function() {
 			if($(".credit").show()){
 				$(".credit").hide();
@@ -34,55 +30,14 @@
 			$(".digit").show();
 		});
 		
-		
 		$("#btn").click(function() {
-			var result =$("input:radio[name='payment']").is(":checked");
-			var id = $("input:radio[name='payment']:checked").val();
-			
-			
+			var result = confirm("예약하시겠습니까?");
 			if(result){
-				if(id=="신용카드"){
-					alert(credit_Info[0].checked);
-					if(credit_Info[0].checked==false){
-						alert("카드 형태를 선택하세요.");
-					}else if(credit_Info[1].value==""){
-						alert("카드 회사를 선택하세요.");
-					}else if(credit_Info[2].value==""){
-						alert("카드 번호를 입력하세요.");
-					}else if(credit_Info[3].value==""){
-						alert("유효기간을 확인하세요");
-					}else if(credit_Info[4].value==""){
-						alert("유효기간을 확인하세요");
-					}else if(credit_Info[5].value==""){
-						alert("카드 비밀번호를 입력하세요.");	
-					}else {
-						var check = confirm("예약하시겠습니까?");
-						if(check){
-							$("#frm").submit();
-						}
-					}	
-				}else {
-					if(digit_Info[0].value==""){
-						alert("출금할 은행을 선택하세요.");
-					}else if(digit_Info[1].value==""){
-						alert("계좌번호를 입력하세요.");
-					}else if(digit_Info[2].value==""){
-						alert("계좌 비밀번호를 입력하세요.");
-					}else {
-						var check = confirm("예약하시겠습니까?");
-						if(check){
-							$("#frm").submit();
-						}
-					}					
-				}
-			
-			}else {
-				alert("결제 방식을 선택하세요.");
-			}		
+				$("#frm").submit();
+			}
 		});
 		
 		
->>>>>>> parent of 7bb8f5d... no message
 	})
 </script>
 <style type="text/css">
@@ -141,21 +96,6 @@
     color: #656565;
     font-size: 1.5em;
 }
-<<<<<<< HEAD
-=======
-.type {
-	margin-left: 15px;
-}
-.info {
-	padding: 20px;
-}
-.infoTR{
-	margin-top: 20px;
-}
-.info_left{
-	border-right: 1px solid grey;
-}
->>>>>>> parent of 7bb8f5d... no message
 </style>
 </head>
 <body>
@@ -219,16 +159,10 @@
 	</div>
 	<hr>
 	<h1>결제방법</h1>
-<<<<<<< HEAD
 	<!-- 결제 방법 선택시 ajax로 각 결제 방법에 맞는 정보 입력하는 창 불러오기 -->
-	<input type="radio" name="payment" value="신용카드">
+	<input type="radio" name="payment" value="신용카드" id="creditCard">
 	신용카드
-	<input type="radio" name="payment" value="실시간 계좌이체">
-=======
-	<input type="radio" name="payment" value="신용카드"  id="creditCard">
-	신용카드
-	<input type="radio" name="payment" value="실시간 계좌이체"  id="checkCard">
->>>>>>> parent of 7bb8f5d... no message
+	<input type="radio" name="payment" value="실시간 계좌이체" id="checkCard">
 	실시간 계좌이체
 		<input type="hidden" name="name" value="${reserveInfo.name}">
 		<input type="hidden" name="reserve_date" value="${reserveInfo.reserve_date}">
@@ -247,40 +181,12 @@
 		<div class="credit">
 			<div class="type">
 				<span>
-<<<<<<< HEAD
-					<input type="radio" name="type"> 개인
-				</span>
-				<span>
-					<input type="radio" name="type"> 법인
-				</span>
-				<select>
-					<option>신한카드</option>
-					<option>현대카드</option>
-					<option>비씨카드</option>
-					<option>삼성카드</option>
-					<option>롯데카드</option>	
-				</select>
-			</div>
-			<div class="card_contents">
-				<table>
-					<tr>
-						<td>카드번호</td>
-						<td><input type="text" placeholder="카드번호 입력"> </td>
-					</tr>
-					<tr>
-						<td>유효기간</td>
-						<td><input type="text" placeholder="월"> <input type="text" placeholder="년"> </td>
-					</tr>
-					<tr>
-						<td>비밀번호</td>
-						<td><input type="text" placeholder="비밀번호"> </td>
-=======
 					<input type="radio" name="type" class="credit_Info"> 개인
 				</span>
 				<span>
 					<input type="radio" name="type" class="credit_Info"> 법인
 				</span>
-				<select class="credit_Info" style="height: 25px;">
+				<select class="credit_Info">
 					<option value="신한카드">신한카드</option>
 					<option value="현대카드">현대카드</option>
 					<option value="비씨카드">비씨카드</option>
@@ -289,19 +195,18 @@
 				</select>
 			</div>
 			<div class="card_contents">
-				<table >
-					<tr class="infoTR">
-						<td class="info info_left">카드번호</td>
-						<td class="info"><input type="text" placeholder="카드번호 입력 '-'를 제외" class="credit_Info"> </td>
+				<table>
+					<tr>
+						<td>카드번호</td>
+						<td><input type="text" placeholder="카드번호 입력 '-'제외" class="credit_Info"> </td>
 					</tr>
-					<tr class="infoTR">
-						<td class="info info_left">유효기간</td>
-						<td class="info"><input type="text" placeholder="월" class="credit_Info" style="width :20%;"> <input type="text" placeholder="년" class="credit_Info" style=" width :20%;"> </td>
+					<tr>
+						<td>유효기간</td>
+						<td><input type="text" placeholder="월" class="credit_Info"> <input type="text" placeholder="년" class="credit_Info"> </td>
 					</tr>
-					<tr class="infoTR">
-						<td class="info info_left">비밀번호</td>
-						<td class="info"><input type="text" placeholder="비밀번호" class="credit_Info"> </td>
->>>>>>> parent of 7bb8f5d... no message
+					<tr>
+						<td>비밀번호</td>
+						<td><input type="text" placeholder="비밀번호" class="credit_Info"> </td>
 					</tr>
 				</table>
 			</div>
@@ -315,21 +220,12 @@
 						출금은행
 					</td>
 					<td>
-<<<<<<< HEAD
-						<select>
-							<option>신한은행</option>
-							<option>우리은행</option>
-							<option>국민은행</option>
-							<option>하나은행</option>
-							<option>농협</option>
-=======
 						<select class="digit_Info">
 							<option value="신한은행">신한은행</option>
 							<option value="우리은행">우리은행</option>
 							<option value="국민은행">국민은행</option>
 							<option value="하나은행">하나은행</option>
 							<option value="농협">농협</option>
->>>>>>> parent of 7bb8f5d... no message
 						</select>
 					</td>	
 				</tr>
@@ -338,11 +234,7 @@
 						계좌번호
 					</td>
 					<td>
-<<<<<<< HEAD
-						<input type="text" placeholder="계좌번호 입력">
-=======
 						<input type="text" placeholder="계좌번호 입력" class="digit_Info">
->>>>>>> parent of 7bb8f5d... no message
 					</td>
 				</tr>
 				<tr>
@@ -350,11 +242,7 @@
 						계좌비밀번호
 					</td>
 					<td>
-<<<<<<< HEAD
-						<input type="text" placeholder="계좌비밀번호 입력">
-=======
 						<input type="text" placeholder="계좌비밀번호 입력" class="digit_Info">
->>>>>>> parent of 7bb8f5d... no message
 					</td>
 				</tr>	
 			</table>

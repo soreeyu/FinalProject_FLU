@@ -15,11 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberService;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
+import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.util.ListInfo;
 
@@ -55,7 +57,10 @@ public class MemberController {
 	
 	//사이트 회원 가입폼 이동
 		@RequestMapping(value="MemberJoin", method=RequestMethod.GET)
-		public String MemberJoin(){
+		public String MemberJoin(Model model){
+			
+			model.addAttribute("memberList", memberService.memberList());
+			
 			return "member/memberJoinForm";
 		}
 		//사이트 회원 가입
@@ -132,14 +137,15 @@ public class MemberController {
 		public ModelAndView login(MemberDTO memberDTO, HttpSession session) throws Exception{
 			ModelAndView mv = new ModelAndView();
 			memberDTO = memberService.login(memberDTO);
-			String message = "0";
+			String message = "";
 			if(memberDTO != null){
 				alarmDTO = new AlarmDTO();
 				session.setAttribute("member", memberDTO);
-				message= "1";
+				message= "로그인 하였습니다.";
 				alarmDTO.setEmail(memberDTO.getEmail());
 				mv.addObject("alarmCount", alarmService.alarmCount(alarmDTO));
 				System.out.println(alarmService.alarmCount(alarmDTO));
+				mv.addObject("message", message);
 				mv.setViewName("/member/myflu");
 				return mv;
 			}else{
@@ -159,10 +165,34 @@ public class MemberController {
 		
 		//MY FLU
 		@RequestMapping(value="myflu")
-		public void myflu(){
-			//멤버, 클라이언트, 프리랜서, 어플리켄트, 프로젝트 테이블 정보 모두 가져오기
-			//로그인한사람의 테이블 정보를 모두 가져옴
-
+		public void myflu(HttpSession session, Model model) throws Exception{
+			
+			//로그인한 사람이 프리랜서일 경우 아래의 코드 실행
+			if(((MemberDTO)session.getAttribute("member")).getKind().equals("freelancer")){
+				//진행중인 프로젝트 List
+				List<ProjectDTO> far = memberService.memberProjectList_ING(((MemberDTO)session.getAttribute("member")).getEmail());
+				//지원한 프로젝트 List
+				List<ProjectDTO> far2 = memberService.memberProjectList_APP(((MemberDTO)session.getAttribute("member")).getEmail());
+				//완료한 프로젝트 List
+				List<ProjectDTO> far3 = memberService.memberProjectList_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
+				
+				model.addAttribute("ingList", far);
+				model.addAttribute("appList", far2);			
+				model.addAttribute("finList", far3);
+				//로그인한 사람이 클라이언트일 경우 아래의 코드를 실행
+			}else if(((MemberDTO)session.getAttribute("member")).getKind().equals("client")){
+				//검수중인 프로젝트 List
+				List<ProjectDTO> car = memberService.memberProjecttList_CHK(((MemberDTO)session.getAttribute("member")).getEmail());
+				//지원자 모집중인 프로젝트 List
+				List<ProjectDTO> car2 = memberService.memberProjectList_REC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 List
+				List<ProjectDTO> car3 = memberService.memberProjectList_INGC(((MemberDTO)session.getAttribute("member")).getEmail());
+				
+				model.addAttribute("chkList", car);
+				model.addAttribute("recList", car2);
+				model.addAttribute("ingcList", car3);
+			}
+			
 			
 		}
 		
@@ -238,7 +268,7 @@ public class MemberController {
 				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setEmail(memberDTO.getEmail());
 				alarmDTO.setContents("개인정보를 성공적으로 등록 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				
@@ -318,11 +348,11 @@ public class MemberController {
 			
 			int result = memberService.memberUpdate(memberDTO);
 			if(result>0){
-				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+				session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((CheckMemberViewDTO)session.getAttribute("member")).getEmail());
-				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
+				alarmDTO.setEmail(memberDTO.getEmail());
+				alarmDTO.setContents("개인정보를 수정 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			}
@@ -356,7 +386,7 @@ public class MemberController {
 							ar.get(i).setTime(ar.get(i).getTime().replaceAll(",", "~"));
 							
 						}
-
+						
 						model.addAttribute("list", ar);
 						model.addAttribute("listInfo", listInfo);
 					}				

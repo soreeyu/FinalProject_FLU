@@ -29,7 +29,6 @@ body{
 .message{
 	width: 1152px;
 	height: 75px;
-	background-color: white;
 	display: inline-block;
 	margin-top: 30px;
 }
@@ -290,6 +289,17 @@ body{
 .alarm_body li{
 	padding: 13px 28px 10px 18px;
 }
+.alert {
+	padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+.alert-success{
+	background-color: #e0f4fa;
+    border-color: #caecf6;
+    color: #2099bb;
+}
 </style>
 </head>
 <body>
@@ -320,11 +330,12 @@ body{
 </script>
 <!-- End Channel Plugin -->
 <c:import url="../temp/header.jsp"></c:import>
-
 <section class="main_section">
 	<div class="message_wrap">
 		<div class="message">
-			로그인 하였습니다.
+			<div class="alert alert-success">
+			로그인 하였습니다.			
+			</div>
 		</div>
 	</div>
 	<div class="page_wrap">
@@ -357,7 +368,7 @@ body{
 					<span>내 프로젝트</span>
 					<div class="interest_project project1">
 						<c:if test="${member.kind eq 'client' }"><p>검수중</p></c:if>
-						<c:if test="${member.kind eq 'freelancer' }"><p>관심 프로젝트</p></c:if>
+						<c:if test="${member.kind eq 'freelancer' }"><p>완료한 프로젝트</p></c:if>
 						<table>
 							<colgroup>
 								<col width="45%">
@@ -372,39 +383,47 @@ body{
 									<th>예상 금액</th>
 									<th>예상 기간</th>
 									<th>마감일자</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${member.kind eq 'freelancer' && not empty finList}">
+								<c:forEach begin="0" end="3" var="i">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td>${finList[i].name}</td>
+									<td>${finList[i].budget}</td>
+									<td>${finList[i].period}</td>
+									<td>${finList[i].finishdate}</td>
 								</tr>
+								</c:forEach>
+								</c:if>
+								<c:if test="${member.kind eq 'client' && not empty chkList}">
+								<c:forEach begin="0" end="3" var="i">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td>${chkList[i].name}</td>
+									<td>${chkList[i].budget}</td>
+									<td>${chkList[i].period}</td>
+									<td>${chkList[i].finishdate}</td>
 								</tr>
+								</c:forEach>
+								</c:if>
+								<c:if test="${empty finList && member.kind eq 'freelancer'}">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td colspan="4">완료한 프로젝트가 없습니다.</td>
 								</tr>
+								</c:if>
+								<c:if test="${empty chkList && member.kind eq 'client'}">
+								<tr>
+									<td colspan="4">검수중인 프로젝트가 없습니다.</td>
+								</tr>
+								</c:if>
 							</tbody>
 						</table>
 						<p>
-							<span>더 자세히 보기 ></span>
+							<span id="detail1">더 자세히 보기 ></span>
 						</p>
 					</div>
 					<div class="proposal_project project1">
-						<c:if test="${member.kind eq 'freelancer' }"><p>지원한 프로젝트</p></c:if>
+						<c:if test="${member.kind eq 'freelancer'}"><p>지원한 프로젝트</p></c:if>
 						<c:if test="${member.kind eq 'client' }"><p>지원자 모집중</p></c:if>
 						<table>
 							<colgroup>
@@ -420,35 +439,43 @@ body{
 									<th>예상 금액</th>
 									<th>예상 기간</th>
 									<th>마감일자</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody>
+							<c:if test="${member.kind eq 'freelancer' && not empty appList}">
+								<c:forEach begin="0" end="3" var="i">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td>${appList[i].name}</td>
+									<td>${appList[i].budget}</td>
+									<td>${appList[i].period}</td>
+									<td>${appList[i].finishdate}</td>
 								</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${member.kind eq 'client'&& not empty recList}">
+								<c:forEach begin="0" end="3" var="i">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td>${recList[i].name}</td>
+									<td>${recList[i].budget}</td>
+									<td>${recList[i].period}</td>
+									<td>${recList[i].finishdate}</td>
 								</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${empty appList && member.kind eq 'freelancer'}">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td colspan="4">지원한 프로젝트가 없습니다.</td>
 								</tr>
+							</c:if>
+							<c:if test="${empty recList && member.kind eq 'client'}">
+								<tr>
+									<td colspan="4">모집중인 프로젝트가 없습니다.</td>
+								</tr>
+							</c:if>								
 							</tbody>
 						</table>
 						<p>
-							<span>더 자세히 보기 ></span>
+							<span id="detail2">더 자세히 보기 ></span>
 						</p>
 					</div>
 					<div class="contract_project project1">
@@ -467,37 +494,40 @@ body{
 									<th>예상 금액</th>
 									<th>예상 기간</th>
 									<th>마감일자</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-							
-							
+							<c:if test="${not empty ingList && member.kind eq 'freelancer'}">
+								<c:forEach begin="0" end="3" var="i">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td>${ingList[i].name}</td>
+									<td>${ingList[i].budget}</td>
+									<td>${ingList[i].period}</td>
+									<td>${ingList[i].finishdate}</td>	
 								</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${not empty ingcList && member.kind eq 'client'}">
+								<c:forEach begin="0" end="3" var="i">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td>${ingcList[i].name}</td>
+									<td>${ingcList[i].budget}</td>
+									<td>${ingcList[i].period}</td>
+									<td>${ingcList[i].finishdate}</td>	
 								</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${empty ingList || empty ingcList}">
 								<tr>
-									<td>Project Name</td>
-									<td>1,000,000원</td>
-									<td>180일</td>
-									<td>2017년 7월 21일</td>
-									<td>관심</td>
+									<td colspan="4">
+										진행중인 프로젝트가 없습니다.
+									</td>
 								</tr>
+							</c:if>
 							</tbody>
 						</table>
 						<p>
-							<span>더 자세히 보기 ></span>
+							<span id="detail3">더 자세히 보기 ></span>
 						</p>
 					</div>
 				</div>
@@ -547,6 +577,20 @@ body{
 
 <c:import url="../temp/footer.jsp"></c:import>
 
-
+<script type="text/javascript">
+	/* $("#detail1").click(function () {
+		var kind = '${member.kind}';
+		if(kind=='freelancer'){
+			location.href=""
+		}
+	}); */
+	$.ajax({
+		url : "${pageContext.request.contextPath}/alarm/alarmList",
+		type : "POST",
+		success : function(data) {
+			$(".alarm_body").html(data);
+		} 
+	});
+</script>
 </body>
 </html>
