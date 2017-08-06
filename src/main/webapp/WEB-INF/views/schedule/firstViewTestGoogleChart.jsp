@@ -88,12 +88,14 @@
           //data.addColumn('number', 'Hours per Day');
          /*  var partState = '${summary.partNames}'; */
           
-          alert(${fn:length(summary.partNames)});
-          for(var i=0;i< ${fn:length(summary.partNames)} ;i++){
+         // alert(${fn:length(summary.partNames)});
+          var length = ${summary.partNames.size()};
+          alert(length);
+          for(var i=0;i< length ;i++){
         	  
-          	var name ='${summary.partNames.get(1)}';
+          	var name = '"${summary.partNames.get("+i+")}"';
           	alert("하아아아"+name);
-          	data.addRow([name,2,${summary.stateCountPerPart.get(i)[1]},1 ]);
+          	data.addRow([name,2, ${summary.stateCountPerPart.get(i)[1]} ,1 ]);
           }
           
          var options = {

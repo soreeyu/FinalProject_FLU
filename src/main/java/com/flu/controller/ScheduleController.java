@@ -106,6 +106,17 @@ public class ScheduleController {
 		}
 		
 		
+		@RequestMapping(value="detailview")
+		public String detailView(){
+			return "schedule/detailViewforExcel";
+		}
+		
+		@RequestMapping(value="makeExcel")
+		public void makeExcel(){
+			scheduleService.makeExcel();
+		}
+		
+		
 		
 		/*
 		 * /schedule 로 접근할때 동작 //url 쳤을때 프로젝트가 있는지 확인해주는 것
