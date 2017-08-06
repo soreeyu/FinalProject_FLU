@@ -142,10 +142,12 @@
 
 }
 
+
+
 #searchForm{
 
 	width: 800px;
-	height: 150px;
+	height:220px;
 	margin-top: 20px;
 	background-color: white;
 	border: 1px solid #dedede;
@@ -154,15 +156,16 @@
 
 #searchBTN{
 	
-	width : 100px;
+	width : 150px;
 	height: 30px;
-	background-color: rgb(68, 110, 171);
+	background-color: #24abd1;
 	color: white;
-	border: 2px solid black;
-	font-size: 1.5em;
-	font-weight: bolder;
+	border: 1px solid #2099bb;
+	font-size: 1.3em;
 	margin: 0 auto;
 	margin-top: 20px;
+	text-align: center;
+	line-height: normal;
 }
 
 #searchBTN:HOVER{
@@ -174,10 +177,25 @@ cursor: pointer;
 #tb{
 
 margin: 0 auto;
-
+margin-top: 30px;
 
 }
 
+.tb_title{
+
+width: 160px;
+height: 30px;
+text-align: center;
+font-family: sans-serif;
+font-weight: bold;
+
+}
+
+.tb_contents{
+
+
+
+}
 
 .contents {
 	width: 800px;
@@ -207,6 +225,10 @@ cursor: pointer;
 .contents_paging span{
 	cursor: pointer;
 }
+
+
+
+
 
 </style>
 <script type="text/javascript">
@@ -531,10 +553,11 @@ cursor: pointer;
 				
 			<form id="frm" action="">
 					<div id="searchForm">
+
 						<table id="tb">
 						<tr>
-							<td>1차 분류</td>
-							<td>
+							<td class="tb_title">1차 분류</td>
+							<td class="tb_contents">
 								<select name="category">
 									<option value="">전체</option>
 									<option value="개발">개발</option>
@@ -542,8 +565,8 @@ cursor: pointer;
 								</select>
 							</td>
 						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
-							<td>기획 상태</td>
-							<td>
+							<td class="tb_title">기획 상태</td>
+							<td class="tb_contents">
 								<select name="planState">
 									<option value="">전체</option>
 									<option value="idea">아이디어까지만 존재</option>
@@ -553,8 +576,8 @@ cursor: pointer;
 							</td>
 						</c:if>
 						<c:if test="${board=='Finish'}">
-							<td>사업자 종류</td>
-							<td>
+							<td class="tb_title">사업자 종류</td>
+							<td class="tb_contents">
 							<select name="type">
 								<option value="">전체</option>	
 								<option value="개인">개인</option>
@@ -565,8 +588,8 @@ cursor: pointer;
 						</c:if>	
 						</tr>
 						<tr>
-							<td>2차 분류</td>
-							<td>
+							<td class="tb_title">2차 분류</td>
+							<td class="tb_contents">
 								<div id="result">
 									<select name="detailCategory">
 										<option value="">전체</option>
@@ -582,11 +605,11 @@ cursor: pointer;
 									</select>
 								</div>
 							</td>
-							<td>프로젝트 명</td>
-							<td><input type="text" name="name" id="name" value="${projectDTO.name}"></td>
+							<td class="tb_title">프로젝트 명</td>
+							<td class="tb_contents"><input type="text" name="name" id="name" value="${projectDTO.name}" placeholder="프로젝트 명을 입력하세요"></td>
 						</tr>
 						<tr>
-							<td>
+							<td class="tb_title">
 							<c:if test="${board=='Check'}">
 							예상 시작일
 							</c:if>
@@ -594,19 +617,19 @@ cursor: pointer;
 							프로젝트 시작일
 							</c:if>
 							</td>
-							<td><input type="date" name="startDate" id="startDate"></td>		
+							<td class="tb_contents"><input type="date" name="startDate" id="startDate"></td>		
 						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
-							<td>담당자 이메일</td>
-							<td><input type="text" name="email" id="email" value="${projectDTO.email}"></td>
+							<td class="tb_title">담당자 이메일</td>
+							<td class="tb_contents"><input type="text" name="email" id="email" value="${projectDTO.email}" placeholder="클리어언트를 입력하세요"></td>
 						</c:if>
 						<c:if test="${board=='Finish'}">
-							<td>이름</td>
-							<td><input type="text" name="memberName" id="memberName" value="${listInfo.memberName}"></td>
+							<td class="tb_title">이름</td>
+							<td class="tb_contents"><input type="text" name="memberName" id="memberName" value="${listInfo.memberName}"></td>
 						</c:if>
 						
 						</tr>
 						<tr>
-							<td>
+							<td class="tb_title">
 							<c:if test="${board=='Check'}">
 							모집마감일
 							</c:if>
@@ -614,11 +637,11 @@ cursor: pointer;
 							프로젝트 종료일
 							</c:if>
 							</td>
-							<td><input type="date" name="finishDate" id="finishDate"></td>
+							<td class="tb_contents"><input type="date" name="finishDate" id="finishDate"></td>
 							
 							
-							<td>기간</td>
-							<td>
+							<td class="tb_title">기간</td>
+							<td class="tb_contents">
 							<select name="searchDate">
 								<option value="">전체</option>
 								<option value="week">최근 1주</option>
@@ -631,9 +654,10 @@ cursor: pointer;
 						</tr>
 						
 					</table>
-						<div id="searchBTN">검색하기</div>
 					
-				</div>
+						<div id="searchBTN">검색하기</div>
+					</div>	
+
 				
 				
 

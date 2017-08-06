@@ -116,34 +116,85 @@ $(function() {
 </script>
 
 <style type="text/css">
-	
-	.ui-datepicker-inline{
-		width: 400px;
-		height: 300px;
-		
-	}
 
-	#btn{
-	
-		width: 55px;
-		height: 30px;
-		background-color: yellow;
-		color: black;
-		font-weight: bolder;
-		margin: 0 auto;
-	
-	}
-	
 	#btn:HOVER {
 	
 		cursor: pointer;
 		
 	}
+	
+	.title{
+		
+	
+	}
+	
+	.ui-datepicker{
+		font-size: 1.2em;
+		width: 400px;
+		height : 250px;
+		background-color : white;
+		border:1px solid #555;
+		color:#333;
+		margin-top: 20px;
+		margin: 0 auto;
+	}
+
+div.ui-datepicker-header{
+	font-size: 1.2em;
+	text-align:center;
+	background:#ddebf7;
+	border:0px;
+	color:#708af8;
+	font-size:8px;
+}
+
+.ui-datepicker .ui-datepicker-title {
+    margin: 0 2.3em;
+    line-height: 1.4em;
+    font-size : 2.0em;
+    height: 30px;;
+}
+
+div.ui-datepicker-header span{
+
+
+
+}
+
+.ui-datepicker-calendar > thead th {
+	color: #949494;
+	font-size: 0.7em;
+}
+.ui-datepicker-calendar > tbody td a{ 
+	
+}
+.ui-datepicker-calendar > tbody td:first-child a { 
+    COLOR: red;
+}
+
+.ui-datepicker-calendar > tbody td:last-child a { 
+    COLOR: blue; 
+}
+
+.register-btn{
+   width:120px;
+   height:20px;
+   color: white;
+   background-color: #f1720c;
+   border-color: #f48023;
+   border-radius: 2px;
+   text-align: center;
+   vertical-align: middle;
+   padding: 10px 12px;
+   text-decoration: none;
+   margin-top:20px;
+   margin: 0 auto;
+}
 
 </style>
 </head>
 <body>
-<div>
+<div class="title">
 프로젝트 기간 변경
 </div>
 <div id="datepicker">
@@ -153,8 +204,8 @@ $(function() {
 <input type="hidden" name="startDate" value="">
 <input type="hidden" name="finishDate" value="">
 <input type="hidden" name="projectNum" value="">
-<div id="btn">
-확인
+<div id="btn" class="register-btn">
+완료
 </div>
 </form>
 
