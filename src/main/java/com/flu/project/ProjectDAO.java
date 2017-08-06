@@ -118,10 +118,10 @@ public class ProjectDAO {
 			
 		}
 		
-		public int contractCount(ProjectDTO projectDTO){
-			System.out.println("contractCount dao 들어옴");
+		public int sellingCount(ProjectDTO projectDTO){
+			System.out.println("sellingCount dao 들어옴");
 			
-			return sqlSession.selectOne(NAMESPACE+"contractcount", projectDTO);
+			return sqlSession.selectOne(NAMESPACE+"sellingCount", projectDTO);
 		}
 		
 		public int ingCount(ProjectDTO projectDTO){
@@ -161,11 +161,34 @@ public class ProjectDAO {
 			
 			return sqlSession.selectList(NAMESPACE+"sellList", map);
 		}
-		
+
 		//기간연장
 		public int moreDateUpdate(ProjectDTO projectDTO){
 			return sqlSession.update(NAMESPACE+"moreDateUpdate", projectDTO);
 		}
 		
+
+		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
+		public MemberDTO projectImg(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectImg", projectDTO);
+		}
+		
+		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+		public int projectListcount(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectcount", projectDTO);
+		}
+
 	
+		//프로젝트 리스트에서 뿌려주는 급구리스트
+		public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
+			return sqlSession.selectList(NAMESPACE+"quickList", listInfo);
+		}
+		
+		//프로젝트 리스트에서 뿌려주는 급구리스트 카운트
+		public int quickCount(ProjectDTO projectDTO){
+			System.out.println("quickCount-dao");
+			return sqlSession.selectOne(NAMESPACE+"quickCount", projectDTO);
+		}
+		
+		
 }

@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.project.ProjectDTO;
+
 @Repository
 public class ApplicantDAO {
 
@@ -27,6 +29,22 @@ public class ApplicantDAO {
 	}
 	
 	
+	//지원하기누르면 추가되는 insert
+	public int insertApplicant(ApplicantDTO applicantDTO){
+		System.out.println("applicant-dao");
+		return sqlSession.insert(NAMESPACE+"insertApplicant", applicantDTO);
+	}
 	
+	//지원했는지 체크해보기
+	public int checkApplicant(ApplicantDTO applicantDTO){
+		System.out.println("checkApplicant-dao");
+		return sqlSession.selectOne(NAMESPACE+"checkApplicant", applicantDTO);
+	}
 	
+	//지원자 수 카운트하기
+	public int countApplicant(int projectNum){
+		System.out.println("countApplicant-dao");
+		
+		return sqlSession.selectOne(NAMESPACE+"countApplicant", projectNum);
+	}
 }

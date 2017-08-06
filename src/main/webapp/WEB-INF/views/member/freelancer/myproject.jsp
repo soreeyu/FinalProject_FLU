@@ -22,7 +22,7 @@
 }
 
 .page {
-	width: 1152px;
+	width: 1160px;
 	display: inline-block;
 	margin-top: 30px;
 }
@@ -96,7 +96,7 @@
 	float: left;
 	margin-left: 10px;
 	margin-right: 10px;
-	width: 790px;
+	width: 870px;
 }
 
 .contents_inner {
@@ -114,7 +114,7 @@
 }
 
 .title>p:FIRST-CHILD {
-	float: right;
+/* 	float: right;
 	margin-top: 7px;
 	padding: 6px 12px;
 	font-size: 14px;
@@ -123,7 +123,7 @@
 	background-color: #66b3ff;
 	border-radius: .2em;
 	color: white;
-	line-height: 1.5;
+	line-height: 1.5; */
 }
 
 .title>p:FIRST-CHILD {
@@ -293,7 +293,7 @@
 						<div class="title">
 
 							<p id="t1">나의 프로젝트</p>
-							<p id="t2">나의 전체 프로젝트</p>
+							<!-- <p id="t2">나의 전체 프로젝트</p> -->
 
 						</div>
 					</div>
@@ -328,6 +328,7 @@ $("#project_list").click(function() {
 	 $.get("myprojectInner?curPage=1", function(data){
 		 alert(data);
 			$(".contents").html(data);
+			
 		}); 
 });
 $("#project_like").click(function() {
@@ -338,6 +339,7 @@ $("#project_app").click(function() {
 	$.get("myprojectInner?curPage=1&state=app", function(data){
 		 alert(data);
 			$(".contents").html(data);
+			$("#t1").text("지원한 프로젝트");
 		}); 
 });
 $("#project_ing").click(function() {
@@ -345,6 +347,7 @@ $("#project_ing").click(function() {
 	$.get("myprojectInner?curPage=1&state=ing", function(data){
 		 alert(data);
 			$(".contents").html(data);
+			$("#t1").text("진행중인 프로젝트");
 		}); 
 });
 
@@ -353,6 +356,7 @@ $("#project_finish").click(function() {
 	$.get("myprojectInner?curPage=1&state=finish", function(data){
 		 alert(data);
 			$(".contents").html(data);
+			$("#t1").text("완료된 프로젝트");
 		}); 
 });
 
@@ -361,6 +365,7 @@ $("#project_end").click(function() {
 	$.get("myprojectInner?curPage=1&state=payFinish", function(data){
 		 alert(data);
 			$(".contents").html(data);
+			$("#t1").text("종료된 프로젝트");
 		}); 
 });
 

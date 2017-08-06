@@ -235,7 +235,7 @@ public class MemberController {
 				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setEmail(memberDTO.getEmail());
 				alarmDTO.setContents("개인정보를 성공적으로 등록 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				
@@ -315,10 +315,10 @@ public class MemberController {
 			
 			int result = memberService.memberUpdate(memberDTO);
 			if(result>0){
-				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+				session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((CheckMemberViewDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setEmail(memberDTO.getEmail());
 				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));

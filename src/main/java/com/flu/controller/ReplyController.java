@@ -34,9 +34,7 @@ public class ReplyController {
 	@RequestMapping(value="replyInsert", method=RequestMethod.POST)
 	public String replyInsert(ReplyDTO replyDTO, HttpSession session, MemberDTO memberDTO, ProjectDTO projectDTO, RedirectAttributes rd){
 		System.out.println("replyInsert");
-		
-		
-		
+	
 		memberDTO = (MemberDTO) session.getAttribute("member");
 		System.out.println(memberDTO.getEmail());
 		replyDTO.setWriter(memberDTO.getEmail());
@@ -51,7 +49,7 @@ public class ReplyController {
 			System.out.println("replySuccess");
 		}
 		
-		return "redirect:/project/projectView";
+		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
 	public String ReplyUpdate(ReplyDTO replyDTO){
@@ -71,7 +69,7 @@ public class ReplyController {
 		
 		rd.addAttribute("message", message);
 		
-		return "redirect:/project/projectView";
+		return "redirect:/project/projectView?projectNum="+num;
 	}
 	
 	@RequestMapping(value="replyList", method=RequestMethod.GET)
@@ -87,7 +85,7 @@ public class ReplyController {
 		map.put("project", projectDTO);
 		List<ReplyDTO> ar = replyService.replyList(map);
 		
-		projectDTO = projectService.projectView(projectDTO.getProjectNum());
+		projectDTO = projectService.projectView(projectDTO.getProjectNum(), projectDTO);
 		model.addAttribute("replyList", ar);
 		model.addAttribute("listInfo", map.get("listInfo"));
 		model.addAttribute("replycount", totalCount);

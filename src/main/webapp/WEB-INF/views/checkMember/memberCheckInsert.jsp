@@ -150,6 +150,33 @@
 	border: 1px solid #dedede;
 }
 
+/* dddddddddddddddddddddddddddddddddd */
+
+
+element.style {
+    margin-bottom: 15px;
+}
+
+.process-guide-box {
+    border: 1px solid #dedede;
+
+}
+
+div {
+    display: block;
+}
+
+body {
+    font-family: "Nanum Gothic", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", AppleGothic, 돋움, Dotum, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: rgb(85, 85, 85);
+    background-color: rgb(243, 244, 247);
+    height: 100%;
+    margin: 0px;
+}
+
+
 
 </style>
 </head>

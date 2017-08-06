@@ -35,8 +35,22 @@ public class ProjectService {
 	}
 	
 	//project View
-	public ProjectDTO projectView(int num){
-		return projectDAO.projectView(num);
+	public ProjectDTO projectView(int num, ProjectDTO projectDTO){
+		System.out.println("projectView에서 skill파싱하기");
+		System.out.println("num=="+num);
+		
+		projectDTO = projectDAO.projectView(num);
+		System.out.println("projectnum=="+projectDTO.getProjectNum());
+		/*System.out.println(projectDTO.getSkill());*/
+		
+		/*System.out.println("parr=="+projectDTO.getSkill().split(","))*/;
+		
+		projectDTO.setSkills(projectDTO.getSkill().split(","));
+		
+		/*System.out.println("skill[]=="+projectDTO.getSkills().length);*/
+		
+		
+		return projectDTO;
 	}
 	
 	//project List
@@ -52,11 +66,9 @@ public class ProjectService {
 		for(int i=0;i<list.size();i++){
 			String[] parsing = list.get(i).getSkill().split(",");
 			list.get(i).setSkills(parsing);
-			/*System.out.println(parsing[i]);*/
+			
 		}
 		
-		
-		//return projectDAO.projectList(listInfo);
 		return list;
 	}
 	
@@ -86,7 +98,7 @@ public class ProjectService {
 			System.out.println(ar.get(i).getSkills());
 		}
 		
-		System.out.println("dao-detailCategory="+ar.get(0).getDetailCategory());
+		
 	
 		return ar;
 	}
@@ -101,10 +113,10 @@ public class ProjectService {
 	}
 	
 	
-	public int contractCount(ProjectDTO projectDTO){
+	public int sellingCount(ProjectDTO projectDTO){
 		System.out.println("contractCount Service 들어옴");
 		
-		return projectDAO.contractCount(projectDTO);
+		return projectDAO.sellingCount(projectDTO);
 	}
 	
 	public int ingCount(ProjectDTO projectDTO){
@@ -137,9 +149,48 @@ public class ProjectService {
 		return projectDAO.sellList(projectDTO, listInfo);
 	}
 	
+
 	//기간연장
 	public int moreDateUpdate(ProjectDTO projectDTO){
 		return projectDAO.moreDateUpdate(projectDTO);
 	}
+
+
+	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
+	public MemberDTO projectImg(ProjectDTO projectDTO){
+		return projectDAO.projectImg(projectDTO);
+	}
 	
+	
+	//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+	public int projectListcount(ProjectDTO projectDTO){
+		return projectDAO.projectListcount(projectDTO);
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 급구리스트
+	public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
+		
+		List<ProjectDTO> ar =  projectDAO.quickList(projectDTO, listInfo);
+		System.out.println("service의 quick-ar=="+ar);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println(ar.get(i).getSkill());
+			String[] parsing = ar.get(i).getSkill().split(",");
+			
+			for(int j=0;j<parsing.length;j++){
+				ar.get(i).setSkills(parsing);				
+			}
+			System.out.println(ar.get(i).getSkills());
+		}
+		return ar;
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 급구리스트 카운트
+	public int quickCount(ProjectDTO projectDTO){
+		System.out.println("quickCount-service");
+		return projectDAO.quickCount(projectDTO);
+	}
+
 }
