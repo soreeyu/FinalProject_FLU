@@ -495,7 +495,6 @@ body{
 								</tr>
 							</thead>
 							<tbody>
-
 							<c:if test="${not empty ingList && member.kind eq 'freelancer'}">
 								<c:forEach begin="0" end="3" var="i">
 								<tr>
