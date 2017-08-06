@@ -9,7 +9,7 @@
 <c:import url="../temp/bootstrap.jsp"></c:import>
 <script type="text/javascript">
  $(function(){
-	 
+	alert("호이"); 
 
 	$("#goExcel").click(function(){
 		alert("엑셀생성");

@@ -1,9 +1,11 @@
 package com.flu.schedule;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,9 +24,14 @@ import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
 
 import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
 import jxl.write.Label;
+import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 
 @Service
 public class ScheduleService {
@@ -535,7 +542,7 @@ public class ScheduleService {
 		public void makeExcel(){
 			System.out.println("엑셀파일 만들러 서비스들어옴 ");
 			
-			// 엑셀파일 객체 생성
+			/*// 엑셀파일 객체 생성
 			WritableWorkbook workbook = null;
 			
 			// 시트 객체 생성
@@ -599,10 +606,145 @@ public class ScheduleService {
 
 			}catch(Exception e){
 				e.printStackTrace();
+			}*/
+			
+			
+			
+			
+			
+			
+			try {
+			this.excelWrite(new File("M:\\ExcelWriteSample.xls"), this.getData());
+			} catch (WriteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			}
+
+
+
 		}
 	
 	
+		
+		
+
+		/** * * @param file * @param data * @throws IOException * @throws WriteException */
+		public void excelWrite(File file, List<Map<String, Object>> data)
+				throws IOException, WriteException {
+
+			// WorkBook 생성
+			WritableWorkbook wb = Workbook.createWorkbook(file);
+
+			// WorkSheet 생성
+			WritableSheet sh = wb.createSheet("테스트", 0);
+			// 열넓이 설정 (열 위치, 넓이)
+			sh.setColumnView(0, 10);
+			sh.setColumnView(1, 20);
+			sh.setColumnView(2, 20);
+			sh.setColumnView(3, 20);
+
+			// 셀형식
+			WritableCellFormat textFormat = new WritableCellFormat();
+
+			// 생성
+			textFormat.setAlignment(Alignment.CENTRE);
+			// 테두리
+			textFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+
+			int row = 0;
+
+			// 헤더
+			Label label = new jxl.write.Label(0, row, "이름", textFormat);
+			sh.addCell(label);
+
+			label = new jxl.write.Label(1, row, "주소", textFormat);
+			sh.addCell(label);
+
+			label = new jxl.write.Label(2, row, "전화번호", textFormat);
+			sh.addCell(label);
+
+			label = new jxl.write.Label(3, row, "비고", textFormat);
+			sh.addCell(label);
+
+			row++;
+
+			for (Map<String, Object> tem : data) {
+
+				// 이름
+				label = new jxl.write.Label(0, row, (String) tem.get("name"),
+						textFormat);
+				sh.addCell(label);
+				// 주소
+				label = new jxl.write.Label(1, row, (String) tem.get("addr"),
+						textFormat);
+				sh.addCell(label);
+				// 전화번호
+				label = new jxl.write.Label(2, row, (String) tem.get("tel"),
+						textFormat);
+				sh.addCell(label);
+				// 비고
+				label = new jxl.write.Label(3, row, (String) tem.get("etc"),
+						textFormat);
+				sh.addCell(label);
+
+				row++;
+			}
+
+			// WorkSheet 쓰기
+			wb.write();
+
+			// WorkSheet 닫기
+			wb.close();
+
+		}
+
+		/** * 출력할 데이터 * * @return */
+		public List<Map<String, Object>> getData() {
+
+			List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("name", "이기자");
+			map.put("addr", "서울시 강북");
+			map.put("tel", "010-XXXX-XXXX");
+			map.put("etc", "");
+
+			data.add(map);
+
+			map = new HashMap<String, Object>();
+			map.put("name", "김철순");
+			map.put("addr", "서울시 강남");
+			map.put("tel", "010-XXXX-XXXX");
+			map.put("etc", "");
+
+			data.add(map);
+
+			map = new HashMap<String, Object>();
+			map.put("name", "박순심");
+			map.put("addr", "서울시 서초");
+			map.put("tel", "010-XXXX-XXXX");
+			map.put("etc", "");
+
+			data.add(map);
+
+			map = new HashMap<String, Object>();
+			map.put("name", "강기남");
+			map.put("addr", "서울시 송파");
+			map.put("tel", "010-XXXX-XXXX");
+			map.put("etc", "");
+
+			data.add(map);
+
+			return data;
+
+		}
+
+
+
 	
 
 
