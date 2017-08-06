@@ -517,6 +517,7 @@ $(function(){
 	   var chart = new google.visualization.PieChart(document.getElementById('chart2'));
 	   chart.draw(data, options);
 	}
+    
     if(chart1 == 0 && chart2 ==0){
   		google.charts.setOnLoadCallback(drawChart2);
     }else{

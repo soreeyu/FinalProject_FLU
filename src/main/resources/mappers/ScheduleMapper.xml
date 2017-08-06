@@ -56,7 +56,11 @@
   	</select>
   
 	<select id="partList" parameterType="java.lang.Integer" resultType="com.flu.schedule.client.SchedulePartDTO">
-		select * from schedulepart where schedulenum=#{scheduleNum} order by partNum asc
+	select schedulenum,partnum ,partname
+	,to_char(partStartDate, 'yyyy-MM-dd') partStartDate
+	,to_char(partFinishDate, 'yyyy-MM-dd') partFinishDate
+	,partDescfileO,partdescfileF  from schedulepart 
+	where schedulenum=#{scheduleNum} order by partNum asc
 	</select>
 
 	

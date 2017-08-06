@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"></c:import>
+
 <title>Insert title here</title>
 <style type="text/css">
 	
@@ -32,6 +33,11 @@
 </style>
 
  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+     google.charts.load('current', {packages: ['corechart']});    
+     google.charts.load('current', {packages: ['corechart', 'bar']});
+   </script>
+ 
     <script type="text/javascript">
     var scheduleNum = '${scheduleNum}';
     
@@ -69,8 +75,8 @@
      */
      
      
-     google.charts.load('current', {packages: ['corechart', 'bar']});
-     google.charts.setOnLoadCallback(drawStacked);
+    
+    
      
      function drawStacked() {
           var data = google.visualization.arrayToDataTable([
@@ -109,16 +115,41 @@
            vAxis: {
              title: '업무비율'
            }
+           
+           
+           /* 재식이꺼
+        // Set chart options
+    	   var options = {
+    	      'width':220,
+    	      'height':200,
+    	      legend :{
+    	    	position: 'top',
+    	    	textStyle : {
+    	    		fontSize: 12
+    	    	}
+    	      },
+    	      slices: {
+    	            0: { color: 'gray' },
+    	          }}; */
+    	          
+    	          
          };
          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
          chart.draw(data, options);
      }
 
-
-         
-      // Load the Visualization API and the piechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
+/* 
+재식
+     if(chart1 == 0 && chart2 ==0){
+   		google.charts.setOnLoadCallback(drawChart2);
+     }else{
+     	google.charts.setOnLoadCallback(drawChart);
+     } 
+     
+*/
+     
+     google.charts.setOnLoadCallback(drawStacked);
+      
       // Set a callback to run when the Google Visualization API is loaded.
       for(var i=0;i<2;i++){
     	 

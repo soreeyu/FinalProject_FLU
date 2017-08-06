@@ -542,85 +542,15 @@ public class ScheduleService {
 		public void makeExcel(){
 			System.out.println("엑셀파일 만들러 서비스들어옴 ");
 			
-			/*// 엑셀파일 객체 생성
-			WritableWorkbook workbook = null;
-			
-			// 시트 객체 생성
-			WritableSheet sheet = null;
-			
-			// 셀 객체 생성
-			Label label = null;
-			
-			
-			// 저장할 파일 객체 생성
-			File file = new File("C:\\test.xls");
-			
-			
-			// 테스트 데이터
-			HashMap<String, String> hm_0 = new HashMap() ;
-			hm_0.put("name", "홍길동") ;
-			hm_0.put("age", "21") ;
-			
-			HashMap hm_1 = new HashMap() ;
-			hm_1.put("name", "김영희") ;
-			hm_1.put("age", "20") ;
-			
-			List list = new ArrayList();
-			list.add(hm_0) ;
-			list.add(hm_1) ;
-			
-			
-			try{
-				
-				// 파일 생성
-				workbook = Workbook.createWorkbook(file);
-				
-				// 시트 생성
-				workbook.createSheet("sheet1", 0);
-				sheet = workbook.getSheet(0);
-				
-				// 셀에 쓰기
-				label = new Label(0, 0, "name");
-				sheet.addCell(label);
-				
-				label = new Label(1, 0, "age");
-				sheet.addCell(label);
-				
-				
-				
-				// 데이터 삽입
-				for(int i=0; i < list.size(); i++){
-					HashMap rs = (HashMap)list.get(i) ;
-					
-					label = new Label(0, (i+1), (String)rs.get("name"));
-					sheet.addCell(label);
-					
-					label = new Label(1, (i+1), (String)rs.get("age"));
-					sheet.addCell(label);
-					
-				}
-				
-				
-				workbook.write();
-				workbook.close();
-
-			}catch(Exception e){
-				e.printStackTrace();
-			}*/
-			
-			
-			
-			
-			
 			
 			try {
-			this.excelWrite(new File("M:\\ExcelWriteSample.xls"), this.getData());
+				this.excelWrite(new File("M:\\ExcelWriteSample.xls"), this.getData());
 			} catch (WriteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 

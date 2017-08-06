@@ -1273,6 +1273,9 @@ var unitModal;
 			}else if(activeTab == 'tab8'){
 				location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
 				//url = "";
+			}else if(activeTab == 'tab9'){
+				location.href="/flu/schedule/detailView?scheduleNum="+scheduleNum;
+				//url = "";
 			}
 			
 			//loadTabContent(url,activeTab);
@@ -1725,6 +1728,7 @@ var unitModal;
 						<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
 						<li class=""  data-tab="tab7"><span class="taba">간트차트2</span></li>
 						<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
+						<li class=""  data-tab="tab9"><span class="taba">상세보기(엑셀)</span></li>
 					</ul>
 				</div>
 			</div>

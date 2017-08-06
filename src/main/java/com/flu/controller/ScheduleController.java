@@ -106,14 +106,34 @@ public class ScheduleController {
 		}
 		
 		
-		@RequestMapping(value="detailview")
-		public String detailView(){
+		@RequestMapping(value="detailView",method=RequestMethod.GET)
+		public String detailView(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
+			map.put("partList",partList);
+			
+			for(int i=0;i<partList.size();i++){
+				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+				scheduleUnitDTO.setScheduleNum(scheduleNum);
+				scheduleUnitDTO.setEmail("");
+				scheduleUnitDTO.setUnitState("");
+				scheduleUnitDTO.setPartNum(partList.get(i).getPartNum());
+				List<ScheduleUnitDTO> unitList = scheduleService.unitList(scheduleUnitDTO);
+				map.put("unitList"+i, unitList);
+			}
+			
+			
+			model.addAttribute("map", map);
 			return "schedule/detailViewforExcel";
 		}
 		
 		@RequestMapping(value="makeExcel")
-		public void makeExcel(){
+		public void makeExcel() throws Exception{
+			
 			scheduleService.makeExcel();
+
 		}
 		
 		
