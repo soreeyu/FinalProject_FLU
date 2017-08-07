@@ -566,7 +566,7 @@ background-color: white;
          </div>
       </div>
       
-      <c:if test="${dto.state=='done'}">
+      <c:if test="${dto.state=='done' && member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null}">
       <div class="contents-register">
             <div class="contents-register-inner" style="text-align: center;">
             
@@ -575,12 +575,16 @@ background-color: white;
             </c:if>
             <c:if test="${member.kind=='freelancer'}">
                <p>프로젝트 지원을 위해
+               <c:if test="${member.phone eq null }">
                <span><a href="../member/personaldataView">기본정보</a></span>
+               </c:if>
+               <c:if test="${freelancer.intro eq null }">
                <span><a href="../member/introView">자기소개</a></span>
-               <c:if test="${skills eq null }">
+               </c:if>
+               <c:if test="${skills[0] eq null }">
                <span><a href="../member/skillList">보유기술</a></span>
                </c:if>
-               <c:if test="${portfolio eq null }">
+               <c:if test="${portfolio[0] eq null }">
                <span><a href="../member/portfolioList">포트폴리오</a></span>
                </c:if>
                을(를) 입력해주세요
@@ -732,12 +736,15 @@ background-color: white;
             <a href="#" class="register-btn" id="btn_apply" data-toggle="modal" data-target="#Model_Te">
             <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">
             <span id="span_apply">
-            <c:if test="${check eq 0 && checkCount eq 0}">
-            프로젝트 지원하기
+            <c:if test="${check eq 0 && checkCount eq 0 && member.phone ne null && freelancer.intro ne null && portfolio[0] ne null && skills[0] ne null}">
+            	프로젝트 지원하기
+            </c:if>
+            <c:if test="${check eq 0 && checkCount eq 0 && member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null }">
+            	프로젝트 지원 불가
             </c:if>
             </span>
             <c:if test="${check eq 1 || checkCount eq 1}">
-           프로젝트 지원 취소
+          	 프로젝트 지원 취소
             </c:if>
              </a>
            <!--  <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
@@ -883,11 +890,13 @@ var state = '${dto.state}';
 var check = "${check}";
 var apply_check = $("#btn_apply").text().trim();
 alert("skills==${skills}");
+alert("skill-size==${skills[0]}");
 alert(state);
 alert("${member.oProfileImage }");
 alert("중복인가="+check);
 alert("checkCount=${checkCount}");
 alert(apply_check);
+alert("intro--=${freelancer.intro}");
 
 
 /* reply ajax */
@@ -1005,14 +1014,6 @@ if(meetKind=='offline'){
   });
    
 
-/* 관심 프로젝트 추가하기  */
-
- $("#btn_like").click(function() {
-   alert("관심 추가하기");
-   /*  */
-});
- 
- 
 
 
 	/* 프로젝트 지원하기 */
@@ -1025,6 +1026,8 @@ if(meetKind=='offline'){
 				});
 					location.href="../member/freelancer/myproject?email"+email;
 					
+			}else if(apply_check=="프로젝트 지원 불가"){
+				alert("프로젝트 지원 불가");
 			}else{
 		
 			alert("프로젝트 지원!");

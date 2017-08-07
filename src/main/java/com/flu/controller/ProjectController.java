@@ -20,6 +20,7 @@ import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.file.FileSaver;
+import com.flu.freelancer.FreelancerDTO;
 import com.flu.freelancer.FreelancerService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -178,15 +179,10 @@ public class ProjectController {
       
       //project를 등록한 사람의 IMG를 가져오기
       MemberDTO mem = projectService.projectImg(projectDTO);
-      
-     System.out.println("프리랜서뷰=="+freelancerService.freelancerView(memberDTO.getEmail()));
-      
-      /*
-     model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
-       */
-      
-      
-      
+   
+      System.out.println("phone="+memberDTO.getPhone());
+      System.out.println("형태="+memberDTO.getKind());
+
       
       int sellResult = projectService.sellingCount(projectDTO);
       System.out.println("판매중인 프로젝트 갯수="+sellResult);
@@ -197,7 +193,7 @@ public class ProjectController {
       int totalResult = projectService.pjCount(projectDTO);
       System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
       
-          
+       System.out.println("포폴--"+freelancerService.portfolioList(memberDTO.getEmail()));
       
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
@@ -213,6 +209,7 @@ public class ProjectController {
       //지원할 자격이 되는지 체크
       model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
       model.addAttribute("skills", freelancerService.skillList(memberDTO.getEmail()));
+      model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
          
    }
    
