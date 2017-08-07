@@ -555,7 +555,7 @@ background-color: white;
             <p id="header_t">
             <span class="header_category">${dto.category} > ${dto.detailCategory }</span>
             
-            <c:if test="${dto.state eq 'recruit' }">
+            <c:if test="${dto.state eq 'done' }">
             <span class="header_apply">
             <img src="${pageContext.request.contextPath}/resources/img/project/proposal.png">
          		   총<strong>${applyCount}명</strong>지원</span>
@@ -566,7 +566,7 @@ background-color: white;
          </div>
       </div>
       
-      <c:if test="${dto.state=='check'}">
+      <c:if test="${dto.state=='done'}">
       <div class="contents-register">
             <div class="contents-register-inner" style="text-align: center;">
             
@@ -673,7 +673,7 @@ background-color: white;
          
          
          
-         <c:if test="${dto.state eq 'ing' || dto.state eq 'recruit'}">
+         <c:if test="${dto.state eq 'ing' || dto.state eq 'done'}">
          <div class="project-qna">
             <div class="project-detail-title">프로젝트 문의 </div>
             <div style="border-bottom: 1px dotted #dedede;"></div>
@@ -724,7 +724,7 @@ background-color: white;
       
          <div class="project-apply-box">
             
-         <c:if test="${member.kind eq 'freelancer' && dto.state eq 'recruit'}">
+         <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done'}">
             <a href="#" class="register-btn" id="btn_apply" data-toggle="modal" data-target="#Model_Te">
             <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">
             <span id="span_apply">
@@ -733,7 +733,7 @@ background-color: white;
             </c:if>
             </span>
             <c:if test="${check eq 1 || checkCount eq 1}">
-            프로젝트 지원 완료
+           프로젝트 지원 취소
             </c:if>
              </a>
             <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
@@ -797,13 +797,13 @@ background-color: white;
           
           
           
-          <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
+        <%--   <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
             <a href="#" class="schedule-btn">프로젝트 스케줄 </a>
           </c:if>
           
-          <c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
+          <c:if test="${(dto.state eq 'done'|| dto.state eq 'ing') && member.kind eq 'client'}">
             <a href="#" class="schedule-btn">미팅룸 예약하기 </a>
-          </c:if>   
+          </c:if>    --%>
           
           <c:if test="${member.kind eq 'admin'}">
           
@@ -846,8 +846,7 @@ background-color: white;
             
             <div class="client-info-box">
                <div>
-               <%-- ${member.oProfileImage }
-               ${member.fProfileImage } --%>
+           
                <div class="dto_profile_box">
                   <div class="dto_profile">
                   	<img style="width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/profile/${mem.fProfileImage}">
@@ -880,9 +879,11 @@ var email = "${member.email}";
 var state = '${dto.state}';
 var check = "${check}";
 var apply_check = $("#btn_apply").text().trim();
+
 alert(state);
 alert("${member.oProfileImage }");
 alert("중복인가="+check);
+alert("checkCount=${checkCount}");
 alert(apply_check);
 
 
@@ -1015,15 +1016,17 @@ if(meetKind=='offline'){
 	(function($) {
 		$("#btn_apply").click(function() {
 			
-			if(check==1){
-				alert("이미 지원한 프로젝트");
-			}else if(apply_check=="프로젝트 지원 완료"){
-				alert("이미 지원한 프로젝트")
-				
+			if(apply_check=="프로젝트 지원 취소"){
+				alert("프로젝트 지원 취소");
+				$.get("../applicant/deleteApplicant?email="+email+"&projectNum="+projectNum, function(data) {
+				});
+					location.href="../member/freelancer/myproject?email"+email;
+					
 			}else{
 		
 			alert("프로젝트 지원!");
 			$("#App_Modal").modal();
+			
 		}
 		});
 	})(jQuery);

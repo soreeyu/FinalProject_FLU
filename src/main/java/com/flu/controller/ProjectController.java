@@ -76,9 +76,6 @@ public class ProjectController {
       memberDTO= (MemberDTO)session.getAttribute("member");
       
      int pjcount = projectService.projectListcount(projectDTO);
-      /*int pjcount = projectService.projectCount(listInfo, projectDTO, array);*/
-     
-   
      
      
       model.addAttribute("listInfo", listInfo);
@@ -130,7 +127,12 @@ public class ProjectController {
             
       List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
             
-     
+      for(int i=0;i<ar.size();i++){
+     	 
+	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
+	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
+	         System.out.println("ar의 appCount=="+ar.get(i).getAppCount());
+	         }
       
       System.out.println("projectListInner의 ar="+ar);
       System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
@@ -159,7 +161,7 @@ public class ProjectController {
    public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
       
-      projectDTO = projectService.projectView(projectNum, projectDTO);
+      projectDTO = projectService.projectView(projectDTO);
 
       memberDTO = (MemberDTO)session.getAttribute("member");
       ApplicantDTO applicantDTO = new ApplicantDTO();
@@ -177,9 +179,6 @@ public class ProjectController {
       int applyCount = applicantService.countApplicant(projectNum);
       
       MemberDTO mem = projectService.projectImg(projectDTO);
-      /*System.out.println("프로젝트 등록한사람=="+mem.getEmail());
-      System.out.println("프로젝트 등록한사람=="+mem.getfProfileImage());
-      System.out.println("프로젝트 등록한사람=="+mem.getoProfileImage());*/
       
       
       int sellResult = projectService.sellingCount(projectDTO);
@@ -279,7 +278,7 @@ public class ProjectController {
 
       System.out.println(memberDTO.getKind());   
       
-      projectDTO = projectService.projectView(projectDTO.getProjectNum(), projectDTO);
+      projectDTO = projectService.projectView(projectDTO);
       System.out.println("projectNum="+projectDTO.getProjectNum());
       System.out.println("controller-project-name="+projectDTO.getName());
    

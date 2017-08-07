@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantService;
 import com.flu.file.FileService;
 import com.flu.freelancer.FreelancerDTO;
 import com.flu.freelancer.FreelancerService;
@@ -39,6 +40,9 @@ public class FreelancerController {
 	
 	@Inject
 	private AlarmService alarmService;
+	
+	@Inject
+	private ApplicantService applicantService;
 	
 	private AlarmDTO alarmDTO;
 
@@ -94,7 +98,7 @@ public class FreelancerController {
 		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
 		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
 		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
-		model.addAttribute("evaluation", freelancerService.evaluationList(this.getEmail(session)));
+		model.addAttribute("evaluation", freelancerService.evaluationList(this.getEmail(session)));	
 		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
 		
 		return "/member/freelancer/mypage";
@@ -959,6 +963,13 @@ public class FreelancerController {
 		for(int i=0;i<ar.size();i++){
 			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
 		}
+		
+		 for(int i=0;i<ar.size();i++){
+        	 
+	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
+	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
+	         System.out.println("ar의 appCount=="+ar.get(i).getAppCount());
+	         }
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("listInfo", listInfo);

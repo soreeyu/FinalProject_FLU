@@ -35,11 +35,11 @@ public class ProjectService {
 	}
 	
 	//project View
-	public ProjectDTO projectView(int num, ProjectDTO projectDTO){
+	public ProjectDTO projectView(ProjectDTO projectDTO){
 		System.out.println("projectView에서 skill파싱하기");
-		System.out.println("num=="+num);
+		System.out.println("num=="+projectDTO.getProjectNum());
 		
-		projectDTO = projectDAO.projectView(num);
+		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
 		System.out.println("projectnum=="+projectDTO.getProjectNum());
 		/*System.out.println(projectDTO.getSkill());*/
 		

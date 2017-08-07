@@ -102,4 +102,17 @@ public class ApplicantController {
 		
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
+	@RequestMapping(value="deleteApplicant", method=RequestMethod.GET)
+	public void deleteApplicant(ApplicantDTO applicantDTO, Model model, HttpSession session, MemberDTO memberDTO){
+		System.out.println("applicant Delete 들어옴");
+		
+		int result = applicantService.deleteApplicant(applicantDTO);
+		System.out.println("result=="+result);
+		if(result==1){
+			System.out.println("지원 취소 성공");
+		}else{
+			System.out.println("지원 취소 실패");
+		}
+
+	}
 }

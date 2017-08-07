@@ -447,7 +447,7 @@
   top: 70%;
   width: auto;
   padding: 16px;
-  margin-top: -150px;
+  margin-top: -290px;
   color: red;
   font-weight: bold;
   font-size: 18px;
@@ -649,20 +649,12 @@
          
          
          <div class="project-sort-box">
-         <c:if test="${member.kind=='client'}">
+
             <div class="project-sort-text">판매중인 프로젝트</div>
             <div class="place-sort-box">
                <button id="dev-btn">개발</button>
                <button id="design-btn">디자인</button>
             </div>
-         </c:if>
-         <c:if test="${member.kind!='client'}">
-            <div class="project-sort-text">판매중인 프로젝트</div>
-            <div class="place-sort-box">
-               판매중인 프로젝트를 보고싶다면 
-               클라이언트로 로그인 해주세요.
-            </div>
-         </c:if>
          </div>
    
             
@@ -685,8 +677,7 @@
  var array = new Array();
 var did = 0;
 var cc=1;
-/* var maxCount = '${quickCount}';
-alert("maxCount=="+maxCount); */
+
 alert("cc="+cc);
 $.get("quickListInner?curPage=1", function(data) {
 	alert(data);
@@ -695,41 +686,6 @@ $.get("quickListInner?curPage=1", function(data) {
 $.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
    $(".contents_main").html(data);
 });
-
-
-/* 급구 리스트 페이징 처리*/
-  
-/* 
-
- $(".preview").click(function() {
-	 if(cc==0){
-		 alert("첫페이지");
-	 }else{
-		 
-		alert("preview클릭");
-		cc=cc-1;
-		alert(did);
-		did = did+1160;
-		alert(did);
-		$(".real_quick").css("margin-left", did);
-		alert($(".real_quick").css("margin-left"));
-	 }
-	});
-
-
-  $(".next").click(function() {
-	alert("next클릭");
-	cc=cc+1;
-	alert(did);
-	did = did-1160;
-	alert(did);
-	$(".real_quick").css("margin-left", did);
-	$(".real_quick").css("animation-duration", "1.5s");
-	alert($(".real_quick").css("margin-left"));
-	alert("cc="+cc);
-});
- */
-
 
 
 

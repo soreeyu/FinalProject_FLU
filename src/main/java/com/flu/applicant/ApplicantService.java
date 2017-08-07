@@ -41,8 +41,11 @@ public class ApplicantService {
 	//지원자 수 카운트하기
 	public int countApplicant(int projectNum){			
 		System.out.println("countApplicant-service");
-	
-
 		return applicantDAO.countApplicant(projectNum);
+	}
+	
+	public int deleteApplicant(ApplicantDTO applicantDTO){
+		System.out.println("applicant-service-delete");
+		return applicantDAO.deleteApplicant(applicantDTO);
 	}
 }

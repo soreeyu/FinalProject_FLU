@@ -85,7 +85,7 @@ public class ReplyController {
 		map.put("project", projectDTO);
 		List<ReplyDTO> ar = replyService.replyList(map);
 		
-		projectDTO = projectService.projectView(projectDTO.getProjectNum(), projectDTO);
+		projectDTO = projectService.projectView(projectDTO);
 		model.addAttribute("replyList", ar);
 		model.addAttribute("listInfo", map.get("listInfo"));
 		model.addAttribute("replycount", totalCount);

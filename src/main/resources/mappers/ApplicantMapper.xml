@@ -14,7 +14,7 @@
   
   
   <!-- 지원하기 눌렀을 때, 지원자 추가하기 -->
-  <insert id="insertApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
+  <insert id="insertApplicant" parameterType="com.flu.applicant.ApplicantDTO">
   insert into applicant (projectNum, email, state, pay) values (#{projectNum}, #{email}, 'app', #{pay})
   </insert>
   
@@ -24,6 +24,8 @@
  <select id="countApplicant" parameterType="int" resultType="int">
   	select count(nvl(projectNum, 0)) from applicant where projectNum=#{projectNum} 
   </select> 
-  
+  <delete id="deleteApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
+  	delete from applicant where email=#{email} and projectNum=#{projectNum}
+  </delete>
   
   </mapper>
