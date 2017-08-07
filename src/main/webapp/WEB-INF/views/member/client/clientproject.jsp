@@ -301,7 +301,7 @@
 							<a id="done">모집중인 프로젝트</a>
 						</p>
 						<p id="recruitBTN">
-							<a id="recruit">미팅중인 프로젝트</a>
+							<a id="recruit">모집 완료된 프로젝트</a>
 						</p>
 						<p id="ingBTN">
 							<a id="ing">진행중인 프로젝트</a>
@@ -345,6 +345,7 @@
 
 <script type="text/javascript">
 
+alert("sellCheck==${sellCheck}");
 /* project 첫화면 검수중인 프로젝트 리스트 띄우기  */
 $.get("projectCheck?state=check&curPage=1", function(data){
 	$(".contents").html(data);

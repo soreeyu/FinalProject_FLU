@@ -79,13 +79,14 @@
 
 
 	  $(".next").click(function() {
-		 cc=cc+1;
+			cc=cc+1;
 		 if(cc==pageCount){
 			alert("마지막 페이지");
 			alert("cc="+cc);
+			cc=cc-1;
 		}else{
 		alert("next클릭");
-		
+	
 		alert(did);
 		did = did-1160;
 		alert(did);

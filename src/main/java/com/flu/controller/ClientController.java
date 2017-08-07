@@ -142,9 +142,7 @@ public class ClientController {
 	   public void projectCheck(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO, ApplicantDTO applicantDTO){
 	      System.out.println("projectCheck요");
 	       MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-	         System.out.println("myProject의 email="+memberDTO.getEmail());
-	         
-	         
+	 
 	         System.out.println("controller에서 state="+projectDTO.getState());
 	         int totalCount =  projectService.clientPjCount(listInfo, memberDTO, projectDTO);
 	         System.out.println("client의 project count="+totalCount);

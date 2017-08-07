@@ -29,7 +29,7 @@
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title" id=${dto.projectNum}>${dto.name}</div>
+						<div class="project-title" id=${dto.projectNum}>${dto.name} ${dto.projectNum}</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -48,12 +48,80 @@
 							</c:if>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							총 <strong>${dto.appCount}명</strong></div>
-							
+							총 <strong>${dto.appCount}명</strong></div>	
 						</div>
 						</c:if>
 						
+						
+						<!-- 완료된 프로젝트에 판매버튼 추가하기 -->						
+						<c:if test="${dto.state eq 'finish'}">
+						<div class="project-contents-right">
+							<button class="projectSellBTN" id="${dto.projectNum}" data-toggle="modal" data-target="#sell-Modal">
+							판매하기</button> 
+			 			</div>
+						</c:if>
+									
 						<div style="clear: both;"></div>
+						
+						
+		   <!----------------------- Modal ---------------------------------->
+        
+
+  <!-- Modal -->
+  <div class="modal fade" id="sell-Modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-edit"></span>  프로젝트 판매를 위해 작성해주세요</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" action="../../project/pjsellInsert" method="post">
+            <div class="form-group">
+            <input type="hidden" name="projectNum" class="modal_Num">
+            <input type="hidden" name="email" value="${member.email}">
+            <div>프로젝트 Num : <span class="modal_Num"></span></div>
+              <label><span class="glyphicon glyphicon-user"></span>판매할 프로젝트 이름</label>
+              <input type="text" name="name">
+            </div>
+            <div class="form-group">
+              <label><span class="glyphicon glyphicon-eye-open"></span> 판매 가격</label>
+              <input type="number" class="form-control" name="price">
+            </div>
+             <div class="form-group">
+              <label><span class="glyphicon glyphicon-eye-open"></span> 프로젝트 설명</label>
+              <input type="text" class="form-control" name="contents">
+            </div>
+         
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Enter</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      
+          <p>프로젝트 판매 정보는 수정이 불가하니 신중해주세요.</p>
+         
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+          
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						
 						<div class="project-bottom">
 							<span class="main-cate">${dto.category }</span>
@@ -101,6 +169,8 @@
 	var state = "${list[0].state}";
 	var preview = ((curBlock-2)*perBlock)+1;
 	var next = curBlock*perBlock+1;
+	
+
 	
 	/* 페이징 색상 */
 	$(".num").each(function() {
@@ -173,7 +243,15 @@
 	});
 
 	
-
+/* 완료된 프로젝트 판매하기 */
+$(".projectSellBTN").click(function() {
+	alert("모달");
+	alert($(this).attr("id"));
+	var sell_Id = $(this).attr("id");
+	$(".modal_Num").html(sell_Id);
+	$(".modal_Num").val(sell_Id);
+	$("#sell-Modal").modal();
+});
 	 
 	
 	</script>

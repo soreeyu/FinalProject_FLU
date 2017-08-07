@@ -25,6 +25,8 @@ import com.flu.freelancer.FreelancerService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
+import com.flu.project.sell.PjSellDTO;
+import com.flu.project.sell.PjSellService;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -40,8 +42,10 @@ public class ProjectController {
    private ApplicantService applicantService;
    @Inject
    private FreelancerService freelancerService;
+   @Inject
+   private PjSellService pjSellService;
    
-	private AlarmDTO alarmDTO;
+   private AlarmDTO alarmDTO;
 
    //@ResponseBody
    @RequestMapping(value="projectMap", method=RequestMethod.GET)
@@ -358,7 +362,7 @@ public class ProjectController {
    }
 
 
-   
+   //판매가능 리스트들 뿌려주기
    @RequestMapping(value="sellList")
    public String sellList(ProjectDTO projectDTO, ListInfo listInfo, Model model){
       System.out.println("sell List service들어옴");
@@ -376,29 +380,34 @@ public class ProjectController {
       return "project/projectListInner";
    }
 
-   //Test
-   //Client가 mypage에서 확인하는 myprojectList
-   //@RequestMapping(value="projectView")
-   /*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
-      System.out.println("Client ProjectList");
-      
-      MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-      int totalCount = projectService.clientPjCount(listInfo, memberDTO);
-      listInfo.makePage(totalCount);
-      listInfo.makeRow();
-      List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
-      
-      System.out.println("totalCount="+totalCount);
-      System.out.println("arsize="+ar.size());
    
-      model.addAttribute("list", ar);
-      model.addAttribute("type", "list");
-      model.addAttribute("pjcount", totalCount);
-      model.addAttribute("listInfo", listInfo);
-      model.addAttribute("member", memberDTO);
-      
-      return "project/clientProjectList";
-   }*/
+   //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
+   @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)
+   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd){
+   		System.out.println("pjsellInsert-controller");
+   		
+   		int result = pjSellService.pjsellInsert(pjSellDTO);
+   		int updateResult = 0;
+   		if(result==1){
+   			System.out.println("프로젝트 판매등록 성공");
+   			
+   			updateResult = projectService.updateProjectState(pjSellDTO);
+   			if(updateResult==1){
+   				System.out.println("프로젝트 상태 수정 성공");
+   			}else{
+   				System.out.println("프로젝트 상태 수정 실패");
+   			}
+   			
+   		}else{
+   			System.out.println("프로젝트 판매등록 실패");
+   		}
+   		
+   		rd.addAttribute("sellCheck", result);
+   		rd.addAttribute("updateResult", updateResult);
+   		//sellCheck가 1이면 프로젝트 판매등록 성공 -> project-state sell로 update하기
+   		
+   		return "redirect:/member/client/clientproject?state=finish";
+   	}
    
 
 

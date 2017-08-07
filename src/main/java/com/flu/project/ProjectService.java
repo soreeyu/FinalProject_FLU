@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.flu.member.MemberDTO;
+import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -180,4 +181,10 @@ public class ProjectService {
 		System.out.println("quickCount-service");
 		return projectDAO.quickCount(projectDTO);
 	}
+	
+	//pjsell update가 아닌 pjsell에 등록했을 때, project상태바꾸기
+	public int updateProjectState(PjSellDTO pjSellDTO){
+		return projectDAO.updateProjectState(pjSellDTO);
+	}
+	
 }

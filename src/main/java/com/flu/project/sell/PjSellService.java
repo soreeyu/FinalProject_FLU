@@ -2,16 +2,22 @@ package com.flu.project.sell;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
 import com.flu.util.ListInfo;
 
+@Service
 public class PjSellService {
 
+	@Inject
 	private PjSellDAO pjSellDAO;
 	
 	
 
-		public int pjsellWrite(PjSellDTO pjSellDTO){
-			return 0;
+		public int pjsellInsert(PjSellDTO pjSellDTO){
+			return pjSellDAO.pjsellInsert(pjSellDTO);
 		}
 		
 
