@@ -12,6 +12,8 @@
 	$(function() {
 		$(".credit").hide();
 		$(".digit").hide();
+		$("#client").hide();
+		$("#freelancer").hide();
 		
 		var credit_Info = document.getElementsByClassName("credit_Info");
 		var digit_Info = document.getElementsByClassName("digit_Info");
@@ -37,7 +39,17 @@
 			}
 		});
 		
-		
+		$("#discount").click(function() {
+			var kind = '${member.kind}';
+			alert(kind);
+			if(kind=='client'){
+				$("#client").show();
+			}else{
+				$("#client").hide();
+				$("#freelancer").show();
+			}
+			
+		})
 	})
 </script>
 <style type="text/css">
@@ -158,6 +170,22 @@
 		</ul>
 	</div>
 	<hr>
+	<br>
+	<div class="discount_btn_box">
+		<label class="btn">
+			<span><h1 id="discount">할인</h1></span>
+		</label>
+		<div class="list">
+			<ul id="client">
+				<li><input type="radio" name="discountC" id="meet_project"> 사전미팅</li>
+				<li><input type="radio" name="discountC" id="ing_project"> 진행중 프로젝트</li>
+			</ul>
+			<ul id="freelancer">
+				<li><input type="radio" id="meet_project"> 진행중 프로젝트</li>
+			</ul>
+		</div>
+	</div>
+	<br>
 	<h1>결제방법</h1>
 	<!-- 결제 방법 선택시 ajax로 각 결제 방법에 맞는 정보 입력하는 창 불러오기 -->
 	<input type="radio" name="payment" value="신용카드" id="creditCard">

@@ -158,6 +158,38 @@ public class MemberService {
 	public List<ProjectDTO> memberProjectList_INGC(String email) throws Exception{
 		return memberDAO.memberProjectList_INGC(email);
 	}
+	//진행중인 프로젝트 카운트(프리랜서)
+	public int memberProjectCount_ING(String email) throws Exception{
+		return memberDAO.memberProjectCount_ING(email);
+	}
+	//지원한 프로젝트 카운트(프리랜서)
+	public int memberProjectCount_APP(String email) throws Exception{
+		return memberDAO.memberProjectCount_APP(email);
+	}
+	//완료한 프로젝트 카운트(프리랜서)
+	public int memberProjectCount_FIN(String email) throws Exception{
+		return memberDAO.memberProjectCount_FIN(email);
+	}
+	//누적완료금액(프리랜서)
+	public int memberProjectSumPay(String email) throws Exception{
+		return memberDAO.memberProjectSumPay(email);
+	}
+	//등록한 프로젝트(클라이언트)
+	public int memberProjectCount_CHK(String email) throws Exception{
+		return memberDAO.memberProjectCount_CHK(email);
+	}
+	//진행중인 프로젝트카운트(클라이언트)
+	public int memberProjectCount_INGC(String email) throws Exception{
+		return memberDAO.memberProjectCount_INGC(email);
+	}
+	//완료한 프로젝트카운트(클라이언트)
+	public int memberProjectCount_FINC(String email) throws Exception{
+		return memberDAO.memberProjectCount_FINC(email);
+	}
+	//누적완료금액 ( 클라이언트)
+	public int memberProjectSumBudget(String email) throws Exception{
+		return memberDAO.memberProjectSumBudget(email);
+	}
 	//myflu에 뿌려질 알람 리스트
 	public List<AlarmDTO> memberAlarmList(String email) throws Exception{
 		return memberDAO.memberAlarmList(email);

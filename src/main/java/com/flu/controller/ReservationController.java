@@ -119,6 +119,15 @@ public class ReservationController {
 		
 	}
 	
+	//예약하기전에 할인 받기 위한 ajax
+	@RequestMapping(value="reserveDiscount", method=RequestMethod.POST)
+	public void reserveDiscount(HttpSession session) throws Exception{
+		//예약하려는 회원이 클라이언트일 경우
+		if(((MemberDTO)session.getAttribute("member")).getKind().equals("client")){
+			
+			
+		}
+	} 
 	
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
 	public String reservePay(ReservationDTO reservationDTO, Model model, RedirectAttributes ra) throws Exception{

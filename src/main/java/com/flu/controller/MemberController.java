@@ -134,8 +134,8 @@ public class MemberController {
 		
 		//로그인 
 		@RequestMapping(value="login", method=RequestMethod.POST)
-		public ModelAndView login(MemberDTO memberDTO, HttpSession session) throws Exception{
-			ModelAndView mv = new ModelAndView();
+		public String login(MemberDTO memberDTO, HttpSession session, RedirectAttributes ra) throws Exception{
+			System.out.println("로그인 컨트롤러");
 			memberDTO = memberService.login(memberDTO);
 			String message = "";
 			if(memberDTO != null){
@@ -143,19 +143,22 @@ public class MemberController {
 				session.setAttribute("member", memberDTO);
 				message= "로그인 하였습니다.";
 				alarmDTO.setEmail(memberDTO.getEmail());
-				mv.addObject("alarmCount", alarmService.alarmCount(alarmDTO));
-				System.out.println(alarmService.alarmCount(alarmDTO));
-				mv.addObject("message", message);
-				mv.setViewName("/member/myflu");
+				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+				System.out.println("카운트"+alarmService.alarmCount(alarmDTO));
+				ra.addFlashAttribute("message", message);
+				
+				System.out.println("회원");
 				//관리자 로그인시 리턴하는 주소는 인덱스 myflu가 아님
 				if(memberDTO.getKind().equals("admin")){
-					mv.setViewName("/index");
+					return "index";
 				}
-				return mv;
+				return "redirect:/member/myflu";
+				
 			}else{
-				mv.addObject("message", message);
-				mv.setViewName("/member/login");
-				return mv;
+				ra.addFlashAttribute("message", message);
+				
+				
+				return "redirect:/member/login";
 				
 			}
 		}
@@ -173,9 +176,7 @@ public class MemberController {
 			//알람 List
 			List<AlarmDTO> ar = memberService.memberAlarmList(((MemberDTO)session.getAttribute("member")).getEmail());
 			
-			for(int i=0;i<ar.size();i++){
-				System.out.println(ar.get(i).getContents());
-			}
+			
 			
 			//로그인한 사람이 프리랜서일 경우 아래의 코드 실행
 			if(((MemberDTO)session.getAttribute("member")).getKind().equals("freelancer")){
@@ -185,11 +186,22 @@ public class MemberController {
 				List<ProjectDTO> far2 = memberService.memberProjectList_APP(((MemberDTO)session.getAttribute("member")).getEmail());
 				//완료한 프로젝트 List
 				List<ProjectDTO> far3 = memberService.memberProjectList_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
-				
-				
+				//진행중인 프로젝트 Count
+				int count1 = memberService.memberProjectCount_ING(((MemberDTO)session.getAttribute("member")).getEmail());
+				//지원한 프로젝트 Count
+				int count2 = memberService.memberProjectCount_APP(((MemberDTO)session.getAttribute("member")).getEmail());
+				//완료한 프로젝트 Count
+				int count3 = memberService.memberProjectCount_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
+				//누적 완료 금액
+				int pay = memberService.memberProjectSumPay(((MemberDTO)session.getAttribute("member")).getEmail());
+				System.out.println("PAY"+pay);
 				model.addAttribute("ingList", far);
 				model.addAttribute("appList", far2);			
 				model.addAttribute("finList", far3);
+				model.addAttribute("ingCount", count1);
+				model.addAttribute("appCount", count2);
+				model.addAttribute("finCount", count3);
+				model.addAttribute("pay", pay);
 				
 				//로그인한 사람이 클라이언트일 경우 아래의 코드를 실행
 			}else if(((MemberDTO)session.getAttribute("member")).getKind().equals("client")){
@@ -199,10 +211,22 @@ public class MemberController {
 				List<ProjectDTO> car2 = memberService.memberProjectList_REC(((MemberDTO)session.getAttribute("member")).getEmail());
 				//진행중인 프로젝트 List
 				List<ProjectDTO> car3 = memberService.memberProjectList_INGC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//등록한 프로젝트 Count
+				int count1 = memberService.memberProjectCount_CHK(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 Count
+				int count2 = memberService.memberProjectCount_INGC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//완료한 프로젝트 Count
+				int count3 = memberService.memberProjectCount_FINC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//누적 완료 금액
+				int budget = memberService.memberProjectSumBudget(((MemberDTO)session.getAttribute("member")).getEmail());
 				
 				model.addAttribute("chkList", car);
 				model.addAttribute("recList", car2);
 				model.addAttribute("ingcList", car3);
+				model.addAttribute("insCount", count1);
+				model.addAttribute("ingCount", count2);
+				model.addAttribute("finCount", count3);
+				model.addAttribute("budget", budget);
 			}
 			model.addAttribute("alrList", ar);
 			

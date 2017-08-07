@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.flu.eachRoom.EachRoomDTO;
 import com.flu.meetRoom.MeetRoomDTO;
+import com.flu.project.ProjectDTO;
 import com.flu.room.RoomDTO;
 
 @Service
@@ -62,4 +63,7 @@ public class ReservationService {
 	public int reservationDel(Integer num) throws Exception{
 		return reservationDAO.reservationDel(num);
 	}
+	//클라이언트(할인)
+	
+	
 }

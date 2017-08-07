@@ -27,4 +27,7 @@
   	<delete id="ReserveDelete" parameterType="java.lang.Integer">
   		delete reservation where num=#{num}
   	</delete>
+  	
+  	<!-- 할인(클라이언트) -->
+  	
   </mapper>

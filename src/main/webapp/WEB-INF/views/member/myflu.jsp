@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -284,6 +285,7 @@ body{
 }
 .alarm_body{
 	height: 250px;
+	
 }
 
 .alarm_body li{
@@ -347,7 +349,7 @@ body{
 			</div>
 			<div class="contents_inner">
 				<div class="notice">
-					<div class="notice_title"><label>공지사항</label><span>페이징</span></div>
+					<div class="notice_title"><label>공지사항</label></div>
 					<div class="notice_list">
 						<ul>
 							<li><span>날짜</span><p><a href="#">공지사항 제목1</a></p></li>
@@ -355,7 +357,7 @@ body{
 							<li>공지사항3</li>
 						</ul>
 						<p>
-							<span>더 자세히 보기 ></span>
+							<span><a href="">더 자세히 보기 ></a></span>
 						</p>
 					</div>
 				</div>
@@ -385,22 +387,22 @@ body{
 							</thead>
 							<tbody>
 								<c:if test="${member.kind eq 'freelancer' && not empty finList}">
-								<c:forEach begin="0" end="3" var="i">
+								<c:forEach begin="0" end="2" var="i">
 								<tr>
-									<td>${finList[i].name}</td>
+									<td><a href="${pageContext.request.contextPath}/project/projectView?projectNum=${finList[i].projectNum}">${finList[i].name}</a></td>
 									<td>${finList[i].budget}</td>
 									<td>${finList[i].period}</td>
-									<td>${finList[i].finishdate}</td>
+									<td>${finList[i].finishDate}</td>
 								</tr>
 								</c:forEach>
 								</c:if>
 								<c:if test="${member.kind eq 'client' && not empty chkList}">
-								<c:forEach begin="0" end="3" var="i">
+								<c:forEach begin="0" end="2" var="i">
 								<tr>
-									<td>${chkList[i].name}</td>
+									<td><a href="${pageContext.request.contextPath}/project/projectView?projectNum=${chkList[i].projectNum}">${chkList[i].name}</a></td>
 									<td>${chkList[i].budget}</td>
 									<td>${chkList[i].period}</td>
-									<td>${chkList[i].finishdate}</td>
+									<td>${chkList[i].finishDate}</td>
 								</tr>
 								</c:forEach>
 								</c:if>
@@ -417,7 +419,12 @@ body{
 							</tbody>
 						</table>
 						<p>
-							<span id="detail1">더 자세히 보기 ></span>
+							<c:if test="${member.kind eq 'client' }">
+							<span><a href="${pageContext.request.contextPath}/member/client/clientproject">더 자세히 보기> </a></span>
+							</c:if>
+							<c:if test="${member.kind eq 'freelancer' }">
+							<span><a href="${pageContext.request.contextPath}/member/freelancer/myproject">더 자세히 보기> </a></span>
+							</c:if>
 						</p>
 					</div>
 					<div class="proposal_project project1">
@@ -441,22 +448,22 @@ body{
 							</thead>
 							<tbody>
 							<c:if test="${member.kind eq 'freelancer' && not empty appList}">
-								<c:forEach begin="0" end="3" var="i">
+								<c:forEach begin="0" end="2" var="i">
 								<tr>
-									<td>${appList[i].name}</td>
+									<td><a href="${pageContext.request.contextPath}/project/projectView?projectNum=${appList[i].projectNum}">${appList[i].name}</a></td>
 									<td>${appList[i].budget}</td>
 									<td>${appList[i].period}</td>
-									<td>${appList[i].finishdate}</td>
+									<td>${appList[i].finishDate}</td>
 								</tr>
 								</c:forEach>
 							</c:if>
 							<c:if test="${member.kind eq 'client'&& not empty recList}">
-								<c:forEach begin="0" end="3" var="i">
+								<c:forEach begin="0" end="2" var="i">
 								<tr>
-									<td>${recList[i].name}</td>
+									<td><a href="${pageContext.request.contextPath}/project/projectView?projectNum=${recList[i].projectNum}">${recList[i].name}</a></td>
 									<td>${recList[i].budget}</td>
 									<td>${recList[i].period}</td>
-									<td>${recList[i].finishdate}</td>
+									<td>${recList[i].finishDate}</td>
 								</tr>
 								</c:forEach>
 							</c:if>
@@ -473,7 +480,12 @@ body{
 							</tbody>
 						</table>
 						<p>
-							<span id="detail2">더 자세히 보기 ></span>
+							<c:if test="${member.kind eq 'client' }">
+							<span><a href="${pageContext.request.contextPath}/member/client/clientproject">더 자세히 보기> </a></span>
+							</c:if>
+							<c:if test="${member.kind eq 'freelancer' }">
+							<span><a href="${pageContext.request.contextPath}/member/freelancer/myproject">더 자세히 보기> </a></span>
+							</c:if>
 						</p>
 					</div>
 					<div class="contract_project project1">
@@ -496,22 +508,22 @@ body{
 							</thead>
 							<tbody>
 							<c:if test="${not empty ingList && member.kind eq 'freelancer'}">
-								<c:forEach begin="0" end="3" var="i">
+								<c:forEach begin="0" end="2" var="i">
 								<tr>
-									<td>${ingList[i].name}</td>
+									<td><a href="${pageContext.request.contextPath}/project/projectView?projectNum=${ingList[i].projectNum}">${ingList[i].name}</a></td>
 									<td>${ingList[i].budget}</td>
 									<td>${ingList[i].period}</td>
-									<td>${ingList[i].finishdate}</td>	
+									<td>${ingList[i].finishDate}</td>	
 								</tr>
 								</c:forEach>
 							</c:if>
 							<c:if test="${not empty ingcList && member.kind eq 'client'}">
-								<c:forEach begin="0" end="3" var="i">
+								<c:forEach begin="0" end="2" var="i">
 								<tr>
-									<td>${ingcList[i].name}</td>
+									<td><a href="${pageContext.request.contextPath}/project/projectView?projectNum=${ingcList[i].projectNum}">${ingcList[i].name}</a></td>
 									<td>${ingcList[i].budget}</td>
 									<td>${ingcList[i].period}</td>
-									<td>${ingcList[i].finishdate}</td>	
+									<td>${ingcList[i].finishDate}</td>	
 								</tr>
 								</c:forEach>
 							</c:if>
@@ -525,7 +537,12 @@ body{
 							</tbody>
 						</table>
 						<p>
-							<span id="detail3">더 자세히 보기 ></span>
+							<c:if test="${member.kind eq 'client' }">
+							<span><a href="${pageContext.request.contextPath}/member/client/clientproject">더 자세히 보기> </a></span>
+							</c:if>
+							<c:if test="${member.kind eq 'freelancer' }">
+							<span><a href="${pageContext.request.contextPath}/member/freelancer/myproject">더 자세히 보기> </a></span>
+							</c:if>						
 						</p>
 					</div>
 				</div>
@@ -537,7 +554,14 @@ body{
 					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
 					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
 					<div class="user_name">
+						<c:choose>
+						<c:when test="${empty member.fProfileImage}">
+							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg">							
+						</c:when>
+						<c:when test="${not empty member.fProfileImage}">
 						<img alt="프로필 사진" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}">
+						</c:when>
+						</c:choose>
 						<span>${member.nickName }</span>
 						<a href="/flu/member/personaldataView"><span>기본 정보 수정</span></a>
 						
@@ -548,16 +572,27 @@ body{
 					<label>
 						<span>무료로 프로젝트를<br>등록해 보세요</span>
 					</label>
-					<a href="#">프로젝트 등록하기</a>
+					<a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록하기</a>
 				</div>
 				</c:if>
 				<div class="history">
 					<span>FLU 히스토리</span>
-					<p>지원한 프로젝트<span>0 건</span></p>
-					<p>계약한 프로젝트<span>0 건</span></p>
-					<p>완료한 프로젝트<span>0 건</span></p>
+					<c:if test="${member.kind eq 'freelancer'}">
+					<p>지원한 프로젝트<span>${appCount} 건</span></p>
+					<p>진행중 프로젝트<span>${ingCount} 건</span></p>
+					<p>완료한 프로젝트<span>${finCount} 건</span></p>
 					<p class="price">누적 완료 금액</p>
-					<span>1,000,000 원</span>
+					<span>
+					<fmt:formatNumber value="${pay}" type="currency" currencySymbol="￦"/>
+					</span>						
+					</c:if>
+					<c:if test="${member.kind eq 'client'}">
+					<p>등록한 프로젝트<span>${insCount} 건</span></p>
+					<p>진행중 프로젝트<span>${ingCount} 건</span></p>
+					<p>완료한 프로젝트<span>${finCount} 건</span></p>
+					<p class="price">누적 완료 금액</p>
+					<span><fmt:formatNumber value="${budget}" type="currency" currencySymbol="￦"/></span>
+					</c:if>
 				</div>
 				<div class="alarm">
 					<span class="alarm_header">새로운 소식</span>
@@ -565,7 +600,7 @@ body{
 						<ul>
 							<c:if test="${not empty alrList}">
 								<c:forEach begin="0" end="5" var="a">
-									<li>${alrList[a].contents}</li>
+									<li style="white-space: nowrap; text-overflow : ellipsis; overflow: hidden;"><a href="${pageContext.request.contextPath}/alarm/alarmList">${alrList[a].contents}</a></li>
 								</c:forEach>
 							</c:if>
 							<c:if test="${empty alrList}">

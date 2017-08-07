@@ -2,6 +2,7 @@ package com.flu.reservation;
 
 import com.flu.eachRoom.EachRoomDTO;
 import com.flu.meetRoom.MeetRoomDTO;
+import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 import java.util.List;
 
@@ -51,5 +52,7 @@ public class ReservationDAO {
 	public int reservationDel(Integer num) throws Exception{
 		return sqlSession.update(NAMESPACE+"ReserveDel", num);
 	}
+	//클라이언트(할인)
 	
+	//프리랜서(할인)
 }
