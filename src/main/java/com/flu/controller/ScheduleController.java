@@ -121,10 +121,10 @@ public class ScheduleController {
 				scheduleUnitDTO.setUnitState("");
 				scheduleUnitDTO.setPartNum(partList.get(i).getPartNum());
 				List<ScheduleUnitDTO> unitList = scheduleService.unitList(scheduleUnitDTO);
-				map.put("unitList"+i, unitList);
+				partList.get(i).setUnitList(unitList);
 			}
 			
-			
+			System.out.println("0번째 유닛꺼내기"+((List<SchedulePartDTO>)map.get("partList")).get(0).getUnitList().get(0).getUnitName());
 			model.addAttribute("map", map);
 			return "schedule/detailViewforExcel";
 		}
