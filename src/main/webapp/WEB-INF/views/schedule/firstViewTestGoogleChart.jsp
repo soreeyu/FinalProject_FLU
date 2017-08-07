@@ -241,8 +241,8 @@
           ['Task'	, 'Hours per Day'],
           ['할일' 	,	willCount],
           ['진행중'	,	ingCount],
-          ['완료'	,	finCount],
-          ['마감일 지남', warnCount]
+          ['완료'	,	finCount]
+          //['마감일 지남', warnCount]
         ]);
 
         var options = {
