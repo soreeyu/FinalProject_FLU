@@ -20,6 +20,7 @@ import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.file.FileSaver;
+import com.flu.freelancer.FreelancerService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
@@ -36,7 +37,8 @@ public class ProjectController {
 	private AlarmService alarmService;
    @Inject
    private ApplicantService applicantService;
-   
+   @Inject
+   private FreelancerService freelancerService;
    
 	private AlarmDTO alarmDTO;
 
@@ -76,9 +78,6 @@ public class ProjectController {
       memberDTO= (MemberDTO)session.getAttribute("member");
       
      int pjcount = projectService.projectListcount(projectDTO);
-      /*int pjcount = projectService.projectCount(listInfo, projectDTO, array);*/
-     
-   
      
      
       model.addAttribute("listInfo", listInfo);
@@ -130,7 +129,12 @@ public class ProjectController {
             
       List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
             
-     
+      for(int i=0;i<ar.size();i++){
+     	 
+	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
+	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
+	         System.out.println("ar의 appCount=="+ar.get(i).getAppCount());
+	         }
       
       System.out.println("projectListInner의 ar="+ar);
       System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
@@ -159,7 +163,7 @@ public class ProjectController {
    public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
       
-      projectDTO = projectService.projectView(projectNum, projectDTO);
+      projectDTO = projectService.projectView(projectDTO);
 
       memberDTO = (MemberDTO)session.getAttribute("member");
       ApplicantDTO applicantDTO = new ApplicantDTO();
@@ -167,19 +171,21 @@ public class ProjectController {
       applicantDTO.setProjectNum(projectNum);
       int checkCount = applicantService.checkApplicant(applicantDTO);
       
-      System.out.println("check값은??=="+check);
       if(check==null){
     	  check=0;
       }
-      System.out.println("check값은2??=="+check);
-      System.out.println("session의 사진을 불러와보자");
-
       int applyCount = applicantService.countApplicant(projectNum);
       
+      //project를 등록한 사람의 IMG를 가져오기
       MemberDTO mem = projectService.projectImg(projectDTO);
-      /*System.out.println("프로젝트 등록한사람=="+mem.getEmail());
-      System.out.println("프로젝트 등록한사람=="+mem.getfProfileImage());
-      System.out.println("프로젝트 등록한사람=="+mem.getoProfileImage());*/
+      
+     System.out.println("프리랜서뷰=="+freelancerService.freelancerView(memberDTO.getEmail()));
+      
+      /*
+     model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
+       */
+      
+      
       
       
       int sellResult = projectService.sellingCount(projectDTO);
@@ -191,10 +197,7 @@ public class ProjectController {
       int totalResult = projectService.pjCount(projectDTO);
       System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
       
-      System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
-      System.out.println("프로젝트 이름="+projectDTO.getName());
-      
-      
+          
       
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
@@ -207,6 +210,9 @@ public class ProjectController {
       model.addAttribute("mem", mem);
       model.addAttribute("applyCount", applyCount);
 
+      //지원할 자격이 되는지 체크
+      model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
+      model.addAttribute("skills", freelancerService.skillList(memberDTO.getEmail()));
          
    }
    
@@ -279,7 +285,7 @@ public class ProjectController {
 
       System.out.println(memberDTO.getKind());   
       
-      projectDTO = projectService.projectView(projectDTO.getProjectNum(), projectDTO);
+      projectDTO = projectService.projectView(projectDTO);
       System.out.println("projectNum="+projectDTO.getProjectNum());
       System.out.println("controller-project-name="+projectDTO.getName());
    

@@ -26,7 +26,7 @@
   
   <select id="count" parameterType="java.util.HashMap" resultType="int">
      select count(nvl(projectNum,0)) from project
-    where state='recruit' and
+    where state='done' and
    (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
    <if test="result == 1">
        and detailCategory IN 
@@ -47,7 +47,7 @@
       (select rownum R, N.* from 
       (select * from project 
       
-      where state='recruit' and
+      where state='done' and
       (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
       <if test="result == 1">
        and detailCategory IN 
@@ -146,9 +146,9 @@
   
   <insert id="insert" parameterType="com.flu.project.ProjectDTO">
      insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
-     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date) 
+     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date, del_Check) 
      values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 
-     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate)
+     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate, #{del_Check})
   </insert>
   
   
