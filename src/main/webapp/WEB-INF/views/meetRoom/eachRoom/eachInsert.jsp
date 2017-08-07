@@ -129,13 +129,14 @@ section {
 	width : 60%;
 	height: 1500px;
 	margin : 0 auto;
+	margin-bottom: 50px;
 }
 #eachRoom_header{
 	display: table;
     position: relative;
     width: 100%;
     padding-bottom: 24px;
-    border-bottom: 4px solid #0066ff;
+    border-bottom: 4px solid #339bff;
     margin-top: 40px;
 }
 #eachRoom_name {
@@ -213,7 +214,7 @@ section {
     width: 100%;
     height: 100%;
     line-height: 50px;
-    background-color: #704de4;
+    background-color: #339bff;
     border: 0;
     color: #fff;
     text-align: center;
@@ -376,17 +377,17 @@ a {
 	
 	<form action="eachInsert" method="post" enctype="multipart/form-data" id="frm">
 	<div id="eachRoom_name">
-		<span>
+		<div class="tit_form">
 			세부공간 명
-		</span>
+		</div>
 		<input type="text" name="name" placeholder="세부 공간명을 입력해주세요." class="eachRoomInfo" value="${dto.name}">
 	</div>
 	
 	<div id="eachRoom_contents">
-		<span>
-			세부공간 소개
-		</span>
-		<textarea rows="" cols="" name="contents" style="height: 108px;">${dto.contents}</textarea>
+		<div class="tit_form">
+			세부공간소개
+		</div>
+		<textarea rows="" cols="" name="contents" style="height: 108px;" placeholder="상세하게 소개해보세요. 공간의 특징이나 주변환경 등의 세부정보를 작성하시면 효과적입니다.">${dto.contents}</textarea>
 	</div>
 	
 	<div class="eachRoom_form">
@@ -423,7 +424,7 @@ a {
 	<div class="tit_form">
 	공간유형	
 	</div>
-	<select name="type" class="eachRoomInfo">
+	<select name="type" class="eachRoomInfo" style="width: 150px; height: 49px; border-radius: 10px; font-size: 20px; font-weight: bold;">
 		<option value="세미나실">세미나실</option>
 		<option value="작업실">작업실</option>
 		<option value="회의실">회의실</option>
@@ -487,7 +488,7 @@ a {
 					</label>
 				</li>
 			</ul>
-			<input type="button" value="RESET" id="reset_btn">
+			<input type="button" value="RESET" id="reset_btn" style="margin-left: 330px; background-color: #339bff; width: 150px; height: 50px; color: white; font-size: 40px; border: none;">
 		</div>
 	</div>
 	
@@ -499,7 +500,7 @@ a {
 	<div class="flex_wrap column2">
 	<dl class="box reservation">
 		<dt class="pull_left tit">
-			<label>
+			<label style="line-height: 50px;">
 				수용인원
 			</label>
 		</dt>
@@ -525,7 +526,7 @@ a {
 	</dl>
 	<dl class="box">
 		<dt class="pull_left tit">
-			<label>
+			<label style="line-height: 50px;">
 				가격
 			</label>
 		</dt>
@@ -553,7 +554,7 @@ a {
 	
 	</div>
 	
-	<input type="button" id="savebutton" value="방 등록" style="margin-top: 50px; width: 100%;">
+	<input type="button" id="savebutton" value="방 등록" style="margin-top: 50px;  margin-bottom:50px; width: 100%; background-color:#339bff; height: 50px; border: none; color: #fff; font-size: 1.5em; ">
 
 
 	<input type="hidden" name="snum" value="${num}">

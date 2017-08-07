@@ -49,10 +49,7 @@
 	font-size: small;
     font-weight: lighter;
 }
-.section_body {
-	display: block;
-	float: left;
-}
+
 .Room{
 	width : 30%;
 	float: left;
@@ -94,6 +91,7 @@
     margin-top: 30px;
     width: 100%;
     height: 16px;
+    float: left;
 }
 .contents_paging{
 	width: 380px;
@@ -128,7 +126,7 @@
 		
 	</div>
 	
-	<div class="section_body">
+	
 	<c:forEach items="${list}" var="i">
 	<div class="Room">
 		<div class="Room_Img" >
@@ -143,7 +141,7 @@
 		</div>
 	</div>
 	</c:forEach>
-	</div>
+	
 
 
 

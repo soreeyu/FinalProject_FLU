@@ -106,8 +106,8 @@
 section {
 	min-width : 1152px;
 	width : 60%;
-	height: 2000px;
 	margin : 0 auto;
+	margin-bottom: 150px;
 }
 p {
 	font-family: sans-serif;
@@ -127,7 +127,7 @@ p {
 	top: 170;
 }
 #eachRoomTit {
-	border-bottom: 4px solid #0066ff;
+	border-bottom: 4px solid #339bff;
 }
 #eachRoomTit > h3{
 	display: inline-block;
@@ -308,9 +308,12 @@ label {
     padding-bottom: 3px;
     padding: 0 0 1px 2px;
     vertical-align: bottom;
-    color: #6d3afb;
+    color: #339bff;
     text-align: right;
 }
+.bottom_admin{
+	margin-bottom: 0;
+} 
 </style>
 </head>
 <body onload="flevInitPersistentLayer('Layer1',0,'0','','','0','','',10)">
@@ -393,9 +396,10 @@ label {
 		<div id="map" style="width:100%;height:400px;margin-top: 5px;"></div>
 		</div>
 	
-		
+		<div class="bottom_admin">
 		<a href="meetDelete?num=${dto.num}">업체 삭제</a>
 		<a href="meetUpdate?num=${dto.num}">업체 수정</a>
+		</div>
 		</section>
 
 
