@@ -20,6 +20,7 @@ import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.file.FileSaver;
+import com.flu.freelancer.FreelancerService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
@@ -36,7 +37,8 @@ public class ProjectController {
 	private AlarmService alarmService;
    @Inject
    private ApplicantService applicantService;
-   
+   @Inject
+   private FreelancerService freelancerService;
    
 	private AlarmDTO alarmDTO;
 
@@ -169,16 +171,21 @@ public class ProjectController {
       applicantDTO.setProjectNum(projectNum);
       int checkCount = applicantService.checkApplicant(applicantDTO);
       
-      System.out.println("check값은??=="+check);
       if(check==null){
     	  check=0;
       }
-      System.out.println("check값은2??=="+check);
-      System.out.println("session의 사진을 불러와보자");
-
       int applyCount = applicantService.countApplicant(projectNum);
       
+      //project를 등록한 사람의 IMG를 가져오기
       MemberDTO mem = projectService.projectImg(projectDTO);
+      
+     System.out.println("프리랜서뷰=="+freelancerService.freelancerView(memberDTO.getEmail()));
+      
+      /*
+     model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
+       */
+      
+      
       
       
       int sellResult = projectService.sellingCount(projectDTO);
@@ -190,10 +197,7 @@ public class ProjectController {
       int totalResult = projectService.pjCount(projectDTO);
       System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
       
-      System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
-      System.out.println("프로젝트 이름="+projectDTO.getName());
-      
-      
+          
       
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
@@ -206,6 +210,9 @@ public class ProjectController {
       model.addAttribute("mem", mem);
       model.addAttribute("applyCount", applyCount);
 
+      //지원할 자격이 되는지 체크
+      model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
+      model.addAttribute("skills", freelancerService.skillList(memberDTO.getEmail()));
          
    }
    

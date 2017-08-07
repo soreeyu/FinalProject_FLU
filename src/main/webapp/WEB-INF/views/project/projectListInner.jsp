@@ -174,7 +174,10 @@ $("#preview").click(function() {
 		
 	});
  
+ 
+ 
  /* 프로젝트뷰로 넘어가기 */
+ /* session이랑 참고해서 기본정보, 자기소개, 포트폴리오, 보유기술 등록여부 확인 */
  
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");

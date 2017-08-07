@@ -577,8 +577,12 @@ background-color: white;
                <p>프로젝트 지원을 위해
                <span><a href="../member/personaldataView">기본정보</a></span>
                <span><a href="../member/introView">자기소개</a></span>
+               <c:if test="${skills eq null }">
                <span><a href="../member/skillList">보유기술</a></span>
+               </c:if>
+               <c:if test="${portfolio eq null }">
                <span><a href="../member/portfolioList">포트폴리오</a></span>
+               </c:if>
                을(를) 입력해주세요
                </p>
               
@@ -736,11 +740,17 @@ background-color: white;
            프로젝트 지원 취소
             </c:if>
              </a>
-            <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
-            <i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
+           <!--  <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
+            <i class="fa fa-heart"></i>관심프로젝트 추가하기 </a> -->
           </c:if> 
+                 
+          <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
+            <a href="#" class="schedule-btn">프로젝트 스케줄 </a>
+          </c:if>
           
-
+          <c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
+            <a href="#" class="schedule-btn">미팅룸 예약하기 </a>
+          </c:if>    
           <!----------------------- Modal ---------------------------------->
         
 
@@ -796,14 +806,7 @@ background-color: white;
           
           
           
-          
-        <%--   <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
-            <a href="#" class="schedule-btn">프로젝트 스케줄 </a>
-          </c:if>
-          
-          <c:if test="${(dto.state eq 'done'|| dto.state eq 'ing') && member.kind eq 'client'}">
-            <a href="#" class="schedule-btn">미팅룸 예약하기 </a>
-          </c:if>    --%>
+   
           
           <c:if test="${member.kind eq 'admin'}">
           
@@ -879,7 +882,7 @@ var email = "${member.email}";
 var state = '${dto.state}';
 var check = "${check}";
 var apply_check = $("#btn_apply").text().trim();
-
+alert("skills==${skills}");
 alert(state);
 alert("${member.oProfileImage }");
 alert("중복인가="+check);

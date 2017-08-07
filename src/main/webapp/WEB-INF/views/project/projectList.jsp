@@ -300,7 +300,6 @@
 	float: right;
 	height: 54px;
 	line-height: 13px;
-	background-color: gray;
 }
 
 .right-contents-sub {
