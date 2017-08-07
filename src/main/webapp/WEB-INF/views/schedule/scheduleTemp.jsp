@@ -27,6 +27,7 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <title>스케줄메인</title>
 
@@ -45,7 +46,6 @@
 	position: relative;
 	margin-top: 30px;
 }
-
 
 
 .schedule_header {
@@ -1049,9 +1049,12 @@ div{
 
 
 
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+   
 
 
 <script type="text/javascript">
+
 function getContextPath(){
 	alert('${pageContext.request.contextPath}');
 	var context = '${pageContext.request.contextPath}';
@@ -1098,11 +1101,19 @@ var unitModal;
 				
 				////////////////1뷰//////////////
 				//part별 갯수로 설정 //1개 기준 150 + 55px //tw-bar-chart
-				var partCount = 3;
+				/* var partCount = 3;
 				var graphHeight = 55;
 				var fullGraphHeight = (150+(partCount*graphHeight))+"px";
 				alert(fullGraphHeight);
 				$(".tw-bar-chart").css("height",fullGraphHeight);
+				 */
+				$.ajax({
+					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
+					type:"GET",
+					success: function(data){
+						$("#tab8").html(data);
+					}
+				});
 				
 				
 				
@@ -1284,7 +1295,14 @@ var unitModal;
 				location.href="/flu/schedule/dhxTest?scheduleNum="+scheduleNum;
 				//url = "";
 			}else if(activeTab == 'tab8'){
-				location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
+				$.ajax({
+					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
+					type:"GET",
+					success: function(data){
+						$("#tab8").html(data);
+					}
+				});
+				//location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
 				//url = "";
 			}else if(activeTab == 'tab9'){
 				//location.href="/flu/schedule/detailView?scheduleNum="+scheduleNum;
@@ -1790,9 +1808,8 @@ var unitModal;
 			</div>
 			
 			<div id="tab8" class="tabcontent">
-				<!-- tab5내용 은 구글차트테스트  -->
-				
-			</div>
+				<%-- <c:import url="/WEB-INF/views/schedule/firstViewTestGoogleChart.jsp" /> 
+			 --%></div>
 			<div id="tab9" class="tabcontent">
 				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
 				<%-- <c:import url="/WEB-INF/views/schedule/detailViewforExcel.jsp" /> --%>
@@ -1802,6 +1819,38 @@ var unitModal;
 		
 		
 		<div class="clear"></div>
+		
+		전체개요
+		${summary.stateCount[0]}
+		${summary.stateCount[1]}
+		${summary.stateCount[2]}
+		${summary.stateCount[3]}
+		<hr/>
+		
+	
+	
+	
+	<c:forEach items="${summary.partNames}" var="partName" varStatus="i">
+		<span class="partNames">${partName}</span>
+		
+		<span class="partNamesWill">${summary.stateCountPerPart.get(i.index*1)[0]}</span>
+		<span class="partNamesIng">${summary.stateCountPerPart.get(i.index*1)[1]}</span>
+		<span class="partNamesDone">${summary.stateCountPerPart.get(i.index*1)[2]}</span>
+		<span class="partNamesTotal">${summary.stateCountPerPart.get(i.index*1)[3]}</span>
+
+	</c:forEach>
+	<hr/>
+	
+	<c:forEach items="${summary.userNames}" var="userName" varStatus="i">
+		<span class="userNames">${userName}</span>
+		
+		<span class="userNamesWill">${summary.stateCountPerUser.get(i.index*1)[0]}</span>
+		<span class="userNamesIng">${summary.stateCountPerUser.get(i.index*1)[1]}</span> 
+		<span class="userNamesDone">${summary.stateCountPerUser.get(i.index*1)[2]}</span>
+		<span class="userNamesTotal">${summary.stateCountPerUser.get(i.index*1)[3]}</span> 
+		
+	</c:forEach>
+	<hr/>
 
 
 		<!-- ------------------- 값 넘어오는거 확인용----------------- -->

@@ -2,49 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:import url="../temp/bootstrap.jsp"></c:import>
-
-<title>Insert title here</title>
-<style type="text/css">
-	
-.main_section {
-	min-width: 1460px;
-	width: 100%;
-	height: auto;
-	min-height: 1000px;
-	position: relative;
-	margin-top: 30px;
-}
 
 
-#main_wrap {
-	width: 1152px;
-	height: auto;
-	margin: 0 auto;
-	background: yellow;
-}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
-	
-</style>
-
- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   
-
-</head>
 <body>
-<c:import url="../temp/header.jsp"></c:import>
 
-<section class="main_section">
-	<div id= "main_wrap">
+
+	<div id= "#firstView_main_wrap">
 		<!--Div that will hold the pie chart-->
-		<c:forEach items="${summary.userNames}" var="partName" varStatus="i">
-		<%-- <c:forEach  begin="0" end="4" var="i"   > --%>
-    		<div id="donutchart${i.index}" style="width:400; height:300"></div>
+		<c:forEach items="${summary.userNames}" varStatus="i">
+    		<div id="donutchart${i.index}" class="dounut" style="width:400; height:300"></div>
 		</c:forEach>
 		
 		
@@ -83,12 +53,11 @@
 	</c:forEach>
 	<hr/>
 	
-
+</div>
 		
-	</div>
+<!-- 	</div>
 </section>
-
-<c:import url="../temp/footer.jsp"></c:import>
+ -->
 
 
  <script type="text/javascript">
@@ -106,33 +75,7 @@
      var finCount = 5;
      var warnCount = 9;
      var index=0;
-    // var jsonData = getJSONData();
-     /* 
-     function getJSONData(){
-    	 var json = null;
-    	 $.ajax({
- 			url:"/flu/schedule/test8Json",
- 			type:"POST",
- 			data:{
- 				scheduleNum:scheduleNum
- 			},
- 			async:false,
- 			success:function(data){
- 				alert("성공?");
- 				alert(JSON.stringify(data));
- 				json = data;
- 			},
- 			error:function(e){
- 				alert("에러부들");
- 			}
- 		});
-    	 return json;    	 
-     }
-     
-     alert("jsonData = "+jsonData);
-     */
-     
-     
+
     
     
      
@@ -172,46 +115,18 @@
            },
            vAxis: {
              title: '파트별업무비율'
-           }
-           ,colors: ['rgb(255, 176, 36)', 'rgb(176, 180, 187)', 'rgb(39, 182, 186)', 'rgb(233, 94, 81)']
+           },
+           colors: ['rgb(233, 94, 81)', 'rgb(255, 176, 36)','rgb(39, 182, 186)','rgb(176, 180, 187)' ]
         
          };
          
-         
-         /* 재식이꺼
-         // Set chart options
-     	   var options = {
-     	      'width':220,
-     	      'height':200,
-     	      legend :{
-     	    	position: 'top',
-     	    	textStyle : {
-     	    		fontSize: 12
-     	    	}
-     	      },
-     	      slices: {
-     	            0: { color: 'gray' },
-     	          }}; */
-         
+        
          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
          chart.draw(data2, options);
      }
 
      google.charts.setOnLoadCallback(drawStacked);
-     
 
-     /* 
-     재식
-          if(chart1 == 0 && chart2 ==0){
-        		google.charts.setOnLoadCallback(drawChart2);
-          }else{
-          	google.charts.setOnLoadCallback(drawChart);
-          } 
-          
-     */
-          
-     
-     
     
       // Set a callback to run when the Google Visualization API is loaded.
       for(var i=0;i<$(".userNames").length;i++){
@@ -221,21 +136,13 @@
       }
       
       
-      //google.charts.setOnLoadCallback(drawChart2);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
       function drawChart1() {
-    	  
 
-
-    	
-        	  willCount = $(".userNamesWill:eq("+index+")").text()*1;
-        	  ingCount = $(".userNamesIng:eq("+index+")").text()*1;
-        	  finCount = $(".userNamesDone:eq("+index+")").text()*1;
-        	  warnCount = 1;
-        
+	   	  willCount = $(".userNamesWill:eq("+index+")").text()*1;
+	   	  ingCount = $(".userNamesIng:eq("+index+")").text()*1;
+	   	  finCount = $(".userNamesDone:eq("+index+")").text()*1;
+	   	  warnCount = 1;
+   
     	
         var data = google.visualization.arrayToDataTable([
           ['Task'	, 'Hours per Day'],
@@ -249,8 +156,14 @@
           width: 400,
           height: 240,
           title: $(".userNames:eq("+index+")").text(),
-          pieHole: 0.5,
-          colors: ['rgb(255, 176, 36)', 'rgb(176, 180, 187)', 'rgb(39, 182, 186)', 'rgb(233, 94, 81)']
+          pieHole: 0.4,
+          colors: ['rgb(233, 94, 81)','rgb(255, 176, 36)', 'rgb(39, 182, 186)', 'rgb(176, 180, 187)']
+	      ,legend :{
+  	    	//position: 'top',
+  	    	textStyle : {
+  	    		fontSize: 12
+  	    	}
+  	      }
         };
 		var id= 'donutchart'+(index);
 		alert(id);
@@ -271,7 +184,3 @@
 
     </script>
 
-
-
-</body>
-</html>
