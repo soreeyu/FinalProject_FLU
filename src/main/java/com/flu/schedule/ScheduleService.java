@@ -476,7 +476,7 @@ public class ScheduleService {
 			//part를 구하고
 			List<SchedulePartDTO> parts = scheduleDAO.partList(scheduleNum);
 			for(int i=0;i<parts.size();i++){ //6번이 돌기는 하는데 값은 없다..?
-				stateCountPerPart = new int [4];//이걸 해줘야할까..?
+				stateCountPerPart = new int [4];//이걸 해줘야할까..?dd
 				System.out.println("parts.get(i).getPartNum() = " + parts.get(i).getPartNum());
 				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
 				scheduleUnitDTO.setPartNum(parts.get(i).getPartNum());
@@ -513,6 +513,7 @@ public class ScheduleService {
 			////////////////////////////user를 구하고
 			List<MemberDTO> users = scheduleDAO.userList(scheduleNum);
 			for(int i=0;i<users.size();i++){
+				stateCountPerUser = new int [4];//이걸 해줘야할까..?
 				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
 				scheduleUnitDTO.setPartNum(-1);
 				scheduleUnitDTO.setScheduleNum(scheduleNum);
