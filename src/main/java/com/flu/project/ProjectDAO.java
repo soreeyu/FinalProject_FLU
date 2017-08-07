@@ -188,4 +188,9 @@ public class ProjectDAO {
 		public int updateProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"updateProjectState", pjSellDTO);
 		}
+		
+		//pjsell update가 아닌 pjsell에서 취소했을 때, project상태 finish로 바꾸기
+		public int cancleProjectState(PjSellDTO pjSellDTO){
+			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
+		}
 }

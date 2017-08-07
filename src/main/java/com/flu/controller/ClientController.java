@@ -27,6 +27,8 @@ import com.flu.client.ClientService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
+import com.flu.project.sell.PjSellDTO;
+import com.flu.project.sell.PjSellService;
 import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
 
@@ -42,6 +44,9 @@ public class ClientController {
 	private AlarmService alarmService;
 	@Inject
 	private ApplicantService applicantService;
+	@Inject
+	private PjSellService pjSellService;
+	
 	
 	private AlarmDTO alarmDTO;
 	
@@ -139,7 +144,7 @@ public class ClientController {
 	
 	 //project state에 따른 리스트 불러오는 부분
 	   @RequestMapping(value="projectCheck", method=RequestMethod.GET)
-	   public void projectCheck(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO, ApplicantDTO applicantDTO){
+	   public void projectCheck(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO, ApplicantDTO applicantDTO, PjSellDTO pjSellDTO){
 	      System.out.println("projectCheck요");
 	       MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 	 
@@ -160,7 +165,7 @@ public class ClientController {
 	         }
 	         applicantDTO.setProjectNum(projectDTO.getProjectNum());
 	         
-	         
+	        
 	         model.addAttribute("list", ar);
 	         model.addAttribute("count", totalCount);
 	         model.addAttribute("member", memberDTO);

@@ -187,4 +187,9 @@ public class ProjectService {
 		return projectDAO.updateProjectState(pjSellDTO);
 	}
 	
+	//pjsell update가 아닌 pjsell에서 취소했을 때, project상태 finish로 바꾸기
+	public int cancleProjectState(PjSellDTO pjSellDTO){
+		return projectDAO.cancleProjectState(pjSellDTO);
+	}
+	
 }

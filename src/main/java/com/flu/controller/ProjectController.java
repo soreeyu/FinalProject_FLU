@@ -402,6 +402,8 @@ public class ProjectController {
    			System.out.println("프로젝트 판매등록 실패");
    		}
    		
+   	 int sellCheckCount = pjSellService.checkSellProject(pjSellDTO);
+     System.out.println("sellCheckCount=="+sellCheckCount);
    		rd.addAttribute("sellCheck", result);
    		rd.addAttribute("updateResult", updateResult);
    		//sellCheck가 1이면 프로젝트 판매등록 성공 -> project-state sell로 update하기
@@ -409,6 +411,19 @@ public class ProjectController {
    		return "redirect:/member/client/clientproject?state=finish";
    	}
    
+   @RequestMapping(value="cancleProjectState")
+   public String cancleProjectState(PjSellDTO pjSellDTO){
+	   System.out.println("cancleProjectState-controller");
+	   
+	   int result = projectService.cancleProjectState(pjSellDTO);
+	   int cancleResult = 0;
+	   if(result==1){
+		   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
+	   }else{
+		   System.out.println("상태 finish 바꾸기 실패");
+	   }
+	   return "";
+   }
 
 
    

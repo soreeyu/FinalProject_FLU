@@ -60,6 +60,12 @@
 							판매하기</button> 
 			 			</div>
 						</c:if>
+						<c:if test="${dto.state eq 'sell' }">
+						<div class="project-contents-right">
+							<button class="CancleSellBTN" data-id="${dto.projectNum}">
+							판매취소</button> 
+			 			</div>
+						</c:if>
 									
 						<div style="clear: both;"></div>
 						
@@ -251,6 +257,16 @@ $(".projectSellBTN").click(function() {
 	$(".modal_Num").html(sell_Id);
 	$(".modal_Num").val(sell_Id);
 	$("#sell-Modal").modal();
+});
+
+$(".CancleSellBTN").click(function() {
+	alert("판매취소할것이다");
+	alert($(this).attr("data-id"));
+	var cancle_Id = $(this).attr("data-id");
+	/* 판매취소할시, pjsell에서 삭제 + projectstate를 finish로 바꿔줌  */
+	$.get("../../project/cancleProjectState?projectNum="+cancle_Id,function(data){
+		alert("ddd");
+	});
 });
 	 
 	

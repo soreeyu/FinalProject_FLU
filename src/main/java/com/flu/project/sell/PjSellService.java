@@ -20,6 +20,12 @@ public class PjSellService {
 			return pjSellDAO.pjsellInsert(pjSellDTO);
 		}
 		
+		
+		//pjsell에 등록이 되어있는지 체크
+		public int checkSellProject(PjSellDTO pjSellDTO){
+			return pjSellDAO.checkSellProject(pjSellDTO);
+		}
+		
 
 		public int pjsellUpdate(PjSellDTO pjSellDTO){
 			return 0;

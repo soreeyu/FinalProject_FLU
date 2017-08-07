@@ -18,13 +18,16 @@ public class PjSellDAO {
 	private final String NAMESPACE="ProjectMapper.";
 
 	
-
+	//pjsell Insert
 	public int pjsellInsert(PjSellDTO pjSellDTO){
 		System.out.println("pjsellinsert-dao");
 		return sqlSession.insert(NAMESPACE+"insertSellProject", pjSellDTO);
 	}
 	
-	
+	//pjsell에 등록이 되어있는지 체크
+	public int checkSellProject(PjSellDTO pjSellDTO){
+		return sqlSession.selectOne(NAMESPACE+"checkSellProject", pjSellDTO);
+	}
 	
 
 	public int pjsellDelete(int num){

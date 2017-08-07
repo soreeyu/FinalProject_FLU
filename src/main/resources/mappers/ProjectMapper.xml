@@ -177,9 +177,20 @@
    	insert into pjsell (projectNum, name, price, contents, email) 
    	values (#{projectNum}, #{name}, #{price}, #{contents}, #{email})
   </insert>
-  
+ 
+<!-- 프로젝트 판매 등록하면 project의 상태도 sell로 바뀜 -->  
 <update id="updateProjectState" parameterType="com.flu.project.sell.PjSellDTO" >
 	update project set state='sell' where projectNum=#{projectNum}
+</update>
+  
+  <!-- 판매인 프로젝트인지 확인하기 -->
+  <select id="checkSellProject" parameterType="com.flu.project.sell.PjSellDTO" resultType="int">
+  select count(nvl(projectNum,0)) from pjsell where projectNum=#{projectNum}
+  </select>
+  
+  <!-- 프로젝트 판매 취소하면 project의 상태를 다시 finish로 바꿈 -->  
+<update id="cancleProjectState" parameterType="com.flu.project.sell.PjSellDTO" >
+	update project set state='finish' where projectNum=#{projectNum}
 </update>
   
   
