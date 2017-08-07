@@ -28,12 +28,7 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
 
 
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
-
-<title>달력뷰</title>
+<title>스케줄메인</title>
 
 
 <style type="text/css">
@@ -53,50 +48,68 @@
 
 
 
-
 .schedule_header {
-    height: 102px;
-    padding: 20px;
-    margin-bottom: 20px;
+    height: 92px;
+    padding: 30px;
     border: 1px solid #e6e6e6;
     margin-bottom: 30px;
     background-color: white;
 }
+
+
 #header_ttt {
-    font-size: 24px;
-    font-weight: bolder;
-    margin-bottom: 20px;
+   font-size: 24px;
+   font-weight: bolder;
+   margin-bottom: 20px;
 }
+
+
+.DateMius{
+   font-size: 14px;
+   background-color: #07b481;
+   vertical-align: middle;
+   margin-top: 5px;
+   float: right;
+   height: 20px;
+   border-radius: 4px;
+   color: white;
+   line-height: 15px;
+   padding: 2px 3px;
+}
+
+/* 추가 */
 #header_t {
-    font-size: medium;
-    font-weight: lighter;
-    color: #666;
-}
-#header_ttt span:last-child {
-    font-size: 14px;
-    background-color: #07b481;
-    vertical-align: middle;
-    margin-top: 5px;
-    float: right;
-    height: 20px;
-    border-radius: 4px;
-    color: white;
-    line-height: 15px;
-    padding: 2px 3px;
-}
-#header_t span:last-child {
-    font-size: 20px;
-    vertical-align: middle;
-    margin-top: 5px;
-    margin-right: 50px;
-    float: right;
-    height: 20px;
-    line-height: 20px;
+   font-size: medium;
+   font-weight: lighter;
+   color: #666;
 }
 
+/* 추가  */
+#header_t span:last-child{
+   font-size: 20px;
+   vertical-align: middle;
+   margin-top: 5px;
+   margin-right:50px;
+   float: right;
+   height: 20px;
+   line-height: 20px;
 
-
-
+}
+.appCount{
+   color: black;
+   font-size: 22px;
+}
+.contents {
+   width: 1260;
+   height: 2000px;
+   /* min-height: 1200px;
+   max-height: 2700px; */
+}
+.clean{
+   background-color: #f2f2f2;
+   height: 15px;
+   width: 100%;
+}
 
 
 
@@ -1228,7 +1241,7 @@ var unitModal;
 				getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
-				getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다 
+				//getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','',''); //전체뷰 볼거
 
 				
@@ -1274,8 +1287,15 @@ var unitModal;
 				location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
 				//url = "";
 			}else if(activeTab == 'tab9'){
-				location.href="/flu/schedule/detailView?scheduleNum="+scheduleNum;
+				//location.href="/flu/schedule/detailView?scheduleNum="+scheduleNum;
 				//url = "";
+				$.ajax({
+					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
+					type:"GET",
+					success:function(data){
+						$("#tab9").html(data);
+					}
+				});
 			}
 			
 			//loadTabContent(url,activeTab);
@@ -1701,20 +1721,19 @@ var unitModal;
 	
 	
 	<div class="schedule_header">
-		<div class="header_text">
-			<p id="header_ttt" style="margin-bottom: 20px;">
-				<span>[테스트 프로젝트] 스케줄 </span>
-				<span>${mainScheduleDTO.startDate} ~ ${mainScheduleDTO.finishDate}</span>
-				<input type="hidden" id="scheduleNum" value="${scheduleNum}">
-			</p>
-			<p id="header_t">
-				<span>개발 &gt; 웹</span>
-				<span>
-			<img src="/flu/resources/img/project/proposal.png">
-			총<strong>1명</strong>지원</span>
-			</p>
-		</div>
-	</div>
+         <div class="header_text">
+            <p id="header_ttt" style="margin-bottom: 20px;">
+            <span>[스케줄] ${projectDTO.name} </span>
+            <span class="DateMius"><span class="startDate">${mainScheduleDTO.startDate}</span> - <span class="finishDate">${mainScheduleDTO.finishDate}</span></span>
+            </p>
+            <p id="header_t">
+            <span>${projectDTO.category}&gt; ${projectDTO.detailCategory}</span>
+            <span>
+            <img src="/flu/resources/img/project/proposal.png">
+          		<strong class="appCount">${applicantCount}명</strong>의 프리랜서참여</span>
+            </p>
+         </div>
+      </div>
 	
 	
 			<div class="sidebar">
@@ -1768,6 +1787,15 @@ var unitModal;
 			<div id="tab7" class="tabcontent">
 				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
 				<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
+			</div>
+			
+			<div id="tab8" class="tabcontent">
+				<!-- tab5내용 은 구글차트테스트  -->
+				
+			</div>
+			<div id="tab9" class="tabcontent">
+				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+				<%-- <c:import url="/WEB-INF/views/schedule/detailViewforExcel.jsp" /> --%>
 			</div>
 		</div>
 		

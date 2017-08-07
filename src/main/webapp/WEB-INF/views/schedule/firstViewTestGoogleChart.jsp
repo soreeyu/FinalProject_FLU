@@ -80,59 +80,42 @@
      
      function drawStacked() {
           var data = google.visualization.arrayToDataTable([
-           ['파트', '할일', '진행중','완료'],
-           ['파트1', 11, 22,33],
-          /*   ['파트2', 14, 2, 50],
-           ['파트3', 11, 22,33],
-           ['파트4', 14, 2, 50],
-           ['파트5', 11, 22,33],
-           ['파트6', 14, 2, 50], */
+           ['파트', '할일', '진행중','완료']
          ]);
           
-          //var data = new google.visualization.DataTable();
-          //data.addColumn('string', 'Task');
-          //data.addColumn('number', 'Hours per Day');
-         /*  var partState = '${summary.partNames}'; */
+          //OR 
           
-         // alert(${fn:length(summary.partNames)});
-          var length = ${summary.partNames.size()};
-          alert(length);
-          for(var i=0;i< length ;i++){
-        	  
-          	var name = '"${summary.partNames.get("+i+")}"';
-          	alert("하아아아"+name);
-          	data.addRow([name,2, ${summary.stateCountPerPart.get(i)[1]} ,1 ]);
-          }
+          var data2 = new google.visualization.DataTable();
+          data2.addColumn('string', 'PART');
+          data2.addColumn('number', '할일');
+          data2.addColumn('number', '진행중');
+          data2.addColumn('number', '완료');
+         
           
+
+          $(".partNames").each(function(index){
+        	  var name = $(this).text();
+        	  var partNamesWill = $(".partNamesWill:eq("+index+")").text()*1;
+        	  var partNamesIng = $(".partNamesIng:eq("+index+")").text()*1;
+        	  var partNamesDone = $(".partNamesDone:eq("+index+")").text()*1;
+        	  var partNamesTotal = $(".partNamesTotal:eq("+index+")").text()*1;
+              alert("하아아아"+name);
+        	  data.addRow([name,partNamesWill, partNamesIng ,partNamesDone]);
+          });
+            
          var options = {
            title: '파트별 업무리스트',
-           chartArea: {width: '50%'},
-           isStacked: true,
+           chartArea: {width: '50%',height: '90%'},
+           isStacked: 'percent',
            hAxis: {
              title: '',
              minValue: 0,
            },
            vAxis: {
-             title: '업무비율'
+             title: '파트별 업무비율'
            }
+           ,colors: ['rgb(255, 176, 36)', 'rgb(176, 180, 187)', 'rgb(39, 182, 186)', 'rgb(233, 94, 81)'],
            
-           
-           /* 재식이꺼
-        // Set chart options
-    	   var options = {
-    	      'width':220,
-    	      'height':200,
-    	      legend :{
-    	    	position: 'top',
-    	    	textStyle : {
-    	    		fontSize: 12
-    	    	}
-    	      },
-    	      slices: {
-    	            0: { color: 'gray' },
-    	          }}; */
-    	          
-    	          
          };
          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
          chart.draw(data, options);
@@ -233,12 +216,12 @@
 	
 	
 	<c:forEach items="${summary.partNames}" var="partName" varStatus="i">
-		${partName}
+		<span class="partNames">${partName}</span>
 		
-		${summary.stateCountPerPart.get(i.index)[0]} 
-		${summary.stateCountPerPart.get(i.index)[1]} 
-		${summary.stateCountPerPart.get(i.index)[2]} 
-		${summary.stateCountPerPart.get(i.index)[3]} 
+		<span class="partNamesWill">${summary.stateCountPerPart.get(i.index*1)[0]}</span>
+		<span class="partNamesIng">${summary.stateCountPerPart.get(i.index*1)[1]}</span>
+		<span class="partNamesDone">${summary.stateCountPerPart.get(i.index*1)[2]}</span>
+		<span class="partNamesTotal">${summary.stateCountPerPart.get(i.index*1)[3]}</span>
 
 	</c:forEach>
 	<hr/>
@@ -246,10 +229,10 @@
 	<c:forEach items="${summary.userNames}" var="userName" varStatus="i">
 		${userName}
 		
-		${summary.stateCountPerUser.get(i.index)[0]} 
-		${summary.stateCountPerUser.get(i.index)[1]} 
-		${summary.stateCountPerUser.get(i.index)[2]} 
-		${summary.stateCountPerUser.get(i.index)[3]} 
+		${summary.stateCountPerUser.get(i.index*1)[0]} 
+		${summary.stateCountPerUser.get(i.index*1)[1]} 
+		${summary.stateCountPerUser.get(i.index*1)[2]} 
+		${summary.stateCountPerUser.get(i.index*1)[3]} 
 		
 	</c:forEach>
 	<hr/>

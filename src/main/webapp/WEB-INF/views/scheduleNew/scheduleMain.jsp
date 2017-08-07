@@ -6,34 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="../temp/bootstrap.jsp"></c:import>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/lib/niee-canvas-chart003.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/lib/ajaxfileupload.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/base.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/core.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/button.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/combo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/datepicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/dropdown.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
 
 
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
-
-<title>달력뷰</title>
+<title>스케줄</title>
 
 
 <style type="text/css">

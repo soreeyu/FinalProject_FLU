@@ -105,7 +105,7 @@ public class ScheduleService {
 		
 		System.out.println("받아온 main scheduleNum"+scheduleMainDTO.getScheduleNum());
 		System.out.println("받아온 part array 0번째"+schedulePartArrayDTO.getPartName()[0]);
-		
+		/*
 		//받아온 파일들 저장해주는것 
 		FileService fileService = new FileService();
 		int partCount = schedulePartArrayDTO.getPartDescFile().length;
@@ -125,6 +125,8 @@ public class ScheduleService {
 		schedulePartArrayDTO.setPartDescFileO(partDescFileO);
 		schedulePartArrayDTO.setPartDescFileF(partDescFileF);
 		System.out.println("파일 저장까지 완료햇음 ");
+		*/
+		//this.partFileSave(schedulePartArrayDTO,session);
 
 		//여기부터 DB 관련 transaction 적용되어야한다 
 		int result = scheduleDAO.updateMainSchedule(scheduleMainDTO);
@@ -134,17 +136,39 @@ public class ScheduleService {
 		System.out.println("partArrayDTO의 스케줄넘에는 들어가잇을지.. "+schedulePartArrayDTO.getScheduleNum());
 		//schedulePartArrayDTO.setScheduleNum(scheduleMainDTO.getScheduleNum()); //이렇게 굳이 세팅안해도 들어가잇음 //이름이 같아서..
 		//schedulePartArrayDTO.setScheduleNum(1000); //아무값이나 들어가면 안되는데....흠 ....//해결못한거..
-		result = this.insertPart(schedulePartArrayDTO); // part 추가
+		result = this.insertPart(schedulePartArrayDTO,session); // part 추가
 
 
 		return result; //mainSheduleUpdate와 part들 추가
 	}
 	
-	
+	public void partFileSave(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
+		//받아온 파일들 저장해주는것 
+				FileService fileService = new FileService();
+				int partCount = schedulePartArrayDTO.getPartDescFile().length;
+				
+				String [] partDescFileO = new String[partCount];
+				String [] partDescFileF = new String[partCount];
+
+				for(int i=0;i<partCount;i++){
+					System.out.println(i+1+"번째 파일 이름 = "+ (schedulePartArrayDTO.getPartDescFile())[i].getOriginalFilename());
+					String fileNameF = fileService.fileSave((schedulePartArrayDTO.getPartDescFile())[i], session); //upload파일에 저장하기 
+					System.out.println("생성된 이름 = " + fileNameF);
+					partDescFileO[i] = schedulePartArrayDTO.getPartDescFile()[i].getOriginalFilename();
+					partDescFileF[i] = fileNameF;
+				}
+
+				//upload 폴더에 저장완료 후 dto 객체에 이름 설정
+				schedulePartArrayDTO.setPartDescFileO(partDescFileO);
+				schedulePartArrayDTO.setPartDescFileF(partDescFileF);
+				System.out.println("파일 저장까지 완료햇음 ");
+	}
 	
 	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
 	@Transactional
-	public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO) throws Exception{
+	public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
+		
+		this.partFileSave(schedulePartArrayDTO,session);
 		int result = 0;
 		//여러개의 값이 올수가 있습니다 
 		if(schedulePartArrayDTO != null){
@@ -442,7 +466,7 @@ public class ScheduleService {
 			
 			dto.setUnitState("");
 			count = scheduleDAO.unitCount(dto); 
-			System.out.println("할일파트할일 수="+count);
+			System.out.println("전체유닛수카운트="+count);
 			totalCount[3] = count;
 			
 			//일단 전체적인 것 구하고
@@ -452,6 +476,7 @@ public class ScheduleService {
 			//part를 구하고
 			List<SchedulePartDTO> parts = scheduleDAO.partList(scheduleNum);
 			for(int i=0;i<parts.size();i++){ //6번이 돌기는 하는데 값은 없다..?
+				stateCountPerPart = new int [4];//이걸 해줘야할까..?
 				System.out.println("parts.get(i).getPartNum() = " + parts.get(i).getPartNum());
 				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
 				scheduleUnitDTO.setPartNum(parts.get(i).getPartNum());
@@ -479,9 +504,11 @@ public class ScheduleService {
 				stateCountPerPart[3] = num4;
 				
 				countParts.add(stateCountPerPart);
+				System.out.println("파트별유닛수테스트 ......."+countParts.get(i)[0]+countParts.get(i)[1]+countParts.get(i)[2]+countParts.get(i)[3]);
 				partNames.add(parts.get(i).getPartName());
 			}
-			
+			//여기서 리셋됨
+			System.out.println("0번.........파트별유닛수테스트 ......."+countParts.get(0)[0]+countParts.get(0)[1]+countParts.get(0)[2]+countParts.get(0)[3]);
 			
 			////////////////////////////user를 구하고
 			List<MemberDTO> users = scheduleDAO.userList(scheduleNum);

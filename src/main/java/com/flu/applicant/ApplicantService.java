@@ -16,8 +16,7 @@ public class ApplicantService {
 	public List<ApplicantDTO> list(int projectNum){
 		return applicantDAO.list(projectNum);
 	}
-	
-	
+
 	// state update
 	public int appUpdate(String email){
 		return applicantDAO.appUpdate(email);

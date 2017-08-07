@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.flu.applicant.ApplicantDAO;
 import com.flu.file.FileService;
 import com.flu.member.MemberDTO;
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
 import com.flu.schedule.ScheduleService;
 import com.flu.schedule.ScheduleSummaryDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
@@ -30,6 +33,10 @@ public class ScheduleController {
 	
 		@Autowired
 		private ScheduleService scheduleService;
+		@Autowired
+		private ProjectService projectService;
+		@Autowired
+		private ApplicantDAO applicantDAO;
 		
 		//이게 보배언니의 프로젝트 뷰 라고 가정한다 
 		@RequestMapping(value="testProjectView")
@@ -45,7 +52,10 @@ public class ScheduleController {
 			
 			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
 			model.addAttribute("mainScheduleDTO", scheduleMainDTO);
-			//return "schedule/firstView";
+			ProjectDTO projectDTO = projectService.projectView(scheduleMainDTO.getProjectNum());
+			model.addAttribute("projectDTO",projectDTO);
+			model.addAttribute("applicantCount", applicantDAO.ingCount(scheduleMainDTO.getProjectNum()));
+			
 			return "schedule/scheduleTemp";
 		}
 		
@@ -220,6 +230,8 @@ public class ScheduleController {
 			return map;
 		}
 		
+		
+		
 
 		
 		
@@ -340,12 +352,13 @@ public class ScheduleController {
 		
 		//DTO내의 배열에 각각 값이 저장됨
 		@RequestMapping(value="addPart", method=RequestMethod.POST)
-		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO) throws Exception{
-			int result =  scheduleService.insertPart(schedulePartArrayDTO);
+		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
+			System.out.println("partWrite scheduleNum = "+schedulePartArrayDTO.getScheduleNum());
+			int result =  scheduleService.insertPart(schedulePartArrayDTO,session);
 
 			System.out.println("part등록 Controller result = "+result);
 
-			return "schedule/main"; 
+			return "redirect:/schedule/scheduleTemp?scheduleNum"+schedulePartArrayDTO.getScheduleNum(); 
 		}
 		
 		@RequestMapping(value="partUpdate", method=RequestMethod.GET)

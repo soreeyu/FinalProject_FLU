@@ -67,7 +67,7 @@
 	<insert id="partInsert" parameterType="com.flu.schedule.client.SchedulePartDTO">
 		insert into schedulepart (schedulenum, partname, partstartdate, partfinishdate, partnum ,partdescfileo, partdescfilef) values 
 		(#{scheduleNum}, #{partName}, #{partStartDate}, #{partFinishDate}, nvl((select max(partNum)+1 from schedulepart
-		where schedulenum=45),0), #{partDescFileO}, #{partDescFileF})
+		where schedulenum=${scheduleNum}),0), #{partDescFileO}, #{partDescFileF})
 	</insert>
 	
 	<update id="partUpdate" parameterType="com.flu.schedule.client.SchedulePartDTO">
