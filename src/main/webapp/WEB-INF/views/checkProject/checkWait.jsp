@@ -17,4 +17,5 @@
 	<p>금액: ${budget}</p>
 	<p>${client.bank} ${client.accountNumber} 입금완료</p>
 
+
 </c:if>

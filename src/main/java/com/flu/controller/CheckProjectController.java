@@ -124,7 +124,7 @@ public class CheckProjectController {
 	public String checkWait(ProjectDTO projectDTO,Model model){
 		
 		MemberDTO memberDTO = clientService.memberView(projectDTO.getEmail());
-		ProjectDTO projectDTO2 = projectService.projectView(projectDTO.getProjectNum());
+		ProjectDTO projectDTO2 = projectService.projectView(projectDTO.getProjectNum(),projectDTO);
 		
 		model.addAttribute("client", memberDTO).addAttribute("projectNum", projectDTO.getProjectNum()).addAttribute("state",projectDTO.getState()).addAttribute("budget", projectDTO2.getBudget());
 		

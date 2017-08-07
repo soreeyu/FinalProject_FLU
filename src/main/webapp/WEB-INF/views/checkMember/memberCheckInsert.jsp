@@ -36,6 +36,12 @@
 }
 
 
+p {
+    display: block;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
 
 .user {
 	width: 248px;
@@ -122,33 +128,31 @@
 	border: 1px solid #dedede;
 }
 
-#t1{
-
-	font-size: x-large;
-	margin-top: 20px;
-	margin-left: 30px;
-	font-weight: bolder;
-	color: rgb(85, 85, 85);
-	
-}
-
-#t2{
-
-	font-size: medium;
-	margin-top: 15px;
-	margin-left: 30px;
-	font-weight: normal;
-	color: #999;
-
-}
-
-.contents {
+.contents_0 {
 	width: 800px;
-	height: 100%;
+	height: 550px;
 	background-color: white;
 	margin-top: 15px;
 	border: 1px solid #dedede;
 }
+
+.contents_1 {
+	width: 800px;
+	height: 350px;
+	background-color: white;
+	margin-top: 15px;
+	border: 1px solid #dedede;
+}
+
+.contents_2 {
+	width: 800px;
+	height: 550px;
+	background-color: white;
+	margin-top: 15px;
+	border: 1px solid #dedede;
+}
+
+
 
 /* dddddddddddddddddddddddddddddddddd */
 
@@ -194,16 +198,7 @@ body {
     line-height: 1;
 }
 
-p {
-    margin: 0 0 10px;
-}
 
-p {
-    display: block;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-}
 
 b, strong {
     font-weight: bold;
@@ -366,7 +361,179 @@ element.style {
 
 }
 
+#table_form{
+
+width: 500px;
+margin: 0 auto;
+
+}
+
+#table_title{
+
+font-weight: bold;
+font-size: 1.2em;
+
+}
+
+.filebox input[type="file"] { 
+	position: absolute; 
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px;
+	overflow: hidden; 
+	clip:rect(0,0,0,0); border: 0;
+	 } 
+	 
+.filebox label {
+ display: inline-block; 
+ padding: .5em .75em;
+ color: white;
+ font-size: 1.0em;
+ font-weight: normal;
+ line-height: normal; 
+ vertical-align: middle; 
+ background-color: #2099bb;
+ cursor: pointer; 
+ border: 1px solid #ebebeb; 
+ border-bottom-color: #e2e2e2; 
+ border-radius: .25em; 
+ } 
+ 
+ /* named upload */ 
+ 
+ .filebox .upload-name { 
+ display: inline-block; 
+ padding: .5em .75em; /* label의 패딩값과 일치 */ 
+ font-size: inherit; 
+ font-family: inherit; 
+ line-height: normal; 
+ vertical-align: middle; 
+ background-color: #f5f5f5; 
+ border: 1px solid #ebebeb; 
+ border-bottom-color: #e2e2e2; 
+ border-radius: .25em; 
+ -webkit-appearance: none; /* 네이티브 외형 감추기 */
+ -moz-appearance: none;
+  appearance: none;
+
+}
+
+.fileBTN:HOVER {
+	
+	cursor: pointer;
+
+}
+
+#submitBTN{
+
+	width: 100px;
+	height: 40px;
+    background-color: #446eab;
+    color: #fff;
+    margin: 0 auto;
+    margin-top: 30px;
+	border-radius: .25em; 
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
+	line-height: 35px;
+	
+}
+
+#submitBTN:HOVER {
+	cursor: pointer;
+}
+
+#t1{ 
+
+	font-size: x-large;
+	margin-top: 20px;
+	margin-left: 30px;
+	margin-bottom: 10px;
+	font-weight: bolder;
+	color: rgb(85, 85, 85);
+	
+}
+
+#t2{
+	font-size: medium;
+	margin-left: 30px;
+	font-weight: normal;
+	color: #999;
+
+}
+
+#auth_ing{
+
+	font-size: 1.3em;
+	font-weight: bold;
+
+}
+
+.wrap{
+
+	width: 750px;
+	height: 300px;
+	border: 1px solid #dedede;
+	margin-left: 25px;
+	margin-top: 25px;
+
+}
+
+.img{
+	
+	width: 250px;
+	height: 200px;
+	float: left;
+	margin-left: 60px;
+	margin-top: 60px;
+}
+
+.naeyong{
+
+	width: 300px;
+	height: 250px;
+	background-color: blue;
+	float: left;
+	margin-left: 100px;
+
+}
+
 </style>
+<script type="text/javascript">
+
+$(document).ready(function(){ 
+	
+	var fileTarget = $('.filebox .upload-hidden'); 
+	
+	fileTarget.on('change', function(){
+		// 값이 변경되면
+		
+		if(window.FileReader){ // modern browser 
+			var filename = $(this)[0].files[0].name; 
+		}else { // old IE 
+			var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출 
+		} // 추출한 파일명 삽입
+			$(this).siblings('.upload-name').val(filename); }); 
+
+	$('#submitBTN').click(function name() {
+		
+		if(confirm("제출 하시겠습니까?")){
+			$('#frm').submit();
+		}else{
+			
+		}
+		
+		
+	});
+	
+	
+}); 
+
+
+
+</script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
@@ -383,67 +550,26 @@ element.style {
 					</div>
 				</div>
 				<div class="history">
-					<c:if test="${board=='Check' or board=='Fail'}">
-						<p id="checkBTN">
-							<a id="check" href="./checkProjectCheckList">검수 전 프로젝트</a>
-						</p>
-						<p id="failBTN">
-							<a id="fail" href="./checkProjectFailList">모집실패 프로젝트</a>
-						</p>
-					</c:if>
-					<c:if test="${board=='Wait' or board=='Finish'}">
-						<p id="waitBTN">
-							<a id="wait" href="./checkProjectWaitList">입금대기 프로젝트</a>
-						</p>
-						<p id="finishBTN">
-							<a id="finish" href="./checkProjectFinishList">프리랜서 대금관리</a>
-						</p>
-					</c:if>
-					<c:if test="${board=='Client' or board=='Freelancer'}">
-						<p id="clientBTN">
-							<a id="client" href="./checkProjectClientList">클라이언트 관리</a>
-						</p>
-						<p id="freelancerBTN">
-							<a id="freelancer" href="./checkProjectFreelancerList">프리랜서 관리</a>
-						</p>
-					</c:if>
+
+				<!-- 여기가 왔다갔다 하는 곳이야 재식아 왼쪽에 클릭하는거 그거 -->
+
 				</div>
 
 			</article>
 			<article class="right">
 				<div class="title">
-					<c:if test="${board=='Check'}">
-						<p id="t1">검수 전 프로젝트</p>
-						<p id="t2">클라이언트로부터 등록된 프로젝트를 검수하는 곳입니다.</p>
-					</c:if>
-					<c:if test="${board=='Fail'}">
-						<p id="t1">모집종료 프로젝트</p>
-						<p id="t2">기간이 완료되어 모집종료된 프로젝트를 보여주는 곳입니다.</p>
-					</c:if>
-					<c:if test="${board=='Wait'}">
-						<p id="t1">입급대기 프로젝트</p>
-						<p id="t2">미팅이 완료된 프로젝트를 보여주는 곳입니다. 프로젝트 진행여부를 결정할 수 있습니다.</p>
-					</c:if>
-					<c:if test="${board=='Finish'}">
-						<p id="t1">프리랜서 대금관리</p>
-						<p id="t2">프로젝트를 완료한 회원들에게 급여를 지급하는 곳입니다.</p>
-					</c:if>
-					<c:if test="${board=='Client'}">
-						<p id="t1">클라이언트 신원확인</p>
-						<p id="t2">클라이언트들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
-					</c:if>
-					<c:if test="${board=='Freelancer'}">
-						<p id="t1">프리랜서 신원확인</p>
-						<p id="t2">프리랜서들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
-					</c:if>
+						<p id="t1">신원인증</p>
+						<p id="t2">안전한 프로젝트 계약을 위해 신분증(사업자등록증)을 통한 신원 확인이 필요합니다.</p>
 				</div>
 			
+<c:if test="${member.authenticState =='0'}">
 
-
-<div class="contents">
+<div class="contents_0">
 
 <div id="sleep">
+	
 	<div class="process-guide-box" style="margin-bottom: 15px;">
+	
 		<img
 			src="${pageContext.servletContext.contextPath}/resources/img/checkMember/process-guide-success.png"
 			style="margin-right: 15px;" />
@@ -488,7 +614,7 @@ element.style {
 				<p class="process-guide-body-paragraph-title">신원 인증 처리 중</p>
 				<p class="process-guide-body-paragraph-content">
 					신원 인증 처리에는 <strong>최대 24시간이 소요</strong>됩니다.<br /> 인증 서류에 문제가 있을
-					경우에는 <strong>플루 팀에서 이메일로 연락</strong>을 드립니다.
+					경우에는 <strong>플루 팀에서 가입하신 이메일로 연락</strong>을 드립니다.
 				</p>
 			</div>
 		</div>
@@ -504,17 +630,65 @@ element.style {
 				</p>
 			</div>
 		</div>
+	
+		
 	</div>
-</div>
-</div>
-</article>
-
-<form action="./memberCheckInsert" method="post" enctype="multipart/form-data">
-<input type="hidden" name="email" value="${member.email}">
-<input type="hidden" name="name" value="${member.name}">
-<p>파일<input type="file" name="file1"></p>
-<button>버튼</button>
+	
+	<form action="./memberCheckInsert" method="post" enctype="multipart/form-data" id="frm">
+	<input type="hidden" name="email" value="${member.email}">
+	<input type="hidden" name="name" value="${member.name}">	
+<div id="table_form">
+	<table>
+		<tr>
+			<td id="table_title">인증 서류 이미지:</td>
+		<td>
+		<div class="filebox">
+			<input class="upload-name" value="제출된 '이미지가'가 없습니다." disabled="disabled" style="width: 200px; margin-left: 10px;">
+			<label for="ex_filename">+ 이미지 등록</label> 
+			<input type="file" name="file1" id="ex_filename" class="upload-hidden">
+		</div>
+		</td>
+		</tr>
+	</table>
+</div>	
+	<div id="submitBTN">제출하기</div>
 </form>
+	
+</div>
+</div>
+</c:if>
+
+<c:if test="${member.authenticState == '1'}">
+	<div class="contents_1">
+		<div class="wrap">
+			<div class="img">
+		
+				<img alt="" src="../resources/img/checkMember/auth.jpg" style="width: 100%; height: 100%;">
+		
+			</div>
+			<div class="naeyong">
+				<p id="auth_ing">신원확인 처리중입니다.</p>
+			</div>
+		</div>
+		
+	
+
+	
+	
+	</div>
+	
+</c:if>
+
+<c:if test="${member.authenticState == '2'}">
+	<div class="contents_1">
+
+	<img alt="" src="../resources/img/checkMember/auth1.png" style="width: 180px; height: 120px;"><span id="auth_ing">이미 신원확인이 완료되셨습니다.</span>
+	
+	</div>
+</c:if>
+
+
+</article>
 </section>
 </section>
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>

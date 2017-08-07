@@ -41,14 +41,7 @@ public class ProjectService {
 		
 		projectDTO = projectDAO.projectView(num);
 		System.out.println("projectnum=="+projectDTO.getProjectNum());
-		/*System.out.println(projectDTO.getSkill());*/
-		
-		/*System.out.println("parr=="+projectDTO.getSkill().split(","))*/;
-		
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
-		
-		/*System.out.println("skill[]=="+projectDTO.getSkills().length);*/
-		
 		
 		return projectDTO;
 	}
