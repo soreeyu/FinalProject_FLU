@@ -66,6 +66,8 @@ public class ScheduleController {
 		@RequestMapping(value="firstView" , method=RequestMethod.GET)
 		public String test3(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
 			model.addAttribute("scheduleNum", scheduleNum);
+			ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //개요를 위한 아이
+			model.addAttribute("summary",scheduleSummaryDTO);
 			return "schedule/firstView";
 		}
 		

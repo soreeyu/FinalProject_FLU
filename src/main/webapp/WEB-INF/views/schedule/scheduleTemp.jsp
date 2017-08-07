@@ -1108,10 +1108,10 @@ var unitModal;
 				$(".tw-bar-chart").css("height",fullGraphHeight);
 				 */
 				$.ajax({
-					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
+					url:"/flu/schedule/test?scheduleNum="+scheduleNum,
 					type:"GET",
 					success: function(data){
-						$("#tab8").html(data);
+						$("#tab1").html(data);
 					}
 				});
 				
@@ -1774,7 +1774,7 @@ var unitModal;
 		<div class="tabContentWrap">
 			<div id="tab1" class="tabcontent current">
 				<!-- tab1내용 은 개요야  -->
-				<c:import url="/WEB-INF/views/schedule/firstView.jsp" />
+				<%-- <c:import url="/WEB-INF/views/schedule/firstView.jsp" /> --%>
 			</div>
 			
 			<div id="tab2" class="tabcontent">
@@ -1821,10 +1821,10 @@ var unitModal;
 		<div class="clear"></div>
 		
 		전체개요
-		${summary.stateCount[0]}
-		${summary.stateCount[1]}
-		${summary.stateCount[2]}
-		${summary.stateCount[3]}
+		<span id="allWill">${summary.stateCount[0]}</span>
+		<span id="allIng">${summary.stateCount[1]}</span>
+		<span id="allDone">${summary.stateCount[2]}</span>
+		<span id="allTotal">${summary.stateCount[3]}</span>
 		<hr/>
 		
 	

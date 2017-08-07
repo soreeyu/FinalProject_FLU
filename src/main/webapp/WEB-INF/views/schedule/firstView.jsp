@@ -74,21 +74,21 @@
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(233, 94, 81);"></div>
 												<span class="tw-project-analytics-overview__head-legend-text">할일</span>
-													<strong><span class="totalPercentWill">X%</span></strong>&nbsp;(<span class="totalPercentWill">3</span>개 업무)
+													<strong><span class="totalPercentWill">X</span>%</strong>&nbsp;(<span class="totalPercentWill">3</span>개 업무)
 												
 											</div>
 											<div class="tw-project-analytics-overview__head-legend">
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(255, 176, 36);"></div>
 												<span class="tw-project-analytics-overview__head-legend-text">진행중</span>
-													<strong><span class="totalPercentIng">X%</span></strong>&nbsp;(<span class="totalPercentIng">3</span>개 업무)
+													<strong><span class="totalPercentIng">X</span>%</strong>&nbsp;(<span class="totalPercentIng">3</span>개 업무)
 												
 											</div>
 											<div class="tw-project-analytics-overview__head-legend">
 												<div class="tw-chart-legend__circle"
 													style="border-color: rgb(39, 182, 186);"></div>
 												<span class="tw-project-analytics-overview__head-legend-text">완료</span>
-													<strong><span class="totalPercentDone">X%</span></strong>&nbsp;(<span class="totalPercentDone">3</span>개 업무)
+													<strong><span class="totalPercentDone">X</span>%</strong>&nbsp;(<span class="totalPercentDone">3</span>개 업무)
 											</div>
 											
 										</div>
@@ -119,7 +119,7 @@
 									</div>
 								</c:forEach>
 								
-								<%-- 
+								
 								<div class="tw-project-analytics-self-centric-chart">
 									<div class="tw-project-analytics-self-centric-chart__header">
 										<h3>사용자3</h3>
@@ -563,10 +563,10 @@
 													(20%)
 													<!-- /react-text -->
 												</div>
-											</div> 
+											</div>
 										</div>
 									</div>
-								</div>--%>
+								</div>
 							</section>
 
 							<div class="tw-project-analytics-page__task-overview">
@@ -629,8 +629,6 @@
 
 		
  <script type="text/javascript">
- 	 $("#chart_div").html('');
- 	 $(".dounut").html('');
      google.charts.load('current', {packages: ['corechart']});    
      google.charts.load('current', {packages: ['corechart', 'bar']});
    </script>
@@ -703,14 +701,14 @@
     
       // Set a callback to run when the Google Visualization API is loaded.
       for(var i=0;i<$(".userNames").length;i++){
-    	  
+    	 
     	  google.charts.setOnLoadCallback(drawChart1);
     	  
       }
       
       
       function drawChart1() {
-			
+
 	   	  willCount = $(".userNamesWill:eq("+index+")").text()*1;
 	   	  ingCount = $(".userNamesIng:eq("+index+")").text()*1;
 	   	  finCount = $(".userNamesDone:eq("+index+")").text()*1;
@@ -729,23 +727,18 @@
           width: 300,
           height: 380,
           title: $(".userNames:eq("+index+")").text(),
-         /*  titleTextStyle:{ 
-        	  color: 'black',
-        	  fontSize: 50,
-        	  italic: true }, */
           pieHole: 0.3,
           colors: ['rgb(233, 94, 81)','rgb(255, 176, 36)', 'rgb(39, 182, 186)', 'rgb(176, 180, 187)']
 	      ,legend :{
   	    	position: 'bottom',
   	    	textStyle : {
-  	    		fontSize: 20
+  	    		fontSize: 12
   	    	}
   	      }
         };
 		var id= 'donutchart'+(index);
 		alert(id);
         var chart = new google.visualization.PieChart(document.getElementById(id));
-        //chart.clearChart(); //비우기
         chart.draw(data, options);
         index++;
       }
@@ -758,6 +751,14 @@
         alert('The user selected ' + value);
       }
 
+      
+      //전체개요
+      $(".totalPercentWill:eq(0)").html(Math.ceil(($("#allWill").text()*1)/($("#allTotal").text()*1)*100));
+      $(".totalPercentIng:eq(0)").html(Math.ceil(($("#allIng").text()*1)/($("#allTotal").text()*1)*100));
+      $(".totalPercentDone:eq(0)").html(Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
+      $(".totalPercentWill:eq(1)").html($("#allWill").text());
+      $(".totalPercentIng:eq(1)").html($("#allIng").text());
+      $(".totalPercentDone:eq(1)").html($("#allDone").text());
       
 
     </script>
