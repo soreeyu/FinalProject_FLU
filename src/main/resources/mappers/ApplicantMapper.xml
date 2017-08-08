@@ -15,5 +15,10 @@
   	<update id="update" parameterType="java.lang.String">
   		update applicant set state = 'payFinish' where email=#{email}
   	</update>
+  	
+  	<!-- 스케줄화면에 진행중인 지원자만 접근 가능하도록 체크 -->
+  	<select id="checkApp" parameterType="string" resultType="java.lang.Integer">
+  		select * from applicant where email=#{email}
+  	</select>
   
   </mapper>

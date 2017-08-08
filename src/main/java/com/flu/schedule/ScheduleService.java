@@ -661,26 +661,26 @@ public class ScheduleService {
 						textFormat);
 				sh.addCell(label);
 				//상태
-				label = new jxl.write.Label(2, row, (String) tem.get("email"),
+				label = new jxl.write.Label(2, row, (String) tem.get("state"),
 						textFormat);
 				sh.addCell(label);
 				//담당자
-				label = new jxl.write.Label(3, row, (String) tem.get("startDate"),
+				label = new jxl.write.Label(3, row, (String) tem.get("email"),
 						textFormat);
 				sh.addCell(label);
 				
 				//시작일
-				label = new jxl.write.Label(4, row, (String) tem.get("finishDate"),
+				label = new jxl.write.Label(4, row, (String) tem.get("startDate"),
 						textFormat);
 				sh.addCell(label);
 				
 				//마감일
-				label = new jxl.write.Label(5, row, (String) tem.get("desc"),
+				label = new jxl.write.Label(5, row, (String) tem.get("finishDate"),
 						textFormat);
 				sh.addCell(label);
 				
 				//상세설명
-				label = new jxl.write.Label(6, row, (String) tem.get("etc"),
+				label = new jxl.write.Label(6, row, (String) tem.get("desc"),
 						textFormat);
 				sh.addCell(label);
 
@@ -712,9 +712,11 @@ public class ScheduleService {
 				List<ScheduleUnitDTO> unitList = this.unitList(scheduleUnitDTO);
 				partList.get(i).setUnitList(unitList);
 			}
+			//데이터 다가져옴 
 			
 			
 			List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+			
 			//list가지고 포문돌리면서 데이터 넣어주기
 			for(int i=0;i<partList.size();i++){
 				Map<String, Object> map = new HashMap<String, Object>();

@@ -12,7 +12,12 @@
 
 
 	<div id= "#firstView_main_wrap">
-		<!--Div that will hold the pie chart-->
+		
+		<div class="tw-project-analytics-overview__bars">
+			<div id="totalBarChart"></div>
+		</div>
+		
+		<!--Div that will hold tshe pie chart-->
 		<c:forEach items="${summary.userNames}" varStatus="i">
     		<div id="donutchart${i.index}" class="dounut" style="width:400; height:300"></div>
 		</c:forEach>
@@ -21,11 +26,12 @@
   		<div id="chart_div"></div>
 	</div>
 	<div>
+	
 		전체개요
-		${summary.stateCount[0]}
-		${summary.stateCount[1]}
-		${summary.stateCount[2]}
-		${summary.stateCount[3]}
+		<span class="totalWill">${summary.stateCount[0]}</span>
+		<span class="totalIng">${summary.stateCount[1]}</span>
+		<span class="totalDone">${summary.stateCount[2]}</span>
+		<span class="totalTotal">${summary.stateCount[3]}</span>
 		<hr/>
 		
 	
@@ -75,6 +81,71 @@
      var finCount = 5;
      var warnCount = 9;
      var index=0;
+     
+     
+     
+     function drawStackedTotal() {
+         
+         var dataTotal = new google.visualization.DataTable();
+         dataTotal.addColumn('string', 'total');
+         dataTotal.addColumn('number', '할일');
+         dataTotal.addColumn('number', '진행중');
+         dataTotal.addColumn('number', '완료'); 
+        
+         
+
+
+       	  var totalWill = $(".totalWill:eq(0)").text()*1;
+       	  var totalIng = $(".totalIng:eq(0)").text()*1;
+       	  var totalDone = $(".totalDone:eq(0)").text()*1;
+       	  var totalTotal = $(".totalTotal:eq(0)").text()*1;
+             dataTotal.addRow(['',totalWill, totalIng ,totalDone]);
+
+           
+        var options = {
+          title: '전체 업무 개요',
+          chartArea: {width: '100%',height: '100%'},
+          isStacked: 'percent',
+          hAxis: {
+            title: '',
+            minValue: 0,
+          },  
+          backgroundColor: "transparent",
+          
+          colors: ['rgb(233, 94, 81)', 'rgb(255, 176, 36)','rgb(39, 182, 186)','rgb(176, 180, 187)' ]
+       
+        };
+        
+       
+        var chart = new google.visualization.BarChart(document.getElementById('totalBarChart'));
+        chart.draw(dataTotal, options);
+    }
+
+    google.charts.setOnLoadCallback(drawStackedTotal);
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
 
     
     

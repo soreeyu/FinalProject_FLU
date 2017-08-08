@@ -6,6 +6,7 @@
 <div id="client_section">
 	<form action="./addPart" method="POST"  enctype="multipart/form-data">
 		<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
+		<input type="hidden" id="currentTab" name="currentTab" value="tab5">
 		<div>
 			프로젝트 시작일:<input type="date" name="startDate" value=""> 
 			프로젝트 마감일:<input type="date" name="finishDate"> 

@@ -96,9 +96,10 @@
 									
 									
 									<div class="tw-project-analytics-overview__bars">
-										<div id="totalPercentBarPercentWill" style="background: rgb(233, 94, 81); width: 20%;"></div>
+										<!-- <div id="totalPercentBarPercentWill" style="background: rgb(233, 94, 81); width: 20%;"></div>
 										<div id="totalPercentBarPercentIng" style="background: rgb(255, 176, 36); width: 10%;"></div>										
-										<div id="totalPercentBarPercentDone" style="background: rgb(39, 182, 186); width: 60%;"></div>	
+										<div id="totalPercentBarPercentDone" style="background: rgb(39, 182, 186); width: 60%;"></div>	 -->
+										<div id="totalBarChart"></div>
 									</div>
 								</div>
 								
@@ -751,26 +752,68 @@
         alert('The user selected ' + value);
       }
 
+      var totalWill = $(".totalWill:eq(0)").text()*1;
+   	  var totalIng = $(".totalIng:eq(0)").text()*1;
+   	  var totalDone = $(".totalDone:eq(0)").text()*1;
+   	  var totalTotal = $(".totalTotal:eq(0)").text()*1;
       
       //전체개요 값 세팅
-      $(".totalPercentWill:eq(0)").html(Math.ceil(($("#allWill").text()*1)/($("#allTotal").text()*1)*100));
-      $(".totalPercentIng:eq(0)").html(Math.ceil(($("#allIng").text()*1)/($("#allTotal").text()*1)*100));
-      $(".totalPercentDone:eq(0)").html(Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
-      $(".totalPercentWill:eq(1)").html($("#allWill").text());
-      $(".totalPercentIng:eq(1)").html($("#allIng").text());
-      $(".totalPercentDone:eq(1)").html($("#allDone").text());
-      
-      // $("#totalPercentBarPercentWill").css("width",Math.ceil(($("#allWill").text()*1)/($("#allTotal").text()*1)*100));
-      //$("#totalPercentBarPercentIng").css("width",Math.ceil(($("#allIng").text()*1)/($("#allTotal").text()*1)*100));
-      // $("#totalPercentBarPercentDone").css("width",Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
+      $(".totalPercentWill:eq(0)").html(Math.ceil(totalWill/totalTotal*100));
+      $(".totalPercentIng:eq(0)").html(Math.ceil(totalIng/totalTotal*100));
+      $(".totalPercentDone:eq(0)").html(Math.ceil(totalDone/totalTotal*100));
+      $(".totalPercentWill:eq(1)").html(totalWill);
+      $(".totalPercentIng:eq(1)").html(totalIng);
+      $(".totalPercentDone:eq(1)").html(totalDone);
+
       
       //제목 설정 
       $("#sDateforTitle").html("4월 7일");
       $("#fDateforTitle").html("8월 7일");
       $("#beforeDuration").html(100);
       $("#afterDuration").html(1);
-      $("#totalUnitsCount").html($("#allTotal").text());
-      $("#totalDoneUnitsCount").html($("#allDone").text());
-      $("#totalDoneUnitsPercent").html(Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
+      $("#totalUnitsCount").html(totalTotal);
+      $("#totalDoneUnitsCount").html(totalDone);
+      $("#totalDoneUnitsPercent").html(Math.ceil(totalDone/totalTotal*100));
+      
+      
+      
+      function drawStackedTotal() {
+          
+          var dataTotal = new google.visualization.DataTable();
+          dataTotal.addColumn('string', 'total');
+          dataTotal.addColumn('number', '할일');
+          dataTotal.addColumn('number', '진행중');
+          dataTotal.addColumn('number', '완료'); 
+         
+          
+
+
+        	  /* var totalWill = $(".totalWill:eq(0)").text()*1;
+        	  var totalIng = $(".totalIng:eq(0)").text()*1;
+        	  var totalDone = $(".totalDone:eq(0)").text()*1;
+        	  var totalTotal = $(".totalTotal:eq(0)").text()*1; */
+              dataTotal.addRow(['',totalWill, totalIng ,totalDone]);
+
+            
+         var options = {
+           title: '전체 업무 개요',
+           chartArea: {width: '100%',height: '100%'},
+           isStacked: 'percent',
+           hAxis: {
+             title: '',
+             minValue: 0,
+           },  
+           backgroundColor: "transparent",
+           
+           colors: ['rgb(233, 94, 81)', 'rgb(255, 176, 36)','rgb(39, 182, 186)','rgb(176, 180, 187)' ]
+        
+         };
+         
+        
+         var chart = new google.visualization.BarChart(document.getElementById('totalBarChart'));
+         chart.draw(dataTotal, options);
+     }
+
+     google.charts.setOnLoadCallback(drawStackedTotal);
 
     </script>

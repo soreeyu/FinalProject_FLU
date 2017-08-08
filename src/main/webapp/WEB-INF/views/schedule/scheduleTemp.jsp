@@ -1065,16 +1065,20 @@ function getContextPath(){
 
 var unitListModal;
 var unitModal;
-
+var currentTab = '${currentTab}';
 	$(function() {
 		
 		var scheduleNum = '${scheduleNum}';
 		
-		
+		//데이터 뿌리기
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
-		loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1');
+		if(currentTab == ''){
+			loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
+		}else{
+			loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,currentTab);
+		}
 	
 		
 		jui.ready([ "ui.modal" ], function(modal) {
@@ -1086,6 +1090,7 @@ var unitModal;
 		});
 		
 		
+		//tab 클릭 이벤트
 		$('ul.tab li').click(function() {
 			//css
 			var activeTab = $(this).attr('data-tab');
@@ -1097,17 +1102,7 @@ var unitModal;
 			
 			
 			if(activeTab == 'tab1'){
-				//alert("개요보기");
-
-				
-				////////////////1뷰//////////////
-				//part별 갯수로 설정 //1개 기준 150 + 55px //tw-bar-chart
-				/* var partCount = 3;
-				var graphHeight = 55;
-				var fullGraphHeight = (150+(partCount*graphHeight))+"px";
-				alert(fullGraphHeight);
-				$(".tw-bar-chart").css("height",fullGraphHeight);
-				 */
+				//아싸리 여기서 비워버리는게 좋겠다
 				$.ajax({
 					url:"/flu/schedule/test?scheduleNum="+scheduleNum,
 					type:"GET",
@@ -1115,12 +1110,6 @@ var unitModal;
 						$("#tab1").html(data);
 					}
 				});
-				
-				
-				
-				////////////////////1뷰끝/////////////
-				
-				
 				
 			}else if(activeTab == 'tab2'){
 				//alert("달력보기");
@@ -1282,16 +1271,12 @@ var unitModal;
 				
 				
 			}else if(activeTab == 'tab4'){
-				alert("체크리스트");
-				//url = "";
+				alert("체크리스트");			
 			}else if(activeTab == 'tab5'){
-				//alert("수정");
-				//url = "";
+				alert("파트일정추가");
 			}else if(activeTab == 'tab6'){
 				alert("간트");
-				location.href="/flu/schedule/sixthView";
-				
-				//url = "";
+				//location.href="/flu/schedule/sixthView";
 			}else if(activeTab == 'tab7'){
 				alert("간트2");
 				location.href="/flu/schedule/dhxTest?scheduleNum="+scheduleNum;
@@ -1305,6 +1290,7 @@ var unitModal;
 				}); */
 				
 			}else if(activeTab == 'tab8'){
+				alert("구글차트 연습용");
 				$.ajax({
 					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
 					type:"GET",
@@ -1312,11 +1298,9 @@ var unitModal;
 						$("#tab8").html(data);
 					}
 				});
-				//location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
-				//url = "";
+
 			}else if(activeTab == 'tab9'){
-				//location.href="/flu/schedule/detailView?scheduleNum="+scheduleNum;
-				//url = "";
+				//전체일정을 표로 보여주고 //엑셀 변환하기 기능을 제공한다 
 				$.ajax({
 					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
 					type:"GET",
@@ -1325,10 +1309,7 @@ var unitModal;
 					}
 				});
 			}
-			
-			//loadTabContent(url,activeTab);
-	
-			
+					
 		});//클릭햇을때
 		
 		
@@ -1336,7 +1317,7 @@ var unitModal;
 		
 		
 		
-		//nav 클릭
+		//카드뷰 클릭이벤트 설정
 		$("#cardKind ul li").click(function(){
 			//alert($(this).text());
 			
@@ -1347,7 +1328,7 @@ var unitModal;
 				getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
-				getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다
+				//getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다
 			
 			}else if($(this).text() == "파트별"){
 					
@@ -1378,8 +1359,12 @@ var unitModal;
 				makeCard = makeCard + '<div class="card">';
 				makeCard = makeCard + '<div class="cardTitle_wrap">';
 				makeCard = makeCard + '<span class="cardTitle">'+$(this).text()+'</span></div>';
-				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';				
-				makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';						
+				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
+				if(member.kind == 'client'){
+					makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';	//이때 modal 로 입력하자									
+				}else{
+					makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'해당업무가 없습니다'+'</div>';	
+				}
 				makeCard = makeCard + '</div></div></div>';
 				
 				$(".cardContentWrap").append(makeCard);
@@ -1749,6 +1734,7 @@ var unitModal;
 	<div id= "main_wrap">
 	
 	
+	<!-- 프로젝트 이름, 시작,마감일 참여프리랜서 뿌려줌 -->
 	<div class="schedule_header">
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
@@ -1762,78 +1748,78 @@ var unitModal;
           		<strong class="appCount">${applicantCount}명</strong>의 프리랜서참여</span>
             </p>
          </div>
-      </div>
+     </div>
 	
-	
-			<div class="sidebar">
-				<div class="sidebar-nav">
-					<ul class="tab">
-						<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
-						<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
-						<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
-						<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
-						<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
-						<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
-						<li class=""  data-tab="tab7"><span class="taba">간트차트(이거)</span></li>
-						<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
-						<li class=""  data-tab="tab9"><span class="taba">상세보기(엑셀)</span></li>
-					</ul>
-				</div>
-			</div>
-			
-			
-		<div class="tabContentWrap">
-			<div id="tab1" class="tabcontent current">
-				<!-- tab1내용 은 개요야  -->
-				<%-- <c:import url="/WEB-INF/views/schedule/firstView.jsp" /> --%>
-			</div>
-			
-			<div id="tab2" class="tabcontent">
-				<!-- tab2내용 은 달력이야 -->
-				<c:import url="/WEB-INF/views/schedule/secondView.jsp" />
-			</div>
-			
-			<div id="tab3" class="tabcontent">
-				<!-- tab3내용 은 표야  -->
-				<c:import url="/WEB-INF/views/schedule/thirdView.jsp" />
-			</div>
-			
-			<div id="tab4" class="tabcontent">
-				<!-- 프리랜서가 업무 체크 -->
-				<c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" />
-			</div>
-			
-			<div id="tab5" class="tabcontent">
-				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-				<c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" />
-			</div>
-			
-			<div id="tab6" class="tabcontent">
-				
-			</div>
-			
-			<div id="tab7" class="tabcontent">
-				<%-- <c:import url="/WEB-INF/views/schedule/dhx_gantTest.jsp" /> --%>
-			</div>
-			
-			<div id="tab8" class="tabcontent">
-				<%-- <c:import url="/WEB-INF/views/schedule/firstViewTestGoogleChart.jsp" /> 
-			 --%></div>
-			<div id="tab9" class="tabcontent">
-				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-				<%-- <c:import url="/WEB-INF/views/schedule/detailViewforExcel.jsp" /> --%>
-			</div>
+	<!-- 왼쪽 네비게이션 메뉴 -->
+	<!-- class current인 친구의 css가 변경되고 화면에 나타난다 -->
+	<div class="sidebar">
+		<div class="sidebar-nav">
+			<ul class="tab">
+				<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
+				<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
+				<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
+				<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
+				<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
+				<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
+				<li class=""  data-tab="tab7"><span class="taba">간트차트(이거)</span></li>
+				<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
+				<li class=""  data-tab="tab9"><span class="taba">상세보기(엑셀)</span></li>
+			</ul>
 		</div>
+	</div>
+			
+	<!-- 실제적인 뷰 화면이다  -->		
+	<div class="tabContentWrap">
+		<div id="tab1" class="tabcontent current">
+			<!-- 개요 -->
+		</div>
+		
+		<div id="tab2" class="tabcontent">
+			<!-- tab2내용 은 달력이야 -->
+			<c:import url="/WEB-INF/views/schedule/secondView.jsp" />
+		</div>
+		
+		<div id="tab3" class="tabcontent">
+			<!-- tab3내용 은 표야  -->
+			<c:import url="/WEB-INF/views/schedule/thirdView.jsp" />
+		</div>
+		
+		<div id="tab4" class="tabcontent">
+			<!-- 프리랜서가 업무 체크 -->
+			<c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" />
+		</div>
+		
+		<div id="tab5" class="tabcontent">
+			<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+			<c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" />
+		</div>
+		
+		<div id="tab6" class="tabcontent">
+			
+		</div>
+		
+		<div id="tab7" class="tabcontent">
+			<%-- <c:import url="/WEB-INF/views/schedule/dhx_gantTest.jsp" /> --%>
+		</div>
+		
+		<div id="tab8" class="tabcontent">
+			<%-- <c:import url="/WEB-INF/views/schedule/firstViewTestGoogleChart.jsp" /> 
+		 --%></div>
+		<div id="tab9" class="tabcontent">
+			<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+			<%-- <c:import url="/WEB-INF/views/schedule/detailViewforExcel.jsp" /> --%>
+		</div>
+	</div>
 		
 		
 		
 		<div class="clear"></div>
 		
 		전체개요
-		<span id="allWill">${summary.stateCount[0]}</span>
-		<span id="allIng">${summary.stateCount[1]}</span>
-		<span id="allDone">${summary.stateCount[2]}</span>
-		<span id="allTotal">${summary.stateCount[3]}</span>
+		<span class="totalWill">${summary.stateCount[0]}</span>
+		<span class="totalIng">${summary.stateCount[1]}</span>
+		<span class="totalDone">${summary.stateCount[2]}</span>
+		<span class="totalTotal">${summary.stateCount[3]}</span>
 		<hr/>
 		
 	

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.applicant.ApplicantDAO;
+import com.flu.applicant.ApplicantService;
 import com.flu.file.FileService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
@@ -37,6 +38,8 @@ public class ScheduleController {
 		private ProjectService projectService;
 		@Autowired
 		private ApplicantDAO applicantDAO;
+		@Autowired
+		private ApplicantService applicantService;
 		
 		//이게 보배언니의 프로젝트 뷰 라고 가정한다 
 		@RequestMapping(value="testProjectView")
@@ -47,20 +50,38 @@ public class ScheduleController {
 		
 		
 		@RequestMapping(value="test" , method=RequestMethod.GET)
-		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
-			model.addAttribute("scheduleNum", scheduleNum);
-			
+		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model, RedirectAttributes rd, HttpSession session) throws Exception{
+
+			Integer result = applicantService.checkApp(((MemberDTO)session.getAttribute("member")).getEmail());
 			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
-			model.addAttribute("mainScheduleDTO", scheduleMainDTO);
-			ProjectDTO projectDTO = projectService.projectView(scheduleMainDTO.getProjectNum());
-			model.addAttribute("projectDTO",projectDTO);
-			model.addAttribute("applicantCount", applicantDAO.ingCount(scheduleMainDTO.getProjectNum()));
-			ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //개요를 위한 아이
-			model.addAttribute("summary",scheduleSummaryDTO);
-			
-			return "schedule/scheduleTemp";
-		}
+			if(result == null){
+				rd.addFlashAttribute("message", "참여하지 않는 프로젝트입니다");
+				return "redirect:/home";
+			}else if(scheduleMainDTO == null){
+
+				rd.addFlashAttribute("message", "해당프로젝트에 대한 스케줄이 없습니다");
+				return "redirect:/home";
 		
+			}else{
+				
+				model.addAttribute("scheduleNum", scheduleNum);
+				model.addAttribute("mainScheduleDTO", scheduleMainDTO);
+
+				ProjectDTO projectDTO = projectService.projectView(scheduleMainDTO.getProjectNum());
+				model.addAttribute("projectDTO",projectDTO); //프로젝트 정보 뿌려주기용 
+				model.addAttribute("applicantCount", applicantDAO.ingCount(scheduleMainDTO.getProjectNum())); //해당 스케줄에 참여한 프리랜서수 
+
+				ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //tab1 의 개요를 위한 아이
+				model.addAttribute("summary",scheduleSummaryDTO);
+
+				return "schedule/scheduleTemp";
+
+			}
+
+
+
+		}
+
 		
 		
 		@RequestMapping(value="firstView" , method=RequestMethod.GET)
@@ -356,13 +377,18 @@ public class ScheduleController {
 		
 		//DTO내의 배열에 각각 값이 저장됨
 		@RequestMapping(value="addPart", method=RequestMethod.POST)
-		public String partWrite(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
+		public String partInsert(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session, RedirectAttributes rd,String currentTab) throws Exception{
 			System.out.println("partWrite scheduleNum = "+schedulePartArrayDTO.getScheduleNum());
 			int result =  scheduleService.insertPart(schedulePartArrayDTO,session);
-
+			int scheduleNum = schedulePartArrayDTO.getScheduleNum();
 			System.out.println("part등록 Controller result = "+result);
-
-			return "redirect:/schedule/scheduleTemp?scheduleNum"+schedulePartArrayDTO.getScheduleNum(); 
+			if(result > 0 ){
+				//part 등록성공	
+			}else{
+				//part 등록 실패
+			}
+			rd.addFlashAttribute("currentTab", currentTab);
+			return "redirect:/schedule/test?scheduleNum"+scheduleNum; 
 		}
 		
 		@RequestMapping(value="partUpdate", method=RequestMethod.GET)

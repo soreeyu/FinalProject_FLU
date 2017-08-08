@@ -32,6 +32,10 @@ public class ApplicantDAO {
 		return sqlSession.update(NAMESPACE+"update", email);
 	}
 	
+	public Integer checkApp(String email){
+		return sqlSession.selectOne(NAMESPACE+"checkApp", email);
+	}
+	
 	
 	
 	

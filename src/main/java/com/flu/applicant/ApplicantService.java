@@ -22,4 +22,8 @@ public class ApplicantService {
 		return applicantDAO.appUpdate(email);
 	}
 	
+	public Integer checkApp(String email){
+		return applicantDAO.checkApp(email);
+	}
+	
 }
