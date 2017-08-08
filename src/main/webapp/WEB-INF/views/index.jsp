@@ -14,6 +14,9 @@
 	height: 2400px;
 	background-color: aqua;
 }
+.advertising_div{
+	background: url("${pageContext.servletContext.contextPath}/resources/img/index/background.png");
+}
 </style>
 <script type="text/javascript">
 	var message = '${message}';
@@ -29,6 +32,7 @@
 	<section class="advertising">
 		<div class="advertising_div">
 			광고
+			
 		</div>
 		<div class="project_quantity_div">
 			등록된 프로젝트 갯수
@@ -57,6 +61,7 @@
 	<section class="process">
 		<div class="process_div">
 			FLU 프로세스
+			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/프로세스.png">
 		</div>
 		<div class="advantage_div">
 			장점
