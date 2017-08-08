@@ -520,7 +520,7 @@ body{
 					<label>
 						<span>무료로 프로젝트를<br>등록해 보세요</span>
 					</label>
-					<a href="#">프로젝트 등록하기</a>
+					<a href="${pageContext.request.contextPath}/project/projectInsert">프로젝트 등록하기</a>
 				</div>
 				</c:if>
 				<div class="history">

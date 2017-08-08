@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantService;
 import com.flu.file.FileSaver;
+import com.flu.freelancer.FreelancerDTO;
+import com.flu.freelancer.FreelancerService;
 import com.flu.member.MemberDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.project.ProjectService;
+import com.flu.project.sell.PjSellDTO;
+import com.flu.project.sell.PjSellService;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -32,7 +39,14 @@ public class ProjectController {
    
    @Inject
 	private AlarmService alarmService;
-	private AlarmDTO alarmDTO;
+   @Inject
+   private ApplicantService applicantService;
+   @Inject
+   private FreelancerService freelancerService;
+   @Inject
+   private PjSellService pjSellService;
+   
+   private AlarmDTO alarmDTO;
 
    //@ResponseBody
    @RequestMapping(value="projectMap", method=RequestMethod.GET)
@@ -68,16 +82,41 @@ public class ProjectController {
       
       MemberDTO memberDTO = new MemberDTO();
       memberDTO= (MemberDTO)session.getAttribute("member");
-
-
+      
+     int pjcount = projectService.projectListcount(projectDTO);
+     
+     
       model.addAttribute("listInfo", listInfo);
       model.addAttribute("member", memberDTO);
-   
+      model.addAttribute("pjcount", pjcount);
+
       
       
       return "project/projectList";
    }
    
+   
+   //급구 project 리스트 AJAX
+   @RequestMapping(value="quickListInner", method=RequestMethod.GET)
+   	public void quickListInner(Model model, ListInfo listInfo, ProjectDTO projectDTO, HttpSession session){
+   		System.out.println("quickListInner요");
+   		
+   		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+   		System.out.println("count들어가기전");
+   		int quickCount = projectService.quickCount(projectDTO);
+   		System.out.println("quickCount=="+quickCount);
+   		System.out.println("count들어간후");
+   		/*listInfo.makePage(quickCount);
+   		listInfo.makeRow();*/
+   		System.out.println("여기는");
+        List<ProjectDTO> ar = projectService.quickList(projectDTO, listInfo);
+        System.out.println("급구리스트 사이즈==="+ar.size());     
+        
+        model.addAttribute("quicklist", ar);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("quickCount", ar.size());
+   		
+   	}
    
    //project 리스트 AJAX
    @RequestMapping(value="projectListInner", method=RequestMethod.GET)
@@ -96,11 +135,15 @@ public class ProjectController {
             
       List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
             
-      //List<ProjectDTO> sellar = projectService.sellList(projectDTO);
+      for(int i=0;i<ar.size();i++){
+     	 
+	         /*System.out.println("ar의 Num=="+ar.get(i).getProjectNum());*/
+	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
+	         /*System.out.println("ar의 appCount=="+ar.get(i).getAppCount());*/
+	         }
       
       System.out.println("projectListInner의 ar="+ar);
-
-      
+ 
       
       System.out.println("=====================");
 
@@ -116,27 +159,37 @@ public class ProjectController {
       model.addAttribute("pjcount", totalCount);
       model.addAttribute("member", memberDTO);
       model.addAttribute("listInfo", listInfo);
-      //model.addAttribute("sellar", sellar);
+
       }
    
 
    //view
    @RequestMapping(value="projectView", method=RequestMethod.GET)
-   public void projectView(Integer projectNum, Model model, HttpSession session, MemberDTO memberDTO, ListInfo listInfo){
+   public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
-      if(projectNum==null){
-         projectNum=1;
-      }
       
-      ProjectDTO projectDTO = projectService.projectView(projectNum);
-
-      
-      System.out.println("session의 사진을 불러와보자");
+      projectDTO = projectService.projectView(projectDTO);
 
       memberDTO = (MemberDTO)session.getAttribute("member");
+      ApplicantDTO applicantDTO = new ApplicantDTO();
+      applicantDTO.setEmail(memberDTO.getEmail());
+      applicantDTO.setProjectNum(projectNum);
+      int checkCount = applicantService.checkApplicant(applicantDTO);
       
-      int contractResult = projectService.contractCount(projectDTO);
-      System.out.println("계약한 갯수="+contractResult);
+      if(check==null){
+    	  check=0;
+      }
+      int applyCount = applicantService.countApplicant(projectNum);
+      
+      //project를 등록한 사람의 IMG를 가져오기
+      MemberDTO mem = projectService.projectImg(projectDTO);
+   
+      System.out.println("phone="+memberDTO.getPhone());
+      System.out.println("형태="+memberDTO.getKind());
+
+      
+      int sellResult = projectService.sellingCount(projectDTO);
+      System.out.println("판매중인 프로젝트 갯수="+sellResult);
       int ingResult = projectService.ingCount(projectDTO);
       System.out.println("진행중 프로젝트갯수="+ingResult);
       int finishResult = projectService.finishCount(projectDTO);
@@ -144,19 +197,23 @@ public class ProjectController {
       int totalResult = projectService.pjCount(projectDTO);
       System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
       
-      System.out.println("프로젝트작성자-asdf-"+projectDTO.getEmail());
-      System.out.println("프로젝트 이름="+projectDTO.getName());
-      
-      
+       System.out.println("포폴--"+freelancerService.portfolioList(memberDTO.getEmail()));
       
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
-      model.addAttribute("conCount", contractResult);
+      model.addAttribute("conCount", sellResult);
       model.addAttribute("ingCount", ingResult);
       model.addAttribute("finishCount", finishResult);
       model.addAttribute("totalCount", totalResult);
+      model.addAttribute("check", check);
+      model.addAttribute("checkCount", checkCount);
+      model.addAttribute("mem", mem);
+      model.addAttribute("applyCount", applyCount);
 
-
+      //지원할 자격이 되는지 체크
+      model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
+      model.addAttribute("skills", freelancerService.skillList(memberDTO.getEmail()));
+      model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
          
    }
    
@@ -229,7 +286,7 @@ public class ProjectController {
 
       System.out.println(memberDTO.getKind());   
       
-      projectDTO = projectService.projectView(projectDTO.getProjectNum());
+      projectDTO = projectService.projectView(projectDTO);
       System.out.println("projectNum="+projectDTO.getProjectNum());
       System.out.println("controller-project-name="+projectDTO.getName());
    
@@ -277,28 +334,35 @@ public class ProjectController {
    @RequestMapping(value="projectDelete")
    public String projectDelete(ProjectDTO projectDTO, RedirectAttributes rd){
       System.out.println("projectDelete");
+      System.out.println("state=="+projectDTO.getState());
       
-      int result =projectService.projectDelete(projectDTO.getProjectNum());
-      //관리자가 지웠을때 관리자 리스트로도 가게하려고 state가 필요해서 DTO로 크게 받는게 어떨까요?
-      
-      String message="Delete fail";
-      if(result==1){
-         message="Delete success";
-      }
-      
-      rd.addAttribute("message", message);
-      
-      String path = "redirect:/project/projectList";
+      String path="";
       
       if(projectDTO.getState().equals("fail")){ //만약 넘어온 상태가 fail이라면 관리자 모집실패 페이지로 주소 변경
          path = "redirect:/checkProject/checkProjectFailList";
-      }
+      }else{  
       
+	      int result =projectService.projectDelete(projectDTO.getProjectNum());
+	      //관리자가 지웠을때 관리자 리스트로도 가게하려고 state가 필요해서 DTO로 크게 받는게 어떨까요?
+	      
+	      String message="";
+	      if(result==1){
+	         message="Delete success";
+	      
+	      rd.addAttribute("message", message);
+	      
+	      path = "redirect:/member/client/clientproject";
+	      }else{
+	    	  message="Delete fail";
+	    	  path = "redirect:/member/client/clientproject";
+	      }
+
+      }
       return path;
    }
 
 
-   
+   //판매가능 리스트들 뿌려주기
    @RequestMapping(value="sellList")
    public String sellList(ProjectDTO projectDTO, ListInfo listInfo, Model model){
       System.out.println("sell List service들어옴");
@@ -316,31 +380,65 @@ public class ProjectController {
       return "project/projectListInner";
    }
 
-   //Test
-   //Client가 mypage에서 확인하는 myprojectList
-   //@RequestMapping(value="projectView")
-   /*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
-      System.out.println("Client ProjectList");
-      
-      MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-      int totalCount = projectService.clientPjCount(listInfo, memberDTO);
-      listInfo.makePage(totalCount);
-      listInfo.makeRow();
-      List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
-      
-      System.out.println("totalCount="+totalCount);
-      System.out.println("arsize="+ar.size());
    
-      model.addAttribute("list", ar);
-      model.addAttribute("type", "list");
-      model.addAttribute("pjcount", totalCount);
-      model.addAttribute("listInfo", listInfo);
-      model.addAttribute("member", memberDTO);
-      
-      return "project/clientProjectList";
-   }*/
+   //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
+   @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)
+   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd, ProjectDTO projectDTO){
+   		System.out.println("pjsellInsert-controller");
+   		
+
+   		System.out.println("==============================");
+   		System.out.println("state====="+projectDTO.getState());
+   		String conState = projectDTO.getState();
+   		int result = pjSellService.pjsellInsert(pjSellDTO);
+   		int updateResult = 0;
+   		if(result==1){
+   			System.out.println("프로젝트 판매등록 성공");
+   			
+   			updateResult = projectService.updateProjectState(pjSellDTO);
+   			if(updateResult==1){
+   				System.out.println("프로젝트 상태 수정 성공");
+   			}else{
+   				System.out.println("프로젝트 상태 수정 실패");
+   			}
+   			
+   		}else{
+   			System.out.println("프로젝트 판매등록 실패");
+   		}
+   		
+   	 int sellCheckCount = pjSellService.checkSellProject(pjSellDTO);
+     System.out.println("sellCheckCount=="+sellCheckCount);
+   		rd.addAttribute("sellCheck", result);
+   		rd.addAttribute("updateResult", updateResult);
+   		rd.addAttribute("conState", conState);
+   		//sellCheck가 1이면 프로젝트 판매등록 성공 -> project-state sell로 update하기
+   		
+   		return "redirect:/member/client/clientproject?state=finish";
+   	}
    
-
-
+   @RequestMapping(value="cancleProjectState")
+   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd){
+	   System.out.println("cancleProjectState-controller");
+	   
+	   int num = pjSellDTO.getProjectNum();
+	   System.out.println("num==="+num);
+	   
+	   //pjsell DB에서 삭제햇는지를 알아보는 cancleResult
+	   int cancleResult = pjSellService.deleteSellProject(num);
+	   //project state를 sell->finish로 바꿧는지 알아보는 result
+	   int result = projectService.cancleProjectState(pjSellDTO);
+	   
+	   if(cancleResult==1){
+		   System.out.println("pjsell DB에서 삭제 성공");
+		   if(result==1){
+			   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
+		   }else{
+			   System.out.println("상태 finish 바꾸기 실패");
+		   }
+	   }else{
+		   System.out.println("pjsell DB에서 삭제 실패");
+	   }
+	   return "member/client/clientproject";
+   }
    
 }

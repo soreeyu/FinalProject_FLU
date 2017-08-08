@@ -72,6 +72,7 @@
 			<exclude-mapping path="/member/logout"/>
 			<exclude-mapping path="/member/re_email"/>
 			<exclude-mapping path="/member/myflu"/>
+			<exclude-mapping path="/project/quickListInner"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		
@@ -113,6 +114,7 @@
 	<context:component-scan base-package="com.flu.member"/>
 	<context:component-scan base-package="com.flu.notice"/>
 	<context:component-scan base-package="com.flu.project"/>
+	<context:component-scan base-package="com.flu.project.sell"/>
 	<context:component-scan base-package="com.flu.reply"/>
 	<context:component-scan base-package="com.flu.reservation"/>
 	<context:component-scan base-package="com.flu.schedule"/>

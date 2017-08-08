@@ -30,7 +30,9 @@ public class ProjectDTO {
 	private String addr_num;		
 	private String addr_main;		
 	private String addr_detail;
-	private String reg_date;		
+	private String reg_date;	
+	private int appCount;
+	private int del_Check;
 
 	public MultipartFile getFileName() {
 		return fileName;
@@ -175,6 +177,18 @@ public class ProjectDTO {
 	}
 	public void setSkills(String[] skills) {
 		this.skills = skills;
+	}
+	public int getAppCount() {
+		return appCount;
+	}
+	public void setAppCount(int appCount) {
+		this.appCount = appCount;
+	}
+	public int getDel_Check() {
+		return del_Check;
+	}
+	public void setDel_Check(int del_Check) {
+		this.del_Check = del_Check;
 	}
 	
 	

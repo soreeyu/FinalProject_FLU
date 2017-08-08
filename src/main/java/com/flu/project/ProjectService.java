@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.flu.member.MemberDTO;
+import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -35,8 +36,16 @@ public class ProjectService {
 	}
 	
 	//project View
-	public ProjectDTO projectView(int num){
-		return projectDAO.projectView(num);
+	public ProjectDTO projectView(ProjectDTO projectDTO){
+		System.out.println("projectView에서 skill파싱하기");
+		System.out.println("num=="+projectDTO.getProjectNum());
+		
+		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
+		System.out.println("projectnum=="+projectDTO.getProjectNum());
+		
+		projectDTO.setSkills(projectDTO.getSkill().split(","));
+				
+		return projectDTO;
 	}
 	
 	//project List
@@ -52,11 +61,9 @@ public class ProjectService {
 		for(int i=0;i<list.size();i++){
 			String[] parsing = list.get(i).getSkill().split(",");
 			list.get(i).setSkills(parsing);
-			/*System.out.println(parsing[i]);*/
+			
 		}
 		
-		
-		//return projectDAO.projectList(listInfo);
 		return list;
 	}
 	
@@ -101,10 +108,10 @@ public class ProjectService {
 	}
 	
 	
-	public int contractCount(ProjectDTO projectDTO){
+	public int sellingCount(ProjectDTO projectDTO){
 		System.out.println("contractCount Service 들어옴");
 		
-		return projectDAO.contractCount(projectDTO);
+		return projectDAO.sellingCount(projectDTO);
 	}
 	
 	public int ingCount(ProjectDTO projectDTO){
@@ -135,6 +142,54 @@ public class ProjectService {
 		System.out.println("sellList service 들어옴");
 		
 		return projectDAO.sellList(projectDTO, listInfo);
+	}
+	
+
+	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
+	public MemberDTO projectImg(ProjectDTO projectDTO){
+		return projectDAO.projectImg(projectDTO);
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+	public int projectListcount(ProjectDTO projectDTO){
+		return projectDAO.projectListcount(projectDTO);
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 급구리스트
+	public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
+		
+		List<ProjectDTO> ar =  projectDAO.quickList(projectDTO, listInfo);
+		System.out.println("service의 quick-ar=="+ar);
+		
+		for(int i=0;i<ar.size();i++){
+			System.out.println(ar.get(i).getSkill());
+			String[] parsing = ar.get(i).getSkill().split(",");
+			
+			for(int j=0;j<parsing.length;j++){
+				ar.get(i).setSkills(parsing);				
+			}
+			System.out.println(ar.get(i).getSkills());
+		}
+		return ar;
+	}
+	
+	
+	//프로젝트 리스트에서 뿌려주는 급구리스트 카운트
+	public int quickCount(ProjectDTO projectDTO){
+		System.out.println("quickCount-service");
+		return projectDAO.quickCount(projectDTO);
+	}
+	
+	//pjsell update가 아닌 pjsell에 등록했을 때, project상태바꾸기
+	public int updateProjectState(PjSellDTO pjSellDTO){
+		return projectDAO.updateProjectState(pjSellDTO);
+	}
+	
+	//pjsell update가 아닌 pjsell에서 취소했을 때, project상태 finish로 바꾸기
+	public int cancleProjectState(PjSellDTO pjSellDTO){
+		return projectDAO.cancleProjectState(pjSellDTO);
 	}
 	
 }

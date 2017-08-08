@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.flu.member.MemberDTO;
+import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -26,10 +27,10 @@ public class ProjectDAO {
 		
 		//project update
 		public int projectUpdate(ProjectDTO projectDTO){
-			System.out.println("dao-projectNum="+projectDTO.getProjectNum());
+			/*System.out.println("dao-projectNum="+projectDTO.getProjectNum());
 			System.out.println("dao-project-name="+projectDTO.getName());
 			System.out.println("dao-project-category="+projectDTO.getCategory());
-			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());
+			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());*/
 			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
@@ -118,10 +119,10 @@ public class ProjectDAO {
 			
 		}
 		
-		public int contractCount(ProjectDTO projectDTO){
-			System.out.println("contractCount dao 들어옴");
+		public int sellingCount(ProjectDTO projectDTO){
+			System.out.println("sellingCount dao 들어옴");
 			
-			return sqlSession.selectOne(NAMESPACE+"contractcount", projectDTO);
+			return sqlSession.selectOne(NAMESPACE+"sellingCount", projectDTO);
 		}
 		
 		public int ingCount(ProjectDTO projectDTO){
@@ -162,7 +163,34 @@ public class ProjectDAO {
 			return sqlSession.selectList(NAMESPACE+"sellList", map);
 		}
 		
+		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
+		public MemberDTO projectImg(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectImg", projectDTO);
+		}
 		
-		
+		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+		public int projectListcount(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectcount", projectDTO);
+		}
 	
+		//프로젝트 리스트에서 뿌려주는 급구리스트
+		public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
+			return sqlSession.selectList(NAMESPACE+"quickList", listInfo);
+		}
+		
+		//프로젝트 리스트에서 뿌려주는 급구리스트 카운트
+		public int quickCount(ProjectDTO projectDTO){
+			System.out.println("quickCount-dao");
+			return sqlSession.selectOne(NAMESPACE+"quickCount", projectDTO);
+		}
+		
+		//pjsell update가 아닌 pjsell에 등록했을 때, project상태바꾸기
+		public int updateProjectState(PjSellDTO pjSellDTO){
+			return sqlSession.update(NAMESPACE+"updateProjectState", pjSellDTO);
+		}
+		
+		//pjsell update가 아닌 pjsell에서 취소했을 때, project상태 finish로 바꾸기
+		public int cancleProjectState(PjSellDTO pjSellDTO){
+			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
+		}
 }

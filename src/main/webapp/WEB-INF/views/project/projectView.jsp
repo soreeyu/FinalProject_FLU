@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
-
+  
 .main_section {
    min-width: 1160px;
    width: 1160px;
@@ -25,7 +26,7 @@
    padding: 30px;
    margin-bottom: 20px;
    border: 1px solid #e6e6e6;
-   margin-bottom: 30px;
+   margin-bottom: 20px;
    background-color: white;
 }
 
@@ -56,8 +57,18 @@
    color: #666;
 }
 
+.header_category{
+	font-size: 20px;
+   vertical-align: middle;
+   margin-top: 5px;
+   margin-right:50px;
+   float: left;
+   height: 20px;
+   line-height: 20px;
+}
+
 /* 추가  */
-#header_t span:last-child{
+.header_apply{
    font-size: 20px;
    vertical-align: middle;
    margin-top: 5px;
@@ -183,16 +194,13 @@ strong{
    font-size: 20px;
    margin-bottom: 20px;
 }
-.project-skill{
-/*    background-color: #666; */
-   color: white;
-   border-radius: 2px;
-}
+
 .contents-register{
    background-color: white;
    margin-top: 10px;
    padding: 25px;
    border: 1px solid #dedede;
+   margin-bottom: 30px;
 }
 .contents-register-inner span a{
    font-weight: bold;
@@ -466,12 +474,7 @@ background-color: white;
    margin-left: 10px;
    color: #666;
 }
-.skill-name{
-   background-color: #a1a7ad;
-}
-.skill-box span{
-   color: #999;
-}
+
 .contents_bottom{
    margin-top: 30px;
    width: 100%;
@@ -517,6 +520,23 @@ background-color: white;
    height: 100%;
    width: 100%;
 }
+.modal-header, h4, .close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+
+.reply_img{
+	height: 30px;
+	width: 30px;
+	margin-right: 10px;
+	border-radius: 2px;
+	display: inline;
+}
 </style>
 
 </head>
@@ -530,16 +550,72 @@ background-color: white;
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
             <span>${dto.name}</span>
-            <span class="DateMius"><span class="startDate"></span> - <span class="finishDate"></span></span>
+            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
             </p>
             <p id="header_t">
-            <span>${dto.category} > ${dto.detailCategory }</span>
-            <span>
+            <span class="header_category">${dto.category} > ${dto.detailCategory }</span>
+            
+            <c:if test="${dto.state eq 'done' }">
+            <span class="header_apply">
             <img src="${pageContext.request.contextPath}/resources/img/project/proposal.png">
-            총<strong>N명</strong>지원</span>
+         		   총<strong>${applyCount}명</strong>지원</span>
+            </c:if>
+            
+            
             </p>
          </div>
       </div>
+      
+      <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done' && member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null}">
+      <div class="contents-register">
+            <div class="contents-register-inner" style="text-align: center;">
+            
+            <c:if test="${member.kind=='admin' }">
+               <p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
+            </c:if>
+            <c:if test="${member.kind=='freelancer'}">
+               <p>프로젝트 지원을 위해
+               <c:if test="${member.phone eq null }">
+               <span><a href="../member/personaldataView">기본정보</a></span>
+               </c:if>
+               <c:if test="${freelancer.intro eq null }">
+               <span><a href="../member/introView">자기소개</a></span>
+               </c:if>
+               <c:if test="${skills[0] eq null }">
+               <span><a href="../member/skillList">보유기술</a></span>
+               </c:if>
+               <c:if test="${portfolio[0] eq null }">
+               <span><a href="../member/portfolioList">포트폴리오</a></span>
+               </c:if>
+               을(를) 입력해주세요
+               </p>
+              
+            </c:if>
+            
+            <c:if test="${member.kind eq 'client' && member.email==dto.email}">
+            
+            
+            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
+               <div class="owner_option_btn">
+               <c:if test="${dto.state eq 'check'}">
+                  <div class="owner-btn" id="pj-update">Update</div>
+               </c:if>
+                  <div class="owner-btn" id="pj-delete">Delete</div>
+               	 
+               </div>
+          
+               </c:if>
+            
+            </div>
+         </div>
+      </c:if>
+      
+      <c:if test="${dto.state eq 'sell'}">
+      <div>판매뷰를 보여주자</div>
+      </c:if>
+      
+      
+      
       
       <!-- contents -->
       <div class="contents">
@@ -595,7 +671,14 @@ background-color: white;
             
             <div>
                <div class="project-detail-title" style="margin-top: 20px;">관련 기술</div>
-               <span class="project-skill">${dto.skills}</span>
+               <span class="project-skill">
+               
+               <c:forEach items="${dto.skills}" var="sk">
+					<span class="skill-name">${sk}</span>
+							
+							</c:forEach>
+               
+               </span>
       
                
                
@@ -603,40 +686,12 @@ background-color: white;
          </div>
          <div style="clear: both;"></div>
 
-
-         <div class="contents-register">
-            <div class="contents-register-inner" style="text-align: center;">
-            
-            <c:if test="${member.kind=='admin' }">
-               <p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-            </c:if>
-            <c:if test="${member.kind=='freelancer'}">
-               <p>프로젝트 지원을 위해
-               <span><a href="#">기본정보</a></span>
-               <span><a href="#">자기소개</a></span>
-               <span><a href="#">보유기술</a></span>
-               <span><a href="#">포트폴리오</a></span>
-               을(를) 입력해주세요
-               </p>
-               <a href="#" class="register-btn"><img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원불가 </a>
-            </c:if>
-            
-            <c:if test="${member.email==dto.email}">
-            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 </p> ${dto.projectNum }
-               <div class="owner_option_btn">
-                  <a href="#" class="owner-btn" id="pj-update">Update</a>
-                  <a href="#" class="owner-btn" id="pj-delete">Delete</a>
-               </div>
-               </c:if>
-            
-            </div>
-         </div>
          
          
          
          
          
-         <c:if test="${dto.state eq 'ing' || dto.state eq 'recruit'}">
+         <c:if test="${dto.state eq 'ing' || dto.state eq 'done'}">
          <div class="project-qna">
             <div class="project-detail-title">프로젝트 문의 </div>
             <div style="border-bottom: 1px dotted #dedede;"></div>
@@ -658,7 +713,7 @@ background-color: white;
                
                <!-- member의 img를 넣자 -->
             
-               
+               <div class="reply_img_box"><img style="height: 30px; width: 30px; border-radius: 3px; margin-right: 10px;" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}"></div>
                <input type="text" name="contents">
                <input type="checkbox" id="reply_check">비공개 설정
                <input type="hidden" name="replyChk" id="replyChk" value="true">
@@ -682,25 +737,97 @@ background-color: white;
          
          <!-- right contents  -->
       <section class="contents_sub">
+      
+      <!-- 오른쪽 상단 버튼 프리랜서일때 설정하기 -->
+      <c:if test="${member.kind eq 'freelancer' && (dto.state eq 'done' || dto.state eq 'ing') }">
+      
          <div class="project-apply-box">
+            <c:if test="${dto.state eq 'done'}">
+            <div class="register-btn" id="btn_apply" data-toggle="modal" >
+            <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">
+            <span id="span_apply">
+            <c:if test="${check eq 0 && checkCount eq 0 && member.phone ne null && freelancer.intro ne null && portfolio[0] ne null && skills[0] ne null}">
+            	프로젝트 지원하기
+            </c:if>
             
-         <c:if test="${member.kind eq 'freelancer' && (applicant.state eq 'app' || dto.state eq 'recruit')}">
-            <a href="#" class="register-btn" id="btn_apply">
-            <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">프로젝트 지원하기 </a>
-            <a href="#" class="register-btn" id="btn_like" style="background-color: navy;">
-            <i class="fa fa-heart"></i>관심프로젝트 추가하기 </a>
-          </c:if> 
-          
-          <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
-            <a href="#" class="schedule-btn">프로젝트 스케줄 </a>
+            <c:if test="${check eq 0 && checkCount eq 0 && member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null }">
+            	프로젝트 지원 불가
+            </c:if>
+            <c:if test="${check eq 1 || checkCount eq 1}">
+          	 프로젝트 지원 취소
+            </c:if>
+            </span>
+            </div>
           </c:if>
+            <c:if test="${dto.state eq 'ing'}">
+            <div class="schedule-btn">프로젝트 스케줄 </div>
+          </c:if>
+         
+             </div>
+            </c:if>
+            
+         
+           <!----------------------- Modal ---------------------------------->
+
+            
+        
+
+  <!-- Modal -->
+ <div class="modal fade" id="App_Modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-edit"></span>  Application</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" action="../applicant/insertApplicant">
+            <div class="form-group">
+            <input type="hidden" name="projectNum" value="${dto.projectNum }">
+            <input type="hidden" name="email" value="${member.email}">
+            <div>프로젝트Num : ${dto.projectNum }</div>
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Applicant email</label>
+              <div>${member.email}</div>
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> pay</label>
+              <input type="number" class="form-control" name="pay" placeholder="Enter pay">
+            </div>
+         
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Apply</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      
+          <p>프로젝트 미팅시 조율이 있을 수 있습니다.</p>
+         
+        </div>
+      </div>
+      
+    </div>
+  </div>  
+         
+         
+             
           
-          <c:if test="${(dto.state eq 'recruit'|| dto.state eq 'ing') && member.kind eq 'client'}">
-            <a href="#" class="schedule-btn">미팅룸 예약하기 </a>
-          </c:if>   
+          <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
+          <c:if test="${member.kind eq 'client' && member.email==dto.email && (dto.state eq 'recruit' || dto.state eq 'ing')}">
+          <div class="project-apply-box">
+          <c:if test="${dto.state eq 'ing'}">
+            <div class="schedule-btn">프로젝트 스케줄 </div>
+          </c:if>
+            <div class="schedule-btn">미팅룸 예약하기 </div>
+        
+          </div>
+          </c:if>
+       
+          
           
           <c:if test="${member.kind eq 'admin'}">
-          
+          <div class="project-apply-box">
            
              <c:if test="${dto.state=='done'}">
             프로젝트 상태 : <strong>검수완료</strong> 
@@ -731,26 +858,27 @@ background-color: white;
             <input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
             
             </form>
+            </div>
           </c:if>
-         </div>
-            
+      
             
          
             
             
             <div class="client-info-box">
                <div>
-               <%-- ${member.oProfileImage }
-               ${member.fProfileImage } --%>
+           
                <div class="dto_profile_box">
-                  <div class="dto_profile"></div>
+                  <div class="dto_profile">
+                  	<img style="width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/profile/${mem.fProfileImage}">
+                  </div>
                </div>
                <div class="dto_profile_detail">
                   <div>프로젝트 등록자 : ${dto.email}</div>
                   <div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
-                  <div><span>계약한 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
                   <div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
                   <div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
+                  <div><span>판매중인 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
                </div>
                </div>
             </div>
@@ -770,8 +898,18 @@ background-color: white;
 var projectNum = "${dto.projectNum}";
 var email = "${member.email}";
 var state = '${dto.state}';
+var check = "${check}";
+var apply_check = $("#btn_apply").text().trim();
+alert("으ㅇㅇ아");
+alert("skills==${skills}");
+alert("skill-size==${skills[0]}");
 alert(state);
 alert("${member.oProfileImage }");
+alert("중복인가="+check);
+alert("checkCount=${checkCount}");
+alert(apply_check);
+alert("intro--=${freelancer.intro}");
+
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -805,7 +943,7 @@ if(planState=='idea'){
  var reg_Month = reg_date.getMonth()+1;
  var reg_Year = reg_date.getFullYear();
  $("#reg_date").text(reg_Year+"년 "+reg_Month+"월 "+reg_Day+"일");
-
+ $(".regDate").text(reg_Year+"년 "+reg_Month+"월 "+reg_Day+"일");
  
  
  /* 예상시작일 뿌려주기 */
@@ -888,76 +1026,89 @@ if(meetKind=='offline'){
   });
    
 
-/* 관심 프로젝트 추가하기  */
-
- $("#btn_like").click(function() {
-   alert("관심 추가하기");
-   /*  */
-});
- 
- 
- /* 프로젝트 지원하기 */
- $("#btn_apply").click(function() {
-   alert("프로젝트 지원!");
-});
- 
- 
- 
- 
- 
- 
- 
- 
-$("#pj-delete").click(function() {
-
-   var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
-   
-   if(ch == true) {
-      $.get("projectDelete?projectNum="+projectNum,function(data){
-         location.href = "projectList";
-      });
-   } else {
-      alert("취소되었습니다.");
-      location.href = "projectView?projectNum="+projectNum;
-   }
-});
- 
- $("#pj-update").click(function() {
-   location.href = "projectUpdate?projectNum="+projectNum+"&email="+email;
-});
- 
- 
- 
- 
-$('#'+state).click(function() {
-   
-
-   var projectNum = '${dto.projectNum}';
-      
-   $('#deleteBTN').click(function() {
-      
-      if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
-         $('#frmm').attr('action','./projectDelete');
-         $('#frmm').submit();
-      }else{
-         
-      }   
-      
-   });
-});   
-   
-   $('#doneBTN').click(function() {
-      if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
-         $('#frmm').submit();
-      }
-      else{
-
-      }
-      
-   });
 
 
+	/* 프로젝트 지원하기 */
+	(function($) {
+		$("#btn_apply").click(function() {
+			
+			if(apply_check=="프로젝트 지원 취소"){
+				alert("프로젝트 지원 취소");
+				var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
+				if(ch == true){
+					$.get("../applicant/deleteApplicant?email="+email+"&projectNum="+projectNum, function(data) {
+					});
+					location.href="../member/freelancer/myproject?email"+email;
+				}else{
+					alert("취소되었습니다.");
+				}
+			}else if(apply_check=="프로젝트 지원 불가"){
+				alert("프로젝트 지원 불가");
+			}else{
+		
+			alert("프로젝트 지원!");
+			$("#App_Modal").modal();
+			
+			}
+		});
+	})(jQuery);
+
+	
+	
+	
+	$("#pj-delete").click(function() {
+
+		if(state=="check" || state=="done"){
+
+			var ch = confirm("삭제하시겠습니까?\n삭제한 프로젝트는 복구할 수 없습니다.");
+	
+			if (ch == true) {
+				$.get("projectDelete?projectNum=" + projectNum+"&state="+state, function(data) {
+					location.href = "../member/client/clientproject";
+				});
+			}else {
+				alert("취소되었습니다.");
+				location.href = "projectView?projectNum=" + projectNum;
+			}
+		}else if(state=="recruit" || state=="ing" || state=="fail"){
+			alert("관리자에게 프로젝트 삭제 요청들어가기");
+		}else{
+			alert("완료된 프로젝트나 판매중인 프로젝트를 삭제시 \n프리랜서의 커리어에서 삭제되기 때문에 삭제 불가합니다. \n관리자에게 문의하세요.");
+		}
+		
+	});
+
+	$("#pj-update").click(
+			function() {
+				location.href = "projectUpdate?projectNum=" + projectNum
+						+ "&email=" + email;
+			});
+
+	$('#' + state).click(function() {
+
+		var projectNum = '${dto.projectNum}';
+
+		$('#deleteBTN').click(function() {
+
+			if (confirm("정말로 프로젝트를 삭제하시겠습니까?")) {
+				$('#frmm').attr('action', './projectDelete');
+				$('#frmm').submit();
+			} else {
+
+			}
+
+		});
+	});
+
+	$('#doneBTN').click(function() {
+		if (confirm("프로젝트 검수를 완료하시겠습니까?")) {
+			$('#frmm').attr('action', '../checkProject/checkProjectUpdate');
+			$('#frmm').submit();
+		} else {
+
+		}
+
+	});
 </script>
 </body>
 </html>

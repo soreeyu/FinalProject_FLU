@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -246,7 +247,8 @@ label{
 						
 				<!-- email은 로그인한 클라이언트 email 땡겨오기 -->
 						<input type="hidden" name="email" value="${member.email}">
-					
+				<!-- 프로젝트 등록시 del_Check=0으로 넣어주기 -->
+						<input type="hidden" name="del_Check" value="0">
 		
 				
 				
@@ -332,9 +334,7 @@ label{
 				<div>
 					<label><span>*</span>프로젝트 내용</label>
 					<div>
-						<textarea rows="30" cols="80" name="contents" >
-						${dto.contents }
-						</textarea>
+						<textarea rows="30" cols="80" name="contents">${dto.contents}</textarea>
 					</div>
 				</div>
 				
@@ -581,7 +581,7 @@ label{
 				<div class="control-wrapper" style="margin-top: 20px;">
 					<label><span>*</span>기획 관련 파일</label>
 					<div class="category-wrapper">
-						<input type="file" name="fileName" >
+						<input type="file" name="fileName" value="${dto.fileName }">
 						<span id="detail">프로젝트 등록시 참고문서가 될 수 있습니다.</span>
 					</div>
 				</div>
@@ -660,14 +660,24 @@ label{
 
 <script type="text/javascript">
 
-/* var fdate = "${dto.finishDate}";
-var fday = new Date(fdate);
-alert("fday=="+fday);
-$("#finishDate").val(fday); */
+
 
 alert("type == ${type}"); 
 alert("사용자email = ${member.email}");
 	
+var fdate = "${dto.finishDate}";
+alert(fdate);
+var finishDate = new Date(fdate);
+var finishDay = finishDate.getDate();
+var finishMonth = finishDate.getMonth()+1;
+var finishYear = finishDate.getFullYear();
+alert(finishDay);
+alert(finishMonth);
+alert(finishYear);
+
+
+
+
 
  function check_submit() {
 	
