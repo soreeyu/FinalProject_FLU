@@ -610,6 +610,10 @@ background-color: white;
          </div>
       </c:if>
       
+      <c:if test="${dto.state eq 'sell'}">
+      <div>판매뷰를 보여주자</div>
+      </c:if>
+      
       
       
       

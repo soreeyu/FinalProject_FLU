@@ -223,7 +223,7 @@
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");
 	var memberEmail = '${member.email}';
-	
+	alert('${conState}');
 	location.href="../../project/projectView?projectNum="+projectNum;
 	
 });
