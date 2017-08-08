@@ -26,10 +26,8 @@
 </script>
 <style type="text/css">
 .main_section {
-    min-width: 1160px;
     width: 1160px;
-    height: auto;
-    min-height: 2300px;
+    height: 1000px;
     margin: 0 auto;
     margin-top: 30px;
 }
@@ -56,8 +54,7 @@
 	width : 30%;
 	float: left;
 	position: relative;
-	padding: 13px;	
-	
+	padding: 13px;		
 }
 .search {
 	float: right;
@@ -88,6 +85,13 @@
 }
 .info {
 	padding-bottom: 10px;
+}
+
+.contents_bottom {
+    margin-top: 30px;
+    width: 100%;
+    height: 16px;
+    float: left;
 }
 .contents_paging{
 	width: 380px;
@@ -137,10 +141,11 @@
 		</div>
 	</div>
 	</c:forEach>
-
-
-
 	
+
+
+
+		<div class="contents_bottom">
 		<div class="contents_paging">
 				<c:if test="${listInfo.curBlock>1 }">
 				<span id="preview">[이전]</span>		
@@ -155,6 +160,7 @@
 				</c:if>
 		</div>
 
+		</div>
 		<c:if test="${member.kind eq 'admin'}">
 			<a href="meetInsert" style="float: left;">업체등록</a>	
 		</c:if>

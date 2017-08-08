@@ -16,11 +16,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberService;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
+import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
@@ -152,25 +154,31 @@ public class MemberController {
 		
 		//로그인 
 		@RequestMapping(value="login", method=RequestMethod.POST)
-		public String login(MemberDTO memberDTO, HttpSession session, RedirectAttributes re) throws Exception{
-			
+		public String login(MemberDTO memberDTO, HttpSession session, RedirectAttributes ra) throws Exception{
+			System.out.println("로그인 컨트롤러");
+
 			memberDTO = memberService.login(memberDTO);
-			String message = "0";
+			String message = "";
 			if(memberDTO != null){
 				alarmDTO = new AlarmDTO();
 				session.setAttribute("member", memberDTO);
-				message= "1";
+				message= "로그인 하였습니다.";
 				alarmDTO.setEmail(memberDTO.getEmail());
-				re.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
-				System.out.println(alarmService.alarmCount(alarmDTO));
-				if(memberDTO.getEmailcheck().equals("1")){
-					
-					return "redirect:/member/myflu";
-				}else{
-					return "redirect:/member/emailCK";
+
+				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
+				System.out.println("카운트"+alarmService.alarmCount(alarmDTO));
+				ra.addFlashAttribute("message", message);
+				
+				System.out.println("회원");
+				//관리자 로그인시 리턴하는 주소는 인덱스 myflu가 아님
+				if(memberDTO.getKind().equals("admin")){
+					return "index";
 				}
+				return "redirect:/member/myflu";
+				
 			}else{
-				re.addFlashAttribute("message", message);
+				ra.addFlashAttribute("message", message);
+
 				return "redirect:/member/login";
 				
 			}
@@ -185,7 +193,63 @@ public class MemberController {
 		
 		//MY FLU
 		@RequestMapping(value="myflu")
-		public void myflu(){
+		public void myflu(HttpSession session, Model model) throws Exception{
+			//알람 List
+			List<AlarmDTO> ar = memberService.memberAlarmList(((MemberDTO)session.getAttribute("member")).getEmail());
+			
+			
+			
+			//로그인한 사람이 프리랜서일 경우 아래의 코드 실행
+			if(((MemberDTO)session.getAttribute("member")).getKind().equals("freelancer")){
+				//진행중인 프로젝트 List
+				List<ProjectDTO> far = memberService.memberProjectList_ING(((MemberDTO)session.getAttribute("member")).getEmail());
+				//지원한 프로젝트 List
+				List<ProjectDTO> far2 = memberService.memberProjectList_APP(((MemberDTO)session.getAttribute("member")).getEmail());
+				//완료한 프로젝트 List
+				List<ProjectDTO> far3 = memberService.memberProjectList_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 Count
+				int count1 = memberService.memberProjectCount_ING(((MemberDTO)session.getAttribute("member")).getEmail());
+				//지원한 프로젝트 Count
+				int count2 = memberService.memberProjectCount_APP(((MemberDTO)session.getAttribute("member")).getEmail());
+				//완료한 프로젝트 Count
+				int count3 = memberService.memberProjectCount_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
+				//누적 완료 금액
+				int pay = memberService.memberProjectSumPay(((MemberDTO)session.getAttribute("member")).getEmail());
+				System.out.println("PAY"+pay);
+				model.addAttribute("ingList", far);
+				model.addAttribute("appList", far2);			
+				model.addAttribute("finList", far3);
+				model.addAttribute("ingCount", count1);
+				model.addAttribute("appCount", count2);
+				model.addAttribute("finCount", count3);
+				model.addAttribute("pay", pay);
+				
+				//로그인한 사람이 클라이언트일 경우 아래의 코드를 실행
+			}else if(((MemberDTO)session.getAttribute("member")).getKind().equals("client")){
+				//검수중인 프로젝트 List
+				List<ProjectDTO> car = memberService.memberProjecttList_CHK(((MemberDTO)session.getAttribute("member")).getEmail());
+				//지원자 모집중인 프로젝트 List
+				List<ProjectDTO> car2 = memberService.memberProjectList_REC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 List
+				List<ProjectDTO> car3 = memberService.memberProjectList_INGC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//등록한 프로젝트 Count
+				int count1 = memberService.memberProjectCount_CHK(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 Count
+				int count2 = memberService.memberProjectCount_INGC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//완료한 프로젝트 Count
+				int count3 = memberService.memberProjectCount_FINC(((MemberDTO)session.getAttribute("member")).getEmail());
+				//누적 완료 금액
+				int budget = memberService.memberProjectSumBudget(((MemberDTO)session.getAttribute("member")).getEmail());
+				
+				model.addAttribute("chkList", car);
+				model.addAttribute("recList", car2);
+				model.addAttribute("ingcList", car3);
+				model.addAttribute("insCount", count1);
+				model.addAttribute("ingCount", count2);
+				model.addAttribute("finCount", count3);
+				model.addAttribute("budget", budget);
+			}
+			model.addAttribute("alrList", ar);
 			
 		}
 		
@@ -347,7 +411,9 @@ public class MemberController {
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
 				alarmDTO.setEmail(memberDTO.getEmail());
-				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
+
+				alarmDTO.setContents("개인정보를 수정 하셨습니다.");
+
 				alarmService.alarmInsert(alarmDTO);
 				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 			}
@@ -355,6 +421,7 @@ public class MemberController {
 
 			return "redirect:/member/personaldataView";
 		}
+		
 		//미팅룸 예약 현황 가져오기 
 				@RequestMapping(value="myMeetRoom", method=RequestMethod.GET)
 				public void MemberReservedList(HttpSession session, ListInfo listInfo, Model model) throws Exception{

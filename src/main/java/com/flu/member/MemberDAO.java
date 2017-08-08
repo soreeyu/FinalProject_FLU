@@ -9,7 +9,10 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.alarm.AlarmDTO;
+import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
+import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
 import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
@@ -125,16 +128,78 @@ public class MemberDAO {
 		return sqlSession.selectList(NAMESPACE+"adminReserved", listInfo);
 	}
 
-	//리스트를 가져오기 위한 count
+	//예약리스트를 가져오기 위한 count
 	public int totalCount() throws Exception{
 		return sqlSession.selectOne("MeetRoomMapper.MeetRoomCount");
 
 	}
 	
+
 	//계좌 등록/수정
 	public int accountInsert(MemberDTO memberDTO){
 		return sqlSession.update(NAMESPACE+"accountInsert", memberDTO);
 	}
+	//진행중인 프로젝트 가져오기
+	public List<ProjectDTO> memberProjectList_ING(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_ING", email);
+	}
+	//지원한 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_APP(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_APP", email);
+	}
+	//완료한 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_FIN(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_FIN", email);
 
+	}
 
+	//검수중인 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjecttList_CHK(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjecttList_CHK", email);
+	}
+	//지원자 모집중인 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_REC(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_REC", email);
+	}
+	//진행중인 프로젝트 리스트 가져오기
+	public List<ProjectDTO> memberProjectList_INGC(String email) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"memberProjectList_INGC", email);
+	}
+	//진행중인 프로젝트 카운트(프리랜서)
+	public int memberProjectCount_ING(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectCount_ING", email);
+	}
+	//지원한 프로젝트 카운트(프리랜서)
+	public int memberProjectCount_APP(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectCount_APP", email);
+	}
+	//완료한 프로젝트 카운트(프리랜서)
+	public int memberProjectCount_FIN(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectCount_FIN", email);
+	}
+	//누적완료금액(프리랜서)
+	public int memberProjectSumPay(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectSumPay", email);				
+	}
+	//등록한 프로젝트 카운트(클라이언트)
+	public int memberProjectCount_CHK(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectCount_CHK", email);
+	}
+	//진행중인 프로젝트 카운트(클라이언트)
+	public int memberProjectCount_INGC(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectCount_INGC", email);
+	}
+	//완료한 프로젝트 카운트(클라이언트)
+	public int memberProjectCount_FINC(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectCount_FINC", email);
+	}
+	//누적완료금액(클라이언트)
+	public int memberProjectSumBudget(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberProjectSumBudget", email);
+	}
+	//myflu에 뿌려질 알람 리스트
+	public List<AlarmDTO> memberAlarmList(String email) throws Exception{
+		System.out.println("email"+email);
+		return sqlSession.selectList(NAMESPACE+"memberAlarmList", email);
+	}
 }

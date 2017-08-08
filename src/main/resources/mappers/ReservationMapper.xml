@@ -27,4 +27,13 @@
   	<delete id="ReserveDelete" parameterType="java.lang.Integer">
   		delete reservation where num=#{num}
   	</delete>
+  	
+  	<!-- 할인(클라이언트) 모집완료된, 진행중인 프로젝트 카운트 -->
+  	<select id="ReserveDiscount_REC" parameterType="java.lang.String" resultType="java.lang.Integer">
+  		select nvl(count(projectnum),0) from project where email=#{email} and state in ('recruit', 'ing')
+  	</select>
+  	<!-- 할인(프리랜서) 진행중인 프로젝트 카운트 -->
+  	<select id="ReserveDiscount_ING" parameterType="java.lang.String" resultType="java.lang.Integer">
+  		select nvl(count(state),0) from applicant where email=#{email} and state='ing'
+  	</select>
   </mapper>

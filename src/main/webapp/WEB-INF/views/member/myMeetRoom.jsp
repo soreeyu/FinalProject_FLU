@@ -245,7 +245,7 @@
 							</c:when>
 						</c:choose>	
 							<h4 class="username">${member.email}</h4>
-							<c:if test="${member.kind eq 'freelancer' || 'client' }">
+							<c:if test="${member.kind ne 'admin' }">
 							<a class="profile-setting"href="./member/personaldataView">기본 정보 수정</a>					
 							</c:if>
 						</div>
@@ -265,7 +265,7 @@
 						<c:if test="${member.kind eq 'admin' }">
 						<small class="small-text">회원들의 미팅룸 예약 현황을 확인할 수 있습니다.</small>
 						</c:if>
-						<c:if test="${ member.kind eq 'freelancer' || 'client'}">
+						<c:if test="${ member.kind ne 'admin'}">
 						<small class="small-text">자신이 예약한 미팅룸의 현황을 확인할 수 있습니다.</small>
 						</c:if>
 					</h3>
@@ -290,7 +290,7 @@
 						<td>${i.time}</td>
 						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>
 						<c:if test="${i.state eq 'finish'}">
-						<c:if test="${member.kind eq 'freelancer' || 'client' }">
+						<c:if test="${member.kind ne 'admin' }">
 						<td><input type="button" value="예약취소" class="btn" title="${i.num}"></td>										
 						</c:if>
 						<c:if test="${member.kind eq 'admin' }">
@@ -302,7 +302,7 @@
 						<c:if test="${member.kind eq 'admin'}">
 						<td><input type="button" value="취소확인" class="del_btn" title="${i.num}" lang="${i.email}"></td>
 						</c:if>
-						<c:if test="${member.kind eq 'freelancer' || 'client'}">
+						<c:if test="${member.kind ne 'admin'}">
 						<td>예약취소대기중</td>
 						</c:if>
 						</c:if>
@@ -313,17 +313,17 @@
 				
 				
 			<c:if test="${member.kind eq 'admin'}">
-			<div class="search">
-				<select name="kind" id="select_kind">
+			<div class="search" style="margin-top: 20px;">
+				<select name="kind" id="select_kind" style="height: 25px;">
 					<option value="name">세부공간명</option>
 					<option value="reserve_name">예약자</option>
 					<option value="reserve_date">예약날짜</option>
 					<option value="human">예약인원</option>
 					<option value="price">가격</option>
 				</select>
-				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
-				<input type="button" value="검색" id="search_btn">
-			</div>
+				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search" style="height: 25px;">
+				<input type="button" value="검색" id="search_btn" style="height: 25px;">
+			</div> 
 			</c:if>
 				
 				
