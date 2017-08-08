@@ -313,17 +313,17 @@
 				
 				
 			<c:if test="${member.kind eq 'admin'}">
-			<div class="search">
-				<select name="kind" id="select_kind">
+			<div class="search" style="margin-top: 20px;">
+				<select name="kind" id="select_kind" style="height: 25px;">
 					<option value="name">세부공간명</option>
 					<option value="reserve_name">예약자</option>
 					<option value="reserve_date">예약날짜</option>
 					<option value="human">예약인원</option>
 					<option value="price">가격</option>
 				</select>
-				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search">
-				<input type="button" value="검색" id="search_btn">
-			</div>
+				<input type="text" placeholder="검색어를 입력해주세요" name="search" id="select_search" style="height: 25px;">
+				<input type="button" value="검색" id="search_btn" style="height: 25px;">
+			</div> 
 			</c:if>
 				
 				

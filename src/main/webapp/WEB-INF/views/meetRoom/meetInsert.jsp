@@ -414,6 +414,9 @@ input[type=text]{
     background-color: #704de4;
     color: #fff;
 }
+#smarteditor{
+	resize: none;
+}
 
 </style>
 </head>
@@ -444,7 +447,7 @@ input[type=text]{
 		<span class="tit">
 				공간소개		
 			</span>
-		<textarea rows="" cols="" name="contents" id="smarteditor" style="height: 108px;" placeholder="공간을 상세하게 소개해보세요. 공간의 특징이나 주변환경 등의 세부정보를 작성하시면 효과적입니다.">${dto.contents}</textarea>
+		<textarea rows="" cols="" name="contents" id="smarteditor"  style="height: 108px;" placeholder="공간을 상세하게 소개해보세요. 공간의 특징이나 주변환경 등의 세부정보를 작성하시면 효과적입니다.">${dto.contents}</textarea>
 	</div>
 	
 	<div class="flex_wrap column2">
@@ -472,7 +475,7 @@ input[type=text]{
 				</div>
 				<span class="txt_hour">까지</span>
 			</div>
-			<p class="p_guide normal">
+			<p class="p_guide normal" style="margin-top: 20px;">
 				실제로 공유 가능한 시간을 입력해주세요.
 			</p>
 		</div>

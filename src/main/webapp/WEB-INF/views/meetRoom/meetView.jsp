@@ -107,7 +107,7 @@ section {
 	min-width : 1152px;
 	width : 60%;
 	margin : 0 auto;
-	margin-bottom: 150px;
+	height: 2000px;
 }
 p {
 	font-family: sans-serif;
@@ -363,7 +363,7 @@ label {
 		</div>
 		<input type="hidden" id="each2">
 		</div> 
-		<input type="button" id="reservation_btn" value="예약하기" style="width: 100%;">
+		<input type="button" id="reservation_btn" value="예약하기" style="width: 100%; margin-top: 20px; border: none; background-color: #339bff; color: white; font-size: 1.5em;">
 		</div>
 
 		
