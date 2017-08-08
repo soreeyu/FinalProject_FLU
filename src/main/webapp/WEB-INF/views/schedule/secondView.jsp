@@ -17,8 +17,6 @@
     </div>
     <div class="bodyWrap">
 		<div id="listModalContents">
-			
-			
 			<!-- 여기에 table 그리기 -->
 			<table>
 				<tr>

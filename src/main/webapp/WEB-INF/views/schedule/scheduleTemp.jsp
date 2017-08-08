@@ -5,13 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:import url="../temp/bootstrap.jsp"></c:import>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/basic.css">
+<%-- <c:import url="../temp/bootstrap.jsp"></c:import> --%>
+  
+  
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
+<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
@@ -26,13 +35,18 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
-
+ --%>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <title>스케줄메인</title>
 
 
 <style type="text/css">
+
+a{
+	color:black;
+}
+
 
 .clear{
 	clear: both;
@@ -49,7 +63,7 @@
 
 
 .schedule_header {
-    height: 92px;
+    height: 142px;
     padding: 30px;
     border: 1px solid #e6e6e6;
     margin-bottom: 30px;
@@ -306,11 +320,11 @@
     font-size: 18px;
 }
  
-.tw-project-analytics-overview{
+/* .tw-project-analytics-overview{
 	height: 113px;
 	background: white;
 }
-
+ */
 .tw-project-analytics-overview__head {
     display: flex;
     margin-bottom: 35px;
@@ -1080,7 +1094,7 @@ var currentTab = '${currentTab}';
 			loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,currentTab);
 		}
 	
-		
+		/* 
 		jui.ready([ "ui.modal" ], function(modal) {
 		    unitModal = modal("#unitViewModal", {
 		        color: "black",
@@ -1088,7 +1102,7 @@ var currentTab = '${currentTab}';
 		        opacity: 0.5
 		    });
 		});
-		
+		 */
 		
 		//tab 클릭 이벤트
 		$('ul.tab li').click(function() {
@@ -1115,7 +1129,7 @@ var currentTab = '${currentTab}';
 				//alert("달력보기");
 				//url = "/flu/schedule/secondView?scheduleNum="+scheduleNum;
 				
-				///////////////////2뷰///////////////
+				/* ///////////////////2뷰///////////////
 				jui.ready([ "ui.modal" ], function(modal) {
 					alert("모달 생성하기");
 					unitListModal = modal("#unitListModal", {
@@ -1123,7 +1137,7 @@ var currentTab = '${currentTab}';
 				        target: "body",
 				        opacity: 0.5
 				    });
-				});
+				}); */
 				
 				
 				$(document).on("click",".closeBtn",function(data){
@@ -1758,12 +1772,18 @@ var currentTab = '${currentTab}';
 				<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
 				<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
 				<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
-				<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
-				<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
-				<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
-				<li class=""  data-tab="tab7"><span class="taba">간트차트(이거)</span></li>
-				<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
+				<li class=""  data-tab="tab7"><span class="taba seeGantt">간트차트보기</span></li>
 				<li class=""  data-tab="tab9"><span class="taba">상세보기(엑셀)</span></li>
+				<c:if test="${member.kind eq 'freelancer'}">
+				<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
+				</c:if>
+				<c:if test="${member.kind eq 'client'}">
+				<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
+				</c:if>
+				<!-- <li class=""  data-tab="tab6"><span class="taba">간트차트</span></li> -->
+				
+				<!-- <li class=""  data-tab="tab8"><span class="taba">구글차트</span></li> -->
+				
 			</ul>
 		</div>
 	</div>
@@ -1810,6 +1830,57 @@ var currentTab = '${currentTab}';
 			<%-- <c:import url="/WEB-INF/views/schedule/detailViewforExcel.jsp" /> --%>
 		</div>
 	</div>
+		
+		
+		
+		
+		
+		
+		
+		<button type="button" class="btn btn-info btn-lg" id="myBtn">Open Modal</button>
+		
+		
+		<!--  -----------MODAL 만들기----------------  -->
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Modal Header</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>Some text in the modal.</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		
+		<script type="text/javascript">
+		$("#myBtn").click(function(){
+			$('#myModal').modal({backdrop: 'static'});
+	    });
+		</script>
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

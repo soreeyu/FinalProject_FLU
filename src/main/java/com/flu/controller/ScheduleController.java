@@ -382,6 +382,7 @@ public class ScheduleController {
 			int result =  scheduleService.insertPart(schedulePartArrayDTO,session);
 			int scheduleNum = schedulePartArrayDTO.getScheduleNum();
 			System.out.println("part등록 Controller result = "+result);
+			
 			if(result > 0 ){
 				//part 등록성공	
 			}else{
