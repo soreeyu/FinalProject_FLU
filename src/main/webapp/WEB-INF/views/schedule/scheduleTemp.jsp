@@ -18,9 +18,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
-<%-- <script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script>
+
+
+<script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
+<%-- <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script> --%>
 <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/lib/niee-canvas-chart003.js"></script>
@@ -31,10 +32,12 @@
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/combo.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/datepicker.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/dropdown.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script>
- --%>
+<%-- <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script> --%>
+<%-- <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
+<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script> --%>
+
+
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <title>스케줄메인</title>
@@ -1075,34 +1078,21 @@ function getContextPath(){
 	return context;
 }
 
-
-var unitListModal;
-var unitModal;
 var currentTab = '${currentTab}';
+var scheduleNum = '${scheduleNum}';
+
 	$(function() {
-		
-		var scheduleNum = '${scheduleNum}';
-		
+
 		//데이터 뿌리기
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
 		if(currentTab == ''){
-			loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
+			loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
 		}else{
-			loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,currentTab);
+			loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,currentTab); //받은 tab으로 이동
 		}
-	
-		/* 
-		jui.ready([ "ui.modal" ], function(modal) {
-		    unitModal = modal("#unitViewModal", {
-		        color: "black",
-		        target: "body",
-		        opacity: 0.5
-		    });
-		});
-		 */
-		
+
 		//tab 클릭 이벤트
 		$('ul.tab li').click(function() {
 			//css
@@ -1125,37 +1115,18 @@ var currentTab = '${currentTab}';
 				});
 				
 			}else if(activeTab == 'tab2'){
-				//alert("달력보기");
-				//url = "/flu/schedule/secondView?scheduleNum="+scheduleNum;
 				
-				/* ///////////////////2뷰///////////////
-				jui.ready([ "ui.modal" ], function(modal) {
-					alert("모달 생성하기");
-					unitListModal = modal("#unitListModal", {
-				        color: "black",
-				        target: "body",
-				        opacity: 0.5
-				    });
-				}); */
-				
-				
-				$(document).on("click",".closeBtn",function(data){
-					unitListModal.hide(); 
+				$.ajax({
+					url:"/flu/schedule/secondView?scheduleNum="+scheduleNum,
+					type:"GET",
+					success: function(data){
+						$("#tab2").html(data);
+					}
 				});
-				
-				$('#schcalendar').fullCalendar({
-					 customButtons: {
-						 myCustomButton: {
-					            text: 'custom!',
-					            click: function() {
-					                alert('clicked the custom button!');
-					            }
-					        }
-					 },
-					    
+
+				/* $('#schcalendar').fullCalendar({
 					header: {
 						left: '',
-						center: 'prev title next myCustomButton',
 						right: 'today,month'//'today,month,basicWeek,basicDay'
 					},
 					titleFormat: {
@@ -1196,7 +1167,7 @@ var currentTab = '${currentTab}';
 			           }
 				        */
 
-				    },
+				/*     },
 				    // 달력의 빈칸을 클릭했을때 실행되는 함수
 				    dayClick: function(date) {
 						//scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
@@ -1207,8 +1178,8 @@ var currentTab = '${currentTab}';
 						//writeModal.show(); 
 						
 				    }
-				});
-				
+				}); */
+				/* 
 				var resultJson = getPartList(scheduleNum);
 				addEvents(resultJson);
 				
@@ -1217,7 +1188,7 @@ var currentTab = '${currentTab}';
 				$(document).on("click",".listModalUnit",function(){
 					alert("unit 상세보기 modal로 바꿔주면 좋겟지요");
 				});
-				
+				 */
 				////////////////////2뷰끝/////////////////////
 				
 				
@@ -1441,25 +1412,7 @@ var currentTab = '${currentTab}';
 		
 		
 		
-		//main insertForm
-		var partCount=1;
 		
-		$("#addPartBtn").click(function(){
-			partCount++;
-			//alert('part 추가');
-			//alert($("#partSection").html());
-			var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
-			partDOM = partDOM + ' part 시작일:<input type="date" class="partStartDate" name="partStartDate">'; 
-			partDOM = partDOM + ' part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">';
-			partDOM = partDOM + ' part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">';
-			partDOM = partDOM + ' <span class="partDel">X</span></div>';
-			$("#partSection").append(partDOM);
-		});
-		
-		$("#partSection").on("click",".partDel",(function(){
-			partCount --;
-			$(this).parent(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
-		}));
 		
 
 
@@ -1710,6 +1663,7 @@ var currentTab = '${currentTab}';
 	/**
 	 * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 //파트만..
 	 */
+	 /* 
 	function addEvents(jsonObj){
 		
 		for(var i=0; i<Object.keys(jsonObj).length; i++){
@@ -1727,7 +1681,7 @@ var currentTab = '${currentTab}';
 	        console.log('달력이벤트 추가 ok');
 	    } 
 	}
-
+ 	*/
 	///////////////2뷰끝/////////////////////
 
 
@@ -1795,7 +1749,7 @@ var currentTab = '${currentTab}';
 		
 		<div id="tab2" class="tabcontent">
 			<!-- tab2내용 은 달력이야 -->
-			<c:import url="/WEB-INF/views/schedule/secondView.jsp" />
+			<%-- <c:import url="/WEB-INF/views/schedule/secondView.jsp" /> --%>
 		</div>
 		
 		<div id="tab3" class="tabcontent">
@@ -1840,7 +1794,7 @@ var currentTab = '${currentTab}';
 		
 		
 		<!--  -----------MODAL 만들기----------------  -->
-		<!-- Modal -->
+		<!-- part 추가 Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 		
@@ -1848,40 +1802,53 @@ var currentTab = '${currentTab}';
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">Modal Header</h4>
+		        <h4 class="modal-title">PART 추가</h4>
 		      </div>
 		      <div class="modal-body">
 		        <div id="client_section">
 					<form action="./addPart" method="POST"  enctype="multipart/form-data">
 						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
 						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
-						<div>
+						<!-- <div>
 							프로젝트 시작일:<input type="date" name="startDate" value=""> 
 							프로젝트 마감일:<input type="date" name="finishDate"> 
 						</div>
 						<div>
 							<h3>시작일은 설정하지 않을경우 당일로 등록되고 마감일은 파트 마감일중 가장 마지막날로 등록된다</h3>
 							<h3>파트의 시작일을 설정하지 않은경우는 프로젝트 시작일로 등록되고 마감일을 등록하지 않은경우는 마감일로 등록된다</h3>
-						</div>
-						<div id="partSection">
-							<div class="partOne">	
-								part 이름 : <input type="text" class="partName" name="partName">
-								part 시작일:<input type="date" class="partStartDate" name="partStartDate"> 
-								part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">
-								part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">
-								<span class="partDel">X</span>
+						</div> -->
+						<div id="partSection"  style="width:100%;">
+							
+								<table>
+									<thead>
+										<tr>
+											<th>part명</th>
+											<th>시작일</th>
+											<th>마감일</th>
+											<th>첨부파일</th>
+										</tr>
+									</thead>
+									<tbody class="partRowSection">
+										<tr class="partOne">
+											<td><input type="text" class="partName" name="partName"></td>
+											<td><input type="date" class="partStartDate" name="partStartDate"> </td>
+											<td><input type="date" class="partFinishDate" name="partFinishDate"></td>
+											<td><input type="file" class="partDescFileO" name="partDescFile"></td>
+											<td><span class="partDel">X</span></td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-						</div>
-						<input type="button" id="addPartBtn" value="part추가">
 						
-						<button>등록</button>
+						<input type="button" class="btn btn-default" id="addPartBtn" value="+">
+						
+						<button type="button" class="btn btn-default">등록</button>
 					</form>
+					
 				</div>
 		      </div>
 		      
-		      
-		      
-		      
+
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		      </div>
@@ -1889,29 +1856,54 @@ var currentTab = '${currentTab}';
 		
 		  </div>
 		</div>
+		<!-- 파트추가MODAL 끝 -->
 		
 		<script type="text/javascript">
-		$("#myModal").click(function(){
-			$('#myModal').modal({backdrop: 'static'});
-	    });
-		</script>
+			$("#myBtn").click(function(){
+				$('#myModal').modal({backdrop: 'static'});
+		    });
 		
-		
-		
+			
+			//main insertForm
+			var partCount=0;
+			
+			$(document).on("click","#addPartBtn",function(){
+				partCount++;
+				alert('part 추가'+partCount);
+				//alert($("#partSection").html());
+				/* var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
+				partDOM = partDOM + ' part 시작일:<input type="date" class="partStartDate" name="partStartDate">'; 
+				partDOM = partDOM + ' part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">';
+				partDOM = partDOM + ' part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">';
+				partDOM = partDOM + ' <span class="partDel">X</span></div>'; */
+				//var partDOM2 = $(".partRowSection").children().eq(0).html();
+				//alert(partDOM2);
+				var partDOM3 = '';
+				partDOM3 = partDOM3 + '<tr class="partOne">';
+				partDOM3 = partDOM3 + '<td><input type="text" class="partName" name="partName"></td>';
+				partDOM3 = partDOM3 + '<td><input type="date" class="partStartDate" name="partStartDate"> </td>';
+				partDOM3 = partDOM3 + '<td><input type="date" class="partFinishDate" name="partFinishDate"></td>';
+				partDOM3 = partDOM3 + '<td><input type="file" class="partDescFileO" name="partDescFile"></td>';
+				partDOM3 = partDOM3 + '<td><span class="partDel">X</span></td>';
+				partDOM3 = partDOM3 + '</tr>';
+				$(".partRowSection").append(partDOM3);
+			});
+			
+			$(document).on("click",".partDel",(function(){
+				
+				alert("삭제하고싶어"+partCount);
+				alert("gg"+$(this).parents(".partOne"));
+				$(this).parents(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
+				partCount --;
+			}));
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		</script>
+
+
+
+
+
+
 		<div class="clear"></div>
 		
 		전체개요

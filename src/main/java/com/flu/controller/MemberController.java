@@ -24,7 +24,7 @@ import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
-import com.flu.util.AES256Util;
+//import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 
 @Controller

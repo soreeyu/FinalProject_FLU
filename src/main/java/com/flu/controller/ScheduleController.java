@@ -73,6 +73,7 @@ public class ScheduleController {
 				model.addAttribute("scheduleNum", scheduleNum);
 				model.addAttribute("mainScheduleDTO", scheduleMainDTO);
 				ProjectDTO dto = new ProjectDTO(); 
+				dto.setProjectNum(scheduleMainDTO.getProjectNum());
 				//ProjectDTO projectDTO = projectService.projectView(scheduleMainDTO.getProjectNum());//처리필요
 				ProjectDTO projectDTO = projectService.projectView(dto);
 				model.addAttribute("projectDTO",projectDTO); //프로젝트 정보 뿌려주기용 

@@ -822,7 +822,7 @@ background-color: white;
           <c:if test="${member.kind eq 'client' && member.email==dto.email && (dto.state eq 'recruit' || dto.state eq 'ing')}">
           <div class="project-apply-box">
           <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
             <div class="schedule-btn">미팅룸 예약하기 </div>
         
@@ -1059,7 +1059,7 @@ if(meetKind=='offline'){
 		});
 	})(jQuery);
 
-<<<<<<< HEAD
+
    var projectNum = '${dto.projectNum}';
       
    $('#deleteBTN').click(function() {
@@ -1072,7 +1072,7 @@ if(meetKind=='offline'){
       }   
       
    });
-});   
+ 
    
    $('#doneBTN').click(function() {
       if(confirm("프로젝트 검수를 완료하시겠습니까?")){
@@ -1088,9 +1088,9 @@ if(meetKind=='offline'){
    
 
    function getContextPath(){
-   	alert('${pageContext.request.contextPath}');
-   	var context = '${pageContext.request.contextPath}';
-   	return context;
+	   	alert('${pageContext.request.contextPath}');
+	   	var context = '${pageContext.request.contextPath}';
+	   	return context;
    }
 
    
@@ -1141,7 +1141,7 @@ if(meetKind=='offline'){
    				//location.href = getContextPath();
    			}
    		}
-   	});
+   	 });
    }
 
 
@@ -1167,7 +1167,7 @@ if(meetKind=='offline'){
    }
 
 
-=======
+
 	
 	
 	
@@ -1220,7 +1220,7 @@ if(meetKind=='offline'){
 			$('#frmm').attr('action', '../checkProject/checkProjectUpdate');
 			$('#frmm').submit();
 		} else {
->>>>>>> master
+
 
 		}
 

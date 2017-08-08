@@ -14,7 +14,7 @@ import com.flu.applicant.ApplicantDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
-import com.flu.util.AES256Util;
+//import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
 
@@ -24,22 +24,23 @@ public class MemberDAO {
 	@Inject
 	private SqlSession sqlSession;
 
-	private final String NAMESPACE = "MemberMapper.";
+	private final String NAMESPACE = "MemberMapper.";	
 	private final String NAMESPACE2 = "FreelancerMapper.";
 
 
 	//회원 가입
 	public int memberInsert(MemberDTO memberDTO)throws Exception {
-		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		//AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
 		
 		String password = memberDTO.getPw();
-		String encpassword = aes256Util.aesEncode(password);
-		String decpassword = aes256Util.aesDecode(encpassword);
+		//String encpassword = aes256Util.aesEncode(password);
+		//String decpassword = aes256Util.aesDecode(encpassword);
 		System.out.println("원래 비밀번호 : "+password);
-		System.out.println("암호화된 비밀번호 : "+encpassword);
-		System.out.println("복호화된 비밀번호 : "+decpassword);
+		//System.out.println("암호화된 비밀번호 : "+encpassword);
+		//System.out.println("복호화된 비밀번호 : "+decpassword);
 		
-		memberDTO.setPw(encpassword);
+		//memberDTO.setPw(encpassword);
+		memberDTO.setPw(password);
 		
 		int result = sqlSession.insert(NAMESPACE+"memberInsert", memberDTO);
 		sqlSession.insert(NAMESPACE2+"freelancerInsert", memberDTO.getEmail());
@@ -106,16 +107,17 @@ public class MemberDAO {
 
 	//로그인
 	public MemberDTO login(MemberDTO memberDTO) throws Exception{
-		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		//AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
 		
 		String password = memberDTO.getPw();
-		String encpassword = aes256Util.aesEncode(password);
-		String decpassword = aes256Util.aesDecode(encpassword);
+		//String encpassword = aes256Util.aesEncode(password);
+		//String decpassword = aes256Util.aesDecode(encpassword);
 		System.out.println("원래 비밀번호 : "+password);
-		System.out.println("암호화된 비밀번호 : "+encpassword);
-		System.out.println("복호화된 비밀번호 : "+decpassword);
+		//System.out.println("암호화된 비밀번호 : "+encpassword);
+		//System.out.println("복호화된 비밀번호 : "+decpassword);
 		
-		memberDTO.setPw(encpassword);
+		//memberDTO.setPw(encpassword);
+		memberDTO.setPw(password);
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
 	}
 	//예약현황 리스트
