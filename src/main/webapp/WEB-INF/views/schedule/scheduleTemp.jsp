@@ -396,6 +396,7 @@
 }
 
 .tw-project-analytics-page__self-centric {
+  width: 1944px; /* width: 324px*4 */
   display: flex;
   background: none;
 }
@@ -469,7 +470,7 @@
   box-sizing: border-box;
   margin: 0 5px;
   padding: 15px 15px 0;
-  width: 33%;
+  width: 324px;
   /* border-radius: 2px; */
   border: 1px solid #e6e6e6;
   background: #fff;
@@ -1069,11 +1070,11 @@ var unitModal;
 		
 		var scheduleNum = '${scheduleNum}';
 		
-		loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1');
+		
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
-		
+		loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1');
 	
 		
 		jui.ready([ "ui.modal" ], function(modal) {
@@ -1289,11 +1290,20 @@ var unitModal;
 			}else if(activeTab == 'tab6'){
 				alert("간트");
 				location.href="/flu/schedule/sixthView";
+				
 				//url = "";
 			}else if(activeTab == 'tab7'){
 				alert("간트2");
 				location.href="/flu/schedule/dhxTest?scheduleNum="+scheduleNum;
 				//url = "";
+				/* $.ajax({
+					url:"/flu/schedule/dhxTest?scheduleNum="+scheduleNum,
+					type:"GET",
+					success: function(data){
+						$("#tab7").html(data);
+					}
+				}); */
+				
 			}else if(activeTab == 'tab8'){
 				$.ajax({
 					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
@@ -1489,7 +1499,7 @@ var unitModal;
 			type: "GET",
 			async:false,
 			success:function(data){ //json 넘어옴 
-
+				alert("파트가져우기");
 				partsJSONArray = data;
 				for(var i=0;i<partsJSONArray.length;i++){
 					partsJSONArray[i].color = colors[((i+1)%7)-1]; //7개설정해놔서그렇습니다
@@ -1549,9 +1559,10 @@ var unitModal;
 		$.ajax({
 			url: "/flu/schedule/userList?scheduleNum="+scheduleNum,
 			type: "GET",
+			async:false,
 			success: function(data){
 				//alert(JSON.stringify(data));
-				
+				alert("유저유닛가져우기");
 				var result="<table>";
 				$(data).each(function(){
 					result = result + "<tr>";
@@ -1763,7 +1774,7 @@ var unitModal;
 						<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
 						<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
 						<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
-						<li class=""  data-tab="tab7"><span class="taba">간트차트2</span></li>
+						<li class=""  data-tab="tab7"><span class="taba">간트차트(이거)</span></li>
 						<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
 						<li class=""  data-tab="tab9"><span class="taba">상세보기(엑셀)</span></li>
 					</ul>
@@ -1798,13 +1809,11 @@ var unitModal;
 			</div>
 			
 			<div id="tab6" class="tabcontent">
-				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-				<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
+				
 			</div>
 			
 			<div id="tab7" class="tabcontent">
-				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-				<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
+				<%-- <c:import url="/WEB-INF/views/schedule/dhx_gantTest.jsp" /> --%>
 			</div>
 			
 			<div id="tab8" class="tabcontent">

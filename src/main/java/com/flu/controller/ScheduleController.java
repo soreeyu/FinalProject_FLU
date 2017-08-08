@@ -97,7 +97,7 @@ public class ScheduleController {
 		@RequestMapping(value="dhxTest" , method=RequestMethod.GET)
 		public String test7(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
 			model.addAttribute("scheduleNum", scheduleNum);
-			return "schedule/dhx_ganttTest";
+			return "schedule/dhx_ganttTest_back";
 		}
 		
 		@RequestMapping(value="test8")
@@ -121,8 +121,8 @@ public class ScheduleController {
 		
 		@RequestMapping(value="detailView",method=RequestMethod.GET)
 		public String detailView(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
-			
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			HashMap<String, Object> map = scheduleService.forExcelData(scheduleNum);
+			/*HashMap<String, Object> map = new HashMap<String, Object>();
 			
 			List<SchedulePartDTO> partList = scheduleService.partList(scheduleNum);
 			map.put("partList",partList);
@@ -137,15 +137,16 @@ public class ScheduleController {
 				partList.get(i).setUnitList(unitList);
 			}
 			
-			System.out.println("0번째 유닛꺼내기"+((List<SchedulePartDTO>)map.get("partList")).get(0).getUnitList().get(0).getUnitName());
+			System.out.println("0번째 유닛꺼내기"+((List<SchedulePartDTO>)map.get("partList")).get(0).getUnitList().get(0).getUnitName());*/
 			model.addAttribute("map", map);
+			model.addAttribute("scheduleNum", scheduleNum);
 			return "schedule/detailViewforExcel";
 		}
 		
 		@RequestMapping(value="makeExcel")
-		public void makeExcel() throws Exception{
+		public void makeExcel(Integer scheduleNum ,HttpSession session) throws Exception{
 			
-			scheduleService.makeExcel();
+			scheduleService.makeExcel(scheduleNum,session);
 
 		}
 		
@@ -395,6 +396,7 @@ public class ScheduleController {
 			}
 			return list;
 		}
+		
 		
 		@ResponseBody
 		@RequestMapping(value="unitOne",method=RequestMethod.POST)

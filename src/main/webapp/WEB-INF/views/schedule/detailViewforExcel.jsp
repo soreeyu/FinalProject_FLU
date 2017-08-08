@@ -53,7 +53,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	$("#goExcel").click(function(){
 		alert("엑셀생성");
 		$.ajax({
-			url: "/flu/schedule/makeExcel",
+			url: "/flu/schedule/makeExcel?scheduleNum=${scheduleNum}",
 			type: "GET",
 			success: function(data){
 				alert("성공");

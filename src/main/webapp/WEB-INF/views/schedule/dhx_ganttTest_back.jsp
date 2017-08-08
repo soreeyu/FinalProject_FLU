@@ -304,11 +304,11 @@ html, body {
 	
 	//////////////////////////////존재하는 애들 가져오기 ////////////////////////////      				
 	//파트가져와서 업무에 추가해주기
-	var resultJson = getPartListGantt(scheduleNum);
+	var resultJson = getPartList(scheduleNum);
 	changeJsonDataForGanttTask(resultJson);
 
 	//unit가져와서 업무에 추가해주기 
-	var resultJsonUnit = getUnitListGantt(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
+	var resultJsonUnit = getUnitList(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
 	changeJsonDataForGanttTaskUnit(resultJsonUnit);
 	
 	
@@ -389,11 +389,11 @@ function changeJsonDataForGanttTaskUnit(jsonObj) {
 } //changeJsonDataForGanttTaskUnit끝
 
 /**
- * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArrayGantt 에 저장해준다
+ * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
  */
-function getPartListGantt(scheduleNum) {
+function getPartList(scheduleNum) {
 
-	var partsJSONArrayGantt = new Array();
+	var partsJSONArray = new Array();
 
 	$.ajax({
 		url : "/flu/schedule/partList?scheduleNum=" + scheduleNum,
@@ -401,20 +401,20 @@ function getPartListGantt(scheduleNum) {
 		async : false,
 		success : function(data) { //json 넘어옴 
 
-			partsJSONArrayGantt = data;
+			partsJSONArray = data;
 
 		}
 	}); //success끝
 
-	alert("ajax아래 함수안에 data part //동기로 했음 "+ JSON.stringify(partsJSONArrayGantt));
-	return partsJSONArrayGantt;
+	alert("ajax아래 함수안에 data part //동기로 했음 "+ JSON.stringify(partsJSONArray));
+	return partsJSONArray;
 
-} // getPartListGantt() 끝
+} // getPartList() 끝
 
 //part별 보기로 클릭했을때 partnum을 주면된다
-function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
+function getUnitList(scheduleNum, partNum, email, unitState, kind) {
 
-	var partsJSONArrayGantt = new Array();
+	var partsJSONArray = new Array();
 
 	$.ajax({
 		url : "/flu/schedule/unitList",
@@ -427,31 +427,31 @@ function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
 			unitState : unitState
 		},
 		success : function(data) {
-			partsJSONArrayGantt = data;
+			partsJSONArray = data;
 			//여기서 상태 분석 후 색 정해주기 //할일 진행중 완료 마감등
-			for (var i = 0; i < partsJSONArrayGantt.length; i++) {
+			for (var i = 0; i < partsJSONArray.length; i++) {
 
-				if (partsJSONArrayGantt[i].unitState == '할일') {
-					partsJSONArrayGantt[i].color = "rgb(255, 176, 36)";
-				} else if (partsJSONArrayGantt[i].unitState == '진행중') {
-					partsJSONArrayGantt[i].color = "rgb(176, 180, 187)";
-				} else if (partsJSONArrayGantt[i].unitState == '완료') {
-					partsJSONArrayGantt[i].color = "rgb(39, 182, 186)";
-				} else if (partsJSONArrayGantt[i].unitState == '마감일 지남') {
-					partsJSONArrayGantt[i].color = "rgb(233, 94, 81)";
+				if (partsJSONArray[i].unitState == '할일') {
+					partsJSONArray[i].color = "rgb(255, 176, 36)";
+				} else if (partsJSONArray[i].unitState == '진행중') {
+					partsJSONArray[i].color = "rgb(176, 180, 187)";
+				} else if (partsJSONArray[i].unitState == '완료') {
+					partsJSONArray[i].color = "rgb(39, 182, 186)";
+				} else if (partsJSONArray[i].unitState == '마감일 지남') {
+					partsJSONArray[i].color = "rgb(233, 94, 81)";
 				} else {
 					alert("니상태는 뭐니");
 				}
 
-				//partsJSONArrayGantt[i].textColor = 'white';
+				//partsJSONArray[i].textColor = 'white';
 			}
 		}
 
 	});
-	alert("ajax아래 함수안에 data unit //동기로 했음" + JSON.stringify(partsJSONArrayGantt));
-	return partsJSONArrayGantt;
+	alert("ajax아래 함수안에 data unit //동기로 했음" + JSON.stringify(partsJSONArray));
+	return partsJSONArray;
 
-} //getUnitListGantt끝
+} //getUnitList끝
 
 
 

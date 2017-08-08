@@ -57,7 +57,7 @@ public class ScheduleService {
 	 * 		부재 : null 
 	 * 		존재 : ScheduleMainDTO 객체 (scheduleNum, startDate, finishDate, projectNum)
 	 * */
-	@Transactional
+	//@Transactional
 	public ScheduleMainDTO checkSchedule(Integer projectNum) throws Exception{
 		System.out.println("check하러 서비스옴");
 		return scheduleDAO.checkSchedule(projectNum);
@@ -100,7 +100,7 @@ public class ScheduleService {
 	
 	// 객체 두개를 받게 되지요 // mainDTO , partDTO //한번에 처리를 어디서 하면 좋을까요 ..
 	//DB transaction 처리 되는지 확인 못함
-	@Transactional
+	//@Transactional
 	public int insertMainPartSchedule(ScheduleMainDTO scheduleMainDTO, SchedulePartArrayDTO schedulePartArrayDTO ,HttpSession session) throws Exception{ 
 		
 		System.out.println("받아온 main scheduleNum"+scheduleMainDTO.getScheduleNum());
@@ -165,7 +165,7 @@ public class ScheduleService {
 	}
 	
 	//make Schedule2 //같은 view에서 받아온 것들 //스케줄 생성이 성공하면 실행된다
-	@Transactional
+	//@Transactional
 	public int insertPart(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
 		
 		this.partFileSave(schedulePartArrayDTO,session);
@@ -567,12 +567,20 @@ public class ScheduleService {
 			
 		}
 		
-		public void makeExcel(){
+		public void makeExcel(Integer scheduleNum, HttpSession session) throws Exception{
 			System.out.println("엑셀파일 만들러 서비스들어옴 ");
 			
+			String realPath = session.getServletContext().getRealPath("resources/excel");
+			File f = new File(realPath);
+			if(!f.exists()){
+				f.mkdirs();
+			}
+			System.out.println("엑셀리얼패스"+realPath);
+			String fileName = "ExcelWriteSchedule.xls";
+			File target = new File(f, fileName);
 			
 			try {
-				this.excelWrite(new File("M:\\ExcelWriteSample.xls"), this.getData());
+				this.excelWrite(target, this.getData(scheduleNum));
 			} catch (WriteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -597,13 +605,17 @@ public class ScheduleService {
 			WritableWorkbook wb = Workbook.createWorkbook(file);
 
 			// WorkSheet 생성
-			WritableSheet sh = wb.createSheet("테스트", 0);
+			WritableSheet sh = wb.createSheet("스케줄", 0);
 			// 열넓이 설정 (열 위치, 넓이)
 			sh.setColumnView(0, 10);
 			sh.setColumnView(1, 20);
 			sh.setColumnView(2, 20);
 			sh.setColumnView(3, 20);
+			sh.setColumnView(4, 20);
+			sh.setColumnView(5, 20);
+			sh.setColumnView(6, 20);
 
+			
 			// 셀형식
 			WritableCellFormat textFormat = new WritableCellFormat();
 
@@ -615,36 +627,60 @@ public class ScheduleService {
 			int row = 0;
 
 			// 헤더
-			Label label = new jxl.write.Label(0, row, "이름", textFormat);
+			Label label = new jxl.write.Label(0, row, "파트", textFormat);
 			sh.addCell(label);
 
-			label = new jxl.write.Label(1, row, "주소", textFormat);
+			label = new jxl.write.Label(1, row, "업무", textFormat);
 			sh.addCell(label);
 
-			label = new jxl.write.Label(2, row, "전화번호", textFormat);
+			label = new jxl.write.Label(2, row, "상태", textFormat);
 			sh.addCell(label);
 
-			label = new jxl.write.Label(3, row, "비고", textFormat);
+			label = new jxl.write.Label(3, row, "담당자", textFormat);
+			sh.addCell(label);
+			
+			label = new jxl.write.Label(4, row, "시작일", textFormat);
+			sh.addCell(label);
+
+			label = new jxl.write.Label(5, row, "마감일", textFormat);
+			sh.addCell(label);
+
+			label = new jxl.write.Label(6, row, "상세설명", textFormat);
 			sh.addCell(label);
 
 			row++;
 
 			for (Map<String, Object> tem : data) {
 
-				// 이름
-				label = new jxl.write.Label(0, row, (String) tem.get("name"),
+				// 파트
+				label = new jxl.write.Label(0, row, (String) tem.get("part"),
 						textFormat);
 				sh.addCell(label);
-				// 주소
-				label = new jxl.write.Label(1, row, (String) tem.get("addr"),
+				// 업무
+				label = new jxl.write.Label(1, row, (String) tem.get("unit"),
 						textFormat);
 				sh.addCell(label);
-				// 전화번호
-				label = new jxl.write.Label(2, row, (String) tem.get("tel"),
+				//상태
+				label = new jxl.write.Label(2, row, (String) tem.get("email"),
 						textFormat);
 				sh.addCell(label);
-				// 비고
-				label = new jxl.write.Label(3, row, (String) tem.get("etc"),
+				//담당자
+				label = new jxl.write.Label(3, row, (String) tem.get("startDate"),
+						textFormat);
+				sh.addCell(label);
+				
+				//시작일
+				label = new jxl.write.Label(4, row, (String) tem.get("finishDate"),
+						textFormat);
+				sh.addCell(label);
+				
+				//마감일
+				label = new jxl.write.Label(5, row, (String) tem.get("desc"),
+						textFormat);
+				sh.addCell(label);
+				
+				//상세설명
+				label = new jxl.write.Label(6, row, (String) tem.get("etc"),
 						textFormat);
 				sh.addCell(label);
 
@@ -659,46 +695,79 @@ public class ScheduleService {
 
 		}
 
-		/** * 출력할 데이터 * * @return */
-		public List<Map<String, Object>> getData() {
+		/** * 출력할 데이터 * * @return 
+		 * @throws Exception */
+		public List<Map<String, Object>> getData(Integer scheduleNum) throws Exception {
 
+			
+
+			List<SchedulePartDTO> partList = this.partList(scheduleNum);
+			
+			for(int i=0;i<partList.size();i++){
+				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+				scheduleUnitDTO.setScheduleNum(scheduleNum);
+				scheduleUnitDTO.setEmail("");
+				scheduleUnitDTO.setUnitState("");
+				scheduleUnitDTO.setPartNum(partList.get(i).getPartNum());
+				List<ScheduleUnitDTO> unitList = this.unitList(scheduleUnitDTO);
+				partList.get(i).setUnitList(unitList);
+			}
+			
+			
 			List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
-			Map<String, Object> map = new HashMap<String, Object>();
-
-			map.put("name", "이기자");
-			map.put("addr", "서울시 강북");
-			map.put("tel", "010-XXXX-XXXX");
-			map.put("etc", "");
-
-			data.add(map);
-
-			map = new HashMap<String, Object>();
-			map.put("name", "김철순");
-			map.put("addr", "서울시 강남");
-			map.put("tel", "010-XXXX-XXXX");
-			map.put("etc", "");
-
-			data.add(map);
-
-			map = new HashMap<String, Object>();
-			map.put("name", "박순심");
-			map.put("addr", "서울시 서초");
-			map.put("tel", "010-XXXX-XXXX");
-			map.put("etc", "");
-
-			data.add(map);
-
-			map = new HashMap<String, Object>();
-			map.put("name", "강기남");
-			map.put("addr", "서울시 송파");
-			map.put("tel", "010-XXXX-XXXX");
-			map.put("etc", "");
-
-			data.add(map);
+			//list가지고 포문돌리면서 데이터 넣어주기
+			for(int i=0;i<partList.size();i++){
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("part", partList.get(i).getPartName());
+				map.put("unit", "");
+				map.put("state", "");
+				map.put("email", "");
+				map.put("startDate",  partList.get(i).getPartStartDate());
+				map.put("finishDate",  partList.get(i).getPartFinishDate());
+				map.put("desc", "");	
+				data.add(map);
+				
+				for(int j=0;j<partList.get(i).getUnitList().size();j++){
+					Map<String, Object> map2 = new HashMap<String, Object>();
+					map2.put("part", "");
+					map2.put("unit", partList.get(i).getUnitList().get(j).getUnitName());
+					map2.put("state", partList.get(i).getUnitList().get(j).getUnitState());
+					map2.put("email", partList.get(i).getUnitList().get(j).getEmail());
+					map2.put("startDate",  partList.get(i).getUnitList().get(j).getUnitStartDate());
+					map2.put("finishDate",  partList.get(i).getUnitList().get(j).getUnitFinishDate());
+					map2.put("desc", partList.get(i).getUnitList().get(j).getUnitDescribe());	
+					data.add(map2);
+					
+				}
+			}
+			
+			
+			
+			
+			
 
 			return data;
 
+		}
+		
+		public HashMap<String, Object> forExcelData(Integer scheduleNum) throws Exception{
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			List<SchedulePartDTO> partList = this.partList(scheduleNum);
+			map.put("partList",partList);
+			
+			for(int i=0;i<partList.size();i++){
+				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+				scheduleUnitDTO.setScheduleNum(scheduleNum);
+				scheduleUnitDTO.setEmail("");
+				scheduleUnitDTO.setUnitState("");
+				scheduleUnitDTO.setPartNum(partList.get(i).getPartNum());
+				List<ScheduleUnitDTO> unitList = this.unitList(scheduleUnitDTO);
+				partList.get(i).setUnitList(unitList);
+			}
+			
+			System.out.println("0번째 유닛꺼내기"+((List<SchedulePartDTO>)map.get("partList")).get(0).getUnitList().get(0).getUnitName());
+			return map;
 		}
 
 

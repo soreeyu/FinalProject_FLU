@@ -16,9 +16,9 @@
 											<div class="tw-project-analytics-status__text">
 												<section class="tw-add-date-panel">
 													<div class="tw-add-date-panel__added-date with-close-icon">
-														<!-- react-text: 437 -->
-														7월 25일
-														<!-- /react-text -->
+														<span id="sDateforTitle">7월 25일
+														${mainScheduleDTO.startDate}</span>
+														
 														<div class="tw-add-date-panel__remove-date">
 															<i class="tw-icon tw-icon-close --name_close"></i>
 														</div>
@@ -31,9 +31,9 @@
 											<div class="tw-project-analytics-status__text">
 												<section class="tw-add-date-panel">
 													<div class="tw-add-date-panel__added-date with-close-icon">
-														<!-- react-text: 437 -->
-														8월 25일
-														<!-- /react-text -->
+														<span id="fDateforTitle">8월 25일
+														${mainScheduleDTO.finishDate}</span>
+														
 														<div class="tw-add-date-panel__remove-date">
 															<i class="tw-icon tw-icon-close --name_close"></i>
 														</div>
@@ -44,21 +44,21 @@
 										
 										<div>
 											<div class="tw-project-analytics-status__head">경과 시간</div>
-											<div class="tw-project-analytics-status__text --plain">-</div>
+											<div class="tw-project-analytics-status__text --plain"><span  id="beforeDuration">-</span>일</div>
 										</div>
 										<div>
 											<div class="tw-project-analytics-status__head">남은 시간</div>
-											<div class="tw-project-analytics-status__text --plain">32일</div>
+											<div class="tw-project-analytics-status__text --plain" ><span  id="afterDuration">-</span>일</div>
 										</div>
 										<div>
 											<div class="tw-project-analytics-status__head">목표 업무(총)</div>
-											<div class="tw-project-analytics-status__text --plain">10개
+											<div class="tw-project-analytics-status__text --plain"><span  id="totalUnitsCount">10</span>개
 												업무 </div>
 										</div>
 										<div>
 											<div class="tw-project-analytics-status__head">완료 업무</div>
-											<div class="tw-project-analytics-status__text --plain">3개
-												업무 (60%)</div>
+											<div class="tw-project-analytics-status__text --plain" ><span id="totalDoneUnitsCount">3</span>개
+												업무 (<span id="totalDoneUnitsPercent"></span>%)</div>
 										</div>
 									</div>
 								</div>
@@ -752,7 +752,7 @@
       }
 
       
-      //전체개요
+      //전체개요 값 세팅
       $(".totalPercentWill:eq(0)").html(Math.ceil(($("#allWill").text()*1)/($("#allTotal").text()*1)*100));
       $(".totalPercentIng:eq(0)").html(Math.ceil(($("#allIng").text()*1)/($("#allTotal").text()*1)*100));
       $(".totalPercentDone:eq(0)").html(Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
@@ -760,5 +760,17 @@
       $(".totalPercentIng:eq(1)").html($("#allIng").text());
       $(".totalPercentDone:eq(1)").html($("#allDone").text());
       
+      // $("#totalPercentBarPercentWill").css("width",Math.ceil(($("#allWill").text()*1)/($("#allTotal").text()*1)*100));
+      //$("#totalPercentBarPercentIng").css("width",Math.ceil(($("#allIng").text()*1)/($("#allTotal").text()*1)*100));
+      // $("#totalPercentBarPercentDone").css("width",Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
+      
+      //제목 설정 
+      $("#sDateforTitle").html("4월 7일");
+      $("#fDateforTitle").html("8월 7일");
+      $("#beforeDuration").html(100);
+      $("#afterDuration").html(1);
+      $("#totalUnitsCount").html($("#allTotal").text());
+      $("#totalDoneUnitsCount").html($("#allDone").text());
+      $("#totalDoneUnitsPercent").html(Math.ceil(($("#allDone").text()*1)/($("#allTotal").text()*1)*100));
 
     </script>
