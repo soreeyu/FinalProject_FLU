@@ -70,8 +70,6 @@
  
  
 <script type="text/javascript">
-alert("project등록한사람==${project.email}");
-alert("member==${member.email}");
 $(".rereply").css("display", "none");
 		
 		/* reply 삭제 */

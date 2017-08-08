@@ -20,6 +20,8 @@ public class ReplyDAO {
 
 	
 	public int replyInsert(ReplyDTO replyDTO){
+		System.out.println("reply-dao");
+		System.out.println(replyDTO.getRef());
 		return sqlSession.insert(NAMESPACE+"insert", replyDTO);
 	}
 	

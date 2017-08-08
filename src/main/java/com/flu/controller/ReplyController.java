@@ -36,10 +36,10 @@ public class ReplyController {
 		System.out.println("replyInsert");
 	
 		memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println(memberDTO.getEmail());
 		replyDTO.setWriter(memberDTO.getEmail());
-
-	
+		
+		System.out.println("reply-controller");
+		System.out.println(replyDTO.getRef());
 
 		System.out.println("projectNum=="+replyDTO.getProjectNum());
 		System.out.println("projectDTONum=="+projectDTO.getProjectNum());
@@ -61,6 +61,7 @@ public class ReplyController {
 		System.out.println("projectDelete");
 		
 		int result =replyService.replyDelete(num);
+		System.out.println("삭제됫는가="+result);
 		
 		String message="Delete fail";
 		if(result==1){

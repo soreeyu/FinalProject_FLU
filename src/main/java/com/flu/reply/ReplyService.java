@@ -25,6 +25,7 @@ public class ReplyService {
 	}
 	
 	public int replyDelete(int num){
+		System.out.println("replydelete - service");
 		return replyDAO.replyDelete(num);
 	}
 	
