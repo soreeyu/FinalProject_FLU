@@ -566,7 +566,7 @@ background-color: white;
          </div>
       </div>
       
-      <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done' && member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null}">
+      <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done' && (member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null)}">
       <div class="contents-register">
             <div class="contents-register-inner" style="text-align: center;">
             
@@ -592,7 +592,7 @@ background-color: white;
               
             </c:if>
             
-            <c:if test="${member.kind eq 'client' && member.email==dto.email}">
+            <c:if test="${member.kind eq 'client' && member.email==dto.email && dto.state ne 'sell'}">
             
             
             <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
@@ -605,11 +605,33 @@ background-color: white;
                </div>
           
                </c:if>
-            
             </div>
          </div>
       </c:if>
+      <c:if test="${dto.state eq 'sell'}">
+       <div class="contents-register" style="width: ">
+            <div class="contents-register-inner" style="text-align: center;">
+      			<div>판매뷰를 보여주자</div>
+      			  <div class="project-detail-info">
+               <div class="budget">
+                  <i class="fa fa-krw"></i>
+                  <span class="fa">예상금액</span>
+                  ${dto.budget}원
+               </div>
+               <div class="term">
+                  <i class="fa fa-clock-o"></i>
+                  <span class="fa">예상기간</span>${dto.period}일
+               </div>
+               <div class="deadline">
+                  <i class="fa fa-pencil"></i>
+                  <span class="fa">모집마감</span><span class="finishDate"></span>
+               </div>
+            </div>
+      		</div>
+      	</div>
+      		 </c:if>
       
+     
       
       
       
@@ -842,7 +864,7 @@ background-color: white;
              <form action="" id="frmm" method="get">
 			 <input type="hidden" name="state" value="${dto.state}">
             <input type="hidden" name="projectNum" value="${dto.projectNum}">
-			
+			<input type="hidden" name="email" value="${dto.email}">
             <c:if test="${dto.state eq 'check'}">
             <input type="button" class="register-btn" value="프로젝트 검수 완료" id="doneBTN">
             </c:if>
@@ -1069,7 +1091,7 @@ if(meetKind=='offline'){
 		}else if(state=="recruit" || state=="ing" || state=="fail"){
 			alert("관리자에게 프로젝트 삭제 요청들어가기");
 		}else{
-			alert("완료된 프로젝트나 판매중인 프로젝트를 삭제시 \n프리랜서의 커리어에서 삭제됩니다.")
+			alert("완료된 프로젝트나 판매중인 프로젝트를 삭제시 \n프리랜서의 커리어에서 삭제되기 때문에 삭제 불가합니다. \n관리자에게 문의하세요.");
 		}
 		
 	});

@@ -93,7 +93,7 @@ public class ProjectService {
 			System.out.println(ar.get(i).getSkills());
 		}
 		
-		
+
 	
 		return ar;
 	}

@@ -277,7 +277,7 @@
 
 
 	$("#cencel").click(function() {
-		location.href="portfolioView";
+		location.href="portfolioView?pfNum=${map.dto.pfNum}";
 	});
 	$("#ok").click(function() {
 		var d1 = $("#title").val();

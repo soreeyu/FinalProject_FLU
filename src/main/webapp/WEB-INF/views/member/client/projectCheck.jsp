@@ -88,9 +88,10 @@
             <div class="form-group">
             <input type="hidden" name="projectNum" class="modal_Num">
             <input type="hidden" name="email" value="${member.email}">
+            <input type="hidden" name="state" value="finish">
             <div>프로젝트 Num : <span class="modal_Num"></span></div>
               <label><span class="glyphicon glyphicon-user"></span>판매할 프로젝트 이름</label>
-              <input type="text" name="name">
+              <input type="text" name="name" value="">
             </div>
             <div class="form-group">
               <label><span class="glyphicon glyphicon-eye-open"></span> 판매 가격</label>
@@ -107,7 +108,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       
-          <p>프로젝트 판매 정보는 수정이 불가하니 신중해주세요.</p>
+          <p>프로젝트 판매 정보는 수정이 불가하니 신중해주세요.</p> 
          
         </div>
       </div>
@@ -222,7 +223,7 @@
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");
 	var memberEmail = '${member.email}';
-	
+	alert('${conState}');
 	location.href="../../project/projectView?projectNum="+projectNum;
 	
 });
@@ -259,17 +260,31 @@ $(".projectSellBTN").click(function() {
 	$("#sell-Modal").modal();
 });
 
+
+/* 판매중인 리스트에서 판매취소하기 */
 $(".CancleSellBTN").click(function() {
-	alert("판매취소할것이다");
-	alert($(this).attr("data-id"));
-	var cancle_Id = $(this).attr("data-id");
-	/* 판매취소할시, pjsell에서 삭제 + projectstate를 finish로 바꿔줌  */
-	$.get("../../project/cancleProjectState?projectNum="+cancle_Id,function(data){
-		alert("ddd");
-		/* pjsell에서 삭제하기 추가하자  */
-	});
+	
+	var ch = confirm("판매를 취소하시겠습니까?");
+	if(ch == true){
+		
+		alert($(this).attr("data-id"));
+		var cancle_Id = $(this).attr("data-id");
+		/* 판매취소할시, pjsell에서 삭제 + projectstate를 finish로 바꿔줌  */
+		$.get("../../project/cancleProjectState?projectNum="+cancle_Id,function(data){
+			alert("ddd");
+			$.get("projectCheck?state=sell&curPage=1", function(data){
+				alert("판매중");
+				$("#t1").text("판매중인 프로젝트");
+				$("#t2").text("다른 클라이언트에게 제공되는 프로젝트입니다.");
+				$(".contents").html(data); 
+			});
+		});
+		
+	}else{
+		alert("판매 취소가 취소되었습니다.");
+	}
 });
-	 
+
 	
 	</script>
 </body>

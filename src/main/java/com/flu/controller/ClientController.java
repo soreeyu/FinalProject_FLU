@@ -129,12 +129,15 @@ public class ClientController {
 	@RequestMapping(value="clientproject")
 	public String myproject(Model model, HttpSession session, ListInfo listInfo, ProjectDTO projectDTO){
 		
+		
+		String conState = projectDTO.getState();
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		System.out.println("myProject의 email="+memberDTO.getEmail());
 		
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("listInfo", listInfo);
 		model.addAttribute("active7", "a");
+		model.addAttribute("conState", conState);
 		
 		
 		return "/member/client/clientproject";

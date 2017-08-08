@@ -30,9 +30,10 @@ public class PjSellService {
 		public int pjsellUpdate(PjSellDTO pjSellDTO){
 			return 0;
 		}
-
-		public int pjsellDelete(int num){
-			return 0;
+		
+		//pjsell에서 삭제하기
+		public int deleteSellProject(int num){
+			return pjSellDAO.deleteSellProject(num);
 		}
 		
 

@@ -142,7 +142,7 @@ public class CheckProjectController {
 		if(result>0){
 			
 			alarmDTO = new AlarmDTO();
-			alarmDTO.setEmail("pkjuno@nate.com");
+			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
