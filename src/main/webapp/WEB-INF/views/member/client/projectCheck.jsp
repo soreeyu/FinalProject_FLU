@@ -266,6 +266,7 @@ $(".CancleSellBTN").click(function() {
 	/* 판매취소할시, pjsell에서 삭제 + projectstate를 finish로 바꿔줌  */
 	$.get("../../project/cancleProjectState?projectNum="+cancle_Id,function(data){
 		alert("ddd");
+		/* pjsell에서 삭제하기 추가하자  */
 	});
 });
 	 
