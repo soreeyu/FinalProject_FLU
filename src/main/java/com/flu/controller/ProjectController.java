@@ -136,11 +136,8 @@ public class ProjectController {
       List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
             
       for(int i=0;i<ar.size();i++){
-     	 
-	         /*System.out.println("ar의 Num=="+ar.get(i).getProjectNum());*/
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
-	         /*System.out.println("ar의 appCount=="+ar.get(i).getAppCount());*/
-	         }
+	  }
       
       System.out.println("projectListInner의 ar="+ar);
  

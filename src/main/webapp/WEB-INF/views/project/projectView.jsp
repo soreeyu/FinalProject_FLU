@@ -584,9 +584,15 @@ background-color: white;
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
             <span>${dto.name}</span>
-            <c:if test="${dto.state ne 'sell' && dto.state ne 'finish' }">
-            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
-            </c:if>
+            <c:choose>
+            	<c:when test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' }">
+		            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
+            	</c:when>
+            	<c:when test="${dto.state eq 'wait' || dto.state eq 'ing' || dto.state eq 'finish' }">
+            		<span class="DateMius"><span class="startDate"></span> - <span class="finishDate"></span></span>
+            	</c:when>
+            </c:choose>
+            
             </p>
             <p id="header_t">
             <span class="header_category">${dto.category} > ${dto.detailCategory }</span>
@@ -694,6 +700,8 @@ background-color: white;
          
          <c:if test="${dto.state ne 'sell' }">
          
+         
+         <c:if test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' }">
             <div class="project-detail-info">
                <div class="budget">
                   <i class="fa fa-krw"></i>
@@ -709,6 +717,29 @@ background-color: white;
                   <span class="fa">모집마감</span><span class="finishDate"></span>
                </div>
             </div>
+         </c:if>
+         
+         
+         <c:if test="${dto.state eq 'wait' || dto.state eq 'ing' || dto.state eq 'finish' }">
+            <div class="project-detail-info">
+               <div class="budget">
+                  <i class="fa fa-krw"></i>
+                  <span class="fa">금액</span>
+                  ${dto.budget}원
+               </div>
+               <div class="term">
+                  <i class="fa fa-clock-o"></i>
+                  <span class="fa">프로젝트 기간</span>${dto.period}일
+               </div>
+               <div class="deadline">
+                  <i class="fa fa-pencil"></i>
+                  <span class="fa">프로젝트 마감</span><span class="finishDate"></span>
+               </div>
+            </div>
+         </c:if>
+         
+         
+         
             
             
             <div class="project-detail-box">
@@ -721,7 +752,14 @@ background-color: white;
                   <div class="detail-data" id="reg_date"></div>
                </div>
                <div class="project-detail-bottom">
+               <c:choose>
+               	<c:when test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' || dto.state eq 'fail'}">
                   <div class="detail-title">예상 시작일</div>
+               	</c:when>
+               	<c:otherwise>
+               		<div class="detail-title">시작일</div>
+               	</c:otherwise>
+               </c:choose>
                   <div class="detail-data startDate"></div>
                   <div class="detail-title">미팅 방식</div>
                   <div class="detail-data" id="meetKind"></div>
