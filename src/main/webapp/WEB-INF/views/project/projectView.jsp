@@ -1127,6 +1127,10 @@ if(meetKind=='offline'){
          $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" id="'+testId+'" value="취소">');
          $(".listReply").attr("data-on", "off");
          $(this).attr("data-on", "on");
+         alert("d");
+         $.get("../reply/checkReply?num="+testId,function(data){
+        	 alert("checkReply");
+         });
          
    });
    

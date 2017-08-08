@@ -38,9 +38,6 @@ public class ReplyDAO {
 	}
 	
 	public List<ReplyDTO> replyList(HashMap<String, Object> map){
-		/*HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("listInfo", listInfo);
-		map.put("project", projectDTO);*/
 		return sqlSession.selectList(NAMESPACE+"list", map); 
 	}
 	
@@ -51,4 +48,15 @@ public class ReplyDAO {
 		return sqlSession.selectOne(NAMESPACE+"count", map);
 	}
 	
+	//답글누를때, 부모의 num을 자식의 ref에 셋팅하기위해 찾기
+	public ReplyDTO checkReply(ReplyDTO replyDTO){
+		int num = replyDTO.getNum();
+		System.out.println("reply-dao에서 num="+num);
+		return sqlSession.selectOne(NAMESPACE+"checkReply", replyDTO);
+	}
+	
+	//답글누를때, 부모의 num을 자식의 ref에 셋팅하기
+	public int insertRef(ReplyDTO replyDTO){
+		return sqlSession.selectOne(NAMESPACE+"insertRef", replyDTO);
+	}
 }

@@ -32,11 +32,11 @@
 			
 			<!-- 비공개일때는 client에게만 답글보여주기 -->
 			<c:if test="${member.email==project.email}">
-			<input type="button" class="listReply" id="listReply${reply.num}" data-on="off" style="height: 22px; width: 55px;" value="답글">
+			<input type="button" class="listReply" id="${reply.num}" data-on="off" style="height: 22px; width: 55px;" value="답글">
 			</c:if>
 			<p>
 			
-			<div class="listReply${reply.num} rere" data-id="${reply.num}">
+			<div class="${reply.num} rere" data-id="${reply.num}">
 			
 			</div>
 			</p>

@@ -52,9 +52,23 @@ public class ReplyController {
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
-	public String ReplyUpdate(ReplyDTO replyDTO){
-		return "";
+	//대댓글 작성하기
+	@RequestMapping(value="checkReply")
+	public void checkReply(ReplyDTO replyDTO){
+		//답글 누를 때, 부모의 num을 가지고 ref 불러오기
+		System.out.println("checkReply-controller");
+		System.out.println("num="+replyDTO.getNum());
+		
+		
+		replyDTO = replyService.checkReply(replyDTO);
+		System.out.println("reply-ref="+replyDTO.getRef());
+		System.out.println("reply-num="+replyDTO.getNum());
+		
+		int result = replyService.insertRef(replyDTO);
+		System.out.println("result=="+result);
 	}
+	
+
 
 	@RequestMapping(value="replyDelete", method=RequestMethod.GET)
 	public String ReplyDelete(int num, RedirectAttributes rd){
