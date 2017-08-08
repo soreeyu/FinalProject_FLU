@@ -118,7 +118,7 @@ public class ScheduleController {
 		@RequestMapping(value="dhxTest" , method=RequestMethod.GET)
 		public String test7(@RequestParam(defaultValue="0") Integer scheduleNum, Model model){
 			model.addAttribute("scheduleNum", scheduleNum);
-			return "schedule/dhx_ganttTest_back";
+			return "schedule/dhx_ganttTest";
 		}
 		
 		@RequestMapping(value="test8")

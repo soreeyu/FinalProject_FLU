@@ -9,6 +9,12 @@
 
 <%-- <c:import url="../temp/bootstrap.jsp"></c:import> --%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/basic.css">
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/schedule/codebase/dhtmlxgantt.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/schedule/codebase/dhtmlxgantt.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/codebase/locale/locale_kr.js" charset="utf-8"></script>
@@ -464,18 +470,13 @@ function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
 </head>
 <body>
 
-
+<c:import url="../temp/header.jsp"></c:import>
 <section class="main_section">
- <div id="gantt_header" style="width:100%; height:100px; background:orange; ">
- 	<span style="display:block; width:200px; height:100px; line-height:100px; background:yellow; margin-left:100px; ">프로젝트 진행창</span>
- </div>
+
  <div id="gantt_here" style='width:100%; height:500px; margin:0 auto; overflow:hidden;'>
  
  </div>
- 
-<div id="test" style='width:200px; height:200px; background:orange;'></div>
- 
- 
+
  </section>
  
 

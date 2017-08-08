@@ -11,8 +11,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/basic.css">
-<%-- <c:import url="../temp/bootstrap.jsp"></c:import> --%>
-  
+
   
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
@@ -1852,8 +1851,37 @@ var currentTab = '${currentTab}';
 		        <h4 class="modal-title">Modal Header</h4>
 		      </div>
 		      <div class="modal-body">
-		        <p>Some text in the modal.</p>
+		        <div id="client_section">
+					<form action="./addPart" method="POST"  enctype="multipart/form-data">
+						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
+						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
+						<div>
+							프로젝트 시작일:<input type="date" name="startDate" value=""> 
+							프로젝트 마감일:<input type="date" name="finishDate"> 
+						</div>
+						<div>
+							<h3>시작일은 설정하지 않을경우 당일로 등록되고 마감일은 파트 마감일중 가장 마지막날로 등록된다</h3>
+							<h3>파트의 시작일을 설정하지 않은경우는 프로젝트 시작일로 등록되고 마감일을 등록하지 않은경우는 마감일로 등록된다</h3>
+						</div>
+						<div id="partSection">
+							<div class="partOne">	
+								part 이름 : <input type="text" class="partName" name="partName">
+								part 시작일:<input type="date" class="partStartDate" name="partStartDate"> 
+								part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">
+								part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">
+								<span class="partDel">X</span>
+							</div>
+						</div>
+						<input type="button" id="addPartBtn" value="part추가">
+						
+						<button>등록</button>
+					</form>
+				</div>
 		      </div>
+		      
+		      
+		      
+		      
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		      </div>
@@ -1863,7 +1891,7 @@ var currentTab = '${currentTab}';
 		</div>
 		
 		<script type="text/javascript">
-		$("#myBtn").click(function(){
+		$("#myModal").click(function(){
 			$('#myModal').modal({backdrop: 'static'});
 	    });
 		</script>
