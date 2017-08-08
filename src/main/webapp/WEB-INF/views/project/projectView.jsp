@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <title>Insert title here</title>
 <style type="text/css">
   
@@ -110,6 +111,7 @@ strong{
    display: block;
    float: left;
 }
+
 .contents-back{
    width: 900px;
    height: auto;
@@ -120,6 +122,17 @@ strong{
    background-color: white;
    border: 1px solid #dedede;
 }
+.pjsellDiv{
+	width: 900px;
+	height: auto;
+	display: block;
+	float: left;
+	background-color: white;
+	border: 1px solid #dedede;
+	margin-bottom: 30px;
+	padding: 20px 30px 20px 30px;
+}
+
 /* 추가 */
 .project-detail-info{
    background-color: #f7f7f7;
@@ -131,10 +144,28 @@ strong{
    font-size: 16px;
    height: 50px;   
 }
+.project-detail-info-i{
+
+   margin-top: 20px;
+   border-top: 1px solid #dedede;
+   border-bottom: 1px solid #dedede;
+   border-radius: 2px;
+   padding: 3px 0px 3px 15px;
+   line-height: 30px;
+   font-size: 16px;
+   height: 50px;   
+}
+
 .fa{
    font-size: 16px;
    font-weight: bold;
    margin-right: 5px;
+}
+.material-icons{
+ 	font-size: 16px;
+   font-weight: bold;
+   margin-right: 5px;
+
 }
 .budget{
    line-height:44px;
@@ -537,6 +568,9 @@ background-color: white;
 	border-radius: 2px;
 	display: inline;
 }
+.pjsellContents{
+	margin-top: 30px;
+}
 </style>
 
 </head>
@@ -550,7 +584,9 @@ background-color: white;
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
             <span>${dto.name}</span>
+            <c:if test="${dto.state ne 'sell' && dto.state ne 'finish' }">
             <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
+            </c:if>
             </p>
             <p id="header_t">
             <span class="header_category">${dto.category} > ${dto.detailCategory }</span>
@@ -608,41 +644,55 @@ background-color: white;
             </div>
          </div>
       </c:if>
-      <c:if test="${dto.state eq 'sell'}">
-       <div class="contents-register" style="width: ">
-            <div class="contents-register-inner" style="text-align: center;">
-      			<div>판매뷰를 보여주자</div>
-      			  <div class="project-detail-info">
-               <div class="budget">
-                  <i class="fa fa-krw"></i>
-                  <span class="fa">예상금액</span>
-                  ${dto.budget}원
-               </div>
-               <div class="term">
-                  <i class="fa fa-clock-o"></i>
-                  <span class="fa">예상기간</span>${dto.period}일
-               </div>
-               <div class="deadline">
-                  <i class="fa fa-pencil"></i>
-                  <span class="fa">모집마감</span><span class="finishDate"></span>
-               </div>
-            </div>
-      		</div>
-      	</div>
-      		 </c:if>
-      
-     
-      
+  
       
       
       <!-- contents -->
       <div class="contents">
       
       
+      <!-- dto.state가 sell일 때 나타나는 pjsell 정보 목록들  -->
+      
+      
+      
       <!-- left contents  -->
          <section class="contents_main" >
+         
+         <c:if test="${dto.state eq 'sell'}">
+     		 <section class="pjsellDiv">
+      			  <div class="project-detail-info-i" style="margin-top: 0px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ">
+		               <div class="budget">
+		                  <span class="fa">판매자</span>
+		                <i class="material-icons">person</i>
+		                  	${mem.nickName}
+		               </div>
+		               <div class="term">
+		                  <span class="fa">연락처</span>
+		                 <i class="material-icons">phone</i>
+		                  ${mem.phone}
+		               </div>
+		               <div class="deadline">
+		                  <span class="fa">판매금액</span> 
+		                   <i class="fa fa-krw"></i>
+		                  ${pjsell.price} 
+		                  <!-- <span class="finishDate"></span> -->
+		               </div>
+		          </div>
+		          
+		          <div class="pjsellContents">
+		          프로젝트 판매 내용
+		          </div>
+      	
+ 
+     		 </section>
+      </c:if>
+         
+         
+         
+         
          <div class="contents-back" style="padding: 30px;">
          
+         <c:if test="${dto.state ne 'sell' }">
          
             <div class="project-detail-info">
                <div class="budget">
@@ -679,6 +729,27 @@ background-color: white;
                   <div class="detail-data" style="overflow: hidden;">${dto.addr_main}</div>
                </div>
             </div>
+         </c:if>
+         <c:if test="${dto.state eq 'sell' }">
+         
+         	 <div class="project-detail-box" style="border-bottom: 1px solid #dedede;">
+               <div class="project-detail-top">
+                  <div class="detail-title">시작일</div>
+                   <div class="detail-data startDate"></div>
+                  <div class="detail-title">종료일</div>
+                  <div class="detail-data finishDate"></div>
+                  <div class="detail-title">위치</div>
+                  <div class="detail-data" style="overflow: hidden;">${dto.addr_main}</div>
+               </div>
+             </div>
+         </c:if>
+         
+         
+         
+           
+            
+            
+            
             
             <!-- 프로젝트 내용 -->
             <div class="project-detail">

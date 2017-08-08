@@ -164,8 +164,8 @@ public class ProjectDAO {
 		}
 		
 		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
-		public MemberDTO projectImg(ProjectDTO projectDTO){
-			return sqlSession.selectOne(NAMESPACE+"projectImg", projectDTO);
+		public MemberDTO projectClient(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectClient", projectDTO);
 		}
 		
 		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
@@ -193,4 +193,6 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
+		
+		
 }

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -37,8 +38,9 @@ public class PjSellService {
 		}
 		
 
-		public PjSellDTO pjsellView(int num){
-			return null;
+		//pjsell의 내용 가져오기
+		public PjSellDTO pjsellInfo(ProjectDTO projectDTO){
+			return pjSellDAO.pjsellInfo(projectDTO);
 		}
 		
 

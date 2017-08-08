@@ -127,7 +127,7 @@
 <select id="finishcount"  parameterType="com.flu.project.ProjectDTO" resultType="int">
    select count(nvl(projectNum,0)) from project where email=#{email} and state='finish'
 </select>
-<select id="projectImg" parameterType="com.flu.project.ProjectDTO" resultType="com.flu.member.MemberDTO">
+<select id="projectClient" parameterType="com.flu.project.ProjectDTO" resultType="com.flu.member.MemberDTO">
 	select * from member where email=#{email}
 </select>
  
@@ -198,6 +198,11 @@
 <update id="cancleProjectState" parameterType="com.flu.project.sell.PjSellDTO" >
 	update project set state='finish' where projectNum=#{projectNum}
 </update>
+
+<!-- 프로젝트 판매 pjsell에서 Num으로 데이터 가져오기 -->
+<select id="pjsellInfo" parameterType="int" resultType="com.flu.project.sell.PjSellDTO">
+	select * from pjsell where projectNum=#{projectNum}
+</select>
   
   
   </mapper>

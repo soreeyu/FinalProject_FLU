@@ -146,8 +146,8 @@ public class ProjectService {
 	
 
 	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
-	public MemberDTO projectImg(ProjectDTO projectDTO){
-		return projectDAO.projectImg(projectDTO);
+	public MemberDTO projectClient(ProjectDTO projectDTO){
+		return projectDAO.projectClient(projectDTO);
 	}
 	
 	
@@ -191,5 +191,6 @@ public class ProjectService {
 	public int cancleProjectState(PjSellDTO pjSellDTO){
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
+	
 	
 }
