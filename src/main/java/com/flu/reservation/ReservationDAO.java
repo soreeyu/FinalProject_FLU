@@ -52,7 +52,12 @@ public class ReservationDAO {
 	public int reservationDel(Integer num) throws Exception{
 		return sqlSession.update(NAMESPACE+"ReserveDel", num);
 	}
-	//클라이언트(할인)
-	
+	//클라이언트(할인) 모집완료된 프로젝트 카운트 ( 사전미팅 하기위한 미팅룸 예약시에 카운트가 있으면 할인 가능 )
+	public int reserveDiscount_REC(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"ReserveDiscount_REC", email);
+	}
 	//프리랜서(할인)
+	public int reserveDiscount_ING(String email) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"ReserveDiscount_ING", email);
+	}
 }

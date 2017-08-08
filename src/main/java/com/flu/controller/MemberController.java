@@ -396,6 +396,7 @@ public class MemberController {
 
 			return "redirect:/member/personaldataView";
 		}
+		
 		//미팅룸 예약 현황 가져오기 
 				@RequestMapping(value="myMeetRoom", method=RequestMethod.GET)
 				public void MemberReservedList(HttpSession session, ListInfo listInfo, Model model) throws Exception{

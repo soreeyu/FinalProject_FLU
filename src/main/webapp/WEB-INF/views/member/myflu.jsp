@@ -527,7 +527,7 @@ body{
 								</tr>
 								</c:forEach>
 							</c:if>
-							<c:if test="${empty ingList || empty ingcList}">
+							<c:if test="${empty ingList && empty ingcList}">
 								<tr>
 									<td colspan="4">
 										진행중인 프로젝트가 없습니다.

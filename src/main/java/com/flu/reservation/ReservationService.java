@@ -63,7 +63,17 @@ public class ReservationService {
 	public int reservationDel(Integer num) throws Exception{
 		return reservationDAO.reservationDel(num);
 	}
-	//클라이언트(할인)
+	
+	//모집완료된 프로젝트 카운트(클라이언트) 할인하기 위해서
+	public int reserveDiscount_REC(String email) throws Exception{
+		return reservationDAO.reserveDiscount_REC(email);
+	}
+	//프리랜서 할인
+	public int reserveDiscount_ING (String email) throws Exception{
+		return reservationDAO.reserveDiscount_ING(email);
+	}
+
+	
 	
 	
 }

@@ -178,6 +178,8 @@ public class MemberService {
 	public int memberProjectCount_CHK(String email) throws Exception{
 		return memberDAO.memberProjectCount_CHK(email);
 	}
+	
+	
 	//진행중인 프로젝트카운트(클라이언트)
 	public int memberProjectCount_INGC(String email) throws Exception{
 		return memberDAO.memberProjectCount_INGC(email);
