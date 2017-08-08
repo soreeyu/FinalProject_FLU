@@ -102,14 +102,14 @@
 
   <!-- client페이지에서 보여지는 state에 따른 리스트들 -->
     <select id="clientcount" parameterType="java.util.HashMap" resultType="int">
-       select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state}
+       select count(nvl(projectNum,0)) from project where email=#{member.email} and state=#{project.state} 
     </select>
     
     
      <select id="clientpjlist" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
      select * from 
      (select rownum R, P.* from 
-     (select * from project where email=#{member.email} and state=#{project.state}) P) 
+     (select * from project where email=#{member.email} and state=#{project.state} order by projectNum desc ) P) 
      where R between #{listInfo.startRow} and #{listInfo.lastRow}
      </select>
 
@@ -134,7 +134,7 @@
  
  <!-- 판매중인 디자인 혹은 개발 리스트 보기 -->
  <select id="sellList" parameterType="java.util.HashMap" resultType="com.flu.project.ProjectDTO">
-    select * from project where state=#{project.state} and category=#{project.category}
+    select * from project where state=#{project.state} and category=#{project.category} order by projectNum desc
  </select>
 <select id="sellCount" parameterType="com.flu.project.ProjectDTO" resultType="int">
    select count(nvl(projectNum, 0)) from project where state='sell' and category=#{category}
@@ -187,6 +187,12 @@
   <select id="checkSellProject" parameterType="com.flu.project.sell.PjSellDTO" resultType="int">
   select count(nvl(projectNum,0)) from pjsell where projectNum=#{projectNum}
   </select>
+  
+  
+  <!-- 프로젝트 판매 취소하면 pjsell에서 삭제됨 -->
+  <delete id="deleteSellProject" parameterType="int">
+  	delete pjsell where projectNum=#{projectNum}
+  </delete>
   
   <!-- 프로젝트 판매 취소하면 project의 상태를 다시 finish로 바꿈 -->  
 <update id="cancleProjectState" parameterType="com.flu.project.sell.PjSellDTO" >

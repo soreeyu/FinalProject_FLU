@@ -84,6 +84,7 @@
 			alert("마지막 페이지");
 			alert("cc="+cc);
 			cc=cc-1;
+			alert("cc="+cc);
 		}else{
 		alert("next클릭");
 	

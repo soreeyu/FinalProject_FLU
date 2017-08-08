@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -105,8 +106,8 @@ public class ProjectController {
    		int quickCount = projectService.quickCount(projectDTO);
    		System.out.println("quickCount=="+quickCount);
    		System.out.println("count들어간후");
-   		listInfo.makePage(quickCount);
-   		listInfo.makeRow();
+   		/*listInfo.makePage(quickCount);
+   		listInfo.makeRow();*/
    		System.out.println("여기는");
         List<ProjectDTO> ar = projectService.quickList(projectDTO, listInfo);
         System.out.println("급구리스트 사이즈==="+ar.size());     
@@ -136,13 +137,13 @@ public class ProjectController {
             
       for(int i=0;i<ar.size();i++){
      	 
-	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
+	         /*System.out.println("ar의 Num=="+ar.get(i).getProjectNum());*/
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
-	         System.out.println("ar의 appCount=="+ar.get(i).getAppCount());
+	         /*System.out.println("ar의 appCount=="+ar.get(i).getAppCount());*/
 	         }
       
       System.out.println("projectListInner의 ar="+ar);
-      System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
+      /*System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());*/
       
       
       System.out.println("=====================");
@@ -383,9 +384,13 @@ public class ProjectController {
    
    //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
    @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)
-   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd){
+   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd, ProjectDTO projectDTO){
    		System.out.println("pjsellInsert-controller");
    		
+
+   		System.out.println("==============================");
+   		System.out.println("state====="+projectDTO.getState());
+   		String conState = projectDTO.getState();
    		int result = pjSellService.pjsellInsert(pjSellDTO);
    		int updateResult = 0;
    		if(result==1){
@@ -406,25 +411,35 @@ public class ProjectController {
      System.out.println("sellCheckCount=="+sellCheckCount);
    		rd.addAttribute("sellCheck", result);
    		rd.addAttribute("updateResult", updateResult);
+   		rd.addAttribute("conState", conState);
    		//sellCheck가 1이면 프로젝트 판매등록 성공 -> project-state sell로 update하기
    		
    		return "redirect:/member/client/clientproject?state=finish";
    	}
    
    @RequestMapping(value="cancleProjectState")
-   public String cancleProjectState(PjSellDTO pjSellDTO){
+   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd){
 	   System.out.println("cancleProjectState-controller");
 	   
+	   int num = pjSellDTO.getProjectNum();
+	   System.out.println("num==="+num);
+	   
+	   //pjsell DB에서 삭제햇는지를 알아보는 cancleResult
+	   int cancleResult = pjSellService.deleteSellProject(num);
+	   //project state를 sell->finish로 바꿧는지 알아보는 result
 	   int result = projectService.cancleProjectState(pjSellDTO);
-	   int cancleResult = 0;
-	   if(result==1){
-		   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
+	   
+	   if(cancleResult==1){
+		   System.out.println("pjsell DB에서 삭제 성공");
+		   if(result==1){
+			   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
+		   }else{
+			   System.out.println("상태 finish 바꾸기 실패");
+		   }
 	   }else{
-		   System.out.println("상태 finish 바꾸기 실패");
+		   System.out.println("pjsell DB에서 삭제 실패");
 	   }
-	   return "";
+	   return "member/client/clientproject";
    }
-
-
    
 }

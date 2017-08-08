@@ -29,9 +29,9 @@ public class PjSellDAO {
 		return sqlSession.selectOne(NAMESPACE+"checkSellProject", pjSellDTO);
 	}
 	
-
-	public int pjsellDelete(int num){
-		return 0;
+	//pjsell에서 삭제
+	public int deleteSellProject(int num){
+		return sqlSession.delete(NAMESPACE+"deleteSellProject", num);
 	}
 	
 
