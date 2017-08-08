@@ -193,11 +193,15 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
+					
 						<c:if test="${empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillInsert" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>${memberDTO.nickName }의 보유기술</span>
+						<c:if test="${email eq member.email }"><a href="skillInsert" style="margin-top: -5px;">업데이트 하기</a></c:if></p>
 						</c:if>
+						
 						<c:if test="${not empty list }">
-						<p><span>ㅁㅁㅁ의 보유기술</span><a href="skillUpdate" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>${memberDTO.nickName }의 보유기술</span>
+						<c:if test="${email eq member.email }"><a href="skillUpdate" style="margin-top: -5px;">업데이트 하기</a></c:if></p>
 						</c:if>
 					</section>
 					<section class="profile_wrap">

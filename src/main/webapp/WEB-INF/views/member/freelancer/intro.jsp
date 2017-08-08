@@ -173,7 +173,8 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<p><span>ㅁㅁㅁ의자기소개</span>
+						<p><span>${memberDTO.nickName }의 자기소개</span>
+						<c:if test="${email eq member.email }">
 						<c:choose>
 						<c:when test="${empty free.intro }">
 						<a href="introInsert" style="margin-top: -5px;">등록 하기</a>
@@ -182,6 +183,7 @@
 						<a href="introUpdate" style="margin-top: -5px;">업데이트 하기</a>
 						</c:otherwise>
 						</c:choose>
+						</c:if>
 						</p>
 					</section>
 					<section class="profile_wrap">

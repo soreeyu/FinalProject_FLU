@@ -702,10 +702,6 @@ alert("사용자email = ${member.email}");
 		alert("매니징 경험을 선택해주세요");
 	}else if(document.frm.quick.value==""){
 		alert("급구 여부를 선택해주세요");
-<<<<<<< HEAD
-	}else{
-		document.frm.submit();
-=======
 	} else if(document.frm.finishDate.value!=""){
 		var finishDate = $("#finishDate").val();
 		 alert("finishDate="+finishDate); 
@@ -747,7 +743,7 @@ alert("사용자email = ${member.email}");
 				 }
 			 }
 		 }
->>>>>>> b76f3ab6dd58431af3ae0d6ec8c80bdc33c3cf93
+
 	}
 }
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
@@ -21,6 +22,7 @@ import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.reservation.ReservationDTO;
+import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -55,31 +57,49 @@ public class MemberController {
 	
 	//사이트 회원 가입폼 이동
 		@RequestMapping(value="MemberJoin", method=RequestMethod.GET)
-		public String MemberJoin(Model model){
-			
+		public String MemberJoin(Model model) throws Exception{
 			model.addAttribute("memberList", memberService.memberList());
 			
 			return "member/memberJoinForm";
 		}
 		//사이트 회원 가입
 		@RequestMapping(value="MemberJoin", method=RequestMethod.POST)
-		public String MemberJoin(MemberDTO memberDTO){
-			
+		public String MemberJoin(MemberDTO memberDTO, Model model, HttpSession session, RedirectAttributes re) throws Exception{
+			String pw = memberDTO.getPw();
 			
 			int result =memberService.memberInsert(memberDTO);
 			if(result > 0){
 				this.EmailAccess(memberDTO.getEmail());
+				memberDTO.setPw(pw);
+				System.out.println("멤버 비번은 ? :"+memberDTO.getPw());
+				this.login(memberDTO, session, re);
 			}
 			System.out.println("회원가입 성공");
-			return "/member/emailCK";
+			model.addAttribute("title", "회원가입 요청 완료");
+			model.addAttribute("message", "FLU 이용을 위해서는 인증 메일 확인이 필요합니다.");
+			
+			return "redirect:/member/emailCK";
 		}
 		//이메일 미인증시 화면
 		@RequestMapping(value="emailCK")
-		public String emailCK(){
+		public String emailCK(Model model){
 			System.out.println("이메일 미인증화면");
+			
+			model.addAttribute("title", "이메일 인증이 필요합니다.");
+			model.addAttribute("message", "FLU 이용을 위해서는 인증 메일 확인이 필요합니다.");
 			
 			return "/member/emailCK";
 		}
+		
+		
+		//이메일 재전송
+		@RequestMapping(value="re_email" ,method=RequestMethod.POST)
+		public String emailrequest(String email){
+			this.EmailAccess(email);
+			
+			return "redirect:/member/emailCK";
+		}
+		
 		
 		//이메일 중복 확인
 		@RequestMapping(value="jungbokCK", method=RequestMethod.POST)
@@ -132,8 +152,8 @@ public class MemberController {
 		
 		//로그인 
 		@RequestMapping(value="login", method=RequestMethod.POST)
-		public ModelAndView login(MemberDTO memberDTO, HttpSession session) throws Exception{
-			ModelAndView mv = new ModelAndView();
+		public String login(MemberDTO memberDTO, HttpSession session, RedirectAttributes re) throws Exception{
+			
 			memberDTO = memberService.login(memberDTO);
 			String message = "0";
 			if(memberDTO != null){
@@ -141,14 +161,17 @@ public class MemberController {
 				session.setAttribute("member", memberDTO);
 				message= "1";
 				alarmDTO.setEmail(memberDTO.getEmail());
-				mv.addObject("alarmCount", alarmService.alarmCount(alarmDTO));
+				re.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 				System.out.println(alarmService.alarmCount(alarmDTO));
-				mv.setViewName("/member/myflu");
-				return mv;
+				if(memberDTO.getEmailcheck().equals("1")){
+					
+					return "redirect:/member/myflu";
+				}else{
+					return "redirect:/member/emailCK";
+				}
 			}else{
-				mv.addObject("message", message);
-				mv.setViewName("/member/login");
-				return mv;
+				re.addFlashAttribute("message", message);
+				return "redirect:/member/login";
 				
 			}
 		}
@@ -169,14 +192,15 @@ public class MemberController {
 		
 		//MY PAGE
 		@RequestMapping(value="mypage")
-		public String mypage(HttpSession session, Model model){
+		public ModelAndView mypage(String email, HttpSession session, ModelAndView model, RedirectAttributes re){
 			MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
-			
+			System.out.println("마이페이지 이메일 : "+email);
 			if(memberDTO.getKind().equals("client")){
-				
-				return "redirect:/member/client/mypage";
+				model.setView(new RedirectView("/flu/member/clientmypage?email="+email));
+				return model;
 			}else{
-				return "redirect:/member/freelancermypage";
+				model.setView(new RedirectView("/flu/member/freelancermypage?email="+email));
+				return model;
 			}
 			//model.addAttribute("active1", "a");
 			/*return "/member/freelancer/mypage";*/
@@ -235,10 +259,11 @@ public class MemberController {
 
 			int result = memberService.memberUpdate(memberDTO);
 			if(result>0){
-				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+				session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
 				//알람 디비에 인서트
+				
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setEmail(memberDTO.getEmail());
 				alarmDTO.setContents("개인정보를 성공적으로 등록 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				
@@ -318,10 +343,10 @@ public class MemberController {
 			
 			int result = memberService.memberUpdate(memberDTO);
 			if(result>0){
-				session.setAttribute("member", memberService.memberView(this.getEmail(session)));
+				session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
 				//알람 디비에 인서트
 				AlarmDTO alarmDTO = new AlarmDTO();
-				alarmDTO.setEmail(((CheckMemberViewDTO)session.getAttribute("member")).getEmail());
+				alarmDTO.setEmail(memberDTO.getEmail());
 				alarmDTO.setContents("개인정보를 수정을 하셨습니다.");
 				alarmService.alarmInsert(alarmDTO);
 				ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -361,6 +386,34 @@ public class MemberController {
 						model.addAttribute("listInfo", listInfo);
 					}				
 					
+				}
+				
+			//계좌 관리 폼
+				@RequestMapping(value="accountView")
+				public String accountView(Model model){
+					
+					model.addAttribute("active3", "a");
+					return "/member/account";
+				}
+				//계좌 등록폼
+				@RequestMapping(value="accountInsert", method=RequestMethod.GET)
+				public String accountInsert(Model model){
+					
+					
+					model.addAttribute("active3", "a");
+					return "/member/accountform";
+				}
+				//계좌 등록/수정
+				@RequestMapping(value="accountInsert", method=RequestMethod.POST)
+				public String accountInsert(Model model, MemberDTO memberDTO, HttpSession session){
+					
+					int result = memberService.accountInsert(memberDTO);
+					
+					if(result > 0){
+						session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
+					}
+					
+					return "redirect:/member/accountView";
 				}
 		
 }

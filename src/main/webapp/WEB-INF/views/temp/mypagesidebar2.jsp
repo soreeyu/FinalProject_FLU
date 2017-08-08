@@ -7,7 +7,7 @@
 					<span>프리랜서</span>
 					<div class="free_img_div">
 						<c:if test="${empty member.fProfileImage }">
-						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/FLU.png">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
 						</c:if>
 						<c:if test="${not empty member.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">

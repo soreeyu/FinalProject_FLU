@@ -25,6 +25,7 @@ public class MemberService {
 	@Inject
 	private MemberDAO memberDAO;
 
+	//이메일 인증
 	public void EmailAccess(String email, String num) {
 		// TODO Auto-generated method stub
 		MemberDTO memberDTO = new MemberDTO();
@@ -89,12 +90,12 @@ public class MemberService {
 	}
 	
 	//로그인
-	public MemberDTO login(MemberDTO memberDTO){
+	public MemberDTO login(MemberDTO memberDTO) throws Exception{
 		return memberDAO.login(memberDTO);
 	}
 	
 	//회원가입
-	public int memberInsert(MemberDTO memberDTO){
+	public int memberInsert(MemberDTO memberDTO) throws Exception{
 		
 		return memberDAO.memberInsert(memberDTO);
 	}
@@ -129,4 +130,8 @@ public class MemberService {
 			listInfo.makeRow();
 			return memberDAO.adminReservedList(listInfo);
 		}
+	//계좌 등록
+	public int accountInsert(MemberDTO memberDTO){
+		return memberDAO.accountInsert(memberDTO);
+	}
 }

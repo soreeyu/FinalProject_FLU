@@ -99,11 +99,11 @@ public class ProjectController {
       //List<ProjectDTO> sellar = projectService.sellList(projectDTO);
       
       System.out.println("projectListInner의 ar="+ar);
-      System.out.println("inner에서 detailCategory=="+ar.get(0).getDetailCategory());
+
       
       
       System.out.println("=====================");
-      System.out.println("detailCategory="+ar.get(0).getDetailCategory());
+
       System.out.println("search="+listInfo.getSearch());
       System.out.println("kind="+listInfo.getKind());
       System.out.println("arrange="+listInfo.getArrange());

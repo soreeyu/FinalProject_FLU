@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.reservation.ReservationDTO;
+import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 import com.flu.util.RowMaker;
 
@@ -25,7 +26,18 @@ public class MemberDAO {
 
 
 	//회원 가입
-	public int memberInsert(MemberDTO memberDTO) {
+	public int memberInsert(MemberDTO memberDTO)throws Exception {
+		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		
+		String password = memberDTO.getPw();
+		String encpassword = aes256Util.aesEncode(password);
+		String decpassword = aes256Util.aesDecode(encpassword);
+		System.out.println("원래 비밀번호 : "+password);
+		System.out.println("암호화된 비밀번호 : "+encpassword);
+		System.out.println("복호화된 비밀번호 : "+decpassword);
+		
+		memberDTO.setPw(encpassword);
+		
 		int result = sqlSession.insert(NAMESPACE+"memberInsert", memberDTO);
 		sqlSession.insert(NAMESPACE2+"freelancerInsert", memberDTO.getEmail());
 		return result;
@@ -65,9 +77,7 @@ public class MemberDAO {
 	//이메일 인증 시 난수 저장 , 인증 성공시 값이 1로 변경
 	public int emailck(MemberDTO memberDTO){
 
-		sqlSession.update(NAMESPACE+"emailUpdate", memberDTO);
-
-		return 3;
+		return sqlSession.update(NAMESPACE+"emailUpdate", memberDTO);
 	}
 
 	//이메일 중복확인
@@ -92,8 +102,17 @@ public class MemberDAO {
 
 
 	//로그인
-	public MemberDTO login(MemberDTO memberDTO){
-
+	public MemberDTO login(MemberDTO memberDTO) throws Exception{
+		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		
+		String password = memberDTO.getPw();
+		String encpassword = aes256Util.aesEncode(password);
+		String decpassword = aes256Util.aesDecode(encpassword);
+		System.out.println("원래 비밀번호 : "+password);
+		System.out.println("암호화된 비밀번호 : "+encpassword);
+		System.out.println("복호화된 비밀번호 : "+decpassword);
+		
+		memberDTO.setPw(encpassword);
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
 	}
 	//예약현황 리스트
@@ -110,6 +129,11 @@ public class MemberDAO {
 	public int totalCount() throws Exception{
 		return sqlSession.selectOne("MeetRoomMapper.MeetRoomCount");
 
+	}
+	
+	//계좌 등록/수정
+	public int accountInsert(MemberDTO memberDTO){
+		return sqlSession.update(NAMESPACE+"accountInsert", memberDTO);
 	}
 
 

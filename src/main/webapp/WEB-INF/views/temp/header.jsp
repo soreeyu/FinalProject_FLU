@@ -44,7 +44,7 @@
 	</div>
 
 </header>
-	<c:if test="${not empty member }">
+	<c:if test="${not empty member && member.emailcheck eq '1'}">
 	<section class="profile_section">
 		<div class="profile_div">
 			<ul>
@@ -58,12 +58,13 @@
 			
 			<c:when test="${member.kind eq 'freelancer' }">
 				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage?email=${member.email}">내 프로필</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/freelancer/myproject">프로젝트 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="${pageContext.request.contextPath}/member/personaldataView">계정 관리</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/mypage">내 프로필</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/mypage?email=${member.email}">내 프로필</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/client/clientproject">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>
 			</c:otherwise>

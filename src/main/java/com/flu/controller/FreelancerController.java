@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
@@ -60,7 +63,10 @@ public class FreelancerController {
 			Map<String, Object> map = freelancerService.freelancerView2(email);
 			return map;
 		}
-	
+	//계정 정보를 가져오는메서드
+		private MemberDTO getMemberDTO(String email){
+			return freelancerService.freelancerMemberView(email);
+		}
 
 	//프리랜서 리스트
 	@RequestMapping(value="freelancerList", method=RequestMethod.GET)
@@ -78,6 +84,10 @@ public class FreelancerController {
 		model.addAttribute("listinfo", listInfo);
 		model.addAttribute("count", totalCount);
 		model.addAttribute("map",freelancerService.freelancerList(listInfo));
+		model.addAttribute("eval", freelancerService.freelancerListEval(listInfo));
+		
+		//추가로 가져와야 할것 각 멤버별 평점
+		
 		
 		
 		
@@ -85,17 +95,42 @@ public class FreelancerController {
 	}
 	//프리랜서 마이페이지
 	@RequestMapping(value="freelancermypage")
-	public String freelancermypage(Model model, HttpSession session){
-		
+	public String freelancermypage(HttpServletRequest request, Model model, HttpSession session){
+		String email = (String)request.getAttribute("email");
+		System.out.println("누구이메일 :"+email);
+		System.out.println("세션이메일 :"+this.getEmail(session));
+		System.out.println(email.equals(this.getEmail(session)));
 		model.addAttribute("active1", "a");
+		if(email.equals(this.getEmail(session))){
+			System.out.println("여기?111111");
+		model.addAttribute("memberDTO", freelancerService.freelancerMemberView(this.getEmail(session)));
 		model.addAttribute("freelancer", freelancerService.freelancerView(this.getEmail(session)));
 		model.addAttribute("portfolio", freelancerService.portfolioList(this.getEmail(session)));
 		model.addAttribute("skills", freelancerService.skillList(this.getEmail(session)));
 		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
 		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
 		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
-		model.addAttribute("evaluation", freelancerService.evaluationList(this.getEmail(session)));
+		
+		model.addAttribute("evaluation", freelancerService.evaluationList2(this.getEmail(session)));
 		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
+		model.addAttribute("projectName", freelancerService.getProjectName(this.getEmail(session)));
+		model.addAttribute("email", this.getEmail(session));
+		}else{
+			System.out.println("여기?2222222");
+			System.out.println(freelancerService.freelancerMemberView(email).getNickName());
+			model.addAttribute("memberDTO", freelancerService.freelancerMemberView(email));
+			model.addAttribute("freelancer", freelancerService.freelancerView(email));
+			model.addAttribute("portfolio", freelancerService.portfolioList(email));
+			model.addAttribute("skills", freelancerService.skillList(email));
+			model.addAttribute("academic", freelancerService.academicList(email));
+			model.addAttribute("carrer", freelancerService.carrerList(email));
+			model.addAttribute("license", freelancerService.licenseList(email));
+			
+			model.addAttribute("evaluation", freelancerService.evaluationList2(email));
+			model.addAttribute("myproject", freelancerService.myprojectList(email));
+			model.addAttribute("projectName", freelancerService.getProjectName(email));
+			model.addAttribute("email", email);
+		}
 		
 		return "/member/freelancer/mypage";
 	}
@@ -107,17 +142,18 @@ public class FreelancerController {
 
 	//프리랜서 정보 뷰
 	@RequestMapping(value="myinfoView")
-	public String freelancerinfoView(Model model, HttpSession session){
-		
+	public String freelancerinfoView(HttpServletRequest request,Model model, HttpSession session){
+		String email = (String)request.getAttribute("email");
 		
 		model.addAttribute("active8", "a");
 		model.addAttribute("free", this.freelancerview2((this.getEmail(session))));
+		model.addAttribute("email", email);
 		return "/member/freelancer/freelancerinfoView";
 	}
 	
 	//프리랜서 정보 등록
 	@RequestMapping(value="infoInsert", method=RequestMethod.GET)
-	public String freelancerinfoInsert(Model model){
+	public String freelancerinfoInsert(Model model, HttpRequest request){
 		
 		model.addAttribute("active8", "a");
 		model.addAttribute("path", "infoInsert");
@@ -157,8 +193,8 @@ public class FreelancerController {
 	
 	//프리랜서 정보 수정
 	@RequestMapping(value="infoUpdate", method=RequestMethod.GET)
-	public String freelancerinfoUpdate(Model model, HttpSession session){
-
+	public String freelancerinfoUpdate(Model model, HttpSession session, HttpServletRequest request){
+		System.out.println("리퀘스트 : "+ request.getAttribute("email"));
 		model.addAttribute("active8", "a");
 		model.addAttribute("path", "infoUpdate");
 		model.addAttribute("free", this.freelancerview2((this.getEmail(session))));
@@ -255,12 +291,20 @@ public class FreelancerController {
 	}
 	//자기소개 뷰
 	@RequestMapping(value="introView")
-	public String introView(HttpSession session, Model model){
-		
+	public String introView(HttpServletRequest request,HttpSession session, Model model){
+		String email = (String)request.getAttribute("email");
 		//자바스크립트 활용하기위한 값
 		model.addAttribute("active2", "a");
-		model.addAttribute("free", this.freelancerview(session));
 		
+		if(email.equals(this.getEmail(session))){
+		model.addAttribute("free", this.freelancerview(session));
+		model.addAttribute("email", this.getEmail(session));
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("free", freelancerService.freelancerView(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/intro";
 	}
 	//자기소개 수정 폼
@@ -280,7 +324,7 @@ public class FreelancerController {
 
 		int result = freelancerService.introUpdate(freelancerDTO);
 		if(result > 0){
-
+			alarmDTO.setEmail(freelancerDTO.getEmail());
 			alarmDTO.setContents("등록된 자기소개를 성공적으로 수정 하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -353,7 +397,6 @@ public class FreelancerController {
 		alarmService.alarmInsert(alarmDTO);
 		redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-		freelancerService.portfolioInsert(portFolio, ar);
 		
 		
 		return "redirect:/member/portfolioList";
@@ -371,9 +414,18 @@ public class FreelancerController {
 	
 	//포트폴리오 리스트
 	@RequestMapping(value="portfolioList", method=RequestMethod.GET)
-	public String portfolioList(HttpSession session, Model model){
+	public String portfolioList(HttpServletRequest request,HttpSession session, Model model){
+		String email = (String)request.getAttribute("email");
 		model.addAttribute("active3", "a");
+		if(email.equals(this.getEmail(session))){
 		model.addAttribute("list", freelancerService.portfolioList(this.getEmail(session)));
+		model.addAttribute("email", this.getEmail(session));
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("list", freelancerService.portfolioList(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/portfolio";
 	}
 	//포트폴리오 수정 폼
@@ -435,12 +487,14 @@ public class FreelancerController {
 				}else if(i ==1){
 					System.out.println("여기냐2");
 					PortFolioImg portFolioImg = new PortFolioImg();
+					System.out.println("이거길이 : "+((List<PortFolioImg>)freelancerService.portfolioView(portFolio.getPfNum()).get("imglist")).size());
 					if(((List<PortFolioImg>)freelancerService.portfolioView(portFolio.getPfNum()).get("imglist")).size() != 0){
 						portFolioImg.setFimage("");
 						portFolioImg.setOimage("");
 					}else{
-					portFolioImg.setFimage(((PortFolioImg)freelancerService.portfolioView(portFolio.getPfNum()).get("imglist")).getFimage());
-					portFolioImg.setOimage(((PortFolioImg)freelancerService.portfolioView(portFolio.getPfNum()).get("imglist")).getOimage());
+							portFolioImg.setFimage(((PortFolioImg)freelancerService.portfolioView(portFolio.getPfNum()).get("imglist")).getFimage());
+							portFolioImg.setOimage(((PortFolioImg)freelancerService.portfolioView(portFolio.getPfNum()).get("imglist")).getOimage());
+							
 					}
 					portFolioImg.setContents(contents1);
 					portFolioImg.setArrage(Integer.toString(arrage));
@@ -475,7 +529,6 @@ public class FreelancerController {
 		alarmService.alarmInsert(alarmDTO);
 		model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-		freelancerService.portfolioUpdate(portFolio, ar);
 		
 		
 		return "redirect:/member/portfolioList";
@@ -510,6 +563,7 @@ public class FreelancerController {
 		
 		List<Skill> ar = new ArrayList<Skill>();
 		
+		alarmDTO.setEmail(skill.getEmail());
 		if(skill.getExp().length() > 1){
 			String [] sk1 = skill.getExp().split(",");
 			String [] sk2 = skill.getKind().split(",");
@@ -533,7 +587,6 @@ public class FreelancerController {
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-			freelancerService.skillInsert(ar);
 
 		}else if(skill.getExp().equals("0")){
 			
@@ -549,7 +602,6 @@ public class FreelancerController {
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-			freelancerService.skillInsert(ar);
 
 		}
 		
@@ -568,14 +620,21 @@ public class FreelancerController {
 	
 	//보유기술 리스트
 	@RequestMapping(value="skillList", method=RequestMethod.GET)
-	public String skillList(Model model, HttpSession session){
-		
+	public String skillList(HttpServletRequest request,Model model, HttpSession session){
+		String email = (String)request.getAttribute("email");
 		
 			
 		
 		model.addAttribute("active4", "a");
+		if(email.equals(this.getEmail(session))){
 		model.addAttribute("list", freelancerService.skillList(this.getEmail(session)));
-		
+		model.addAttribute("email", this.getEmail(session));
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("list", freelancerService.skillList(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/skill";
 	}
 	
@@ -650,12 +709,23 @@ public class FreelancerController {
 	/************************** Carrer *******************************/
 	//경력, 학력, 자격증
 	@RequestMapping(value="carrer", method=RequestMethod.GET)
-	public String carrer(String email, Model model, HttpSession session){
+	public String carrer(HttpServletRequest request, Model model, HttpSession session){
+		String email = (String)request.getAttribute("email");
 		model.addAttribute("active5", "a");
 		
+		if(email.equals(this.getEmail(session))){
 		model.addAttribute("carrer", freelancerService.carrerList(this.getEmail(session)));
 		model.addAttribute("academic", freelancerService.academicList(this.getEmail(session)));
 		model.addAttribute("license", freelancerService.licenseList(this.getEmail(session)));
+		model.addAttribute("email", this.getEmail(session));
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("carrer", freelancerService.carrerList(email));
+			model.addAttribute("academic", freelancerService.academicList(email));
+			model.addAttribute("license", freelancerService.licenseList(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/carrer";
 		
 	}
@@ -690,7 +760,6 @@ public class FreelancerController {
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-		freelancerService.carrerInsert(carrer);
 		
 		return "redirect:/member/carrer";
 	}
@@ -879,7 +948,6 @@ public class FreelancerController {
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-		freelancerService.licenseUpdate(license);
 		
 
 		return "redirect:/member/carrer";
@@ -899,12 +967,22 @@ public class FreelancerController {
 
 	//평가 정보 리스트 - 클라이언트의 평가 항목
 	@RequestMapping(value="evaluationView", method=RequestMethod.GET)
-	public String evaluationView(HttpSession session, Model model){
+	public String evaluationView(HttpServletRequest request, HttpSession session, Model model){
+		String email = (String)request.getAttribute("email");
 		model.addAttribute("active6", "a");
+		if(email.equals(this.getEmail(session))){
 		model.addAttribute("evaluation", freelancerService.evaluationList2(this.getEmail(session)));
 		model.addAttribute("myproject", freelancerService.myprojectList(this.getEmail(session)));
 		model.addAttribute("projectName", freelancerService.getProjectName(this.getEmail(session)));
-		
+		model.addAttribute("email", this.getEmail(session));
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("evaluation", freelancerService.evaluationList2(email));
+			model.addAttribute("myproject", freelancerService.myprojectList(email));
+			model.addAttribute("projectName", freelancerService.getProjectName(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/evaluation";
 	}
 	//평가 정보 수정

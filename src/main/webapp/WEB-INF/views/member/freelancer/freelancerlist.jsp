@@ -197,32 +197,36 @@ $(function() {
 			</div>
 		</div>
 					<c:catch>
+					
 					<c:forEach begin="0" end="${map.member.size()-1 }" var="i">
 					<c:if test="${map.member[i].emailcheck eq 1}">
 			<div class="freelancerListform">
 				<div class="freelancerdiv">
 					<div class="freelancerimg">
 						<c:if test="${not empty map.member[i].fProfileImage }">
-						<a href="#"><img src="${pageContext.request.contextPath}/resources/profile/${map.member[i].fProfileImage}"></a>
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }"><img src="${pageContext.request.contextPath}/resources/profile/${map.member[i].fProfileImage}"></a>
 						</c:if>
 						<c:if test="${empty map.member[i].fProfileImage }">
-						<a href="#"><img src="${pageContext.request.contextPath}/resources/img/FLU.png"></a>
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }"><img src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg"></a>
 						</c:if>
 					</div>
 					<div class="freelancerdata">
-						<p><span class="username">${map.member[i].nickName }</span>
+						<p><a href="/flu/member/freelancermypage?email=${map.member[i].email }">
+						<span class="username">${map.member[i].nickName }</span>
+						</a>
 						<label>
 						<span class="avail">
 						<c:choose>
 						<c:when test="${not empty map.freelancer[i].possibility }">
-						${map.freelancer[i].possibility }
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">${map.freelancer[i].possibility }</a>
 						</c:when>
 						<c:otherwise>
-						활동가능
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">활동가능</a>
 						</c:otherwise>
 						</c:choose></span>
 						</label></p>
 						<p><span class="kind">
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">
 						<c:if test="${not empty map.freelancer[i].jobKind }">
 						${map.freelancer[i].jobKind }</c:if>
 						<c:if test="${empty map.freelancer[i].jobKind }">
@@ -235,8 +239,9 @@ $(function() {
 						<c:if test="${empty map.meber[i].type }">
 						개인
 						</c:if>
-						</span></p>
+						</a></span></p>
 						<p>
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">
 						<c:choose>
 						<c:when test="${not empty map.freelancer[i].intro }">
 						<span class="intro">${map.freelancer[i].intro }</span>
@@ -245,8 +250,10 @@ $(function() {
 						<span class="intro">자기소개가 없습니다.</span>
 						</c:otherwise>
 						</c:choose>
+						</a>
 						</p>
 						<p>
+						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">
 						<c:choose>
 						<c:when test="${not empty map.skills[i] }">
 						<c:forEach items="${map.skills[i] }" var="j">
@@ -257,6 +264,7 @@ $(function() {
 						<span class="skills">스킬미등록</span>
 						</c:otherwise>
 						</c:choose>
+						</a>
 						</p>
 					</div>
 				</div>
@@ -264,34 +272,33 @@ $(function() {
 					<div class="starpoint">
 						<p>
 						<span>
-						<c:if test="${starpoint eq 0 }">
+						<c:if test="${eval.eval[i] eq 0 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/0.png">
 						</c:if>
-						<c:if test="${starpoint eq 1 }">
+						<c:if test="${eval.eval[i] eq 1 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/1.png">
 						</c:if>
-						<c:if test="${starpoint eq 2 }">
+						<c:if test="${eval.eval[i] eq 2 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/2.png">
 						</c:if>
-						<c:if test="${starpoint eq 3 }">
+						<c:if test="${eval.eval[i] eq 3 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/3.png">
 						</c:if>
-						<c:if test="${starpoint eq 4 }">
+						<c:if test="${eval.eval[i] eq 4 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/4.png">
 						</c:if>
-						<c:if test="${starpoint eq 5 }">
+						<c:if test="${eval.eval[i] eq 5 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
 						</c:if>
-						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
 						</span>
 						<span style="line-height: 30px; vertical-align: top; float: right; margin-right: 10px;">
-							4점/평가 2개
+							${eval.eval[i] }점/평가 ${eval.evaluationLength[i] }개
 						</span>
 						</p>
 						<hr>
-						<p><span>계약한 프로젝트</span><span style="float: right; margin-right: 10px;">4건</span></p>
+						<p><span>계약한 프로젝트</span><span style="float: right; margin-right: 10px;">${map.myproject[i]}건</span></p>
 						<hr>
-						<p><span>포트폴리오</span><span style="float: right; margin-right: 10px;">22개</span></p>
+						<p><span>포트폴리오</span><span style="float: right; margin-right: 10px;">${map.portfolio[i] }개</span></p>
 						<hr>
 					</div>
 					<div class="access">
@@ -315,6 +322,17 @@ $(function() {
 				</c:if>
 					</c:forEach>
 					</c:catch>
+					<c:if test="${map.member.size() < 1 }">
+						<div class="freelancerListform">
+							<div style="width: 210px; margin: 0 auto; text-align: center; margin-top: 110px;">
+								<p style="margin-bottom:10px; display:inline-block; ">검색 결과가 없습니다.
+								</p>
+								<p>
+								다른 검색어로 검색해주세요
+								</p>
+							</div>
+						</div>
+					</c:if>
 		</div>
 		<div>
 			<div class="contents_paging">

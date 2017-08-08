@@ -74,5 +74,11 @@
   		<select id="memberList" resultType="java.lang.String" parameterType="java.lang.String">
   			select email from member where kind = #{kind}
   		</select>
+  		
+  		
+  		<!-- 계좌 등록/수정 -->
+  		<update id="accountInsert" parameterType="com.flu.member.MemberDTO">
+  			update member set bank = #{bank} , account =#{account} , accountnumber = #{accountNumber} where email = #{email}
+  		</update>
   
   </mapper>

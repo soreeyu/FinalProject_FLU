@@ -421,7 +421,7 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<p><span>프리랜서 정보 등록</span></p>
+						<p><c:if test="${memberDTO.email eq member.email }"><span>프리랜서 정보 등록</span></c:if></p>
 					</section>
 					<section class="profile_wrap">
 						
