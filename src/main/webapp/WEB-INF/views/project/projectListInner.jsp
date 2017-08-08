@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
-<title>Insert title here</title>
+
 </head>
 <body>
 <c:if test="${pjcount==0}">
@@ -41,7 +41,7 @@
 							마감<span class="deadline" id="${dto.finishDate}"></span></div>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							총지원 <strong>몇명</strong></div>
+							총지원 <strong>${dto.appCount}명</strong></div>
 							
 							
 							
@@ -174,7 +174,10 @@ $("#preview").click(function() {
 		
 	});
  
+ 
+ 
  /* 프로젝트뷰로 넘어가기 */
+ /* session이랑 참고해서 기본정보, 자기소개, 포트폴리오, 보유기술 등록여부 확인 */
  
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");

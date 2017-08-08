@@ -62,7 +62,7 @@ public class MeetRoomDAOImpl implements RoomDAO{
 	}
 	public int count(ListInfo listInfo) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne(NAMESPACE+"MeetRoomCount", listInfo);
 	}
 	
 	

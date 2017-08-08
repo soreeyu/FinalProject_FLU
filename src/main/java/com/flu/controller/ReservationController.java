@@ -37,7 +37,7 @@ import com.flu.room.RoomDTO;
 public class ReservationController {
 	
 	@Autowired
-	private ReservationService reservaionService;
+	private ReservationService reservationService;
 	@Autowired
 	private AlarmService alarmService;
 	
@@ -49,13 +49,13 @@ public class ReservationController {
 	
 	@RequestMapping(value="reserveInsert", method=RequestMethod.GET)
 	public void reserveInsert(Model model, ReservationDTO reservationDTO) throws Exception{
-		EachRoomDTO eachRoomDTO =  reservaionService.eachView(reservationDTO.getNum());//방 번호를 가지고 해당 방의 정보를 뿌려준다.
+		EachRoomDTO eachRoomDTO =  reservationService.eachView(reservationDTO.getNum());//방 번호를 가지고 해당 방의 정보를 뿌려준다.
 		
-		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());//업체 번호를 가지고 업체의 정보를 뿌려준다.(운영시간, 위치 등등)
+		MeetRoomDTO meetRoomDTO = reservationService.accessTime(reservationDTO.getSnum());//업체 번호를 가지고 업체의 정보를 뿌려준다.(운영시간, 위치 등등)
 		Calendar ca = Calendar.getInstance();
 		Date da = new Date(ca.getTimeInMillis());
 		reservationDTO.setReserve_date(da.toString());
-		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);//방 이름과 업체 번호를 가지고와서 해당 업체의 선택한 방의 예약된 정보를 가져온다.
+		List<ReservationDTO> ar = reservationService.reservedTime(reservationDTO);//방 이름과 업체 번호를 가지고와서 해당 업체의 선택한 방의 예약된 정보를 가져온다.
 		
 		String [] reserved_time = null;
 		ArrayList<String> in = new ArrayList<String>();
@@ -94,7 +94,7 @@ public class ReservationController {
 	@RequestMapping(value="reservationDel", method=RequestMethod.GET)
 	public String reserveDel(Integer num, HttpSession session, RedirectAttributes ra) throws Exception{
 		
-		int result = reservaionService.reservationDel(num);
+		int result = reservationService.reservationDel(num);
 		if(result>0){
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
@@ -107,7 +107,7 @@ public class ReservationController {
 	
 	@RequestMapping(value="reserveDelete")
 	public String reserveDelete(Integer num, String email, RedirectAttributes ra) throws Exception{
-		int result = reservaionService.delete(num);
+		int result = reservationService.delete(num);
 		if(result>0){
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(email);
@@ -119,11 +119,41 @@ public class ReservationController {
 		
 	}
 	
+	//예약하기전에 할인 받기 위한 ajax
+	@RequestMapping(value="reserveDiscount", method=RequestMethod.POST)
+	public String reserveDiscount(HttpSession session, Model model, String email) throws Exception{
+		//예약하려는 회원이 클라이언트일 경우
+		
+		if(((MemberDTO)session.getAttribute("member")).getKind().equals("client")){
+			//모집완료된, 진행중인 프로젝트 카운트
+			int discount_Count = reservationService.reserveDiscount_REC(email);
+			String message ="";
+			if(discount_Count>0){
+				message = "조건에 충족하여 결제 예정 금액의 10%를 할인 받을 수 있습니다.";
+			}else {
+				message = "조건에 충족하지 못하여 10% 할인 받을 수 없습니다.";
+			}
+			model.addAttribute("message", message);
+		}else if(((MemberDTO)session.getAttribute("member")).getKind().equals("freelancer")){
+			//진행중인 프로젝트 카운트
+			int discount_Count = reservationService.reserveDiscount_ING(email);
+			String message = "";
+			if(discount_Count>0){
+				message = "조건에 충족하여 결제 예정 금액의 10%를 할인 받을 수 있습니다.";
+			}else {
+				message = "조건에 충족하지 못하여 10% 할인 받을 수 없습니다.";
+			}
+			model.addAttribute("message", message);
+		}
+		
+		return "/meetRoom/reservation/reserveDiscount2";
+		
+	} 
 	
 	@RequestMapping(value="reservePay", method=RequestMethod.POST)
 	public String reservePay(ReservationDTO reservationDTO, Model model, RedirectAttributes ra) throws Exception{
 		System.out.println("컨트롤러 방이름 : "+reservationDTO.getName());
-		int result = reservaionService.insert(reservationDTO);
+		int result = reservationService.insert(reservationDTO);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(reservationDTO.getEmail());
 		if(result>0){
@@ -141,7 +171,7 @@ public class ReservationController {
 	@RequestMapping(value="accessTime", method=RequestMethod.POST)
 	public void accessTime(Model model, ReservationDTO reservationDTO) throws Exception{
 		System.out.println(reservationDTO.getSnum());
-		MeetRoomDTO meetRoomDTO = reservaionService.accessTime(reservationDTO.getSnum());
+		MeetRoomDTO meetRoomDTO = reservationService.accessTime(reservationDTO.getSnum());
 		System.out.println(meetRoomDTO.getTime());
 		String [] access = meetRoomDTO.getTime().split(",");
 		model.addAttribute("access", access);
@@ -151,7 +181,7 @@ public class ReservationController {
 	@ResponseBody
 	public Map<String, Object> reservedTime(Model model, ReservationDTO reservationDTO) throws Exception{
 		System.out.println("날짜"+reservationDTO.getReserve_date());
-		List<ReservationDTO> ar = reservaionService.reservedTime(reservationDTO);
+		List<ReservationDTO> ar = reservationService.reservedTime(reservationDTO);
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<String> in = new ArrayList<String>();
 		ArrayList<String> out = new ArrayList<String>();

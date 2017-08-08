@@ -797,7 +797,7 @@ $(function(){
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<p><span>${member.nickName }의 평가</span></p>
+						<p><span>${memberDTO.nickName }의 평가</span></p>
 					</section>
 					<section class="profile_wrap">
 						<div>

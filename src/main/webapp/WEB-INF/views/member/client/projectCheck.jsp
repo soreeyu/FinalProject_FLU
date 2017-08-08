@@ -29,7 +29,7 @@
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title" id=${dto.projectNum}>${dto.name}</div>
+						<div class="project-title" id=${dto.projectNum}>${dto.name} ${dto.projectNum}</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -39,19 +39,96 @@
 						</div>
 						<div class="project-contents">${dto.contents }</div>
 						
-						<c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
+						<c:if test="${dto.state eq 'done' || dto.state eq 'recruit' || dto.state eq 'ing' }">
 						<div class="project-contents-right">
+							<c:if test="${dto.state eq 'done'}">
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
 							마감<span class="deadline" id="${dto.finishDate}"></span></div>
+							</c:if>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							총 <strong>몇명</strong></div>
-							
+							총 <strong>${dto.appCount}명</strong></div>	
 						</div>
 						</c:if>
 						
+						
+						<!-- 완료된 프로젝트에 판매버튼 추가하기 -->						
+						<c:if test="${dto.state eq 'finish'}">
+						<div class="project-contents-right">
+							<button class="projectSellBTN" id="${dto.projectNum}" data-toggle="modal" data-target="#sell-Modal">
+							판매하기</button> 
+			 			</div>
+						</c:if>
+						<c:if test="${dto.state eq 'sell' }">
+						<div class="project-contents-right">
+							<button class="CancleSellBTN" data-id="${dto.projectNum}">
+							판매취소</button> 
+			 			</div>
+						</c:if>
+									
 						<div style="clear: both;"></div>
+						
+						
+		   <!----------------------- Modal ---------------------------------->
+        
+
+  <!-- Modal -->
+  <div class="modal fade" id="sell-Modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-edit"></span>  프로젝트 판매를 위해 작성해주세요</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" action="../../project/pjsellInsert" method="post">
+            <div class="form-group">
+            <input type="hidden" name="projectNum" class="modal_Num">
+            <input type="hidden" name="email" value="${member.email}">
+            <input type="hidden" name="state" value="finish">
+            <div>프로젝트 Num : <span class="modal_Num"></span></div>
+              <label><span class="glyphicon glyphicon-user"></span>판매할 프로젝트 이름</label>
+              <input type="text" name="name" value="">
+            </div>
+            <div class="form-group">
+              <label><span class="glyphicon glyphicon-eye-open"></span> 판매 가격</label>
+              <input type="number" class="form-control" name="price">
+            </div>
+             <div class="form-group">
+              <label><span class="glyphicon glyphicon-eye-open"></span> 프로젝트 설명</label>
+              <input type="text" class="form-control" name="contents">
+            </div>
+         
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Enter</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+      
+          <p>프로젝트 판매 정보는 수정이 불가하니 신중해주세요.</p> 
+         
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+          
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						
 						<div class="project-bottom">
 							<span class="main-cate">${dto.category }</span>
@@ -100,6 +177,8 @@
 	var preview = ((curBlock-2)*perBlock)+1;
 	var next = curBlock*perBlock+1;
 	
+
+	
 	/* 페이징 색상 */
 	$(".num").each(function() {
 		if(curPage==$(this).attr("id")){
@@ -144,7 +223,7 @@
 	$(".project-title").click(function() {
 	var projectNum=$(this).attr("id");
 	var memberEmail = '${member.email}';
-	
+	alert('${conState}');
 	location.href="../../project/projectView?projectNum="+projectNum;
 	
 });
@@ -171,8 +250,41 @@
 	});
 
 	
+/* 완료된 프로젝트 판매하기 */
+$(".projectSellBTN").click(function() {
+	alert("모달");
+	alert($(this).attr("id"));
+	var sell_Id = $(this).attr("id");
+	$(".modal_Num").html(sell_Id);
+	$(".modal_Num").val(sell_Id);
+	$("#sell-Modal").modal();
+});
 
-	 
+
+/* 판매중인 리스트에서 판매취소하기 */
+$(".CancleSellBTN").click(function() {
+	
+	var ch = confirm("판매를 취소하시겠습니까?");
+	if(ch == true){
+		
+		alert($(this).attr("data-id"));
+		var cancle_Id = $(this).attr("data-id");
+		/* 판매취소할시, pjsell에서 삭제 + projectstate를 finish로 바꿔줌  */
+		$.get("../../project/cancleProjectState?projectNum="+cancle_Id,function(data){
+			alert("ddd");
+			$.get("projectCheck?state=sell&curPage=1", function(data){
+				alert("판매중");
+				$("#t1").text("판매중인 프로젝트");
+				$("#t2").text("다른 클라이언트에게 제공되는 프로젝트입니다.");
+				$(".contents").html(data); 
+			});
+		});
+		
+	}else{
+		alert("판매 취소가 취소되었습니다.");
+	}
+});
+
 	
 	</script>
 </body>

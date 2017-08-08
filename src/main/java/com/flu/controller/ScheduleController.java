@@ -6,6 +6,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,8 +72,9 @@ public class ScheduleController {
 				
 				model.addAttribute("scheduleNum", scheduleNum);
 				model.addAttribute("mainScheduleDTO", scheduleMainDTO);
-
-				ProjectDTO projectDTO = projectService.projectView(scheduleMainDTO.getProjectNum());
+				ProjectDTO dto = new ProjectDTO(); 
+				//ProjectDTO projectDTO = projectService.projectView(scheduleMainDTO.getProjectNum());//처리필요
+				ProjectDTO projectDTO = projectService.projectView(dto);
 				model.addAttribute("projectDTO",projectDTO); //프로젝트 정보 뿌려주기용 
 				model.addAttribute("applicantCount", applicantDAO.ingCount(scheduleMainDTO.getProjectNum())); //해당 스케줄에 참여한 프리랜서수 
 

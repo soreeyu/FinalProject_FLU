@@ -225,7 +225,7 @@ section {
 							</c:when>
 						</c:choose>	
 							<h4 class="username">${member.email}</h4>
-							<a class="profile-setting"href="./member/personaldataView">기본 정보 수정</a>
+							<a class="profile-setting"href="/flu/member/personaldataView">기본 정보 수정</a>
 							
 						</div>
 					</div>

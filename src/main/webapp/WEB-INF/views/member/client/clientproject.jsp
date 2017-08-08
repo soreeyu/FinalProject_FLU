@@ -281,6 +281,7 @@
 </style>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp" />
+
 <section class="main_section">
 			<div class="left">
 				<div class="user">
@@ -296,21 +297,23 @@
 						<p id="checkBTN">
 							<a id="check">검수중인 프로젝트</a>
 						</p>
-						<p id="failBTN">
-							<a id="recruit">모집중인 프로젝트</a>
+						<p id="doneBTN">
+							<a id="done">모집중인 프로젝트</a>
 						</p>
-					
-						<p id="waitBTN">
+						<p id="recruitBTN">
+							<a id="recruit">모집 완료된 프로젝트</a>
+						</p>
+						<p id="ingBTN">
 							<a id="ing">진행중인 프로젝트</a>
 						</p>
 						<p id="finishBTN">
 							<a id="finish">완료된 프로젝트</a>
 						</p>
 					
-						<p id="clientBTN">
+						<p id="sellBTN">
 							<a id="sell">판매중인 프로젝트</a>
 						</p>
-						<p id="freelancerBTN">
+						<p id="failBTN">
 							<a id="fail">실패된 프로젝트</a>
 						</p>
 				
@@ -342,8 +345,20 @@
 
 <script type="text/javascript">
 
-/* project 첫화면 검수중인 프로젝트 리스트 띄우기  */
-$.get("projectCheck?state=check&curPage=1", function(data){
+alert("sellCheck==${sellCheck}");
+alert("state==${conState}");
+var conState='${conState}';
+
+if(conState=='finish'){
+	alert("dd");
+	$("#t1").text("완료된 프로젝트");
+	$("#t2").text("완료된 프로젝트입니다.");
+}else if(conState=='check'){
+	$("#t1").text("검수중인 프로젝트");
+	$("#t2").text("관리자의 승인을 기다리는 곳입니다.");
+}
+/* project 첫화면 프로젝트 리스트 띄우기  */
+$.get("projectCheck?state=${conState}&curPage=1", function(data){
 	$(".contents").html(data);
 }); 
 
@@ -352,15 +367,17 @@ $.get("projectCheck?state=check&curPage=1", function(data){
 $("#check").click(function() {
 	$.get("projectCheck?state=check&curPage=1", function(data){
 		alert("검수중");
+		$("#t1").text("검수중인 프로젝트");
+		$("#t2").text("관리자의 승인을 기다리는 곳입니다.");
 		$(".contents").html(data);
 	});
 
 });
 
 /* 모집중인 프로젝트 리스트 */
-$("#recruit").click(function() {
+$("#done").click(function() {
 
-	$.get("projectCheck?state=recruit&curPage=1", function(data){
+	$.get("projectCheck?state=done&curPage=1", function(data){
 		alert("모집중");
 		$("#t1").text("모집중인 프로젝트");
 		$("#t2").text("프리랜서를 모집중인 프로젝트입니다.");
@@ -368,6 +385,19 @@ $("#recruit").click(function() {
 	});
 
 });
+
+/* 모집완료된 프로젝트 리스트 */
+$("#recruit").click(function() {
+
+	$.get("projectCheck?state=recruit&curPage=1", function(data){	
+		alert("모집완료");
+		$("#t1").text("모집완료된 프로젝트");
+		$("#t2").text("프리랜서와 미팅을 준비중인 프로젝트입니다.");
+		$(".contents").html(data); 
+	});
+
+});
+
 /* 진행중인 프로젝트 리스트 */
 $("#ing").click(function() {
 

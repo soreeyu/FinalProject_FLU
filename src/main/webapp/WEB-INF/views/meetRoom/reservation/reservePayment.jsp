@@ -10,12 +10,77 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function() {
-		$("#btn").click(function() {
-			var result = confirm("예약하시겠습니까?");
-			if(result){
-				$("#frm").submit();
-			}
+		$(".credit").hide();
+		
+		
+		
+		var credit_Info = document.getElementsByClassName("credit_Info");
+		var digit_Info = document.getElementsByClassName("digit_Info");
+		
+		$("#creditCard").click(function() {
+			$(".credit").show();
 		});
+		
+		$("#btn").click(function() {
+			var card = $("input:radio[name='payment']").is(":checked");
+			var type = $("input:radio[name='type']").is(":checked");
+			if(card){
+				if(type){
+					if(credit_Info[0].value==""){
+						alert("카드를 선택하세요.");
+					}else if(credit_Info[1].value==""){
+						alert("카드번호를 입력하세요.");
+					}else if(credit_Info[2].value==""){
+						alert("유효기간을 입력하세요.(월)");
+					}else if(credit_Info[3].value==""){
+						alert("유효기간을 입력하세요.(년)");
+					}else if(credit_Info[4].value==""){
+						alert("비밀번호를 입력하세요.");
+					}else{
+						var result = confirm("예약하시겠습니까?");
+						if(result){
+							$("#frm").submit();
+						}				
+					}				
+				}else {
+					alert("카드 유형을 선택하세요.(개인/법인)");
+				}
+			}else {
+				alert("결제 방법을 선택하세요.");
+			}
+			
+			
+			
+			
+			
+		});
+		
+		$("#discount").click(function() {
+			var kind = '${member.kind}';
+			var email = '${member.email}';
+			
+				$.ajax({
+					url : "reserveDiscount",
+					type : "POST",
+					data : {email:email},
+					success: function(data) {
+						var result = data;
+						alert(result.trim());
+						$(".list").html(result);
+						if(result!='조건에 충족하지 못하여 10% 할인 받을 수 없습니다.'){
+							$("#price").val(($("#price").val()*1)*0.9);
+							$(".disCount_Price").html($("#price").val());
+							
+						}
+					}
+				})
+			
+			
+		});
+		
+		
+		
+		
 	})
 </script>
 <style type="text/css">
@@ -42,7 +107,7 @@
 .reserve_price{
 	margin-top: 40px;
     background: #fff;
-    border-top: 3px solid #704de4;
+    border-top: 3px solid #339bff;
 }
 .reserve_pirce_wrap {
 	padding: 0 20px;
@@ -74,6 +139,10 @@
     color: #656565;
     font-size: 1.5em;
 }
+.info_right{
+	padding: 30px;
+}
+
 </style>
 </head>
 <body>
@@ -112,7 +181,7 @@
 				<span class="tit">
 					결제예정금액
 				</span>
-				<span class="data">
+				<span class="data disCount_Price">
 					${reserveInfo.price}
 				</span>
 			 
@@ -136,98 +205,71 @@
 		</ul>
 	</div>
 	<hr>
+	<br>
+	<div class="discount_btn_box">
+		<label class="btn">
+			<span><h1 id="discount">할인(누르면 할인 조건을 검사한 후에 자동으로 할인된 금액이 입력됩니다.)</h1></span>
+		</label>
+		<div class="list">
+			
+		</div>
+	</div>
+	<br>
 	<h1>결제방법</h1>
 	<!-- 결제 방법 선택시 ajax로 각 결제 방법에 맞는 정보 입력하는 창 불러오기 -->
-	<input type="radio" name="payment" value="신용카드">
+	<input type="radio" name="payment" value="신용카드" id="creditCard">
 	신용카드
-	<input type="radio" name="payment" value="실시간 계좌이체">
-	실시간 계좌이체
 		<input type="hidden" name="name" value="${reserveInfo.name}">
 		<input type="hidden" name="reserve_date" value="${reserveInfo.reserve_date}">
 		<input type="hidden" name="time" value="${reserveInfo.time}">
 		<input type="hidden" name="reserve_name"  value="${reserveInfo.reserve_name}">
-		<input type="hidden" name="price"  value="${reserveInfo.price}">
+		<input type="hidden" name="price"  value="${reserveInfo.price}" id="price">
 		<input type="hidden" name="human"  value="${reserveInfo.human}">
 		<input type="hidden" name="phone"  value="${reserveInfo.phone}">
 		<input type="hidden" name="email"  value="${reserveInfo.email}">
 		<input type="hidden" name="snum"  value="${reserveInfo.snum}">	
-	<input type="button" value="결제하기" id="btn">
 	</form>
 	</div>
 	
 	<div class="container">
 		<div class="credit">
-			<div class="type">
+			<div class="type" style="height: 50px;">
 				<span>
 					<input type="radio" name="type"> 개인
 				</span>
 				<span>
 					<input type="radio" name="type"> 법인
 				</span>
-				<select>
-					<option>신한카드</option>
-					<option>현대카드</option>
-					<option>비씨카드</option>
-					<option>삼성카드</option>
-					<option>롯데카드</option>	
+				<select class="credit_Info" style="height: 25px;">
+					<option value="신한카드">신한카드</option>
+					<option value="현대카드">현대카드</option>
+					<option value="비씨카드">비씨카드</option>
+					<option value="삼성카드">삼성카드</option>
+					<option value="롯데카드">롯데카드</option>	
 				</select>
 			</div>
 			<div class="card_contents">
 				<table>
 					<tr>
-						<td>카드번호</td>
-						<td><input type="text" placeholder="카드번호 입력"> </td>
+						<td class="info_left">카드번호</td>
+						<td class="info_right"><input type="text" placeholder="카드번호 입력 '-'제외" class="credit_Info" style="height: 30px;"> </td>
 					</tr>
 					<tr>
-						<td>유효기간</td>
-						<td><input type="text" placeholder="월"> <input type="text" placeholder="년"> </td>
+						<td class="info_left">유효기간</td>
+						<td class="info_right"><input type="text" placeholder="월" class="credit_Info month" style="width: 50px; height: 30px;"> <input type="text" placeholder="년" class="credit_Info year" style="width: 50px; height: 30px;"> </td>
 					</tr>
 					<tr>
-						<td>비밀번호</td>
-						<td><input type="text" placeholder="비밀번호"> </td>
+						<td class="info_left">비밀번호</td>
+						<td class="info_right"><input type="text" placeholder="비밀번호" class="credit_Info" style="height: 30px;"> </td>
 					</tr>
 				</table>
 			</div>
 			
 		</div>
-		
-		<div class="digit">
-			<table>
-				<tr>
-					<td>
-						출금은행
-					</td>
-					<td>
-						<select>
-							<option>신한은행</option>
-							<option>우리은행</option>
-							<option>국민은행</option>
-							<option>하나은행</option>
-							<option>농협</option>
-						</select>
-					</td>	
-				</tr>
-				<tr>
-					<td>
-						계좌번호
-					</td>
-					<td>
-						<input type="text" placeholder="계좌번호 입력">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						계좌비밀번호
-					</td>
-					<td>
-						<input type="text" placeholder="계좌비밀번호 입력">
-					</td>
-				</tr>	
-			</table>
-		</div>
 	</div>
 	
 
+	<input type="button" value="결제하기" id="btn" style="margin-top: 50px;  margin-bottom:50px; width: 100%; background-color:#339bff; height: 50px; border: none; color: #fff; font-size: 1.5em; ">
 
 
 

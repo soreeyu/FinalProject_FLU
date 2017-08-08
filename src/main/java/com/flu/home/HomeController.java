@@ -40,7 +40,7 @@ public class HomeController {
 		if(session.getAttribute("member") == null){
 			return "index";
 		}else{
-			return "member/myflu";
+			return "redirect:/member/myflu";
 		}
 		
 	}
