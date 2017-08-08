@@ -163,7 +163,7 @@
 	border: 1px solid #2099bb;
 	font-size: 1.3em;
 	margin: 0 auto;
-	margin-top: 20px;
+	margin-top: 10px;
 	text-align: center;
 	line-height: normal;
 }
@@ -181,8 +181,28 @@ margin-top: 30px;
 
 }
 
-.tb_title{
+#tb td select{
+	
+	width: 160px;
+	height: 25px;
+	border: 1px solid rgb(203, 203, 180);
+	background-color: rgb(245, 245, 240);	
+	border-radius: 0.1px;
+	
+}
 
+#tb td input{
+	
+	width: 170px;
+	height: 25px;
+	border: 1px solid rgb(203, 203, 180);
+	background-color: rgb(245, 245, 240);
+	
+}
+
+
+
+.tb_title{
 width: 160px;
 height: 30px;
 text-align: center;
@@ -241,11 +261,15 @@ cursor: pointer;
 			$('#checkBTN').children("#check").css('color', 'white');
 			$('#failBTN').css('background-color', 'white');
 			$('#failBTN').children("#fail").css('color', 'black');
+			$('#cancelBTN').css('background-color', 'white');
+			$('#cancelBTN').children("#cancel").css('color', 'black');
 		} else if (board == 'Fail') {
 			$('#failBTN').css('background-color', '#446eab');
 			$('#failBTN').children("#fail").css('color', 'white');
 			$('#checkBTN').css('background-color', 'white');
 			$('#checkBTN').children("#check").css('color', 'black');
+			$('#cancelBTN').css('background-color', 'white');
+			$('#cancelBTN').children("#cancel").css('color', 'black');
 		} else if (board == 'Wait') {
 			$('#waitBTN').css('background-color', '#446eab');
 			$('#waitBTN').children("#wait").css('color', 'white');
@@ -256,8 +280,14 @@ cursor: pointer;
 			$('#finishBTN').children("#finish").css('color', 'white');
 			$('#waitBTN').css('background-color', 'white');
 			$('#waitBTN').children("#wait").css('color', 'black');
-		} else {
-
+		} else if(board=='Cancel'){
+			$('#checkBTN').css('background-color', 'white');
+			$('#checkBTN').children("#cancel").css('color', 'black');
+			$('#failBTN').css('background-color', 'white');
+			$('#failBTN').children("#fail").css('color', 'black');
+			$('#cancelBTN').css('background-color', '#446eab');
+			$('#cancelBTN').children("#check").css('color', 'white');
+			
 		}
 
 		
@@ -496,12 +526,15 @@ cursor: pointer;
 					</div>
 				</div>
 				<div class="history">
-					<c:if test="${board=='Check' or board=='Fail'}">
+					<c:if test="${board=='Check' or board=='Fail' or board=='Cancel'}">
 						<p id="checkBTN">
 							<a id="check" href="./checkProjectCheckList">검수 전 프로젝트</a>
 						</p>
 						<p id="failBTN">
 							<a id="fail" href="./checkProjectFailList">모집실패 프로젝트</a>
+						</p>
+						<p id="cancelBTN">
+							<a id="cancel" href="./checkProjectCancelList">중단요청 프로젝트</a>
 						</p>
 					</c:if>
 					<c:if test="${board=='Wait' or board=='Finish'}">
@@ -548,6 +581,10 @@ cursor: pointer;
 					<c:if test="${board=='Freelancer'}">
 						<p id="t1">프리랜서 신원확인</p>
 						<p id="t2">프리랜서들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
+					</c:if>
+					<c:if test="${board=='Cancel'}">
+						<p id="t1">중단요청 프로젝트</p>
+						<p id="t2">클라이언트로부터 중단 요청을 받은 프로젝트를 처리하는 곳입니다.</p>
 					</c:if>
 				</div>
 				
@@ -620,7 +657,7 @@ cursor: pointer;
 							<td class="tb_contents"><input type="date" name="startDate" id="startDate"></td>		
 						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
 							<td class="tb_title">담당자 이메일</td>
-							<td class="tb_contents"><input type="text" name="email" id="email" value="${projectDTO.email}" placeholder="클리어언트를 입력하세요"></td>
+							<td class="tb_contents"><input type="text" name="email" id="email" value="${projectDTO.email}" placeholder="클라이언트를 입력하세요"></td>
 						</c:if>
 						<c:if test="${board=='Finish'}">
 							<td class="tb_title">이름</td>

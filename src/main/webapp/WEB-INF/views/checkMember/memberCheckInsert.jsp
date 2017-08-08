@@ -97,7 +97,7 @@ p {
 	width: 248px;
 	padding: 15px 30px;
 	background-color: white;
-	margin-bottom: 20px
+	margin-bottom: 20px;
 	border: 1px solid #dedede;
 }
 
@@ -138,7 +138,7 @@ p {
 
 .contents_1 {
 	width: 800px;
-	height: 350px;
+	height: 270px;
 	background-color: white;
 	margin-top: 15px;
 	border: 1px solid #dedede;
@@ -146,7 +146,7 @@ p {
 
 .contents_2 {
 	width: 800px;
-	height: 550px;
+	height: 270px;
 	background-color: white;
 	margin-top: 15px;
 	border: 1px solid #dedede;
@@ -440,10 +440,29 @@ font-size: 1.2em;
 	line-height: 35px;
 	
 }
-
 #submitBTN:HOVER {
 	cursor: pointer;
 }
+
+#cancelBTN{
+
+	width: 200px;
+	height: 35px;
+    background-color: #446eab;
+    color: #fff;
+	float: right;
+    margin-top: 20px;
+	border-radius: .25em; 
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
+	line-height: 30px;
+	
+}
+#cancelBTN:HOVER {
+	cursor: pointer;
+}
+
 
 #t1{ 
 
@@ -464,17 +483,11 @@ font-size: 1.2em;
 
 }
 
-#auth_ing{
-
-	font-size: 1.3em;
-	font-weight: bold;
-
-}
 
 .wrap{
 
 	width: 750px;
-	height: 300px;
+	height: 220px;
 	border: 1px solid #dedede;
 	margin-left: 25px;
 	margin-top: 25px;
@@ -484,21 +497,43 @@ font-size: 1.2em;
 .img{
 	
 	width: 250px;
-	height: 200px;
+	height: 180px;
 	float: left;
-	margin-left: 60px;
-	margin-top: 60px;
+	margin-top: 20px;
+	margin-left: 20px;
 }
 
 .naeyong{
 
-	width: 300px;
-	height: 250px;
-	background-color: blue;
+	width: 400px;
+	color: rgb(85, 85, 85);
+	margin: 0 auto;
 	float: left;
-	margin-left: 100px;
+	margin-top: 40px;
+	margin-left: 30px;
 
 }
+
+#auth_ing1{
+
+	font-size: 1.5em;
+	font-weight: bold;
+
+}
+
+#auth_ing2{
+
+	font-size: 1.1em;
+	margin-top: 10px;
+}
+
+#auth_ing3{
+
+	font-size: 1.1em;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -517,7 +552,7 @@ $(document).ready(function(){
 		} // 추출한 파일명 삽입
 			$(this).siblings('.upload-name').val(filename); }); 
 
-	$('#submitBTN').click(function name() {
+	$('#submitBTN').click(function() {
 		
 		if(confirm("제출 하시겠습니까?")){
 			$('#frm').submit();
@@ -528,6 +563,18 @@ $(document).ready(function(){
 		
 	});
 	
+	$('#cancelBTN').click(function() {
+		
+		var sessionEmail = '${member.email}';
+		
+		if(confirm("접수를 취소하시겠습니까?")){
+			location.href="./memberCheckCancel?email="+sessionEmail;
+		}else{
+			
+		}
+		
+		
+	});
 	
 }); 
 
@@ -634,7 +681,7 @@ $(document).ready(function(){
 		
 	</div>
 	
-	<form action="./memberCheckInsert" method="post" enctype="multipart/form-data" id="frm">
+<form action="./memberCheckInsert" method="post" enctype="multipart/form-data" id="frm">
 	<input type="hidden" name="email" value="${member.email}">
 	<input type="hidden" name="name" value="${member.name}">	
 <div id="table_form">
@@ -662,28 +709,29 @@ $(document).ready(function(){
 	<div class="contents_1">
 		<div class="wrap">
 			<div class="img">
-		
-				<img alt="" src="../resources/img/checkMember/auth.jpg" style="width: 100%; height: 100%;">
-		
+				<img alt="" src="../resources/img/checkMember/auth.jpg" style="width: 100%; height: 100%;">	
 			</div>
 			<div class="naeyong">
-				<p id="auth_ing">신원확인 처리중입니다.</p>
-			</div>
+				<p id="auth_ing1">고객님의 신원을 확인하고 있습니다.</p>
+				<p id="auth_ing2">최대한 빠른 일처리로 고객의 편의만을 생각하겠습니다.</p>
+				<div id="cancelBTN">인증요청 취소하기</div>
+			</div>	
 		</div>
-		
-	
-
-	
-	
 	</div>
-	
 </c:if>
 
 <c:if test="${member.authenticState == '2'}">
-	<div class="contents_1">
-
-	<img alt="" src="../resources/img/checkMember/auth1.png" style="width: 180px; height: 120px;"><span id="auth_ing">이미 신원확인이 완료되셨습니다.</span>
-	
+	<div class="contents_2">
+		<div class="wrap">
+			<div class="img">
+				<img alt="" src="../resources/img/checkMember/auth_complete.png" style="width: 100%; height: 100%;">	
+			</div>
+			<div class="naeyong">
+				<p id="auth_ing1">고객님의 신원이 확인되었습니다.</p>
+				<p id="auth_ing2">신원 인증 서류를 변경하실 경우에는 고객센터로  <br/>전화를 주시면 신속하게 도와드리겠습니다. </p>
+				<p id="auth_ing3">고객센터: (02)6925-4849</p>
+			</div>	
+		</div>
 	</div>
 </c:if>
 
