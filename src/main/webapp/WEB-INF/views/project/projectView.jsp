@@ -760,7 +760,7 @@ background-color: white;
             </div>
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
          
              </div>

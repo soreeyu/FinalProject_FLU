@@ -569,7 +569,7 @@
 								</div>
 							</section>
 
-							<div class="tw-project-analytics-page__task-overview">
+							<div class="tw-project-analytics-page__task-overview partOverview">
 									<div class="tw-tasklist-stats-panel">
 										<div class="tw-tasklist-stats-panel__header">
 											<h3 class="tw-tasklist-stats-panel__title">업무리스트 개요(파트별)</h3>
@@ -675,7 +675,7 @@
             
          var options = {
            title: '파트별 업무리스트',
-           chartArea: {width: '50%',height: '90%'},
+           chartArea: {width: '50%',height: '95%'},
            isStacked: 'percent',
            hAxis: {
              title: '',

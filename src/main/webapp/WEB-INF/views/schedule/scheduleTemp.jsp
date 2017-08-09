@@ -407,6 +407,10 @@ a{
   background: #fff;
 }
 
+.partOverview{
+	height: 500px;
+}
+
 .tw-project-analytics-page__container > div:first-child {
   margin-top: 0px;
 }
@@ -1058,9 +1062,44 @@ div{
     float: left;
 }
 
-
 </style>
 
+<style type="text/css">
+table,#excelTable{
+	margin: 0 auto;
+	border: 1px solid #ccccff;
+}
+
+thead{
+	background-color: #ccddff;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+tbody{
+	font-size: 15px;
+	text-align: left;
+}
+
+th,td{
+	padding: 8px;
+	border-left: 1px solid #ccccff;
+	border-bottom:  1px solid #ccccff;
+}
+
+tr{
+	font-size: 0.8em;
+}
+
+th{
+	border-top: 2px solid #3377ff;
+}
+
+th:FIRST-CHILD,td:FIRST-CHILD{
+	border-left: 0;
+}
+
+</style>
 
 
 
@@ -1087,11 +1126,11 @@ var scheduleNum = '${scheduleNum}';
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
-		if(currentTab == ''){
-			loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
-		}else{
-			loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,currentTab); //받은 tab으로 이동
-		}
+		loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
+		if(currentTab != ''){
+			alert("");
+			$('ul.tab li[data-tab="${currentTab}"]').trigger('click');
+		}//안되넹..
 
 		//tab 클릭 이벤트
 		$('ul.tab li').click(function() {
@@ -1255,9 +1294,31 @@ var scheduleNum = '${scheduleNum}';
 				
 				
 			}else if(activeTab == 'tab4'){
-				alert("체크리스트");			
+				alert("체크리스트");
+				loadCheckList(scheduleNum,'${member.email}',-1);
+				/* $.ajax({
+					url:"/flu/schedule/checkListForFreelancer",
+					type:"POST",
+					data:{
+						scheduleNum:scheduleNum
+					},
+					success:function(data){
+						$("#tab4").html(data);
+					}
+				}); */
+				
 			}else if(activeTab == 'tab5'){
 				alert("파트일정추가");
+				
+				//전체일정을 표로 보여주고 //엑셀 변환하기 기능을 제공한다 
+				$.ajax({
+					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
+					type:"GET",
+					success:function(data){
+						$("#tab5").append(data);
+					}
+				});
+				
 			}else if(activeTab == 'tab6'){
 				alert("간트");
 				//location.href="/flu/schedule/sixthView";
@@ -1417,6 +1478,26 @@ var scheduleNum = '${scheduleNum}';
 
 
 	}); //function
+	
+	
+	function loadCheckList(scheduleNum,email,partNum){
+		$.ajax({
+		url:"/flu/schedule/checkListForFreelancer",
+		type:"POST",
+		data:{
+			scheduleNum:scheduleNum,
+			email:email,
+			partNum:partNum,
+			unitState:''
+		},
+		success:function(data){
+			$("#tab4").html(data);
+		}
+	}); 
+	}
+	
+	
+	
 	
 	//jsp 임포트해서 피료 노노
 	function loadTabContent(url,activeTab){
@@ -1726,12 +1807,12 @@ var scheduleNum = '${scheduleNum}';
 				<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
 				<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
 				<li class=""  data-tab="tab7"><span class="taba seeGantt">간트차트보기</span></li>
-				<li class=""  data-tab="tab9"><span class="taba">상세보기(엑셀)</span></li>
 				<c:if test="${member.kind eq 'freelancer'}">
-				<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
+					<li class=""  data-tab="tab9"><span class="taba">상세보기</span></li>
+					<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
 				</c:if>
 				<c:if test="${member.kind eq 'client'}">
-				<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
+					<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
 				</c:if>
 				<!-- <li class=""  data-tab="tab6"><span class="taba">간트차트</span></li> -->
 				
@@ -1759,12 +1840,15 @@ var scheduleNum = '${scheduleNum}';
 		
 		<div id="tab4" class="tabcontent">
 			<!-- 프리랜서가 업무 체크 -->
-			<c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" />
+			<%-- <c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" /> --%>
 		</div>
 		
 		<div id="tab5" class="tabcontent">
+			
 			<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-			<c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" />
+			<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
+			
+		
 		</div>
 		
 		<div id="tab6" class="tabcontent">
@@ -1790,13 +1874,12 @@ var scheduleNum = '${scheduleNum}';
 		
 		
 		
-		<button type="button" class="btn btn-info btn-lg" id="myBtn">Open Modal</button>
 		
 		
 		<!--  -----------MODAL 만들기----------------  -->
 		<!-- part 추가 Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog   modal-lg">
 		
 		    <!-- Modal content-->
 		    <div class="modal-content">
@@ -1806,7 +1889,7 @@ var scheduleNum = '${scheduleNum}';
 		      </div>
 		      <div class="modal-body">
 		        <div id="client_section">
-					<form action="./addPart" method="POST"  enctype="multipart/form-data">
+					<form id="partAddForm" action="${pageContext.request.contextPath}/schedule/addPart" method="POST"  enctype="multipart/form-data">
 						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
 						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
 						<!-- <div>
@@ -1826,6 +1909,7 @@ var scheduleNum = '${scheduleNum}';
 											<th>시작일</th>
 											<th>마감일</th>
 											<th>첨부파일</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody class="partRowSection">
@@ -1840,9 +1924,8 @@ var scheduleNum = '${scheduleNum}';
 								</table>
 							</div>
 						
-						<input type="button" class="btn btn-default" id="addPartBtn" value="+">
-						
-						<button type="button" class="btn btn-default">등록</button>
+						<input type="button" class="btn btn-default" id="addPartBtn" value="+" style="margin:0 auto;">
+
 					</form>
 					
 				</div>
@@ -1850,7 +1933,8 @@ var scheduleNum = '${scheduleNum}';
 		      
 
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      	<button type="button" class="btn btn-default partFrmBtn">등록</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 		      </div>
 		    </div>
 		
@@ -1858,26 +1942,85 @@ var scheduleNum = '${scheduleNum}';
 		</div>
 		<!-- 파트추가MODAL 끝 -->
 		
-		<script type="text/javascript">
-			$("#myBtn").click(function(){
-				$('#myModal').modal({backdrop: 'static'});
-		    });
 		
+		
+		<!-- 업무 추가 Modal -->
+		<div id="myModal2" class="modal fade" role="dialog">
+		  <div class="modal-dialog   modal-lg">
+		
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">업무 추가</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div id="client_section">
+					<form id="unitAddForm" action="${pageContext.request.contextPath}/schedule/addUnit" method="POST"  enctype="multipart/form-data">
+						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
+						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
+
+						<div id="unitSection"  style="width:100%;">
+							
+								<table>
+									<thead>
+										<tr>
+											<th>업무명</th>
+											<th>시작일</th>
+											<th>마감일</th>
+											<th>담당자</th>
+											<th>상세설명</th>
+											<th>상태</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody class="unitRowSection">
+										<tr class="unitOne">
+											<td><input type="text" class="unitName" name="unitName"></td>
+											<td><input type="date" class="unitStartDate" name="unitStartDate"> </td>
+											<td><input type="date" class="unitFinishDate" name="unitFinishDate"></td>
+											<td><input type="date" class="email" name="email"></td>
+											<td><textarea rows="" cols="" class="unitDescribe" name="unitDescribe"></textarea></td>
+											<td><input type="text" class="unitState" name="unitState" value="할일" readonly="readonly"></td>
+											<td><span class="unitDel">X</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						
+						<input type="button" class="btn btn-default" id="addUnitBtn" value="+" style="margin:0 auto;">
+
+					</form>
+					
+				</div>
+		      </div>
+		      
+
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-default unitFrmBtn">등록</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		<!-- 업무추가MODAL 끝 -->
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			$(document).on("click","#addPartModalBtn",function(){
+				$("#myModal").modal({backdrop:'static'});
+			});
 			
-			//main insertForm
-			var partCount=0;
+			$(document).on("click","#addUnitModalBtn",function(){
+				$("#myModal2").modal({backdrop:'static'});
+			});
 			
 			$(document).on("click","#addPartBtn",function(){
-				partCount++;
-				alert('part 추가'+partCount);
-				//alert($("#partSection").html());
-				/* var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
-				partDOM = partDOM + ' part 시작일:<input type="date" class="partStartDate" name="partStartDate">'; 
-				partDOM = partDOM + ' part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">';
-				partDOM = partDOM + ' part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">';
-				partDOM = partDOM + ' <span class="partDel">X</span></div>'; */
-				//var partDOM2 = $(".partRowSection").children().eq(0).html();
-				//alert(partDOM2);
+				//alert('part 추가'+partCount);
 				var partDOM3 = '';
 				partDOM3 = partDOM3 + '<tr class="partOne">';
 				partDOM3 = partDOM3 + '<td><input type="text" class="partName" name="partName"></td>';
@@ -1890,12 +2033,13 @@ var scheduleNum = '${scheduleNum}';
 			});
 			
 			$(document).on("click",".partDel",(function(){
-				
-				alert("삭제하고싶어"+partCount);
-				alert("gg"+$(this).parents(".partOne"));
+				//alert("삭제하고싶어"+partCount);
 				$(this).parents(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
-				partCount --;
 			}));
+			
+			$(document).on("click",".partFrmBtn",function(){
+				$("#partAddForm").submit();
+			});
 
 		</script>
 
@@ -1905,60 +2049,60 @@ var scheduleNum = '${scheduleNum}';
 
 
 		<div class="clear"></div>
+	<div class="" style="display:none;">
+			전체개요
+			<span class="totalWill">${summary.stateCount[0]}</span>
+			<span class="totalIng">${summary.stateCount[1]}</span>
+			<span class="totalDone">${summary.stateCount[2]}</span>
+			<span class="totalTotal">${summary.stateCount[3]}</span>
+			<hr/>
+			
 		
-		전체개요
-		<span class="totalWill">${summary.stateCount[0]}</span>
-		<span class="totalIng">${summary.stateCount[1]}</span>
-		<span class="totalDone">${summary.stateCount[2]}</span>
-		<span class="totalTotal">${summary.stateCount[3]}</span>
+		
+		
+		<c:forEach items="${summary.partNames}" var="partName" varStatus="i">
+			<span class="partNames">${partName}</span>
+			
+			<span class="partNamesWill">${summary.stateCountPerPart.get(i.index*1)[0]}</span>
+			<span class="partNamesIng">${summary.stateCountPerPart.get(i.index*1)[1]}</span>
+			<span class="partNamesDone">${summary.stateCountPerPart.get(i.index*1)[2]}</span>
+			<span class="partNamesTotal">${summary.stateCountPerPart.get(i.index*1)[3]}</span>
+	
+		</c:forEach>
 		<hr/>
 		
+		<c:forEach items="${summary.userNames}" var="userName" varStatus="i">
+			<span class="userNames">${userName}</span>
+			
+			<span class="userNamesWill">${summary.stateCountPerUser.get(i.index*1)[0]}</span>
+			<span class="userNamesIng">${summary.stateCountPerUser.get(i.index*1)[1]}</span> 
+			<span class="userNamesDone">${summary.stateCountPerUser.get(i.index*1)[2]}</span>
+			<span class="userNamesTotal">${summary.stateCountPerUser.get(i.index*1)[3]}</span> 
+			
+		</c:forEach>
+		<hr/>
 	
 	
+			<!-- ------------------- 값 넘어오는거 확인용----------------- -->
+			<div class="testData" style="display:block">
+			
+				<div id="partsDiv"></div>
+				<hr>
+			
+				<div id="unitsDiv"></div>
+				<hr>
+			
+				<div id="clientDiv"></div>
+				<hr>
+			
+				<div id="usersDiv"></div>
+				<hr>
 	
-	<c:forEach items="${summary.partNames}" var="partName" varStatus="i">
-		<span class="partNames">${partName}</span>
-		
-		<span class="partNamesWill">${summary.stateCountPerPart.get(i.index*1)[0]}</span>
-		<span class="partNamesIng">${summary.stateCountPerPart.get(i.index*1)[1]}</span>
-		<span class="partNamesDone">${summary.stateCountPerPart.get(i.index*1)[2]}</span>
-		<span class="partNamesTotal">${summary.stateCountPerPart.get(i.index*1)[3]}</span>
-
-	</c:forEach>
-	<hr/>
+			
 	
-	<c:forEach items="${summary.userNames}" var="userName" varStatus="i">
-		<span class="userNames">${userName}</span>
-		
-		<span class="userNamesWill">${summary.stateCountPerUser.get(i.index*1)[0]}</span>
-		<span class="userNamesIng">${summary.stateCountPerUser.get(i.index*1)[1]}</span> 
-		<span class="userNamesDone">${summary.stateCountPerUser.get(i.index*1)[2]}</span>
-		<span class="userNamesTotal">${summary.stateCountPerUser.get(i.index*1)[3]}</span> 
-		
-	</c:forEach>
-	<hr/>
+			</div>
 
-
-		<!-- ------------------- 값 넘어오는거 확인용----------------- -->
-		<div class="testData" style="display:block">
-		
-			<div id="partsDiv"></div>
-			<hr>
-		
-			<div id="unitsDiv"></div>
-			<hr>
-		
-			<div id="clientDiv"></div>
-			<hr>
-		
-			<div id="usersDiv"></div>
-			<hr>
-
-		
-
-		</div>
-
-	
+	</div>
 		
 		
 		

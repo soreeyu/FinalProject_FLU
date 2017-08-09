@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 
@@ -8,10 +8,17 @@
 <div id="cklist_section">
 	<div id="unitSearch">
 		<select>
+			<c:forEach items="${userList}" var="user">
+				<option value="${user.email}">${user.nickName}</option>
+			</c:forEach>
 			<option>test1(tester1)</option>
 			<option>test1(tester1)</option>
 			<option>test1(tester1)</option>
-		</select> <select>
+		</select> 
+		<select>
+			<c:forEach items="${partList}" var="part">
+				<option value="${part.partNum}">${part.partName}</option>
+			</c:forEach>
 			<option>파트파트파트1</option>
 			<option>파트파트파트2</option>
 			<option>파트파트파트3</option>

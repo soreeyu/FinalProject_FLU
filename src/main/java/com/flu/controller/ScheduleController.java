@@ -55,18 +55,18 @@ public class ScheduleController {
 		
 		
 		
-		@RequestMapping(value="test" , method=RequestMethod.GET)
-		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, Model model, RedirectAttributes rd, HttpSession session) throws Exception{
-
+		@RequestMapping(value="test" , method= {RequestMethod.GET,RequestMethod.POST})
+		public String test(@RequestParam(defaultValue="0") Integer scheduleNum,String currentTab, Model model, RedirectAttributes rd, HttpSession session) throws Exception{
+			System.out.println("test 링크로 오는 애임 Controller = "+scheduleNum);
 			Integer result = applicantService.checkApp(((MemberDTO)session.getAttribute("member")).getEmail());
 			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
 			if(result == null){
 				rd.addFlashAttribute("message", "참여하지 않는 프로젝트입니다");
-				return "redirect:/home";
+				return "redirect:/";
 			}else if(scheduleMainDTO == null){
 
 				rd.addFlashAttribute("message", "해당프로젝트에 대한 스케줄이 없습니다");
-				return "redirect:/home";
+				return "redirect:/";
 		
 			}else{
 				
@@ -82,6 +82,7 @@ public class ScheduleController {
 				ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //tab1 의 개요를 위한 아이
 				model.addAttribute("summary",scheduleSummaryDTO);
 
+				model.addAttribute("currentTab", currentTab);
 				return "schedule/scheduleTemp";
 
 			}
@@ -384,20 +385,32 @@ public class ScheduleController {
 		
 		
 		//DTO내의 배열에 각각 값이 저장됨
+		
+		//public String partInsert(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session, RedirectAttributes rd,String currentTab,Model model) throws Exception{
+		//@ResponseBody
 		@RequestMapping(value="addPart", method=RequestMethod.POST)
-		public String partInsert(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session, RedirectAttributes rd,String currentTab) throws Exception{
+		public String partInsert(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session, RedirectAttributes rd,String currentTab,Model model) throws Exception{	
 			System.out.println("partWrite scheduleNum = "+schedulePartArrayDTO.getScheduleNum());
 			int result =  scheduleService.insertPart(schedulePartArrayDTO,session);
 			int scheduleNum = schedulePartArrayDTO.getScheduleNum();
+			String message = "";
 			System.out.println("part등록 Controller result = "+result);
-			
+			System.out.println("addPart 링크타고들어왔을때 scheduleNum = " + scheduleNum);
 			if(result > 0 ){
 				//part 등록성공	
+				message = "part등록완료";
 			}else{
 				//part 등록 실패
+				message = "part등록실패";
 			}
+			model.addAttribute("currentTab", currentTab);
+			model.addAttribute("scheduleNum", scheduleNum);
+			model.addAttribute("message", message);
 			rd.addFlashAttribute("currentTab", currentTab);
-			return "redirect:/schedule/test?scheduleNum"+scheduleNum; 
+			rd.addFlashAttribute("scheduleNum", scheduleNum);
+			//return "redirect:/schedule/test?scheduleNum"+scheduleNum; 
+			return "schedule/addPartResult";
+			//return result;
 		}
 		
 		@RequestMapping(value="partUpdate", method=RequestMethod.GET)
@@ -567,7 +580,15 @@ public class ScheduleController {
 				
 		}
 
-
+		
+		@RequestMapping(value="checkListForFreelancer",method=RequestMethod.POST)
+		public String checkListForFreelancer(ScheduleUnitDTO scheduleUnitDTO,String currentTab, Model model) throws Exception{
+			List<MemberDTO> list = scheduleService.userList(scheduleUnitDTO.getScheduleNum());
+			List<ScheduleUnitDTO> list2 = scheduleService.unitList(scheduleUnitDTO);
+			model.addAttribute("userList", list);
+			model.addAttribute("partList", list2);
+			return "schedule/checkListForFreelancer";
+		}
 		
 	
 	

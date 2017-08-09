@@ -82,7 +82,7 @@ html, body {
 		
 		gantt.form_blocks.textarea.button_click=function(index,button,shead,sbody){
 		    //뭘까
-		    gantt.alert("버튼 눌렷을 때인건가"+index+button+shead+sbody);
+		   // gantt.alert("버튼 눌렷을 때인건가"+index+button+shead+sbody);
 		}
 
 		//이거를 unit생성할때 사용해야겠군요 
@@ -276,7 +276,7 @@ html, body {
 	gantt.init("gantt_here");
 	
 	gantt.attachEvent("onAfterTaskAdd", function(id, item) {
-		alert("item"+item);
+		//alert("item"+item);
 		// task반복문
 		//gantt.eachTask(function(task){
 			if (item.unitState == '할일') {
@@ -323,6 +323,10 @@ html, body {
 		alert("저장할란다");
 		var json = gantt.serialize();		
 		setUnits(json);
+	});
+	
+	$("#backBtnGantt").click(function(){
+		location.href="${pageContext.request.contextPath}/schedule/test?scheduleNum="+scheduleNum;
 	});
 
 	
@@ -476,7 +480,9 @@ function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
  <div id="gantt_here" style='width:100%; height:500px; margin:0 auto; overflow:hidden;'>
  
  </div>
-
+ <div style='width:10%; margin:0 auto; margin-top:20px; text-align:center;'>
+ 	<button id="backBtnGantt" class="btn btn-default" >뒤로가기</button>
+ </div>
  </section>
  
 

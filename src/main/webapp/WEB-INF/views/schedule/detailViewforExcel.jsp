@@ -4,35 +4,7 @@
 
 
 <style type="text/css">
-table , #excelTable{
-	margin: 0 auto;
-	border: 1px solid #ccccff;
-}
 
-thead{
-	background-color: #ccddff;
-	font-weight: bold;
-	font-size: 15px;
-}
-tbody{
-	font-size: 15px;
-	text-align: left;
-}
-th, td{
-	padding: 8px;
-	border-left: 1px solid #ccccff;
-	border-bottom: 1px solid #ccccff;
-	
-}
-tr {
-	font-size: 0.8em;
-}
-th{
-	border-top: 2px solid #3377ff;
-}
-th:FIRST-CHILD,td:FIRST-CHILD{
-	border-left: 0;
-}
 #a{
 	background-color: #66b3ff;
 	color: white;
@@ -40,15 +12,27 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 
 #excelViewContainer{
 	margin-top:20px;
+	margin-bottom: 20px;
 	width:992px;
 	height: auto;
 	background: white;
 }
+
+#btnWrap {
+    width: 80%;
+    margin: 0 auto;
+	height: auto;
+	margin-top:20px;
+	margin-bottom: 20px;
+}
+
+
 </style>
 
 <script type="text/javascript">
  $(function(){
 	alert("호이"); 
+	
 
 	$("#goExcel").click(function(){
 		alert("엑셀생성");
@@ -57,6 +41,8 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 			type: "GET",
 			success: function(data){
 				alert("성공");
+				var link = "다운클릭";
+				$("#excelDiv").text(link);
 			}
 		});
 	});
@@ -66,6 +52,16 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 
 <div>
 	<div id="excelViewContainer">
+		<div id="btnWrap">
+			<c:if test="${member.kind eq 'client'}">
+			<button type="button" class="btn btn-default" id="addPartModalBtn">파트 추가</button>
+			<button type="button" class="btn btn-default" id="addUnitModalBtn">업무 추가</button>
+			</c:if>
+			<button type="button" class="btn btn-default" id="goExcel">엑셀파일생성 추가</button>
+			<div id="excelDiv"></div>
+
+		</div>
+	
 		<table id="excelTable" style="width: 80%; text-align: left; font-size:10px;">
 			<colgroup>
 				<col width="15%">
@@ -128,9 +124,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 			</tr>
 			</tbody>
 		</table>
+
 		
-		
-	
-		<div id="goExcel">엑셀파일생성</div>
 	</div>
 </div>

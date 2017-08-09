@@ -97,23 +97,26 @@
   	
 	<select id="unitList" parameterType="com.flu.schedule.client.ScheduleUnitDTO"
 		resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select schedulenum,partnum,unitnum,unitname,unitdescribe,email
-		,to_char(unitStartDate, 'yyyy-MM-dd') unitStartDate
-		,to_char(unitFinishDate, 'yyyy-MM-dd') unitFinishDate
-		,unitstate,unitdescfileo,unitdescfilef from scheduleunit 
-		where schedulenum=#{scheduleNum} 
-		and email like '%'||#{email}||'%'
-		and unitstate like '%'||#{unitState}||'%'
-		<if test="partNum != -1">
+		select distinct U.schedulenum,U.partnum,U.unitnum,U.unitname,U.unitdescribe,U.email
+		,to_char(U.unitStartDate, 'yyyy-MM-dd') unitStartDate
+		,to_char(U.unitFinishDate, 'yyyy-MM-dd') unitFinishDate
+		,U.unitstate,U.unitdescfileo,U.unitdescfilef,P.partname from scheduleunit U,schedulepart P
+		where U.schedulenum=#{scheduleNum} 
+        and U.schedulenum=P.schedulenum
+        and P.partNum=U.partNum
+       	<if test="partNum != -1">
 			and partnum in #{partNum}
 		</if>
-		order by partnum asc,unitNum asc
+		and email like '%'||#{email}||'%'
+		and unitstate like '%'||#{unitState}||'%'
+		order by U.partnum asc,U.unitNum asc
 	</select>
 
 	<select id="unitOne" parameterType="com.flu.schedule.client.ScheduleUnitDTO"
 		resultType="com.flu.schedule.client.ScheduleUnitDTO">
-		select * from scheduleunit where schedulenum=#{scheduleNum}
-		and unitNum=#{unitNum}
+		select distinct U.*,P.partName from scheduleunit U, schedulepart P 
+		where U.schedulenum=P.schedulenum and U.scheduleNum=#{scheduleNum}
+		and P.partNum=U.partNum and unitNum=#{unitNum}
 	</select>
 
 

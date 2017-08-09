@@ -488,10 +488,12 @@ public class ScheduleService {
 				System.out.println("할일파트할일 수"+i+"="+num);
 				stateCountPerPart[0] = num;
 				
+				
 				scheduleUnitDTO.setUnitState("진행중");
 				int num2 = scheduleDAO.unitCount(scheduleUnitDTO); 
 				System.out.println("진행중파트할일 수"+i+"="+num2);
 				stateCountPerPart[1] = num2;
+				
 				
 				scheduleUnitDTO.setUnitState("완료");
 				int num3 = scheduleDAO.unitCount(scheduleUnitDTO); 
@@ -506,6 +508,8 @@ public class ScheduleService {
 				countParts.add(stateCountPerPart);
 				System.out.println("파트별유닛수테스트 ......."+countParts.get(i)[0]+countParts.get(i)[1]+countParts.get(i)[2]+countParts.get(i)[3]);
 				partNames.add(parts.get(i).getPartName());
+				
+				Thread.sleep(200);
 			}
 			//여기서 리셋됨
 			System.out.println("0번.........파트별유닛수테스트 ......."+countParts.get(0)[0]+countParts.get(0)[1]+countParts.get(0)[2]+countParts.get(0)[3]);
