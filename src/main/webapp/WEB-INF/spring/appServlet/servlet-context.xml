@@ -53,6 +53,8 @@
 	<beans:bean class="com.flu.interceptor.adminInterceptor" id="adminInterceptor"></beans:bean>
 	<beans:bean class="com.flu.interceptor.memberInterceptor" id="memberInterceptor"></beans:bean>
 	<beans:bean class="com.flu.interceptor.LoginInterceptor" id="loginInterceptor"></beans:bean>
+	<beans:bean class="com.flu.interceptor.EmailCKInterceptor" id="emailCKInterceptor"></beans:bean>
+	<beans:bean class="com.flu.interceptor.MyPageEmailInterceptor" id="myPageEmailInterceptor"></beans:bean>
 	
 	<interceptors>
 		<interceptor>
@@ -72,8 +74,35 @@
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/member/MemberJoin"/>
 			<exclude-mapping path="/project/projectListInner"/>
+			<exclude-mapping path="/member/jungbokCK"/>
+			<exclude-mapping path="/*/alarmCount"/>
+			<exclude-mapping path="/member/logout"/>
+			<exclude-mapping path="/member/re_email"/>
+			<exclude-mapping path="/member/myflu"/>
+			<exclude-mapping path="/project/quickListInner"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
+		
+		<interceptor>
+			<mapping path="/project/projectList"/>
+			<mapping path="/member/freelancerList"/>
+			<mapping path="/meetRoom/meetList"/>
+			<mapping path="/alarm/alarmList"/>
+			<mapping path="/"/>
+			<beans:ref bean="emailCKInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/member/*"/>
+			<exclude-mapping path="/*/login"/>
+			<exclude-mapping path="/*/logout"/>
+			<exclude-mapping path="/*/MemberJoin"/>
+			<exclude-mapping path="/member/re_email"/>
+			<exclude-mapping path="/member/jungbokCK"/>
+			<exclude-mapping path="/member/freelancerList"/>
+			<beans:ref bean="myPageEmailInterceptor"/>
+		</interceptor>
+		
 	</interceptors>
 
 	
@@ -93,6 +122,7 @@
 	<context:component-scan base-package="com.flu.member"/>
 	<context:component-scan base-package="com.flu.notice"/>
 	<context:component-scan base-package="com.flu.project"/>
+	<context:component-scan base-package="com.flu.project.sell"/>
 	<context:component-scan base-package="com.flu.reply"/>
 	<context:component-scan base-package="com.flu.reservation"/>
 	<context:component-scan base-package="com.flu.schedule"/>

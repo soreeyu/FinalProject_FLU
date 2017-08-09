@@ -23,7 +23,7 @@
 </script>
 </head>
 <body>
-<c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
+<c:import url="/WEB-INF/views/temp/header.jsp"/>
 
 <section class="main_section">
 	<section class="advertising">

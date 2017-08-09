@@ -51,16 +51,19 @@
 
 	<script type="text/javascript">
 
+	alert("quickCount=${quickCount}");
 	var maxCount = '${quickCount}';
 	alert("maxCount=="+maxCount);
+	
 	var pageCount=((maxCount/5)+1).toFixed();
 	alert("pageCount=="+pageCount);
-	
+	//cc는 기본1로 셋팅
 
 
 	 $(".preview").click(function() {
 		 if(cc==1){
 			 alert("첫페이지");
+			 alert("cc="+cc);
 		 }else{
 			 
 			alert("preview클릭");
@@ -70,16 +73,21 @@
 			alert(did);
 			$(".real_quick").css("margin-left", did);
 			alert($(".real_quick").css("margin-left"));
+			alert("cc="+cc);
 		 }
 		});
 
 
 	  $(".next").click(function() {
-		if(cc==pageCount){
+			cc=cc+1;
+		 if(cc==pageCount){
 			alert("마지막 페이지");
+			alert("cc="+cc);
+			cc=cc-1;
+			alert("cc="+cc);
 		}else{
 		alert("next클릭");
-		cc=cc+1;
+	
 		alert(did);
 		did = did-1160;
 		alert(did);

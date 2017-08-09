@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.flu.member.MemberDTO;
+import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
 
 @Service
@@ -35,14 +36,15 @@ public class ProjectService {
 	}
 	
 	//project View
-	public ProjectDTO projectView(int num, ProjectDTO projectDTO){
+	public ProjectDTO projectView(ProjectDTO projectDTO){
 		System.out.println("projectView에서 skill파싱하기");
-		System.out.println("num=="+num);
+		System.out.println("num=="+projectDTO.getProjectNum());
 		
-		projectDTO = projectDAO.projectView(num);
+		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
 		System.out.println("projectnum=="+projectDTO.getProjectNum());
+
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
-		
+				
 		return projectDTO;
 	}
 	
@@ -91,7 +93,7 @@ public class ProjectService {
 			System.out.println(ar.get(i).getSkills());
 		}
 		
-		
+
 	
 		return ar;
 	}
@@ -184,6 +186,16 @@ public class ProjectService {
 	public int quickCount(ProjectDTO projectDTO){
 		System.out.println("quickCount-service");
 		return projectDAO.quickCount(projectDTO);
+	}
+	
+	//pjsell update가 아닌 pjsell에 등록했을 때, project상태바꾸기
+	public int updateProjectState(PjSellDTO pjSellDTO){
+		return projectDAO.updateProjectState(pjSellDTO);
+	}
+	
+	//pjsell update가 아닌 pjsell에서 취소했을 때, project상태 finish로 바꾸기
+	public int cancleProjectState(PjSellDTO pjSellDTO){
+		return projectDAO.cancleProjectState(pjSellDTO);
 	}
 
 }

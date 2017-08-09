@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.flu.member.MemberDTO;
+import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -26,10 +27,10 @@ public class ProjectDAO {
 		
 		//project update
 		public int projectUpdate(ProjectDTO projectDTO){
-			System.out.println("dao-projectNum="+projectDTO.getProjectNum());
+			/*System.out.println("dao-projectNum="+projectDTO.getProjectNum());
 			System.out.println("dao-project-name="+projectDTO.getName());
 			System.out.println("dao-project-category="+projectDTO.getCategory());
-			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());
+			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());*/
 			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
@@ -190,5 +191,13 @@ public class ProjectDAO {
 			return sqlSession.selectOne(NAMESPACE+"quickCount", projectDTO);
 		}
 		
+		//pjsell update가 아닌 pjsell에 등록했을 때, project상태바꾸기
+		public int updateProjectState(PjSellDTO pjSellDTO){
+			return sqlSession.update(NAMESPACE+"updateProjectState", pjSellDTO);
+		}
 		
+		//pjsell update가 아닌 pjsell에서 취소했을 때, project상태 finish로 바꾸기
+		public int cancleProjectState(PjSellDTO pjSellDTO){
+			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
+		}
 }

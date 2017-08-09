@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import com.flu.project.ProjectDAO;
 import com.flu.project.ProjectDTO;
+import com.flu.project.sell.PjSellDAO;
+import com.flu.project.sell.PjSellDTO;
 import com.flu.reply.ReplyDAO;
 import com.flu.reply.ReplyDTO;
 import com.flu.util.ListInfo;
@@ -17,14 +19,22 @@ import com.flu.util.ListInfo;
 public class ProjectTest extends MyAbstract {
 
 	@Inject
+	private PjSellDAO pjSellDAO;
+	@Inject
 	private ProjectDAO projectDAO;
 	
 	@Test
 	public void test() {
-	ProjectDTO projectDTO = new ProjectDTO();
-	List<ProjectDTO> ar =  projectDAO.quickList(projectDTO);
+	PjSellDTO pjSellDTO = new PjSellDTO();
 	
-	assertEquals(5, ar.size());
+	pjSellDTO.setEmail("bobobo");
+	pjSellDTO.setName("name");
+	pjSellDTO.setPrice(10);
+	pjSellDTO.setProjectNum(263);
+	pjSellDTO.setContents("ddd");
+	
+	int result = projectDAO.updateProjectState(pjSellDTO);
+			assertEquals(1, result);
 	}
 
 }

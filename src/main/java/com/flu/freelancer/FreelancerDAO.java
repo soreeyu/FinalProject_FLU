@@ -31,6 +31,12 @@ public class FreelancerDAO{
 	
 	private final String NAMESPACE = "FreelancerMapper.";
 	
+	
+	//프리랜서 계정 정보 뷰
+	public MemberDTO freelancerMemberView(String email){
+		return sqlSession.selectOne(NAMESPACE+"memberView", email);
+	}
+	
 	//프리랜서 1명 가져오기
 	public FreelancerDTO freelancerView(String email){
 		return sqlSession.selectOne(NAMESPACE+"freelancerView", email);
@@ -54,20 +60,61 @@ public class FreelancerDAO{
 		List<String> ar = this.getemail(listInfo);
 		List<MemberDTO> ar1 = new ArrayList<MemberDTO>();
 		List<FreelancerDTO> ar2 = new ArrayList<FreelancerDTO>();
-		List<Evaluation> ar3 = new ArrayList<Evaluation>();
 		List<List<Skill>> ar4 = new ArrayList<List<Skill>>();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<Integer> prosize = new ArrayList<Integer>();
+		List<Integer> pofolsize = new ArrayList<Integer>();
+		if(ar.size() > 0){
 		for(int i =0; i < ar.size(); i++){
 			System.out.println(ar.get(i));
 			ar1.add((MemberDTO)sqlSession.selectOne(NAMESPACE+"freelancerList_member", ar.get(i)));
 			ar2.add((FreelancerDTO)sqlSession.selectOne(NAMESPACE+"freelancerList_freelancer", ar.get(i)));
+			
+			
 			List<Skill> ars = sqlSession.selectList(NAMESPACE+"skillList", ar.get(i));
 			ar4.add(ars);
+			prosize.add(this.myprojectList(ar.get(i)).size());
+			pofolsize.add(this.portfolioList(ar.get(i)).size());
 		}
-		map.put("member", ar1);
+		}
+		map.put("member", ar1); 
 		map.put("freelancer", ar2);
 		map.put("skills", ar4);
+		map.put("myproject", prosize);
+		map.put("portfolio", pofolsize);
 		
+		return map;
+	}
+	
+	public Map<String, Object> freelancerListEval(ListInfo listInfo){
+		List<String> ar =this.getemail(listInfo);
+		List<Integer> ar2 = new ArrayList<Integer>();
+		List<Integer> ar3 = new ArrayList<Integer>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(ar.size() > 0){
+			System.out.println("배열길이: "+ar.size());
+			for(int i =0; i< ar.size(); i++){
+				System.out.println("이름들 :"+ar.get(i));
+				List<Evaluation> eval2 = sqlSession.selectList(NAMESPACE+"evaluationList",ar.get(i)); 
+				if(eval2.size() > 0){
+					System.out.println(ar.get(i)+"의 평가 갯수 : "+eval2.size());
+					int total = 0;
+					for(int j =0; j < eval2.size(); j++){
+						total = total + (eval2.get(j).getProfessional()+eval2.get(j).getSatisfy()+eval2.get(j).getCommunication()+eval2.get(j).getPassion()+eval2.get(j).getSchedule())/5;
+						
+					}
+					total = total/eval2.size();
+					ar2.add(total);
+					ar3.add(eval2.size());
+				}else{
+					ar2.add(0);
+					ar3.add(0);
+				}
+			}
+		}
+		map.put("eval", ar2);
+		map.put("evaluationLength", ar3);
 		return map;
 	}
 	

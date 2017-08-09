@@ -9,6 +9,10 @@
  			where j.intro like '%' || #{search } || '%' or j.INTERESTING like '%' || #{search} || '%' or j.nickname like '%' || #{search} || '%' 
  		</sql>
   		
+  		<!-- 프리랜서 계정 정보 -->
+  		<select id="memberView" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
+  			select * from member where email = #{email}
+  		</select>
   		
   		<!-- 프리랜서 생성 -->
   		<insert id="freelancerInsert" parameterType="java.lang.String">

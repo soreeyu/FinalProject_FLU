@@ -160,7 +160,19 @@
 
 </body>
 <script type="text/javascript">
-	
+$("#pw").keydown(function() {
+	if(event.keyCode == 13){
+		var pw = $("#pw").val();
+		
+		if(pw == ""){
+			$("#p_pw").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>항목을 채워주세요</label>");
+		}else if(pw.length < 8){
+			$("#p_pw").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>8글자 이상 입력해 주세요 (입력하신 내용은 "+pw.length+"글자입니다.)</label>");
+		}else{
+			$("#form").submit();
+		}
+	}
+});
 	$("#btn").click(function() {
 		var pw = $("#pw").val();
 		
@@ -168,10 +180,8 @@
 			$("#p_pw").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>항목을 채워주세요</label>");
 		}else if(pw.length < 8){
 			$("#p_pw").html("<i class='fa fa-exclamation-circle'></i>&nbsp;<label>8글자 이상 입력해 주세요 (입력하신 내용은 "+pw.length+"글자입니다.)</label>");
-			
 		}else{
 			$("#form").submit();
-			
 		}
 	});
 	

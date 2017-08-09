@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -231,24 +232,24 @@
 
 
 /**** 스킬 ****/
-thead{
+.skill thead{
 	background-color: #ccddff;
 	font-weight: bold;
 	font-size: 15px;
 }
-tbody{
+.skill tbody{
 	font-size: 15px;
 	text-align: left;
 }
-th, td{
+.skill th, .skill td{
 	padding: 8px;
 	border-left: 1px solid #ccccff;
 	border-bottom: 1px solid #ccccff;
 }
-th{
+.skill th{
 	border-top: 2px solid #3377ff;
 }
-th:FIRST-CHILD,td:FIRST-CHILD{
+.skill th:FIRST-CHILD,td:FIRST-CHILD{
 	border-left: 0;
 }
 
@@ -257,6 +258,125 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	background-color: #66b3ff;
 	color: white;
 }
+
+
+
+/******************평점 있을 때 **************************/
+.wrap_eval{
+	padding: 18px 21px 4px;
+	margin-bottom: 10px;
+}
+
+.wrap_eval table tbody tr{
+	border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    font-size: 14px;
+    line-height: 16px;
+    color: #333333;
+}
+
+.wrap_eval table{
+	text-align : center;
+	margin-bottom: 10px;
+}
+
+.td_title{
+	padding: 10px;
+    background-color: #f7f7f7;
+    color: #666666;
+    font-weight: bold;
+}
+.td_contents{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    color: #535353;
+}
+.wrap_eval{
+	border: 1px solid #dedede;
+}
+.wrap_projectName{
+	margin-top: 0px;
+    font-size: 18px;
+    line-height: 18px;
+    color: #00264d;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.wrap_project_etc{
+	margin-bottom: 13px;
+}
+.wrap_project_etc span:FIRST-CHILD{
+	font-size: 13px;
+    line-height: 16px;
+    color: #999999;
+}
+.wrap_project_etc span:FIRST-CHILD span:FIRST-CHILD{
+	font-weight: bold;
+}
+
+
+
+.wrap_project_etc span:LAST-CHILD{
+	font-size: 13px;
+    line-height: 16px;
+    color: #999999;
+}
+.wrap_project_etc span:LAST-CHILD span:FIRST-CHILD{
+	margin-right: 5px;
+    font-weight: bold;
+}
+.wrap_project_etc span:LAST-CHILD span:LAST-CHILD{
+	color: #434343;
+}
+
+.wrap_eval ul{
+	width: 686px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    list-style: none;
+    text-align: center;
+    border-top: 1px dashed #dedede;
+    border-bottom: 1px dashed #dedede;
+    
+}
+.wrap_eval ul li{
+	float: left;
+    padding-left: 22px;
+    padding-right: 20px;
+    font-size: 13px;
+    color: #666666;
+    line-height: 15px;
+    
+}
+.wrap_eval ul li > p {
+	margin-bottom: 6px;
+}
+.wrap_eval ul li span:LAST-CHILD{
+	vertical-align: top;
+	font-weight: bold;
+	margin-left: 2px;
+}
+
+.wrap_eval ul:AFTER {
+	content: " ";
+    display: table;
+    line-height: 0;
+	clear: both;
+}
+.li_bar{
+    float: left;
+    padding: 0 !important;
+    height: 39px;
+    border-left: 1px solid #dedede;
+}
+
+.eval_star{
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+
 </style>
 <script type="text/javascript">
 
@@ -539,7 +659,7 @@ $(function(){
 				<div class="contents_inner">
 					<section class="profile_title">
 						
-						<p><span>${member.nickName }</span><span class="availability">
+						<p><span>${memberDTO.nickName }</span><span class="availability">
 						<c:if test="${not empty freelancer.possibility }">
 						${freelancer.possibility }
 						</c:if>
@@ -547,7 +667,10 @@ $(function(){
 						활동가능
 						</c:if>
 						</span>
-						<a href="myinfoView" >업데이트 하기</a></p>
+						<c:if test="${member.email eq email }">
+						<a href="myinfoView" >업데이트 하기</a>
+						</c:if>
+						</p>
 						<p><span>
 						<c:choose>
 						<c:when test="${empty freelancer.jobKind }">
@@ -563,33 +686,33 @@ $(function(){
 						</span>
 						<span>
 						<c:choose>
-						<c:when test="${empty member.type }">
+						<c:when test="${empty memberDTO.type }">
 						<i class="fa fa-user"></i><span>개인<span class="bar">|</span></span>
 						</c:when>
-						<c:when test="${member.type eq '개인' }">
-						<i class="fa fa-user"></i><span>${member.type }<span class="bar">|</span></span>
+						<c:when test="${memberDTO.type eq '개인' }">
+						<i class="fa fa-user"></i><span>${memberDTO.type }<span class="bar">|</span></span>
 						</c:when>
-						<c:when test="${member.type eq '팀' }">
-						<i class="fa fa-users"></i><span>${member.type}<span class="bar">|</span></span>
+						<c:when test="${memberDTO.type eq '팀' }">
+						<i class="fa fa-users"></i><span>${memberDTO.type}<span class="bar">|</span></span>
 						</c:when>
 						<c:otherwise>
-						<i class="fa fa-building-o"></i><span>${member.type}<span class="bar">|</span></span>
+						<i class="fa fa-building-o"></i><span>${memberDTO.type}<span class="bar">|</span></span>
 						</c:otherwise>
 						</c:choose>
 						</span>
 						<span>
-						<c:if test="${member.authenticState ne 2 }">
+						<c:if test="${memberDTO.authenticState ne 2 }">
 						<i style="opacity: 0.5;" class="fa fa-address-card"></i><span>신원 미인증<span class="bar">|</span></span>
 						</c:if>
-						<c:if test="${member.authenticState eq 2 }">
+						<c:if test="${memberDTO.authenticState eq 2 }">
 						<i class="fa fa-address-card"></i><span>신원 인증<span class="bar">|</span></span>
 						</c:if>
 						</span>
 						<span>
-						<c:if test="${empty member.phone }">
+						<c:if test="${empty memberDTO.phone }">
 						<i style="opacity: 0.5;" class="fa fa-phone"></i><span>연락처 미등록</span>
 						</c:if>
-						<c:if test="${not empty member.phone }">
+						<c:if test="${not empty memberDTO.phone }">
 						<i class="fa fa-phone"></i><span>연락처 등록</span>
 						</c:if>
 						</span>
@@ -662,27 +785,35 @@ $(function(){
 					</section>
 					
 					<section class="profile_wrap">
-						<p><span>자기소개</span><a href="introView" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>자기소개</span>
+						<c:if test="${member.email eq memberDTO.email }">
+						<a href="introView" style="margin-top: -5px;">업데이트 하기</a>
+						</c:if></p>
 						
-						<div class="no_data_wrap" style="text-align: left;">
 							<c:if test="${empty freelancer.intro }">
+							<div class="no_data_wrap">
 							<div class="no_data">
 								<div class="no_img">
 									<img alt="자기소개" src="${pageContext.request.contextPath }/resources/img/mypage/intro.png">
 									<p>입력된 <span>'자기소개'</span>가 없습니다.</p>
 								</div>
 							</div>
+							</div>
 							</c:if>
 							<c:if test="${not empty freelancer.intro }">
+						<div class="no_data_wrap" style="text-align: left;">
 								<div class="introform">
 								<p>${freelancer.intro }</p>
 								</div>
-							</c:if>
 						</div>
+							</c:if>
 						
 					</section>
 					<section class="profile_wrap">
-						<p><span>포트폴리오</span><a href="portfolioList" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>포트폴리오</span>
+						<c:if test="${member.email eq memberDTO.email }">
+						<a href="portfolioList" style="margin-top: -5px;">업데이트 하기</a>
+						</c:if></p>
 						
 						<div class="no_data_wrap">
 							<c:if test="${empty portfolio }">
@@ -707,9 +838,12 @@ $(function(){
 						</div>
 					</section>
 					<section class="profile_wrap">
-						<p><span>보유기술</span><a href="skillList" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>보유기술</span>
+						<c:if test="${member.email eq memberDTO.email }">
+						<a href="skillList" style="margin-top: -5px;">업데이트 하기</a>
+						</c:if></p>
 						
-						<div class="no_data_wrap" style="height: auto;">
+						<div class="no_data_wrap skill" style="height: auto;">
 							<c:if test="${empty skills }">
 							<div class="no_data">
 								<div class="no_img">
@@ -747,9 +881,12 @@ $(function(){
 						
 					</section>
 					<section class="profile_wrap">
-						<p><span>경력</span><a href="carrer" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>경력</span>
+						<c:if test="${member.email eq memberDTO.email }">
+						<a href="carrer" style="margin-top: -5px;">업데이트 하기</a>
+						</c:if></p>
 						
-						<div class="no_data_wrap" style="height: auto;">
+						<div class="no_data_wrap skill" style="height: auto;">
 							<c:if test="${empty carrer }">
 							<div class="no_data">
 								<div class="no_img">
@@ -792,7 +929,7 @@ $(function(){
 						
 						<p><span>학력</span></p>
 						
-						<div class="no_data_wrap" style="height: auto;">
+						<div class="no_data_wrap skill" style="height: auto;">
 							<div class="no_data">
 								<c:if test="${empty academic }">
 								<div class="no_img">
@@ -839,7 +976,7 @@ $(function(){
 						
 						<p><span>자격증</span></p>
 						
-						<div class="no_data_wrap" style="height: auto;">
+						<div class="no_data_wrap skill" style="height: auto;">
 							<c:if test="${empty license }">
 							<div class="no_data">
 								<div class="no_img">
@@ -880,15 +1017,234 @@ $(function(){
 						
 					</section>
 					<section class="profile_wrap">
-						<p><span>평가</span><a href="#" style="margin-top: -5px;">업데이트 하기</a></p>
+						<p><span>평가</span>
+						<c:if test="${member.email eq memberDTO.email }">
+						<a href="evaluationView" style="margin-top: -5px;">업데이트 하기</a>
+						</c:if></p>
 						
-						<div class="no_data_wrap">
+						<div class="no_data_wrap" style="height: auto;">
+							<c:if test="${evaluation.projectList eq 0}">
 							<div class="no_data">
 								<div class="no_img">
 									<img alt="평가" src="${pageContext.request.contextPath }/resources/img/mypage/evaluation.png">
 									<p>등록된 <span>'평가'</span>가 없습니다.</p>
 								</div>
 							</div>
+							</c:if>
+							<c:if test="${evaluation.projectList ne 0 }">
+								<c:forEach begin="0" end="${evaluation.projectList-1 }" var="i" varStatus="o">
+										
+										<div class="wrap_eval">
+											<div>
+												<c:forEach items="${projectName.projectName[i]}" var="j">
+												<c:if test="${j.projectNum eq evaluation.eval[i].projectNum }">
+												<p class="wrap_projectName">
+													<a href="/flu/project/projectView?projectNum=${j.projectNum }">${j.name }</a>
+												</p>
+												<p class="wrap_project_etc">
+												<span><span>${j.category } ></span><span>${j.detailCategory }</span></span>
+												<span style="color: #dedede; margin-left: 10px; margin-right: 10px;">|</span>
+												<span><span>클라이언트 </span><span>${j.email }</span></span>
+												</p>
+												<div>
+													<table>
+														<colgroup>
+															<col width="93px">
+															<col width="140px">
+															<col width="96px">
+															<col width="130px">
+															<col width="97px">
+															<col width="153px">
+														</colgroup>
+														<thead></thead>
+														<tbody>
+														<tr>
+															<td class="td_title">\계약금액
+															</td>
+															<td class="td_contents">
+															<fmt:formatNumber pattern="\###,###" value="3000000"/>
+															</td>
+															<td class="td_title"><i class="fa fa-clock-o"></i> 계약기간
+															</td>
+															<td class="td_contents">${j.period }
+															</td>
+															<td class="td_title"><i class="fa fa-calendar"></i> 계약일자
+															</td>
+															<td class="td_contents">${j.startDate }
+															</td>
+														</tr>
+														</tbody>
+													</table>
+												</div>
+												</c:if>
+												</c:forEach>
+												<div class="eval_star">
+													<span>
+														<c:choose>
+														<c:when test="${evaluation.avrList[i] eq 5}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/5.png">
+														</c:when>
+														<c:when test="${evaluation.avrList[i] eq 4}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/4.png">
+														</c:when>
+														<c:when test="${evaluation.avrList[i] eq 3}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/3.png">
+														</c:when>
+														<c:when test="${evaluation.avrList[i] eq 2}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/2.png">
+														</c:when>
+														<c:when test="${evaluation.avrList[i] eq 1}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/1.png">
+														</c:when>
+														<c:otherwise>
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/0.png">
+														</c:otherwise>
+														</c:choose>
+													</span>
+													<span>
+														${evaluation.avrList[i] }
+													</span>
+												</div>
+												<ul>
+													<li>
+														<p>전문성</p>
+														<span>
+														<c:choose>
+														<c:when test="${evaluation.eval[i].professional eq 5}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/5.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].professional eq 4}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/4.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].professional eq 3}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/3.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].professional eq 2}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/2.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].professional eq 1}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/1.png">
+														</c:when>
+														<c:otherwise>
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/0.png">
+														</c:otherwise>
+														</c:choose>
+														</span>
+														<span>${evaluation.eval[i].professional}</span>
+													</li>
+													<li class="li_bar"></li>
+													<li>
+														<p>만족도</p>
+														<span>
+														<c:choose>
+														<c:when test="${evaluation.eval[i].satisfy eq 5}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/5.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].satisfy eq 4}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/4.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].satisfy eq 3}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/3.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].satisfy eq 2}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/2.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].satisfy eq 1}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/1.png">
+														</c:when>
+														<c:otherwise>
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/0.png">
+														</c:otherwise>
+														</c:choose>
+														</span>
+														<span>${evaluation.eval[i].satisfy}</span>
+													</li>
+													<li class="li_bar"></li>
+													<li>
+														<p>의사소통</p>
+														<span>
+														<c:choose>
+														<c:when test="${evaluation.eval[i].communication eq 5}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/5.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].communication eq 4}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/4.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].communication eq 3}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/3.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].communication eq 2}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/2.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].communication eq 1}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/1.png">
+														</c:when>
+														<c:otherwise>
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/0.png">
+														</c:otherwise>
+														</c:choose>
+														</span>
+														<span>${evaluation.eval[i].communication}</span>
+													</li>
+													<li class="li_bar"></li>
+													<li>
+														<p>일정 준수</p>
+														<span>
+														<c:choose>
+														<c:when test="${evaluation.eval[i].schedule eq 5}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/5.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].schedule eq 4}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/4.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].schedule eq 3}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/3.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].schedule eq 2}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/2.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].schedule eq 1}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/1.png">
+														</c:when>
+														<c:otherwise>
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/0.png">
+														</c:otherwise>
+														</c:choose>
+														</span>
+														<span>${evaluation.eval[i].schedule}</span>
+													</li>
+													<li class="li_bar"></li>
+													<li>
+														<p>적극성</p>
+														<span>
+														<c:choose>
+														<c:when test="${evaluation.eval[i].passion eq 5}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/5.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].passion eq 4}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/4.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].passion eq 3}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/3.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].passion eq 2}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/2.png">
+														</c:when>
+														<c:when test="${evaluation.eval[i].passion eq 1}">
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/1.png">
+														</c:when>
+														<c:otherwise>
+														<img style="width: 80px;" src="${pageContext.request.contextPath }/resources/img/starpoint/0.png">
+														</c:otherwise>
+														</c:choose>
+														</span>
+														<span>${evaluation.eval[i].passion }</span>
+													</li>
+												</ul>
+											</div>
+										</div>
+										</c:forEach>
+							</c:if>
 						</div>
 						
 					</section>

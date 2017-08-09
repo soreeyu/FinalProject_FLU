@@ -32,7 +32,10 @@ public class FreelancerService{
 	@Inject
 	private FreelancerDAO freelancerDAO;
 
-	
+	//프리랜서 계정정보 뷰
+	public MemberDTO freelancerMemberView(String email){
+		return freelancerDAO.freelancerMemberView(email);
+	}
 	
 	//프리랜서 등록
 	public int freelancerInsert(FreelancerDTO freelancerDTO){
@@ -46,7 +49,16 @@ public class FreelancerService{
 
 	//프리랜서 리스트
 	public Map<String, Object> freelancerList(ListInfo listInfo){
-		return freelancerDAO.freelancerList(listInfo);
+		Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
+		
+		
+		
+		return map;
+	}
+	//프리랜서리스트 평가리스트
+	public Map<String, Object> freelancerListEval(ListInfo listInfo){
+		
+		return freelancerDAO.freelancerListEval(listInfo);
 	}
 
 	//프리랜서 뷰

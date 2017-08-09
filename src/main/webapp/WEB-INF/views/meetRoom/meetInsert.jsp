@@ -118,15 +118,15 @@
 section {
 	min-width : 1152px;
 	width : 60%;
-	height: 2000px;
 	margin : 0 auto;
+
 }
 #meetRoom_header{
 	display: table;
     position: relative;
     width: 100%;
     padding-bottom: 24px;
-    border-bottom: 4px solid #0066ff;
+    border-bottom: 4px solid #339bff;
     margin-top: 40px;
 }
 .meetRoom_name {
@@ -134,8 +134,10 @@ section {
 	position: relative;
 }
 .meetRoom_name .tit{
-	margin-bottom: 5px;
-	font-size: 12px;
+	line-height: 50px;
+    font-size: 18px;
+    margin-bottom: 0;
+    padding: 0;
 }
 label {
 	cursor:  pointer;
@@ -154,8 +156,10 @@ label {
 	position: relative;
 }
 #meetRoom_contents .tit{
-	margin-bottom: 5px;
-	font-size: 12px;
+	line-height: 50px;
+    font-size: 18px;
+    margin-bottom: 0;
+    padding: 0;
 }
 #meetRoom_contents > textarea{
 	width: 100%;
@@ -370,7 +374,7 @@ input[type="checkbox"]{
     width: 100%;
     height: 100%;
     line-height: 50px;
-    background-color: #704de4;
+    background-color: #339bff;
     border: 0;
     color: #fff;
     text-align: center;
@@ -410,6 +414,9 @@ input[type=text]{
     background-color: #704de4;
     color: #fff;
 }
+#smarteditor{
+	resize: none;
+}
 
 </style>
 </head>
@@ -426,22 +433,21 @@ input[type=text]{
 	<form action="meetUpdate" method="post" enctype="multipart/form-data" id="frm">
 	</c:if>
 	<div class="meetRoom_name">
-		<div class="tit">
-			<label>
+		
+			<span class="tit">
 				공간명		
-			</label>
-		</div>
+			</span>
+			
+		
 		
 		<input type="text" name="name" placeholder="공간명을 입력해주세요." class="meetRoomInfo" value="${dto.name}"> 
 		
 	</div>
 	<div id="meetRoom_contents">
-		<div class="tit">
-			<label>
-				공간소개
-			</label>
-		</div>
-		<textarea rows="" cols="" name="contents" id="smarteditor" style="height: 108px;" placeholder="공간을 상세하게 소개해보세요. 공간의 특징이나 주변환경 등의 세부정보를 작성하시면 효과적입니다.">${dto.contents}</textarea>
+		<span class="tit">
+				공간소개		
+			</span>
+		<textarea rows="" cols="" name="contents" id="smarteditor"  style="height: 108px;" placeholder="공간을 상세하게 소개해보세요. 공간의 특징이나 주변환경 등의 세부정보를 작성하시면 효과적입니다.">${dto.contents}</textarea>
 	</div>
 	
 	<div class="flex_wrap column2">
@@ -469,7 +475,7 @@ input[type=text]{
 				</div>
 				<span class="txt_hour">까지</span>
 			</div>
-			<p class="p_guide normal">
+			<p class="p_guide normal" style="margin-top: 20px;">
 				실제로 공유 가능한 시간을 입력해주세요.
 			</p>
 		</div>
@@ -551,10 +557,13 @@ input[type=text]{
 	
 		
 		<div class="meetRoom_name">
+		<span class="tit">
 		홈페이지
+		</span>
 		<input type="text" name="homePage" class="meetRoomInfo" value="${dto.homePage}">		
 		</div>
-		<input type="button" id="savebutton" value="공간등록" style="margin-top: 50px; width: 100%;">
+		
+		<input type="button" id="savebutton" value="공간등록" style="margin-top: 50px;  margin-bottom:50px; width: 100%; background-color:#339bff; height: 50px; border: none; color: #fff; font-size: 1.5em; ">
 	</form>
 	</section>
 	<c:import url="../temp/footer.jsp"/>

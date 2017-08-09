@@ -234,7 +234,7 @@
 								${free.dto.jobKind }
 								</c:if>
 								<c:if test="${empty free.dto.jobKind }">
-								X
+								직종 미선택
 								</c:if>
 								</label>
 							</div>
@@ -243,8 +243,8 @@
 								<div class="job_info">
 									<label>개발</label>
 									<c:if test="${not empty free.interesting }">
-									<c:forEach items="${free.interesting }" var="i">
-									<p>${i }</p>
+									<c:forEach items="${free.interesting }" var="i" varStatus="s">
+									<p>${s.count}.${i }</p>
 									</c:forEach>
 									</c:if>
 									<c:if test="${empty free.interesting }">
@@ -252,8 +252,8 @@
 									</c:if>
 									<label>디자인</label>
 									<c:if test="${not empty free.interesting2 }">
-									<c:forEach items="${free.interesting2 }" var="i">
-									<p>${i }</p>
+									<c:forEach items="${free.interesting2 }" var="i" varStatus="s">
+									<p>${s.count}.${i }</p>
 									</c:forEach>
 									</c:if>
 									<c:if test="${empty free.interesting2 }">
@@ -268,7 +268,7 @@
 								${free.dto.possibility }
 								</c:if>
 								<c:if test="${empty free.dto.possibility }">
-								X
+								활동가능성 미선택
 								</c:if>
 								</label>
 							</div>

@@ -235,10 +235,11 @@ table {
 				<div class="contents_inner">
 					<section class="profile_title">
 					
-						<p><span>경력, 학력, 자격증</span></p>
+						<p><span>${memberDTO.nickName }의 경력, 학력, 자격증</span></p>
 					</section>
 					<section class="profile_wrap">
-						<p><b id="carrer" style="margin-top: -5px;">경력 추가하기</b></p>
+						<p>
+						<c:if test="${email eq member.email }"><b id="carrer" style="margin-top: -5px;">경력 추가하기</b></c:if></p>
 						<div class="carrer_div">
 						<p><span>경력</span></p>
 						<input id="member_email" type="hidden" name="email" value="${member.email }">
@@ -290,7 +291,8 @@ table {
 							</c:choose>
 						</div>
 						</div>
-						<p><b id="academic" style="margin-top: -5px;">학력 추가하기</b></p>
+						<p>
+						<c:if test="${email eq member.email }"><b id="academic" style="margin-top: -5px;">학력 추가하기</b></c:if></p>
 						<div class="academic_div">
 						<p><span>학력</span></p>
 						
@@ -344,7 +346,8 @@ table {
 							
 						</div>
 						</div>
-						<p><b id="license" style="margin-top: -5px;">자격증 추가하기</b></p>
+						<p>
+						<c:if test="${email eq member.email }"><b id="license" style="margin-top: -5px;">자격증 추가하기</b></c:if></p>
 						<div class="license_div">
 						<p><span>자격증</span></p>
 						

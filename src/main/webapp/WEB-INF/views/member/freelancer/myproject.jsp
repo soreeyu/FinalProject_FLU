@@ -275,7 +275,6 @@
 					<div class="sidebar_menu">
 						<ul>
 							<li><a class="menu" id="project_list">나의 프로젝트</a></li>
-							<li><a class="menu" id="project_like">관심 프로젝트</a></li>
 							<li><a class="menu" id="project_app">지원한 프로젝트</a></li>
 							<li><a class="menu" id="project_ing">진행중인 프로젝트</a></li>
 							<li><a class="menu" id="project_finish">완료된 프로젝트</a></li>
@@ -330,9 +329,6 @@ $("#project_list").click(function() {
 			$(".contents").html(data);
 			
 		}); 
-});
-$("#project_like").click(function() {
-	alert("DB만들어야하나 체크해보기");
 });
 $("#project_app").click(function() {
 	alert("지원한 프로젝트");

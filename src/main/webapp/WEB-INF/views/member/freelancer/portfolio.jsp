@@ -170,6 +170,25 @@
 	color: white;
 	background-color: #66b3ff;
 }
+.pofol{
+	border: 1px solid #dededd;
+}
+.pofol img{
+	width: 198px;
+	height: 150px;
+}
+#titi{
+	display: block;
+	width: 200px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	border-top: 1px solid #dededd;
+	cursor: pointer;
+}
+.img_a{
+	display: inline-block;
+}
 
 </style>
 </head>
@@ -184,12 +203,12 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<p><span>ㅁㅁㅁ의 포트폴리오</span>
-						
+						<p><span>${memberDTO.nickName }의 포트폴리오</span>
+						<c:if test="${email eq member.email }">
 						<c:if test="${list.size() < 3 }">
 						<a href="portfolioInsert" style="margin-top: -5px;">등록 하기</a>
 						</c:if>
-
+						</c:if>
 						</p>
 						
 					</section>
@@ -207,17 +226,32 @@
 								</div>
 							</div>
 						</c:if>
+						<c:catch>
 						<c:if test="${not empty list }">
 							<c:forEach items="${list }" var="i">
 							<div style="display: inline-block;">
-								<div style="display:inline-block; height: 200px; width: 200px; margin-right: 30px;">
-									${i.title }
-									<a href="portfolioView?pfNum=${i.pfNum }">${i.title }</a>
+								<div class="pofol" style="display:inline-block; height: 200px; width: 200px; margin-right: 30px;">
+									<c:if test="${not empty i.pfFname }">
+									<a class="img_a" href="portfolioView?pfNum=${i.pfNum }">
+									<img src="${pageContext.request.contextPath}/resources/portfolio/${i.pfFname}">
+									</a>
+									</c:if>
 									
+									<c:if test="${empty i.pfFname }">
+									<a class="img_a" href="portfolioView?pfNum=${i.pfNum }">
+									<img src="${pageContext.request.contextPath}/resources/img/FLU.png">
+									</a>
+									</c:if>
+									<a id="titi" href="portfolioView?pfNum=${i.pfNum }">
+									<label class="view">
+										${i.title }
+									</label>
+									</a>
 								</div>
 							</div>
 							</c:forEach>
 						</c:if>
+						</c:catch>
 						</div>
 					</section>
 					

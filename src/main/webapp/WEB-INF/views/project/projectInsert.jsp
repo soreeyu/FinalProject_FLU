@@ -247,7 +247,8 @@ label{
 						
 				<!-- email은 로그인한 클라이언트 email 땡겨오기 -->
 						<input type="hidden" name="email" value="${member.email}">
-					
+				<!-- 프로젝트 등록시 del_Check=0으로 넣어주기 -->
+						<input type="hidden" name="del_Check" value="0">
 		
 				
 				
@@ -333,9 +334,7 @@ label{
 				<div>
 					<label><span>*</span>프로젝트 내용</label>
 					<div>
-						<textarea rows="30" cols="80" name="contents">
-						${dto.contents}
-						</textarea>
+						<textarea rows="30" cols="80" name="contents">${dto.contents}</textarea>
 					</div>
 				</div>
 				

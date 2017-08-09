@@ -7,7 +7,7 @@
 					<span>프리랜서</span>
 					<div class="free_img_div">
 						<c:if test="${empty member.fProfileImage }">
-						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/FLU.png">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
 						</c:if>
 						<c:if test="${not empty member.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
@@ -19,7 +19,7 @@
 					<ul>
 						<li><a id="${active1}" class="menu" href="${pageContext.request.contextPath}/member/personaldataView">계정 정보</a></li>
 						<li><a id="${active2}" class="menu" href="${pageContext.request.contextPath}/checkMember/memberCheckInsert">신원 인증</a></li>
-						<li><a id="${active3}" class="menu" href="#">계좌 관리</a></li>
+						<li><a id="${active3}" class="menu" href="${pageContext.request.contextPath}/member/accountView">계좌 관리</a></li>
 						<li><a id="${active4}" class="menu" href="#">회원 탈퇴</a></li>
 					</ul>
 				</div>

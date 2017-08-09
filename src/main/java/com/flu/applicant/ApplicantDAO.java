@@ -1,5 +1,6 @@
 package com.flu.applicant;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class ApplicantDAO {
 	//지원했는지 체크해보기
 	public int checkApplicant(ApplicantDTO applicantDTO){
 		System.out.println("checkApplicant-dao");
+		System.out.println(applicantDTO.getEmail());
 		return sqlSession.selectOne(NAMESPACE+"checkApplicant", applicantDTO);
 	}
 	
@@ -46,5 +48,13 @@ public class ApplicantDAO {
 		System.out.println("countApplicant-dao");
 		
 		return sqlSession.selectOne(NAMESPACE+"countApplicant", projectNum);
+	}
+	
+	public int deleteApplicant(ApplicantDTO applicantDTO){
+		System.out.println("delete-applicant-dao");
+		System.out.println("email=="+applicantDTO.getEmail());
+		System.out.println("projectNum=="+applicantDTO.getProjectNum());
+	
+		return sqlSession.delete(NAMESPACE+"deleteApplicant", applicantDTO);
 	}
 }

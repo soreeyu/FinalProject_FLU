@@ -47,7 +47,7 @@
 							마감<span class="deadline" id="${dto.finishDate}"></span></div>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							총 <strong>몇명</strong></div>
+							총 <strong>${dto.appCount}명</strong></div>
 							
 						</div>
 						</c:if>
