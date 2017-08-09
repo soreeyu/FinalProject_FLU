@@ -475,7 +475,17 @@ cursor: pointer;
 
 			}else{//중단하기
 				
+				alert(num);
+				alert(state);
 				
+ 				if(confirm("프로젝트를 중단하시겠습니까?")){
+				
+					location.href="./checkProjectUpdate?projectNum="+num+"&state="+state;
+					
+					
+				} 
+				
+					
 				
 			}			
 			
@@ -751,14 +761,14 @@ cursor: pointer;
 									 <c:if test="${i.state=='fail'}">모집 실패</c:if>
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
 									 <c:if test="${i.del_check=='1'}">중단요청</c:if>
-									 <c:if test="${i.del_check=='2'}">중단</c:if>
+									 <c:if test="${i.del_check=='2'}">중단완료</c:if>
 								 </td>
 								 <td>
 								 <c:if test="${board=='Finish' or board=='Wait'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
 								 </c:if>
 								 <c:if test="${board=='Cancel' and i.del_check=='1'}">
-								 	<span class="bbttnn2" title="${i.email}" lang="${i.projectNum}" role="${i.state }">중단하기</span>
+								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="cancel">중단하기</span>
 								 </c:if>
 								 </td>
 							</tr>

@@ -123,7 +123,7 @@ public class CheckProjectController {
 	@RequestMapping(value="checkProjectCancelList", method=RequestMethod.GET)
 	public String checkProjectCancelList(ProjectDTO projectDTO, ListInfo listInfo,Model model,String searchDate){
 
-		String [] ar = {"recruit","ing","wait","stop"};
+		String [] ar = {"recruit","ing","wait","cancel"};
 		
 		listInfo.setProject(ar);
 	
@@ -151,12 +151,17 @@ public class CheckProjectController {
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
-
 	public String update(ProjectDTO projectDTO, RedirectAttributes ra) throws Exception{
 		
 		int result = checkProjectService.update(projectDTO);
+		
+		String path = "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		
+		if(projectDTO.getState().equals("cancel")){
+			path = "redirect:/checkProject/checkProjectCancelList";
+		}
+		
 		if(result>0){
-			
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail("pkjuno@nate.com");
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
@@ -164,7 +169,7 @@ public class CheckProjectController {
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 
-		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		return path;
 	}
 	
 

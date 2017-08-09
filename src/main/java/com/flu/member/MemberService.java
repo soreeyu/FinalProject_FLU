@@ -89,7 +89,6 @@ public class MemberService {
 	
 	//로그인
 	public MemberDTO login(MemberDTO memberDTO){
-		System.out.println("카인드 뭐야 : "+memberDAO.login(memberDTO).getKind());
 		return memberDAO.login(memberDTO);
 	}
 	

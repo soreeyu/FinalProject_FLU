@@ -93,6 +93,9 @@
   				<if test="state=='wait'">
   				state='ing' where projectNum=#{projectNum}
   				</if>
+   				<if test="state=='cancel'">
+  				state='cancel',del_check=2 where projectNum=#{projectNum}
+  				</if>
   		</update>
   	
   		
@@ -112,7 +115,12 @@
 			  	and email like '%' || #{projectDTO.email} || '%' 
 			  	and planstate like '%' || #{projectDTO.planState} || '%' 
 			  	and startdate like '%' || #{projectDTO.startDate} || '%' 
-			  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+			  	and finishdate like '%' || #{projectDTO.finishDate} || '%'
+
+			  	<if test="check=='check'">
+		  		and del_check in ('1','2')
+		  		</if>
+		  		 
 			  	and reg_date between #{projectDTO.reg_date} and sysdate) A
 		
 			  	order by reg_date asc 		
