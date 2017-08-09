@@ -63,43 +63,47 @@
 			</tr>
 		</tbody>
 	</table>
-	<table id="cklist_table">
-		<tr id="unitTitle">
-			<th id="task">할일</th>
-			<th id="ing">진행중</th>
-			<th id="comp">완료</th>
-		</tr>
-		<tr>
-			<td id="unitWill">
-				<ul>
-					<li><input type="checkbox">기나긴 이름들의 할일1</li>
-					<li><input type="checkbox">기나긴 이름들의 할일2</li>
-					<li><input type="checkbox">기나긴 이름들의 할일3</li>
-					<li><input type="checkbox">기나긴 이름들의 할일4</li>
-					<li><input type="checkbox">기나긴 이름들의 할일5</li>
-				</ul>
-			</td>
-			<td id="unitIng">
-				<ul>
-					<li><input type="checkbox">기나긴 이름들의 진행중1</li>
-					<li><input type="checkbox">기나긴 이름들의 진행중2</li>
-					<li><input type="checkbox">기나긴 이름들의 진행중3</li>
-					<li><input type="checkbox">기나긴 이름들의 진행중4</li>
-					<li><input type="checkbox">기나긴 이름들의 진행중5</li>
-				</ul>
-			</td>
-			<td id="unitDone">
-				<ul>
-					<li><input type="checkbox">기나긴 이름들의 완료1</li>
-					<li><input type="checkbox">기나긴 이름들의 완료2</li>
-					<li><input type="checkbox">기나긴 이름들의 완료3</li>
-					<li><input type="checkbox">기나긴 이름들의 완료4</li>
-					<li><input type="checkbox">기나긴 이름들의 완료5</li>
-				</ul>
-			</td>
-		</tr>
-	</table>
 </div>
+
+
+
+
+		<!-- 업무 완료 결과 Modal -->
+		<div id="myUnitResultModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog   modal-lg">
+		
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">업무 결과 등록</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div id="client_section">
+					<form id="resultAddForm" action="${pageContext.request.contextPath}/schedule/#########" method="POST"  enctype="multipart/form-data">
+						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
+						<input type="hidden" id="currentTab" name="currentTab" value="">				
+						샤바샤바 랄라라
+						
+					</form>
+					
+				</div>
+		      </div>
+		      
+
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-default unitResultFrmBtn">등록</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		<!-- 업무추가MODAL 끝 -->
+
+
+
+
 
 <!----------------- 달력&체크리스트 끝--------------->
 
@@ -135,7 +139,7 @@
 	});
 	
 	
-	
+	// 진행중 > 완료 // 반드시 결과 입력 필요
 	$(document).on("click",".unitIngOne",function(){
 		if ( $(this).prop('checked') ) { //true
 			alert($(this).prop('checked'));
@@ -143,6 +147,10 @@
 			alert($(this).attr('data-unitNum'));
 			
 			//modal 열어서 값 입력 성공하면 변환 
+			$("#myUnitResultModal").modal({backdrop:'static'});
+			
+			
+			
 			
 			
 			
@@ -171,6 +179,15 @@
 	        //$(this).parent().removeClass("selected");
 	     }
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	function stateChange(scheduleNum,unitNum,unitState){
