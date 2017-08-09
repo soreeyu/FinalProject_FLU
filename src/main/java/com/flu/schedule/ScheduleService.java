@@ -401,6 +401,19 @@ public class ScheduleService {
 		//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
 		public int stateChange(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 			//clientSchedule 부분에 state를 변경해준다 
+			String state = scheduleUnitDTO.getUnitState();
+			String unitState = "할일";
+			
+			if(state.equals("0")){
+				unitState = "할일";
+			}else if(state.equals("1")){
+				unitState = "진행중";
+			}else if(state.equals("2")){
+				unitState = "완료";
+			}
+			
+			scheduleUnitDTO.setUnitState(unitState); 
+			System.out.println("적용된 상태 보기   "+scheduleUnitDTO.getUnitState());
 			return scheduleDAO.stateChange(scheduleUnitDTO);
 		}	
 	

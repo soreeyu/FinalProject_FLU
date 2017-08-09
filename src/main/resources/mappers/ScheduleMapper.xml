@@ -105,7 +105,7 @@
         and U.schedulenum=P.schedulenum
         and P.partNum=U.partNum
        	<if test="partNum != -1">
-			and partnum in #{partNum}
+			and P.partnum in #{partNum}
 		</if>
 		and email like '%'||#{email}||'%'
 		and unitstate like '%'||#{unitState}||'%'
@@ -153,7 +153,7 @@
 	
 	
 	<update id="stateChange" parameterType="com.flu.schedule.client.ScheduleUnitDTO">
-		update scheduleunit set unitstate='#{unitState}' where schedulenum=#{scheduleNum} and unitnum=#{unitNum}
+		update scheduleunit set unitstate=#{unitState} where schedulenum=#{scheduleNum} and unitnum=#{unitNum}
 	</update>
 	
   	

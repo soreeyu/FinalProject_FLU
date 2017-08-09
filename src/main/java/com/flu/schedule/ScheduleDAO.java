@@ -149,7 +149,15 @@ public class ScheduleDAO {
 	//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
 	public int stateChange(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 		//clientSchedule 부분에 state를 변경해준다 
-		return sqlSession.update(NAMESPACE+"stateChange", scheduleUnitDTO);
+		System.out.println("왜안되니");
+		System.out.println("상태변환용 em  "+scheduleUnitDTO.getEmail());
+		System.out.println("상태변환용 st  "+scheduleUnitDTO.getUnitState());
+		System.out.println("상태변환용 sn  "+scheduleUnitDTO.getScheduleNum());
+		System.out.println("상태변환용 un  "+scheduleUnitDTO.getUnitNum());
+		
+		int result =sqlSession.update(NAMESPACE+"stateChange", scheduleUnitDTO);
+		System.out.println("result = " + result);
+		return result;
 	}	
 	
 	

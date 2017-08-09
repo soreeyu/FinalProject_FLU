@@ -440,7 +440,7 @@ public class ScheduleController {
 			System.out.println("unitState "+scheduleUnitDTO.getUnitState());
 			List<ScheduleUnitDTO> list = scheduleService.unitList(scheduleUnitDTO);
 			for(int i=0;i<list.size();i++){
-				System.out.println(i+"번째 할일이름 = "+list.get(i).getUnitName());
+				System.out.println(i+"번째 할일이름 = "+list.get(i).getUnitName() + "  "+ list.get(i).getPartName());
 			}
 			return list;
 		}
@@ -528,13 +528,29 @@ public class ScheduleController {
 		
 
 		
-		//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-		public void stateChange(String user,Integer doNum){
+		//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다
+		@ResponseBody
+		@RequestMapping(value="stateChange", method=RequestMethod.POST)
+		public int stateChange(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			
 			//clientSchedule 부분에 state를 변경해준다 
+			/*System.out.println("상태변환용 em  "+scheduleUnitDTO.getEmail());
+			System.out.println("상태변환용 st  "+scheduleUnitDTO.getUnitState());
+			System.out.println("상태변환용 sn  "+scheduleUnitDTO.getScheduleNum());
+			System.out.println("상태변환용 un  "+scheduleUnitDTO.getUnitNum());
+			*/
+			return scheduleService.stateChange(scheduleUnitDTO);
+
 		}	
+		
+		
+		
 		
 		//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
 		public void uploadResult(String file,String contents){ //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
+			
+			
+			
 			
 		}  
 		
@@ -587,6 +603,8 @@ public class ScheduleController {
 			List<ScheduleUnitDTO> list2 = scheduleService.unitList(scheduleUnitDTO);
 			model.addAttribute("userList", list);
 			model.addAttribute("partList", list2);
+			model.addAttribute("scheduleNum", scheduleUnitDTO.getScheduleNum());
+			
 			return "schedule/checkListForFreelancer";
 		}
 		

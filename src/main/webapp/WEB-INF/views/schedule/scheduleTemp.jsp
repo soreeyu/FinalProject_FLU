@@ -1038,6 +1038,17 @@ div{
 	float: left;
 }
 
+#cklist_section li{
+	height: 40px;
+}
+
+input[type=checkbox], input[type=radio]{
+	margin: 0;
+	height: 40px;
+	line-height: 40px;
+	margin-left:10px;
+}
+
 #cklist_table{
 	border: 1px solid black;
 	text-align: center;
@@ -1047,10 +1058,38 @@ div{
 	font-size: 15px;
 }
 
-#cklist_table th{
-	height: 30px;
-	line-height: 30px;
+#cklist_table th {
+    width: 33%;
+    height: 30px;
+    line-height: 30px;
 }
+
+
+
+.unit3{
+	height: 40px;
+    margin: 2px;
+    background: orange;
+}
+
+.unitTitle{
+    width: 80%;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    font-weight: bold;
+    float: left;
+ }
+ 
+#cklist_table input[type='checkbox']{
+	float: right;
+} 
+
+td{
+	vertical-align: top;
+}
+
+
 </style>
 
 <style type="text/css">
@@ -1098,6 +1137,8 @@ th{
 th:FIRST-CHILD,td:FIRST-CHILD{
 	border-left: 0;
 }
+
+
 
 </style>
 
@@ -1405,11 +1446,7 @@ var scheduleNum = '${scheduleNum}';
 				makeCard = makeCard + '<div class="cardTitle_wrap">';
 				makeCard = makeCard + '<span class="cardTitle">'+$(this).text()+'</span></div>';
 				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
-				if(member.kind == 'client'){
-					makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';	//이때 modal 로 입력하자									
-				}else{
-					makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'해당업무가 없습니다'+'</div>';	
-				}
+				makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'해당업무가 없습니다'+'</div>';	
 				makeCard = makeCard + '</div></div></div>';
 				
 				$(".cardContentWrap").append(makeCard);
@@ -1642,7 +1679,7 @@ var scheduleNum = '${scheduleNum}';
 			success: function(data){
 				
 				
-			//alert("unit들"+JSON.stringify(data));
+			alert("unit들"+JSON.stringify(data));
 	
 						var result="<table>";
 						$(data).each(function(){
@@ -1652,6 +1689,7 @@ var scheduleNum = '${scheduleNum}';
 							result = result + "<td> "+ this.unitDescribe + " </td>";
 							result = result + "<td> "+ this.unitFinishDate + " </td>";
 							result = result + "<td> "+ this.partNum + " </td>";
+							result = result + "<td class='getPartName'> "+ this.partName + " </td>";
 							result = result + "<td> "+ this.email + " </td>";
 							result = result + "</tr>";				
 						});
@@ -1682,7 +1720,7 @@ var scheduleNum = '${scheduleNum}';
 					if(kind == "상태별"){
 						makeUnitList(data,unitState); //카드뷰에 집어넣을겨
 					}else if(kind == "파트별"){
-						makeUnitList(data,partNum); //카드뷰에 집어넣을겨
+						makeUnitList(data,'part'); //카드뷰에 집어넣을겨
 					}else if(kind == "사용자별"){
 						makeUnitList(data,email); //카드뷰에 집어넣을겨
 					}else{
@@ -1706,7 +1744,12 @@ var scheduleNum = '${scheduleNum}';
 		var makeCard = "";
 		makeCard = makeCard + '<div class="card">';
 		makeCard = makeCard + '<div class="cardTitle_wrap">';
-		makeCard = makeCard + '<span class="cardTitle">'+state+'</span></div>';
+		if(state == 'part'){
+			makeCard = makeCard + '<span class="cardTitle">'+data[0].partName+'</span></div>';
+		}else{
+			makeCard = makeCard + '<span class="cardTitle">'+state+'</span></div>';
+		}
+		
 		makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
 		$(data).each(function(){							
 			makeCard = makeCard + '<div class="unit" data-unitNum='+this.unitNum+'>'+this.unitName+'</div>';						
@@ -1728,7 +1771,7 @@ var scheduleNum = '${scheduleNum}';
 		}else if($(".card").length > 9){
 			$(".cardContentWrap").css("height","1280px");
 		}
-
+		//안먹음..
 		
 	} //makeUnitList 함수 끝
 	
@@ -1969,8 +2012,7 @@ var scheduleNum = '${scheduleNum}';
 											<th>시작일</th>
 											<th>마감일</th>
 											<th>담당자</th>
-											<th>상세설명</th>
-											<th>상태</th>
+											<th>상세설명</th>							
 											<th></th>
 										</tr>
 									</thead>
@@ -1979,13 +2021,14 @@ var scheduleNum = '${scheduleNum}';
 											<td><input type="text" class="unitName" name="unitName"></td>
 											<td><input type="date" class="unitStartDate" name="unitStartDate"> </td>
 											<td><input type="date" class="unitFinishDate" name="unitFinishDate"></td>
-											<td><input type="date" class="email" name="email"></td>
-											<td><textarea rows="" cols="" class="unitDescribe" name="unitDescribe"></textarea></td>
-											<td><input type="text" class="unitState" name="unitState" value="할일" readonly="readonly"></td>
+											<td><textarea rows="" cols="100" class="unitDescribe" name="unitDescribe"></textarea></td>
+											<td><input type="date" class="email" name="email"></td>			
 											<td><span class="unitDel">X</span></td>
 										</tr>
+
 									</tbody>
 								</table>
+									<input type="hidden" class="unitState" name="unitState" value="할일" readonly="readonly">
 							</div>
 						
 						<input type="button" class="btn btn-default" id="addUnitBtn" value="+" style="margin:0 auto;">
@@ -2032,6 +2075,19 @@ var scheduleNum = '${scheduleNum}';
 				$(".partRowSection").append(partDOM3);
 			});
 			
+			$(document).on("click","#addUnitBtn",function(){
+				//alert('unit 추가'+unitCount);
+				var partDOM4 = '';
+				partDOM4 = partDOM4 + '<tr class="partOne">';
+				partDOM4 = partDOM4 + '<td><input type="text" class="partName" name="partName"></td>';
+				partDOM4 = partDOM4 + '<td><input type="date" class="partStartDate" name="partStartDate"> </td>';
+				partDOM4 = partDOM4 + '<td><input type="date" class="partFinishDate" name="partFinishDate"></td>';
+				partDOM4 = partDOM4 + '<td><input type="file" class="partDescFileO" name="partDescFile"></td>';
+				partDOM4 = partDOM4 + '<td><span class="partDel">X</span></td>';
+				partDOM4 = partDOM4 + '</tr>';
+				$(".unitRowSection").append(partDOM4);
+			});
+			
 			$(document).on("click",".partDel",(function(){
 				//alert("삭제하고싶어"+partCount);
 				$(this).parents(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
@@ -2049,7 +2105,7 @@ var scheduleNum = '${scheduleNum}';
 
 
 		<div class="clear"></div>
-	<div class="" style="display:none;">
+	<div class="" style="display:block;">
 			전체개요
 			<span class="totalWill">${summary.stateCount[0]}</span>
 			<span class="totalIng">${summary.stateCount[1]}</span>
