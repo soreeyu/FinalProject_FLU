@@ -54,28 +54,30 @@ public class HomeController {
 		List<ProjectDTO> ar2 = new ArrayList<ProjectDTO>();
 
 		//프리랜서
-		int fcount = freelancerService.totalcount(listInfo);
 		
 		
+		/*if(ar!=null){		
 		for(int i=0;i<6;i++){	
 			projectDTO = new ProjectDTO();
 			projectDTO.setSkills(ar.get(i).getSkill().split(","));
 			projectDTO.setProjectNum(ar.get(i).getProjectNum());
 			ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
-			ar2.add(projectDTO);
-			
+			ar2.add(projectDTO);	
+		}
+		}else {
+			pjcount=0;
+			mcount=0;
+			budget=0;
+			ar=null;
+			ar2=null;
 		}
 		
-		
-	
 		model.addAttribute("pjcount", pjcount);
 		model.addAttribute("mcount", mcount);
 		model.addAttribute("budget", budget);
 		model.addAttribute("indexList", ar);
 		model.addAttribute("skills", ar2);
-		
-		
-		
+*/
 		return "index";
 
 	}

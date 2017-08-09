@@ -224,24 +224,22 @@ body{
 	margin: 50px 46px 50px 46px;
 }
 .process{
-	width: 1152px;
-	height: 750px;
-	background-color: white;
-	margin: 0 auto;
+	margin-top: 50px;
+    margin-bottom: 0\0;
+    background-color: #fff;
+    border-top: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
 }
 .process_div{
-	width: 1060px;
-	height: 200px;
-	background-color: #e6e6e6;
-	margin: 50px 46px 50px 46px;
+	margin: 0 auto;
+    width: 1060px;
 }
-
-
 .advantage_div{
-	width: 1060px;
-	height: 500px;
-	background-color: #c9c9c9;
-	margin: 50px 46px 50px 46px;
+	margin-left: auto;
+    margin-right: auto;
+    width: 1060px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 /************************************ 여기까지 바디 *************************************/
 

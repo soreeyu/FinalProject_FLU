@@ -12,7 +12,6 @@
 .main_section{
 	min-width: 1460px;
 	width: 100%;
-	height: 2400px;
 	background-color: #f2f2f2;
 }
 .advertising_div{
@@ -108,7 +107,113 @@
     vertical-align: baseline;
     border-radius: .2em;
 }
-
+.process_header{
+	text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #454545;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.process_div div{
+	width: 1060px;
+    padding-bottom: 50px;
+    margin-right: 0;
+}
+.process_div div span{
+	line-height: 18px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #2d3a45;
+    margin-right: 142px;
+    font-size: 14px \0;
+}
+.process_div div span+span{
+    margin-right: 160px;
+}
+.process_div div span+span+span{
+    margin-right: 156px;
+}
+.process_div div span+span+span+span{
+    margin-right: 135px;
+}
+.process_div div span+span+span+span+span {
+    margin-right: 0;
+}
+.join{
+	border-left: none;
+    border-right: none;
+    height: 66px;
+    padding: 0;
+    background-color: #e7e9ec;
+    border-bottom: 1px solid #d2d2d2;
+    margin-bottom: 0;
+}
+.inner{
+	margin-left: auto;
+    margin-right: auto;
+    width: 1060px;
+    padding-top: 15px;
+}
+.text-center{
+	line-height: 34px;
+    height: 34px;
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+    color: #2d3a45;
+    margin-bottom: 20px;
+}
+.btn{
+	display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    border-radius: 2px;
+}
+.advantage{
+    background-color: #fff;
+    height: 500px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.benefit-item {
+    float: left;
+    margin-top: 30px;
+    text-align: center;
+}
+.benefit-item img {
+    margin-left: 99px;
+    margin-right: 99px;
+}
+.benefit-item .benefit-item-title {
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #2d3a45;
+}
+.client {
+	margin-top: 0;
+    background-color: #4c5c6a !important;
+    border-top: 1px solid #293139 !important;
+    border-bottom: 1px solid #293139 !important;
+    color: #fff !important;
+}
+.register{
+	margin-left: auto;
+    margin-right: auto;
+    width: 1060px;
+    padding-top: 15px;
+}
 </style>
 <script type="text/javascript">
 	var message = '${message}';
@@ -123,7 +228,7 @@
 	<section class="advertising">
 		<div class="advertising_div">
 			<p class="invitation-text-md">웹 개발, 웹 디자인, 워드프레스 제작 등</p>
-			<h1 class="invitation-heading">안전적, 효율적, 획기적인 플랫폼 제공</h1>
+			<h1 class="invitation-heading">안전! 효율! 획기적인 플랫폼 제공</h1>
 			<p class="invitation-text-sm">FLU or UFC 의 새로운 아웃소싱을 시작해 보세요</p>
 		</div>
 		<div class="project_quantity_div">
@@ -192,11 +297,80 @@
 	</section>
 	<section class="process">
 		<div class="process_div">
+			<h4 class="process_header">
 			FLU 프로세스
-			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/프로세스.png">
+			</h4>
+			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/프로세스.png" style="padding-bottom: 10px;">
+			<div>
+				<span>프로젝트 등록</span>
+				<span>지원자 선택</span>
+				<span>미팅 & 계약</span>
+				<span>진행 & 완료</span>
+				<span>프로젝트 판매</span>
+			</div>
 		</div>
+	</section>
+	<section class="join">
+		<div class="inner">
+			<div class="text-center">
+				회원 가입하실래요?
+				<a href="#" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">회원가입하기</a>
+			</div>
+		</div>
+	
+	</section>
+	<section class="advantage">
 		<div class="advantage_div">
-			장점
+			<div class="advantage_header" style="text-align: center;">
+				<h4 style="font-weight: bold; font-size: 18px; color: #454545;">완전 빠르고 완전 효율적인 FLU!</h4>
+			</div>
+			<div class="benefit-item">
+				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/benefit_first.png">
+				<h3 class="benefit-item-title">프로젝트를 무료로 등록 할수 있어요!</h3>
+				<p>
+					원하는 프로젝트를
+					<br>
+					쉽고 빠르게 진행할 수 있습니다.
+					<br>
+					수많은 FLU 프리랜서들에게
+					<br>
+					당신의 프로젝트를 소개해 보세요.
+				</p>
+			</div>
+			<div class="benefit-item">
+				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/benefit_second.png">
+				<h3 class="benefit-item-title">원하는 지원자를 쉽게 찾아볼까요?</h3>
+				<p style="color: #454545; margin: 0 0 10px;">
+					원하는 프로젝트를
+					<br>
+					쉽고 빠르게 진행할 수 있습니다.
+					<br>
+					수많은 FLU 프리랜서들에게
+					<br>
+					당신의 프로젝트를 소개해 보세요.
+				</p>
+			</div>
+			<div class="benefit-item">
+				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/benefit_third.png">
+				<h3 class="benefit-item-title">대금은 우리가 지켜줄게요!</h3>
+				<p>
+					원하는 프로젝트를
+					<br>
+					쉽고 빠르게 진행할 수 있습니다.
+					<br>
+					수많은 FLU 프리랜서들에게
+					<br>
+					당신의 프로젝트를 소개해 보세요.
+				</p>
+			</div>
+		</div>
+	</section>
+	<section class="client">
+		<div class="register">
+			<div class="text-center" style="color: white;">
+				지금 프로젝트를 한번 등록해 보시겠어요?
+				<a href="#" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">프로젝트 등록하기</a>
+			</div>
 		</div>
 	</section>
 </section>
