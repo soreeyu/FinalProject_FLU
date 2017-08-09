@@ -30,6 +30,10 @@ public class ProjectService {
 		return projectDAO.projectUpdate(projectDTO);
 	}
 	
+	public int projectCancelUpdate(ProjectDTO projectDTO){
+		return projectDAO.projectCancelUpdate(projectDTO);
+	}
+	
 	//project delete
 	public int projectDelete(int num){
 		return projectDAO.projectDelete(num);
@@ -198,4 +202,10 @@ public class ProjectService {
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
 
+	//채팅방 만들기 위한 
+	public List<ProjectDTO> roomCount(){
+		return projectDAO.roomCount();
+	}
+
+	
 }

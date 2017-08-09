@@ -329,6 +329,24 @@ public class ProjectController {
       return "redirect:/project/projectList";
    }
    
+   //Cancel Update 중단요청하기
+   @RequestMapping(value="projectCancelUpdate")
+   public String projectCancelUpdate(ProjectDTO projectDTO,Model model){
+	   
+	   int result = projectService.projectCancelUpdate(projectDTO);
+	
+	   String message = "실패";
+	   
+	   if(result>0){
+		   message = "중단 요청이 접수되었습니다.";
+	   }
+	   
+	   model.addAttribute("message", message).addAttribute("path", "./projectView?projectNum="+projectDTO.getProjectNum());
+	   
+	   return "/common/result";
+	   
+   }
+   
    
    //delete
    @RequestMapping(value="projectDelete")

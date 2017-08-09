@@ -158,7 +158,7 @@
 	
 	width : 150px;
 	height: 30px;
-	background-color: #24abd1;
+	background-color: #339bff;
 	color: white;
 	border: 1px solid #2099bb;
 	font-size: 1.3em;

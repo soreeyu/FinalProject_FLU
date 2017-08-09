@@ -168,6 +168,10 @@ public class ProjectDAO {
 			return sqlSession.update(NAMESPACE+"moreDateUpdate", projectDTO);
 		}
 		
+		//중단 요청
+		public int projectCancelUpdate(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"projectCancelUpdate", projectDTO);
+		}
 
 		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
 		public MemberDTO projectImg(ProjectDTO projectDTO){
@@ -200,4 +204,10 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
+		
+		//채팅방을 만들기 위하여 ing delcheck 0 인놈 불러오기
+		public List<ProjectDTO> roomCount(){
+			return sqlSession.selectList(NAMESPACE+"roomCount");
+		}
+		
 }

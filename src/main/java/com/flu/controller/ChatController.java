@@ -20,7 +20,7 @@ import com.flu.member.MemberDTO;
 public class ChatController {
 	
 	@RequestMapping(value="chatDo")
-	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request){
+	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request,String projectNum){
 		
 		mv.setViewName("chat/chat");
 		
@@ -30,7 +30,7 @@ public class ChatController {
 		//String ip = session에서 IP꺼내기
 		
 		mv.addObject("user", user).addObject("clientIP",clientIP).addObject("serverIP",serverIP);
-		
+		mv.addObject("projectNum", projectNum);
 		return mv;
 	}
 	

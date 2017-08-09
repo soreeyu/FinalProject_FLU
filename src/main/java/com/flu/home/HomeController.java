@@ -2,8 +2,11 @@ package com.flu.home;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,12 +16,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Handles requests for the application home page.
- */
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
+import com.flu.tproject.EchoHandler;
+
+
 @Controller
 public class HomeController {
 	
+	@Inject
+	private EchoHandler echoHandler; 
+	@Inject
+	private ProjectService projectService;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -27,16 +36,11 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
+
+		List<ProjectDTO> count = projectService.roomCount();
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+		Map<Integer,Object> room = echoHandler.roomCount(count);
+
 		if(session.getAttribute("member") == null){
 			return "index";
 		}else{

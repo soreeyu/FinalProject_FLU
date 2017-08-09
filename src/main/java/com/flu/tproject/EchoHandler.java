@@ -2,6 +2,7 @@ package com.flu.tproject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +11,23 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.flu.project.ProjectDTO;
+
 public class EchoHandler extends TextWebSocketHandler{
 
-	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+	private List<WebSocketSession> sessionList;
 	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
+	private Map<Integer, Object> room;
+	
+	
+	public Map<Integer, Object> roomCount(List<ProjectDTO> par){
+		
+		for(int i=0;i<par.size();i++){
+			sessionList = new ArrayList<WebSocketSession>();
+			room.put(par.get(i).getProjectNum(), sessionList);
+		}
+		return room;
+	}
 	
 	
 	@Override
