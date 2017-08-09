@@ -278,7 +278,7 @@ font-size:14px;
     width: 100%;
     padding-bottom: 15px;
     padding-top: 2px;
-    border-bottom: 3px solid #704de4;
+    border-bottom: 3px solid #339bff;
 }
 .reserve_space{
 	display: table-cell;
@@ -298,7 +298,7 @@ font-size:14px;
 }
 .price_tit {
 	font-size: 18px;
-	color: #6d3afb;
+	color: #339bff;
 }
 .tit_unit {
 	font-size:12px;

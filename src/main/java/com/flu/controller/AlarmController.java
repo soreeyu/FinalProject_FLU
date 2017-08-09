@@ -16,7 +16,7 @@ import com.flu.alarm.AlarmService;
 import com.flu.member.MemberDTO;
 
 @Controller
-@RequestMapping(value="alarm/**")
+@RequestMapping(value="/alarm/**")
 public class AlarmController {
 	
 	@Autowired

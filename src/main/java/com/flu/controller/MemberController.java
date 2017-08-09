@@ -260,7 +260,7 @@ public class MemberController {
 			MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
 			System.out.println("마이페이지 이메일 : "+email);
 			if(memberDTO.getKind().equals("client")){
-				model.setView(new RedirectView("/flu/member/clientmypage?email="+email));
+				model.setView(new RedirectView("/flu/member/client/mypage?email="+email));
 				return model;
 			}else{
 				model.setView(new RedirectView("/flu/member/freelancermypage?email="+email));

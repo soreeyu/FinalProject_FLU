@@ -156,6 +156,9 @@
 		<select id="memberAlarmList" resultType="com.flu.alarm.AlarmDTO" parameterType="java.lang.String">
 			select contents from alarm where email=#{email}
 		</select>
+		<!-- index에 뿌려질 등록된 회원 카운트 -->
+		<select id="memberCountTotal" resultType="java.lang.Integer">
+			select nvl(count(rownum),0) from member
+		</select>
 		
-
   </mapper>

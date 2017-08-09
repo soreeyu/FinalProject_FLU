@@ -192,4 +192,12 @@ public class ProjectService {
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
 	
+	//index에 뿌려질 등록된 프로젝트 금액
+	public int totalBudget() throws Exception{
+		return projectDAO.totalBudget();
+	}
+	//index에 뿌려질 등록된 프로젝트리스트( 높은 금액순)
+	public List<ProjectDTO> indexProjectList () throws Exception{
+		return projectDAO.indexProjectList();
+	}
 }
