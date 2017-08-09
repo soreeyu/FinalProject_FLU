@@ -84,7 +84,7 @@
      
      <!-- List에서 뿌려주는 총 recruit 프로젝트 갯수 -->
      <select id="projectcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
-     select count(nvl(projectNum, 0)) from project where state='recruit'
+     	select count(nvl(projectNum, 0)) from project where state='done'
      </select>
      
      
@@ -95,7 +95,7 @@
 	
 	<!-- List에서 뿌려주는 급구 리스트 카운트 -->
 	<select id="quickCount" parameterType="com.flu.util.ListInfo" resultType="int">
-		select count(nvl(projectNum,0)) from project where quick=1 and state='recruit'
+		select count(nvl(projectNum,0)) from project where quick=1 and state='done'
 	</select>
 
 
@@ -199,5 +199,14 @@
 	update project set state='finish' where projectNum=#{projectNum}
 </update>
   
+  <!-- index에 뿌려질 등록된 프로젝트의 금액 -->
+  <select id="totalBudget" resultType="java.lang.Integer">
+  	select nvl(sum(budget), 0) from project
+  </select>
+  
+  <!-- index에 뿌려질 등록된 프로젝트 리스트 ( 높은 금액순 ) 6개-->
+  <select id="indexProjectList" resultType="com.flu.project.ProjectDTO"> 
+  	select * from project order by budget desc
+  </select>
   
   </mapper>

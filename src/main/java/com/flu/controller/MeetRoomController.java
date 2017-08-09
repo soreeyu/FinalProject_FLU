@@ -84,7 +84,7 @@ public class MeetRoomController {
 	public String meetUpdate(MeetRoomDTO meetRoomDTO, MultipartHttpServletRequest request,HttpSession session) throws Exception{
 		//update 처리
 		FileSaver fileSaver = new FileSaver();
-		
+		System.out.println("미팅이이이이이이이루무우우웅"+meetRoomDTO.getNum());
 		MultipartFile multi=request.getFile("file");
 		String realPath = session.getServletContext().getRealPath("resources/upload");
 		meetRoomDTO.setFname(fileSaver.fileSave(realPath, multi));
@@ -133,6 +133,7 @@ public class MeetRoomController {
 		
 		MeetRoomDTO meetRoomDTO = (MeetRoomDTO) meetRoomServiceImpl.view(num);
 		String [] time = meetRoomDTO.getTime().split(",");
+		
 		model.addAttribute("dto", meetRoomDTO);
 		model.addAttribute("time", time);
 		

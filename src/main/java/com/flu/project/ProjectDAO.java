@@ -193,4 +193,13 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
+		
+		//index에 뿌려질 등록된 프로젝트 금액
+		public int totalBudget() throws Exception{
+			return sqlSession.selectOne(NAMESPACE+"totalBudget");
+		}
+		//index에 뿌려질 등록된 프로젝트 (금액 높은순으로 6개)
+		public List<ProjectDTO> indexProjectList() throws Exception{
+			return sqlSession.selectList(NAMESPACE+"indexProjectList");
+		}
 }

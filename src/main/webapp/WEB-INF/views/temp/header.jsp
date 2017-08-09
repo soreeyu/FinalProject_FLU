@@ -27,7 +27,7 @@
 					</span>
 					</c:when>
 					<c:otherwise>		
-					<span class="alarmCount" style="font-size: 15px; margin-top: 15px;"></span>
+					<span class="alarmCount" style="font-size: 15px; margin-top: 15px; color: black;"></span>
 					<span>
 						<a href="${pageContext.request.contextPath}/alarm/alarmList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alarm/alarm.png"></a>
 					</span>
@@ -82,6 +82,8 @@
 		type : "POST",
 		success : function(data) {
 			$(".alarmCount").html("새로운 소식 ["+data+"]");
+			
 		} 
 	})
+	
 </script>    

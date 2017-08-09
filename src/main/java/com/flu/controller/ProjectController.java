@@ -83,7 +83,7 @@ public class ProjectController {
       MemberDTO memberDTO = new MemberDTO();
       memberDTO= (MemberDTO)session.getAttribute("member");
       
-     int pjcount = projectService.projectListcount(projectDTO);
+      int pjcount = projectService.projectListcount(projectDTO);
      
      
       model.addAttribute("listInfo", listInfo);
