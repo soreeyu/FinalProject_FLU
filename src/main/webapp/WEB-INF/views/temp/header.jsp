@@ -81,7 +81,8 @@
 		url : "${pageContext.request.contextPath}/alarm/alarmCount",
 		type : "POST",
 		success : function(data) {
-			$(".alarmCount").html("새로운 소식 ["+data+"]");
+			alert(data);
+			/* $(".alarmCount").html("새로운 소식 ["+data+"]"); */
 		} 
 	})
 </script>    
