@@ -202,7 +202,20 @@ public class CheckProjectService {
 	}
 
 	
-	
+	public List<ProjectDTO> cancelList(ProjectDTO projectDTO,ListInfo listInfo,String searchDate){
+		
+		
+		search(projectDTO, searchDate);
+			
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("listInfo", listInfo);
+		map.put("projectDTO", projectDTO);
+		map.put("check", "check");
+		
+		count(map, listInfo);
+		
+		return checkProjectDAO.cancelList(map);
+	}
 
 	public List<String> supportList(ListInfo listInfo){
 		return checkProjectDAO.supportList(listInfo);

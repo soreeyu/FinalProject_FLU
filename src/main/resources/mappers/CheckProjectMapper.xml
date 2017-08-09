@@ -21,7 +21,13 @@
 		  	and planstate like '%' || #{projectDTO.planState} || '%' 
 		  	and startdate like '%' || #{projectDTO.startDate} || '%' 
 		  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
-		  	and reg_date between #{projectDTO.reg_date} and sysdate) A) B where R between #{listInfo.startRow} and #{listInfo.lastRow}
+		  	and reg_date between #{projectDTO.reg_date} and sysdate
+		  	
+		  	<if test="check=='check'">
+		  		and del_check in ('1','2')
+		  	</if>
+		  	
+		  	) A) B where R between #{listInfo.startRow} and #{listInfo.lastRow}
 		  	order by reg_date asc 		
   		</when>
   		<otherwise>
@@ -66,7 +72,10 @@
    		<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
   		</select> 
-  		
+ 
+    	<select id="cancelList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
+  			<include refid="project" />
+  		</select>  		
   		
   		
 

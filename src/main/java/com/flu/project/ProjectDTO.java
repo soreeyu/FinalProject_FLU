@@ -32,7 +32,14 @@ public class ProjectDTO {
 	private String addr_detail;
 	private String reg_date;	
 	private int appCount;
+	private String del_check;
 
+	public String getDel_check() {
+		return del_check;
+	}
+	public void setDel_check(String del_check) {
+		this.del_check = del_check;
+	}
 	public MultipartFile getFileName() {
 		return fileName;
 	}

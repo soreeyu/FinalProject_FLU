@@ -119,6 +119,22 @@ public class CheckProjectController {
 		return "checkProject/checkList";
 	}
 
+	//중단요청 프로젝트들고오기
+	@RequestMapping(value="checkProjectCancelList", method=RequestMethod.GET)
+	public String checkProjectCancelList(ProjectDTO projectDTO, ListInfo listInfo,Model model,String searchDate){
+
+		String [] ar = {"recruit","ing","wait","stop"};
+		
+		listInfo.setProject(ar);
+	
+		List<ProjectDTO> list = checkProjectService.cancelList(projectDTO,listInfo,searchDate);
+
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Cancel").addAttribute("searchDate", searchDate);
+		return "checkProject/checkList";
+	}
+	
+	
+	
 	//입금대기중 프로젝트의 클라이언트 정보 AJAX로 불러오기
 	@RequestMapping(value="checkWait")
 	public String checkWait(ProjectDTO projectDTO,Model model){

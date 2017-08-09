@@ -282,11 +282,11 @@ cursor: pointer;
 			$('#waitBTN').children("#wait").css('color', 'black');
 		} else if(board=='Cancel'){
 			$('#checkBTN').css('background-color', 'white');
-			$('#checkBTN').children("#cancel").css('color', 'black');
+			$('#checkBTN').children("#check").css('color', 'black');
 			$('#failBTN').css('background-color', 'white');
 			$('#failBTN').children("#fail").css('color', 'black');
 			$('#cancelBTN').css('background-color', '#446eab');
-			$('#cancelBTN').children("#check").css('color', 'white');
+			$('#cancelBTN').children("#cancel").css('color', 'white');
 			
 		}
 
@@ -431,7 +431,7 @@ cursor: pointer;
 			
 				
 				
-			}else{
+			}else if('${board}'=='Wait'){
 			
 				$.ajax({
 					
@@ -465,14 +465,18 @@ cursor: pointer;
 
 				}) 
 				
-				$('#'+num).on("click",".x", function() {
+/* 				$('#'+num).on("click",".x", function() {
 
 					$("#"+num).remove();
 					
 
-				}) 
+				})  */
 				
 
+			}else{//중단하기
+				
+				
+				
 			}			
 			
 		});
@@ -601,7 +605,7 @@ cursor: pointer;
 									<option value="디자인">디자인</option>
 								</select>
 							</td>
-						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
+						<c:if test="${board=='Check' or board=='Fail' or board=='Wait' or board=='Cancel'}">
 							<td class="tb_title">기획 상태</td>
 							<td class="tb_contents">
 								<select name="planState">
@@ -650,12 +654,12 @@ cursor: pointer;
 							<c:if test="${board=='Check'}">
 							예상 시작일
 							</c:if>
-							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish'}">
+							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish' or board=='Cancel'}">
 							프로젝트 시작일
 							</c:if>
 							</td>
 							<td class="tb_contents"><input type="date" name="startDate" id="startDate"></td>		
-						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
+						<c:if test="${board=='Check' or board=='Fail' or board=='Wait' or board=='Cancel'}">
 							<td class="tb_title">담당자 이메일</td>
 							<td class="tb_contents"><input type="text" name="email" id="email" value="${projectDTO.email}" placeholder="클라이언트를 입력하세요"></td>
 						</c:if>
@@ -670,7 +674,7 @@ cursor: pointer;
 							<c:if test="${board=='Check'}">
 							모집마감일
 							</c:if>
-							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish'}">
+							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish' or board=='Cancel'}">
 							프로젝트 종료일
 							</c:if>
 							</td>
@@ -740,15 +744,21 @@ cursor: pointer;
 								<td>
 									 <c:if test="${i.state=='check'}">검수 단계</c:if>
 									 <c:if test="${i.state=='done'}">검수 완료</c:if>
+									 <c:if test="${i.state=='recruit'}">모집 완료</c:if>
 									 <c:if test="${i.state=='wait'}">입금대기중</c:if>
 									 <c:if test="${i.state=='ing'}">진행중</c:if>
 									 <c:if test="${i.state=='finish'}">미지급</c:if>
 									 <c:if test="${i.state=='fail'}">모집 실패</c:if>
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
+									 <c:if test="${i.del_check=='1'}">중단요청</c:if>
+									 <c:if test="${i.del_check=='2'}">중단</c:if>
 								 </td>
 								 <td>
 								 <c:if test="${board=='Finish' or board=='Wait'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
+								 </c:if>
+								 <c:if test="${board=='Cancel' and i.del_check=='1'}">
+								 	<span class="bbttnn2" title="${i.email}" lang="${i.projectNum}" role="${i.state }">중단하기</span>
 								 </c:if>
 								 </td>
 							</tr>
