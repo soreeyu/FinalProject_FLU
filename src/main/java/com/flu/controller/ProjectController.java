@@ -164,9 +164,9 @@ public class ProjectController {
    @RequestMapping(value="projectView", method=RequestMethod.GET)
    public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
-      
+      System.out.println("controller-projectNum="+projectDTO.getProjectNum());
       projectDTO = projectService.projectView(projectDTO);
-
+      System.out.println("controller-projectNum="+projectDTO.getProjectNum());
       memberDTO = (MemberDTO)session.getAttribute("member");
       ApplicantDTO applicantDTO = new ApplicantDTO();
       applicantDTO.setEmail(memberDTO.getEmail());

@@ -79,7 +79,7 @@ $(".rereply").css("display", "none");
  
 		   var r = confirm("삭제하시겠습니까?");
 			if(r == true) {
-				$.get("../reply/replyDelete?num="+data_id,function(data){
+				$.get("../reply/replyDelete?num="+data_id+"&projectNum="+projectNum,function(data){
 					window.location.reload(true);
 				});
 			} else {

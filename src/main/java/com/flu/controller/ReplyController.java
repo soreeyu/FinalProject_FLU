@@ -53,33 +53,40 @@ public class ReplyController {
 	}
 	
 	
-	//대댓글 작성하기 - 부모의 ref불러와
-	@RequestMapping(value="checkReply")
-	public void checkReply(ReplyDTO replyDTO){
-		//답글 누를 때, 부모의 num을 가지고 ref 불러오기
-		System.out.println("checkReply-controller");
-		System.out.println("num="+replyDTO.getNum());
-		
-		
-		replyDTO = replyService.checkReply(replyDTO);
-		System.out.println("reply-num="+replyDTO.getNum());
-		System.out.println("reply-ref="+replyDTO.getRef());
-		System.out.println("reply-step="+replyDTO.getStep());
-		System.out.println("reply-depth="+replyDTO.getDepth());
-		
-		/*int result = replyService.insertRef(replyDTO);
-		System.out.println("result=="+result);*/
-	}
-	
 	
 	@RequestMapping(value="reReply")
-	public void reReply(ReplyDTO replyDTO){
+	public String reReply(ReplyDTO replyDTO, ProjectDTO projectDTO, RedirectAttributes rd){
 		System.out.println("reReply");
 		
+		//부모 댓글
+		ReplyDTO parentreplyDTO = replyService.checkReply(replyDTO);
+		System.out.println("parentReply-num="+parentreplyDTO.getNum());
+		System.out.println("parentReply-contnets="+parentreplyDTO.getContents());
+		System.out.println("parentReply-ref="+parentreplyDTO.getRef());
+		System.out.println("parentReply-steo="+parentreplyDTO.getStep());
+		System.out.println("parentReply-depth="+parentreplyDTO.getDepth());
+		
+		
+		//자식 댓글
 		System.out.println("writer="+replyDTO.getWriter());
 		System.out.println("contents="+replyDTO.getContents());
+		System.out.println("porjectNum="+replyDTO.getProjectNum());
+		if(replyDTO.getReplyChk()==""){
+				replyDTO.setReplyChk("false");
+		}
 		System.out.println("replyChk="+replyDTO.getReplyChk());
-
+		
+		int result = replyService.updateReply(parentreplyDTO);
+		System.out.println("Result="+result);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("reply", replyDTO);
+		map.put("parentreply", parentreplyDTO);
+		
+		int insertResult = replyService.insertReply(map);
+		System.out.println("insertResult="+insertResult);
+		
+		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
 	
@@ -88,9 +95,10 @@ public class ReplyController {
 
 
 	@RequestMapping(value="replyDelete", method=RequestMethod.GET)
-	public String ReplyDelete(int num, RedirectAttributes rd){
+	public String ReplyDelete(int num, ProjectDTO projectDTO, RedirectAttributes rd){
 		System.out.println("projectDelete");
 		
+		System.out.println("projectNum-reply에서 = "+projectDTO.getProjectNum());
 		int result =replyService.replyDelete(num);
 		System.out.println("삭제됫는가="+result);
 		
@@ -101,7 +109,7 @@ public class ReplyController {
 		
 		rd.addAttribute("message", message);
 		
-		return "redirect:/project/projectView?projectNum="+num;
+		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
 	@RequestMapping(value="replyList", method=RequestMethod.GET)

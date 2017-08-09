@@ -41,8 +41,7 @@ public class ProjectService {
 		System.out.println("num=="+projectDTO.getProjectNum());
 		
 		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
-		
-		
+		System.out.println(projectDTO.getSkill());
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
 				
 		return projectDTO;

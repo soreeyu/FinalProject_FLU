@@ -164,7 +164,7 @@ public class ProjectDAO {
 			return sqlSession.selectOne(NAMESPACE+"projectClient", projectDTO);
 		}
 		
-		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+		//프로젝트 리스트에서 뿌려주는 done상태의 프로젝트 갯수
 		public int projectListcount(ProjectDTO projectDTO){
 			return sqlSession.selectOne(NAMESPACE+"projectcount", projectDTO);
 		}

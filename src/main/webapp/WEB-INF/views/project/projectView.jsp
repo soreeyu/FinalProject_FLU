@@ -1108,12 +1108,12 @@ if(meetKind=='offline'){
    $("#frm").submit();
 });
 
-
+var testId = "";
 /* 답글버튼 */
  $(".project-reply-box-top").on("click",".listReply",function() {
 
       alert($(this).attr("id"));
-      var testId = $(this).attr("id");
+      testId = $(this).attr("id");
 
          $(".rere").html("");
          $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="checkbox" id="reply_check">비공개'
@@ -1121,9 +1121,7 @@ if(meetKind=='offline'){
         		 +'<input type="button"class="cancle" id="'+testId+'" value="취소">');
          $(".listReply").attr("data-on", "off");
          $(this).attr("data-on", "on");
-         $.get("../reply/checkReply?num="+testId,function(data){
-        	 alert("checkReply");
-         });
+       
          
    });
    
@@ -1137,11 +1135,10 @@ if(meetKind=='offline'){
  });
  
  
- /* 댓글달기 버튼클릭 */
-  $(".project-reply-box-top").on("click", ".replybtn", function() {
-	  
-      $(".project-reply-box-top").on("click", "#reply_check", function() {
-    	  var chkk = $("#reply_check").prop("checked");
+ /* 댓글달기 checkbox클릭 */
+ var chkk="";	  
+ $(".project-reply-box-top").on("click", "#reply_check", function() {
+    	  chkk = $("#reply_check").prop("checked");
     	  alert($("#reply_check").prop("checked"));
     	  alert("chkk=="+chkk);
     	  alert("클릭");
@@ -1149,24 +1146,25 @@ if(meetKind=='offline'){
 			alert("체크됨");
 			alert("비공개댓글에 댓글은 자동비공개, 공개댓글의 댓글은 체크하기");
 		}else{
-			alert("체크해제");
+			alert("비공개d댓글");
 		}
 	});
-    alert("ddd");
-    alert($("#recontents").val());
+ 
+  $(".project-reply-box-top").on("click", ".replybtn", function() {
+	
+    alert("댓글id="+testId);
     var contents = $("#recontents").val();
     $.ajax({
     	type:"POST",
-    	url:"../reply/reReply",
+    	url:"../reply/reReply?num="+testId,
     	data:{
-    		contents:contents,
     		writer:email,
+    		contents:contents,
+    		projectNum:projectNum,
     		replyChk:chkk
-    		
     	},
     	success:function(result){
-    		alert("대댓글");
-    		alert(result);
+    		window.location.reload(true);
     	}
     });
   });
