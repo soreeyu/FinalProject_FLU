@@ -33,11 +33,14 @@ values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, #{ref
 <select id="checkReply" parameterType="com.flu.reply.ReplyDTO" resultType="com.flu.reply.ReplyDTO">
 	select * from reply where num=#{num}
 </select>
+
 <!-- 우선 ref에 부모의 num이 들어가게하자 -->
 <insert id="insertRef" parameterType="com.flu.reply.ReplyDTO">
 	insert into reply (num, writer, contents, reg_date, projectNum, ref, step, depth, replyChk)
 	values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, #{ref}, 0,0, 'false')
 </insert>
+ 
+ 
  
   <update id="update" parameterType="com.flu.reply.ReplyDTO">
   	update reply set contents=#{contents}, reg_date=sysdate where num=#{num}

@@ -146,9 +146,9 @@
   
   <insert id="insert" parameterType="com.flu.project.ProjectDTO">
      insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
-     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date, del_Check) 
+     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date, del_check) 
      values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 
-     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate, #{del_Check})
+     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate, #{del_check})
   </insert>
   
   

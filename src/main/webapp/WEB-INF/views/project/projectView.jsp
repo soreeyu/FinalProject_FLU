@@ -634,19 +634,7 @@ background-color: white;
               
             </c:if>
             
-            <c:if test="${member.kind eq 'client' && member.email==dto.email && dto.state ne 'sell'}">
-            
-            
-            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
-               <div class="owner_option_btn">
-               <c:if test="${dto.state eq 'check'}">
-                  <div class="owner-btn" id="pj-update">Update</div>
-               </c:if>
-                  <div class="owner-btn" id="pj-delete">Delete</div>
-               	 
-               </div>
-          
-               </c:if>
+           
             </div>
          </div>
       </c:if>
@@ -941,16 +929,22 @@ background-color: white;
              
           
           <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
-          <c:if test="${member.kind eq 'client' && member.email==dto.email && (dto.state eq 'recruit' || dto.state eq 'ing')}">
+          <c:if test="${member.kind eq 'client' && member.email==dto.email}">
           <div class="project-apply-box">
           <c:if test="${dto.state eq 'ing'}">
             <div class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
+          <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
             <div class="schedule-btn">미팅룸 예약하기 </div>
-        
+          </c:if>
+          	<c:if test="${dto.state eq 'check'}">
+                <div class="owner-btn" id="pj-update">Update</div>
+            </c:if>
+                <div class="owner-btn" id="pj-delete">Delete</div>
+
           </div>
           </c:if>
-       
+
           
           
           <c:if test="${member.kind eq 'admin'}">
@@ -1100,9 +1094,7 @@ if(meetKind=='offline'){
 
 /* reply 작성 */
  $("#btn").click(function() {
-    alert("yes");
    var chk = $("#reply_check").prop("checked");
-   alert(chk);
    
    /* 비밀글이면 true, 공개댓글이면 false값 */
    if(chk==true){
@@ -1124,10 +1116,11 @@ if(meetKind=='offline'){
       var testId = $(this).attr("id");
 
          $(".rere").html("");
-         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" id="'+testId+'" value="취소">');
+         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="checkbox" id="reply_check">비공개'
+        		 +'<input type="button" class="replybtn" value="댓글달기">'
+        		 +'<input type="button"class="cancle" id="'+testId+'" value="취소">');
          $(".listReply").attr("data-on", "off");
          $(this).attr("data-on", "on");
-         alert("d");
          $.get("../reply/checkReply?num="+testId,function(data){
         	 alert("checkReply");
          });
@@ -1138,7 +1131,6 @@ if(meetKind=='offline'){
  $(".project-reply-box-top").on("click",".cancle",function() {
    var testId = $(this).attr("id");
    alert("testid=="+testId);
-   alert("취소합시다");
    $("."+testId).html("");
    $(".listReply").show();
    
@@ -1147,10 +1139,36 @@ if(meetKind=='offline'){
  
  /* 댓글달기 버튼클릭 */
   $(".project-reply-box-top").on("click", ".replybtn", function() {
-      
+	  
+      $(".project-reply-box-top").on("click", "#reply_check", function() {
+    	  var chkk = $("#reply_check").prop("checked");
+    	  alert($("#reply_check").prop("checked"));
+    	  alert("chkk=="+chkk);
+    	  alert("클릭");
+		if(chkk==true){
+			alert("체크됨");
+			alert("비공개댓글에 댓글은 자동비공개, 공개댓글의 댓글은 체크하기");
+		}else{
+			alert("체크해제");
+		}
+	});
     alert("ddd");
     alert($("#recontents").val());
-    /* $("#frm").submit(); */
+    var contents = $("#recontents").val();
+    $.ajax({
+    	type:"POST",
+    	url:"../reply/reReply",
+    	data:{
+    		contents:contents,
+    		writer:email,
+    		replyChk:chkk
+    		
+    	},
+    	success:function(result){
+    		alert("대댓글");
+    		alert(result);
+    	}
+    });
   });
    
 

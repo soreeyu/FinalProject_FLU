@@ -52,7 +52,8 @@ public class ReplyController {
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	
-	//대댓글 작성하기
+	
+	//대댓글 작성하기 - 부모의 ref불러와
 	@RequestMapping(value="checkReply")
 	public void checkReply(ReplyDTO replyDTO){
 		//답글 누를 때, 부모의 num을 가지고 ref 불러오기
@@ -61,12 +62,28 @@ public class ReplyController {
 		
 		
 		replyDTO = replyService.checkReply(replyDTO);
-		System.out.println("reply-ref="+replyDTO.getRef());
 		System.out.println("reply-num="+replyDTO.getNum());
+		System.out.println("reply-ref="+replyDTO.getRef());
+		System.out.println("reply-step="+replyDTO.getStep());
+		System.out.println("reply-depth="+replyDTO.getDepth());
 		
-		int result = replyService.insertRef(replyDTO);
-		System.out.println("result=="+result);
+		/*int result = replyService.insertRef(replyDTO);
+		System.out.println("result=="+result);*/
 	}
+	
+	
+	@RequestMapping(value="reReply")
+	public void reReply(ReplyDTO replyDTO){
+		System.out.println("reReply");
+		
+		System.out.println("writer="+replyDTO.getWriter());
+		System.out.println("contents="+replyDTO.getContents());
+		System.out.println("replyChk="+replyDTO.getReplyChk());
+
+	}
+	
+	
+	
 	
 
 
