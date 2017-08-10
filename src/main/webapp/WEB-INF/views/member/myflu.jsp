@@ -334,13 +334,7 @@ body{
 <!-- End Channel Plugin -->
 <c:import url="../temp/header.jsp"></c:import>
 <section class="main_section">
-	<div class="message_wrap">
-		<div class="message">
-			<div class="alert alert-success">
-			로그인 하였습니다.			
-			</div>
-		</div>
-	</div>
+
 	<div class="page_wrap">
 	<div class="page">
 		

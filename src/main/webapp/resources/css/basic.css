@@ -5,14 +5,13 @@ header{
 	min-width: 1460px;
 	width: 100%;
 	height: 50px;
-	background-color: gray;
+	background-color: #262626;
 }
 .header{
 	min-width: 1152px;
 	margin: 0 auto;
 	width: 60%;
 	height: 50px;
-	background-color: yellow;
 }
 .header_wrap{
 	height: 50px;
@@ -45,9 +44,14 @@ header{
 	position: relative;
 }
 .header_menu ul li a{
-	padding: 15px 20px 15px 20px;
+	padding: 20px 20px 16px 20px;
 	display: block;
 	font-size: 14px;
+	color: white;
+}
+.header_menu ul li a:hover{
+	color: white;
+	background-color:#339bff;
 }
 .header_right{
 	float: right; 
@@ -63,17 +67,21 @@ header{
 	color: white;
 }
 .header_login a{
-	background-color: #797f86;
-	padding: 5px 10px 5px 10px;
 	height: 30px;
 	line-height: 20px;
+	background-color: #94a2af;
+    border-color: #8595a4;
+    color: white;
+    border-radius: 4px;
+    line-height: 25px;
 }
 
 .header_sign_up a{
-	background-color: #0073ff;
-	padding: 5px 10px 5px 10px;
+	background-color: #94a2af;
 	height: 30px;
-	line-height: 20px;
+	line-height: 25px;
+	border-radius: 4px;
+	
 }
 
 /********** 로그인 전 ************/
@@ -82,7 +90,8 @@ header{
 	min-width: 1460px;
 	width: 100%;
 	height: 50px;
-	background-color: #bdc4cc;
+	background-color: #595959;
+
 }
 .profile_div{
 	min-width: 1152px;
@@ -99,11 +108,15 @@ header{
 }
 
 .profile_div ul li a{
-	padding: 15px 20px 15px 20px;
+	padding: 15px 20px 21px 20px;
 	display: block;
 	font-size: 14px;
+	color: white;
 }
-
+.profile_div ul li a:hover{
+	background-color: #00b386;
+	
+}
 
 /********** 로그인 후 ************/
 
@@ -113,6 +126,7 @@ header{
 body{
 	background-color: #f2f2f2;
 }
+
 .advertising{
 	height: 480px;
 	margin: 0 auto;
