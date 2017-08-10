@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <style type="text/css">
     
+    .free_img_div img{
+    	display: inline-block;
+    }
+    </style>
     <div class="side">
 				<div class="freelancer_name">
 					<span>프리랜서</span>

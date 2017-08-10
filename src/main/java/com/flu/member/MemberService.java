@@ -205,4 +205,15 @@ public class MemberService {
 		return memberDAO.memberAlarmList(email);
 
 	}
+	
+	
+	//비번 체크
+	public String pwcheck(MemberDTO memberDTO) throws Exception{
+		return memberDAO.pwCheck(memberDTO);
+	}
+	//회원 탈퇴
+	public int memberDelete(MemberDTO memberDTO) throws Exception{
+		return memberDAO.memberDelete(memberDTO);
+	}
+	
 }

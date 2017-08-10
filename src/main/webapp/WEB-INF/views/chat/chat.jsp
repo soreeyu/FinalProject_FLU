@@ -31,10 +31,11 @@ overflow-y: auto;
  
     
 	$(function() {
-		
+		alert("안녕");
 		 var sock;
 		    //웸소켓을 지정한 url로 연결한다.
 		    sock = new SockJS("<c:url value="/echo"/>");
+		    alert("방만듬");
 		    
 		    sock.onopen=onEntrance;
 		    

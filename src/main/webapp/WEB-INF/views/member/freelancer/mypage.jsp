@@ -375,6 +375,15 @@
 	margin-bottom: 10px;
 	text-align: center;
 }
+.no{
+	background-color: #dedede;
+}
+.notno{
+	background-color: #339bff;
+}
+.nono{
+	background-color: green;
+}
 
 
 </style>
@@ -659,14 +668,22 @@ $(function(){
 				<div class="contents_inner">
 					<section class="profile_title">
 						
-						<p><span>${memberDTO.nickName }</span><span class="availability">
+						<p><span>${memberDTO.nickName }</span>
 						<c:if test="${not empty freelancer.possibility }">
-						${freelancer.possibility }
+							<c:if test="${freelancer.possibility eq '활동가능' }">
+							<span  class="availability no">${freelancer.possibility }</span>
+							</c:if>
+							<c:if test="${freelancer.possibility eq '활동불가' }">
+							<span class="availability notno">${freelancer.possibility }</span>
+							</c:if>
+							<c:if test="${freelancer.possibility eq '협의필요' }">
+							<span class="availability nono">${freelancer.possibility }</span>
+							</c:if>
 						</c:if>
 						<c:if test="${empty freelancer.possibility }">
-						활동가능
+						<span class="availability">활동가능</span>
 						</c:if>
-						</span>
+						
 						<c:if test="${member.email eq email }">
 						<a href="myinfoView" >업데이트 하기</a>
 						</c:if>

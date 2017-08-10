@@ -190,6 +190,25 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
+		//회원 탈퇴 비번확인
+		@RequestMapping(value="pwCheck")
+		@ResponseBody
+		public String pwCheck(MemberDTO memberDTO) throws Exception{
+			
+			return memberService.pwcheck(memberDTO);
+		}
+		
+		//회원 탈퇴
+		@RequestMapping(value="memberDelete")
+		public String memberDelte(MemberDTO memberDTO, HttpSession session) throws Exception{
+			int result =memberService.memberDelete(memberDTO);
+			
+			if(result > 0){
+				session.invalidate();
+			}
+			
+			return "redirect:/";
+		}
 		
 		//MY FLU
 		@RequestMapping(value="myflu")
@@ -260,7 +279,7 @@ public class MemberController {
 			MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
 			System.out.println("마이페이지 이메일 : "+email);
 			if(memberDTO.getKind().equals("client")){
-				model.setView(new RedirectView("/flu/member/clientmypage?email="+email));
+				model.setView(new RedirectView("/flu/member/client/mypage?email="+email));
 				return model;
 			}else{
 				model.setView(new RedirectView("/flu/member/freelancermypage?email="+email));

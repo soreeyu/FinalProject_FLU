@@ -441,4 +441,32 @@ public class ProjectController {
 	   return "member/client/clientproject";
    }
    
+   //지원자 선택 컨트롤러
+   @RequestMapping(value="applicantCheck", method=RequestMethod.POST)
+   public String applicantCheck(String paycheck, Integer projectNum){
+	   System.out.println("지원자 선택 컨트롤러 들어옴");
+	   
+	   System.out.println("프로젝트 번호 :"+projectNum);
+	   System.out.println("선택한 지원자 :"+paycheck);
+	   
+	   projectService.applicantCheck(paycheck, projectNum);
+	   
+	   return "redirect:/member/client/clientproject?state=recruit";
+   }
+   
+   //계약완료 컨트롤러
+   @RequestMapping(value="applicantMeet", method=RequestMethod.POST)
+   public String applicantMeet(String pay, ProjectDTO projectDTO){
+	   System.out.println("계약완료 컨트롤러 들어옴");
+	   
+	   System.out.println("스타트데이트 :"+projectDTO.getStartDate());
+	   System.out.println("피니쉬데이트 :"+projectDTO.getFinishDate());
+	   System.out.println("프로젝트 번호 :"+projectDTO.getProjectNum());
+	   System.out.println("금액리스트"+pay);
+	   
+	   projectService.applicantMeet(pay, projectDTO);
+	   
+	   return "redirect:/member/client/clientproject?state=ing";
+   }
+   
 }

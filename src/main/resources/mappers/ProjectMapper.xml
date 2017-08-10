@@ -113,6 +113,48 @@
      where R between #{listInfo.startRow} and #{listInfo.lastRow}
      </select>
 
+	<!-- 지원자 리스트 -->
+	<select id="applicantList" parameterType="java.util.HashMap" resultType="com.flu.applicant.ApplicantDTO">
+		select a.* from applicant a inner join project p on a.projectnum = p.projectnum 
+			<where>
+  			a.projectnum in 
+  			<foreach collection="projectNumList" item="item" open="(" separator="," close=")">
+  			#{item.projectNum}
+  			</foreach>
+  			</where>
+	</select>
+	
+	<!-- 선택한 지원자의 지원한 프로젝트에서 이메일 리스트가져오기 -->
+	<select id="applicantEmailList" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select email from applicant where projectnum = #{projectNum}
+	</select>
+	
+	<!-- 선택받은 놈 업데이트 시켜주기 -->
+	<update id="applicantUpdateMeet" parameterType="java.util.Map">
+		update applicant set state='meet' where projectnum=#{projectNum} and email in 
+		<foreach collection="emailList" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!-- 선택한 프로젝트 상태 업데이트 -->
+	<update id="projectUpdateRecruit" parameterType="java.lang.Integer">
+		update project set state='recruit' where projectnum =#{projectNum}
+	</update>
+	
+	<!-- 지원자 계약금과 상태 업데이트 -->
+	<update id="applicantUpdateIng" parameterType="java.util.Map">
+		update applicant set state='ing' , pay = #{pay} where projectnum=#{dto.projectNum} and email =#{email}
+		
+	</update>
+	<!-- 계약완료된 프로젝트 업데이트 -->
+	<update id="projectUpdateIng" parameterType="com.flu.project.ProjectDTO">
+		update project set state='ing' , startdate=#{startDate} , finishdate =#{finishDate} , budget=${budget} where projectnum=#{projectNum}
+	</update>
+	<!-- meet인 지원자 리스트 -->
+	<select id="meetList" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select email from applicant where projectNum = #{projectNum}
+	</select>
+
 
 <!-- View에서 뿌려질 해당 프로젝트를 등록한 클라이언트에 대한 갯수들 -->
 <select id="pjcount" parameterType="com.flu.project.ProjectDTO" resultType="int">

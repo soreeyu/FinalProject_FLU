@@ -49,6 +49,12 @@ public class FreelancerController {
 	
 	private AlarmDTO alarmDTO;
 
+	@RequestMapping(value="test11")
+	public String Test(){
+		
+		return "redirect:test";
+	}
+	
 	//이메일 가져오는 메서드
 	private String getEmail(HttpSession session){
 		return ((MemberDTO)session.getAttribute("member")).getEmail();
@@ -150,8 +156,15 @@ public class FreelancerController {
 		String email = (String)request.getAttribute("email");
 		
 		model.addAttribute("active8", "a");
+		if(email.equals(this.getEmail(session))){
 		model.addAttribute("free", this.freelancerview2((this.getEmail(session))));
 		model.addAttribute("email", email);
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("free", this.freelancerview2(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/freelancerinfoView";
 	}
 	

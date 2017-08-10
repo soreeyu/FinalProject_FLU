@@ -171,13 +171,13 @@ th, td{
 	border-bottom: 1px solid #ccccff;
 }
 th{
-	border-top: 2px solid #3377ff;
+	border-top: 2px solid #339bff;
 }
 th:FIRST-CHILD,td:FIRST-CHILD{
 	border-left: 0;
 }
 #a{
-	background-color: #66b3ff;
+	background-color: #339bff;
 	color: white;
 }
 </style>

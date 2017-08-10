@@ -73,6 +73,7 @@
 			<exclude-mapping path="/member/re_email"/>
 			<exclude-mapping path="/member/myflu"/>
 			<exclude-mapping path="/project/quickListInner"/>
+			<exclude-mapping path="/*/sellList"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		
@@ -81,6 +82,7 @@
 			<mapping path="/member/freelancerList"/>
 			<mapping path="/meetRoom/meetList"/>
 			<mapping path="/alarm/alarmList"/>
+			<mapping path="/member/myflu"/>
 			<mapping path="/"/>
 			<beans:ref bean="emailCKInterceptor"/>
 		</interceptor>

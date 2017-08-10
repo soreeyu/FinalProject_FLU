@@ -51,7 +51,11 @@ public class FreelancerService{
 	public Map<String, Object> freelancerList(ListInfo listInfo){
 		Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
 		
-		
+		/*Map<String, Object> map =freelancerDAO.freelancerList2(listInfo);
+		List<MemberDTO> aa =(List<MemberDTO>)map.get("member");
+		for(int i = 0; i <aa.size();i++ ){
+			System.out.println("내가 가져온 이메일:"+aa.get(i).getEmail());
+		}*/
 		
 		return map;
 	}

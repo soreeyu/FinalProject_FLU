@@ -19,6 +19,8 @@ import com.flu.member.MemberDTO;
 @RequestMapping("/chat/*")
 public class ChatController {
 	
+
+	
 	@RequestMapping(value="chatDo")
 	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request){
 		

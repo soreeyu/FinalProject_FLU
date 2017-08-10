@@ -202,4 +202,38 @@ public class MemberDAO {
 		System.out.println("email"+email);
 		return sqlSession.selectList(NAMESPACE+"memberAlarmList", email);
 	}
+	
+	//비밀번호 확인
+	public String pwCheck(MemberDTO memberDTO) throws Exception{
+		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		
+		String password = memberDTO.getPw();
+		String encpassword = aes256Util.aesEncode(password);
+		String decpassword = aes256Util.aesDecode(encpassword);
+		System.out.println("원래 비밀번호 : "+password);
+		System.out.println("암호화된 비밀번호 : "+encpassword);
+		System.out.println("복호화된 비밀번호 : "+decpassword);
+		
+		memberDTO.setPw(encpassword);
+		String pw = sqlSession.selectOne(NAMESPACE+"pwcheck", memberDTO);
+		if(pw != null){
+		pw = aes256Util.aesDecode(pw);
+		}else{
+			pw="";
+		}
+		return pw;
+	}
+	public int memberDelete(MemberDTO memberDTO) throws Exception{
+		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		
+		String password = memberDTO.getPw();
+		String encpassword = aes256Util.aesEncode(password);
+		String decpassword = aes256Util.aesDecode(encpassword);
+		System.out.println("원래 비밀번호 : "+password);
+		System.out.println("암호화된 비밀번호 : "+encpassword);
+		System.out.println("복호화된 비밀번호 : "+decpassword);
+		
+		memberDTO.setPw(encpassword);
+		return sqlSession.delete(NAMESPACE+"memberDelete", memberDTO);
+	}
 }

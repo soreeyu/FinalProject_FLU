@@ -202,79 +202,76 @@ $(function() {
 				</div>
 			</div>
 		</div>
-					<c:catch>
 					
-					<c:forEach begin="0" end="${map.member.size()-1 }" var="i">
-					<c:if test="${map.member[i].emailcheck eq 1}">
+					<c:forEach items="${map.member}" var="o" varStatus="i">
+					<c:if test="${o.emailcheck eq 1}">
 			<div class="freelancerListform">
 				<div class="freelancerdiv">
 					<div class="freelancerimg">
-						<c:if test="${not empty map.member[i].fProfileImage }">
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }"><img src="${pageContext.request.contextPath}/resources/profile/${map.member[i].fProfileImage}"></a>
+						<c:if test="${not empty o.fProfileImage }">
+						<a href="/flu/member/freelancermypage?email=${o.email }"><img src="${pageContext.request.contextPath}/resources/profile/${o.fProfileImage}"></a>
 						</c:if>
-						<c:if test="${empty map.member[i].fProfileImage }">
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }"><img src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg"></a>
+						<c:if test="${empty o.fProfileImage }">
+						<a href="/flu/member/freelancermypage?email=${o.email }"><img src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg"></a>
 						</c:if>
 					</div>
 					<div class="freelancerdata">
-						<p><a href="/flu/member/freelancermypage?email=${map.member[i].email }">
-						<span class="username">${map.member[i].nickName }</span>
+						<p><a href="/flu/member/freelancermypage?email=${o.email }">
+						<span class="username">${o.nickName }</span>
 						</a>
 						<label>
 						<span class="avail">
 						<c:choose>
-						<c:when test="${not empty map.freelancer[i].possibility }">
-						<c:if test="${map.freelancer[i].possibility eq '활동불가' }">
-						<a class="no" href="/flu/member/freelancermypage?email=${map.member[i].email }">${map.freelancer[i].possibility }</a>
+						<c:when test="${not empty map.freelancer[i.count].possibility }">
+						<c:if test="${map.freelancer[i.count].possibility eq '활동불가' }">
+						<a class="no" href="/flu/member/freelancermypage?email=${o.email }">${map.freelancer[i.count].possibility }</a>
 						</c:if>
-						<c:if test="${map.freelancer[i].possibility ne '활동가능' }">
-						<a class="notno" href="/flu/member/freelancermypage?email=${map.member[i].email }">${map.freelancer[i].possibility }</a>
+						<c:if test="${map.freelancer[i.count].possibility ne '활동가능' }">
+						<a class="notno" href="/flu/member/freelancermypage?email=${o.email }">${map.freelancer[i.count].possibility }</a>
 						</c:if>
 						</c:when>
 						<c:otherwise>
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">활동가능</a>
+						<a href="/flu/member/freelancermypage?email=${o.email }">활동가능</a>
 						</c:otherwise>
 						</c:choose></span>
 						</label></p>
 						<p><span class="kind">
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">
-						<c:if test="${not empty map.freelancer[i].jobKind }">
-						${map.freelancer[i].jobKind }</c:if>
-						<c:if test="${empty map.freelancer[i].jobKind }">
+						<a href="/flu/member/freelancermypage?email=${o.email }">
+						<c:if test="${not empty map.freelancer[i.count].jobKind }">
+						${map.freelancer[i.count].jobKind }</c:if>
+						<c:if test="${empty map.freelancer[i.count].jobKind }">
 						직종 미입력
 						</c:if>
 						 | 
-						<c:if test="${not empty map.member[i].type }">
-						${map.member[i].type }
+						<c:if test="${not empty o.type }">
+						${o.type }
 						</c:if>
-						<c:if test="${empty map.meber[i].type }">
+						<c:if test="${empty o.type }">
 						개인
 						</c:if>
 						</a></span></p>
 						<p>
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">
+						<a href="/flu/member/freelancermypage?email=${o.email }">
 						<c:choose>
-						<c:when test="${not empty map.freelancer[i].intro }">
-						<span class="intro">${map.freelancer[i].intro }</span>
+						<c:when test="${not empty map.freelancer[i.count].intro }">
+						<span class="intro">${map.freelancer[i.count].intro }</span>
 						</c:when>
 						<c:otherwise>
-						<span class="intro">자기소개가 없습니다.</span>
+						<span class="intro">자기소개가 없습니다.${map.member }</span>
 						</c:otherwise>
 						</c:choose>
 						</a>
 						</p>
 						<p>
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">
-						<c:choose>
-						<c:when test="${not empty map.skills[i] }">
-						<c:forEach items="${map.skills[i] }" var="j">
+						<a href="/flu/member/freelancermypage?email=${o.email }">
+						<c:forEach items="${map.skills }" var="j">
+						<c:if test="${j.email eq o.email }">
 						<span class="skills">${j.kind }</span>
+						</c:if>
 						</c:forEach>
-						</c:when>
-						<c:otherwise>
-						<span class="skills">스킬미등록</span>
-						</c:otherwise>
-						</c:choose>
+						<c:if test="">
+							
+						</c:if>
 						</a>
 						</p>
 					</div>
@@ -283,47 +280,63 @@ $(function() {
 					<div class="starpoint">
 						<p>
 						<span>
-						<c:if test="${eval.eval[i] eq 0 }">
+						<c:if test="${eval.eval[i.count] eq 0 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/0.png">
 						</c:if>
-						<c:if test="${eval.eval[i] eq 1 }">
+						<c:if test="${eval.eval[i.count] eq 1 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/1.png">
 						</c:if>
-						<c:if test="${eval.eval[i] eq 2 }">
+						<c:if test="${eval.eval[i.count] eq 2 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/2.png">
 						</c:if>
-						<c:if test="${eval.eval[i] eq 3 }">
+						<c:if test="${eval.eval[i.count] eq 3 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/3.png">
 						</c:if>
-						<c:if test="${eval.eval[i] eq 4 }">
+						<c:if test="${eval.eval[i.count] eq 4 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/4.png">
 						</c:if>
-						<c:if test="${eval.eval[i] eq 5 }">
+						<c:if test="${eval.eval[i.count] eq 5 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
 						</c:if>
 						</span>
 						<span style="line-height: 30px; vertical-align: top; float: right; margin-right: 10px;">
-							${eval.eval[i] }점/평가 ${eval.evaluationLength[i] }개
+							${eval.eval[i.count] }점/평가 ${eval.evaluationLength[i.count] }개
 						</span>
 						</p>
 						<hr>
-						<p><span>계약한 프로젝트</span><span style="float: right; margin-right: 10px;">${map.myproject[i]}건</span></p>
+						<p><span>계약한 프로젝트</span><span style="float: right; margin-right: 10px;">
+						<c:if test="${map.myproject[i.count].email eq o.email }">
+						
+						${map.myproject[i.count].appCount}
+						</c:if>
+						<c:if test="${map.myproject[i.count].email ne o.email }">
+						0
+						</c:if>건
+						</span></p>
 						<hr>
-						<p><span>포트폴리오</span><span style="float: right; margin-right: 10px;">${map.portfolio[i] }개</span></p>
+						<p><span>포트폴리오</span><span style="float: right; margin-right: 10px;">
+						<c:if test="${map.portfolio[i.count].email eq o.email }">
+						${map.portfolio[i.count].pfNum }
+						</c:if>
+						<c:if test="${map.portfolio[i.count].email ne o.email }">
+						0
+						</c:if>
+						개
+						</span></p>
 						<hr>
 					</div>
 					<div class="access">
 						<p>
-						<c:if test="${map.member[i].authenticState eq 2 }">
+						<c:if test="${o.authenticState eq 2 }">
 						<span>신원 인증</span>
 						</c:if>
-						<c:if test="${map.member[i].authenticState ne 2 }">
+						<c:if test="${o.authenticState ne 2 }">
 						<span>신원 미인증</span>
 						</c:if>
-						<c:if test="${not empty map.member[i].phone }">
+						<c:if test="${not empty o.phone }">
 						<span>연락처 등록</span>
 						</c:if>
-						<c:if test="${empty map.member[i].phone }">
+						<c:if test="${empty o.phone }">
 						<span>연락처 미등록</span>
 						</c:if>
 						</p>
@@ -332,7 +345,6 @@ $(function() {
 			</div>
 				</c:if>
 					</c:forEach>
-					</c:catch>
 					<c:if test="${map.member.size() < 1 }">
 						<div class="freelancerListform">
 							<div style="width: 210px; margin: 0 auto; text-align: center; margin-top: 110px;">
