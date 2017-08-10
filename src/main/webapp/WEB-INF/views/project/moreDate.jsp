@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html class="total">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -51,8 +51,6 @@ $(function() {
 		    var day = startDate.substr(8,2);
 			
 			startDate = startDate.substr(2,8);
-			
-		    alert("시작날짜"+startDate);
 		    
 		    $('input[name=startDate]').val(startDate);
 		    
@@ -99,7 +97,7 @@ $(function() {
 				alert("연장되었습니다.");
 				//window.close();
 			}else{
-				alert('no');
+				
 			}
 		}
 		
@@ -123,10 +121,9 @@ $(function() {
 		
 	}
 	
-	.title{
-		
-	
-	}
+
+
+
 	
 	.ui-datepicker{
 		font-size: 1.2em;
@@ -177,26 +174,30 @@ div.ui-datepicker-header span{
 }
 
 .register-btn{
-   width:120px;
-   height:20px;
+   width:80px;
+   height:15px;
    color: white;
-   background-color: #f1720c;
+   background-color: #7194da;
    border-color: #f48023;
    border-radius: 2px;
    text-align: center;
    vertical-align: middle;
+   line-height: 20px;
    padding: 10px 12px;
    text-decoration: none;
-   margin-top:20px;
    margin: 0 auto;
+   margin-top:10px;
 }
 
+	.total{
+
+	background-color: #f2f9ff;
+
+	}
 </style>
 </head>
 <body>
-<div class="title">
-프로젝트 기간 변경
-</div>
+
 <div id="datepicker">
 
 </div>

@@ -545,6 +545,10 @@ background-color: white;
 	border-radius: 2px;
 	display: inline;
 }
+
+
+
+
 </style>
 
 </head>
@@ -1138,7 +1142,7 @@ if(meetKind=='offline'){
 	   $('#dateBTN').click(function name() {
 
 		   var url="./moreDate";
-		   var option = "width=500,height=500,top=100,left=300";
+		   var option = "width=440,height=340,top=100,left=300";
 		  
 		   window.open(url,'moreDate',option);
 		   
