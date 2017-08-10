@@ -302,10 +302,10 @@
 			</h4>
 			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/프로세스.png" style="padding-bottom: 10px;">
 			<div>
-				<span>프로젝트 등록</span>
-				<span>지원자 선택</span>
-				<span>미팅 & 계약</span>
-				<span>진행 & 완료</span>
+				<span>등록 & 선택</span>
+				<span>지원자 미팅</span>
+				<span>진행 & 스케줄</span>
+				<span>프로젝트 완료</span>
 				<span>프로젝트 판매</span>
 			</div>
 		</div>
