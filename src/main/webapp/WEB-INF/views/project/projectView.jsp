@@ -1209,10 +1209,6 @@ var testId = "";
 	 //프로젝트스케줄 //면 //아래잇는거 지우고 function 안으로 넣음 
 		 $("#scheduleBtn").click(function(){
 			var test = getScheduleNum(projectNum);
-			//alert("test "+test);
-			//if(test == 'needMainModal'){
-			//	$("#insertMainschedule").modal({backdrop:'static'});
-			//}
 	    });
 		   
 
