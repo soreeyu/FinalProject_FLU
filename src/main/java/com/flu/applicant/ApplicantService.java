@@ -50,7 +50,6 @@ public class ApplicantService {
 	
 	//지원자 수 카운트하기
 	public int countApplicant(int projectNum){			
-		System.out.println("countApplicant-service");
 		return applicantDAO.countApplicant(projectNum);
 	}
 	

@@ -973,7 +973,7 @@ background-color: white;
             <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
           <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
-            <div class="schedule-btn">미팅룸 예약하기 </div>
+            <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList">미팅룸 예약하기 </a></div>
           </c:if>
           	<c:if test="${dto.state eq 'check'}">
                 <div class="owner-btn" id="pj-update">Update</div>

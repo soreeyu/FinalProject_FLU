@@ -11,7 +11,7 @@
 
   	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
   		select * from applicant where projectNum=#{projectNum} and state in('ing')
-
+	</select>
   	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
   		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
 
@@ -41,5 +41,4 @@
   <delete id="deleteApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
   	delete from applicant where email=#{email} and projectNum=#{projectNum}
   </delete>
-  
   </mapper>

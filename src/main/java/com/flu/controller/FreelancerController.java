@@ -292,7 +292,7 @@ public class FreelancerController {
 		if(result > 0){
 			freelancerDTO = freelancerService.freelancerView(freelancerDTO.getEmail());
 			redirectAttributes.addFlashAttribute("free", freelancerDTO);
-
+			alarmDTO.setEmail(freelancerDTO.getEmail());
 			alarmDTO.setContents("자기소개를 성공적으로 등록하였습니다.");
 			alarmService.alarmInsert(alarmDTO);		
 			redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
