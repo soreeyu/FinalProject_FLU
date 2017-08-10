@@ -56,7 +56,7 @@ public class ApplicantDAO {
 	//지원자 수 카운트하기
 	public int countApplicant(int projectNum){
 		System.out.println("countApplicant-dao");
-		
+		System.out.println(projectNum);
 		return sqlSession.selectOne(NAMESPACE+"countApplicant", projectNum);
 	}
 	

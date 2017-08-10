@@ -54,7 +54,9 @@
 	alert("quickCount=${quickCount}");
 	var maxCount = '${quickCount}';
 	alert("maxCount=="+maxCount);
+
 	var pageCount="";
+	
 	if(maxCount%5==0){
 		pageCount=(maxCount/5).toFixed();		
 	}else{
@@ -68,7 +70,9 @@
 		 if(cc==1){
 			 alert("첫페이지");
 			 alert("cc="+cc);
-		 }else{
+
+		 }else{ 
+
 			alert("preview클릭");
 			cc=cc-1;
 			alert(did);
@@ -82,10 +86,12 @@
 
 
 	  $(".next").click(function() {
-		
+
+			
 		 if(cc==pageCount){
 			alert("마지막 페이지");
 			alert("cc="+cc);
+			
 
 		}else{
 		alert("next클릭");

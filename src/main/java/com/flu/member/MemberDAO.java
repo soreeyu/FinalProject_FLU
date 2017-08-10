@@ -204,4 +204,8 @@ public class MemberDAO {
 		System.out.println("email"+email);
 		return sqlSession.selectList(NAMESPACE+"memberAlarmList", email);
 	}
+	//index에 뿌려질 등록된 회원 카운트
+	public int memberCountTotal() throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberCountTotal");
+	}
 }

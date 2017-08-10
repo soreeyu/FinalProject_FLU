@@ -68,7 +68,6 @@
 			<exclude-mapping path="/member/MemberJoin"/>
 			<exclude-mapping path="/project/projectListInner"/>
 			<exclude-mapping path="/member/jungbokCK"/>
-			<exclude-mapping path="/*/alarmCount"/>
 			<exclude-mapping path="/member/logout"/>
 			<exclude-mapping path="/member/re_email"/>
 			<exclude-mapping path="/member/myflu"/>
