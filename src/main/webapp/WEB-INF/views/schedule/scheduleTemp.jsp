@@ -1176,11 +1176,17 @@ var scheduleNum = '${scheduleNum}';
 		}//안되넹..
 		
 		
-		
-		
+		var memberKind = '${member.kind}';
+
 		//날짜가 입력이 안되있을경우 modal 생성
 		if($("#sDateforTitle").text() == ''){
-			$("#insertMainschedule").modal({backdrop:'static'});
+			
+			if(memberKind == 'client' ){
+				$("#insertMainschedule").modal({backdrop:'static'});	
+			}else{
+				alert("스케줄이 설정되있지 않습니다");
+				history.back();//뒤로가기
+			}
 		}
 
 		
@@ -2032,15 +2038,31 @@ var scheduleNum = '${scheduleNum}';
 										</tr>
 										<tr>
 											<th>마감일</th>
-											<td><input type="date" id="partNumS" name="partNumS" style="width:300px;"></td>
+											<td><input type="date" id="unitFinishDate" name="unitFinishDate" style="width:300px;"></td>
 										</tr>
 										<tr>
 											<th>파트</th>
-											<td><input type="number" id="unitFinishDate" name="unitFinishDate" style="width:300px;"></td>
+											<td>
+												<select id="partNumS" name="partNumS" style="width:300px;">
+													<option value="">파트선택</option>
+													<c:forEach items="${partList2}" var="part">
+														<option value="${part.partNum}">${part.partName}</option>
+													</c:forEach>
+												</select>
+											<!-- <input type="number" id="partNumS" name="partNumS" style="width:300px;"> -->
+											
+											</td>
 										</tr>
 										<tr>
 											<th>담당자</th>
-											<td><input type="text" id="unitEmailS" name="unitEmailS" placeholder="담당자" style="width:300px;"></td>			
+											<td>
+												<select id="unitEmailS" name="unitEmailS" placeholder="담당자" style="width:300px;">
+													<option value="">담당자선택</option>
+													<c:forEach items="${userList2}" var="user">
+														<option value="${user.email}">${user.nickName}</option>
+													</c:forEach>
+												</select> 
+												<!-- <input type="text" id="unitEmailS" name="unitEmailS" placeholder="담당자" style="width:300px;"> --></td>			
 										</tr>
 										<tr>
 											<th>상세설명</th>	
@@ -2108,8 +2130,11 @@ var scheduleNum = '${scheduleNum}';
 				
 				var partNumS = $("#partNumS").val();
 				var unitNameS = $("#unitNameS").val();
-				var unitStartDate = $("#unitStartDate").val();
-				var unitFinishDate = $("#unitFinishDate").val();
+				
+				var unitStartDate = String($("#unitStartDate").val());
+				
+				var unitFinishDate = String($("#unitFinishDate").val());
+
 				var unitEmailS = $("#unitEmailS").val();
 				var unitDescribeS = $("#unitDescribeS").val();
 				alert(scheduleNum+"확인용 이름 "+unitNameS + " 시작 "+unitStartDate + " 마감"+ unitFinishDate+ " 메일  "+ unitEmailS + " 설명  " +unitDescribeS);

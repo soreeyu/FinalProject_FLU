@@ -58,7 +58,7 @@ public class ScheduleController {
 		
 		
 		@RequestMapping(value="test" , method= {RequestMethod.GET,RequestMethod.POST})
-		public String test(@RequestParam(defaultValue="0") Integer scheduleNum,String currentTab, Model model, RedirectAttributes rd, HttpSession session) throws Exception{
+		public String test(@RequestParam(defaultValue="0") Integer scheduleNum, String currentTab, Model model, RedirectAttributes rd, HttpSession session) throws Exception{
 			System.out.println("test 링크로 오는 애임 Controller = "+scheduleNum);
 			Integer result = applicantService.checkApp(((MemberDTO)session.getAttribute("member")).getEmail());
 			ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
@@ -86,6 +86,24 @@ public class ScheduleController {
 				model.addAttribute("summary",scheduleSummaryDTO);
 
 				model.addAttribute("currentTab", currentTab);
+				
+				ScheduleUnitDTO scheduleUnitDTO = new ScheduleUnitDTO();
+				scheduleUnitDTO.setScheduleNum(scheduleNum);
+				scheduleUnitDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
+				scheduleUnitDTO.setPartNum(-1);
+				scheduleUnitDTO.setUnitState("");
+			    
+				
+				List<MemberDTO> list = scheduleService.userList(scheduleNum);
+				List<SchedulePartDTO> list2 = scheduleService.partList(scheduleNum);
+				//System.out.println("list온거 좀 보세 "+list.get(0).getEmail());
+				model.addAttribute("userList2", list);
+				model.addAttribute("partList2", list2);
+				model.addAttribute("scheduleNum",scheduleNum);
+				
+				
+				
+				
 				return "schedule/scheduleTemp";
 
 			}
@@ -587,7 +605,7 @@ public class ScheduleController {
 		
 		//세부항목
 		@ResponseBody
-		@RequestMapping(value ="addUnit", method=RequestMethod.POST)
+		@RequestMapping(value ="addUnit", method={RequestMethod.POST, RequestMethod.GET})
 		public int insertUnit(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
 			System.out.println("값왓니?"+scheduleUnitDTO.getUnitDescribe());
 			return scheduleService.unitInsert(scheduleUnitDTO);
@@ -620,11 +638,17 @@ public class ScheduleController {
 		
 		@RequestMapping(value="checkListForFreelancer",method=RequestMethod.POST)
 		public String checkListForFreelancer(ScheduleUnitDTO scheduleUnitDTO,String currentTab, Model model) throws Exception{
-			List<MemberDTO> list = scheduleService.userList(scheduleUnitDTO.getScheduleNum());
+			/*List<MemberDTO> list = scheduleService.userList(scheduleUnitDTO.getScheduleNum());
 			List<ScheduleUnitDTO> list2 = scheduleService.unitList(scheduleUnitDTO);
-			model.addAttribute("userList", list);
-			model.addAttribute("partList", list2);
-			model.addAttribute("scheduleNum", scheduleUnitDTO.getScheduleNum());
+			model.addAttribute("userList2", list);
+			model.addAttribute("partList2", list2);
+			model.addAttribute("scheduleNum", scheduleUnitDTO.getScheduleNum());*/
+			
+			scheduleUnitDTO.setUnitState("할일");
+			List<ScheduleUnitDTO> freeWillList = scheduleService.unitList(scheduleUnitDTO);
+			model.addAttribute("freeWillList", freeWillList);
+			
+			
 			
 			return "schedule/checkListForFreelancer";
 		}

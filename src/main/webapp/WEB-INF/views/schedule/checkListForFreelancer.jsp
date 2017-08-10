@@ -6,9 +6,9 @@
 
 
 <div id="cklist_section">
-	<div id="unitSearch">
+	<%-- <div id="unitSearch">
 		<select>
-			<c:forEach items="${userList}" var="user">
+			<c:forEach items="${userList2}" var="user">
 				<option value="${user.email}">${user.nickName}</option>
 			</c:forEach>
 			<option>test1(tester1)</option>
@@ -16,13 +16,17 @@
 			<option>test1(tester1)</option>
 		</select> 
 		<select>
-			<c:forEach items="${partList}" var="part">
+			<c:forEach items="${partList2}" var="part">
 				<option value="${part.partNum}">${part.partName}</option>
 			</c:forEach>
 			<option>파트파트파트1</option>
 			<option>파트파트파트2</option>
 			<option>파트파트파트3</option>
 		</select>
+	</div> --%>
+	
+	<div>
+		[업무수행한 것 체크체크]
 	</div>
 
 	<table id="cklist_table">
@@ -37,11 +41,18 @@
 			<tr>
 				<td id="unitWill">
 					<div class="unit3Wrap">
-						<div class="unit3"><div class="unitTitle">기나긴 이름들의 할일1</div><input type="checkbox" class="unitWillOne" data-scheduleNum="${scheduleNum}" data-unitNum="1"  data-state="0" data-email="myeon02@flu.com"></div>
+					<c:forEach items="${freeWillList}" var="list">
+						<div class="unit3">
+							<div class="unitTitle">"${list.unitName}"</div>
+							<input type="checkbox" class="unitWillOne" data-scheduleNum="${scheduleNum}" data-unitNum="${list.unitNum}"  data-state="0" data-email="${list.email}">
+						</div>
+					</c:forEach>
+		
 						<div class="unit3"><div class="unitTitle">기나긴 이름들의 할일2</div><input type="checkbox" class="unitWillOne" data-scheduleNum="${scheduleNum}" data-unitNum="2" data-state="0" data-email="myeon03@flu.com"></div>
 						<div class="unit3"><div class="unitTitle">기나긴 이름들의 할일3</div><input type="checkbox" class="unitWillOne" data-scheduleNum="${scheduleNum}" data-unitNum="3"  data-state="0" data-email="myeon02@flu.com"></div>
 						<div class="unit3"><div class="unitTitle">기나긴 이름들의 할일4</div><input type="checkbox" class="unitWillOne" data-scheduleNum="${scheduleNum}" data-unitNum="4"  data-state="0" data-email="myeon02@flu.com"></div>
 						<div class="unit3"><div class="unitTitle">기나긴 이름들의 할일5</div><input type="checkbox" class="unitWillOne" data-scheduleNum="${scheduleNum}" data-unitNum="5"  data-state="0" data-email="myeon02@flu.com"></div>
+					
 					</div>
 				</td>
 				<td id="unitIng">
