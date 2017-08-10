@@ -291,9 +291,13 @@ public class ProjectController {
       System.out.println("projectNum="+projectDTO.getProjectNum());
       System.out.println("controller-project-name="+projectDTO.getName());
    
+      System.out.println(projectDTO.getSkill().length());
+      System.out.println(projectDTO.getSkills().length);
       model.addAttribute("type", "update");
       model.addAttribute("member", memberDTO);
       model.addAttribute("dto", projectDTO);
+      model.addAttribute("skillSize", projectDTO.getSkills().length);
+      model.addAttribute("skills", projectDTO.getSkills());
       
       return "project/projectInsert";
    }

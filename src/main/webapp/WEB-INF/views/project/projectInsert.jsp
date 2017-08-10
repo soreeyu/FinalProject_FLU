@@ -6,10 +6,100 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
 <title>Insert title here</title>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript">
+$(function(){
+    //전역변수선언
+    var editor_object = [];
+     
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: editor_object,
+        elPlaceHolder: "smart",
+        sSkinURI: "../resources/SE2/SmartEditor2Skin.html", 
+        htParams : {
+            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseToolbar : true,             
+            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseVerticalResizer : true,     
+            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseModeChanger : true, 
+        }
+    });
+     
+    
 
+
+
+    $("#submitBTN").click(function() {
+    	alert("btn");
+    	
+    	 
+    	 alert("vvv");
+    	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
+    		alert("옵션 선택좀");
+    	} else if(document.frm.name.value==""){
+    		alert("제목을 입력하세요");
+    	}else if(document.frm.period.value==""){
+    		alert("기간을 입력하세요");
+    	}else if(document.frm.budget.value==""){
+    		alert("예상금액을 입력하세요");
+    	}else if(document.frm.planState.value==""){
+    		alert("기획상태를 입력하세요");
+    	}else if(document.frm.fileName.value==""){
+    		alert("File을 선택해주세요");
+    	}else if(document.frm.finishDate.value==""){
+    		alert("마감일을 선택해주세요");
+    	}else if(document.frm.addr_main.value==""){
+    		alert("주소를 입력해주세요");
+    	}else if(document.frm.startDate.value==""){
+    		alert("시작일을 선택해주세요");
+    	}else if(document.frm.exp.value==""){
+    		alert("매니징 경험을 선택해주세요");
+    	}else if(document.frm.quick.value==""){
+    		alert("급구 여부를 선택해주세요");
+    	} else if(document.frm.finishDate.value!=""){
+    		var finishDate = $("#finishDate").val();
+    		 alert("finishDate="+finishDate); 
+    		 var finish = new Date(finishDate);
+    		 var today = new Date();
+    		 alert("today="+today);
+    		 var left = finish.getTime()-today.getTime();
+    		 alert(left);
+    		 var leftDate = Math.ceil(left/(24*60*60*1000));
+    		 alert("leftDate="+leftDate);
+    		 if(leftDate<7){
+    			 alert("마감일은 최소 1주일입니다.");			 
+    		 }else{
+    			 alert("마감일 괜춘");
+    			 if(document.frm.startDate.value!=""){
+    				 var startDate = $("#startDate").val();
+    				 alert("startDate="+startDate);
+    				 var start = new Date(startDate);
+    				 alert("today="+today);
+    				 var lef = start.getTime()-finish.getTime();
+    				 alert(lef);
+    				 var lefDate = Math.ceil(lef/(24*60*60*1000));
+    				 alert("시작일-마감일="+lefDate);
+    				 if(lefDate<7){
+    					 alert("시작일은 마감일 이후 최소 1주일입니다.");
+    				 }else{
+    					 alert("시작일 적당");
+    					 editor_object.getById["smart"].exec("UPDATE_CONTENTS_FIELD", []);
+    					 alert("editor먹엇나");
+    					 document.frm.submit();
+    				 }
+    			 }
+    		 }
+
+    	}
+    });
+ 
+})
+</script>
 <style type="text/css">
 
 *{
@@ -260,8 +350,8 @@ label{
 						<div class="main-wrapper">
 								<select class="cate-select" id="category" name="category" onChange="changeSelect(value)" required="required">
 									 <option>카테고리</option>
-									 <option class="main_opt" value="개발">개발</option>
-									 <option class="main_opt" value="디자인">디자인</option>
+									 <option class="main_opt category" value="개발">개발</option>
+									 <option class="main_opt category" value="디자인">디자인</option>
 								</select>
 							</div>
 
@@ -334,7 +424,7 @@ label{
 				<div>
 					<label><span>*</span>프로젝트 내용</label>
 					<div>
-						<textarea rows="30" cols="80" name="contents">${dto.contents}</textarea>
+						<textarea rows="30" cols="80" name="contents" id="smart">${dto.contents}</textarea>
 					</div>
 				</div>
 				
@@ -498,10 +588,10 @@ label{
 						<input type="checkbox" class="chk" name="skill" value="WordPress">WordPress
 						</li>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="HybridApp">하이브리드앱
+						<input type="checkbox" class="chk" name="skill" value="하이브리드앱">하이브리드앱
 						</li>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="Presentation">프레젠테이션
+						<input type="checkbox" class="chk" name="skill" value="프레젠테이션">프레젠테이션
 						</li>
 					</ul>
 					</div>
@@ -513,7 +603,7 @@ label{
 					<div class="skill-wrapper">
 					<ul>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="Oracle">Oracle 컨설턴트
+						<input type="checkbox" class="chk" name="skill" value="Oracle컨설턴트">Oracle 컨설턴트
 						</li>
 						<li class="skill-li">
 						<input type="checkbox" class="chk" name="skill" value="PM">PM
@@ -522,16 +612,16 @@ label{
 						<input type="checkbox" class="chk" name="skill" value="PMO">PMO
 						</li>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="SAP">SAP컨설턴트
+						<input type="checkbox" class="chk" name="skill" value="SAP컨설턴트">SAP컨설턴트
 						</li>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="Planning">기획
+						<input type="checkbox" class="chk" name="skill" value="기획">기획
 						</li>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="MobilePlanning">모바일기획
+						<input type="checkbox" class="chk" name="skill" value="모바일기획">모바일기획
 						</li>
 						<li class="skill-li">
-						<input type="checkbox" class="chk" name="skill" value="WebPlanning">웹기획
+						<input type="checkbox" class="chk" name="skill" value="웹기획">웹기획
 						</li>
 						</ul>
 					</div>
@@ -599,8 +689,8 @@ label{
 					<label><span>*</span>사전 미팅</label>
 					<div class="category-wrapper">
 						<select name="meetKind" required="required">
-							<option value="offline">오프라인</option>
-							<option value="online">온라인</option>
+							<option class="meetKind" value="오프라인">오프라인</option>
+							<option class="meetKind" value="온라인">온라인</option>
 						</select>
 					</div>
 				</div>
@@ -610,8 +700,8 @@ label{
 					<div class="category-wrapper">
 						<input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" value="${dto.addr_num}">
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required" value="${addr_main}">
-						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required" value="${addr_detail}">
+						<input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required" value="${dto.addr_main}">
+						<input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required" value="${dto.addr_detail}">
 					</div>
 				</div>
 
@@ -619,7 +709,7 @@ label{
 					<label><span>*</span>프로젝트 <br> 예상 시작일</label>
 					<div class="category-wrapper">
 
-						<input type="date" name="startDate" id="startDate" required="required" value="${dto.startDate }">
+						<input type="date" name="startDate" id="startDate" value="">
 
 					</div>
 				</div>
@@ -627,8 +717,8 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>프로젝트 <br>매니징 경험</label>
 					<div class="category-wrapper">
-						<input type="radio" name="exp" value="y">예 
-						<input type="radio" name="exp" value="n">아니오
+						<input class="exp" type="radio" name="exp" value="y">예 
+						<input class="exp" type="radio" name="exp" value="n">아니오
 					</div>
 				</div>
 
@@ -637,14 +727,14 @@ label{
 				<div class="control-wrapper">
 					<label><span>*</span>급구 여부</label>
 					<div class="category-wrapper">
-						<input type="radio" name="quick" value="1">예 <input
-							type="radio" name="quick" value="0">아니오
+						<input class="quick" type="radio" name="quick" value="1">예 
+						<input class="quick" type="radio" name="quick" value="0">아니오
 					</div>
 				</div>
 
 
 				
-				<input type="button" class="btn btn-default" onclick="check_submit()" value="등록">
+				<input type="button" class="btn btn-default" id="submitBTN" value="등록">
 				</form>
 				
 				
@@ -662,103 +752,123 @@ label{
 
 
 
-alert("type == ${type}"); 
+var type="${type}";
+alert("type == "+type); 
 alert("사용자email = ${member.email}");
-	
 var fdate = "${dto.finishDate}";
 alert(fdate);
 var finishDate = new Date(fdate);
 var finishDay = finishDate.getDate();
 var finishMonth = finishDate.getMonth()+1;
 var finishYear = finishDate.getFullYear();
-alert(finishDay);
+/* alert(finishDay);
 alert(finishMonth);
-alert(finishYear);
+alert(finishYear); */
 
 
+if(type=='update'){
 
+	/* 기술 Check해놓는거  */
+	var dtoSkill='${dto.skill}';
+	var skillSize = '${skillSize}';
+	alert("skillSize="+skillSize);
+	var skills = '${skills}';
+	 skillSize = skillSize*1+1;
 
-
- function check_submit() {
-	
-	alert("btn");
-	if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
-		alert("옵션 선택좀");
-	} else if(document.frm.name.value==""){
-		alert("제목을 입력하세요");
-	}else if(document.frm.period.value==""){
-		alert("기간을 입력하세요");
-	}else if(document.frm.budget.value==""){
-		alert("예상금액을 입력하세요");
-	}else if(document.frm.planState.value==""){
-		alert("기획상태를 입력하세요");
-	}else if(document.frm.contents.value==""){
-		alert("내용을 입력하세요");
-	} 
-	
-	/* else if($(".chk").prop("checked")==false){
-		alert("skill을 입력하세요");
-	}  */
-	
-	  else if(document.frm.fileName.value==""){
-		alert("File을 선택해주세요");
-	}else if(document.frm.finishDate.value==""){
-		alert("마감일을 선택해주세요");
-	}else if(document.frm.addr_main.value==""){
-		alert("주소를 입력해주세요");
-	}else if(document.frm.startDate.value==""){
-		alert("시작일을 선택해주세요");
-	}else if(document.frm.exp.value==""){
-		alert("매니징 경험을 선택해주세요");
-	}else if(document.frm.quick.value==""){
-		alert("급구 여부를 선택해주세요");
-	} else if(document.frm.finishDate.value!=""){
-		var finishDate = $("#finishDate").val();
-		 alert("finishDate="+finishDate); 
-		 var finish = new Date(finishDate);
-		 var today = new Date();
-		 alert("today="+today);
-		 var left = finish.getTime()-today.getTime();
-		 alert(left);
-		 var leftDate = Math.ceil(left/(24*60*60*1000));
-		 alert("leftDate="+leftDate);
-		 if(leftDate<7){
-			 alert("마감일은 최소 1주일입니다.");
-			 
-			 
-	/* 	  $(".chk").each(function() {
-			
-			 if($(this).prop("checked")==false){
-				  alert($(this).val()); 
-			 }
-		});  */
-			 
-			 
-		 }else{
-			 alert("마감일 괜춘");
-			 if(document.frm.startDate.value!=""){
-				 var startDate = $("#startDate").val();
-				 alert("startDate="+startDate);
-				 var start = new Date(startDate);
-				 alert("today="+today);
-				 var lef = start.getTime()-finish.getTime();
-				 alert(lef);
-				 var lefDate = Math.ceil(lef/(24*60*60*1000));
-				 alert("시작일-마감일="+lefDate);
-				 if(lefDate<7){
-					 alert("시작일은 마감일 이후 최소 1주일입니다.");
-				 }else{
-					 alert("시작일 적당");
-					 document.frm.submit();
-				 }
-			 }
-		 }
-
-	}
+	  for(var i=1;i<skillSize;i++){
+		var skil = dtoSkill.split(",");
+		
+		$(".chk").each(function() {
+			if(skil[i-1]==$(this).val()){
+				$(this).prop("checked", true);
+			}
+		});
+		
+	}  /* for문 끝 */
+		
 }
+	if(type=='update'){
+		
+	var dtoState = '${dto.planState}';
+	alert("dtoState="+dtoState);
+	
+	$(".planState").each(function() {
+		if(dtoState == $(this).val()){
+			
+		$(this).prop("checked", true);
+		}
+	});
+	
+	var dtoMeet = '${dto.meetKind}';
+	alert("dtoMeet="+dtoMeet);
+	
+	$(".meetKind").prop("selected", dtoMeet);
+	/* check인가?... */
+			
+			
+	var dtoExp = '${dto.exp}';
+	alert("dtoExp="+dtoExp);
+	
+	$(".exp").each(function() {
+		if(dtoExp==$(this).val()){
+			$(this).prop("checked", true);
+		}
+	});
+	
+	var dtoQuick = '${dto.quick}';
+	alert("dtoQuick="+dtoQuick);
+	
+	$(".quick").each(function() {
+		if(dtoQuick==$(this).val()){
+			$(this).prop("checked", true);
+		}
+	});
+
+	var dtoStart = '${dto.startDate}';
+	alert("dtoStart="+dtoStart);
+
+	 var startYear = dtoStart.substr(2, 2);
+	 var startMonth = dtoStart.substr(5,2);
+	 var startDay = dtoStart.substr(8,2);
+
+	 
+	 $("#startDate").val('20'+startYear+"-"+startMonth+"-"+startDay);
+	 
+	 
+	 var dtoFinish = '${dto.finishDate}';
+		alert("dtoFinish="+dtoFinish);
+
+		 var finishYear = dtoFinish.substr(2, 2);
+		 var finishMonth = dtoFinish.substr(5,2);
+		 var finishDay = dtoFinish.substr(8,2);
+		 alert(startDay);
+		 alert(startMonth);
+		 alert(startYear);	 
+		 
+		 $("#finishDate").val('20'+finishYear+"-"+finishMonth+"-"+finishDay);
+	 
+	  	 
+	 
+	}
+	
+	
+	
 
 
 
+
+/*  //전송버튼 클릭이벤트
+ $("#savebutton").click(function(){
+     //id가 smarteditor인 textarea에 에디터에서 대입
+     editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+      
+     // 이부분에 에디터 validation 검증
+      
+     //폼 submit
+     $("#frm").submit();
+ })
+
+ */
 
 
 /* 옵션 처리하는 부분 */

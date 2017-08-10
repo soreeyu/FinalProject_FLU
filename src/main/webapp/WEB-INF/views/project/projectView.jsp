@@ -1075,11 +1075,8 @@ if(planState=='idea'){
  
  /* 미팅방식 뿌려주기 */
 var meetKind = "${dto.meetKind}";
-if(meetKind=='offline'){
-   $("#meetKind").text("오프라인");
-}else{
-   $("#meetKind").text("온라인");
-}
+   $("#meetKind").text(meetKind);
+
 
 /* 모집마감일 뿌려주기 */
  var fdate = "${dto.finishDate}";

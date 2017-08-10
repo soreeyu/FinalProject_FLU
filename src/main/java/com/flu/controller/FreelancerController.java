@@ -661,7 +661,7 @@ public class FreelancerController {
 		model.addAttribute("data", "0");
 		
 		Map<String, Object> map = freelancerService.myskillList(this.getEmail(session));
-		
+		System.out.println("skillUpdate임");
 		model.addAttribute("slevel", map.get("slevel"));
 		model.addAttribute("exp", map.get("exp"));
 		return "/member/freelancer/skillform";
