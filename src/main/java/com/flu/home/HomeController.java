@@ -16,7 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.socket.WebSocketSession;
 
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
+import com.flu.tproject.EchoHandler;
+
+
+<<<<<<< HEAD
 import com.flu.applicant.ApplicantService;
 import com.flu.freelancer.FreelancerDTO;
 import com.flu.freelancer.FreelancerService;
@@ -29,9 +36,15 @@ import com.flu.util.ListInfo;
 /**
  * Handles requests for the application home page.
  */
+=======
+>>>>>>> faad6c1d76dcd78d5bfc041d69f4d7679baf2399
 @Controller
 public class HomeController {
 	
+	@Inject
+	private EchoHandler echoHandler; 
+	@Inject
+	private ProjectService projectService;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Inject
@@ -93,8 +106,10 @@ public class HomeController {
 			ar=null;
 			ar2=null;
 			
-		}
-		
+
+		List<ProjectDTO> countList = projectService.roomCount();
+		echoHandler.roomCount(countList);
+
 		model.addAttribute("pjcount", pjcount);
 		model.addAttribute("mcount", mcount);
 		model.addAttribute("budget", budget);
@@ -106,7 +121,7 @@ public class HomeController {
 		model.addAttribute("pay", pay);
 		
 		return "index";
-
+		}
 	}
 	@RequestMapping(value="/home")
 	public String test(){

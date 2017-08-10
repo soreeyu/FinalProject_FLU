@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -239,6 +240,13 @@ strong{
    margin-top: 15px;
    text-decoration: none;
 }
+
+.owner-btn:HOVER{
+
+cursor: pointer;
+
+}
+
 .schedule-btn{
    width:230px;
    height:40px;
@@ -544,7 +552,7 @@ background-color: white;
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 <section class="main_section">
-
+	<input type="hidden" id="opener" value="${dto.projectNum}"> <!-- 연장할때 필요 지우지마셈 -->
       <!--  header -->
       <div class="project_header">
          <div class="header_text">
@@ -595,13 +603,25 @@ background-color: white;
             <c:if test="${member.kind eq 'client' && member.email==dto.email}">
             
             
-            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
+            <p>
+            <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
+            	삭제 신중하게 하셈 [프로젝트 넘: ${dto.projectNum }] 
+            </c:if>
+            <c:if test="${dto.del_check == 0}">
+            	 중단 요청 후 중단이 완료되면 복구가 불가능합니다. 신중하게 결정해 주세요[프로젝트 넘: ${dto.projectNum }] 
+            </c:if>
+            </p>
                <div class="owner_option_btn">
                <c:if test="${dto.state eq 'check'}">
                   <div class="owner-btn" id="pj-update">Update</div>
                </c:if>
-                  <div class="owner-btn" id="pj-delete">Delete</div>
-               	 
+                  
+                  <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
+                  <div class="owner-btn" id="pj-delete"> Delete</div>
+                  </c:if>
+                  <c:if test="${dto.del_check == 0}">
+                  <div class="owner-btn" id="pj-delete">중단요청</div>
+                  </c:if>
                </div>
           
                </c:if>
@@ -852,7 +872,7 @@ background-color: white;
             </c:if>
             
             <c:if test="${dto.state eq 'fail'}">
-            <input type="button" class="register-btn" value="프로젝트 연장" id="dateBTN">
+            <input type="button" class="register-btn" value="프로젝트 기간변경" id="dateBTN">
             </c:if>
             
             <input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
@@ -1028,6 +1048,7 @@ if(meetKind=='offline'){
 
 
 
+
 	/* 프로젝트 지원하기 */
 	(function($) {
 		$("#btn_apply").click(function() {
@@ -1072,6 +1093,7 @@ if(meetKind=='offline'){
 			}
 		}else if(state=="recruit" || state=="ing" || state=="fail"){
 			alert("관리자에게 프로젝트 삭제 요청들어가기");
+			location.href="./projectCancelUpdate?projectNum="+projectNum;
 		}else{
 			alert("완료된 프로젝트나 판매중인 프로젝트를 삭제시 \n프리랜서의 커리어에서 삭제되기 때문에 삭제 불가합니다. \n관리자에게 문의하세요.");
 		}
@@ -1106,9 +1128,23 @@ if(meetKind=='offline'){
 			$('#frmm').submit();
 		} else {
 
+
 		}
 
 	});
+	
+	
+	   
+	   $('#dateBTN').click(function name() {
+
+		   var url="./moreDate";
+		   var option = "width=500,height=500,top=100,left=300";
+		  
+		   window.open(url,'moreDate',option);
+		   
+		   
+		});
+	
 </script>
 </body>
 </html>

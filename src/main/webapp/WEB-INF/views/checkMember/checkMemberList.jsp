@@ -120,6 +120,27 @@
 	border: 1px solid #dedede;
 }
 
+#t1{
+
+	font-size: x-large;
+	margin-top: 20px;
+	margin-left: 30px;
+	font-weight: bolder;
+	color: rgb(85, 85, 85);
+	
+}
+
+#t2{
+
+	font-size: medium;
+	margin-top: 15px;
+	margin-left: 30px;
+	font-weight: normal;
+	color: #999;
+
+}
+
+
 .contents {
 	width: 800px;
 	height: 100%;
@@ -139,16 +160,16 @@
 		
 		var board = '${board}';
 		
-		if(board=='client'){
+		if(board=='Client'){
 			$('#clientBTN').css('background-color', '#446eab');
 		 	$('#clientBTN').children("#client").css('color', 'white');	
 			$('#freelancerBTN').css('background-color', 'white');
 		 	$('#freelancerBTN').children("#freelancer").css('color', 'black');
-		}else{
+		}else if(board=='Freelancer'){
 			$('#freelancerBTN').css('background-color', '#446eab');
-		 	$('#freelancer').children("#client").css('color', 'white');	
+		 	$('#freelancerBTN').children("#freelancer").css('color', 'white');	
 			$('#clientBTN').css('background-color', 'white');
-		 	$('#clientBTN').children("#freelancer").css('color', 'black');
+		 	$('#clientBTN').children("#client").css('color', 'black');
 		}
 		
 		
@@ -190,13 +211,12 @@
 					</div>
 				</div>
 				<div class="history">
-					<c:if test="${board=='client' or board=='freelancer'}">
+					<c:if test="${board=='Client' or board=='Freelancer'}">
 						<p id="clientBTN">
 							<a id="client" href="./checkMemberClientList">클라이언트 관리</a>
 						</p>
 						<p id="freelancerBTN">
-							<a id="freelancer" href="./checkMemberFreelancerList">프리랜서
-								관리</a>
+							<a id="freelancer" href="./checkMemberFreelancerList">프리랜서 관리</a>
 						</p>
 					</c:if>
 				</div>
@@ -204,13 +224,13 @@
 			</article>
 			<article class="right">
 				<div class="title">
-					<c:if test="${board=='client'}">
-						<p>클라이언트 신원확인</p>
-						<p>클라이언트들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
+					<c:if test="${board=='Client'}">
+						<p id="t1">클라이언트 신원확인</p>
+						<p id="t2">클라이언트들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
 					</c:if>
-					<c:if test="${board=='freelancer'}">
-						<p>프리랜서 신원확인</p>
-						<p>프리랜서들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
+					<c:if test="${board=='Freelancer'}">
+						<p id="t1">프리랜서 신원확인</p>
+						<p id="t2">프리랜서들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
 					</c:if>
 				</div>
 

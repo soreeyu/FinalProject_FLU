@@ -94,6 +94,7 @@ public class MemberService {
 
 	//로그인
 	public MemberDTO login(MemberDTO memberDTO) throws Exception{
+
 		return memberDAO.login(memberDTO);
 	}
 

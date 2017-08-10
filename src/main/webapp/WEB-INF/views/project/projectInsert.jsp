@@ -726,14 +726,6 @@ alert(finishYear);
 			 alert("마감일은 최소 1주일입니다.");
 			 
 			 
-	/* 	  $(".chk").each(function() {
-			
-			 if($(this).prop("checked")==false){
-				  alert($(this).val()); 
-			 }
-		});  */
-			 
-			 
 		 }else{
 			 alert("마감일 괜춘");
 			 if(document.frm.startDate.value!=""){

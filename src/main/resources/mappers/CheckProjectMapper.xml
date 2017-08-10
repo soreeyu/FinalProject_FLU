@@ -4,96 +4,60 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="CheckProjectMapper">
-  
-  
-  
-  	<!-- <sql id="project">
-	  	select * from project
-		<choose>
-  				<when test="category==null and detailCategory==null">
-  					where state in
-  					
-  					<foreach collection="project" item="item" open="(" separator="," close=")">
-  					#{item}
-  					</foreach>
-  					
-  					 order by reg_date asc
-  				</when>
-				<when test="category!=null and detailCategory!=null">
-  					where state in
-  					
-  					<foreach collection="project" item="item" open="(" separator="," close=")">
-  					#{item}
-  					</foreach>
-  					
-  					 and category like '%' || #{category} || '%' and detailcategory like '%' || #{detailCategory} || '%' and
-  				
-	  				<if test="kind == 'name'">
-	  					name like '%' || #{search} || '%'
-	  				</if>
-	  				
-	  				<if test="kind == 'email'">
-	  					email like '%' || #{search} || '%'
-	  				</if>
-	  				
-	  				<if test="kind == 'contents'">
-	  					contents like '%' || #{search} || '%'
-	  				</if>
-	  				
-	  				order by reg_date asc
-				</when>
-  			</choose>
-	</sql> -->
-	
 	
   <sql id="project">
-  
   	<choose>
   		<when test="board==null">
- 	  	select * from (select A.*,rownum R from (select * from project where state in 
-	  	
-	 			 	
-  					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
-  					#{item}
-  					</foreach>	  	
-
-	  	and category like '%' || #{projectDTO.category} || '%' 
-	  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
-	  	and name like '%' || #{projectDTO.name} || '%' 
-	  	and email like '%' || #{projectDTO.email} || '%' 
-	  	and planstate like '%' || #{projectDTO.planState} || '%' 
-	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
-	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
-	  	and reg_date between #{projectDTO.reg_date} and sysdate) A) B where R between #{listInfo.startRow} and #{listInfo.lastRow}
-
-	  	order by reg_date asc 		
-  		
+	 	  	select * from (select A.*,rownum R from (select 
+	 	  	projectNum,category,detailcategory,name,state,email,del_check,to_char(reg_date,'YYYY-MM-DD') reg_date	 	  	
+	 	  	 from project where state in 
+		  		 			 	
+	  		<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
+	  			#{item}
+	  		</foreach>	  	
+	
+		  	and category like '%' || #{projectDTO.category} || '%' 
+		  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
+		  	and name like '%' || #{projectDTO.name} || '%' 
+		  	and email like '%' || #{projectDTO.email} || '%' 
+		  	and planstate like '%' || #{projectDTO.planState} || '%' 
+		  	and startdate like '%' || #{projectDTO.startDate} || '%' 
+		  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+		  	and reg_date between #{projectDTO.reg_date} and sysdate
+		  	
+		  	<if test="check=='check'">
+		  		and del_check in ('1','2')
+		  	</if>
+		  	
+		  	) A) B where R between #{listInfo.startRow} and #{listInfo.lastRow}
+		  	order by reg_date asc 		
   		</when>
   		<otherwise>
   		
-  		select * from (select A.*,rownum R from (select * from project where state in 
-	  	
-  					<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
-  					#{item}
-  					</foreach>	  	
-
-	  	and category like '%' || #{projectDTO.category} || '%' 
-	  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
-	  	and name like '%' || #{projectDTO.name} || '%' 
-	  	and startdate like '%' || #{projectDTO.startDate} || '%' 
-	  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
-	  	and reg_date between #{projectDTO.reg_date} and sysdate 
-	    and projectNum in	    
-	  	<foreach collection="projectList" item="item" open="(" separator="," close=")">
-  		#{item}
-  		</foreach>	  
-		) A) B where R between #{listInfo.startRow} and #{listInfo.lastRow}
-	  	order by reg_date asc
+	  		select * from (select A.*,rownum R from (select
+	  		projectNum,category,detailcategory,name,state,email,del_check,to_char(reg_date,'YYYY-MM-DD') reg_date
+	  		from project where state in 
+		  	
+	  		<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
+	  			#{item}
+	  		</foreach>	  	
 	
+		  	and category like '%' || #{projectDTO.category} || '%' 
+		  	and detailcategory like '%' || #{projectDTO.detailCategory} || '%'
+		  	and name like '%' || #{projectDTO.name} || '%' 
+		  	and startdate like '%' || #{projectDTO.startDate} || '%' 
+		  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+		  	and reg_date between #{projectDTO.reg_date} and sysdate 
+		    and projectNum in	    
+		  	
+		  	<foreach collection="projectList" item="item" open="(" separator="," close=")">
+	  			#{item}
+	  		</foreach>	  
+			
+			) A) B where R between #{listInfo.startRow} and #{listInfo.lastRow}
+		  	order by reg_date asc
   		</otherwise>
- 
   	</choose>
- 
 	</sql>
 
   
@@ -112,14 +76,17 @@
    		<select id="finishList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
   			<include refid="project" />
   		</select> 
-  		
+ 
+    	<select id="cancelList" resultType="com.flu.project.ProjectDTO" parameterType="java.util.Map">
+  			<include refid="project" />
+  		</select>  		
   		
   		
 
   		<select id="supportList" parameterType="com.flu.util.ListInfo" resultType="java.lang.String">
   			select projectnum from applicant where email in (select email from member where name like '%' || #{memberName} || '%' and type like '%' || #{type} || '%') and state in ('finish','payFinish')
   		</select>
-  		<!-- 만약 type에 해당되는게 하나도 없어서 projectnum으로 오는게 없으면 에러뜸 -->
+  		<!-- 만약 type에 해당되는게 하나도 없어서 projectnum으로 오는게 없으면 에러뜸.. -->
   		
   		
   		<update id="update" parameterType="com.flu.project.ProjectDTO">
@@ -130,13 +97,13 @@
   				<if test="state=='wait'">
   				state='ing' where projectNum=#{projectNum}
   				</if>
+   				<if test="state=='cancel'">
+  				state='cancel',del_check=2 where projectNum=#{projectNum}
+  				</if>
   		</update>
-  		
-  		
-  		
+  	
   		
   		<select id="checkCount" resultType="java.lang.Integer" parameterType="java.util.Map">
-  			
   			
   			<choose>
 		  		<when test="board==null">
@@ -152,7 +119,12 @@
 			  	and email like '%' || #{projectDTO.email} || '%' 
 			  	and planstate like '%' || #{projectDTO.planState} || '%' 
 			  	and startdate like '%' || #{projectDTO.startDate} || '%' 
-			  	and finishdate like '%' || #{projectDTO.finishDate} || '%' 
+			  	and finishdate like '%' || #{projectDTO.finishDate} || '%'
+
+			  	<if test="check=='check'">
+		  		and del_check in ('1','2')
+		  		</if>
+		  		 
 			  	and reg_date between #{projectDTO.reg_date} and sysdate) A
 		
 			  	order by reg_date asc 		
@@ -184,7 +156,12 @@
 	  	</choose>
   			
   		</select>
-  		
+    		
 
+		<update id="makeFail" parameterType="java.lang.String">
+			update project set state='fail' where finishDate=#{finishDate}
+		</update>   
+		
+		
   		
   </mapper>

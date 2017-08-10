@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,10 +143,12 @@
 
 }
 
+
+
 #searchForm{
 
 	width: 800px;
-	height: 150px;
+	height:220px;
 	margin-top: 20px;
 	background-color: white;
 	border: 1px solid #dedede;
@@ -154,15 +157,16 @@
 
 #searchBTN{
 	
-	width : 100px;
+	width : 150px;
 	height: 30px;
-	background-color: rgb(68, 110, 171);
+	background-color: #339bff;
 	color: white;
-	border: 2px solid black;
-	font-size: 1.5em;
-	font-weight: bolder;
+	border: 1px solid #2099bb;
+	font-size: 1.3em;
 	margin: 0 auto;
-	margin-top: 20px;
+	margin-top: 10px;
+	text-align: center;
+	line-height: normal;
 }
 
 #searchBTN:HOVER{
@@ -174,10 +178,45 @@ cursor: pointer;
 #tb{
 
 margin: 0 auto;
-
+margin-top: 30px;
 
 }
 
+#tb td select{
+	
+	width: 160px;
+	height: 25px;
+	border: 1px solid rgb(203, 203, 180);
+	background-color: rgb(245, 245, 240);	
+	border-radius: 0.1px;
+	
+}
+
+#tb td input{
+	
+	width: 170px;
+	height: 25px;
+	border: 1px solid rgb(203, 203, 180);
+	background-color: rgb(245, 245, 240);
+	
+}
+
+
+
+.tb_title{
+width: 160px;
+height: 30px;
+text-align: center;
+font-family: sans-serif;
+font-weight: bold;
+
+}
+
+.tb_contents{
+
+
+
+}
 
 .contents {
 	width: 800px;
@@ -208,6 +247,124 @@ cursor: pointer;
 	cursor: pointer;
 }
 
+.tavle{
+
+	width: 750px;
+	height: 100%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+thead tr td{
+	
+	height: 30px;
+	font-size: 1.0em;
+	font-weight: bold;
+	color: gb(85, 85, 85);
+	text-align:  center;
+	line-height: 25px;
+	border-bottom: 2px solid #005580;
+	
+}
+
+
+.yui .tbody_td1{
+	
+	width: 5%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+	
+}
+
+.yui .tbody_td2{
+	
+	width: 13%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td3{
+	
+	width: 28%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td4{
+	
+	width: 15%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td5{
+	width: 10%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td6{
+	width: 12%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+
+.yui .tbody_td7{
+	
+	width: 7%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+
+.label{
+    display: inline;
+    padding: .2em .6em .2em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .2em;
+    background-color: #f33d12;
+}
+
+.check_wait_tr{
+	background-color: #f7ffff;
+}
+
+.stop{
+
+color:red;
+
+}
+
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -219,11 +376,15 @@ cursor: pointer;
 			$('#checkBTN').children("#check").css('color', 'white');
 			$('#failBTN').css('background-color', 'white');
 			$('#failBTN').children("#fail").css('color', 'black');
+			$('#cancelBTN').css('background-color', 'white');
+			$('#cancelBTN').children("#cancel").css('color', 'black');
 		} else if (board == 'Fail') {
 			$('#failBTN').css('background-color', '#446eab');
 			$('#failBTN').children("#fail").css('color', 'white');
 			$('#checkBTN').css('background-color', 'white');
 			$('#checkBTN').children("#check").css('color', 'black');
+			$('#cancelBTN').css('background-color', 'white');
+			$('#cancelBTN').children("#cancel").css('color', 'black');
 		} else if (board == 'Wait') {
 			$('#waitBTN').css('background-color', '#446eab');
 			$('#waitBTN').children("#wait").css('color', 'white');
@@ -234,8 +395,14 @@ cursor: pointer;
 			$('#finishBTN').children("#finish").css('color', 'white');
 			$('#waitBTN').css('background-color', 'white');
 			$('#waitBTN').children("#wait").css('color', 'black');
-		} else {
-
+		} else if(board=='Cancel'){
+			$('#checkBTN').css('background-color', 'white');
+			$('#checkBTN').children("#check").css('color', 'black');
+			$('#failBTN').css('background-color', 'white');
+			$('#failBTN').children("#fail").css('color', 'black');
+			$('#cancelBTN').css('background-color', '#446eab');
+			$('#cancelBTN').children("#cancel").css('color', 'white');
+			
 		}
 
 		
@@ -300,6 +467,8 @@ cursor: pointer;
 		$("#email").val("${projectDTO.email}");
 		
 		var startDate = '${projectDTO.startDate}';
+		
+		alert(startDate);
 		
 		var y = startDate.substr(0, 2);
 	    var m = startDate.substr(3, 2);
@@ -379,7 +548,7 @@ cursor: pointer;
 			
 				
 				
-			}else{
+			}else if('${board}'=='Wait'){
 			
 				$.ajax({
 					
@@ -413,14 +582,28 @@ cursor: pointer;
 
 				}) 
 				
-				$('#'+num).on("click",".x", function() {
+/* 				$('#'+num).on("click",".x", function() {
 
 					$("#"+num).remove();
 					
 
-				}) 
+				})  */
 				
 
+			}else{//중단하기
+				
+				alert(num);
+				alert(state);
+				
+ 				if(confirm("프로젝트를 중단하시겠습니까?")){
+				
+					location.href="./checkProjectUpdate?projectNum="+num+"&state="+state;
+					
+					
+				} 
+				
+					
+				
 			}			
 			
 		});
@@ -455,6 +638,7 @@ cursor: pointer;
 	    
 		
 	});
+	
 </script>
 </head>
 <body>
@@ -473,12 +657,15 @@ cursor: pointer;
 					</div>
 				</div>
 				<div class="history">
-					<c:if test="${board=='Check' or board=='Fail'}">
+					<c:if test="${board=='Check' or board=='Fail' or board=='Cancel'}">
 						<p id="checkBTN">
 							<a id="check" href="./checkProjectCheckList">검수 전 프로젝트</a>
 						</p>
 						<p id="failBTN">
 							<a id="fail" href="./checkProjectFailList">모집실패 프로젝트</a>
+						</p>
+						<p id="cancelBTN">
+							<a id="cancel" href="./checkProjectCancelList">중단요청 프로젝트</a>
 						</p>
 					</c:if>
 					<c:if test="${board=='Wait' or board=='Finish'}">
@@ -526,23 +713,28 @@ cursor: pointer;
 						<p id="t1">프리랜서 신원확인</p>
 						<p id="t2">프리랜서들의 신원확인 신청을 받아 승인하는 곳입니다.</p>
 					</c:if>
+					<c:if test="${board=='Cancel'}">
+						<p id="t1">중단요청 프로젝트</p>
+						<p id="t2">클라이언트로부터 중단 요청을 받은 프로젝트를 처리하는 곳입니다.</p>
+					</c:if>
 				</div>
 				
 			<form id="frm" action="">
 					<div id="searchForm">
+
 						<table id="tb">
 						<tr>
-							<td>1차 분류</td>
-							<td>
+							<td class="tb_title">1차 분류</td>
+							<td class="tb_contents">
 								<select name="category">
 									<option value="">전체</option>
 									<option value="개발">개발</option>
 									<option value="디자인">디자인</option>
 								</select>
 							</td>
-						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
-							<td>기획 상태</td>
-							<td>
+						<c:if test="${board=='Check' or board=='Fail' or board=='Wait' or board=='Cancel'}">
+							<td class="tb_title">기획 상태</td>
+							<td class="tb_contents">
 								<select name="planState">
 									<option value="">전체</option>
 									<option value="idea">아이디어까지만 존재</option>
@@ -552,8 +744,8 @@ cursor: pointer;
 							</td>
 						</c:if>
 						<c:if test="${board=='Finish'}">
-							<td>사업자 종류</td>
-							<td>
+							<td class="tb_title">사업자 종류</td>
+							<td class="tb_contents">
 							<select name="type">
 								<option value="">전체</option>	
 								<option value="개인">개인</option>
@@ -564,8 +756,8 @@ cursor: pointer;
 						</c:if>	
 						</tr>
 						<tr>
-							<td>2차 분류</td>
-							<td>
+							<td class="tb_title">2차 분류</td>
+							<td class="tb_contents">
 								<div id="result">
 									<select name="detailCategory">
 										<option value="">전체</option>
@@ -581,43 +773,43 @@ cursor: pointer;
 									</select>
 								</div>
 							</td>
-							<td>프로젝트 명</td>
-							<td><input type="text" name="name" id="name" value="${projectDTO.name}"></td>
+							<td class="tb_title">프로젝트 명</td>
+							<td class="tb_contents"><input type="text" name="name" id="name" value="${projectDTO.name}" placeholder="프로젝트 명을 입력하세요"></td>
 						</tr>
 						<tr>
-							<td>
+							<td class="tb_title">
 							<c:if test="${board=='Check'}">
 							예상 시작일
 							</c:if>
-							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish'}">
+							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish' or board=='Cancel'}">
 							프로젝트 시작일
 							</c:if>
 							</td>
-							<td><input type="date" name="startDate" id="startDate"></td>		
-						<c:if test="${board=='Check' or board=='Fail' or board=='Wait'}">
-							<td>담당자 이메일</td>
-							<td><input type="text" name="email" id="email" value="${projectDTO.email}"></td>
+							<td class="tb_contents"><input type="date" name="startDate" id="startDate"></td>		
+						<c:if test="${board=='Check' or board=='Fail' or board=='Wait' or board=='Cancel'}">
+							<td class="tb_title">담당자 이메일</td>
+							<td class="tb_contents"><input type="text" name="email" id="email" value="${projectDTO.email}" placeholder="클라이언트를 입력하세요"></td>
 						</c:if>
 						<c:if test="${board=='Finish'}">
-							<td>이름</td>
-							<td><input type="text" name="memberName" id="memberName" value="${listInfo.memberName}"></td>
+							<td class="tb_title">이름</td>
+							<td class="tb_contents"><input type="text" name="memberName" id="memberName" value="${listInfo.memberName}"></td>
 						</c:if>
 						
 						</tr>
 						<tr>
-							<td>
+							<td class="tb_title">
 							<c:if test="${board=='Check'}">
 							모집마감일
 							</c:if>
-							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish'}">
+							<c:if test="${board=='Fail' or board=='Wait' or board=='Finish' or board=='Cancel'}">
 							프로젝트 종료일
 							</c:if>
 							</td>
-							<td><input type="date" name="finishDate" id="finishDate"></td>
+							<td class="tb_contents"><input type="date" name="finishDate" id="finishDate"></td>
 							
 							
-							<td>기간</td>
-							<td>
+							<td class="tb_title">기간</td>
+							<td class="tb_contents">
 							<select name="searchDate">
 								<option value="">전체</option>
 								<option value="week">최근 1주</option>
@@ -630,77 +822,72 @@ cursor: pointer;
 						</tr>
 						
 					</table>
-						<div id="searchBTN">검색하기</div>
 					
-				</div>
+						<div id="searchBTN">검색하기</div>
+					</div>	
+
 				
 				
 
 				<div class="contents">
-					
-
-					<table>
+				<div class="tavle">
+					<table class="yui">
+						<thead>
 						<tr>
-							<td>분야</td>
-							<td>세부분야</td>
-							<td>프로젝트명</td>
-							<td>담당자</td>
-							<td>등록날짜</td>
-							<td>상태</td>
-							<td></td>
-
+							<td class="td1">분야</td>
+							<td class="td2">세부분야</td>
+							<td class="td3">프로젝트명</td>
+							<td class="td4">담당자</td>
+							<td class="td5">등록날짜</td>
+							<td class="td6">상태</td>
+							<td class="td7"></td>
 						</tr>
-
-
+						</thead>
+						<tbody>
 						<c:forEach items="${list}" var="i" varStatus="e">
 							<tr>
-								<td>${i.category}</td>
-								<td>${i.detailCategory}</td>
-								<td>
-								<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								
-						  <%-- <c:if test="${i.state=='wait' or i.state=='ing'}"> <!-- 임금대기 -->
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='finish' or i.state=='payFinish'}">
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='fail'}"> <!-- 실패 -->
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='check' or i.state=='done'}"> <!-- 검수 -->
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if> --%>
-
+								<td class="tbody_td1">${i.category}</td>
+								<td class="tbody_td2">${i.detailCategory}</td>
+								<td class="tbody_td3">
+								<a href="../project/projectView?projectNum=${i.projectNum}">
+								${i.name }
+								<c:if test="${i.del_check=='1'}"><span class="stop">중단요청</span></c:if>
+								<c:if test="${i.del_check=='2'}"><span class="stop">중단</span></c:if>
+								</a>
 								</td>
-								<td>${i.email }</td>
-								<td>${i.reg_date}</td>
-								<td>
+								<td class="tbody_td4">${i.email }</td>
+								<td class="tbody_td5">${i.reg_date}</td>
+								<td class="tbody_td6">
 									 <c:if test="${i.state=='check'}">검수 단계</c:if>
 									 <c:if test="${i.state=='done'}">검수 완료</c:if>
+									 <c:if test="${i.state=='recruit'}">모집 완료</c:if>
 									 <c:if test="${i.state=='wait'}">입금대기중</c:if>
 									 <c:if test="${i.state=='ing'}">진행중</c:if>
 									 <c:if test="${i.state=='finish'}">미지급</c:if>
 									 <c:if test="${i.state=='fail'}">모집 실패</c:if>
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
+									 
 								 </td>
-								 <td>
+								 <td class="tbody_td7">
 								 <c:if test="${board=='Finish' or board=='Wait'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
 								 </c:if>
+								 <c:if test="${board=='Cancel' and i.del_check=='1'}">
+								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="cancel">중단하기</span>
+								 </c:if>
 								 </td>
 							</tr>
-							<tr>
-								<td colspan="6">
+							<tr class="check_wait_tr">
+								<td colspan="7">
 									<div id="${i.projectNum}">
 									
 									</div>
 								</td>
 							</tr>
 						</c:forEach>
-
+						</tbody>
 					</table>
-					
+					</div>
 				<!-- 페이징 -->
 				<div class="contents_paging">
 					<c:if test="${listInfo.curBlock>1 }">

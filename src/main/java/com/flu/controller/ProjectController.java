@@ -329,6 +329,24 @@ public class ProjectController {
       return "redirect:/project/projectList";
    }
    
+   //Cancel Update 중단요청하기
+   @RequestMapping(value="projectCancelUpdate")
+   public String projectCancelUpdate(ProjectDTO projectDTO,Model model){
+	   
+	   int result = projectService.projectCancelUpdate(projectDTO);
+	
+	   String message = "실패";
+	   
+	   if(result>0){
+		   message = "중단 요청이 접수되었습니다.";
+	   }
+	   
+	   model.addAttribute("message", message).addAttribute("path", "./projectView?projectNum="+projectDTO.getProjectNum());
+	   
+	   return "/common/result";
+	   
+   }
+   
    
    //delete
    @RequestMapping(value="projectDelete")
@@ -380,6 +398,51 @@ public class ProjectController {
       return "project/projectListInner";
    }
 
+
+	@RequestMapping(value="moreDate")
+	public void moreDate(Model model){
+		
+		model.addAttribute("result",0);
+		
+	}
+   
+   //프로젝트 기간연장하는 관리자의 고유 권한
+	@RequestMapping(value="moreDateUpdate")
+	public String moreDateUpdate(ProjectDTO projectDTO,Model model){
+		System.out.println("여기에도달");
+		projectService.moreDateUpdate(projectDTO);
+		model.addAttribute("result",1);
+		
+		return "./project/moreDate";
+	}
+   
+   
+   
+   
+   
+   //Test
+   //Client가 mypage에서 확인하는 myprojectList
+   //@RequestMapping(value="projectView")
+   /*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
+      System.out.println("Client ProjectList");
+      
+      MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+      int totalCount = projectService.clientPjCount(listInfo, memberDTO);
+      listInfo.makePage(totalCount);
+      listInfo.makeRow();
+      List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
+      
+      System.out.println("totalCount="+totalCount);
+      System.out.println("arsize="+ar.size());
+   
+      model.addAttribute("list", ar);
+      model.addAttribute("type", "list");
+      model.addAttribute("pjcount", totalCount);
+      model.addAttribute("listInfo", listInfo);
+      model.addAttribute("member", memberDTO);
+      
+      return "project/clientProjectList";
+   }*/
    
    //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
    @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)

@@ -254,7 +254,7 @@ p span{
 								정보가 없습니다.
 								</c:if></p>
 								
-								<c:if test="${member.type=='admin'}">
+								<c:if test="${member.kind=='admin'}">
 									<p>신원 인증 자료: 
 										<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
 									</p>

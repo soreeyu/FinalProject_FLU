@@ -24,6 +24,12 @@ public class ApplicantDAO {
 		return sqlSession.selectList(NAMESPACE+"list", projectNum);
 	}
 	
+	//chat List
+	public List<ApplicantDTO> chatList(int projectNum){
+		return sqlSession.selectList(NAMESPACE+"chatList", projectNum);
+	}
+	
+	
 	//지원자 update
 	public int appUpdate(String email){
 		return sqlSession.update(NAMESPACE+"update", email);
