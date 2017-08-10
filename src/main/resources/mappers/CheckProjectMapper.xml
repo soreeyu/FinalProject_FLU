@@ -8,7 +8,9 @@
   <sql id="project">
   	<choose>
   		<when test="board==null">
-	 	  	select * from (select A.*,rownum R from (select * from project where state in 
+	 	  	select * from (select A.*,rownum R from (select 
+	 	  	projectNum,category,detailcategory,name,state,email,del_check,to_char(reg_date,'YYYY-MM-DD') reg_date	 	  	
+	 	  	 from project where state in 
 		  		 			 	
 	  		<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
 	  			#{item}
@@ -32,7 +34,9 @@
   		</when>
   		<otherwise>
   		
-	  		select * from (select A.*,rownum R from (select * from project where state in 
+	  		select * from (select A.*,rownum R from (select
+	  		projectNum,category,detailcategory,name,state,email,del_check,to_char(reg_date,'YYYY-MM-DD') reg_date
+	  		from project where state in 
 		  	
 	  		<foreach collection="listInfo.project" item="item" open="(" separator="," close=")">
 	  			#{item}

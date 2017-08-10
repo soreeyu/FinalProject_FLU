@@ -37,10 +37,10 @@ public class HomeController {
 	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		List<ProjectDTO> count = projectService.roomCount();
+/*		List<ProjectDTO> count = projectService.roomCount();
 		
 		Map<Integer,Object> room = echoHandler.roomCount(count);
-
+*/
 		if(session.getAttribute("member") == null){
 			return "index";
 		}else{

@@ -20,7 +20,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	private Map<Integer, Object> room;
 	
 	
-	public Map<Integer, Object> roomCount(List<ProjectDTO> par){
+/*	public Map<Integer, Object> roomCount(List<ProjectDTO> par){
 		
 		for(int i=0;i<par.size();i++){
 			sessionList = new ArrayList<WebSocketSession>();
@@ -28,7 +28,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		}
 		return room;
 	}
-	
+	*/
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {

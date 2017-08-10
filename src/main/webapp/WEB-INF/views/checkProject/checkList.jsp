@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -246,8 +247,116 @@ cursor: pointer;
 	cursor: pointer;
 }
 
+.tavle{
+
+	width: 750px;
+	height: 100%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+thead tr td{
+	
+	height: 30px;
+	font-size: 1.0em;
+	font-weight: bold;
+	color: gb(85, 85, 85);
+	text-align:  center;
+	line-height: 25px;
+	border-bottom: 2px solid #005580;
+	
+}
 
 
+.yui .tbody_td1{
+	
+	width: 7%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+	
+}
+
+.yui .tbody_td2{
+	
+	width: 13%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td3{
+	
+	width: 28%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td4{
+	
+	width: 15%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td5{
+	width: 10%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td6{
+	width: 10%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+
+.yui .tbody_td7{
+	
+	width: 7%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+
+.label{
+    display: inline;
+    padding: .2em .6em .2em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .2em;
+    background-color: #f33d12;
+}
+
+.check_wait_tr{
+	background-color: #f7ffff;
+}
 
 
 </style>
@@ -713,45 +822,30 @@ cursor: pointer;
 				
 
 				<div class="contents">
-					
-
-					<table>
+				<div class="tavle">
+					<table class="yui">
+						<thead>
 						<tr>
-							<td>분야</td>
-							<td>세부분야</td>
-							<td>프로젝트명</td>
-							<td>담당자</td>
-							<td>등록날짜</td>
-							<td>상태</td>
-							<td></td>
-
+							<td class="td1">분야</td>
+							<td class="td2">세부분야</td>
+							<td class="td3">프로젝트명</td>
+							<td class="td4">담당자</td>
+							<td class="td5">등록날짜</td>
+							<td class="td6">상태</td>
+							<td class="td7"></td>
 						</tr>
-
-
+						</thead>
+						<tbody>
 						<c:forEach items="${list}" var="i" varStatus="e">
 							<tr>
-								<td>${i.category}</td>
-								<td>${i.detailCategory}</td>
-								<td>
+								<td class="tbody_td1">${i.category}</td>
+								<td class="tbody_td2">${i.detailCategory}</td>
+								<td class="tbody_td3">
 								<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								
-						  <%-- <c:if test="${i.state=='wait' or i.state=='ing'}"> <!-- 임금대기 -->
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='finish' or i.state=='payFinish'}">
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='fail'}"> <!-- 실패 -->
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if>
-								<c:if test="${i.state=='check' or i.state=='done'}"> <!-- 검수 -->
-									<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
-								</c:if> --%>
-
 								</td>
-								<td>${i.email }</td>
-								<td>${i.reg_date}</td>
-								<td>
+								<td class="tbody_td4">${i.email }</td>
+								<td class="tbody_td5">${i.reg_date}</td>
+								<td class="tbody_td6">
 									 <c:if test="${i.state=='check'}">검수 단계</c:if>
 									 <c:if test="${i.state=='done'}">검수 완료</c:if>
 									 <c:if test="${i.state=='recruit'}">모집 완료</c:if>
@@ -763,7 +857,7 @@ cursor: pointer;
 									 <c:if test="${i.del_check=='1'}">중단요청</c:if>
 									 <c:if test="${i.del_check=='2'}">중단완료</c:if>
 								 </td>
-								 <td>
+								 <td class="tbody_td7">
 								 <c:if test="${board=='Finish' or board=='Wait'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="${i.state }">열기</span>
 								 </c:if>
@@ -772,17 +866,17 @@ cursor: pointer;
 								 </c:if>
 								 </td>
 							</tr>
-							<tr>
-								<td colspan="6">
+							<tr class="check_wait_tr">
+								<td colspan="7">
 									<div id="${i.projectNum}">
 									
 									</div>
 								</td>
 							</tr>
 						</c:forEach>
-
+						</tbody>
 					</table>
-					
+					</div>
 				<!-- 페이징 -->
 				<div class="contents_paging">
 					<c:if test="${listInfo.curBlock>1 }">
