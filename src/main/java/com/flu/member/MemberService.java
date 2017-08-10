@@ -93,6 +93,7 @@ public class MemberService {
 	}
 
 	//로그인
+
 	public MemberDTO login(MemberDTO memberDTO) throws Exception{
 
 		return memberDAO.login(memberDTO);
@@ -209,4 +210,15 @@ public class MemberService {
 	public int memberCountTotal() throws Exception{
 		return memberDAO.memberCountTotal();
 	}
+	
+	
+	//비번 체크
+	public String pwcheck(MemberDTO memberDTO) throws Exception{
+		return memberDAO.pwCheck(memberDTO);
+	}
+	//회원 탈퇴
+	public int memberDelete(MemberDTO memberDTO) throws Exception{
+		return memberDAO.memberDelete(memberDTO);
+	}
+	
 }

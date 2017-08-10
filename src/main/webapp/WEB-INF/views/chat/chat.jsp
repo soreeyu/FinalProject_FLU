@@ -31,12 +31,16 @@ overflow-y: auto;
  
     
 	$(function() {
-		
+		alert("안녕");
 		 var sock;
 		alert("JSP로 옴");
 		//웸소켓을 지정한 url로 연결한다.
 		    sock = new SockJS("<c:url value="/echo"/>");
+
 			alert("소켓만듬");			
+
+		    alert("방만듬");
+
 		    sock.onopen=onEntrance;
 			alert("메세지 뿅~");			
 		    //자바스크립트 안에 function을 집어넣을 수 있음.

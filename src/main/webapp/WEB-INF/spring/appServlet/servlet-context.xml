@@ -88,6 +88,7 @@
 			<mapping path="/member/freelancerList"/>
 			<mapping path="/meetRoom/meetList"/>
 			<mapping path="/alarm/alarmList"/>
+			<mapping path="/member/myflu"/>
 			<mapping path="/"/>
 			<beans:ref bean="emailCKInterceptor"/>
 		</interceptor>

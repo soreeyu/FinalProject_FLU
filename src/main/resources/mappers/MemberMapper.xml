@@ -161,4 +161,15 @@
 			select nvl(count(rownum),0) from member
 		</select>
 		
+
+		<!-- 회원 탈퇴 비밀번호 체크 -->
+		<select id="pwcheck" parameterType="com.flu.member.MemberDTO" resultType="java.lang.String">
+			select pw from member where email=#{email} and pw = #{pw}
+		</select>
+		
+		<!-- 회원 탈퇴 -->
+		<delete id="memberDelete" parameterType="com.flu.member.MemberDTO">
+			delete member where email=#{email} and pw=#{pw}
+		</delete>
+
   </mapper>

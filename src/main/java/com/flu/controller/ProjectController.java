@@ -136,11 +136,8 @@ public class ProjectController {
       List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
             
       for(int i=0;i<ar.size();i++){
-     	 
-	         /*System.out.println("ar의 Num=="+ar.get(i).getProjectNum());*/
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
-	         /*System.out.println("ar의 appCount=="+ar.get(i).getAppCount());*/
-	         }
+	  }
       
       System.out.println("projectListInner의 ar="+ar);
  
@@ -167,9 +164,9 @@ public class ProjectController {
    @RequestMapping(value="projectView", method=RequestMethod.GET)
    public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
-      
+      System.out.println("controller-projectNum="+projectDTO.getProjectNum());
       projectDTO = projectService.projectView(projectDTO);
-
+      System.out.println("controller-projectNum="+projectDTO.getProjectNum());
       memberDTO = (MemberDTO)session.getAttribute("member");
       ApplicantDTO applicantDTO = new ApplicantDTO();
       applicantDTO.setEmail(memberDTO.getEmail());
@@ -181,8 +178,8 @@ public class ProjectController {
       }
       int applyCount = applicantService.countApplicant(projectNum);
       
-      //project를 등록한 사람의 IMG를 가져오기
-      MemberDTO mem = projectService.projectImg(projectDTO);
+      //project를 등록한 사람의 정보를 가져오기
+      MemberDTO mem = projectService.projectClient(projectDTO);
    
       System.out.println("phone="+memberDTO.getPhone());
       System.out.println("형태="+memberDTO.getKind());
@@ -199,6 +196,9 @@ public class ProjectController {
       
        System.out.println("포폴--"+freelancerService.portfolioList(memberDTO.getEmail()));
       
+      PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
+
+       
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
       model.addAttribute("conCount", sellResult);
@@ -209,6 +209,7 @@ public class ProjectController {
       model.addAttribute("checkCount", checkCount);
       model.addAttribute("mem", mem);
       model.addAttribute("applyCount", applyCount);
+      model.addAttribute("pjsell", pjSellDTO);
 
       //지원할 자격이 되는지 체크
       model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
@@ -290,9 +291,13 @@ public class ProjectController {
       System.out.println("projectNum="+projectDTO.getProjectNum());
       System.out.println("controller-project-name="+projectDTO.getName());
    
+      System.out.println(projectDTO.getSkill().length());
+      System.out.println(projectDTO.getSkills().length);
       model.addAttribute("type", "update");
       model.addAttribute("member", memberDTO);
       model.addAttribute("dto", projectDTO);
+      model.addAttribute("skillSize", projectDTO.getSkills().length);
+      model.addAttribute("skills", projectDTO.getSkills());
       
       return "project/projectInsert";
    }
@@ -502,6 +507,34 @@ public class ProjectController {
 		   System.out.println("pjsell DB에서 삭제 실패");
 	   }
 	   return "member/client/clientproject";
+   }
+   
+   //지원자 선택 컨트롤러
+   @RequestMapping(value="applicantCheck", method=RequestMethod.POST)
+   public String applicantCheck(String paycheck, Integer projectNum){
+	   System.out.println("지원자 선택 컨트롤러 들어옴");
+	   
+	   System.out.println("프로젝트 번호 :"+projectNum);
+	   System.out.println("선택한 지원자 :"+paycheck);
+	   
+	   projectService.applicantCheck(paycheck, projectNum);
+	   
+	   return "redirect:/member/client/clientproject?state=recruit";
+   }
+   
+   //계약완료 컨트롤러
+   @RequestMapping(value="applicantMeet", method=RequestMethod.POST)
+   public String applicantMeet(String pay, ProjectDTO projectDTO){
+	   System.out.println("계약완료 컨트롤러 들어옴");
+	   
+	   System.out.println("스타트데이트 :"+projectDTO.getStartDate());
+	   System.out.println("피니쉬데이트 :"+projectDTO.getFinishDate());
+	   System.out.println("프로젝트 번호 :"+projectDTO.getProjectNum());
+	   System.out.println("금액리스트"+pay);
+	   
+	   projectService.applicantMeet(pay, projectDTO);
+	   
+	   return "redirect:/member/client/clientproject?state=ing";
    }
    
 }

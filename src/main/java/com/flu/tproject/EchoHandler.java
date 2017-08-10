@@ -53,9 +53,12 @@ public class EchoHandler extends TextWebSocketHandler{
 		this.email = email;
 	}
 	
+	
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
+
 		System.out.println("방들어오는 메소드");
 		
 		this.applicantList(7777);
@@ -82,6 +85,11 @@ public class EchoHandler extends TextWebSocketHandler{
 			}*/
 		
 	
+
+		
+		logger.info("{} 연결됨", session.getId());
+		System.out.println("1번");
+
 	}
 
 	
@@ -90,6 +98,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		System.out.println("메세지 전송 전");
 		
+
 		for(int i=0;i<roomList.get(7777).size();i++){
 			
 			for(WebSocketSession sess : roomList.get(7777)){
@@ -97,10 +106,10 @@ public class EchoHandler extends TextWebSocketHandler{
 				logger.info("{}로부터 {} 받음", session.getId(),message.getPayload());
 				System.out.println("444");
 			}
-			
-			
-			System.out.println(session.getId()+"가 메세지보냄");
 		}
+			
+			
+		
 	}
 	
 	@Override
@@ -110,7 +119,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		sessionList.remove(session);
 		logger.info("{} 연결끊김", session.getId());
-		
+		System.out.println("3번");
 		//System.out.println("채팅방 퇴장자: "+session.getPrincipal().getName());
 		
 	}

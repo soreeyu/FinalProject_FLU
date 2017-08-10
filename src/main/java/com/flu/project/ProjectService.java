@@ -1,13 +1,15 @@
 package com.flu.project;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.member.MemberDTO;
 import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
@@ -41,11 +43,10 @@ public class ProjectService {
 	
 	//project View
 	public ProjectDTO projectView(ProjectDTO projectDTO){
-		System.out.println("projectView에서 skill파싱하기");
+		System.out.println("projectView - service");
 		System.out.println("num=="+projectDTO.getProjectNum());
 		
 		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
-		System.out.println("projectnum=="+projectDTO.getProjectNum());
 
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
 				
@@ -96,11 +97,15 @@ public class ProjectService {
 			}
 			System.out.println(ar.get(i).getSkills());
 		}
-		
 
-	
 		return ar;
 	}
+	
+	public List<ApplicantDTO> applicantList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
+			
+		return projectDAO.applicantList(listInfo, memberDTO, projectDTO);
+	}
+	
 	
 	//Client ProjectList의 Count
 	public int clientPjCount(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
@@ -156,8 +161,8 @@ public class ProjectService {
 
 
 	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
-	public MemberDTO projectImg(ProjectDTO projectDTO){
-		return projectDAO.projectImg(projectDTO);
+	public MemberDTO projectClient(ProjectDTO projectDTO){
+		return projectDAO.projectClient(projectDTO);
 	}
 	
 	
@@ -208,6 +213,50 @@ public class ProjectService {
 	}
 
 	
+
+	
+	//지원자 선택 서비스
+	public int applicantCheck(String paycheck, Integer projectNum){
+		List<String> ar = projectDAO.applicantEmailList(projectNum);
+		projectDAO.projectUpdateRecruit(projectNum);
+		List<String> emailList = new ArrayList<String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(ar.size() > 0){
+		for(int i=0; i<ar.size(); i++){
+			System.out.println("이메일 목록 :"+ar.get(i));
+			if(paycheck.contains(ar.get(i))){
+				emailList.add(ar.get(i));
+			}
+		}
+		}
+		System.out.println("선택받은 놈수:"+emailList.size());
+		map.put("emailList", emailList);
+		map.put("projectNum", projectNum);
+		return projectDAO.applicantUpdateMeet(map);
+	}
+	//계약 완료 서비스(모집완료에서 금액,시작일 입력)
+	public int applicantMeet(String pay , ProjectDTO projectDTO){
+		List<String> ar = projectDAO.meetList(projectDTO.getProjectNum());
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> payList2 = new ArrayList<String>();
+		String [] payList = pay.split(",");
+		int budget = 0;
+		for(String pay1 : payList){
+			System.out.println("페이 :"+pay1);
+			payList2.add(pay1);
+			budget = budget+Integer.parseInt(pay1);
+		}
+		projectDTO.setBudget(budget);
+		projectDAO.projectUpdateIng(projectDTO);
+		map.put("pay", payList2);
+		map.put("emailList", ar);
+		map.put("dto", projectDTO);
+		
+		
+		return projectDAO.applicantUpdateIng(map);
+	}
+	
+
 	//index에 뿌려질 등록된 프로젝트 금액
 	public int totalBudget() throws Exception{
 		return projectDAO.totalBudget();
@@ -216,4 +265,5 @@ public class ProjectService {
 	public List<ProjectDTO> indexProjectList () throws Exception{
 		return projectDAO.indexProjectList();
 	}
+
 }

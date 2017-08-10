@@ -187,9 +187,15 @@ public class ProjectDTO {
 	public int getDel_check() {
 		return del_check;
 	}
+
 	public void setDel_check(int del_Check) {
 		this.del_check = del_Check;
+
+	public void setDel_check(int del_check) {
+		this.del_check = del_check;
+
 	}
+
 	
 	
 	

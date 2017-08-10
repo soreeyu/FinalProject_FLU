@@ -274,7 +274,7 @@
 					</div>
 					<div class="sidebar_menu">
 						<ul>
-							<li><a class="menu" id="project_list">나의 프로젝트</a></li>
+					
 							<li><a class="menu" id="project_app">지원한 프로젝트</a></li>
 							<li><a class="menu" id="project_ing">진행중인 프로젝트</a></li>
 							<li><a class="menu" id="project_finish">완료된 프로젝트</a></li>
@@ -291,7 +291,7 @@
 					<div class="contents_inner">
 						<div class="title">
 
-							<p id="t1">나의 프로젝트</p>
+							<p id="t1"></p>
 							<!-- <p id="t2">나의 전체 프로젝트</p> -->
 
 						</div>
@@ -318,18 +318,19 @@
 <script type="text/javascript">
 /* 기본적인 세팅 */
 
-$.get("myprojectInner?curPage=1", function(data){
+$.get("myprojectInner?curPage=1&state=app", function(data){
 	 alert(data);
 		$(".contents").html(data);
+		$("#t1").text("지원한 프로젝트");
 }); 
 	
-$("#project_list").click(function() {
+/* $("#project_list").click(function() {
 	 $.get("myprojectInner?curPage=1", function(data){
 		 alert(data);
 			$(".contents").html(data);
 			
 		}); 
-});
+}); */
 $("#project_app").click(function() {
 	alert("지원한 프로젝트");
 	$.get("myprojectInner?curPage=1&state=app", function(data){

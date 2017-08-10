@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 
 @Repository
@@ -35,8 +36,10 @@ public class PjSellDAO {
 	}
 	
 
-	public PjSellDTO pjsellView(int num){
-		return null;
+	//pjsell의 내용 가져오기
+	public PjSellDTO pjsellInfo(ProjectDTO projectDTO){
+		int pjnum = projectDTO.getProjectNum();
+		return sqlSession.selectOne(NAMESPACE+"pjsellInfo", pjnum);
 	}
 	
 

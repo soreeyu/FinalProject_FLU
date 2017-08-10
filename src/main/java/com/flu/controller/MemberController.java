@@ -24,7 +24,7 @@ import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
-import com.flu.util.AES256Util;
+//import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -190,6 +190,25 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
+		//회원 탈퇴 비번확인
+		@RequestMapping(value="pwCheck")
+		@ResponseBody
+		public String pwCheck(MemberDTO memberDTO) throws Exception{
+			
+			return memberService.pwcheck(memberDTO);
+		}
+		
+		//회원 탈퇴
+		@RequestMapping(value="memberDelete")
+		public String memberDelte(MemberDTO memberDTO, HttpSession session) throws Exception{
+			int result =memberService.memberDelete(memberDTO);
+			
+			if(result > 0){
+				session.invalidate();
+			}
+			
+			return "redirect:/";
+		}
 		
 		//MY FLU
 		@RequestMapping(value="myflu")

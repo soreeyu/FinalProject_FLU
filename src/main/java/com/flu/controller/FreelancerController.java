@@ -49,6 +49,12 @@ public class FreelancerController {
 	
 	private AlarmDTO alarmDTO;
 
+	@RequestMapping(value="test11")
+	public String Test(){
+		
+		return "redirect:test";
+	}
+	
 	//이메일 가져오는 메서드
 	private String getEmail(HttpSession session){
 		return ((MemberDTO)session.getAttribute("member")).getEmail();
@@ -150,8 +156,15 @@ public class FreelancerController {
 		String email = (String)request.getAttribute("email");
 		
 		model.addAttribute("active8", "a");
+		if(email.equals(this.getEmail(session))){
 		model.addAttribute("free", this.freelancerview2((this.getEmail(session))));
 		model.addAttribute("email", email);
+		model.addAttribute("memberDTO",this.getMemberDTO(this.getEmail(session)));
+		}else{
+			model.addAttribute("free", this.freelancerview2(email));
+			model.addAttribute("email", email);
+			model.addAttribute("memberDTO",this.getMemberDTO(email));
+		}
 		return "/member/freelancer/freelancerinfoView";
 	}
 	
@@ -661,7 +674,7 @@ public class FreelancerController {
 		model.addAttribute("data", "0");
 		
 		Map<String, Object> map = freelancerService.myskillList(this.getEmail(session));
-		
+		System.out.println("skillUpdate임");
 		model.addAttribute("slevel", map.get("slevel"));
 		model.addAttribute("exp", map.get("exp"));
 		return "/member/freelancer/skillform";
@@ -1039,10 +1052,6 @@ public class FreelancerController {
 		List<ProjectDTO> ar = freelancerService.listAll(memberDTO, listInfo, applicantDTO);
 		
 		for(int i=0;i<ar.size();i++){
-			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
-		}
-		
-		 for(int i=0;i<ar.size();i++){
         	 
 	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));

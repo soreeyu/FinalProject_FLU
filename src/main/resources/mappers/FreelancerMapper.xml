@@ -8,6 +8,11 @@
   		 <sql id="search">
  			where j.intro like '%' || #{search } || '%' or j.INTERESTING like '%' || #{search} || '%' or j.nickname like '%' || #{search} || '%' 
  		</sql>
+ 		<sql id="list">
+ 			<foreach collection="email" item="item" open="(" separator="," close=")">
+  					#{item}
+  				</foreach>
+ 		</sql>
   		
   		<!-- 프리랜서 계정 정보 -->
   		<select id="memberView" resultType="com.flu.member.MemberDTO" parameterType="java.lang.String">
@@ -73,6 +78,58 @@
   			select * from evaluation where toemail = #{email}
   		</select>
   		
+  		<!-- 프리랜서 리스트 최적화  -->
+  		<select id="freelancerList_member2" resultType="com.flu.member.MemberDTO" parameterType="java.util.Map">
+  			select * from  member
+  			<where>
+  				email in
+  				<include refid="list"></include>
+  			</where>
+  		</select>
+  		
+  		<select id="freelancerList_freelancer2" resultType="com.flu.freelancer.FreelancerDTO" parameterType="java.util.Map">
+  			select * from freelancer 
+  			<where>
+  				email in
+  				<include refid="list"></include>
+  			</where>
+  		</select>
+  		
+  		<select id="freelancerList_evaluation2" resultType="com.flu.profile.Evaluation" parameterType="java.util.Map">
+  			select * from evaluation 
+  			<where>
+  				toeamil in
+  				<include refid="list"></include>
+  			</where>
+  		</select>
+  		
+  		<select id="skillList2" resultType="com.flu.profile.Skill" parameterType="java.util.Map">
+  			select * from skill 
+  			<where>
+  				email in
+  				<include refid="list"></include>
+  			</where>
+  		</select>
+  		
+  		<!-- 내가 참여한 프로젝트 갯수 -->
+  		<select id="myprojectList2" parameterType="java.util.Map" resultType="com.flu.project.ProjectDTO">
+  			select email,count(*) as appcount from applicant
+  			  <where>
+  				email in
+  				<include refid="list"></include>
+  			</where>
+  			group by email
+  		</select>
+  		
+  		<!-- 내 포트폴리오 갯수  -->
+  		<select id="myportfolioList2" parameterType="java.util.Map" resultType="com.flu.profile.PortFolio">
+  			select email,count(*) as pfnum from PORTFOLIO 
+  			<where> 
+  			email in
+  			<include refid="list"></include>
+  			</where>
+  			 group by email
+  		</select>
   		
   	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡPortFolioㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
   		

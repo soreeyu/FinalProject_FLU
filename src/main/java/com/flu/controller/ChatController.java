@@ -21,8 +21,12 @@ import com.flu.tproject.EchoHandler;
 @RequestMapping("/chat/*")
 public class ChatController {
 	
+
 	@Inject
 	private EchoHandler echoHandler;
+
+
+
 	
 	@RequestMapping(value="chatDo")
 	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request,Integer projectNum){

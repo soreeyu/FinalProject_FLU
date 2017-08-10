@@ -159,7 +159,9 @@ public class ClientController {
 	         listInfo.makeRow();
 	         
 	         List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
-	         
+	         if(projectDTO.getState().equals("done") || projectDTO.getState().equals("recruit")){
+	         model.addAttribute("applicantList", projectService.applicantList(listInfo, memberDTO, projectDTO));
+	         }
 	         for(int i=0;i<ar.size();i++){
 	        	 
 	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());

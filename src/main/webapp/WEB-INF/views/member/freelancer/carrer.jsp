@@ -159,7 +159,7 @@
 }
 
 #a{
-	background-color: #66b3ff;
+	background-color: #339bff;
 	color: white;
 }
 
@@ -177,7 +177,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: black;
+    background-color: #339bff;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -197,8 +197,10 @@
 }
 
 
+
 thead{
-	background-color: #ccddff;
+	color: white;
+	background-color: #66b3ff;
 	font-weight: bold;
 	font-size: 15px;
 }
@@ -212,7 +214,7 @@ th, td{
 	border-bottom: 1px solid #ccccff;
 }
 th{
-	border-top: 2px solid #3377ff;
+	border-top: 2px solid #66b3ff;
 }
 th:FIRST-CHILD,td:FIRST-CHILD{
 	border-left: 0;

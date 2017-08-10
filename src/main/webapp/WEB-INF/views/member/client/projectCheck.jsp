@@ -1,14 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <title>Insert title here</title>
+<style type="text/css">
+thead{
+	background-color: #ccddff;
+	font-weight: bold;
+	font-size: 15px;
+}
+tbody{
+	font-size: 15px;
+	text-align: left;
+}
+th, td{
+	padding: 8px;
+	border-left: 1px solid #ccccff;
+	border-bottom: 1px solid #ccccff;
+}
+th{
+	border-top: 2px solid #339bff;
+}
+th:FIRST-CHILD,td:FIRST-CHILD{
+	border-left: 0;
+}
+#appformMeet tr:FIRST-CHILD{
+	border-top: 2px solid #339bff;
+}
+#appformMeet th{
+	border-top: inherit;
+	background-color: #e6f5ff;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
 <c:if test="${list.size()==0}">
@@ -48,15 +75,27 @@
 							</c:if>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							총 <strong>${dto.appCount}명</strong></div>	
+							총 
+							<c:choose>
+							<c:when test="${dto.state eq 'done' }">
+								<span style="cursor: pointer;" data-toggle="modal" data-target="#rList-Modal${dto.projectNum}">${dto.appCount}명</span>
+							</c:when>
+							<c:when test="${dto.state eq 'recruit' }">
+								<span style="cursor: pointer;" data-toggle="modal" data-target="#rList-Modal2${dto.projectNum }">${dto.appCount}명</span>
+							</c:when>
+							<c:otherwise>
+								<strong>${dto.appCount}명</strong>
+							</c:otherwise>
+							</c:choose>
+							</div>	
 						</div>
 						</c:if>
 						
 						
 						<!-- 완료된 프로젝트에 판매버튼 추가하기 -->						
-						<c:if test="${dto.state eq 'finish'}">
+						<c:if test="${dto.state eq 'finish'}">	
 						<div class="project-contents-right">
-							<button class="projectSellBTN" id="${dto.projectNum}" data-toggle="modal" data-target="#sell-Modal">
+							<button class="projectSellBTN" id="${dto.projectNum}" data-toggle="modal">
 							판매하기</button> 
 			 			</div>
 						</c:if>
@@ -71,7 +110,109 @@
 						
 						
 		   <!----------------------- Modal ---------------------------------->
-        
+	   
+  <!-- 지원자 목록 모달 -->      
+	<div class="modal fade" id="rList-Modal${dto.projectNum }" role="dialog">
+		<div class="modal-dialog">
+    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">계약을 진행 할 사람을 선택 하세요.</h4>
+	        </div>
+	        <div class="modal-body">
+	        <form id="appform" action="/flu/project/applicantCheck" method="post">
+	        <input id="hiddenNum" type="hidden" name="projectNum">
+	        <table style="display:block; margin:0 auto; width: 70%; text-align: center;">
+	        <colgroup>
+	        	<col width="317px">
+	        	<col width="100px">
+	        </colgroup>
+	        <thead>
+	        <tr>
+	        	<th style="text-align: center;">지원자 목록</th>
+	        	<th style="text-align: center;">선택 여부</th>
+	        </tr>
+	        </thead>
+	        <tbody>
+	        <c:forEach items="${applicantList }" var="i" varStatus="o">
+	        <c:if test="${i.projectNum eq dto.projectNum }">
+	        <tr>
+	          <td><label for="${o.index }">${i.email }</label></td>
+	          <td style="text-align: center;"><input title="${i.projectNum }" style="vertical-align:bottom;height: 20px;width: 30px;" class="paybox" id="${o.index }" type="checkbox" name="paycheck" value="${i.email }"></td>
+	        </tr>
+	          <p style="vertical-align:top; font-size: 20px;font-weight: bold;">
+	          <span style="margin-left: 30px;"></span></p>
+	          </c:if>
+	        </c:forEach>
+	        </tbody>
+	        </table>
+	        </form>
+	        </div>
+	        <div class="modal-footer">
+	        	<button class="okbtn btn btn-default" type="button" class="btn btn-default">확인</button>
+	          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        </div>
+	      </div>
+      
+    	</div>
+	</div>
+	
+	<!-- 모집완료 모달 -->
+	<div class="modal fade" id="rList-Modal2${dto.projectNum }" role="dialog">
+		<div class="modal-dialog">
+    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">계약금과 프로젝트 시작일을 설정해 주세요</h4>
+	        </div>
+	        <div class="modal-body">
+	        <form id="appformMeet" action="/flu/project/applicantMeet" method="post">
+	        <input id="hiddenNum" type="hidden" name="projectNum" value="${dto.projectNum }">
+	        <table style="display:block; margin:0 auto; width: 100%; text-align: center;">
+	        <colgroup>
+	        	<col width="100px">
+	        	<col width="180px">
+	        	<col width="100px">
+	        	<col width="180px">
+	        </colgroup>
+	        <thead>
+	        </thead>
+	        <tbody>
+	        <c:forEach items="${applicantList }" var="i" varStatus="o">
+	        <c:if test="${i.state eq 'meet' && i.projectNum eq dto.projectNum }">
+	        <tr>
+	        	<th style="text-align: center;">지원자 </th>
+	        	<td style="text-align: center;">${i.email }</td>
+	        	<th style="text-align: center;">계약금 </th>
+	        	<td style="text-align: center;"><input type="text" name="pay"class="form-control"></td>
+	        </tr>
+	        </c:if>
+	        </c:forEach>
+	        <tr style="border-bottom: 2px solid #3377ff;">
+	        	<th style="text-align: center;border-top: 1px solid #ccccff">시작일</th>
+	        	<td><input type="date"class="form-control" name="startDate"></td>
+	        	<th style="text-align: center;border-top: 1px solid #ccccff">종료일</th>
+	        	<td><input type="date"class="form-control" name="finishDate"></td>
+	        </tr>
+	        </tbody>
+	        </table>
+	        </form>
+	        </div>
+	        <div class="modal-footer">
+	        	<button class="okbtn2 btn btn-default" type="button" class="btn btn-default">확인</button>
+	          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        </div>
+	      </div>
+      
+    	</div>
+	</div>
+
+	
+
 
   <!-- Modal -->
   <div class="modal fade" id="sell-Modal" role="dialog">
@@ -283,6 +424,74 @@ $(".CancleSellBTN").click(function() {
 	}else{
 		alert("판매 취소가 취소되었습니다.");
 	}
+});
+
+// 지원자 선택버튼
+
+$(".okbtn").click(function() {
+	var pronum =$(".paybox").attr("title");
+	$("#hiddenNum").val(pronum);
+	
+	var checkbox = $("input[name='paycheck']:checked");
+	var count =0;
+	$(checkbox).each(function() {
+		count++;
+	});
+	if(count == 0){
+		alert("지원자를 선택해 주세요")
+	}else{
+		$("#appform").submit();
+	}
+	
+});
+
+
+//계약 버튼
+$(".okbtn2").click(function() {
+	
+	var pay = $("input[name='pay']:text");
+	var paycheck = 0;
+	var length = 0;
+	$(pay).each(function() {
+		if($(this).val() != ""){
+			$(this).css("border", "1px solid #ccc");
+			paycheck++;
+		}else{
+			$(this).css("border", "1px solid red");
+		}
+		length++;
+	});
+	var startDate = $("input[name='startDate']").val();
+	var finishDate = $("input[name='finishDate']").val();
+	if(startDate == ""){
+		$("input[name='startDate']").css("border", "1px solid red");
+	}else{
+		$("input[name='startDate']").css("border", "1px solid #ccc");
+	}
+	if(finishDate == ""){
+		$("input[name='finishDate']").css("border", "1px solid red");
+	}else{
+		$("input[name='finishDate']").css("border", "1px solid #ccc");
+	}
+	var datecheck = 0;
+	if(startDate != "" && finishDate != ""){
+	if(startDate > finishDate){
+		$("input[name='startDate']").css("border", "1px solid red");
+		$("input[name='finishDate']").css("border", "1px solid red");
+		datecheck = 1;
+	}else{
+		$("input[name='startDate']").css("border", "1px solid #ccc");
+		$("input[name='finishDate']").css("border", "1px solid #ccc");
+		datecheck =0;
+	}
+	}
+	
+	if(paycheck == length && startDate !="" && finishDate != "" && datecheck ==0){
+		$("#appformMeet").submit();
+	}else{
+		alert("실패");
+	}
+	
 });
 
 	

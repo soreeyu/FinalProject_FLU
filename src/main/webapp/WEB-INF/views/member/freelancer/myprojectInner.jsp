@@ -34,17 +34,28 @@
 					</div>
 					<div class="project-body">
 						<div class="project-info">
-							<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
-							<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
+							<c:choose>
+							<c:when test="${applicant.state eq 'app'}">							
+								<div class="fa fa-won" style="padding-left: 0px;">예상금액 ${dto.budget}원</div>
+								<div class="fa fa-clock-o">예상기간 ${dto.period}일</div>
+							</c:when>
+							<c:otherwise>
+								<div class="fa fa-won" style="padding-left: 0px;">금액 ${dto.budget}원</div>
+								<div class="fa fa-clock-o">기간 ${dto.period}일</div>
+							</c:otherwise>
+							</c:choose>
+							
 							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
 						</div>
 						<div class="project-contents">${dto.contents }</div>
 						
 						<c:if test="${applicant.state eq 'app' || dto.state eq 'ing' }">
 						<div class="project-contents-right">
+							<c:if test="${applicant.state eq 'app' }">
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
 							마감<span class="deadline" id="${dto.finishDate}"></span></div>
+							</c:if>
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
 							총 <strong>${dto.appCount}명</strong></div>
@@ -64,6 +75,7 @@
 								 <span class="skill-name" style="color: white; font-size: 13px;">${sk}</span>
 							
 							</c:forEach>
+							
 							
 							</div>
 						</div>

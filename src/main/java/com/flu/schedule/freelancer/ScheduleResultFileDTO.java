@@ -1,5 +1,7 @@
 package com.flu.schedule.freelancer;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ScheduleResultFileDTO {
 	
 	private int unitResultFileNum;
@@ -7,7 +9,15 @@ public class ScheduleResultFileDTO {
 	private String resultOName;
 	private int resultFileSeq; // 해당 doResultFileNum(고유번호임)에서의 순서 
 	
+	private MultipartFile [] unitResultFiles;
 	
+	
+	public MultipartFile[] getUnitResultFiles() {
+		return unitResultFiles;
+	}
+	public void setUnitResultFiles(MultipartFile[] unitResultFiles) {
+		this.unitResultFiles = unitResultFiles;
+	}
 	public int getUnitResultFileNum() {
 		return unitResultFileNum;
 	}
@@ -32,6 +42,8 @@ public class ScheduleResultFileDTO {
 	public void setResultFileSeq(int resultFileSeq) {
 		this.resultFileSeq = resultFileSeq;
 	}
+
+	
 	
 	
 }

@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
 
 
 <title>Insert title here</title>
@@ -277,101 +275,6 @@ input[type=text]{
 					</section>
 					<section class="profile_wrap">
 						
-						<div class="no_data_wrap">
-							<div class="email_guide">
-							<img alt="" src="${pageContext.request.contextPath }/resources/img/mypage/guide.png">
-							<div>
-								<p style="font-weight: bold;">[계좌 관리 가이드]</p>
-								<p>프로젝트 대금의 안전한 송금을 위해 정확한 계좌번호가 필요합니다.</p>
-							</div>
-							</div>
-							<p><span>등록 계좌</span>
-							<c:choose>
-							<c:when test="${not empty member.bank }">
-								<span class="update">수정</span>
-							</c:when>
-							<c:otherwise>
-							<span class="update" style="display: none;"></span>
-							</c:otherwise>
-							</c:choose>
-							</p>
-							
-							<c:choose>
-							<c:when test="${not empty member.bank }">
-								<div class="myaccount_form">
-							</c:when>
-							<c:otherwise>
-								<div class="myaccount_form" style="display: none">
-							</c:otherwise>
-							</c:choose>
-								<div class="bank_name_form form">
-									<div class="bank_name">
-										<span>은행명</span>
-										<label>국민은행</label>
-									</div>
-								</div>
-								<div class="account_name_form form">
-									<div class="account_name">
-										<span>예금주</span>
-										<label>${member.account }</label>
-									</div>
-								</div>
-								<div class="account_number_form form">
-									<div class="account_number">
-										<span>계좌번호</span>
-										<label>${member.accountNumber }</label>
-									</div>
-								</div>
-							</div>
-							
-							<c:choose>
-							<c:when test="${not empty member.bank }">
-							<form id="form" action="accountInsert" method="post" style="display: none;">
-							</c:when>
-							<c:otherwise>
-							<form id="form" action="accountInsert" method="post" style="display: inherit;">
-							</c:otherwise>
-							</c:choose>
-								<input type="hidden" name="email" value="${member.email }">
-								<div class="form">
-									<label>은행명</label>
-									<div>
-										<select id="bank" class="form_control" name="bank">
-											<option value="기업은행">기업은행</option>
-											<option value="국민은행">국민은행</option>
-											<option value="우리은행">우리은행</option>
-											<option value="신한은행">신한은행</option>
-											<option value="하나은행">하나은행</option>
-											<option value="농협">농협</option>
-											<option value="외환은행">외환은행</option>
-											<option value="한국씨티은행">한국씨티은행</option>
-										</select>
-									</div>
-								</div>
-								<div class="form">
-									<label>예금주</label>
-									<div>
-										<input type="text" id="account" class="form_control" name="account" value="${member.account }">
-									</div>
-								</div>
-								<div class="form">
-									<label>계좌번호</label>
-									<div>
-										<input type="text" id="accountNumber" class="form_control" name="accountNumber" value="${member.accountNumber }">
-									</div>
-								</div>
-								<div class="btn">
-									<p>
-									<span class="ok">완료</span>
-									<c:if test="${not empty member.bank }">
-									<span class="cencel">취소</span>
-									</c:if>
-									</p>
-									
-								</div>
-							</form>
-							
-						</div>
 						
 					</section>
 					
@@ -383,38 +286,6 @@ input[type=text]{
 	
 	<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 </body>
-<script type="text/javascript">
 
-	$(".update").click(function() {
-		
-		$(".myaccount_form").css("display", "none");
-		$("#form").css("display", "inline-block");
-		$(this).css("display", "none");
-	});
-	$(".cencel").click(function() {
-		$(".myaccount_form").css("display", "block");
-		$("#form").css("display", "none");
-		$(".update").css("display", "inherit");
-	});
-	$(".ok").click(function() {
-		var number = $("#accountNumber").val();
-		var name = $("#account").val();
-		
-		if(number != "" || name != ""){
-			alert("널없음");
-			$("#form").submit();
-		}else{
-			alert('널있음');
-		}
-	});
-	
-	var bank = '${member.bank}';
-	
-	if(bank != ""){
-		$("#bank").val(bank);
-	}
-	
-	
-</script>
 
 </html>
