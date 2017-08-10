@@ -24,11 +24,7 @@ import com.flu.tproject.EchoHandler;
 
 @Controller
 public class HomeController {
-	
-	@Inject
-	private EchoHandler echoHandler; 
-	@Inject
-	private ProjectService projectService;
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -38,8 +34,6 @@ public class HomeController {
 	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		List<ProjectDTO> countList = projectService.roomCount();
-		echoHandler.roomCount(countList);
 
 		if(session.getAttribute("member") == null){
 			return "index";

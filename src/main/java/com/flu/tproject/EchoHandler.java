@@ -31,13 +31,13 @@ public class EchoHandler extends TextWebSocketHandler{
 	private Integer projectNum;
 	
 	public void roomCount(List<ProjectDTO> par){	
+		System.out.println("채팅방 들어갈때 방만듬");
 		
-		for(int i=0;i<par.size();i++){
-			
+		for(int i=0;i<par.size();i++){	
 			if(roomList.get(par.get(i).getProjectNum())==null){	
 				List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 				this.roomList.put(par.get(i).getProjectNum(), sessionList);
-				System.out.println("서버 켜자마자 방만듬");
+
 				System.out.println("webSession:"+roomList.get(par.get(i).getProjectNum()));	
 			}
 
@@ -63,8 +63,13 @@ public class EchoHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
 		System.out.println("방들어오는 메소드");
-		this.setNum(projectNum);
 		System.out.println("방번호:"+this.projectNum);
+		Map<String, Object> mapSession = session.getAttributes();
+		
+		mapSession.put(session.getId(), this.projectNum);
+		
+		System.out.println("주어진 세션아이디: "+session.getId());
+		
 		this.roomList.get(this.projectNum).add(session);
 		System.out.println("지금 아이디: "+this.email);
 	
@@ -75,8 +80,9 @@ public class EchoHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		System.out.println("메세지 전송 전");
-			
-			for(WebSocketSession sess : roomList.get(this.projectNum)){
+		System.out.println("주어진 세션아이디로 꺼낸 프로젝트 번호: "+session.getAttributes().get(session.getId()));
+		
+			for(WebSocketSession sess : roomList.get(session.getAttributes().get(session.getId()))){
 				sess.sendMessage(new TextMessage(session.getRemoteAddress().getHostName()+":"+message.getPayload()));
 				logger.info("{}로부터 {} 받음", session.getId(),message.getPayload());
 				System.out.println("메세지 전송 확인");

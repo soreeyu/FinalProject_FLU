@@ -1,5 +1,7 @@
 package com.flu.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.flu.chat.ChatDTO;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
 import com.flu.tproject.EchoHandler;
 
 @Controller
@@ -23,6 +27,8 @@ public class ChatController {
 	
 	@Inject
 	private EchoHandler echoHandler;
+	@Inject
+	private ProjectService projectService;
 	
 	@RequestMapping(value="chatDo")
 	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request,Integer projectNum){
@@ -35,6 +41,10 @@ public class ChatController {
 		//String ip = session에서 IP꺼내기
 		
 		echoHandler.setNum(projectNum);
+
+		List<ProjectDTO> countList = projectService.roomCount();
+		System.out.println("카운트:"+countList.size());
+		echoHandler.roomCount(countList);
 		echoHandler.setId(((MemberDTO)(session.getAttribute("member"))).getEmail());
 		
 		mv.addObject("user", user).addObject("clientIP",clientIP).addObject("serverIP",serverIP);
