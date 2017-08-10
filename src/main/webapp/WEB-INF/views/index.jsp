@@ -288,11 +288,41 @@
 			</c:forEach>
 		</div>
 	</section>
-	<section class="freelancer">
-		<div class="freelancer_div">
-				등록된 프리랜서
-				
-				더보기
+	<section class="project">
+		<div class="project_div">
+			<div class="list_heading">등록된 프리랜서</div>
+				<c:forEach begin="0" end="5" var="f">
+			<div class="project_item">
+				<h4 style="color :#2099bb;">
+					${freelancer[f].email}
+				</h4>
+				<h4>닉네임 : ${freelancer[f].nickName }</h4>
+				<h5 class="project-element-list">
+					<span>
+						<i class="fa fa-won"></i>
+						<strong>진행중 ${count1} 건</strong>
+					</span>
+					<span class="day">
+						<i class="fa fa-clock-o"></i>
+						<strong>완료한 ${count2} 건</strong>
+					</span>
+					<span>
+						<i class="fa fa-pencil"></i>
+						<strong>누적 ${pay}원</strong>
+					</span>
+				</h5>
+				<p class="List_contents">${freelancer[f].intro}</p>
+				<%-- <p class="project-sill-list">
+					<c:forEach items="${skills}" var="s">
+					<c:forEach items="${s.skills}" var="s2">
+					<c:if test="${s.projectNum eq indexList[i].projectNum}">
+					<span class="project-skill">${s2}</span>
+					</c:if>
+					</c:forEach>
+					</c:forEach>
+				</p> --%>
+			</div>
+			</c:forEach>
 		</div>
 	</section>
 	<section class="process">
@@ -302,9 +332,9 @@
 			</h4>
 			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/프로세스.png" style="padding-bottom: 10px;">
 			<div>
-				<span>등록 & 선택</span>
-				<span>지원자 미팅</span>
-				<span>진행 & 스케줄</span>
+				<span>프로젝트 등록</span>
+				<span>계약 및 진행</span>
+				<span>스케줄링</span>
 				<span>프로젝트 완료</span>
 				<span>프로젝트 판매</span>
 			</div>
@@ -314,7 +344,7 @@
 		<div class="inner">
 			<div class="text-center">
 				회원 가입하실래요?
-				<a href="#" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">회원가입하기</a>
+				<a href="${pageContext.servletContext.contextPath}/member/MemberJoin" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">회원가입하기</a>
 			</div>
 		</div>
 	
@@ -369,7 +399,7 @@
 		<div class="register">
 			<div class="text-center" style="color: white;">
 				지금 프로젝트를 한번 등록해 보시겠어요?
-				<a href="#" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">프로젝트 등록하기</a>
+				<a href="${pageContext.servletContext.contextPath}/project/projectInsert" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">프로젝트 등록하기</a>
 			</div>
 		</div>
 	</section>

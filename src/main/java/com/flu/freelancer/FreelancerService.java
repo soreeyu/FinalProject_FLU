@@ -501,6 +501,9 @@ public class FreelancerService{
 			return freelancerDAO.countAll(memberDTO, listInfo, applicantDTO);
 		}
 		
-		
+	//인덱스에 뿌려질 프리랜서 리스트
+	public List<FreelancerDTO> indexFreelancerList() throws Exception{
+		return freelancerDAO.indexFreelancerList();
+	}
 	
 }
