@@ -210,7 +210,7 @@
 
 <!-- 채팅방 형성을 위한 ing방 갯수 구해오기 -->
  <select id="roomCount" resultType="com.flu.project.ProjectDTO">
- 	select * from project where state='ing' and del_check in (0,1)
+ 	select * from project where state='ing' and del_check in(0,1)
  </select>
   
   </mapper>

@@ -270,7 +270,7 @@ thead tr td{
 
 .yui .tbody_td1{
 	
-	width: 7%;
+	width: 5%;
 	font-size: 0.8em;
 	height: 30px;
 	line-height: 25px;
@@ -320,7 +320,7 @@ thead tr td{
 
 }
 .yui .tbody_td6{
-	width: 10%;
+	width: 12%;
 	font-size: 0.8em;
 	height: 30px;
 	line-height: 25px;
@@ -356,6 +356,12 @@ thead tr td{
 
 .check_wait_tr{
 	background-color: #f7ffff;
+}
+
+.stop{
+
+color:red;
+
 }
 
 
@@ -461,6 +467,8 @@ thead tr td{
 		$("#email").val("${projectDTO.email}");
 		
 		var startDate = '${projectDTO.startDate}';
+		
+		alert(startDate);
 		
 		var y = startDate.substr(0, 2);
 	    var m = startDate.substr(3, 2);
@@ -841,7 +849,11 @@ thead tr td{
 								<td class="tbody_td1">${i.category}</td>
 								<td class="tbody_td2">${i.detailCategory}</td>
 								<td class="tbody_td3">
-								<a href="../project/projectView?projectNum=${i.projectNum}">${i.name }</a>
+								<a href="../project/projectView?projectNum=${i.projectNum}">
+								${i.name }
+								<c:if test="${i.del_check=='1'}"><span class="stop">중단요청</span></c:if>
+								<c:if test="${i.del_check=='2'}"><span class="stop">중단</span></c:if>
+								</a>
 								</td>
 								<td class="tbody_td4">${i.email }</td>
 								<td class="tbody_td5">${i.reg_date}</td>
@@ -854,8 +866,7 @@ thead tr td{
 									 <c:if test="${i.state=='finish'}">미지급</c:if>
 									 <c:if test="${i.state=='fail'}">모집 실패</c:if>
 									 <c:if test="${i.state=='payFinish'}">지급완료</c:if>
-									 <c:if test="${i.del_check=='1'}">중단요청</c:if>
-									 <c:if test="${i.del_check=='2'}">중단완료</c:if>
+									 
 								 </td>
 								 <td class="tbody_td7">
 								 <c:if test="${board=='Finish' or board=='Wait'}">

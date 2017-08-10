@@ -7,6 +7,10 @@
   	<select id="list" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
   		select * from applicant where projectNum=#{projectNum} and state in('finish','payFinish')
   	</select>
+  	
+  	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
+  		select * from applicant where projectNum=#{projectNum} and state in('ing')
+  	</select>
   
   	<update id="update" parameterType="java.lang.String">
   		update applicant set state = 'payFinish' where email=#{email}
