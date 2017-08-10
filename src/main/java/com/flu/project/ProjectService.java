@@ -35,12 +35,11 @@ public class ProjectService {
 	
 	//project View
 	public ProjectDTO projectView(ProjectDTO projectDTO){
-		System.out.println("projectView에서 skill파싱하기");
+		System.out.println("projectView - service");
 		System.out.println("num=="+projectDTO.getProjectNum());
 		
 		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
-		System.out.println("projectnum=="+projectDTO.getProjectNum());
-		
+		System.out.println(projectDTO.getSkill());
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
 				
 		return projectDTO;
@@ -142,8 +141,8 @@ public class ProjectService {
 	
 
 	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
-	public MemberDTO projectImg(ProjectDTO projectDTO){
-		return projectDAO.projectImg(projectDTO);
+	public MemberDTO projectClient(ProjectDTO projectDTO){
+		return projectDAO.projectClient(projectDTO);
 	}
 	
 	
@@ -187,5 +186,6 @@ public class ProjectService {
 	public int cancleProjectState(PjSellDTO pjSellDTO){
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
+	
 	
 }

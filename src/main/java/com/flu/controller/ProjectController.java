@@ -136,11 +136,8 @@ public class ProjectController {
       List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
             
       for(int i=0;i<ar.size();i++){
-     	 
-	         /*System.out.println("ar의 Num=="+ar.get(i).getProjectNum());*/
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
-	         /*System.out.println("ar의 appCount=="+ar.get(i).getAppCount());*/
-	         }
+	  }
       
       System.out.println("projectListInner의 ar="+ar);
  
@@ -167,9 +164,9 @@ public class ProjectController {
    @RequestMapping(value="projectView", method=RequestMethod.GET)
    public void projectView(Integer projectNum, Model model,ProjectDTO projectDTO, HttpSession session, MemberDTO memberDTO, ListInfo listInfo, @RequestParam(value="check", defaultValue="")Integer check){
       System.out.println("projectView");
-      
+      System.out.println("controller-projectNum="+projectDTO.getProjectNum());
       projectDTO = projectService.projectView(projectDTO);
-
+      System.out.println("controller-projectNum="+projectDTO.getProjectNum());
       memberDTO = (MemberDTO)session.getAttribute("member");
       ApplicantDTO applicantDTO = new ApplicantDTO();
       applicantDTO.setEmail(memberDTO.getEmail());
@@ -181,8 +178,8 @@ public class ProjectController {
       }
       int applyCount = applicantService.countApplicant(projectNum);
       
-      //project를 등록한 사람의 IMG를 가져오기
-      MemberDTO mem = projectService.projectImg(projectDTO);
+      //project를 등록한 사람의 정보를 가져오기
+      MemberDTO mem = projectService.projectClient(projectDTO);
    
       System.out.println("phone="+memberDTO.getPhone());
       System.out.println("형태="+memberDTO.getKind());
@@ -199,6 +196,9 @@ public class ProjectController {
       
        System.out.println("포폴--"+freelancerService.portfolioList(memberDTO.getEmail()));
       
+      PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
+
+       
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
       model.addAttribute("conCount", sellResult);
@@ -209,6 +209,7 @@ public class ProjectController {
       model.addAttribute("checkCount", checkCount);
       model.addAttribute("mem", mem);
       model.addAttribute("applyCount", applyCount);
+      model.addAttribute("pjsell", pjSellDTO);
 
       //지원할 자격이 되는지 체크
       model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
