@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <title>Insert title here</title>
 <style type="text/css">
   
@@ -110,6 +111,7 @@ strong{
    display: block;
    float: left;
 }
+
 .contents-back{
    width: 900px;
    height: auto;
@@ -120,6 +122,17 @@ strong{
    background-color: white;
    border: 1px solid #dedede;
 }
+.pjsellDiv{
+	width: 900px;
+	height: auto;
+	display: block;
+	float: left;
+	background-color: white;
+	border: 1px solid #dedede;
+	margin-bottom: 30px;
+	padding: 20px 30px 20px 30px;
+}
+
 /* 추가 */
 .project-detail-info{
    background-color: #f7f7f7;
@@ -131,10 +144,28 @@ strong{
    font-size: 16px;
    height: 50px;   
 }
+.project-detail-info-i{
+
+   margin-top: 20px;
+   border-top: 1px solid #dedede;
+   border-bottom: 1px solid #dedede;
+   border-radius: 2px;
+   padding: 3px 0px 3px 15px;
+   line-height: 30px;
+   font-size: 16px;
+   height: 50px;   
+}
+
 .fa{
    font-size: 16px;
    font-weight: bold;
    margin-right: 5px;
+}
+.material-icons{
+ 	font-size: 16px;
+   font-weight: bold;
+   margin-right: 5px;
+
 }
 .budget{
    line-height:44px;
@@ -537,6 +568,9 @@ background-color: white;
 	border-radius: 2px;
 	display: inline;
 }
+.pjsellContents{
+	margin-top: 30px;
+}
 </style>
 
 </head>
@@ -550,7 +584,15 @@ background-color: white;
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
             <span>${dto.name}</span>
-            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
+            <c:choose>
+            	<c:when test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' }">
+		            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
+            	</c:when>
+            	<c:when test="${dto.state eq 'wait' || dto.state eq 'ing' || dto.state eq 'finish' }">
+            		<span class="DateMius"><span class="startDate"></span> - <span class="finishDate"></span></span>
+            	</c:when>
+            </c:choose>
+            
             </p>
             <p id="header_t">
             <span class="header_category">${dto.category} > ${dto.detailCategory }</span>
@@ -566,7 +608,7 @@ background-color: white;
          </div>
       </div>
       
-      <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done' && member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null}">
+      <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done' && (member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null)}">
       <div class="contents-register">
             <div class="contents-register-inner" style="text-align: center;">
             
@@ -592,40 +634,62 @@ background-color: white;
               
             </c:if>
             
-            <c:if test="${member.kind eq 'client' && member.email==dto.email}">
-            
-            
-            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
-               <div class="owner_option_btn">
-               <c:if test="${dto.state eq 'check'}">
-                  <div class="owner-btn" id="pj-update">Update</div>
-               </c:if>
-                  <div class="owner-btn" id="pj-delete">Delete</div>
-               	 
-               </div>
-          
-               </c:if>
-            
+           
             </div>
          </div>
       </c:if>
-      
-      <c:if test="${dto.state eq 'sell'}">
-      <div>판매뷰를 보여주자</div>
-      </c:if>
-      
-      
+  
       
       
       <!-- contents -->
       <div class="contents">
       
       
+      <!-- dto.state가 sell일 때 나타나는 pjsell 정보 목록들  -->
+      
+      
+      
       <!-- left contents  -->
          <section class="contents_main" >
+         
+         <c:if test="${dto.state eq 'sell'}">
+     		 <section class="pjsellDiv">
+      			  <div class="project-detail-info-i" style="margin-top: 0px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ">
+		               <div class="budget">
+		                  <span class="fa">판매자</span>
+		                <i class="material-icons">person</i>
+		                  	${mem.nickName}
+		               </div>
+		               <div class="term">
+		                  <span class="fa">연락처</span>
+		                 <i class="material-icons">phone</i>
+		                  ${mem.phone}
+		               </div>
+		               <div class="deadline">
+		                  <span class="fa">판매금액</span> 
+		                   <i class="fa fa-krw"></i>
+		                  ${pjsell.price} 
+		                  <!-- <span class="finishDate"></span> -->
+		               </div>
+		          </div>
+		          
+		          <div class="pjsellContents">
+		          프로젝트 판매 내용
+		          </div>
+      	
+ 
+     		 </section>
+      </c:if>
+         
+         
+         
+         
          <div class="contents-back" style="padding: 30px;">
          
+         <c:if test="${dto.state ne 'sell' }">
          
+         
+         <c:if test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' }">
             <div class="project-detail-info">
                <div class="budget">
                   <i class="fa fa-krw"></i>
@@ -641,6 +705,29 @@ background-color: white;
                   <span class="fa">모집마감</span><span class="finishDate"></span>
                </div>
             </div>
+         </c:if>
+         
+         
+         <c:if test="${dto.state eq 'wait' || dto.state eq 'ing' || dto.state eq 'finish' }">
+            <div class="project-detail-info">
+               <div class="budget">
+                  <i class="fa fa-krw"></i>
+                  <span class="fa">금액</span>
+                  ${dto.budget}원
+               </div>
+               <div class="term">
+                  <i class="fa fa-clock-o"></i>
+                  <span class="fa">프로젝트 기간</span>${dto.period}일
+               </div>
+               <div class="deadline">
+                  <i class="fa fa-pencil"></i>
+                  <span class="fa">프로젝트 마감</span><span class="finishDate"></span>
+               </div>
+            </div>
+         </c:if>
+         
+         
+         
             
             
             <div class="project-detail-box">
@@ -653,7 +740,14 @@ background-color: white;
                   <div class="detail-data" id="reg_date"></div>
                </div>
                <div class="project-detail-bottom">
+               <c:choose>
+               	<c:when test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' || dto.state eq 'fail'}">
                   <div class="detail-title">예상 시작일</div>
+               	</c:when>
+               	<c:otherwise>
+               		<div class="detail-title">시작일</div>
+               	</c:otherwise>
+               </c:choose>
                   <div class="detail-data startDate"></div>
                   <div class="detail-title">미팅 방식</div>
                   <div class="detail-data" id="meetKind"></div>
@@ -661,6 +755,27 @@ background-color: white;
                   <div class="detail-data" style="overflow: hidden;">${dto.addr_main}</div>
                </div>
             </div>
+         </c:if>
+         <c:if test="${dto.state eq 'sell' }">
+         
+         	 <div class="project-detail-box" style="border-bottom: 1px solid #dedede;">
+               <div class="project-detail-top">
+                  <div class="detail-title">시작일</div>
+                   <div class="detail-data startDate"></div>
+                  <div class="detail-title">종료일</div>
+                  <div class="detail-data finishDate"></div>
+                  <div class="detail-title">위치</div>
+                  <div class="detail-data" style="overflow: hidden;">${dto.addr_main}</div>
+               </div>
+             </div>
+         </c:if>
+         
+         
+         
+           
+            
+            
+            
             
             <!-- 프로젝트 내용 -->
             <div class="project-detail">
@@ -760,7 +875,7 @@ background-color: white;
             </div>
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
          
              </div>
@@ -813,17 +928,29 @@ background-color: white;
          
              
           
+<%-- <<<<<<< HEAD
+		확인필요
+          <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+======= --%>
           <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
-          <c:if test="${member.kind eq 'client' && member.email==dto.email && (dto.state eq 'recruit' || dto.state eq 'ing')}">
+          <c:if test="${member.kind eq 'client' && member.email==dto.email}">
           <div class="project-apply-box">
           <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
+          <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
             <div class="schedule-btn">미팅룸 예약하기 </div>
-        
-          </div>
           </c:if>
-       
+          	<c:if test="${dto.state eq 'check'}">
+                <div class="owner-btn" id="pj-update">Update</div>
+            </c:if>
+                <div class="owner-btn" id="pj-delete">Delete</div>
+
+          </div>
+
+          </c:if>
+
           
           
           <c:if test="${member.kind eq 'admin'}">
@@ -887,6 +1014,8 @@ background-color: white;
       
          </section>
       </div>
+      
+      
 
 
 </section>
@@ -900,9 +1029,6 @@ var email = "${member.email}";
 var state = '${dto.state}';
 var check = "${check}";
 var apply_check = $("#btn_apply").text().trim();
-alert("으ㅇㅇ아");
-alert("skills==${skills}");
-alert("skill-size==${skills[0]}");
 alert(state);
 alert("${member.oProfileImage }");
 alert("중복인가="+check);
@@ -976,9 +1102,7 @@ if(meetKind=='offline'){
 
 /* reply 작성 */
  $("#btn").click(function() {
-    alert("yes");
    var chk = $("#reply_check").prop("checked");
-   alert(chk);
    
    /* 비밀글이면 true, 공개댓글이면 false값 */
    if(chk==true){
@@ -992,17 +1116,20 @@ if(meetKind=='offline'){
    $("#frm").submit();
 });
 
-
+var testId = "";
 /* 답글버튼 */
  $(".project-reply-box-top").on("click",".listReply",function() {
 
       alert($(this).attr("id"));
-      var testId = $(this).attr("id");
+      testId = $(this).attr("id");
 
          $(".rere").html("");
-         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" id="'+testId+'" value="취소">');
+         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="checkbox" id="reply_check">비공개'
+        		 +'<input type="button" class="replybtn" value="댓글달기">'
+        		 +'<input type="button"class="cancle" id="'+testId+'" value="취소">');
          $(".listReply").attr("data-on", "off");
          $(this).attr("data-on", "on");
+       
          
    });
    
@@ -1010,19 +1137,44 @@ if(meetKind=='offline'){
  $(".project-reply-box-top").on("click",".cancle",function() {
    var testId = $(this).attr("id");
    alert("testid=="+testId);
-   alert("취소합시다");
    $("."+testId).html("");
    $(".listReply").show();
    
  });
  
  
- /* 댓글달기 버튼클릭 */
+ /* 댓글달기 checkbox클릭 */
+ var chkk="";	  
+ $(".project-reply-box-top").on("click", "#reply_check", function() {
+    	  chkk = $("#reply_check").prop("checked");
+    	  alert($("#reply_check").prop("checked"));
+    	  alert("chkk=="+chkk);
+    	  alert("클릭");
+		if(chkk==true){
+			alert("체크됨");
+			alert("비공개댓글에 댓글은 자동비공개, 공개댓글의 댓글은 체크하기");
+		}else{
+			alert("비공개d댓글");
+		}
+	});
+ 
   $(".project-reply-box-top").on("click", ".replybtn", function() {
-      
-    alert("ddd");
-    alert($("#recontents").val());
-    /* $("#frm").submit(); */
+	
+    alert("댓글id="+testId);
+    var contents = $("#recontents").val();
+    $.ajax({
+    	type:"POST",
+    	url:"../reply/reReply?num="+testId,
+    	data:{
+    		writer:email,
+    		contents:contents,
+    		projectNum:projectNum,
+    		replyChk:chkk
+    	},
+    	success:function(result){
+    		window.location.reload(true);
+    	}
+    });
   });
    
 
@@ -1051,7 +1203,121 @@ if(meetKind=='offline'){
 			
 			}
 		});
+		
+		   
+		   
+	 //프로젝트스케줄 //면 //아래잇는거 지우고 function 안으로 넣음 
+		 $("#scheduleBtn").click(function(){
+			var test = getScheduleNum(projectNum);
+	    });
+		   
+
 	})(jQuery);
+
+
+   var projectNum = '${dto.projectNum}';
+      
+   $('#deleteBTN').click(function() {
+      
+      if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
+         $('#frmm').attr('action','./projectDelete');
+         $('#frmm').submit();
+      }else{
+         
+      }   
+      
+   });
+ 
+   
+   $('#doneBTN').click(function() {
+      if(confirm("프로젝트 검수를 완료하시겠습니까?")){
+         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
+         $('#frmm').submit();
+      }
+      else{
+
+      }
+      
+   });
+   
+   
+
+   function getContextPath(){
+	   	alert('${pageContext.request.contextPath}');
+	   	var context = '${pageContext.request.contextPath}';
+	   	return context;
+   }
+
+
+
+   /* 
+    * 	
+    * Controller에서 이미 프로젝트의 존재여부는 확인하고 들어와진 상태라고 보면된다 
+   	DB 에 해당 프로젝트의 스케줄이 있는지 확인 후 
+   	있으면 users, parts , units 정보를 가져오는 함수호출
+   	없으면 스케줄 생성여부를 물어본 뒤 
+   		생성한다고하면 생성함수호출 
+   		안한다고 하면 이전 화면
+   */
+   function getScheduleNum(projectNum){
+   	var test = "";
+   	$.ajax({
+   		url: "${pageContext.request.contextPath}/schedule/check?projectNum="+projectNum,
+   		type: "GET",
+   		async : false,
+   		success: function(data){
+   			//alert(JSON.stringify(data));
+   			
+   			if(data.schedule=='n'){
+   				//스케줄 생성하도록 창띄워주기
+   				if(confirm('스케줄을 생성하시겠소?')){
+   					createSchedule(data.projectNum);
+   				}else{
+   					//이전 화면으로 가기 
+   					//window.history.back();
+   					//혹은
+   					location.href = $(location).attr('href');
+   				}
+   				
+   			}else if(data.schedule=='y'){
+   				
+   				var scheduleNum = data.scheduleMainDTO.scheduleNum;
+   				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum;
+   			}else{
+   				alert("스케줄 생성 오류");
+   				location.href = $(location).attr('href');
+   				//location.href = getContextPath();
+   			}
+   		}
+   	 });
+   	
+   	return test;
+   }
+
+
+
+   /* 
+   	스케줄 생성함수 
+   */
+   function createSchedule(projectNum){
+   	var scheduleNum = 0;
+   	$.ajax({
+   		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
+   		type: "GET",
+   		success:function(data){
+   			//alert("스케줄 생성해야됨"+data);
+   			if(data.result == 'y'){
+   				alert("생성된 scheduleNum = "+data.scheduleNum);
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+data.scheduleNum;
+   			}else{
+   				alert("스케줄생성오류");
+   			}
+   		}
+   	});
+   }
+
+
 
 	
 	
@@ -1106,9 +1372,12 @@ if(meetKind=='offline'){
 			$('#frmm').submit();
 		} else {
 
+
 		}
 
 	});
+	
+	
 </script>
 </body>
 </html>

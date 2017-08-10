@@ -6,8 +6,6 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.flu.project.ProjectDTO;
-
 @Service
 public class ApplicantService {
 	
@@ -18,13 +16,18 @@ public class ApplicantService {
 	public List<ApplicantDTO> list(int projectNum){
 		return applicantDAO.list(projectNum);
 	}
-	
-	
+
 	// state update
 	public int appUpdate(String email){
 		return applicantDAO.appUpdate(email);
 	}
 	
+
+	public Integer checkApp(String email){
+		return applicantDAO.checkApp(email);
+	}
+	
+
 	
 	//지원하기 누르면 지원자 추가
 	public int insertApplicant(ApplicantDTO applicantDTO){
@@ -48,4 +51,5 @@ public class ApplicantService {
 		System.out.println("applicant-service-delete");
 		return applicantDAO.deleteApplicant(applicantDTO);
 	}
+
 }

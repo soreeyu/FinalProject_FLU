@@ -228,7 +228,8 @@ body{
     font-size: 18px;
     line-height: 1.33;
     border-radius: 3px;
-    background-color: #d9d9d9;
+    background-color: #339bff;
+    color: white;
 }
 
 .history{

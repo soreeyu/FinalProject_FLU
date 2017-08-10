@@ -472,4 +472,11 @@ public class FreelancerDAO{
 
 	/************************** Authentic *******************************/
 
+	
+	
+	//index에 뿌려질 프리랜서 리스트
+	public List<FreelancerDTO> indexFreelancerList() throws Exception{
+		return sqlSession.selectList(NAMESPACE+"indexFreelancerList");
+		
+	}
 }

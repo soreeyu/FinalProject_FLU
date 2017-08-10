@@ -29,10 +29,6 @@ public class ProjectDAO {
 		
 		//project update
 		public int projectUpdate(ProjectDTO projectDTO){
-			/*System.out.println("dao-projectNum="+projectDTO.getProjectNum());
-			System.out.println("dao-project-name="+projectDTO.getName());
-			System.out.println("dao-project-category="+projectDTO.getCategory());
-			System.out.println("dao-project-detailcategory="+projectDTO.getDetailCategory());*/
 			return sqlSession.update(NAMESPACE+"update", projectDTO);
 		}
 		
@@ -228,11 +224,11 @@ public class ProjectDAO {
 		}
 		
 		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
-		public MemberDTO projectImg(ProjectDTO projectDTO){
-			return sqlSession.selectOne(NAMESPACE+"projectImg", projectDTO);
+		public MemberDTO projectClient(ProjectDTO projectDTO){
+			return sqlSession.selectOne(NAMESPACE+"projectClient", projectDTO);
 		}
 		
-		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+		//프로젝트 리스트에서 뿌려주는 done상태의 프로젝트 갯수
 		public int projectListcount(ProjectDTO projectDTO){
 			return sqlSession.selectOne(NAMESPACE+"projectcount", projectDTO);
 		}
@@ -257,4 +253,15 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
+		
+
+		//index에 뿌려질 등록된 프로젝트 금액
+		public int totalBudget() throws Exception{
+			return sqlSession.selectOne(NAMESPACE+"totalBudget");
+		}
+		//index에 뿌려질 등록된 프로젝트 (금액 높은순으로 6개)
+		public List<ProjectDTO> indexProjectList() throws Exception{
+			return sqlSession.selectList(NAMESPACE+"indexProjectList");
+		}
+
 }

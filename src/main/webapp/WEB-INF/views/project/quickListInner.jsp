@@ -54,8 +54,14 @@
 	alert("quickCount=${quickCount}");
 	var maxCount = '${quickCount}';
 	alert("maxCount=="+maxCount);
+
+	var pageCount="";
 	
-	var pageCount=((maxCount/5)+1).toFixed();
+	if(maxCount%5==0){
+		pageCount=(maxCount/5).toFixed();		
+	}else{
+		pageCount=((maxCount/5)+1).toFixed();
+	}
 	alert("pageCount=="+pageCount);
 	//cc는 기본1로 셋팅
 
@@ -64,8 +70,9 @@
 		 if(cc==1){
 			 alert("첫페이지");
 			 alert("cc="+cc);
-		 }else{
-			 
+
+		 }else{ 
+
 			alert("preview클릭");
 			cc=cc-1;
 			alert(did);
@@ -79,15 +86,16 @@
 
 
 	  $(".next").click(function() {
-			cc=cc+1;
+
+			
 		 if(cc==pageCount){
 			alert("마지막 페이지");
 			alert("cc="+cc);
-			cc=cc-1;
-			alert("cc="+cc);
+			
+
 		}else{
 		alert("next클릭");
-	
+		cc=cc+1;
 		alert(did);
 		did = did-1160;
 		alert(did);

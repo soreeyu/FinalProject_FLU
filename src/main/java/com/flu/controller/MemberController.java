@@ -24,7 +24,7 @@ import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
-import com.flu.util.AES256Util;
+//import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -172,7 +172,7 @@ public class MemberController {
 				System.out.println("회원");
 				//관리자 로그인시 리턴하는 주소는 인덱스 myflu가 아님
 				if(memberDTO.getKind().equals("admin")){
-					return "index";
+					return "redirect:/";
 				}
 				return "redirect:/member/myflu";
 				
@@ -226,10 +226,10 @@ public class MemberController {
 				List<ProjectDTO> far2 = memberService.memberProjectList_APP(((MemberDTO)session.getAttribute("member")).getEmail());
 				//완료한 프로젝트 List
 				List<ProjectDTO> far3 = memberService.memberProjectList_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
-				//진행중인 프로젝트 Count
-				int count1 = memberService.memberProjectCount_ING(((MemberDTO)session.getAttribute("member")).getEmail());
 				//지원한 프로젝트 Count
 				int count2 = memberService.memberProjectCount_APP(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 Count
+				int count1 = memberService.memberProjectCount_ING(((MemberDTO)session.getAttribute("member")).getEmail());
 				//완료한 프로젝트 Count
 				int count3 = memberService.memberProjectCount_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
 				//누적 완료 금액

@@ -10,6 +10,13 @@
 </head>
 <body>
 
+<script type="text/javascript">
+	var message = '${message}';
+	if(message!=''){
+		alert(message);
+	}
+</script>
+
 <!-- Channel Plugin Scripts -->
 <script>
   window.channelPluginSettings = {

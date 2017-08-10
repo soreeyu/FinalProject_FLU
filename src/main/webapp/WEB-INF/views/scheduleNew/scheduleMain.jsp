@@ -5,50 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/basic.css">
-
-  
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/jui/jui.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/animate.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/schedule/lib/main.css"/>
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<c:import url="../temp/bootstrap.jsp"></c:import>
 
 
-<script src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" type="text/javascript" charset="utf-8"></script>
-<%-- <script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery.min.js'></script> --%>
-<script src='${pageContext.request.contextPath}/resources/schedule/lib/jquery-ui.custom.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/schedule/fullcalendar/fullcalendar.min.js'></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/lib/niee-canvas-chart003.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/lib/ajaxfileupload.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/base.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/core.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/button.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/combo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/datepicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/ui/dropdown.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/resources/schedule/js/ui/modal.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath}/resources/schedule/js/uix/table.js"></script>
-<script src="${pageContext.request.contextPath}/resources/schedule/js/uix/tree.js"></script> --%>
-
-
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-<title>스케줄메인</title>
+<title>스케줄</title>
 
 
 <style type="text/css">
-
-a{
-	color:black;
-}
-
 
 .clear{
 	clear: both;
@@ -64,68 +27,51 @@ a{
 }
 
 
+
+
 .schedule_header {
-    height: 142px;
-    padding: 30px;
+    height: 102px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid #e6e6e6;
     margin-bottom: 30px;
     background-color: white;
 }
-
-
 #header_ttt {
-   font-size: 24px;
-   font-weight: bolder;
-   margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 20px;
 }
-
-
-.DateMius{
-   font-size: 14px;
-   background-color: #07b481;
-   vertical-align: middle;
-   margin-top: 5px;
-   float: right;
-   height: 20px;
-   border-radius: 4px;
-   color: white;
-   line-height: 15px;
-   padding: 2px 3px;
-}
-
-/* 추가 */
 #header_t {
-   font-size: medium;
-   font-weight: lighter;
-   color: #666;
+    font-size: medium;
+    font-weight: lighter;
+    color: #666;
+}
+#header_ttt span:last-child {
+    font-size: 14px;
+    background-color: #07b481;
+    vertical-align: middle;
+    margin-top: 5px;
+    float: right;
+    height: 20px;
+    border-radius: 4px;
+    color: white;
+    line-height: 15px;
+    padding: 2px 3px;
+}
+#header_t span:last-child {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: 5px;
+    margin-right: 50px;
+    float: right;
+    height: 20px;
+    line-height: 20px;
 }
 
-/* 추가  */
-#header_t span:last-child{
-   font-size: 20px;
-   vertical-align: middle;
-   margin-top: 5px;
-   margin-right:50px;
-   float: right;
-   height: 20px;
-   line-height: 20px;
 
-}
-.appCount{
-   color: black;
-   font-size: 22px;
-}
-.contents {
-   width: 1260;
-   height: 2000px;
-   /* min-height: 1200px;
-   max-height: 2700px; */
-}
-.clean{
-   background-color: #f2f2f2;
-   height: 15px;
-   width: 100%;
-}
+
+
 
 
 
@@ -322,11 +268,11 @@ a{
     font-size: 18px;
 }
  
-/* .tw-project-analytics-overview{
+.tw-project-analytics-overview{
 	height: 113px;
 	background: white;
 }
- */
+
 .tw-project-analytics-overview__head {
     display: flex;
     margin-bottom: 35px;
@@ -407,16 +353,11 @@ a{
   background: #fff;
 }
 
-.partOverview{
-	height: 500px;
-}
-
 .tw-project-analytics-page__container > div:first-child {
   margin-top: 0px;
 }
 
 .tw-project-analytics-page__self-centric {
-  width: 1944px; /* width: 324px*4 */
   display: flex;
   background: none;
 }
@@ -490,7 +431,7 @@ a{
   box-sizing: border-box;
   margin: 0 5px;
   padding: 15px 15px 0;
-  width: 324px;
+  width: 33%;
   /* border-radius: 2px; */
   border: 1px solid #e6e6e6;
   background: #fff;
@@ -1038,17 +979,6 @@ div{
 	float: left;
 }
 
-#cklist_section li{
-	height: 40px;
-}
-
-input[type=checkbox], input[type=radio]{
-	margin: 0;
-	height: 40px;
-	line-height: 40px;
-	margin-left:10px;
-}
-
 #cklist_table{
 	border: 1px solid black;
 	text-align: center;
@@ -1058,38 +988,10 @@ input[type=checkbox], input[type=radio]{
 	font-size: 15px;
 }
 
-#cklist_table th {
-    width: 33%;
-    height: 30px;
-    line-height: 30px;
+#cklist_table th{
+	height: 30px;
+	line-height: 30px;
 }
-
-
-
-.unit3{
-	height: 40px;
-    margin: 2px;
-    background: orange;
-}
-
-.unitTitle{
-    width: 80%;
-    height: 40px;
-    line-height: 40px;
-    padding-left: 10px;
-    font-weight: bold;
-    float: left;
- }
- 
-#cklist_table input[type='checkbox']{
-	float: right;
-} 
-
-td{
-	vertical-align: top;
-}
-
-
 </style>
 
 <style type="text/css">
@@ -1101,44 +1003,6 @@ td{
     float: left;
 }
 
-</style>
-
-<style type="text/css">
-table,#excelTable{
-	margin: 0 auto;
-	border: 1px solid #ccccff;
-}
-
-thead{
-	background-color: #ccddff;
-	font-weight: bold;
-	font-size: 15px;
-}
-
-tbody{
-	font-size: 15px;
-	text-align: left;
-}
-
-th,td{
-	padding: 8px;
-	border-left: 1px solid #ccccff;
-	border-bottom:  1px solid #ccccff;
-}
-
-tr{
-	font-size: 0.8em;
-}
-
-th{
-	border-top: 2px solid #3377ff;
-}
-
-th:FIRST-CHILD,td:FIRST-CHILD{
-	border-left: 0;
-}
-
-
 
 </style>
 
@@ -1146,58 +1010,40 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 
 
 
-<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
-   
+
 
 
 <script type="text/javascript">
-
 function getContextPath(){
 	alert('${pageContext.request.contextPath}');
 	var context = '${pageContext.request.contextPath}';
 	return context;
 }
 
-var currentTab = '${currentTab}';
-var scheduleNum = '${scheduleNum}';
+
+var unitListModal;
+var unitModal;
 
 	$(function() {
 		
+		var scheduleNum = '${scheduleNum}';
 		
-		
-		//데이터 뿌리기
+		loadTabContent("/flu/schedule/firstView?scheduleNum="+scheduleNum,'tab1');
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
-		loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
-		if(currentTab != ''){
-			alert("");
-			$('ul.tab li[data-tab="${currentTab}"]').trigger('click');
-		}//안되넹..
+		
+	
+		
+		jui.ready([ "ui.modal" ], function(modal) {
+		    unitModal = modal("#unitViewModal", {
+		        color: "black",
+		        target: "body",
+		        opacity: 0.5
+		    });
+		});
 		
 		
-		var memberKind = '${member.kind}';
-
-		//날짜가 입력이 안되있을경우 modal 생성
-		if($("#sDateforTitle").text() == ''){
-			
-			if(memberKind == 'client' ){
-				$("#insertMainschedule").modal({backdrop:'static'});	
-			}else{
-				alert("스케줄이 설정되있지 않습니다");
-				history.back();//뒤로가기
-			}
-		}
-
-		
-		
-		
-		
-		
-		
-		
-
-		//tab 클릭 이벤트
 		$('ul.tab li').click(function() {
 			//css
 			var activeTab = $(this).attr('data-tab');
@@ -1209,28 +1055,55 @@ var scheduleNum = '${scheduleNum}';
 			
 			
 			if(activeTab == 'tab1'){
-				//아싸리 여기서 비워버리는게 좋겠다
-				$.ajax({
-					url:"/flu/schedule/test?scheduleNum="+scheduleNum,
-					type:"GET",
-					success: function(data){
-						$("#tab1").html(data);
-					}
-				});
+				//alert("개요보기");
+
+				
+				////////////////1뷰//////////////
+				//part별 갯수로 설정 //1개 기준 150 + 55px //tw-bar-chart
+				var partCount = 3;
+				var graphHeight = 55;
+				var fullGraphHeight = (150+(partCount*graphHeight))+"px";
+				alert(fullGraphHeight);
+				$(".tw-bar-chart").css("height",fullGraphHeight);
+				
+				
+				
+				////////////////////1뷰끝/////////////
+				
+				
 				
 			}else if(activeTab == 'tab2'){
+				//alert("달력보기");
+				//url = "/flu/schedule/secondView?scheduleNum="+scheduleNum;
 				
-				$.ajax({
-					url:"/flu/schedule/secondView?scheduleNum="+scheduleNum,
-					type:"GET",
-					success: function(data){
-						$("#tab2").html(data);
-					}
+				///////////////////2뷰///////////////
+				jui.ready([ "ui.modal" ], function(modal) {
+					alert("모달 생성하기");
+					unitListModal = modal("#unitListModal", {
+				        color: "black",
+				        target: "body",
+				        opacity: 0.5
+				    });
 				});
-
-				/* $('#schcalendar').fullCalendar({
+				
+				
+				$(document).on("click",".closeBtn",function(data){
+					unitListModal.hide(); 
+				});
+				
+				$('#schcalendar').fullCalendar({
+					 customButtons: {
+						 myCustomButton: {
+					            text: 'custom!',
+					            click: function() {
+					                alert('clicked the custom button!');
+					            }
+					        }
+					 },
+					    
 					header: {
 						left: '',
+						center: 'prev title next myCustomButton',
 						right: 'today,month'//'today,month,basicWeek,basicDay'
 					},
 					titleFormat: {
@@ -1271,7 +1144,7 @@ var scheduleNum = '${scheduleNum}';
 			           }
 				        */
 
-				/*     },
+				    },
 				    // 달력의 빈칸을 클릭했을때 실행되는 함수
 				    dayClick: function(date) {
 						//scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
@@ -1282,8 +1155,8 @@ var scheduleNum = '${scheduleNum}';
 						//writeModal.show(); 
 						
 				    }
-				}); */
-				/* 
+				});
+				
 				var resultJson = getPartList(scheduleNum);
 				addEvents(resultJson);
 				
@@ -1292,7 +1165,7 @@ var scheduleNum = '${scheduleNum}';
 				$(document).on("click",".listModalUnit",function(){
 					alert("unit 상세보기 modal로 바꿔주면 좋겟지요");
 				});
-				 */
+				
 				////////////////////2뷰끝/////////////////////
 				
 				
@@ -1330,9 +1203,17 @@ var scheduleNum = '${scheduleNum}';
 				getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
-				//getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다 
+				getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','',''); //전체뷰 볼거
 
+				
+				
+				
+				
+				
+				$(document).on("click",".closeBtn",function(data){
+					unitModal.hide(); 
+				});
 				
 				
 				
@@ -1352,66 +1233,26 @@ var scheduleNum = '${scheduleNum}';
 				
 			}else if(activeTab == 'tab4'){
 				alert("체크리스트");
-				loadCheckList(scheduleNum,'${member.email}',-1);
-				/* $.ajax({
-					url:"/flu/schedule/checkListForFreelancer",
-					type:"POST",
-					data:{
-						scheduleNum:scheduleNum
-					},
-					success:function(data){
-						$("#tab4").html(data);
-					}
-				}); */
-				
+				//url = "";
 			}else if(activeTab == 'tab5'){
-				alert("파트일정추가");
-				
-				//전체일정을 표로 보여주고 //엑셀 변환하기 기능을 제공한다 
-				$.ajax({
-					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
-					type:"GET",
-					success:function(data){
-						$("#tab5").html(data);
-					}
-				});
-				
+				//alert("수정");
+				//url = "";
 			}else if(activeTab == 'tab6'){
 				alert("간트");
-				//location.href="/flu/schedule/sixthView";
+				location.href="/flu/schedule/sixthView";
+				//url = "";
 			}else if(activeTab == 'tab7'){
 				alert("간트2");
 				location.href="/flu/schedule/dhxTest?scheduleNum="+scheduleNum;
 				//url = "";
-				/* $.ajax({
-					url:"/flu/schedule/dhxTest?scheduleNum="+scheduleNum,
-					type:"GET",
-					success: function(data){
-						$("#tab7").html(data);
-					}
-				}); */
-				
 			}else if(activeTab == 'tab8'){
-				alert("구글차트 연습용");
-				$.ajax({
-					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
-					type:"GET",
-					success: function(data){
-						$("#tab8").html(data);
-					}
-				});
-
-			}else if(activeTab == 'tab9'){
-				//전체일정을 표로 보여주고 //엑셀 변환하기 기능을 제공한다 
-				$.ajax({
-					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
-					type:"GET",
-					success:function(data){
-						$("#tab9").html(data);
-					}
-				});
+				location.href="/flu/schedule/test8?scheduleNum="+scheduleNum;
+				//url = "";
 			}
-					
+			
+			//loadTabContent(url,activeTab);
+	
+			
 		});//클릭햇을때
 		
 		
@@ -1419,7 +1260,7 @@ var scheduleNum = '${scheduleNum}';
 		
 		
 		
-		//카드뷰 클릭이벤트 설정
+		//nav 클릭
 		$("#cardKind ul li").click(function(){
 			//alert($(this).text());
 			
@@ -1430,7 +1271,7 @@ var scheduleNum = '${scheduleNum}';
 				getUnitList(scheduleNum,-1,'','할일',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','진행중',"상태별");// -1 이면 전체가 나온다 
 				getUnitList(scheduleNum,-1,'','완료',"상태별");// -1 이면 전체가 나온다 
-				//getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다
+				getUnitList(scheduleNum,-1,'','마감일지남',"상태별");// -1 이면 전체가 나온다
 			
 			}else if($(this).text() == "파트별"){
 					
@@ -1461,8 +1302,8 @@ var scheduleNum = '${scheduleNum}';
 				makeCard = makeCard + '<div class="card">';
 				makeCard = makeCard + '<div class="cardTitle_wrap">';
 				makeCard = makeCard + '<span class="cardTitle">'+$(this).text()+'</span></div>';
-				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
-				makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'해당업무가 없습니다'+'</div>';	
+				makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';				
+				makeCard = makeCard + '<div class="unit" data-unitNum=-1>'+'추가하기'+'</div>';						
 				makeCard = makeCard + '</div></div></div>';
 				
 				$(".cardContentWrap").append(makeCard);
@@ -1526,31 +1367,29 @@ var scheduleNum = '${scheduleNum}';
 		
 		
 		
+		//main insertForm
+		var partCount=1;
 		
+		$("#addPartBtn").click(function(){
+			partCount++;
+			//alert('part 추가');
+			//alert($("#partSection").html());
+			var partDOM = '<div class="partOne"> part 이름 : <input type="text" class="partName" name="partName">';
+			partDOM = partDOM + ' part 시작일:<input type="date" class="partStartDate" name="partStartDate">'; 
+			partDOM = partDOM + ' part 마감일:<input type="date" class="partFinishDate" name="partFinishDate">';
+			partDOM = partDOM + ' part 설명첨부파일:<input type="file" class="partDescFileO" name="partDescFile">';
+			partDOM = partDOM + ' <span class="partDel">X</span></div>';
+			$("#partSection").append(partDOM);
+		});
+		
+		$("#partSection").on("click",".partDel",(function(){
+			partCount --;
+			$(this).parent(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
+		}));
 		
 
 
 	}); //function
-	
-	
-	function loadCheckList(scheduleNum,email,partNum){
-		$.ajax({
-		url:"/flu/schedule/checkListForFreelancer",
-		type:"POST",
-		data:{
-			scheduleNum:scheduleNum,
-			email:email,
-			partNum:partNum,
-			unitState:''
-		},
-		success:function(data){
-			$("#tab4").html(data);
-		}
-	}); 
-	}
-	
-	
-	
 	
 	//jsp 임포트해서 피료 노노
 	function loadTabContent(url,activeTab){
@@ -1584,7 +1423,7 @@ var scheduleNum = '${scheduleNum}';
 			type: "GET",
 			async:false,
 			success:function(data){ //json 넘어옴 
-				alert("파트가져우기");
+
 				partsJSONArray = data;
 				for(var i=0;i<partsJSONArray.length;i++){
 					partsJSONArray[i].color = colors[((i+1)%7)-1]; //7개설정해놔서그렇습니다
@@ -1644,10 +1483,9 @@ var scheduleNum = '${scheduleNum}';
 		$.ajax({
 			url: "/flu/schedule/userList?scheduleNum="+scheduleNum,
 			type: "GET",
-			async:false,
 			success: function(data){
 				//alert(JSON.stringify(data));
-				alert("유저유닛가져우기");
+				
 				var result="<table>";
 				$(data).each(function(){
 					result = result + "<tr>";
@@ -1695,7 +1533,7 @@ var scheduleNum = '${scheduleNum}';
 			success: function(data){
 				
 				
-			alert("unit들"+JSON.stringify(data));
+			//alert("unit들"+JSON.stringify(data));
 	
 						var result="<table>";
 						$(data).each(function(){
@@ -1705,7 +1543,6 @@ var scheduleNum = '${scheduleNum}';
 							result = result + "<td> "+ this.unitDescribe + " </td>";
 							result = result + "<td> "+ this.unitFinishDate + " </td>";
 							result = result + "<td> "+ this.partNum + " </td>";
-							result = result + "<td class='getPartName'> "+ this.partName + " </td>";
 							result = result + "<td> "+ this.email + " </td>";
 							result = result + "</tr>";				
 						});
@@ -1736,7 +1573,7 @@ var scheduleNum = '${scheduleNum}';
 					if(kind == "상태별"){
 						makeUnitList(data,unitState); //카드뷰에 집어넣을겨
 					}else if(kind == "파트별"){
-						makeUnitList(data,'part'); //카드뷰에 집어넣을겨
+						makeUnitList(data,partNum); //카드뷰에 집어넣을겨
 					}else if(kind == "사용자별"){
 						makeUnitList(data,email); //카드뷰에 집어넣을겨
 					}else{
@@ -1760,12 +1597,7 @@ var scheduleNum = '${scheduleNum}';
 		var makeCard = "";
 		makeCard = makeCard + '<div class="card">';
 		makeCard = makeCard + '<div class="cardTitle_wrap">';
-		if(state == 'part'){
-			makeCard = makeCard + '<span class="cardTitle">'+data[0].partName+'</span></div>';
-		}else{
-			makeCard = makeCard + '<span class="cardTitle">'+state+'</span></div>';
-		}
-		
+		makeCard = makeCard + '<span class="cardTitle">'+state+'</span></div>';
 		makeCard = makeCard + '<div class="cardContent_wrap"><div class="cardContent">';
 		$(data).each(function(){							
 			makeCard = makeCard + '<div class="unit" data-unitNum='+this.unitNum+'>'+this.unitName+'</div>';						
@@ -1787,7 +1619,7 @@ var scheduleNum = '${scheduleNum}';
 		}else if($(".card").length > 9){
 			$(".cardContentWrap").css("height","1280px");
 		}
-		//안먹음..
+
 		
 	} //makeUnitList 함수 끝
 	
@@ -1803,7 +1635,6 @@ var scheduleNum = '${scheduleNum}';
 	/**
 	 * 받아온 json을 사용해서 fullcal의 일정에 추가해준다 //파트만..
 	 */
-	 /* 
 	function addEvents(jsonObj){
 		
 		for(var i=0; i<Object.keys(jsonObj).length; i++){
@@ -1821,7 +1652,7 @@ var scheduleNum = '${scheduleNum}';
 	        console.log('달력이벤트 추가 ok');
 	    } 
 	}
- 	*/
+
 	///////////////2뷰끝/////////////////////
 
 
@@ -1841,475 +1672,101 @@ var scheduleNum = '${scheduleNum}';
 	<div id= "main_wrap">
 	
 	
-	<!-- 프로젝트 이름, 시작,마감일 참여프리랜서 뿌려줌 -->
 	<div class="schedule_header">
-         <div class="header_text">
-            <p id="header_ttt" style="margin-bottom: 20px;">
-            <span>[스케줄] ${projectDTO.name} </span>
-            <span class="DateMius"><span class="startDate">${mainScheduleDTO.startDate}</span> - <span class="finishDate">${mainScheduleDTO.finishDate}</span></span>
-            </p>
-            <p id="header_t">
-            <span>${projectDTO.category}&gt; ${projectDTO.detailCategory}</span>
-            <span>
-            <img src="/flu/resources/img/project/proposal.png">
-          		<strong class="appCount">${applicantCount}명</strong>의 프리랜서참여</span>
-            </p>
-         </div>
-     </div>
-	
-	<!-- 왼쪽 네비게이션 메뉴 -->
-	<!-- class current인 친구의 css가 변경되고 화면에 나타난다 -->
-	<div class="sidebar">
-		<div class="sidebar-nav">
-			<ul class="tab">
-				<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
-				<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
-				<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
-				<li class=""  data-tab="tab7"><span class="taba seeGantt">간트차트보기</span></li>
-				<c:if test="${member.kind eq 'freelancer'}">
-					<li class=""  data-tab="tab9"><span class="taba">상세보기</span></li>
-					<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
-				</c:if>
-				<c:if test="${member.kind eq 'client'}">
-					<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
-				</c:if>
-				<!-- <li class=""  data-tab="tab6"><span class="taba">간트차트</span></li> -->
-				
-				<!-- <li class=""  data-tab="tab8"><span class="taba">구글차트</span></li> -->
-				
-			</ul>
+		<div class="header_text">
+			<p id="header_ttt" style="margin-bottom: 20px;">
+				<span>[테스트 프로젝트] 스케줄 </span>
+				<span>${mainScheduleDTO.startDate} ~ ${mainScheduleDTO.finishDate}</span>
+				<input type="hidden" id="scheduleNum" value="${scheduleNum}">
+			</p>
+			<p id="header_t">
+				<span>개발 &gt; 웹</span>
+				<span>
+			<img src="/flu/resources/img/project/proposal.png">
+			총<strong>1명</strong>지원</span>
+			</p>
 		</div>
 	</div>
-			
-	<!-- 실제적인 뷰 화면이다  -->		
-	<div class="tabContentWrap">
-		<div id="tab1" class="tabcontent current">
-			<!-- 개요 -->
-		</div>
-		
-		<div id="tab2" class="tabcontent">
-			<!-- tab2내용 은 달력이야 -->
-			<%-- <c:import url="/WEB-INF/views/schedule/secondView.jsp" /> --%>
-		</div>
-		
-		<div id="tab3" class="tabcontent">
-			<!-- tab3내용 은 표야  -->
-			<c:import url="/WEB-INF/views/schedule/thirdView.jsp" />
-		</div>
-		
-		<div id="tab4" class="tabcontent">
-			<!-- 프리랜서가 업무 체크 -->
-			<%-- <c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" /> --%>
-		</div>
-		
-		<div id="tab5" class="tabcontent">
-			
-			<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-			<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
-			
-		
-		</div>
-		
-		<div id="tab6" class="tabcontent">
-			
-		</div>
-		
-		<div id="tab7" class="tabcontent">
-			<%-- <c:import url="/WEB-INF/views/schedule/dhx_gantTest.jsp" /> --%>
-		</div>
-		
-		<div id="tab8" class="tabcontent">
-			<%-- <c:import url="/WEB-INF/views/schedule/firstViewTestGoogleChart.jsp" /> 
-		 --%></div>
-		<div id="tab9" class="tabcontent">
-			<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
-			<%-- <c:import url="/WEB-INF/views/schedule/detailViewforExcel.jsp" /> --%>
-		</div>
-	</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<!--  -----------MODAL 만들기----------------  -->
-		<!-- part 추가 Modal -->
-		<div id="myModal" class="modal fade" role="dialog">
-		  <div class="modal-dialog   modal-lg">
-		
-		    <!-- Modal content-->
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">PART 추가</h4>
-		      </div>
-		      <div class="modal-body">
-		        <div id="client_section">
-					<form id="partAddForm" action="${pageContext.request.contextPath}/schedule/addPart" method="POST"  enctype="multipart/form-data">
-						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
-						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
-						<!-- <div>
-							프로젝트 시작일:<input type="date" name="startDate" value=""> 
-							프로젝트 마감일:<input type="date" name="finishDate"> 
-						</div>
-						<div>
-							<h3>시작일은 설정하지 않을경우 당일로 등록되고 마감일은 파트 마감일중 가장 마지막날로 등록된다</h3>
-							<h3>파트의 시작일을 설정하지 않은경우는 프로젝트 시작일로 등록되고 마감일을 등록하지 않은경우는 마감일로 등록된다</h3>
-						</div> -->
-						<div id="partSection"  style="width:100%;">
-							
-								<table>
-									<thead>
-										<tr>
-											<th>part명</th>
-											<th>시작일</th>
-											<th>마감일</th>
-											<th>첨부파일</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody class="partRowSection">
-										<tr class="partOne">
-											<td><input type="text" class="partName" name="partName"></td>
-											<td><input type="date" class="partStartDate" name="partStartDate"> </td>
-											<td><input type="date" class="partFinishDate" name="partFinishDate"></td>
-											<td><input type="file" class="partDescFileO" name="partDescFile"></td>
-											<td><span class="partDel">X</span></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						
-						<input type="button" class="btn btn-default" id="addPartBtn" value="+" style="margin:0 auto;">
-
-					</form>
-					
+	
+	
+			<div class="sidebar">
+				<div class="sidebar-nav">
+					<ul class="tab">
+						<li class="current"  data-tab="tab1"><span class="taba">개요</span></li>
+						<li class="" data-tab="tab2"><span class="taba">달력보기</span></li>
+						<li class=""  data-tab="tab3"><span class="taba">카드보기</span></li>
+						<li class=""  data-tab="tab4"><span class="taba">업무체크리스트</span></li>
+						<li class=""  data-tab="tab5"><span class="taba">일정/업무 수정</span></li>
+						<li class=""  data-tab="tab6"><span class="taba">간트차트</span></li>
+						<li class=""  data-tab="tab7"><span class="taba">간트차트2</span></li>
+						<li class=""  data-tab="tab8"><span class="taba">구글차트</span></li>
+					</ul>
 				</div>
-		      </div>
-		      
-
-		      <div class="modal-footer">
-		      	<button type="button" class="btn btn-default partFrmBtn">등록</button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		      </div>
-		    </div>
-		
-		  </div>
-		</div>
-		<!-- 파트추가MODAL 끝 -->
-		
-		
-		
-		<!-- 업무 추가 Modal -->
-		<div id="myModal2" class="modal fade" role="dialog">
-		  <div class="modal-dialog   modal-lg">
-		
-		    <!-- Modal content-->
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">업무 추가</h4>
-		      </div>
-		      <div class="modal-body">
-		        <div id="client_section">
-						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
-						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
-
-						<div id="unitSection"  style="width:100%;">
-							
-								<table>
-									<thead>
-										<tr>
-											<th></th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody class="unitRowSection">
-										<tr>
-											<th>업무명</th>
-											<td><input type="text" id="unitNameS" name="unitNameS" placeholder="업무제목" style="width:300px;"></td>
-										</tr>
-										<tr>
-											<th>시작일</th>
-											<td><input type="date" id="unitStartDate" name="unitStartDate" style="width:300px;"> </td>
-										</tr>
-										<tr>
-											<th>마감일</th>
-											<td><input type="date" id="unitFinishDate" name="unitFinishDate" style="width:300px;"></td>
-										</tr>
-										<tr>
-											<th>파트</th>
-											<td>
-												<select id="partNumS" name="partNumS" style="width:300px;">
-													<option value="">파트선택</option>
-													<c:forEach items="${partList2}" var="part">
-														<option value="${part.partNum}">${part.partName}</option>
-													</c:forEach>
-												</select>
-											<!-- <input type="number" id="partNumS" name="partNumS" style="width:300px;"> -->
-											
-											</td>
-										</tr>
-										<tr>
-											<th>담당자</th>
-											<td>
-												<select id="unitEmailS" name="unitEmailS" placeholder="담당자" style="width:300px;">
-													<option value="">담당자선택</option>
-													<c:forEach items="${userList2}" var="user">
-														<option value="${user.email}">${user.nickName}</option>
-													</c:forEach>
-												</select> 
-												<!-- <input type="text" id="unitEmailS" name="unitEmailS" placeholder="담당자" style="width:300px;"> --></td>			
-										</tr>
-										<tr>
-											<th>상세설명</th>	
-											<td><textarea rows="" cols="100" id="unitDescribeS" name="unitDescribeS"></textarea></td>		
-										</tr>
-
-									</tbody>
-								</table>
-								<input type="hidden" id="unitState" name="unitState" value="할일" readonly="readonly">
-							</div>
-
-				</div>
-		      </div>
-		      
-
-		      <div class="modal-footer">
-		      	<button type="button" class="btn btn-default " id="unitFrmBtn">등록</button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		      </div>
-		    </div>
-		
-		  </div>
-		</div>
-		<!-- 업무추가MODAL 끝 -->
-		
-		
-		
-		
-		
-		<script type="text/javascript">
-			$(document).on("click","#addPartModalBtn",function(){
-				$("#myModal").modal({backdrop:'static'});
-			});
-			
-			$(document).on("click","#addUnitModalBtn",function(){
-				$("#myModal2").modal({backdrop:'static'});
-			});
-			
-			$(document).on("click","#addPartBtn",function(){
-				//alert('part 추가'+partCount);
-				var partDOM3 = '';
-				partDOM3 = partDOM3 + '<tr class="partOne">';
-				partDOM3 = partDOM3 + '<td><input type="text" class="partName" name="partName"></td>';
-				partDOM3 = partDOM3 + '<td><input type="date" class="partStartDate" name="partStartDate"> </td>';
-				partDOM3 = partDOM3 + '<td><input type="date" class="partFinishDate" name="partFinishDate"></td>';
-				partDOM3 = partDOM3 + '<td><input type="file" class="partDescFileO" name="partDescFile"></td>';
-				partDOM3 = partDOM3 + '<td><span class="partDel">X</span></td>';
-				partDOM3 = partDOM3 + '</tr>';
-				$(".partRowSection").append(partDOM3);
-			});
-			
-			
-			
-			$(document).on("click",".partDel",(function(){
-				//alert("삭제하고싶어"+partCount);
-				$(this).parents(".partOne").remove(); //눌린 본인의 부모 P를 삭제하다
-			}));
-			
-			$(document).on("click",".partFrmBtn",function(){
-				$("#partAddForm").submit();
-			});
-			
-			
-			$(document).on("click","#unitFrmBtn",function(){
-				
-				var partNumS = $("#partNumS").val();
-				var unitNameS = $("#unitNameS").val();
-				
-				var unitStartDate = String($("#unitStartDate").val());
-				
-				var unitFinishDate = String($("#unitFinishDate").val());
-
-				var unitEmailS = $("#unitEmailS").val();
-				var unitDescribeS = $("#unitDescribeS").val();
-				alert(scheduleNum+"확인용 이름 "+unitNameS + " 시작 "+unitStartDate + " 마감"+ unitFinishDate+ " 메일  "+ unitEmailS + " 설명  " +unitDescribeS);
-				$.ajax({
-					url: "${pageContext.request.contextPath}/schedule/addUnit",
-					type: "POST",
-					data : {
-						scheduleNum : scheduleNum,
-						partNum : partNumS,
-						unitName :unitNameS,
-						unitStartDate : unitStartDate,
-						unitFinishDate :unitFinishDate,
-						email : unitEmailS,
-						unitDescribe : unitDescribeS
-					},
-					success:function(data){
-						if(data == 1){
-							
-						}else{
-							alert("업무등록오류");
-						}
-						$("#myModal2").modal('hide');
-					}
-					
-				});
-			});
-			
-
-		</script>
-
-
-      <!--  -----------MODAL 만들기 면----------------  -->
-		<!-- 메인추가 Modal -->
-		<div id="insertMainschedule" class="modal fade" role="dialog">
-		  <div class="modal-dialog ">
-		
-		    <!-- Modal content-->
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">스케줄 생성</h4>
-		      </div>
-		      <div class="modal-body">
-		        <div id="client_section">
-					
-					<input type="hidden" id="scheduleNumSC" name="scheduleNumSC" value="${scheduleNum}">
-					<input type="hidden" id="projectNumSC" name="projectNumSC" value="${projectNum}">
-						<div id="mainSection"  style="width:100%;">
-						
-							<table>
-								<thead>
-									<tr>
-										<th>시작일</th>
-										<th>마감일</th>
-								
-									</tr>
-								</thead>
-								<tbody class="mainRowSection">
-									<tr>
-										<td><input type="date" id="startDateSC" name="startDateSC" value=""> </td>
-										<td><input type="date" id="finishDateSC" name="finishDateSC">  </td>	
-									</tr>
-								</tbody>
-							</table>
-						</div>
-				</div>
-		      </div>
-
-		      <div class="modal-footer">
-		      	<button type="button" class="btn btn-default mainInsertBtn">등록</button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		      </div>
-		    </div>
-		
-		  </div>
-		</div>
-		<!-- 메인추가MODAL 끝 -->
-      
-
-
-		
-	<script type="text/javascript">
-		$('.mainInsertBtn').click(function(){
-			alert("main insert 하기 "); // 사실이미 DB 에는 저장되어있음 
-			var scheduleNum = $("#scheduleNumSC").val()*1;
-			var projectNum = $("#projectNumSC").val()*1;
-			var startDate = $("#startDateSC").val();
-			var finishDate = $("#finishDateSC").val();
-			alert(scheduleNum + " " +projectNum+ " " + startDate+ " " +finishDate );
-			
-			$.ajax({
-				url: "/flu/schedule/mainInsert",
-				type: "POST",
-				async: false,
-				data: {
-					scheduleNum:scheduleNum,
-					projectNum:projectNum,
-					startDate:startDate,
-					finishDate:finishDate
-				},
-				success: function(data){
-					alert("mainINsert 결과 "+data);
-					if(data==1){
-						alert("성공");
-						
-					}else{
-						alert("날짜 등록 에러");
-					
-					}
-					$("#insertMainschedule").modal('hide');
-				}
-			});
-			
-		loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
-		});
-		
-		</script>
-
-
-
-		<div class="clear"></div>
-	<div class="" style="display:block;">
-			전체개요
-			<span class="totalWill">${summary.stateCount[0]}</span>
-			<span class="totalIng">${summary.stateCount[1]}</span>
-			<span class="totalDone">${summary.stateCount[2]}</span>
-			<span class="totalTotal">${summary.stateCount[3]}</span>
-			<hr/>
-			
-		
-		
-		
-		<c:forEach items="${summary.partNames}" var="partName" varStatus="i">
-			<span class="partNames">${partName}</span>
-			
-			<span class="partNamesWill">${summary.stateCountPerPart.get(i.index*1)[0]}</span>
-			<span class="partNamesIng">${summary.stateCountPerPart.get(i.index*1)[1]}</span>
-			<span class="partNamesDone">${summary.stateCountPerPart.get(i.index*1)[2]}</span>
-			<span class="partNamesTotal">${summary.stateCountPerPart.get(i.index*1)[3]}</span>
-	
-		</c:forEach>
-		<hr/>
-		
-		<c:forEach items="${summary.userNames}" var="userName" varStatus="i">
-			<span class="userNames">${userName}</span>
-			
-			<span class="userNamesWill">${summary.stateCountPerUser.get(i.index*1)[0]}</span>
-			<span class="userNamesIng">${summary.stateCountPerUser.get(i.index*1)[1]}</span> 
-			<span class="userNamesDone">${summary.stateCountPerUser.get(i.index*1)[2]}</span>
-			<span class="userNamesTotal">${summary.stateCountPerUser.get(i.index*1)[3]}</span> 
-			
-		</c:forEach>
-		<hr/>
-	
-	
-			<!-- ------------------- 값 넘어오는거 확인용----------------- -->
-			<div class="testData" style="display:block">
-			
-				<div id="partsDiv"></div>
-				<hr>
-			
-				<div id="unitsDiv"></div>
-				<hr>
-			
-				<div id="clientDiv"></div>
-				<hr>
-			
-				<div id="usersDiv"></div>
-				<hr>
-	
-			
-	
 			</div>
+			
+			
+		<div class="tabContentWrap">
+			<div id="tab1" class="tabcontent current">
+				<!-- tab1내용 은 개요야  -->
+				<c:import url="/WEB-INF/views/schedule/firstView.jsp" />
+			</div>
+			
+			<div id="tab2" class="tabcontent">
+				<!-- tab2내용 은 달력이야 -->
+				<c:import url="/WEB-INF/views/schedule/secondView.jsp" />
+			</div>
+			
+			<div id="tab3" class="tabcontent">
+				<!-- tab3내용 은 표야  -->
+				<c:import url="/WEB-INF/views/schedule/thirdView.jsp" />
+			</div>
+			
+			<div id="tab4" class="tabcontent">
+				<!-- 프리랜서가 업무 체크 -->
+				<c:import url="/WEB-INF/views/schedule/checkListForFreelancer.jsp" />
+			</div>
+			
+			<div id="tab5" class="tabcontent">
+				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+				<c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" />
+			</div>
+			
+			<div id="tab6" class="tabcontent">
+				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+				<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
+			</div>
+			
+			<div id="tab7" class="tabcontent">
+				<!-- tab5내용 은 수정이야 //클라이언트만 가능  -->
+				<%-- <c:import url="/WEB-INF/views/schedule/mainInsertForm.jsp" /> --%>
+			</div>
+		</div>
+		
+		
+		
+		<div class="clear"></div>
 
-	</div>
+
+		<!-- ------------------- 값 넘어오는거 확인용----------------- -->
+		<div class="testData" style="display:block">
+		
+			<div id="partsDiv"></div>
+			<hr>
+		
+			<div id="unitsDiv"></div>
+			<hr>
+		
+			<div id="clientDiv"></div>
+			<hr>
+		
+			<div id="usersDiv"></div>
+			<hr>
+
+		
+
+		</div>
+
+	
 		
 		
 		

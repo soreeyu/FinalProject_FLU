@@ -1052,10 +1052,6 @@ public class FreelancerController {
 		List<ProjectDTO> ar = freelancerService.listAll(memberDTO, listInfo, applicantDTO);
 		
 		for(int i=0;i<ar.size();i++){
-			System.out.println("지원한 프로젝트의 email을뽑아보자="+ar.get(i).getEmail());
-		}
-		
-		 for(int i=0;i<ar.size();i++){
         	 
 	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));

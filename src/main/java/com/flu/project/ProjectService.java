@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.flu.applicant.ApplicantDTO;
 import com.flu.member.MemberDTO;
@@ -40,12 +39,11 @@ public class ProjectService {
 	
 	//project View
 	public ProjectDTO projectView(ProjectDTO projectDTO){
-		System.out.println("projectView에서 skill파싱하기");
+		System.out.println("projectView - service");
 		System.out.println("num=="+projectDTO.getProjectNum());
 		
 		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
-		System.out.println("projectnum=="+projectDTO.getProjectNum());
-		
+		System.out.println(projectDTO.getSkill());
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
 				
 		return projectDTO;
@@ -95,9 +93,7 @@ public class ProjectService {
 			}
 			System.out.println(ar.get(i).getSkills());
 		}
-		
 
-	
 		return ar;
 	}
 	
@@ -155,8 +151,8 @@ public class ProjectService {
 	
 
 	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
-	public MemberDTO projectImg(ProjectDTO projectDTO){
-		return projectDAO.projectImg(projectDTO);
+	public MemberDTO projectClient(ProjectDTO projectDTO){
+		return projectDAO.projectClient(projectDTO);
 	}
 	
 	
@@ -201,6 +197,7 @@ public class ProjectService {
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
 	
+
 	
 	//지원자 선택 서비스
 	public int applicantCheck(String paycheck, Integer projectNum){
@@ -243,5 +240,14 @@ public class ProjectService {
 		return projectDAO.applicantUpdateIng(map);
 	}
 	
-	
+
+	//index에 뿌려질 등록된 프로젝트 금액
+	public int totalBudget() throws Exception{
+		return projectDAO.totalBudget();
+	}
+	//index에 뿌려질 등록된 프로젝트리스트( 높은 금액순)
+	public List<ProjectDTO> indexProjectList () throws Exception{
+		return projectDAO.indexProjectList();
+	}
+
 }

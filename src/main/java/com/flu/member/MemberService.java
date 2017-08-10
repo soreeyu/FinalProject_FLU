@@ -93,7 +93,9 @@ public class MemberService {
 	}
 
 	//로그인
+
 	public MemberDTO login(MemberDTO memberDTO) throws Exception{
+
 		return memberDAO.login(memberDTO);
 	}
 
@@ -203,7 +205,10 @@ public class MemberService {
 	//myflu에 뿌려질 알람 리스트
 	public List<AlarmDTO> memberAlarmList(String email) throws Exception{
 		return memberDAO.memberAlarmList(email);
-
+	}
+	//index에 뿌려질 등록된 회원 카운트
+	public int memberCountTotal() throws Exception{
+		return memberDAO.memberCountTotal();
 	}
 	
 	

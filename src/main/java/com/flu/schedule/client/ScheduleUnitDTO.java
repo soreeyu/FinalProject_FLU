@@ -12,6 +12,7 @@ public class ScheduleUnitDTO {
 	private String unitDescFileO;
 	private String unitDescFileF;
 	private Integer partNum; // Part들 중에 무조건 속해잇어야함
+	private String partName; //필요해
 	private String unitStartDate; //시작일
 	private String unitFinishDate; //마감일
 	private String email; // 해당 일을 맡은 사용자 등록 
@@ -92,6 +93,13 @@ public class ScheduleUnitDTO {
 	public void setUnitState(String unitState) {
 		this.unitState = unitState;
 	}
+	public String getPartName() {
+		return partName;
+	}
+	public void setPartName(String partName) {
+		this.partName = partName;
+	}
+	
 	
 	
 	

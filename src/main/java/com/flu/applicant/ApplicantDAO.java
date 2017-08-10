@@ -24,9 +24,19 @@ public class ApplicantDAO {
 		return sqlSession.selectList(NAMESPACE+"list", projectNum);
 	}
 	
+	//지원자 List 불러오기
+	public int ingCount(int projectNum){
+			
+		return sqlSession.selectOne(NAMESPACE+"ingCount", projectNum);
+	}
+	
 	//지원자 update
 	public int appUpdate(String email){
 		return sqlSession.update(NAMESPACE+"update", email);
+	}
+	
+	public Integer checkApp(String email){
+		return sqlSession.selectOne(NAMESPACE+"checkApp", email);
 	}
 	
 	
@@ -46,7 +56,7 @@ public class ApplicantDAO {
 	//지원자 수 카운트하기
 	public int countApplicant(int projectNum){
 		System.out.println("countApplicant-dao");
-		
+		System.out.println(projectNum);
 		return sqlSession.selectOne(NAMESPACE+"countApplicant", projectNum);
 	}
 	

@@ -50,6 +50,7 @@ public class FreelancerService{
 	//프리랜서 리스트
 	public Map<String, Object> freelancerList(ListInfo listInfo){
 		Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
+
 		
 		/*Map<String, Object> map =freelancerDAO.freelancerList2(listInfo);
 		List<MemberDTO> aa =(List<MemberDTO>)map.get("member");
@@ -494,17 +495,27 @@ public class FreelancerService{
 	/************************** freelancer Project *******************************/
 
 
-	//freelancer 나의 전체 프로젝트리스트
+	//freelancer 나의 프로젝트리스트
 		public List<ProjectDTO> listAll(MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
 			System.out.println("service의 state="+applicantDTO.getState());
-
-			return freelancerDAO.listAll(memberDTO, listInfo, applicantDTO);
+			
+			List<ProjectDTO> list = freelancerDAO.listAll(memberDTO, listInfo, applicantDTO);
+			
+			for(int i=0;i<list.size();i++){
+				String[] parsing = list.get(i).getSkill().split(",");
+				list.get(i).setSkills(parsing);
+			}
+			
+			return list;
 		}
 		
 		public int countAll(MemberDTO memberDTO, ListInfo listInfo, ApplicantDTO applicantDTO){
 			return freelancerDAO.countAll(memberDTO, listInfo, applicantDTO);
 		}
 		
-		
+	//인덱스에 뿌려질 프리랜서 리스트
+	public List<FreelancerDTO> indexFreelancerList() throws Exception{
+		return freelancerDAO.indexFreelancerList();
+	}
 	
 }
