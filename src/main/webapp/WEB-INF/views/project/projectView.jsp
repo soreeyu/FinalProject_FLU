@@ -875,7 +875,7 @@ background-color: white;
             </div>
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
          
              </div>
@@ -928,11 +928,16 @@ background-color: white;
          
              
           
+<%-- <<<<<<< HEAD
+		확인필요
+          <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+======= --%>
           <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
           <c:if test="${member.kind eq 'client' && member.email==dto.email}">
           <div class="project-apply-box">
           <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
           <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
             <div class="schedule-btn">미팅룸 예약하기 </div>
@@ -943,6 +948,7 @@ background-color: white;
                 <div class="owner-btn" id="pj-delete">Delete</div>
 
           </div>
+
           </c:if>
 
           
@@ -1008,6 +1014,8 @@ background-color: white;
       
          </section>
       </div>
+      
+      
 
 
 </section>
@@ -1192,7 +1200,121 @@ var testId = "";
 			
 			}
 		});
+		
+		   
+		   
+	 //프로젝트스케줄 //면 //아래잇는거 지우고 function 안으로 넣음 
+		 $("#scheduleBtn").click(function(){
+			var test = getScheduleNum(projectNum);
+	    });
+		   
+
 	})(jQuery);
+
+
+   var projectNum = '${dto.projectNum}';
+      
+   $('#deleteBTN').click(function() {
+      
+      if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
+         $('#frmm').attr('action','./projectDelete');
+         $('#frmm').submit();
+      }else{
+         
+      }   
+      
+   });
+ 
+   
+   $('#doneBTN').click(function() {
+      if(confirm("프로젝트 검수를 완료하시겠습니까?")){
+         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
+         $('#frmm').submit();
+      }
+      else{
+
+      }
+      
+   });
+   
+   
+
+   function getContextPath(){
+	   	alert('${pageContext.request.contextPath}');
+	   	var context = '${pageContext.request.contextPath}';
+	   	return context;
+   }
+
+
+
+   /* 
+    * 	
+    * Controller에서 이미 프로젝트의 존재여부는 확인하고 들어와진 상태라고 보면된다 
+   	DB 에 해당 프로젝트의 스케줄이 있는지 확인 후 
+   	있으면 users, parts , units 정보를 가져오는 함수호출
+   	없으면 스케줄 생성여부를 물어본 뒤 
+   		생성한다고하면 생성함수호출 
+   		안한다고 하면 이전 화면
+   */
+   function getScheduleNum(projectNum){
+   	var test = "";
+   	$.ajax({
+   		url: "${pageContext.request.contextPath}/schedule/check?projectNum="+projectNum,
+   		type: "GET",
+   		async : false,
+   		success: function(data){
+   			//alert(JSON.stringify(data));
+   			
+   			if(data.schedule=='n'){
+   				//스케줄 생성하도록 창띄워주기
+   				if(confirm('스케줄을 생성하시겠소?')){
+   					createSchedule(data.projectNum);
+   				}else{
+   					//이전 화면으로 가기 
+   					//window.history.back();
+   					//혹은
+   					location.href = $(location).attr('href');
+   				}
+   				
+   			}else if(data.schedule=='y'){
+   				
+   				var scheduleNum = data.scheduleMainDTO.scheduleNum;
+   				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum;
+   			}else{
+   				alert("스케줄 생성 오류");
+   				location.href = $(location).attr('href');
+   				//location.href = getContextPath();
+   			}
+   		}
+   	 });
+   	
+   	return test;
+   }
+
+
+
+   /* 
+   	스케줄 생성함수 
+   */
+   function createSchedule(projectNum){
+   	var scheduleNum = 0;
+   	$.ajax({
+   		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
+   		type: "GET",
+   		success:function(data){
+   			//alert("스케줄 생성해야됨"+data);
+   			if(data.result == 'y'){
+   				alert("생성된 scheduleNum = "+data.scheduleNum);
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+data.scheduleNum;
+   			}else{
+   				alert("스케줄생성오류");
+   			}
+   		}
+   	});
+   }
+
+
 
 	
 	
@@ -1247,9 +1369,12 @@ var testId = "";
 			$('#frmm').submit();
 		} else {
 
+
 		}
 
 	});
+	
+	
 </script>
 </body>
 </html>

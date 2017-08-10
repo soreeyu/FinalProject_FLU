@@ -1,5 +1,9 @@
 package com.flu.schedule.client;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
+
 public class SchedulePartDTO {
 	
 	private int scheduleNum; //MainDTO의 것과 엮임
@@ -9,9 +13,16 @@ public class SchedulePartDTO {
 	private String partDescFileO;
 	private String partDescFileF;
 	private Integer partNum; // 동일한 스케줄내에서 part에 접근하기 위한 변수 
+	private List<ScheduleUnitDTO> unitList;
 	
 	
 	
+	public List<ScheduleUnitDTO> getUnitList() {
+		return unitList;
+	}
+	public void setUnitList(List<ScheduleUnitDTO> unitList) {
+		this.unitList = unitList;
+	}
 	public String getPartDescFileO() {
 		return partDescFileO;
 	}

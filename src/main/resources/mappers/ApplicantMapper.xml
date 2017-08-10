@@ -7,10 +7,19 @@
   	<select id="list" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
   		select * from applicant where projectNum=#{projectNum} and state in('finish','payFinish')
   	</select>
+  	
+  	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
+  		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
+  	</select>
   
   	<update id="update" parameterType="java.lang.String">
   		update applicant set state = 'payFinish' where email=#{email}
   	</update>
+  	
+  	<!-- 스케줄화면에 진행중인 지원자만 접근 가능하도록 체크 -->
+  	<select id="checkApp" parameterType="string" resultType="java.lang.Integer">
+  		select * from applicant where email=#{email}
+  	</select>
   
   
   <!-- 지원하기 눌렀을 때, 지원자 추가하기 -->

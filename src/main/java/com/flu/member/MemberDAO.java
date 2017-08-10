@@ -24,22 +24,23 @@ public class MemberDAO {
 	@Inject
 	private SqlSession sqlSession;
 
-	private final String NAMESPACE = "MemberMapper.";
+	private final String NAMESPACE = "MemberMapper.";	
 	private final String NAMESPACE2 = "FreelancerMapper.";
 
 
 	//회원 가입
 	public int memberInsert(MemberDTO memberDTO)throws Exception {
-		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		//AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
 		
-		String password = memberDTO.getPw();
-		String encpassword = aes256Util.aesEncode(password);
-		String decpassword = aes256Util.aesDecode(encpassword);
-		System.out.println("원래 비밀번호 : "+password);
-		System.out.println("암호화된 비밀번호 : "+encpassword);
-		System.out.println("복호화된 비밀번호 : "+decpassword);
+		//String password = memberDTO.getPw();
+		//String encpassword = aes256Util.aesEncode(password);
+		//String decpassword = aes256Util.aesDecode(encpassword);
+		//System.out.println("원래 비밀번호 : "+password);
+		//System.out.println("암호화된 비밀번호 : "+encpassword);
+		//System.out.println("복호화된 비밀번호 : "+decpassword);
 		
-		memberDTO.setPw(encpassword);
+		//memberDTO.setPw(encpassword);
+		//memberDTO.setPw(password);
 		
 		int result = sqlSession.insert(NAMESPACE+"memberInsert", memberDTO);
 		sqlSession.insert(NAMESPACE2+"freelancerInsert", memberDTO.getEmail());
@@ -106,16 +107,17 @@ public class MemberDAO {
 
 	//로그인
 	public MemberDTO login(MemberDTO memberDTO) throws Exception{
-		AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		//AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
 		
-		String password = memberDTO.getPw();
-		String encpassword = aes256Util.aesEncode(password);
-		String decpassword = aes256Util.aesDecode(encpassword);
-		System.out.println("원래 비밀번호 : "+password);
-		System.out.println("암호화된 비밀번호 : "+encpassword);
-		System.out.println("복호화된 비밀번호 : "+decpassword);
+		//String password = memberDTO.getPw();
+		//String encpassword = aes256Util.aesEncode(password);
+		//String decpassword = aes256Util.aesDecode(encpassword);
+		//System.out.println("원래 비밀번호 : "+password);
+		//System.out.println("암호화된 비밀번호 : "+encpassword);
+		//System.out.println("복호화된 비밀번호 : "+decpassword);
 		
-		memberDTO.setPw(encpassword);
+		//memberDTO.setPw(encpassword);
+		//memberDTO.setPw(password);
 		return sqlSession.selectOne(NAMESPACE+"memberLogin", memberDTO);
 	}
 	//예약현황 리스트
@@ -201,5 +203,43 @@ public class MemberDAO {
 	public List<AlarmDTO> memberAlarmList(String email) throws Exception{
 		System.out.println("email"+email);
 		return sqlSession.selectList(NAMESPACE+"memberAlarmList", email);
+	}
+
+	//비밀번호 확인
+	public String pwCheck(MemberDTO memberDTO) throws Exception{
+		/*AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		
+		String password = memberDTO.getPw();
+		String encpassword = aes256Util.aesEncode(password);
+		String decpassword = aes256Util.aesDecode(encpassword);
+		System.out.println("원래 비밀번호 : "+password);
+		System.out.println("암호화된 비밀번호 : "+encpassword);
+		System.out.println("복호화된 비밀번호 : "+decpassword);
+		
+		memberDTO.setPw(encpassword);
+		String pw = sqlSession.selectOne(NAMESPACE+"pwcheck", memberDTO);
+		if(pw != null){
+		pw = aes256Util.aesDecode(pw);
+		}else{
+			pw="";
+		}*/
+		return sqlSession.selectOne(NAMESPACE+"pwcheck", memberDTO);
+	}
+	public int memberDelete(MemberDTO memberDTO) throws Exception{
+		/*AES256Util aes256Util = new AES256Util("FLU-Insert-encryption");
+		
+		String password = memberDTO.getPw();
+		String encpassword = aes256Util.aesEncode(password);
+		String decpassword = aes256Util.aesDecode(encpassword);
+		System.out.println("원래 비밀번호 : "+password);
+		System.out.println("암호화된 비밀번호 : "+encpassword);
+		System.out.println("복호화된 비밀번호 : "+decpassword);
+		
+		memberDTO.setPw(encpassword);*/
+		return sqlSession.delete(NAMESPACE+"memberDelete", memberDTO);
+	}
+	//index에 뿌려질 등록된 회원 카운트
+	public int memberCountTotal() throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"memberCountTotal");
 	}
 }

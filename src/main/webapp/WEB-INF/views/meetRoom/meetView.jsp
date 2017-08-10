@@ -395,11 +395,13 @@ label {
 		<input type="hidden" id="address_main" value="${dto.addr_main}">
 		<div id="map" style="width:100%;height:400px;margin-top: 5px;"></div>
 		</div>
-	
+		
+		<c:if test="${member.kind eq 'admin' }">
 		<div class="bottom_admin">
 		<a href="meetDelete?num=${dto.num}">업체 삭제</a>
 		<a href="meetUpdate?num=${dto.num}">업체 수정</a>
 		</div>
+		</c:if>
 		</section>
 
 

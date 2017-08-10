@@ -9,12 +9,6 @@
 
 <%-- <c:import url="../temp/bootstrap.jsp"></c:import> --%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/basic.css">
-
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/schedule/codebase/dhtmlxgantt.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/schedule/codebase/dhtmlxgantt.js"></script>
 <script src="${pageContext.request.contextPath}/resources/schedule/codebase/locale/locale_kr.js" charset="utf-8"></script>
@@ -82,7 +76,7 @@ html, body {
 		
 		gantt.form_blocks.textarea.button_click=function(index,button,shead,sbody){
 		    //뭘까
-		   // gantt.alert("버튼 눌렷을 때인건가"+index+button+shead+sbody);
+		    gantt.alert("버튼 눌렷을 때인건가"+index+button+shead+sbody);
 		}
 
 		//이거를 unit생성할때 사용해야겠군요 
@@ -276,7 +270,7 @@ html, body {
 	gantt.init("gantt_here");
 	
 	gantt.attachEvent("onAfterTaskAdd", function(id, item) {
-		//alert("item"+item);
+		alert("item"+item);
 		// task반복문
 		//gantt.eachTask(function(task){
 			if (item.unitState == '할일') {
@@ -310,11 +304,11 @@ html, body {
 	
 	//////////////////////////////존재하는 애들 가져오기 ////////////////////////////      				
 	//파트가져와서 업무에 추가해주기
-	var resultJson = getPartListGantt(scheduleNum);
+	var resultJson = getPartList(scheduleNum);
 	changeJsonDataForGanttTask(resultJson);
 
 	//unit가져와서 업무에 추가해주기 
-	var resultJsonUnit = getUnitListGantt(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
+	var resultJsonUnit = getUnitList(scheduleNum, -1, '', '', '');//구분 없이 해당 스케줄의 unit을 다가져온다
 	changeJsonDataForGanttTaskUnit(resultJsonUnit);
 	
 	
@@ -323,10 +317,6 @@ html, body {
 		alert("저장할란다");
 		var json = gantt.serialize();		
 		setUnits(json);
-	});
-	
-	$("#backBtnGantt").click(function(){
-		location.href="${pageContext.request.contextPath}/schedule/test?scheduleNum="+scheduleNum;
 	});
 
 	
@@ -399,11 +389,11 @@ function changeJsonDataForGanttTaskUnit(jsonObj) {
 } //changeJsonDataForGanttTaskUnit끝
 
 /**
- * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArrayGantt 에 저장해준다
+ * DB에 저장된 part들의 list를 json 형태로 받고 partsJSONArray 에 저장해준다
  */
-function getPartListGantt(scheduleNum) {
+function getPartList(scheduleNum) {
 
-	var partsJSONArrayGantt = new Array();
+	var partsJSONArray = new Array();
 
 	$.ajax({
 		url : "/flu/schedule/partList?scheduleNum=" + scheduleNum,
@@ -411,20 +401,20 @@ function getPartListGantt(scheduleNum) {
 		async : false,
 		success : function(data) { //json 넘어옴 
 
-			partsJSONArrayGantt = data;
+			partsJSONArray = data;
 
 		}
 	}); //success끝
 
-	alert("ajax아래 함수안에 data part //동기로 했음 "+ JSON.stringify(partsJSONArrayGantt));
-	return partsJSONArrayGantt;
+	alert("ajax아래 함수안에 data part //동기로 했음 "+ JSON.stringify(partsJSONArray));
+	return partsJSONArray;
 
-} // getPartListGantt() 끝
+} // getPartList() 끝
 
 //part별 보기로 클릭했을때 partnum을 주면된다
-function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
+function getUnitList(scheduleNum, partNum, email, unitState, kind) {
 
-	var partsJSONArrayGantt = new Array();
+	var partsJSONArray = new Array();
 
 	$.ajax({
 		url : "/flu/schedule/unitList",
@@ -437,31 +427,31 @@ function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
 			unitState : unitState
 		},
 		success : function(data) {
-			partsJSONArrayGantt = data;
+			partsJSONArray = data;
 			//여기서 상태 분석 후 색 정해주기 //할일 진행중 완료 마감등
-			for (var i = 0; i < partsJSONArrayGantt.length; i++) {
+			for (var i = 0; i < partsJSONArray.length; i++) {
 
-				if (partsJSONArrayGantt[i].unitState == '할일') {
-					partsJSONArrayGantt[i].color = "rgb(255, 176, 36)";
-				} else if (partsJSONArrayGantt[i].unitState == '진행중') {
-					partsJSONArrayGantt[i].color = "rgb(176, 180, 187)";
-				} else if (partsJSONArrayGantt[i].unitState == '완료') {
-					partsJSONArrayGantt[i].color = "rgb(39, 182, 186)";
-				} else if (partsJSONArrayGantt[i].unitState == '마감일 지남') {
-					partsJSONArrayGantt[i].color = "rgb(233, 94, 81)";
+				if (partsJSONArray[i].unitState == '할일') {
+					partsJSONArray[i].color = "rgb(255, 176, 36)";
+				} else if (partsJSONArray[i].unitState == '진행중') {
+					partsJSONArray[i].color = "rgb(176, 180, 187)";
+				} else if (partsJSONArray[i].unitState == '완료') {
+					partsJSONArray[i].color = "rgb(39, 182, 186)";
+				} else if (partsJSONArray[i].unitState == '마감일 지남') {
+					partsJSONArray[i].color = "rgb(233, 94, 81)";
 				} else {
 					alert("니상태는 뭐니");
 				}
 
-				//partsJSONArrayGantt[i].textColor = 'white';
+				//partsJSONArray[i].textColor = 'white';
 			}
 		}
 
 	});
-	alert("ajax아래 함수안에 data unit //동기로 했음" + JSON.stringify(partsJSONArrayGantt));
-	return partsJSONArrayGantt;
+	alert("ajax아래 함수안에 data unit //동기로 했음" + JSON.stringify(partsJSONArray));
+	return partsJSONArray;
 
-} //getUnitListGantt끝
+} //getUnitList끝
 
 
 
@@ -474,15 +464,18 @@ function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
 </head>
 <body>
 
-<c:import url="../temp/header.jsp"></c:import>
-<section class="main_section">
 
+<section class="main_section">
+ <div id="gantt_header" style="width:100%; height:100px; background:orange; ">
+ 	<span style="display:block; width:200px; height:100px; line-height:100px; background:yellow; margin-left:100px; ">프로젝트 진행창</span>
+ </div>
  <div id="gantt_here" style='width:100%; height:500px; margin:0 auto; overflow:hidden;'>
  
  </div>
- <div style='width:10%; margin:0 auto; margin-top:20px; text-align:center;'>
- 	<button id="backBtnGantt" class="btn btn-default" >뒤로가기</button>
- </div>
+ 
+<div id="test" style='width:200px; height:200px; background:orange;'></div>
+ 
+ 
  </section>
  
 
