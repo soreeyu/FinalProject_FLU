@@ -34,7 +34,7 @@ public class ChatController {
 		String user = ((MemberDTO)(session.getAttribute("member"))).getName();
 		//String ip = session에서 IP꺼내기
 		
-		echoHandler.applicantList(projectNum);
+		echoHandler.setNum(projectNum);
 		echoHandler.setId(((MemberDTO)(session.getAttribute("member"))).getEmail());
 		
 		mv.addObject("user", user).addObject("clientIP",clientIP).addObject("serverIP",serverIP);

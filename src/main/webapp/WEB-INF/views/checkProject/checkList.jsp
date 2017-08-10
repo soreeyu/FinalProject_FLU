@@ -468,8 +468,6 @@ color:red;
 		
 		var startDate = '${projectDTO.startDate}';
 		
-		alert(startDate);
-		
 		var y = startDate.substr(0, 2);
 	    var m = startDate.substr(3, 2);
 	    var d = startDate.substr(6, 2);
