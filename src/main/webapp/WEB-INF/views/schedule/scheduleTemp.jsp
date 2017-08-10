@@ -1162,7 +1162,9 @@ var currentTab = '${currentTab}';
 var scheduleNum = '${scheduleNum}';
 
 	$(function() {
-
+		
+		
+		
 		//데이터 뿌리기
 		getPartList(scheduleNum);
 		getUserList(scheduleNum);
@@ -1172,6 +1174,22 @@ var scheduleNum = '${scheduleNum}';
 			alert("");
 			$('ul.tab li[data-tab="${currentTab}"]').trigger('click');
 		}//안되넹..
+		
+		
+		
+		
+		//날짜가 입력이 안되있을경우 modal 생성
+		if($("#sDateforTitle").text() == ''){
+			$("#insertMainschedule").modal({backdrop:'static'});
+		}
+
+		
+		
+		
+		
+		
+		
+		
 
 		//tab 클릭 이벤트
 		$('ul.tab li').click(function() {
@@ -1314,14 +1332,6 @@ var scheduleNum = '${scheduleNum}';
 				
 				
 				
-				$(document).on("click",".closeBtn",function(data){
-					unitModal.hide(); 
-				});
-				
-				
-				
-				
-				
 				/////////////////////3뷰끝/////////////////////////////
 				
 				
@@ -1356,7 +1366,7 @@ var scheduleNum = '${scheduleNum}';
 					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
 					type:"GET",
 					success:function(data){
-						$("#tab5").append(data);
+						$("#tab5").html(data);
 					}
 				});
 				
@@ -1999,7 +2009,6 @@ var scheduleNum = '${scheduleNum}';
 		      </div>
 		      <div class="modal-body">
 		        <div id="client_section">
-					<form id="unitAddForm" action="${pageContext.request.contextPath}/schedule/addUnit" method="POST"  enctype="multipart/form-data">
 						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
 						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
 
@@ -2008,39 +2017,47 @@ var scheduleNum = '${scheduleNum}';
 								<table>
 									<thead>
 										<tr>
-											<th>업무명</th>
-											<th>시작일</th>
-											<th>마감일</th>
-											<th>담당자</th>
-											<th>상세설명</th>							
+											<th></th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody class="unitRowSection">
-										<tr class="unitOne">
-											<td><input type="text" class="unitName" name="unitName"></td>
-											<td><input type="date" class="unitStartDate" name="unitStartDate"> </td>
-											<td><input type="date" class="unitFinishDate" name="unitFinishDate"></td>
-											<td><textarea rows="" cols="100" class="unitDescribe" name="unitDescribe"></textarea></td>
-											<td><input type="date" class="email" name="email"></td>			
-											<td><span class="unitDel">X</span></td>
+										<tr>
+											<th>업무명</th>
+											<td><input type="text" id="unitNameS" name="unitNameS" placeholder="업무제목" style="width:300px;"></td>
+										</tr>
+										<tr>
+											<th>시작일</th>
+											<td><input type="date" id="unitStartDate" name="unitStartDate" style="width:300px;"> </td>
+										</tr>
+										<tr>
+											<th>마감일</th>
+											<td><input type="date" id="partNumS" name="partNumS" style="width:300px;"></td>
+										</tr>
+										<tr>
+											<th>파트</th>
+											<td><input type="number" id="unitFinishDate" name="unitFinishDate" style="width:300px;"></td>
+										</tr>
+										<tr>
+											<th>담당자</th>
+											<td><input type="text" id="unitEmailS" name="unitEmailS" placeholder="담당자" style="width:300px;"></td>			
+										</tr>
+										<tr>
+											<th>상세설명</th>	
+											<td><textarea rows="" cols="100" id="unitDescribeS" name="unitDescribeS"></textarea></td>		
 										</tr>
 
 									</tbody>
 								</table>
-									<input type="hidden" class="unitState" name="unitState" value="할일" readonly="readonly">
+								<input type="hidden" id="unitState" name="unitState" value="할일" readonly="readonly">
 							</div>
-						
-						<input type="button" class="btn btn-default" id="addUnitBtn" value="+" style="margin:0 auto;">
 
-					</form>
-					
 				</div>
 		      </div>
 		      
 
 		      <div class="modal-footer">
-		      	<button type="button" class="btn btn-default unitFrmBtn">등록</button>
+		      	<button type="button" class="btn btn-default " id="unitFrmBtn">등록</button>
 		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 		      </div>
 		    </div>
@@ -2075,18 +2092,7 @@ var scheduleNum = '${scheduleNum}';
 				$(".partRowSection").append(partDOM3);
 			});
 			
-			$(document).on("click","#addUnitBtn",function(){
-				//alert('unit 추가'+unitCount);
-				var partDOM4 = '';
-				partDOM4 = partDOM4 + '<tr class="partOne">';
-				partDOM4 = partDOM4 + '<td><input type="text" class="partName" name="partName"></td>';
-				partDOM4 = partDOM4 + '<td><input type="date" class="partStartDate" name="partStartDate"> </td>';
-				partDOM4 = partDOM4 + '<td><input type="date" class="partFinishDate" name="partFinishDate"></td>';
-				partDOM4 = partDOM4 + '<td><input type="file" class="partDescFileO" name="partDescFile"></td>';
-				partDOM4 = partDOM4 + '<td><span class="partDel">X</span></td>';
-				partDOM4 = partDOM4 + '</tr>';
-				$(".unitRowSection").append(partDOM4);
-			});
+			
 			
 			$(document).on("click",".partDel",(function(){
 				//alert("삭제하고싶어"+partCount);
@@ -2096,11 +2102,131 @@ var scheduleNum = '${scheduleNum}';
 			$(document).on("click",".partFrmBtn",function(){
 				$("#partAddForm").submit();
 			});
+			
+			
+			$(document).on("click","#unitFrmBtn",function(){
+				
+				var partNumS = $("#partNumS").val();
+				var unitNameS = $("#unitNameS").val();
+				var unitStartDate = $("#unitStartDate").val();
+				var unitFinishDate = $("#unitFinishDate").val();
+				var unitEmailS = $("#unitEmailS").val();
+				var unitDescribeS = $("#unitDescribeS").val();
+				alert(scheduleNum+"확인용 이름 "+unitNameS + " 시작 "+unitStartDate + " 마감"+ unitFinishDate+ " 메일  "+ unitEmailS + " 설명  " +unitDescribeS);
+				$.ajax({
+					url: "${pageContext.request.contextPath}/schedule/addUnit",
+					type: "POST",
+					data : {
+						scheduleNum : scheduleNum,
+						partNum : partNumS,
+						unitName :unitNameS,
+						unitStartDate : unitStartDate,
+						unitFinishDate :unitFinishDate,
+						email : unitEmailS,
+						unitDescribe : unitDescribeS
+					},
+					success:function(data){
+						if(data == 1){
+							
+						}else{
+							alert("업무등록오류");
+						}
+						$("#myModal2").modal('hide');
+					}
+					
+				});
+			});
+			
 
 		</script>
 
 
+      <!--  -----------MODAL 만들기 면----------------  -->
+		<!-- 메인추가 Modal -->
+		<div id="insertMainschedule" class="modal fade" role="dialog">
+		  <div class="modal-dialog ">
+		
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">스케줄 생성</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div id="client_section">
+					
+					<input type="hidden" id="scheduleNumSC" name="scheduleNumSC" value="${scheduleNum}">
+					<input type="hidden" id="projectNumSC" name="projectNumSC" value="${projectNum}">
+						<div id="mainSection"  style="width:100%;">
+						
+							<table>
+								<thead>
+									<tr>
+										<th>시작일</th>
+										<th>마감일</th>
+								
+									</tr>
+								</thead>
+								<tbody class="mainRowSection">
+									<tr>
+										<td><input type="date" id="startDateSC" name="startDateSC" value=""> </td>
+										<td><input type="date" id="finishDateSC" name="finishDateSC">  </td>	
+									</tr>
+								</tbody>
+							</table>
+						</div>
+				</div>
+		      </div>
 
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-default mainInsertBtn">등록</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		<!-- 메인추가MODAL 끝 -->
+      
+
+
+		
+	<script type="text/javascript">
+		$('.mainInsertBtn').click(function(){
+			alert("main insert 하기 "); // 사실이미 DB 에는 저장되어있음 
+			var scheduleNum = $("#scheduleNumSC").val()*1;
+			var projectNum = $("#projectNumSC").val()*1;
+			var startDate = $("#startDateSC").val();
+			var finishDate = $("#finishDateSC").val();
+			alert(scheduleNum + " " +projectNum+ " " + startDate+ " " +finishDate );
+			
+			$.ajax({
+				url: "/flu/schedule/mainInsert",
+				type: "POST",
+				async: false,
+				data: {
+					scheduleNum:scheduleNum,
+					projectNum:projectNum,
+					startDate:startDate,
+					finishDate:finishDate
+				},
+				success: function(data){
+					alert("mainINsert 결과 "+data);
+					if(data==1){
+						alert("성공");
+						
+					}else{
+						alert("날짜 등록 에러");
+					
+					}
+					$("#insertMainschedule").modal('hide');
+				}
+			});
+			
+		loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
+		});
+		
+		</script>
 
 
 

@@ -10,6 +10,8 @@ import com.flu.member.MemberDTO;
 import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
+import com.flu.schedule.freelancer.ScheduleResultFileDTO;
+import com.flu.schedule.freelancer.SheduleFreeTodoResultDTO;
 
 @Repository
 public class ScheduleDAO {
@@ -117,7 +119,10 @@ public class ScheduleDAO {
 	
 	
 	public int unitInsert(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
-		return sqlSession.insert(NAMESPACE+"unitInsert", scheduleUnitDTO); 
+		System.out.println("값왓니3?"+scheduleUnitDTO.getUnitDescribe());
+		int result = sqlSession.insert(NAMESPACE+"unitInsert", scheduleUnitDTO); 
+		System.out.println("결과 "+result);
+		return result;
 	}
 	
 	
@@ -162,13 +167,16 @@ public class ScheduleDAO {
 	
 	
 	//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-	public void uploadResult(String file,String contents) throws Exception { //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
-		
+	public int uploadResult(SheduleFreeTodoResultDTO freeTodoResultDTO) throws Exception { //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
+		return sqlSession.insert(NAMESPACE+"setResult1",freeTodoResultDTO);
 	}  
 	
+	public int setResultFile(ScheduleResultFileDTO resultFileDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE+"setResultFile",resultFileDTO);
+	}
 	
 	
-	
+
 	
 	
 

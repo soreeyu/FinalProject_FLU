@@ -893,6 +893,8 @@ background-color: white;
       
          </section>
       </div>
+      
+      
 
 
 </section>
@@ -1057,6 +1059,19 @@ if(meetKind=='offline'){
 			
 			}
 		});
+		
+		   
+		   
+	 //프로젝트스케줄 //면 //아래잇는거 지우고 function 안으로 넣음 
+		 $("#scheduleBtn").click(function(){
+			var test = getScheduleNum(projectNum);
+			//alert("test "+test);
+			//if(test == 'needMainModal'){
+			//	$("#insertMainschedule").modal({backdrop:'static'});
+			//}
+	    });
+		   
+
 	})(jQuery);
 
 
@@ -1093,14 +1108,7 @@ if(meetKind=='offline'){
 	   	return context;
    }
 
-   
-   
-   //프로젝트스케줄
-   $("#scheduleBtn").click(function(){
-		getScheduleNum(projectNum);
-	});
-   
-   
+
 
    /* 
     * 	
@@ -1112,10 +1120,11 @@ if(meetKind=='offline'){
    		안한다고 하면 이전 화면
    */
    function getScheduleNum(projectNum){
-   	
+   	var test = "";
    	$.ajax({
-   		url: getContextPath()+"/schedule/check?projectNum="+projectNum,
+   		url: "${pageContext.request.contextPath}/schedule/check?projectNum="+projectNum,
    		type: "GET",
+   		async : false,
    		success: function(data){
    			//alert(JSON.stringify(data));
    			
@@ -1142,6 +1151,8 @@ if(meetKind=='offline'){
    			}
    		}
    	 });
+   	
+   	return test;
    }
 
 
@@ -1225,6 +1236,8 @@ if(meetKind=='offline'){
 		}
 
 	});
+	
+	
 </script>
 </body>
 </html>

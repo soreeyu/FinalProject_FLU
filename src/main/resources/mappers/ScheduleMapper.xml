@@ -22,7 +22,7 @@
 	<insert id="createS" parameterType="java.lang.Integer">
 		insert into schedulemain
 		(schedulenum, startdate, finishdate, projectnum) values
-		(schedule_seq.nextval, sysdate, sysdate, #{projectNum})
+		(schedule_seq.nextval, null, null, #{projectNum})
 	</insert>
 
 	<!-- 스케줄 넘, 시작일, 마감일, 프로젝트 넘 -->
@@ -125,7 +125,7 @@
 		(schedulenum, unitnum, unitname,
 		unitdescribe,unitstartDate,unitfinishdate, partnum, email, unitstate)
 		values (#{scheduleNum}, nvl((select max(unitNum)+1 from scheduleunit
-		where schedulenum=#{scheduleNum}),0), #{unitName}, '설명들어가야하는디',
+		where schedulenum=#{scheduleNum}),0), #{unitName}, #{unitDescribe},
 		#{unitStartDate}, #{unitFinishDate}, #{partNum}, #{email}, '할일')
 	</insert>
 
@@ -156,6 +156,19 @@
 		update scheduleunit set unitstate=#{unitState} where schedulenum=#{scheduleNum} and unitnum=#{unitNum}
 	</update>
 	
+	
+	
+	<!-- 
+	<insert id="setResult1" parameterType="com.flu.schedule.freelancer.ScheduleFreeTodoResultDTO">
+		insert into scheduleunitresult (schedulenum,unitnum,unitresultfilenum,email)
+		values (#{scheduleNum},#{unitNum},FREELANCERSCHEDULE_SEQ.NEXTVAL,#{email})
+	</insert>
+	
+	<insert id="setResultFile" parameterType="com.flu.schedule.freelancer.ScheduleResultFileDTO">
+		insert into ScheduleResultFiles (unitResultFilenum,resultFname,resultoname,resultfileseq)
+		values (FREELANCERSCHEDULE_SEQ.currval,'파일명2','파일명오2',RESULTFILES_SEQ.NEXTVAL)
+	</insert>
+	 -->
   	
 
   </mapper>

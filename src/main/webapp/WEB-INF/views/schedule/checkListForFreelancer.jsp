@@ -80,11 +80,13 @@
 		      </div>
 		      <div class="modal-body">
 		        <div id="client_section">
-					<form id="resultAddForm" action="${pageContext.request.contextPath}/schedule/#########" method="POST"  enctype="multipart/form-data">
-						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
-						<input type="hidden" id="currentTab" name="currentTab" value="">				
-						샤바샤바 랄라라
-						
+					<form id="resultAddForm" action="${pageContext.request.contextPath}/schedule/uploadResult" method="POST"  enctype="multipart/form-data">
+						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">				
+						SE를 넣고싶다...결과를 등록해주세요
+						<input type="file" class="unitResultFiles" name="unitResultFiles">
+						<input type="file" class="unitResultFiles" name="unitResultFiles">	
+						<input type="file" class="unitResultFiles" name="unitResultFiles">
+						<input type="file" class="unitResultFiles" name="unitResultFiles">	
 					</form>
 					
 				</div>
@@ -93,7 +95,7 @@
 
 		      <div class="modal-footer">
 		      	<button type="button" class="btn btn-default unitResultFrmBtn">등록</button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-default close" data-dismiss="modal">취소</button>
 		      </div>
 		    </div>
 		

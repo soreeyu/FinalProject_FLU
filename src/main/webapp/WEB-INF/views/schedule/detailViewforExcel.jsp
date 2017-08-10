@@ -109,7 +109,7 @@
 				</c:forEach>
 				
 			</c:forEach>
-			
+			<!-- 	
 			<tr>
 				<td>DB구축구축</td><td></td><td></td><td></td>
 				<td>2017-07-08</td><td>2017-08-08</td><td>DB를 열심히 구축하면됩니다</td>
@@ -121,7 +121,7 @@
 			<tr>
 				<td></td><td>MEMBER DB생성하기</td><td>할일</td><td>myeon01@flu.com</td>
 				<td>2017-07-10</td><td>2017-07-15</td><td>MEMBER 를 열심히 분석해서 어떻게할지 정하세요</td>
-			</tr>
+			</tr> -->
 			</tbody>
 		</table>
 

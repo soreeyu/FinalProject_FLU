@@ -15,8 +15,7 @@
 											<div class="tw-project-analytics-status__text">
 												<section class="tw-add-date-panel">
 													<div class="tw-add-date-panel__added-date with-close-icon">
-														<span id="sDateforTitle">7월 25일
-														${mainScheduleDTO.startDate}</span>
+														<span id="sDateforTitle">${mainScheduleDTO.startDate}</span>
 														
 														<div class="tw-add-date-panel__remove-date">
 															<i class="tw-icon tw-icon-close --name_close"></i>
@@ -30,8 +29,7 @@
 											<div class="tw-project-analytics-status__text">
 												<section class="tw-add-date-panel">
 													<div class="tw-add-date-panel__added-date with-close-icon">
-														<span id="fDateforTitle">8월 25일
-														${mainScheduleDTO.finishDate}</span>
+														<span id="fDateforTitle">${mainScheduleDTO.finishDate}</span>
 														
 														<div class="tw-add-date-panel__remove-date">
 															<i class="tw-icon tw-icon-close --name_close"></i>
@@ -51,12 +49,12 @@
 										</div>
 										<div>
 											<div class="tw-project-analytics-status__head">목표 업무(총)</div>
-											<div class="tw-project-analytics-status__text --plain"><span  id="totalUnitsCount">10</span>개
+											<div class="tw-project-analytics-status__text --plain"><span  id="totalUnitsCount"></span>개
 												업무 </div>
 										</div>
 										<div>
 											<div class="tw-project-analytics-status__head">완료 업무</div>
-											<div class="tw-project-analytics-status__text --plain" ><span id="totalDoneUnitsCount">3</span>개
+											<div class="tw-project-analytics-status__text --plain" ><span id="totalDoneUnitsCount"></span>개
 												업무 (<span id="totalDoneUnitsPercent"></span>%)</div>
 										</div>
 									</div>
@@ -119,7 +117,7 @@
 									</div>
 								</c:forEach>
 								
-								
+								<%-- 
 								<div class="tw-project-analytics-self-centric-chart">
 									<div class="tw-project-analytics-self-centric-chart__header">
 										<h3>사용자3</h3>
@@ -566,7 +564,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> --%>
 							</section>
 
 							<div class="tw-project-analytics-page__task-overview partOverview">
@@ -576,14 +574,14 @@
 											<div class="tw-tasklist-stats-panel__spacer"></div>
 											<div class="tw-tasklist-stats-panel__filter">
 												<div class="tw-tasklist-stats-panel__legend-container">
-													<div class="tw-chart-legend --compact --selected" id="all"
+													<!-- <div class="tw-chart-legend --compact --selected" id="all"
 														style="height: 21px; line-height:21px;">
 														<div class="tw-chart-legend__name">
 														<div class="tw-chart-legend__text --compact"
 															style="margin-left: 0px;">전체</div>
 													</div>
-													</div>
-													<div class="tw-chart-legend --compact --selected" id="completed"
+													</div> -->
+													<div class="tw-chart-legend --compact " id="completed"
 														style="height: 21px; line-height:21px;">
 														<div class="tw-chart-legend__name">
 															<div class="tw-chart-legend__circle --compact"
@@ -766,10 +764,10 @@
 
       
       //제목 설정 
-      $("#sDateforTitle").html("4월 7일");
-      $("#fDateforTitle").html("8월 7일");
-      $("#beforeDuration").html(100);
-      $("#afterDuration").html(1);
+      //$("#sDateforTitle").html("4월 5일");
+      //$("#fDateforTitle").html("8월 7일");
+      $("#beforeDuration").html();
+      $("#afterDuration").html();
       $("#totalUnitsCount").html(totalTotal);
       $("#totalDoneUnitsCount").html(totalDone);
       $("#totalDoneUnitsPercent").html(Math.ceil(totalDone/totalTotal*100));

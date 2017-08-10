@@ -33,6 +33,8 @@ import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
+import com.flu.schedule.freelancer.ScheduleResultFileDTO;
+import com.flu.schedule.freelancer.SheduleFreeTodoResultDTO;
 
 @Controller
 @RequestMapping(value="/schedule/**")
@@ -78,7 +80,8 @@ public class ScheduleController {
 				ProjectDTO projectDTO = projectService.projectView(dto);
 				model.addAttribute("projectDTO",projectDTO); //프로젝트 정보 뿌려주기용 
 				model.addAttribute("applicantCount", applicantDAO.ingCount(scheduleMainDTO.getProjectNum())); //해당 스케줄에 참여한 프리랜서수 
-
+				
+				
 				ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //tab1 의 개요를 위한 아이
 				model.addAttribute("summary",scheduleSummaryDTO);
 
@@ -90,13 +93,25 @@ public class ScheduleController {
 
 
 		}
+		
+		
+		@ResponseBody
+		@RequestMapping(value="mainInsert" , method=RequestMethod.POST)
+		public int mainInsert(ScheduleMainDTO scheduleMainDTO) throws Exception{
+			int result = scheduleService.mainInsert(scheduleMainDTO);
+			return result;
+		}
 
 		
 		
 		@RequestMapping(value="firstView" , method=RequestMethod.GET)
 		public String test3(@RequestParam(defaultValue="0") Integer scheduleNum, Model model) throws Exception{
 			model.addAttribute("scheduleNum", scheduleNum);
-			ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //개요를 위한 아이
+			
+			ScheduleMainDTO mainScheduleDTO = scheduleService.getScheduleMainDTO(scheduleNum);
+			model.addAttribute("mainScheduleDTO", mainScheduleDTO);
+			
+			ScheduleSummaryDTO scheduleSummaryDTO = scheduleService.getfirstViewData(scheduleNum); //개요를 위한 아이			
 			model.addAttribute("summary",scheduleSummaryDTO);
 			return "schedule/firstView";
 		}
@@ -547,11 +562,13 @@ public class ScheduleController {
 		
 		
 		//프리랜서 용 // 할일에 지정되있는 user가 email 계정과 동일해야한다  
-		public void uploadResult(String file,String contents){ //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
+		@ResponseBody
+		@RequestMapping(value="uploadResult", method=RequestMethod.POST)
+		public int uploadResult(SheduleFreeTodoResultDTO freeTodoResultDTO,ScheduleResultFileDTO resultFileDTO, HttpSession session) throws Exception{ //파일이 여러개일 수 있음 //멀티파트파일리스트를 받아야할수도 있음
 			
+			int result = scheduleService.uploadUnitResult(freeTodoResultDTO, resultFileDTO, session);
 			
-			
-			
+			return result;
 		}  
 		
 		
@@ -569,9 +586,13 @@ public class ScheduleController {
 		
 		
 		//세부항목
-		public int insertUnit(ScheduleUnitDTO scheduleUnitDTO){
-			return 0;
+		@ResponseBody
+		@RequestMapping(value ="addUnit", method=RequestMethod.POST)
+		public int insertUnit(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			System.out.println("값왓니?"+scheduleUnitDTO.getUnitDescribe());
+			return scheduleService.unitInsert(scheduleUnitDTO);
 		}
+		
 		
 		public int updateUnit(ScheduleUnitDTO scheduleUnitDTO){
 			return 0;

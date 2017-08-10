@@ -22,6 +22,8 @@ import com.flu.schedule.client.ScheduleMainDTO;
 import com.flu.schedule.client.SchedulePartArrayDTO;
 import com.flu.schedule.client.SchedulePartDTO;
 import com.flu.schedule.client.ScheduleUnitDTO;
+import com.flu.schedule.freelancer.ScheduleResultFileDTO;
+import com.flu.schedule.freelancer.SheduleFreeTodoResultDTO;
 
 import jxl.Workbook;
 import jxl.format.Alignment;
@@ -145,7 +147,7 @@ public class ScheduleService {
 	public void partFileSave(SchedulePartArrayDTO schedulePartArrayDTO,HttpSession session) throws Exception{
 		//받아온 파일들 저장해주는것 
 				FileService fileService = new FileService();
-				int partCount = schedulePartArrayDTO.getPartDescFile().length;
+				int partCount = schedulePartArrayDTO.getPartDescFile().length; //파일들
 				
 				String [] partDescFileO = new String[partCount];
 				String [] partDescFileF = new String[partCount];
@@ -369,6 +371,7 @@ public class ScheduleService {
 		
 		
 		public int unitInsert(ScheduleUnitDTO scheduleUnitDTO) throws Exception{
+			System.out.println("값왓니2?"+scheduleUnitDTO.getUnitDescribe());
 			return scheduleDAO.unitInsert(scheduleUnitDTO);
 		}
 		
@@ -525,7 +528,7 @@ public class ScheduleService {
 				Thread.sleep(200);
 			}
 			//여기서 리셋됨
-			System.out.println("0번.........파트별유닛수테스트 ......."+countParts.get(0)[0]+countParts.get(0)[1]+countParts.get(0)[2]+countParts.get(0)[3]);
+			//System.out.println("0번.........파트별유닛수테스트 ......."+countParts.get(0)[0]+countParts.get(0)[1]+countParts.get(0)[2]+countParts.get(0)[3]);
 			
 			////////////////////////////user를 구하고
 			List<MemberDTO> users = scheduleDAO.userList(scheduleNum);
@@ -785,13 +788,53 @@ public class ScheduleService {
 				partList.get(i).setUnitList(unitList);
 			}
 			
-			System.out.println("0번째 유닛꺼내기"+((List<SchedulePartDTO>)map.get("partList")).get(0).getUnitList().get(0).getUnitName());
+			//System.out.println("0번째 유닛꺼내기"+((List<SchedulePartDTO>)map.get("partList")).get(0).getUnitList().get(0).getUnitName());
 			return map;
 		}
 
 
+		@Transactional
+		public int uploadUnitResult(SheduleFreeTodoResultDTO freeTodoResultDTO,ScheduleResultFileDTO resultFileDTO, HttpSession session) throws Exception{
+			FileService fileService = new FileService();
+			int resultCount = resultFileDTO.getUnitResultFiles().length; //들어온 파일 갯수저장
+			
+			String [] resultOName = new String[resultCount];
+			String [] resultFName = new String[resultCount];
 
+			for(int i=0;i<resultCount;i++){
+				System.out.println(i+1+"번째 파일 이름 = "+ (resultFileDTO.getUnitResultFiles()[i].getOriginalFilename()));
+				String fileNameF = fileService.fileSave((resultFileDTO.getUnitResultFiles()[i]), session); //upload파일에 저장하기 
+				System.out.println("생성된 이름 = " + fileNameF);
+				resultOName[i] = resultFileDTO.getUnitResultFiles()[i].getOriginalFilename();
+				resultFName[i] = fileNameF;
+				
+				//upload 폴더에 저장완료 후 dto 객체에 이름 설정
+				resultFileDTO.setResultOName(resultOName[i]);
+				resultFileDTO.setResultFName(resultFName[i]);
+				//나머지 값은 이미 세팅되있음 
+			}
+			
+			
+			int result =scheduleDAO.uploadResult(freeTodoResultDTO);
+			result = scheduleDAO.setResultFile(resultFileDTO);
+			
+			return result;
+			
+			
+			
+			
+			
+		}//함수 끝
+
+		
+		public int mainInsert(ScheduleMainDTO scheduleMainDTO) throws Exception{
+			int result = scheduleDAO.updateMainSchedule(scheduleMainDTO);
+			return result;
+		}
 	
+		public ScheduleMainDTO getScheduleMainDTO(Integer scheduleNum) throws Exception{
+			return scheduleDAO.getSchedule2(scheduleNum);
+		}
 
 
 
