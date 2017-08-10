@@ -46,12 +46,26 @@ public class ProjectDAO {
 		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
 
 			System.out.println("projectDAO-projectList들어옴");
+			System.out.println("dao-category="+projectDTO.getCategory());
 			System.out.println("dao-list- arrange=="+listInfo.getArrange());
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("project", projectDTO);
 			map.put("arrange", listInfo.getArrange());
 			map.put("array", array);
+			
+			if(projectDTO.getCategory()==null){
+				System.out.println("==================");
+				System.out.println("category는 Null");
+				map.put("Cate", 0);
+			}else{
+				System.out.println("==================");
+				System.out.println("category는" + projectDTO.getCategory());
+				map.put("Cate", 1);
+			}
+			
+			
+			
 			if(array.size() == 0){
 				map.put("result", 0);
 				System.out.println("zz"+array.size());

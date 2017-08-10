@@ -123,6 +123,7 @@ public class ProjectController {
    public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
       System.out.println("projectListInner요");
    
+      System.out.println("controller-category="+projectDTO.getCategory());
        MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
       
        System.out.println("controller-search==="+listInfo.getSearch());

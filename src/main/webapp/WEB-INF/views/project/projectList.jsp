@@ -545,7 +545,7 @@
                
                <!-- 클릭시 trigger 적용하자 -->
                   <div class="cate-skipper">
-                     <input id="dev" class="cate-chk" name="category" type="checkbox" onclick="devClick()">
+                     <input id="dev" class="cate-chk" name="category" type="checkbox" value="개발">
                      <label for="dev" class="cate-label">개발</label>
                      <ul class="cate-list">
                         <li>
@@ -590,7 +590,7 @@
                </div>
                <div class="category-select-list">
                   <div class="cate-skipper">
-                     <input id="design" class="cate-chk" name="category" type="checkbox" onclick="designClick()">
+                     <input id="design" class="cate-chk" name="category" type="checkbox" onclick="designClick()" value="디자인">
                      <label for="design" class="cate-label">디자인</label>
                      <ul class="cate-list">
                         <li>
@@ -856,17 +856,78 @@ $("#by-date-finish").click(function() {
 
 /* =================프로젝트 카테고리 체크박스 설정================= */
  
- /* 개발자 */
+ 
+ $(".cate-chk").click(function() {
+	
+	var CateVal = "";
+	alert("category="+CateVal);
+	if($(this).prop("checked")==true){
+		alert("check-category="+CateVal);
+		CateVal = $(this).val();
+		alert("CateVal=="+CateVal);
+		
+	}else{
+		alert("check-category=null처리");
+		CateVal = null;
+		alert("CateVal=="+CateVal);
+	}
+	
+	if(CateVal == "개발"){
+		var devCheck = $("input[class='dev-chk']:checked").length;
+	      if(($(".dev-chk").length)==devCheck){
+	         $(".dev-chk").prop("checked", false);
+	      }else{
+	         $(".dev-chk").prop("checked", true);
+	      }
+	      var devVal = $(this).val();
+	      alert(devVal);
+	      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+CateVal,function(data){
+	          alert("dd");
+	          $(".contents_main").html(data);
+	      });
+	      
+	      
+	}
+	else{
+		
+		alert("category="+CateVal);
+		var designCheck = $("input[class='design-chk']:checked").length;
+	      alert(designCheck); 
+	      if(($(".design-chk").length)==designCheck){
+	         $(".design-chk").prop("checked", false);
+	      }else{
+	         $(".design-chk").prop("checked", true);
+	      }
+	      
+	     
+	      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+CateVal,function(data){
+	          alert("dd");
+	          $(".contents_main").html(data);
+	      });
+	}
+});
+ 
+ 
+ /* 개발자 Category 부분 */
+ 
+   /*
 function devClick() {
    var devCheck = $("input[class='dev-chk']:checked").length;
-      alert("check된거=="+devCheck);
       if(($(".dev-chk").length)==devCheck){
          $(".dev-chk").prop("checked", false);
       }else{
          $(".dev-chk").prop("checked", true);
       }
-   
+      var devVal = $(this).val();
+      alert(devVal);
+      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
+          alert("dd");
+          $(".contents_main").html(data);
+      }); 
 }
+      */
+
+/* 개발자 DetailCategory부분 */
  $(".dev-chk").click(function() {
     
     var de_id = $(this).val();
@@ -882,6 +943,7 @@ function devClick() {
       array[index] = $(this).val();
          
    });
+    
     alert(array);
     
     var devCheck = $("input[class='dev-chk']:checked").length;
@@ -897,16 +959,18 @@ function devClick() {
    }else{
       $("#dev").prop("checked", false);
    }
-   alert("클릭한 프로젝트종류="+de_id);
-    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
-       alert("웹들어옴");
+   
+   var devVal = $("#dev").val();
+   alert("dev=="+devVal);
+   
+    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
        $(".contents_main").html(data);
    }); 
 });
 
  
- /* 디자인 */
-  function designClick() {
+ /* 디자인 category부분 */
+ /*  function designClick() {
       
    var designCheck = $("input[class='design-chk']:checked").length;
       alert(designCheck); 
@@ -915,7 +979,14 @@ function devClick() {
       }else{
          $(".design-chk").prop("checked", true);
       }
-   }
+      
+     
+      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
+          alert("dd");
+          $(".contents_main").html(data);
+      });
+      
+   } */
 
 
 $(".design-chk").click(function() { 

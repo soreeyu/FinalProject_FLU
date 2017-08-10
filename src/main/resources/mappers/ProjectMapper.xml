@@ -49,6 +49,9 @@
       
       where state='done' and
       (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+      <if test="Cate == 1">
+      and category=#{project.category}
+      </if>
       <if test="result == 1">
        and detailCategory IN 
        <foreach collection="array" item="c" open="(" close=")" separator=",">
