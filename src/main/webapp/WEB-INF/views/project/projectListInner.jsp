@@ -49,9 +49,6 @@
 							총지원 <strong>${dto.appCount}명</strong></div>
 							
 							
-							
-							<div class="right-contents-sub">
-							
 							<input type="hidden" class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></div>
 							 
 							 

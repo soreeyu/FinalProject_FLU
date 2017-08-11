@@ -89,11 +89,11 @@ public class HomeController {
 		
 		for(int j=0; j<6;j++){
 			//진행중인 프로젝트 Count
-			count1 = memberService.memberProjectCount_ING(freelancer.get(j).getEmail());
+			//count1 = memberService.memberProjectCount_ING(freelancer.get(j).getEmail());
 			//완료한 프로젝트 Count
-			count2 = memberService.memberProjectCount_FIN(freelancer.get(j).getEmail());
+			//count2 = memberService.memberProjectCount_FIN(freelancer.get(j).getEmail());
 			//누적 완료 금액
-			pay = memberService.memberProjectSumPay(freelancer.get(j).getEmail());
+			//pay = memberService.memberProjectSumPay(freelancer.get(j).getEmail());
 			
 		}
 		

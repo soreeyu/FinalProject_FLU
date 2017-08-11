@@ -69,9 +69,12 @@
 	border: 1px solid #e6e6e6;
 	box-shadow: 2px 2px 2px #aaaaaa;
 }
+.quick_contents:hover{
+background-color:black;	
+	box-shadow: 2px 2px 2px #00b386;
+}
 
 .clean {
-
 	height: 15px;
 	width: 100%;
 }
@@ -267,8 +270,7 @@
 
 .project-body {
 	width: 100%;
-	height: 120px;
-	/*    background-color: green; */
+	/* height: 120px; */
 }
 
 
@@ -483,7 +485,8 @@
 }
 .real_quick{
 	width: 3000px;
-	background-color: blue;
+	height:100%;
+	/* background-color: blue; */
 }
 #dev-btn{
 	color: #666;
@@ -509,9 +512,11 @@
     width: 80px;
     height: 28px;
     border: none;
+    box-shadow: 2px 2px 2px #aaaaaa;	
 }
 #searchBtn:hover{
 	box-shadow: 2px 2px 2px #aaaaaa;
+	background-color: #00b386;
 }
 	
 
@@ -724,7 +729,6 @@ var cc=1;
 
 alert("cc="+cc);
 $.get("quickListInner?curPage=1", function(data) {
-	alert(data);
 	$(".quick_contents_list").html(data);
 });
 $.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
@@ -757,7 +761,6 @@ $("#searchBtn").click(function() {
    var checkList = $("input[class='dev-chk']:checked");
    var array = new Array();
    var i=0;
-   alert("checkList="+checkList);
 
     checkList.each(function(index) {
       array[index] = checkList.val(); 
