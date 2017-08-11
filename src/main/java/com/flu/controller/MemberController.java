@@ -491,12 +491,15 @@ public class MemberController {
 				}
 				//계좌 등록/수정
 				@RequestMapping(value="accountInsert", method=RequestMethod.POST)
-				public String accountInsert(Model model, MemberDTO memberDTO, HttpSession session){
-					
+				public String accountInsert(Model model, MemberDTO memberDTO, HttpSession session) throws Exception{
+					alarmDTO = new AlarmDTO();
 					int result = memberService.accountInsert(memberDTO);
 					
 					if(result > 0){
 						session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
+						alarmDTO.setEmail(memberDTO.getEmail());
+						alarmDTO.setContents("계좌 정보를 수정했습니다.");
+						alarmService.alarmInsert(alarmDTO);
 					}
 					
 					return "redirect:/member/accountView";

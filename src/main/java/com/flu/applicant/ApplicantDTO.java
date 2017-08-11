@@ -7,6 +7,7 @@ public class ApplicantDTO {
 	private String state;
 	private Integer pay;
 	private Integer finishCheck;
+
 	public Integer getProjectNum() {
 		return projectNum;
 	}

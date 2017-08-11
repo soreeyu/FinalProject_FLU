@@ -111,7 +111,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -201,7 +201,7 @@
 
 #a{
 	color: white;
-	background-color: #66b3ff;
+	background-color: #446eab;
 }
 </style>
 </head>

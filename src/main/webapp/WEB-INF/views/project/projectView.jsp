@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -270,6 +271,13 @@ strong{
    margin-top: 15px;
    text-decoration: none;
 }
+
+.owner-btn:HOVER{
+
+cursor: pointer;
+
+}
+
 .schedule-btn{
    width:230px;
    height:40px;
@@ -568,9 +576,12 @@ background-color: white;
 	border-radius: 2px;
 	display: inline;
 }
+
 .pjsellContents{
 	margin-top: 30px;
 }
+
+
 </style>
 
 </head>
@@ -578,7 +589,7 @@ background-color: white;
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 <section class="main_section">
-
+	<input type="hidden" id="opener" value="${dto.projectNum}"> <!-- 연장할때 필요 지우지마셈 -->
       <!--  header -->
       <div class="project_header">
          <div class="header_text">
@@ -634,7 +645,32 @@ background-color: white;
               
             </c:if>
             
-           
+
+            <c:if test="${member.kind eq 'client' && member.email==dto.email}">
+            
+            
+            <p>
+            <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
+            	삭제 신중하게 하셈 [프로젝트 넘: ${dto.projectNum }] 
+            </c:if>
+            <c:if test="${dto.del_check == 0}">
+            	 중단 요청 후 중단이 완료되면 복구가 불가능합니다. 신중하게 결정해 주세요[프로젝트 넘: ${dto.projectNum }] 
+            </c:if>
+            </p>
+               <div class="owner_option_btn">
+               <c:if test="${dto.state eq 'check'}">
+                  <div class="owner-btn" id="pj-update">Update</div>
+               </c:if>
+                  
+                  <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
+                  <div class="owner-btn" id="pj-delete"> Delete</div>
+                  </c:if>
+                  <c:if test="${dto.del_check == 0}">
+                  <div class="owner-btn" id="pj-delete">중단요청</div>
+                  </c:if>
+               </div>
+          
+               </c:if>
             </div>
          </div>
       </c:if>
@@ -876,12 +912,14 @@ background-color: white;
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
             <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+
             <div class="schedule-btn">미팅룸 예약하기</div>
              <div class="schedule-btn" id="pjFinish-free">프로젝트 완료</div>
           </c:if>
-         
+
+       
              </div>
-            </c:if>
+		</c:if>
             
          
            <!----------------------- Modal ---------------------------------->
@@ -928,15 +966,13 @@ background-color: white;
   </div>  
          
          
-             
-          
 
           <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
           <c:if test="${member.kind eq 'client' && member.email==dto.email}">
           <div class="project-apply-box">
           
           <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
-            <div class="schedule-btn">미팅룸 예약하기 </div>
+            <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList">미팅룸 예약하기 </a></div>
           </c:if>
           	<c:if test="${dto.state eq 'check'}">
                 <div class="owner-btn" id="pj-update">Update</div>
@@ -980,7 +1016,7 @@ background-color: white;
             </c:if>
             
             <c:if test="${dto.state eq 'fail'}">
-            <input type="button" class="register-btn" value="프로젝트 연장" id="dateBTN">
+            <input type="button" class="register-btn" value="프로젝트 기간변경" id="dateBTN">
             </c:if>
             
             <input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
@@ -1180,6 +1216,7 @@ var testId = "";
 
 
 
+
 	/* 프로젝트 지원하기 */
 	(function($) {
 		$("#btn_apply").click(function() {
@@ -1323,7 +1360,7 @@ var testId = "";
    				
    				var scheduleNum = data.scheduleMainDTO.scheduleNum;
    				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
-   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum;
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum+"&projectNum="+projectNum;
    			}else{
    				alert("스케줄 생성 오류");
    				location.href = $(location).attr('href');
@@ -1378,6 +1415,7 @@ var testId = "";
 			}
 		}else if(state=="recruit" || state=="ing" || state=="fail"){
 			alert("관리자에게 프로젝트 삭제 요청들어가기");
+			location.href="./projectCancelUpdate?projectNum="+projectNum;
 		}else{
 			alert("완료된 프로젝트나 판매중인 프로젝트를 삭제시 \n프리랜서의 커리어에서 삭제되기 때문에 삭제 불가합니다. \n관리자에게 문의하세요.");
 		}
@@ -1416,8 +1454,20 @@ var testId = "";
 		}
 
 	});
-	
-	
+
+
+	   
+	   $('#dateBTN').click(function name() {
+
+		   var url="./moreDate";
+		   var option = "width=440,height=340,top=100,left=300";
+		  
+		   window.open(url,'moreDate',option);
+		   
+		   
+		});
+
+
 </script>
 </body>
 </html>

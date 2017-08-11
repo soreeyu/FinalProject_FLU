@@ -32,6 +32,8 @@ public class ApplicantController {
 	@Inject
 	private AlarmService alarmService;
 	
+	private AlarmDTO alarmDTO;
+	
 	//해당 프로젝트를 완료한 Applicant 리스트와 그들의 memberInfo 들고오기
 	@RequestMapping(value="applicantListCheck")
 	public String viewCash(Integer projectNum,Model model){
@@ -57,7 +59,7 @@ public class ApplicantController {
 		
 		int result = applicantService.appUpdate(email);
 		if(result>0){
-			AlarmDTO alarmDTO = new AlarmDTO();
+			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(email);
 			alarmDTO.setContents("금액 지급이 완료 되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
@@ -71,7 +73,7 @@ public class ApplicantController {
 	
 	//지원하기누르면 지원추가하기
 	@RequestMapping(value="insertApplicant", method=RequestMethod.GET)
-	public String insertApplicant(Model model, ApplicantDTO applicantDTO, ProjectDTO projectDTO, HttpSession session, RedirectAttributes rd){
+	public String insertApplicant(Model model, ApplicantDTO applicantDTO, ProjectDTO projectDTO, HttpSession session, RedirectAttributes rd) throws Exception{
 		
 		System.out.println("applicant 추가하기 들어옴");
 		System.out.println("projectNum==="+projectDTO.getProjectNum());
@@ -90,8 +92,15 @@ public class ApplicantController {
 			if(result==1){
 				System.out.println("지원성공");
 				checkCount=1;
+				alarmDTO = new AlarmDTO();
+				alarmDTO.setEmail(applicantDTO.getEmail());
+				alarmDTO.setContents("프로젝트를 지원하셨습니다.");
+				alarmService.alarmInsert(alarmDTO);
 			}else{
 				System.out.println("지원실패");
+				alarmDTO.setEmail(applicantDTO.getEmail());
+				alarmDTO.setContents("프로젝트를 지원에 실패했습니다.");
+				alarmService.alarmInsert(alarmDTO);
 			}
 		}
 		
@@ -103,16 +112,20 @@ public class ApplicantController {
 		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
 	}
 	@RequestMapping(value="deleteApplicant", method=RequestMethod.GET)
-	public void deleteApplicant(ApplicantDTO applicantDTO, Model model, HttpSession session, MemberDTO memberDTO){
+	public void deleteApplicant(ApplicantDTO applicantDTO, Model model, HttpSession session, MemberDTO memberDTO) throws Exception{
 		System.out.println("applicant Delete 들어옴");
-		
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(applicantDTO.getEmail());
 		int result = applicantService.deleteApplicant(applicantDTO);
 		System.out.println("result=="+result);
 		if(result==1){
 			System.out.println("지원 취소 성공");
+			alarmDTO.setContents("프로젝트 지원을 취소했습니다.");
 		}else{
 			System.out.println("지원 취소 실패");
+			alarmDTO.setContents("프로젝트 지원을 취소실패했습니다.");
 		}
+		alarmService.alarmInsert(alarmDTO);
 
 	}
 	

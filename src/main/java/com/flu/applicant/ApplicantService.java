@@ -19,14 +19,21 @@ public class ApplicantService {
 		return applicantDAO.list(projectNum);
 	}
 
+	
+	//chat List
+	public List<ApplicantDTO> chatList(int projectNum){
+		return applicantDAO.chatList(projectNum);
+	}
+	
+
 	// state update
 	public int appUpdate(String email){
 		return applicantDAO.appUpdate(email);
 	}
 	
 
-	public Integer checkApp(String email){
-		return applicantDAO.checkApp(email);
+	public Integer checkApp(ApplicantDTO applicantDTO){
+		return applicantDAO.checkApp(applicantDTO);
 	}
 	
 
@@ -45,7 +52,6 @@ public class ApplicantService {
 	
 	//지원자 수 카운트하기
 	public int countApplicant(int projectNum){			
-		System.out.println("countApplicant-service");
 		return applicantDAO.countApplicant(projectNum);
 	}
 	
@@ -53,6 +59,7 @@ public class ApplicantService {
 		System.out.println("applicant-service-delete");
 		return applicantDAO.deleteApplicant(applicantDTO);
 	}
+
 
 	//프로젝트 완료를 프리랜서가 눌렀을 때, applicant의 state-ing인 상태의 finishCheck를 0->1로 업데이트
 	public int updateFinish(ApplicantDTO applicantDTO){
@@ -80,4 +87,5 @@ public class ApplicantService {
 	public int updateState(ProjectDTO projectDTO){
 		return applicantDAO.updateState(projectDTO);
 	}
+
 }

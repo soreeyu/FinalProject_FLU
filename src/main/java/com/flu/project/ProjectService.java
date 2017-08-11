@@ -32,6 +32,10 @@ public class ProjectService {
 		return projectDAO.projectUpdate(projectDTO);
 	}
 	
+	public int projectCancelUpdate(ProjectDTO projectDTO){
+		return projectDAO.projectCancelUpdate(projectDTO);
+	}
+	
 	//project delete
 	public int projectDelete(int num){
 		return projectDAO.projectDelete(num);
@@ -43,7 +47,7 @@ public class ProjectService {
 		System.out.println("num=="+projectDTO.getProjectNum());
 		
 		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
-		System.out.println(projectDTO.getSkill());
+
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
 				
 		return projectDTO;
@@ -151,6 +155,12 @@ public class ProjectService {
 	}
 	
 
+	//기간연장
+	public int moreDateUpdate(ProjectDTO projectDTO){
+		return projectDAO.moreDateUpdate(projectDTO);
+	}
+
+
 	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
 	public MemberDTO projectClient(ProjectDTO projectDTO){
 		return projectDAO.projectClient(projectDTO);
@@ -197,6 +207,12 @@ public class ProjectService {
 	public int cancleProjectState(PjSellDTO pjSellDTO){
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
+
+	//채팅방 만들기 위한 
+	public List<ProjectDTO> roomCount(){
+		return projectDAO.roomCount();
+	}
+
 	
 
 	

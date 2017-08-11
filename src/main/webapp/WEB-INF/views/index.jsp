@@ -14,12 +14,24 @@
 	width: 100%;
 	background-color: #f2f2f2;
 }
+.advertising_sec{
+	height: 400px;
+	margin: 0 auto;
+}
+.advertising2 {
+	height: 300px;
+    padding: 0;
+    margin-bottom: 0;
+    background-color: white;
+}
 .advertising_div{
-	background: url("${pageContext.servletContext.contextPath}/resources/img/index/background.png");
+	background: url("${pageContext.servletContext.contextPath}/resources/img/index/start-up.jpg");
+	background-size : 100%;
 	background-position: center center;
     height: 368px;
     padding: 0;
     margin-bottom: 0;
+    opacity: 0.8;
 }
 .list_heading {
 	text-align: center;
@@ -226,11 +238,8 @@
 <c:import url="/WEB-INF/views/temp/header.jsp"/>
 <section class="main_section">
 	<section class="advertising">
-		<div class="advertising_div">
-			<p class="invitation-text-md">웹 개발, 웹 디자인, 워드프레스 제작 등</p>
-			<h1 class="invitation-heading">안전! 효율! 획기적인 플랫폼 제공</h1>
-			<p class="invitation-text-sm">FLU or UFC 의 새로운 아웃소싱을 시작해 보세요</p>
-		</div>
+		<div class="advertising_div">		
+		</div>		
 		<div class="project_quantity_div">
 			<div class="projectCount">
 			<div class="status-box">
@@ -251,6 +260,13 @@
 			</div>
 		</div>
 			
+	</section>
+	<section class="advertising_sec">
+		<div class="advertising2">
+			<p class="invitation-text-md" >웹 개발, 웹 디자인, 워드프레스 제작 등</p>
+			<h1 class="invitation-heading" >안전! 효율! 획기적인 플랫폼 제공</h1>
+			<p class="invitation-text-sm" >FLU의 새로운 아웃소싱을 시작해 보세요</p>
+		</div>
 	</section>
 	<section class="project">
 		<div class="project_div">
@@ -299,15 +315,15 @@
 				<h4>닉네임 : ${freelancer[f].nickName }</h4>
 				<h5 class="project-element-list">
 					<span>
-						<i class="fa fa-won"></i>
+						<i class="fa fa-pencil"></i>
 						<strong>진행중 ${count1} 건</strong>
 					</span>
 					<span class="day">
-						<i class="fa fa-clock-o"></i>
-						<strong>완료한 ${count2} 건</strong>
+						<i class="fa fa-pencil"></i>
+						<strong>완료 ${count2} 건</strong>
 					</span>
 					<span>
-						<i class="fa fa-pencil"></i>
+						<i class="fa fa-won"></i>
 						<strong>누적 ${pay}원</strong>
 					</span>
 				</h5>
@@ -342,12 +358,13 @@
 	</section>
 	<section class="join">
 		<div class="inner">
+	<c:if test="${empty member}">
 			<div class="text-center">
 				회원 가입하실래요?
 				<a href="${pageContext.servletContext.contextPath}/member/MemberJoin" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">회원가입하기</a>
 			</div>
-		</div>
-	
+	</c:if>
+		</div>	
 	</section>
 	<section class="advantage">
 		<div class="advantage_div">
@@ -397,10 +414,12 @@
 	</section>
 	<section class="client">
 		<div class="register">
+
 			<div class="text-center" style="color: white;">
 				지금 프로젝트를 한번 등록해 보시겠어요?
 				<a href="${pageContext.servletContext.contextPath}/project/projectInsert" class="btn" style="color: #fff; background-color: #2099bb; border-color: #1c87a5; margin-left: 25px;">프로젝트 등록하기</a>
 			</div>
+
 		</div>
 	</section>
 </section>

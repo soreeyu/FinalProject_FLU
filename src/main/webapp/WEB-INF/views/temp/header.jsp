@@ -27,7 +27,7 @@
 					</span>
 					</c:when>
 					<c:otherwise>		
-					<span class="alarmCount" style="font-size: 15px; margin-top: 15px; color: black;"></span>
+					<span class="alarmCount" style="font-size: 15px; margin-top: 15px; color: white;"></span>
 					<span>
 						<a href="${pageContext.request.contextPath}/alarm/alarmList"><img style="width:30px; height: 30px;"   id="alram_img" alt="" src="${pageContext.request.contextPath}/resources/img/alarm/alarm.png"></a>
 					</span>
@@ -49,7 +49,7 @@
 		<div class="profile_div">
 			<ul>
 			<c:choose>
-			<c:when test="${member.type=='admin'}">
+			<c:when test="${member.kind=='admin'}">
 				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectWaitList">대금 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/checkProject/checkProjectCheckList">프로젝트 관리</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/myMeetRoom">미팅룸 관리</a></li>

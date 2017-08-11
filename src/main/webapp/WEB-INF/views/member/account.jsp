@@ -146,7 +146,7 @@
 
 
 #a{
-	background-color: #339bff;
+	background-color: #446eab;
 	color: white;
 }
 .no_data_wrap > p{
@@ -190,7 +190,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -254,8 +254,8 @@
     border-radius: 2px;
 }
 input[type=text]{
-	height: 20px;
-	width: 92%;
+	height: 34px;
+	width: 100%;
 }
 
 
@@ -401,10 +401,9 @@ input[type=text]{
 		var name = $("#account").val();
 		
 		if(number != "" || name != ""){
-			alert("널없음");
 			$("#form").submit();
 		}else{
-			alert('널있음');
+			alert('항목을 모두 채워주세요');
 		}
 	});
 	

@@ -8,6 +8,11 @@
   		select * from applicant where projectNum=#{projectNum} and state in('finish','payFinish')
   	</select>
   	
+
+  	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
+  		select * from applicant where projectNum=#{projectNum} and state in('ing')
+	</select>
+	
   	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
   		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
   	</select>
@@ -17,8 +22,8 @@
   	</update>
   	
   	<!-- 스케줄화면에 진행중인 지원자만 접근 가능하도록 체크 -->
-  	<select id="checkApp" parameterType="string" resultType="java.lang.Integer">
-  		select * from applicant where email=#{email}
+  	<select id="checkApp" parameterType="com.flu.applicant.ApplicantDTO" resultType="java.lang.Integer">
+  		select * from applicant where email=#{email} and projectnum=#{projectNum}
   	</select>
   
   <!-- 프로젝트 완료를 프리랜서가 눌렀을 때, applicant의 state-ing인 상태의 finishCheck를 0->1로 업데이트 -->
@@ -45,6 +50,7 @@
   <delete id="deleteApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
   	delete from applicant where email=#{email} and projectNum=#{projectNum}
   </delete>
+
   
   
     
@@ -62,5 +68,5 @@
   <update id="updateState" parameterType="com.flu.project.ProjectDTO">
   	update applicant set state='finish' where projectNum=#{projectNum}
   </update>
-  
+
   </mapper>

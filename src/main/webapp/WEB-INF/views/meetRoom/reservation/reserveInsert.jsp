@@ -58,7 +58,7 @@
 						for(var i=0;i<count;i++){
 	        				$(".time").each(function(index) {
 	        					if(reserve_in[i]<=index && reserve_out[i]>=index){
-		        					$(this).css("background-color", "gray");       					
+		        					$(this).css("background-color", "black");       					
 	        					} 
 						})
 							

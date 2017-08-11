@@ -39,7 +39,7 @@
 					자격증명
 					</th>
 					<td colspan="4">
-						<input id="lName" type="text" name="lName" value="${license.lName }">
+						<input id="lName" type="text" name="lName" value="${license.lName }" required="required">
 					</td>
 				</tr>
 				<tr>
@@ -47,13 +47,13 @@
 					발급기관
 					</th>
 					<td>
-						<input id="agency" type="text" name="agency" value="${license.agency }">
+						<input id="agency" type="text" name="agency" value="${license.agency }" required="required">
 					</td>
 					<th>
 					발행일자
 					</th>
 					<td>
-						<input id="publishDate" type="date" name="publishDate" value="${license.publishDate }">
+						<input id="publishDate" type="date" name="publishDate" value="${license.publishDate }" required="required">
 					</td>
 				</tr>
 				
@@ -62,7 +62,7 @@
 					일련번호
 					</th>
 					<td colspan="4">
-						<input id="seiralNum" type="number" name="seiralNum" value="${license.seiralNum }">
+						<input required="required" id="seiralNum" type="number" name="seiralNum" min="0" value="${license.seiralNum }" max="9999999999999999">
 					</td>
 					
 					

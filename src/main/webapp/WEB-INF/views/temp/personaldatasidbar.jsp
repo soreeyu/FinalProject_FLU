@@ -18,7 +18,8 @@
     </style>
     <div class="side">
 				<div class="freelancer_name">
-					<span>프리랜서</span>
+					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
+					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
 					<div class="free_img_div">
 						<c:if test="${empty member.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
@@ -26,7 +27,7 @@
 						<c:if test="${not empty member.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
 						</c:if>
-						<label style="display: block;"><span>${member.nickName }</span></label>
+						<label style="display: block;"><span>${member.nickName}</span></label>
 					</div>
 				</div>
 				<div class="sidebar_menu">
@@ -65,21 +66,6 @@
 			
 			<script type="text/javascript">
 				
-			
-				$(".menu").mouseover(function() {
-					var id = $(this).attr("id");
-				
-					if(id != 'a'){
-					$(this).css("background-color", "#ccddff");
-					}
-				});
-				$(".menu").mouseleave(function() {
-					var id = $(this).attr("id");
-					
-					if(id != 'a'){
-					$(this).css("background-color", "white");
-					}
-				});
 				
 				$(".okbtn").click(function() {
 					var pw = $("#pw").val();
