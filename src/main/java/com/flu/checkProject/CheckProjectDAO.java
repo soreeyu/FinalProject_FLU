@@ -40,6 +40,9 @@ public class CheckProjectDAO {
 		return sqlSession.selectList(NAMESPACE+"finishList",map);
 	}
 
+	public List<ProjectDTO>cancelList(Map<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+"cancelList",map);
+	}
 	
 	
 	
@@ -55,7 +58,9 @@ public class CheckProjectDAO {
 	public int checkCount(Map<String, Object> map){
 		return sqlSession.selectOne(NAMESPACE+"checkCount",map);
 	}
-	
-	
-	
+
+	public int makeFail(String finishDate){
+		return sqlSession.update(NAMESPACE+"makeFail",finishDate);
+	}
+
 }

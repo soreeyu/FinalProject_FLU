@@ -119,6 +119,22 @@ public class CheckProjectController {
 		return "checkProject/checkList";
 	}
 
+	//중단요청 프로젝트들고오기
+	@RequestMapping(value="checkProjectCancelList", method=RequestMethod.GET)
+	public String checkProjectCancelList(ProjectDTO projectDTO, ListInfo listInfo,Model model,String searchDate){
+
+		String [] ar = {"recruit","ing","wait","cancel"};
+		
+		listInfo.setProject(ar);
+	
+		List<ProjectDTO> list = checkProjectService.cancelList(projectDTO,listInfo,searchDate);
+
+		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Cancel").addAttribute("searchDate", searchDate);
+		return "checkProject/checkList";
+	}
+	
+	
+	
 	//입금대기중 프로젝트의 클라이언트 정보 AJAX로 불러오기
 	@RequestMapping(value="checkWait")
 	public String checkWait(ProjectDTO projectDTO,Model model){
@@ -135,12 +151,17 @@ public class CheckProjectController {
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
-
 	public String update(ProjectDTO projectDTO, RedirectAttributes ra) throws Exception{
 		
 		int result = checkProjectService.update(projectDTO);
+		
+		String path = "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		
+		if(projectDTO.getState().equals("cancel")){
+			path = "redirect:/checkProject/checkProjectCancelList";
+		}
+		
 		if(result>0){
-			
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(projectDTO.getEmail());
 			alarmDTO.setContents("등록하신 프로젝트의 검수가 완료 되었습니다.");
@@ -148,7 +169,7 @@ public class CheckProjectController {
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		}
 
-		return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		return path;
 	}
 	
 
@@ -166,4 +187,9 @@ public class CheckProjectController {
 	
 	}
 	
+	
+
+	
+	
+
 }

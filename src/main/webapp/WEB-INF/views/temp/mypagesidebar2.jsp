@@ -8,7 +8,7 @@
     </style>
     <div class="side">
 				<div class="freelancer_name">
-					<span>프리랜서</span>
+					<span>클라이언트</span>
 					<div class="free_img_div">
 						<c:if test="${empty memberDTO.fProfileImage }">
 						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
@@ -22,7 +22,6 @@
 				<div class="sidebar_menu">
 					<ul>
 						<li><a id="${active1}" class="menu" href="mypage">클라이언트 정보</a></li>
-						<li><a id="${active2}" class="menu" href="history">프로젝트 히스토리</a></li>
 					</ul>
 				</div>
 			</div>

@@ -802,6 +802,7 @@ if(type=='update'){
 	var dtoMeet = '${dto.meetKind}';
 	alert("dtoMeet="+dtoMeet);
 	
+
 	$(".meetKind").prop("selected", dtoMeet);
 	/* check인가?... */
 			
@@ -848,7 +849,54 @@ if(type=='update'){
 		 $("#finishDate").val('20'+finishYear+"-"+finishMonth+"-"+finishDay);
 	 
 	  	 
-	 
+
+	  else if(document.frm.fileName.value==""){
+		alert("File을 선택해주세요");
+	}else if(document.frm.finishDate.value==""){
+		alert("마감일을 선택해주세요");
+	}else if(document.frm.addr_main.value==""){
+		alert("주소를 입력해주세요");
+	}else if(document.frm.startDate.value==""){
+		alert("시작일을 선택해주세요");
+	}else if(document.frm.exp.value==""){
+		alert("매니징 경험을 선택해주세요");
+	}else if(document.frm.quick.value==""){
+		alert("급구 여부를 선택해주세요");
+	} else if(document.frm.finishDate.value!=""){
+		var finishDate = $("#finishDate").val();
+		 alert("finishDate="+finishDate); 
+		 var finish = new Date(finishDate);
+		 var today = new Date();
+		 alert("today="+today);
+		 var left = finish.getTime()-today.getTime();
+		 alert(left);
+		 var leftDate = Math.ceil(left/(24*60*60*1000));
+		 alert("leftDate="+leftDate);
+		 if(leftDate<7){
+			 alert("마감일은 최소 1주일입니다.");
+			 
+			 
+		 }else{
+			 alert("마감일 괜춘");
+			 if(document.frm.startDate.value!=""){
+				 var startDate = $("#startDate").val();
+				 alert("startDate="+startDate);
+				 var start = new Date(startDate);
+				 alert("today="+today);
+				 var lef = start.getTime()-finish.getTime();
+				 alert(lef);
+				 var lefDate = Math.ceil(lef/(24*60*60*1000));
+				 alert("시작일-마감일="+lefDate);
+				 if(lefDate<7){
+					 alert("시작일은 마감일 이후 최소 1주일입니다.");
+				 }else{
+					 alert("시작일 적당");
+					 document.frm.submit();
+				 }
+			 }
+		 }
+
+
 	}
 	
 	

@@ -39,13 +39,13 @@
 					분류
 					</th>
 					<td>
-						<input id="school" type="text" name="school" value="${academic.school }">
+						<input required="required" id="school" type="text" name="school" value="${academic.school }">
 					</td>
 					<th>
 					상태
 					</th>
 					<td>
-						<input id="state" type="text" name="state" value="${academic.state }">
+						<input required="required" id="state" type="text" name="state" value="${academic.state }">
 					</td>
 				</tr>
 				<tr>
@@ -53,13 +53,13 @@
 					학교명
 					</th>
 					<td>
-						<input id="sName" type="text" name="sName" value="${academic.sName }">
+						<input required="required" id="sName" type="text" name="sName" value="${academic.sName }">
 					</td>
 					<th>
 					전공
 					</th>
 					<td>
-						<input id="major" type="text" name="major" value="${academic.major }">
+						<input required="required" id="major" type="text" name="major" value="${academic.major }">
 					</td>
 				</tr>
 				
@@ -68,13 +68,13 @@
 					입학일
 					</th>
 					<td>
-						<input id="entrance" type="date" name="entrance" value="${academic.entrance }">
+						<input required="required" id="entrance" type="date" name="entrance" value="${academic.entrance }">
 					</td>
 					<th>
 					졸업일
 					</th>
 					<td>
-						<input id="graduate" type="date" name="graduate" value="${academic.graduate }">
+						<input required="required" id="graduate" type="date" name="graduate" value="${academic.graduate }">
 					</td>
 				</tr>
 			</tbody>

@@ -93,15 +93,15 @@ public class FreelancerController {
 		System.out.println("총 갯수 : "+totalCount);
 		model.addAttribute("listinfo", listInfo);
 		model.addAttribute("count", totalCount);
-		model.addAttribute("map",freelancerService.freelancerList(listInfo));
-		model.addAttribute("eval", freelancerService.freelancerListEval(listInfo));
+		model.addAttribute("map",freelancerService.freelancerList2(listInfo));
+		//model.addAttribute("eval", freelancerService.freelancerListEval(listInfo));
 		
 		//추가로 가져와야 할것 각 멤버별 평점
 		
 		
 		
 		
-		return "/member/freelancer/freelancerlist";
+		return "/member/freelancer/freelancerlist2";
 	}
 	//프리랜서 마이페이지
 	@RequestMapping(value="freelancermypage")
@@ -569,8 +569,8 @@ public class FreelancerController {
 	//보유기술 등록
 	@RequestMapping(value="skillInsert", method=RequestMethod.POST)
 
-	public String skillInsert(Skill skill, RedirectAttributes ra) throws Exception{
-
+	public String skillInsert(Skill skill, RedirectAttributes ra, HttpSession session) throws Exception{
+		alarmDTO = new AlarmDTO();
 		System.out.println(skill.getEmail());
 		System.out.println(skill.getKind());
 		System.out.println(skill.getSlevel());
@@ -580,7 +580,7 @@ public class FreelancerController {
 		
 		List<Skill> ar = new ArrayList<Skill>();
 		
-		alarmDTO.setEmail(skill.getEmail());
+		alarmDTO.setEmail(this.getEmail(session));
 		if(skill.getExp().length() > 1){
 			String [] sk1 = skill.getExp().split(",");
 			String [] sk2 = skill.getKind().split(",");
@@ -625,7 +625,7 @@ public class FreelancerController {
 		
 		
 		
-		return "redirect:/member/skillView";
+		return "redirect:/member/skillList";
 	}
 
 	//보유기술 뷰
@@ -640,7 +640,7 @@ public class FreelancerController {
 	public String skillList(HttpServletRequest request,Model model, HttpSession session){
 		String email = (String)request.getAttribute("email");
 		
-			
+		System.out.println("내이메일:"+email);	
 		
 		model.addAttribute("active4", "a");
 		if(email.equals(this.getEmail(session))){

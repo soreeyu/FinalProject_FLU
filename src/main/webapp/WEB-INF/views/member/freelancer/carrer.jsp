@@ -625,11 +625,17 @@ $(function() {
 			
 			alert("실패");
 		}else{
-			alert("성공");
-			
+			var length = $("#seiralNum").val();
+			if(length.length > 16){
+				alert("실패");
+			}else{
+				alert("성공");
 			$("#licenseform").submit();
+			}
+			
 		}
 	});
+	
 	
 	
 	

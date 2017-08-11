@@ -216,6 +216,27 @@
     color: white;
     line-height: 1.5;
 }
+.pofol th{
+	width: 90px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    padding-left: 0;
+    font-size: 14px;
+}
+.pofol th span{
+    border-right: 1px solid #dedede;
+    margin-left: 10px;
+    max-width: 90px;
+    height: 18px;
+	
+}
+.pofol td{
+	padding-bottom: 15px;
+    vertical-align: top !important;
+    font-size: 14px;
+    padding-left: 10px;
+    color: #999;
+}
 	
 </style>
 </head>
@@ -230,19 +251,34 @@
 			<div class="contents">
 				<div class="contents_inner">
 					<section class="profile_title">
-						<p><span>포트폴리오</span></p>
+						<p><span>${map.dto.title }</span></p>
 					</section>
 					<section class="profile_wrap">
 						
 						
 						<div class="no_data_wrap">
 							<div class="no_data">
-								<p>${map.dto.title }</p>
-								<p>${map.dto.describe }</p>
-								<p>${map.dto.startDate }</p>
-								<p>${map.dto.finishDate }</p>
-								<p>${map.dto.percentage }</p>
-								<p>${map.dto.pfOname }</p>
+								
+								<div>
+									<table class="pofol">
+										<tr>
+											<th>설명<span style="float: right;"></span></th>
+											<td>${map.dto.describe }</td>
+										</tr>
+										<tr>
+											<th>참여기간<span style="float: right;"></span></th>
+											<td>${map.dto.startDate } ~ ${map.dto.finishDate }</td>
+										</tr>
+										<tr>
+											<th>참여율<span style="float: right;"></span></th>
+											<td>${map.dto.percentage }%</td>
+										</tr>
+									</table>
+									<div>
+										<img alt="" src="${pageContext.request.contextPath}/resources/portfolio/${map.dto.pfFname }">
+									</div>
+								</div>
+								
 								
 							</div>
 							<br><a class="portView" href="portfolioUpdate?pfNum=${map.dto.pfNum }" style="margin-top: -5px;">업데이트 하기</a>
