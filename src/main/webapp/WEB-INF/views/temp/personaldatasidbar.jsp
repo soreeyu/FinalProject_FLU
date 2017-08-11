@@ -65,21 +65,6 @@
 			
 			<script type="text/javascript">
 				
-			
-				$(".menu").mouseover(function() {
-					var id = $(this).attr("id");
-				
-					if(id != 'a'){
-					$(this).css("background-color", "#ccddff");
-					}
-				});
-				$(".menu").mouseleave(function() {
-					var id = $(this).attr("id");
-					
-					if(id != 'a'){
-					$(this).css("background-color", "white");
-					}
-				});
 				
 				$(".okbtn").click(function() {
 					var pw = $("#pw").val();

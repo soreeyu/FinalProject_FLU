@@ -156,7 +156,7 @@
 }
 
 #a{
-	background-color: #66b3ff;
+	background-color: #446eab;
 	color: white;
 }
 
@@ -175,10 +175,13 @@
 }
 .info_div > label:FIRST-CHILD{
 	text-align: right;
+	font-weight: bold;
+	font-size: 17px;
 }
 
 .job_info label{
 	font-size: 20px;
+	font-weight: 700;
 }
 .job_info p{
 	padding-left: 40px;
@@ -202,7 +205,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;

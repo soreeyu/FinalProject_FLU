@@ -159,7 +159,7 @@
 }
 
 #a{
-	background-color: #339bff;
+	background-color: #446eab;
 	color: white;
 }
 
@@ -177,7 +177,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #339bff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -200,7 +200,7 @@
 
 thead{
 	color: white;
-	background-color: #66b3ff;
+	background-color: #446eab;
 	font-weight: bold;
 	font-size: 15px;
 }
@@ -210,11 +210,11 @@ tbody{
 }
 th, td{
 	padding: 8px;
-	border-left: 1px solid #ccccff;
-	border-bottom: 1px solid #ccccff;
+	border-left: 1px solid white;
+	border-bottom: 1px solid white;
 }
 th{
-	border-top: 2px solid #66b3ff;
+	border-top: 2px solid white;
 }
 th:FIRST-CHILD,td:FIRST-CHILD{
 	border-left: 0;

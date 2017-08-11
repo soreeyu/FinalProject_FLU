@@ -137,6 +137,7 @@
 	margin: 0 auto;
 	text-align: center;
 	font-weight: bold;
+	margin-bottom: 20px;
 }
 .contents_paging span{
 	cursor: pointer;
@@ -151,19 +152,16 @@
 	border-radius: 5px;
 	color: white;
 	padding: 2px;
+	font-weight: bold;
 }
-.notno{
+.notno, .nono{
 	background-color: #339bff;
 	border-radius: 5px;
 	color: white;
 	padding: 2px;
+	font-weight: bold;
 }
-.nono{
-	background-color: green;
-	border-radius: 5px;
-	color: white;
-	padding: 2px;
-}
+
 
 
 #search{

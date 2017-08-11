@@ -40,8 +40,8 @@ public class CheckMemberController {
 	
 	//신원확인 insert FORM으로 가기 
 	@RequestMapping(value="memberCheckInsert", method=RequestMethod.GET)
-	public void insert(){
-		
+	public void insert(Model model){
+		model.addAttribute("active2", "a");
 	}
 	
 	//신원확인 등록하기

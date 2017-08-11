@@ -4,6 +4,7 @@ package com.flu.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -106,13 +107,15 @@ public class ClientController {
 	
 	//클라이언트 정보 뷰
 	@RequestMapping(value="client/mypage")
-	public String mypage(Model model, HttpSession session) throws Exception{
+	public String mypage(Model model, HttpSession session, HttpServletRequest request) throws Exception{
+		String email = (String)request.getAttribute("email");
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(this.getEmail(session));
 		
 		model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		model.addAttribute("active1", "a");
 		model.addAttribute("dto",clientService.clientView(this.getEmail(session)));
+		model.addAttribute("email", this.getEmail(session));
 		
 		return "/member/client/mypage";
 	}

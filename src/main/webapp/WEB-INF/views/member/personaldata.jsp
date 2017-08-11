@@ -114,7 +114,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -163,7 +163,7 @@
 }
 
 #a{
-	background-color: #339bff;
+	background-color: #446eab;
 	color: white;
 }
 p span{
