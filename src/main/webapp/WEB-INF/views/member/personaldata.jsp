@@ -233,7 +233,7 @@ p span{
 									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/profile/${dto.fProfileImage}">
 									</c:if>
 									<c:if test="${empty dto.fProfileImage }">
-									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/img/FLU.png">
+									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/img//mypage/avatar.jpg">
 									</c:if>
 								</div>
 								<p><span>프리랜서 형태</span>

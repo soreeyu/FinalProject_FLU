@@ -671,8 +671,6 @@ background-color: white;
                </div>
           
                </c:if>
-            
-
             </div>
          </div>
       </c:if>
@@ -914,7 +912,8 @@ background-color: white;
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
             <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
-          </c:if>
+            <div class="schedule-btn" id="">프로젝트 완료</div>
+          	</c:if>
          
              </div>
             </c:if>
@@ -978,7 +977,7 @@ background-color: white;
             <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
           </c:if>
           <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
-            <div class="schedule-btn">미팅룸 예약하기 </div>
+            <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList">미팅룸 예약하기 </a></div>
           </c:if>
           	<c:if test="${dto.state eq 'check'}">
                 <div class="owner-btn" id="pj-update">Update</div>
@@ -1319,7 +1318,7 @@ var testId = "";
    				
    				var scheduleNum = data.scheduleMainDTO.scheduleNum;
    				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
-   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum;
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum+"&projectNum="+projectNum;
    			}else{
    				alert("스케줄 생성 오류");
    				location.href = $(location).attr('href');
@@ -1414,6 +1413,10 @@ var testId = "";
 
 	});
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> ParkJunHo3
 
 	   
 	   $('#dateBTN').click(function name() {
@@ -1425,7 +1428,10 @@ var testId = "";
 		   
 		   
 		});
+<<<<<<< HEAD
 	
+=======
+>>>>>>> ParkJunHo3
 
 </script>
 </body>

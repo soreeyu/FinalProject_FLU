@@ -264,9 +264,6 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
-		
-
-
 		//index에 뿌려질 등록된 프로젝트 금액
 		public int totalBudget() throws Exception{
 			return sqlSession.selectOne(NAMESPACE+"totalBudget");
@@ -275,12 +272,8 @@ public class ProjectDAO {
 		public List<ProjectDTO> indexProjectList() throws Exception{
 			return sqlSession.selectList(NAMESPACE+"indexProjectList");
 		}
-
-
 		//채팅방을 만들기 위하여 ing delcheck 0 인놈 불러오기
 		public List<ProjectDTO> roomCount(){
 			return sqlSession.selectList(NAMESPACE+"roomCount");
 		}
-		
-
 }

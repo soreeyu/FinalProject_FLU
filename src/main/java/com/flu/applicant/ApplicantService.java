@@ -30,8 +30,8 @@ public class ApplicantService {
 	}
 	
 
-	public Integer checkApp(String email){
-		return applicantDAO.checkApp(email);
+	public Integer checkApp(ApplicantDTO applicantDTO){
+		return applicantDAO.checkApp(applicantDTO);
 	}
 	
 
@@ -50,7 +50,6 @@ public class ApplicantService {
 	
 	//지원자 수 카운트하기
 	public int countApplicant(int projectNum){			
-		System.out.println("countApplicant-service");
 		return applicantDAO.countApplicant(projectNum);
 	}
 	
@@ -58,5 +57,4 @@ public class ApplicantService {
 		System.out.println("applicant-service-delete");
 		return applicantDAO.deleteApplicant(applicantDTO);
 	}
-
 }

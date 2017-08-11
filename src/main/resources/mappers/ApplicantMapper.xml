@@ -11,6 +11,10 @@
 
   	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
   		select * from applicant where projectNum=#{projectNum} and state in('ing')
+	</select>
+	
+  	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
+  		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
   	</select>
   
   	<update id="update" parameterType="java.lang.String">
@@ -18,8 +22,8 @@
   	</update>
   	
   	<!-- 스케줄화면에 진행중인 지원자만 접근 가능하도록 체크 -->
-  	<select id="checkApp" parameterType="string" resultType="java.lang.Integer">
-  		select * from applicant where email=#{email}
+  	<select id="checkApp" parameterType="com.flu.applicant.ApplicantDTO" resultType="java.lang.Integer">
+  		select * from applicant where email=#{email} and projectnum=#{projectNum}
   	</select>
   
   
@@ -37,5 +41,4 @@
   <delete id="deleteApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
   	delete from applicant where email=#{email} and projectNum=#{projectNum}
   </delete>
-  
   </mapper>
