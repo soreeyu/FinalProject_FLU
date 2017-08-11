@@ -457,13 +457,25 @@ $.get("projectCheck?state=${conState}&curPage=1", function(data){
 
 /* 검수중인 프로젝트 리스트 */
 $("#check").click(function() {
+		$("#check").css("background-color", "#446eab");
+		$("#check").css("color", "white");
 	$.get("projectCheck?state=check&curPage=1", function(data){
 		
 		alert("검수중");
 		$("#t1").text("검수중인 프로젝트");
 		$("#t2").text("관리자의 승인을 기다리는 곳입니다.");
-		$(this).css("background-color", "#446eab");
-		$(this).css("color", "white");
+		$("#done").css("background-color", "white");
+		$("#done").css("color", "#999");
+		$("#recruit").css("background-color", "white");
+		$("#recruit").css("color", "#999");
+		$("#ing").css("background-color", "white");
+		$("#ing").css("color", "#999");
+		$("#finish").css("background-color", "white");
+		$("#finish").css("color", "#999");
+		$("#sell").css("background-color", "white");
+		$("#sell").css("color", "#999");
+		$("#fail").css("background-color", "white");
+		$("#fail").css("color", "#999");	
 		$(".contents").html(data);
 	});
 
@@ -471,16 +483,25 @@ $("#check").click(function() {
 
 /* 모집중인 프로젝트 리스트 */
 $("#done").click(function() {
-
 	$.get("projectCheck?state=done&curPage=1", function(data){
+		$("#done").css("background-color", "#446eab");
+		$("#done").css("color", "white");
 		alert("모집중");
 		$("#check").css("background-color", "white");
 		$("#check").css("color", "#999");
+		$("#recruit").css("background-color", "white");
+		$("#recruit").css("color", "#999");
+		$("#ing").css("background-color", "white");
+		$("#ing").css("color", "#999");
+		$("#finish").css("background-color", "white");
+		$("#finish").css("color", "#999");
+		$("#sell").css("background-color", "white");
+		$("#sell").css("color", "#999");
+		$("#fail").css("background-color", "white");
+		$("#fail").css("color", "#999");
 		$("#t1").text("모집중인 프로젝트");
 		$("#t2").text("프리랜서를 모집중인 프로젝트입니다.");
 		$(".contents").html(data); 
-		$("#done").css("background-color", "#446eab");
-		$("#done").css("color", "white");
 	});
 
 });
