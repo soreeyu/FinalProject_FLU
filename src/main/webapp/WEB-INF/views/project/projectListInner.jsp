@@ -46,8 +46,8 @@
 							
 							
 							<div class="right-contents-sub">
-							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							 급구여부 : <strong class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></strong></div>
+							
+							<input type="hidden" class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></div>
 							 
 							 
 						</div>
@@ -138,7 +138,7 @@ $(".quick").each(function() {
 /* 페이징 색상 */
 $(".num").each(function() {
 	if(curPage==$(this).attr("id")){
-		$(this).css("color", "#3385ff");
+		$(this).css("color", "#2099bb");
 	}
 });
 

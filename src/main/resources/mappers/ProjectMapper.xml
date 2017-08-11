@@ -261,4 +261,9 @@
   	select * from project order by budget desc
   </select>
   
+  <!-- 클라이언트가 완료 눌렀을 때, 프로젝트 state를 finish로 변환  -->
+  <update id="updateState" parameterType="com.flu.project.ProjectDTO">
+  	update project set state='finish' where projectNum=#{projectNum}
+  </update>
+  
   </mapper>

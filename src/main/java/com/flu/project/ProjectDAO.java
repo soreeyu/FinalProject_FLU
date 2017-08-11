@@ -277,5 +277,10 @@ public class ProjectDAO {
 		public List<ProjectDTO> indexProjectList() throws Exception{
 			return sqlSession.selectList(NAMESPACE+"indexProjectList");
 		}
+		
+		//클라이언트가 완료 눌렀을 때, project상태 finish로 update하기
+		public int updateState(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"updateState", projectDTO);
+		}
 
 }

@@ -115,4 +115,20 @@ public class ApplicantController {
 		}
 
 	}
+	
+	@RequestMapping(value="updateFinish", method=RequestMethod.GET)
+	public String updateFinish(ApplicantDTO applicantDTO, RedirectAttributes rd){
+		System.out.println("updateFinish-controller");
+		System.out.println(applicantDTO.getEmail());
+		System.out.println(applicantDTO.getProjectNum());
+		
+		int result = applicantService.updateFinish(applicantDTO);
+		System.out.println("result="+result);
+		
+		return "redirect:/project/projectView?projectNum="+applicantDTO.getProjectNum();
+	}
+	
+	
+	
+	
 }

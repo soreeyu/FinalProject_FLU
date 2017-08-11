@@ -182,24 +182,34 @@ public class ProjectController {
       //project를 등록한 사람의 정보를 가져오기
       MemberDTO mem = projectService.projectClient(projectDTO);
    
-      System.out.println("phone="+memberDTO.getPhone());
-      System.out.println("형태="+memberDTO.getKind());
-
-      
+ 
       int sellResult = projectService.sellingCount(projectDTO);
-      System.out.println("판매중인 프로젝트 갯수="+sellResult);
       int ingResult = projectService.ingCount(projectDTO);
-      System.out.println("진행중 프로젝트갯수="+ingResult);
       int finishResult = projectService.finishCount(projectDTO);
-      System.out.println("완료된 프로젝트=="+finishResult);
       int totalResult = projectService.pjCount(projectDTO);
-      System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
       
        System.out.println("포폴--"+freelancerService.portfolioList(memberDTO.getEmail()));
       
       PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
-
-       
+      
+      System.out.println("session-kind=="+memberDTO.getKind());
+      if(memberDTO.getKind().equals("freelancer")){
+    	  applicantDTO = applicantService.checkFinish(applicantDTO);
+    	 model.addAttribute("finishCheck", applicantDTO.getFinishCheck());
+      }else{
+    	  int countCheck = applicantService.countCheck(applicantDTO);
+    	  int countFinish = applicantService.countFinish(applicantDTO);
+    	  System.out.println("countCheck="+countCheck);
+    	  System.out.println("countFinish="+countFinish);
+    	  if(countCheck==countFinish){
+    		  model.addAttribute("clientFinish", 1);
+    	  }else{
+    		  model.addAttribute("clientFinish", 0);
+    	  }
+      }
+     
+          	  
+      
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
       model.addAttribute("conCount", sellResult);
@@ -216,8 +226,22 @@ public class ProjectController {
       model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
       model.addAttribute("skills", freelancerService.skillList(memberDTO.getEmail()));
       model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
-         
+      
+      //프로젝트를 완료를 눌렀는지 체크
+  
    }
+   @RequestMapping(value="updateState")
+   public String updateState(ProjectDTO projectDTO){
+	   System.out.println("updateStAte");
+	   
+	   int pjupdate = projectService.updateState(projectDTO);
+	   if(pjupdate==1){
+		   int appupdate = applicantService.updateState(projectDTO);		   
+	   }
+	   
+	   return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+   }
+   
    
    
    

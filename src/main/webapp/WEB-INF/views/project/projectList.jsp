@@ -27,6 +27,7 @@
 	border: 1px solid #e6e6e6;
 	margin-bottom: 30px;
 	background-color: white;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 #header_ttt {
@@ -64,12 +65,13 @@
 	margin-right: 5px;
 	margin-left: 3px;
 	margin-bottom: 10px;
-	border: 1px dotted black;
-	background-color: gray;
+	background-color: white;
+	border: 1px solid #e6e6e6;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .clean {
-	background-color: #f2f2f2;
+
 	height: 15px;
 	width: 100%;
 }
@@ -101,6 +103,7 @@
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .project-sort-text {
@@ -144,6 +147,7 @@
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .category-select-both {
@@ -208,7 +212,7 @@
 }
 
 .place-sort-box {
-	height: 65px;
+	height: 45px;
 	width: 250px;
 }
 
@@ -242,6 +246,7 @@
 	height: 200px;
 	margin-bottom: 5px;
 	background-color: white;
+	box-shadow: 3px 3px 3px #aaaaaa;
 }
 
 .project-head {
@@ -250,7 +255,7 @@
 }
 
 .project-title {
-	color: #3385ff;
+	color: #2099bb;
 	font-size: 18px;
 	font-weight: bold;
 	cursor: pointer;
@@ -261,6 +266,7 @@
 	height: 120px;
 	/*    background-color: green; */
 }
+
 
 .project-info {
 	width: 100%;
@@ -377,6 +383,7 @@
 	text-align: center;
 	font-weight: bold;
 	cursor: pointer;
+	color: #2099bb;
 }
 
 .quick_regdate {
@@ -393,7 +400,7 @@
 	float: right;
 	font-size: 14px;
 	font-weight: bold;
-	color: red;
+	color: #ff6666;
 	display: block;
 	width:100%;
 	text-align: right;
@@ -474,6 +481,22 @@
 	width: 3000px;
 	background-color: blue;
 }
+#dev-btn{
+	color: #666;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 20px;
+}
+#design-btn{
+	color: #666;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 20px;
+}
 </style>
 
 </head>
@@ -485,7 +508,7 @@
       <div class="project_header">
          <div class="header_text">
             <p id="header_ttt">프로젝트 찾기</p>
-            <p id="header_tt">${pjcount}개의 프로젝트가 있습니다.</p>
+            <p id="header_tt"><span style="color: #ff6666; font-weight: bolder;">${pjcount}</span>개의 프로젝트가 있습니다.</p>
             
             <div class="search-part">
             
@@ -647,12 +670,16 @@
          <div class="clean"></div>
          
          
-         <div class="project-sort-box">
+         <div class="project-sort-box" style="height: 100px;">
 
             <div class="project-sort-text">판매중인 프로젝트</div>
             <div class="place-sort-box">
-               <button id="dev-btn">개발</button>
-               <button id="design-btn">디자인</button>
+            <div class="left-sort-box" style="height: 45px;">
+               <div id="dev-btn">개발</div>
+            </div>
+            <div class="right-sort-box" style="height: 45px;">
+               <div id="design-btn">디자인</div>
+            </div>
             </div>
          </div>
    

@@ -251,4 +251,9 @@ public class ProjectService {
 		return projectDAO.indexProjectList();
 	}
 
+	//클라이언트가 완료 눌렀을 때, project상태 finish로 update하기
+	public int updateState(ProjectDTO projectDTO){
+		return projectDAO.updateState(projectDTO);
+	}
+
 }
