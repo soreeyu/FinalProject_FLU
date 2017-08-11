@@ -63,7 +63,7 @@
   			select * from 
   			(select m.*, rownum R from 
   			(select j.email from 
-  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.kind = 'freelancer' and m.emailcheck = 1) j  
+  			(select f.email,f.intro,f.INTERESTING,m.nickname from freelancer f inner join member m on f.email = m.email where m.kind = 'freelancer' and m.emailcheck = 1 order by m.email asc) j  
 			 <include refid="search"/>  
 			) m) where R between #{startRow} and #{lastRow}
   		</select>
@@ -88,11 +88,13 @@
   		</select>
   		
   		<select id="freelancerList_freelancer2" resultType="com.flu.freelancer.FreelancerDTO" parameterType="java.util.Map">
-  			select * from freelancer 
+  			select m.*,f.jobkind,f.interesting,f.possibility,f.intro from member m inner join freelancer f on m.email = f.email 
+  			<if test="length > 0">
   			<where>
-  				email in
+  				m.email in
   				<include refid="list"></include>
   			</where>
+  			</if>
   		</select>
   		
   		<select id="freelancerList_evaluation2" resultType="com.flu.profile.Evaluation" parameterType="java.util.Map">
@@ -105,30 +107,47 @@
   		
   		<select id="skillList2" resultType="com.flu.profile.Skill" parameterType="java.util.Map">
   			select * from skill 
+  			<if test="length > 0">
   			<where>
   				email in
   				<include refid="list"></include>
   			</where>
+  			</if>
   		</select>
   		
   		<!-- 내가 참여한 프로젝트 갯수 -->
   		<select id="myprojectList2" parameterType="java.util.Map" resultType="com.flu.project.ProjectDTO">
   			select email,count(*) as appcount from applicant
+  			<if test="length > 0">
   			  <where>
   				email in
   				<include refid="list"></include>
   			</where>
-  			group by email
+  			</if>
+  			group by email 
   		</select>
   		
   		<!-- 내 포트폴리오 갯수  -->
   		<select id="myportfolioList2" parameterType="java.util.Map" resultType="com.flu.profile.PortFolio">
   			select email,count(*) as pfnum from PORTFOLIO 
+  			<if test="length > 0">
   			<where> 
   			email in
   			<include refid="list"></include>
   			</where>
-  			 group by email
+  			</if>
+  			 group by email 
+  		</select>
+  		
+  		<!--모든 평가리스트 -->
+  		<select id="evalList2" parameterType="java.util.Map" resultType="com.flu.profile.Evaluation">
+  			select * from evaluation
+  			<if test="length > 0">
+  			<where>
+  				toemail in
+  				<include refid="list"></include>
+  			</where>
+  			</if>
   		</select>
   		
   	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡPortFolioㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->

@@ -86,7 +86,6 @@
 .freelancerdata > p .avail{
 	position: relative;
 	font-size: 12px;
-	background-color: green;
 	left: 10px;
 	border-radius: 5px;
 	padding: 2px;
@@ -149,9 +148,21 @@
 }
 .no{
 	background-color: #dedede;
+	border-radius: 5px;
+	color: white;
+	padding: 2px;
 }
 .notno{
 	background-color: #339bff;
+	border-radius: 5px;
+	color: white;
+	padding: 2px;
+}
+.nono{
+	background-color: green;
+	border-radius: 5px;
+	color: white;
+	padding: 2px;
 }
 
 </style>
@@ -172,10 +183,13 @@ $(function() {
 		
 		location.href="freelancerList?search="+search+"&curPage="+curPage;
 	})
+
 	
 	
 });
 
+
+var project = $("")
 
 </script>
 </head>
@@ -203,7 +217,7 @@ $(function() {
 			</div>
 		</div>
 					
-					<c:forEach items="${map.member}" var="o" varStatus="i">
+					<c:forEach items="${map.freelancer}" var="o" varStatus="i">
 					<c:if test="${o.emailcheck eq 1}">
 			<div class="freelancerListform">
 				<div class="freelancerdiv">
@@ -222,24 +236,24 @@ $(function() {
 						<label>
 						<span class="avail">
 						<c:choose>
-						<c:when test="${not empty map.freelancer[i.count].possibility }">
-						<c:if test="${map.freelancer[i.count].possibility eq '활동불가' }">
-						<a class="no" href="/flu/member/freelancermypage?email=${o.email }">${map.freelancer[i.count].possibility }</a>
+						<c:when test="${not empty o.possibility }">
+						<c:if test="${o.possibility eq '활동불가' }">
+						<a class="no" href="/flu/member/freelancermypage?email=${o.email }">${o.possibility }</a>
 						</c:if>
-						<c:if test="${map.freelancer[i.count].possibility ne '활동가능' }">
-						<a class="notno" href="/flu/member/freelancermypage?email=${o.email }">${map.freelancer[i.count].possibility }</a>
+						<c:if test="${o.possibility eq '활동가능' }">
+						<a class="notno" href="/flu/member/freelancermypage?email=${o.email }">${o.possibility }</a>
 						</c:if>
 						</c:when>
 						<c:otherwise>
-						<a href="/flu/member/freelancermypage?email=${o.email }">활동가능</a>
+						<a class="nono" href="/flu/member/freelancermypage?email=${o.email }">활동가능</a>
 						</c:otherwise>
 						</c:choose></span>
 						</label></p>
 						<p><span class="kind">
 						<a href="/flu/member/freelancermypage?email=${o.email }">
-						<c:if test="${not empty map.freelancer[i.count].jobKind }">
-						${map.freelancer[i.count].jobKind }</c:if>
-						<c:if test="${empty map.freelancer[i.count].jobKind }">
+						<c:if test="${not empty o.jobKind }">
+						${o.jobKind }</c:if>
+						<c:if test="${empty o.jobKind }">
 						직종 미입력
 						</c:if>
 						 | 
@@ -253,11 +267,11 @@ $(function() {
 						<p>
 						<a href="/flu/member/freelancermypage?email=${o.email }">
 						<c:choose>
-						<c:when test="${not empty map.freelancer[i.count].intro }">
-						<span class="intro">${map.freelancer[i.count].intro }</span>
+						<c:when test="${not empty o.intro }">
+						<span class="intro">${o.email } : ${map.skills[i.count].email}${o.intro }</span>
 						</c:when>
 						<c:otherwise>
-						<span class="intro">자기소개가 없습니다.${map.member }</span>
+						<span class="intro">자기소개가 없습니다.${o.email } : ${map.skills[i.count].email}</span>
 						</c:otherwise>
 						</c:choose>
 						</a>
@@ -269,9 +283,7 @@ $(function() {
 						<span class="skills">${j.kind }</span>
 						</c:if>
 						</c:forEach>
-						<c:if test="">
-							
-						</c:if>
+						
 						</a>
 						</p>
 					</div>
@@ -305,22 +317,22 @@ $(function() {
 						</p>
 						<hr>
 						<p><span>계약한 프로젝트</span><span style="float: right; margin-right: 10px;">
-						<c:if test="${map.myproject[i.count].email eq o.email }">
+						<c:forEach items="${map.myproject}" var="t">
+						<c:if test="${t.email eq o.email }">
 						
-						${map.myproject[i.count].appCount}
+						${t.appCount}
 						</c:if>
-						<c:if test="${map.myproject[i.count].email ne o.email }">
-						0
-						</c:if>건
+						
+						</c:forEach>
+						건
 						</span></p>
 						<hr>
 						<p><span>포트폴리오</span><span style="float: right; margin-right: 10px;">
-						<c:if test="${map.portfolio[i.count].email eq o.email }">
-						${map.portfolio[i.count].pfNum }
+						<c:forEach items="${map.portfolio }" var="p">
+						<c:if test="${p.email eq o.email }">
+						${p.pfNum }
 						</c:if>
-						<c:if test="${map.portfolio[i.count].email ne o.email }">
-						0
-						</c:if>
+						</c:forEach>
 						개
 						</span></p>
 						<hr>

@@ -101,7 +101,7 @@ public class FreelancerController {
 		
 		
 		
-		return "/member/freelancer/freelancerlist";
+		return "/member/freelancer/freelancerlist2";
 	}
 	//프리랜서 마이페이지
 	@RequestMapping(value="freelancermypage")

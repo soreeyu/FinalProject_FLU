@@ -49,17 +49,81 @@ public class FreelancerService{
 
 	//프리랜서 리스트
 	public Map<String, Object> freelancerList(ListInfo listInfo){
-		Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
+		//Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
 
 		
-		/*Map<String, Object> map =freelancerDAO.freelancerList2(listInfo);
-		List<MemberDTO> aa =(List<MemberDTO>)map.get("member");
+		Map<String, Object> map =freelancerDAO.freelancerList2(listInfo);
+		List<FreelancerDTO> aa =(List<FreelancerDTO>)map.get("freelancer");
+		List<Skill> bb = (List<Skill>)map.get("skills");
+		List<ProjectDTO> cc = (List<ProjectDTO>)map.get("myproject");
+		List<PortFolio> dd = (List<PortFolio>)map.get("portfolio");
+		List<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
+		List<PortFolio> portfolio = new ArrayList<PortFolio>();
+		
+		System.out.println("멤버 길이:"+aa.size()+"프로젝트길이"+cc.size());
 		for(int i = 0; i <aa.size();i++ ){
-			System.out.println("내가 가져온 이메일:"+aa.get(i).getEmail());
-		}*/
+			ProjectDTO projectDTO = new ProjectDTO();
+			projectDTO.setEmail(aa.get(i).getEmail());
+			
+			for(int j =0; j< cc.size();j++){
+				System.out.println("멤버이메일 :"+aa.get(i).getEmail()+"프로젝트카운트이메일:"+cc.get(j).getEmail());
+				if(aa.get(i).getEmail().equals(cc.get(j).getEmail())){
+					projectDTO.setAppCount(cc.get(j).getAppCount());
+					break;
+				}else{
+					projectDTO.setAppCount(0);
+				}
+				
+			}
+			projectList.add(projectDTO);
+			
+			PortFolio portFolio = new PortFolio();
+			portFolio.setEmail(aa.get(i).getEmail());
+			for(int k =0; k<dd.size(); k++){
+				if(aa.get(i).getEmail().equals(dd.get(k).getEmail())){
+					portFolio.setPfNum(dd.get(k).getPfNum());
+					break;
+				}else{
+					portFolio.setPfNum(0);
+				}
+			}
+			portfolio.add(portFolio);
+		}
+		for(int i =0; i< projectList.size(); i++){
+			System.out.println("이메일:"+projectList.get(i).getEmail()+":프로젝트갯수:"+projectList.get(i).getAppCount());
+		}
+		for(int i =0; i< portfolio.size(); i++){
+			System.out.println("이메일"+portfolio.get(i).getEmail()+"::포폴갯수:"+portfolio.get(i).getPfNum());
+		}
+		
+		
+		map.put("portfolio", portfolio);
+		map.put("myproject", projectList);
+		
+		//평가 리스트 추가 
+		
+		Map<String, Object> map2 = freelancerDAO.freelancerListEval2(listInfo);
+		List<Evaluation> eval = (List<Evaluation>)map2.get("evaluation");
+		
+		int total =0;
+		for(int j = 0; j< aa.size(); j++){
+			Evaluation evaluation = new Evaluation();
+			evaluation.setToEmail(aa.get(j).getEmail());
+				for(int i =0; i<eval.size(); i++){
+					if(aa.get(j).equals(eval.get(i).getToEmail())){
+						total = total + (eval.get(i).getProfessional()+eval.get(i).getSatisfy()+eval.get(i).getCommunication()+eval.get(i).getPassion()+eval.get(i).getSchedule())/5;
+					}else{
+						total = total;
+					}
+				}
+			
+		}
+		
 		
 		return map;
 	}
+	
+	
 	//프리랜서리스트 평가리스트
 	public Map<String, Object> freelancerListEval(ListInfo listInfo){
 		
