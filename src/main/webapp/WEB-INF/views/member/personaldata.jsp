@@ -12,6 +12,9 @@
 
 <title>Insert title here</title>
 <style type="text/css">
+a{
+	text-decoration: none;
+}
 .main_section{
 	min-width: 1460px;
 	width: 100%;

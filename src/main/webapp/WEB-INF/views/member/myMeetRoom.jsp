@@ -180,6 +180,7 @@
     padding: 4px 8px;
     background-color: white;
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 .sidebar_menu ul li{
 	height: 40px;
@@ -218,7 +219,7 @@
 				</div>
 				<div class="sidebar_menu">
 					<ul>
-						<li><a id="${active1}" class="menu" href="${pageContext.request.contextPath}/member/personaldataView">예약현황</a></li>
+						<li><a class="menu" href="${pageContext.request.contextPath}/member/myMeetRoom" style="background-color: #446eab; color: white;">예약현황</a></li>
 					</ul>
 				</div>
 			</div>
