@@ -912,11 +912,14 @@ background-color: white;
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
             <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
-            <div class="schedule-btn" id="">프로젝트 완료</div>
-          	</c:if>
-         
+
+            <div class="schedule-btn">미팅룸 예약하기</div>
+             <div class="schedule-btn" id="pjFinish-free">프로젝트 완료</div>
+          </c:if>
+
+       
              </div>
-            </c:if>
+		</c:if>
             
          
            <!----------------------- Modal ---------------------------------->
@@ -963,19 +966,11 @@ background-color: white;
   </div>  
          
          
-             
-          
-<%-- 
-		확인필요
-          <c:if test="${dto.state eq 'ing' && member.kind ne 'admin'}">
-            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
- --%>
+
           <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
           <c:if test="${member.kind eq 'client' && member.email==dto.email}">
           <div class="project-apply-box">
-          <c:if test="${dto.state eq 'ing'}">
-            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
-          </c:if>
+          
           <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
             <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList">미팅룸 예약하기 </a></div>
           </c:if>
@@ -983,7 +978,12 @@ background-color: white;
                 <div class="owner-btn" id="pj-update">Update</div>
             </c:if>
                 <div class="owner-btn" id="pj-delete">Delete</div>
-
+			<c:if test="${dto.state eq 'ing'}">
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+            <c:if test="${clientFinish eq 1}">
+            <div class="schedule-btn" id="pjFinish-client">프로젝트 완료</div>
+            </c:if>
+          </c:if>
           </div>
 
           </c:if>
@@ -1067,12 +1067,14 @@ var state = '${dto.state}';
 var check = "${check}";
 var apply_check = $("#btn_apply").text().trim();
 alert(state);
-alert("${member.oProfileImage }");
 alert("중복인가="+check);
 alert("checkCount=${checkCount}");
 alert(apply_check);
-alert("intro--=${freelancer.intro}");
-
+alert("finishcheck==${finishCheck}");
+alert("clientFinish==${clientFinish}");
+if("${finishCheck}"==1){
+	$("#pjFinish-free").text("완료된 프로젝트");
+}
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -1239,7 +1241,47 @@ var testId = "";
 			}
 		});
 		
-		   
+	/* 프리랜서가 프로젝트 완료시 완료버튼 누를때  */
+	$("#pjFinish-free").click(function() {
+		
+		if($("#pjFinish-free").text()=="완료된 프로젝트"){
+			alert("이미 완료버튼을 누르셨습니다.\n클라이언트의 승인이 필요합니다.");
+		}
+		else{
+
+		var ch = confirm("프로젝트를 완료하셨습니까?\n클라이언트에게 메세지가 전달됩니다.");
+		if(ch==true){
+			
+		$.get("${pageContext.request.contextPath}/applicant/updateFinish?projectNum="+projectNum+"&email="+email,function(data){
+			alert(data);
+			$("#pjFinish-free").text("완료된 프로젝트");
+		});
+		}else{
+			alert("취소되었습니다.")
+		}
+		}
+	});	
+		
+	/* 지원한 applicant가 모두 완료를 눌렀을 때, 클라이언트에 버튼 활성화 */
+	
+	$("#pjFinish-client").click(function() {
+		alert("프로젝트 완료버튼");
+		var ch = confirm("프로젝트를 완료하셨습니까?\n클라이언트에게 메세지가 전달됩니다.");
+		if(ch==true){
+			$.get("${pageContext.request.contextPath}/project/updateState?projectNum="+projectNum,function(data){
+				
+				alert(data);
+				$("#pjFinish-client").text("프로젝트 최종완료");
+			});
+			location.href="../member/client/myproject?email"+email;
+		}else{
+			alert("취소되었습니다.")
+		}
+		
+	});
+	
+	
+	
 		   
 	 //프로젝트스케줄 //면 //아래잇는거 지우고 function 안으로 넣음 
 		 $("#scheduleBtn").click(function(){
@@ -1412,11 +1454,7 @@ var testId = "";
 		}
 
 	});
-	
-<<<<<<< HEAD
-=======
-	
->>>>>>> ParkJunHo3
+
 
 	   
 	   $('#dateBTN').click(function name() {
@@ -1428,10 +1466,7 @@ var testId = "";
 		   
 		   
 		});
-<<<<<<< HEAD
-	
-=======
->>>>>>> ParkJunHo3
+
 
 </script>
 </body>
