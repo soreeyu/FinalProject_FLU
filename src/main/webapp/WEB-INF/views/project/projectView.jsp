@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -270,6 +271,13 @@ strong{
    margin-top: 15px;
    text-decoration: none;
 }
+
+.owner-btn:HOVER{
+
+cursor: pointer;
+
+}
+
 .schedule-btn{
    width:230px;
    height:40px;
@@ -568,9 +576,12 @@ background-color: white;
 	border-radius: 2px;
 	display: inline;
 }
+
 .pjsellContents{
 	margin-top: 30px;
 }
+
+
 </style>
 
 </head>
@@ -578,7 +589,7 @@ background-color: white;
 <c:import url="/WEB-INF/views/temp/header.jsp"></c:import>
 
 <section class="main_section">
-
+	<input type="hidden" id="opener" value="${dto.projectNum}"> <!-- 연장할때 필요 지우지마셈 -->
       <!--  header -->
       <div class="project_header">
          <div class="header_text">
@@ -634,16 +645,29 @@ background-color: white;
               
             </c:if>
             
-            <c:if test="${member.kind eq 'client' && member.email==dto.email && dto.state ne 'sell'}">
+
+            <c:if test="${member.kind eq 'client' && member.email==dto.email}">
             
             
-            <p> 프로젝트를 수정/삭제 할 땐, 신중해주세요 ${dto.projectNum }</p>
+            <p>
+            <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
+            	삭제 신중하게 하셈 [프로젝트 넘: ${dto.projectNum }] 
+            </c:if>
+            <c:if test="${dto.del_check == 0}">
+            	 중단 요청 후 중단이 완료되면 복구가 불가능합니다. 신중하게 결정해 주세요[프로젝트 넘: ${dto.projectNum }] 
+            </c:if>
+            </p>
                <div class="owner_option_btn">
                <c:if test="${dto.state eq 'check'}">
                   <div class="owner-btn" id="pj-update">Update</div>
                </c:if>
-                  <div class="owner-btn" id="pj-delete">Delete</div>
-               	 
+                  
+                  <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
+                  <div class="owner-btn" id="pj-delete"> Delete</div>
+                  </c:if>
+                  <c:if test="${dto.del_check == 0}">
+                  <div class="owner-btn" id="pj-delete">중단요청</div>
+                  </c:if>
                </div>
           
                </c:if>
@@ -887,11 +911,15 @@ background-color: white;
             </div>
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+
+            <div class="schedule-btn">미팅룸 예약하기</div>
+             <div class="schedule-btn" id="pjFinish-free">프로젝트 완료</div>
           </c:if>
-         
+
+       
              </div>
-            </c:if>
+		</c:if>
             
          
            <!----------------------- Modal ---------------------------------->
@@ -938,19 +966,28 @@ background-color: white;
   </div>  
          
          
-             
-          
+
           <!-- 오른쪽 상단버튼 클라이언트일때 설정하기 -->
-          <c:if test="${member.kind eq 'client' && member.email==dto.email && (dto.state eq 'recruit' || dto.state eq 'ing')}">
+          <c:if test="${member.kind eq 'client' && member.email==dto.email}">
           <div class="project-apply-box">
-          <c:if test="${dto.state eq 'ing'}">
-            <div class="schedule-btn">프로젝트 스케줄 </div>
+          
+          <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
+            <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList">미팅룸 예약하기 </a></div>
           </c:if>
-            <div class="schedule-btn">미팅룸 예약하기 </div>
-        
+          	<c:if test="${dto.state eq 'check'}">
+                <div class="owner-btn" id="pj-update">Update</div>
+            </c:if>
+                <div class="owner-btn" id="pj-delete">Delete</div>
+			<c:if test="${dto.state eq 'ing'}">
+            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+            <c:if test="${clientFinish eq 1}">
+            <div class="schedule-btn" id="pjFinish-client">프로젝트 완료</div>
+            </c:if>
+          </c:if>
           </div>
+
           </c:if>
-       
+
           
           
           <c:if test="${member.kind eq 'admin'}">
@@ -979,7 +1016,7 @@ background-color: white;
             </c:if>
             
             <c:if test="${dto.state eq 'fail'}">
-            <input type="button" class="register-btn" value="프로젝트 연장" id="dateBTN">
+            <input type="button" class="register-btn" value="프로젝트 기간변경" id="dateBTN">
             </c:if>
             
             <input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
@@ -1014,6 +1051,8 @@ background-color: white;
       
          </section>
       </div>
+      
+      
 
 
 </section>
@@ -1028,12 +1067,14 @@ var state = '${dto.state}';
 var check = "${check}";
 var apply_check = $("#btn_apply").text().trim();
 alert(state);
-alert("${member.oProfileImage }");
 alert("중복인가="+check);
 alert("checkCount=${checkCount}");
 alert(apply_check);
-alert("intro--=${freelancer.intro}");
-
+alert("finishcheck==${finishCheck}");
+alert("clientFinish==${clientFinish}");
+if("${finishCheck}"==1){
+	$("#pjFinish-free").text("완료된 프로젝트");
+}
 
 /* reply ajax */
 $.get("../reply/replyList?projectNum="+projectNum+"&curPage=1",function(data){
@@ -1081,11 +1122,8 @@ if(planState=='idea'){
  
  /* 미팅방식 뿌려주기 */
 var meetKind = "${dto.meetKind}";
-if(meetKind=='offline'){
-   $("#meetKind").text("오프라인");
-}else{
-   $("#meetKind").text("온라인");
-}
+   $("#meetKind").text(meetKind);
+
 
 /* 모집마감일 뿌려주기 */
  var fdate = "${dto.finishDate}";
@@ -1100,9 +1138,7 @@ if(meetKind=='offline'){
 
 /* reply 작성 */
  $("#btn").click(function() {
-    alert("yes");
    var chk = $("#reply_check").prop("checked");
-   alert(chk);
    
    /* 비밀글이면 true, 공개댓글이면 false값 */
    if(chk==true){
@@ -1116,21 +1152,20 @@ if(meetKind=='offline'){
    $("#frm").submit();
 });
 
-
+var testId = "";
 /* 답글버튼 */
  $(".project-reply-box-top").on("click",".listReply",function() {
 
       alert($(this).attr("id"));
-      var testId = $(this).attr("id");
+      testId = $(this).attr("id");
 
          $(".rere").html("");
-         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="button" class="replybtn" value="댓글달기"><input type="button"class="cancle" id="'+testId+'" value="취소">');
+         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="checkbox" id="reply_check">비공개'
+        		 +'<input type="button" class="replybtn" value="댓글달기">'
+        		 +'<input type="button"class="cancle" id="'+testId+'" value="취소">');
          $(".listReply").attr("data-on", "off");
          $(this).attr("data-on", "on");
-         alert("d");
-         $.get("../reply/checkReply?num="+testId,function(data){
-        	 alert("checkReply");
-         });
+       
          
    });
    
@@ -1138,21 +1173,47 @@ if(meetKind=='offline'){
  $(".project-reply-box-top").on("click",".cancle",function() {
    var testId = $(this).attr("id");
    alert("testid=="+testId);
-   alert("취소합시다");
    $("."+testId).html("");
    $(".listReply").show();
    
  });
  
  
- /* 댓글달기 버튼클릭 */
+ /* 댓글달기 checkbox클릭 */
+ var chkk="";	  
+ $(".project-reply-box-top").on("click", "#reply_check", function() {
+    	  chkk = $("#reply_check").prop("checked");
+    	  alert($("#reply_check").prop("checked"));
+    	  alert("chkk=="+chkk);
+    	  alert("클릭");
+		if(chkk==true){
+			alert("체크됨");
+			alert("비공개댓글에 댓글은 자동비공개, 공개댓글의 댓글은 체크하기");
+		}else{
+			alert("비공개d댓글");
+		}
+	});
+ 
   $(".project-reply-box-top").on("click", ".replybtn", function() {
-      
-    alert("ddd");
-    alert($("#recontents").val());
-    /* $("#frm").submit(); */
+	
+    alert("댓글id="+testId);
+    var contents = $("#recontents").val();
+    $.ajax({
+    	type:"POST",
+    	url:"../reply/reReply?num="+testId,
+    	data:{
+    		writer:email,
+    		contents:contents,
+    		projectNum:projectNum,
+    		replyChk:chkk
+    	},
+    	success:function(result){
+    		window.location.reload(true);
+    	}
+    });
   });
    
+
 
 
 
@@ -1179,7 +1240,161 @@ if(meetKind=='offline'){
 			
 			}
 		});
+		
+	/* 프리랜서가 프로젝트 완료시 완료버튼 누를때  */
+	$("#pjFinish-free").click(function() {
+		
+		if($("#pjFinish-free").text()=="완료된 프로젝트"){
+			alert("이미 완료버튼을 누르셨습니다.\n클라이언트의 승인이 필요합니다.");
+		}
+		else{
+
+		var ch = confirm("프로젝트를 완료하셨습니까?\n클라이언트에게 메세지가 전달됩니다.");
+		if(ch==true){
+			
+		$.get("${pageContext.request.contextPath}/applicant/updateFinish?projectNum="+projectNum+"&email="+email,function(data){
+			alert(data);
+			$("#pjFinish-free").text("완료된 프로젝트");
+		});
+		}else{
+			alert("취소되었습니다.")
+		}
+		}
+	});	
+		
+	/* 지원한 applicant가 모두 완료를 눌렀을 때, 클라이언트에 버튼 활성화 */
+	
+	$("#pjFinish-client").click(function() {
+		alert("프로젝트 완료버튼");
+		var ch = confirm("프로젝트를 완료하셨습니까?\n클라이언트에게 메세지가 전달됩니다.");
+		if(ch==true){
+			$.get("${pageContext.request.contextPath}/project/updateState?projectNum="+projectNum,function(data){
+				
+				alert(data);
+				$("#pjFinish-client").text("프로젝트 최종완료");
+			});
+			location.href="../member/client/myproject?email"+email;
+		}else{
+			alert("취소되었습니다.")
+		}
+		
+	});
+	
+	
+	
+		   
+	 //프로젝트스케줄 //면 //아래잇는거 지우고 function 안으로 넣음 
+		 $("#scheduleBtn").click(function(){
+			var test = getScheduleNum(projectNum);
+	    });
+		   
+
 	})(jQuery);
+
+
+   var projectNum = '${dto.projectNum}';
+      
+   $('#deleteBTN').click(function() {
+      
+      if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
+         $('#frmm').attr('action','./projectDelete');
+         $('#frmm').submit();
+      }else{
+         
+      }   
+      
+   });
+ 
+   
+   $('#doneBTN').click(function() {
+      if(confirm("프로젝트 검수를 완료하시겠습니까?")){
+         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
+         $('#frmm').submit();
+      }
+      else{
+
+      }
+      
+   });
+   
+   
+
+   function getContextPath(){
+	   	alert('${pageContext.request.contextPath}');
+	   	var context = '${pageContext.request.contextPath}';
+	   	return context;
+   }
+
+
+
+   /* 
+    * 	
+    * Controller에서 이미 프로젝트의 존재여부는 확인하고 들어와진 상태라고 보면된다 
+   	DB 에 해당 프로젝트의 스케줄이 있는지 확인 후 
+   	있으면 users, parts , units 정보를 가져오는 함수호출
+   	없으면 스케줄 생성여부를 물어본 뒤 
+   		생성한다고하면 생성함수호출 
+   		안한다고 하면 이전 화면
+   */
+   function getScheduleNum(projectNum){
+   	var test = "";
+   	$.ajax({
+   		url: "${pageContext.request.contextPath}/schedule/check?projectNum="+projectNum,
+   		type: "GET",
+   		async : false,
+   		success: function(data){
+   			//alert(JSON.stringify(data));
+   			
+   			if(data.schedule=='n'){
+   				//스케줄 생성하도록 창띄워주기
+   				if(confirm('스케줄을 생성하시겠소?')){
+   					createSchedule(data.projectNum);
+   				}else{
+   					//이전 화면으로 가기 
+   					//window.history.back();
+   					//혹은
+   					location.href = $(location).attr('href');
+   				}
+   				
+   			}else if(data.schedule=='y'){
+   				
+   				var scheduleNum = data.scheduleMainDTO.scheduleNum;
+   				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum+"&projectNum="+projectNum;
+   			}else{
+   				alert("스케줄 생성 오류");
+   				location.href = $(location).attr('href');
+   				//location.href = getContextPath();
+   			}
+   		}
+   	 });
+   	
+   	return test;
+   }
+
+
+
+   /* 
+   	스케줄 생성함수 
+   */
+   function createSchedule(projectNum){
+   	var scheduleNum = 0;
+   	$.ajax({
+   		url: getContextPath()+"/schedule/create?projectNum="+projectNum,
+   		type: "GET",
+   		success:function(data){
+   			//alert("스케줄 생성해야됨"+data);
+   			if(data.result == 'y'){
+   				alert("생성된 scheduleNum = "+data.scheduleNum);
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+data.scheduleNum;
+   			}else{
+   				alert("스케줄생성오류");
+   			}
+   		}
+   	});
+   }
+
+
 
 	
 	
@@ -1200,6 +1415,7 @@ if(meetKind=='offline'){
 			}
 		}else if(state=="recruit" || state=="ing" || state=="fail"){
 			alert("관리자에게 프로젝트 삭제 요청들어가기");
+			location.href="./projectCancelUpdate?projectNum="+projectNum;
 		}else{
 			alert("완료된 프로젝트나 판매중인 프로젝트를 삭제시 \n프리랜서의 커리어에서 삭제되기 때문에 삭제 불가합니다. \n관리자에게 문의하세요.");
 		}
@@ -1234,9 +1450,24 @@ if(meetKind=='offline'){
 			$('#frmm').submit();
 		} else {
 
+
 		}
 
 	});
+
+
+	   
+	   $('#dateBTN').click(function name() {
+
+		   var url="./moreDate";
+		   var option = "width=440,height=340,top=100,left=300";
+		  
+		   window.open(url,'moreDate',option);
+		   
+		   
+		});
+
+
 </script>
 </body>
 </html>

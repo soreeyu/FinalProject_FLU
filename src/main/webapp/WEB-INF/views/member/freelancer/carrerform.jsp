@@ -39,7 +39,7 @@
 					회사명
 					</th>
 					<td colspan="4">
-						<input id="companyName" type="text" name="companyName" value="${carrer.companyName }">
+						<input required="required" id="companyName" type="text" name="companyName" value="${carrer.companyName }">
 					</td>
 				</tr>
 				<tr>
@@ -47,13 +47,13 @@
 					부서명
 					</th>
 					<td>
-						<input id="dept" type="text" name="dept" value="${carrer.dept }">
+						<input required="required" id="dept" type="text" name="dept" value="${carrer.dept }">
 					</td>
 					<th>
 					직위
 					</th>
 					<td>
-						<input id="position" type="text" name="position" value="${carrer.position }">
+						<input required="required" id="position" type="text" name="position" value="${carrer.position }">
 					</td>
 				</tr>
 				
@@ -62,13 +62,13 @@
 					입사일
 					</th>
 					<td>
-						<input id="hireDate" type="date" name="hireDate" value="${carrer.hireDate }">
+						<input required="required" id="hireDate" type="date" name="hireDate" value="${carrer.hireDate }">
 					</td>
 					<th>
 					퇴사일
 					</th>
 					<td>
-						<input id="retireDate" type="date" name="retireDate" value="${carrer.retireDate }" >
+						<input required="required" id="retireDate" type="date" name="retireDate" value="${carrer.retireDate }" >
 					</td>
 				</tr>
 			</tbody>

@@ -50,8 +50,107 @@ public class FreelancerService{
 	//프리랜서 리스트
 	public Map<String, Object> freelancerList(ListInfo listInfo){
 		Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
+
+		
+		
 		return map;
 	}
+	//프리랜서 리스트 2
+	public Map<String, Object> freelancerList2(ListInfo listInfo){
+		//Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
+
+		
+		Map<String, Object> map =freelancerDAO.freelancerList2(listInfo);
+		List<FreelancerDTO> aa =(List<FreelancerDTO>)map.get("freelancer");
+		List<Skill> bb = (List<Skill>)map.get("skills");
+		List<ProjectDTO> cc = (List<ProjectDTO>)map.get("myproject");
+		List<PortFolio> dd = (List<PortFolio>)map.get("portfolio");
+		List<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
+		List<PortFolio> portfolio = new ArrayList<PortFolio>();
+		
+		System.out.println("멤버 길이:"+aa.size()+"프로젝트길이"+cc.size());
+		for(int i = 0; i <aa.size();i++ ){
+			ProjectDTO projectDTO = new ProjectDTO();
+			projectDTO.setEmail(aa.get(i).getEmail());
+			
+			for(int j =0; j< cc.size();j++){
+				System.out.println("멤버이메일 :"+aa.get(i).getEmail()+"프로젝트카운트이메일:"+cc.get(j).getEmail());
+				if(aa.get(i).getEmail().equals(cc.get(j).getEmail())){
+					projectDTO.setAppCount(cc.get(j).getAppCount());
+					break;
+				}else{
+					projectDTO.setAppCount(0);
+				}
+				
+			}
+			projectList.add(projectDTO);
+			
+			PortFolio portFolio = new PortFolio();
+			portFolio.setEmail(aa.get(i).getEmail());
+			for(int k =0; k<dd.size(); k++){
+				if(aa.get(i).getEmail().equals(dd.get(k).getEmail())){
+					portFolio.setPfNum(dd.get(k).getPfNum());
+					break;
+				}else{
+					portFolio.setPfNum(0);
+				}
+			}
+			portfolio.add(portFolio);
+		}
+		for(int i =0; i< projectList.size(); i++){
+			System.out.println("이메일:"+projectList.get(i).getEmail()+":프로젝트갯수:"+projectList.get(i).getAppCount());
+		}
+		for(int i =0; i< portfolio.size(); i++){
+			System.out.println("이메일"+portfolio.get(i).getEmail()+"::포폴갯수:"+portfolio.get(i).getPfNum());
+		}
+		
+		
+		map.put("portfolio", portfolio);
+		map.put("myproject", projectList);
+		
+		//평가 리스트 추가 
+		
+		Map<String, Object> map2 = freelancerDAO.freelancerListEval2(listInfo);
+		List<Evaluation> eval = (List<Evaluation>)map2.get("evaluation");
+		
+		List<Evaluation> eval2 = new ArrayList<Evaluation>();
+		System.out.println("평가 갯수:"+eval.size());
+		for(int j = 0; j< aa.size(); j++){
+			int total =0;
+			int count =0;
+			Evaluation evaluation = new Evaluation();
+			evaluation.setToEmail(aa.get(j).getEmail());
+				for(int i =0; i<eval.size(); i++){
+					System.out.println("평가당한 이메일:"+eval.get(i).getToEmail()+":멤버이메일:"+aa.get(j).getEmail()+":점수:"+eval.get(i).getCommunication());
+					System.out.println(aa.get(j).getEmail().equals(eval.get(i).getToEmail()));
+					if(aa.get(j).getEmail().equals(eval.get(i).getToEmail())){
+						
+						total = total + (eval.get(i).getProfessional()+eval.get(i).getSatisfy()+eval.get(i).getCommunication()+eval.get(i).getPassion()+eval.get(i).getSchedule())/5;
+						count++;
+						System.out.println("값의 평균:"+total);
+					}
+					
+					
+				}
+				if(count != 0){
+				total = total/count;
+				}
+				evaluation.setSatisfy(total); //평점
+				evaluation.setPassion(count); //평가 갯수
+				
+				eval2.add(evaluation);
+				
+		}
+		for(int i=0; i< eval2.size(); i++){
+			System.out.println("평가당한 이메일:"+eval2.get(i).getToEmail()+":평균:"+eval2.get(i).getSatisfy());
+		}
+		
+		
+		map.put("evaluation2", eval2);
+		
+		return map;
+	}
+	
 	//프리랜서리스트 평가리스트
 	public Map<String, Object> freelancerListEval(ListInfo listInfo){
 		
@@ -505,6 +604,9 @@ public class FreelancerService{
 			return freelancerDAO.countAll(memberDTO, listInfo, applicantDTO);
 		}
 		
-		
+	//인덱스에 뿌려질 프리랜서 리스트
+	public List<FreelancerDTO> indexFreelancerList() throws Exception{
+		return freelancerDAO.indexFreelancerList();
+	}
 	
 }

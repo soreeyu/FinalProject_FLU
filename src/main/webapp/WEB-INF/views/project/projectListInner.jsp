@@ -8,6 +8,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<style type="text/css">
+.project-unit:hover{
+	box-shadow: box-shadow: 2px 2px 2px #00b386;
+}
+</style>
 
 </head>
 <body>
@@ -46,8 +51,8 @@
 							
 							
 							<div class="right-contents-sub">
-							<img src="${pageContext.request.contextPath}/resources/img/project/proposal-user.png">
-							 급구여부 : <strong class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></strong></div>
+							
+							<input type="hidden" class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></div>
 							 
 							 
 						</div>
@@ -138,7 +143,7 @@ $(".quick").each(function() {
 /* 페이징 색상 */
 $(".num").each(function() {
 	if(curPage==$(this).attr("id")){
-		$(this).css("color", "#3385ff");
+		$(this).css("color", "#2099bb");
 	}
 });
 

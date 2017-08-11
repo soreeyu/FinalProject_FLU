@@ -147,6 +147,12 @@
 	width: 150px;
 	height: 30px;
 }
+.no{
+	background-color: #dedede;
+}
+.notno{
+	background-color: #339bff;
+}
 
 </style>
 
@@ -218,7 +224,12 @@ $(function() {
 						<span class="avail">
 						<c:choose>
 						<c:when test="${not empty map.freelancer[i].possibility }">
-						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">${map.freelancer[i].possibility }</a>
+						<c:if test="${map.freelancer[i].possibility eq '활동불가' }">
+						<a class="no" href="/flu/member/freelancermypage?email=${map.member[i].email }">${map.freelancer[i].possibility }</a>
+						</c:if>
+						<c:if test="${map.freelancer[i].possibility ne '활동가능' }">
+						<a class="notno" href="/flu/member/freelancermypage?email=${map.member[i].email }">${map.freelancer[i].possibility }</a>
+						</c:if>
 						</c:when>
 						<c:otherwise>
 						<a href="/flu/member/freelancermypage?email=${map.member[i].email }">활동가능</a>

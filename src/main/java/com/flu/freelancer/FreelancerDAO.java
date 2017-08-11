@@ -117,6 +117,53 @@ public class FreelancerDAO{
 		map.put("evaluationLength", ar3);
 		return map;
 	}
+	//프리랜서 리스트 최적화 버전
+	public Map<String, Object> freelancerList2(ListInfo listInfo){
+		System.out.println(listInfo.getSearch());
+		List<String> email = this.getemail(listInfo);
+		for(String a : email){
+			System.out.println("검색이메일:"+a);
+		}
+		List<MemberDTO> ar1 = new ArrayList<MemberDTO>();
+		List<FreelancerDTO> ar2 = new ArrayList<FreelancerDTO>();
+		List<Skill> ar4 = new ArrayList<Skill>();
+		
+		List<ProjectDTO> ar5 = new ArrayList<ProjectDTO>();
+		List<PortFolio> ar6 = new ArrayList<PortFolio>();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("email", email);
+		map.put("length", email.size());
+		//ar1 = sqlSession.selectList(NAMESPACE+"freelancerList_member2", map);
+		ar2 = sqlSession.selectList(NAMESPACE+"freelancerList_freelancer2", map);
+		ar4 = sqlSession.selectList(NAMESPACE+"skillList2",map);
+		ar5 = sqlSession.selectList(NAMESPACE+"myprojectList2", map);
+		ar6 = sqlSession.selectList(NAMESPACE+"myportfolioList2", map);
+		
+		//map.put("member", ar1); 
+		map.put("freelancer", ar2);
+		map.put("skills", ar4);
+		map.put("myproject", ar5);
+		map.put("portfolio", ar6);
+		
+		return map;
+	}
+	//평점 최적화
+	public Map<String, Object> freelancerListEval2(ListInfo listInfo){
+		List<String> email =this.getemail(listInfo);
+		List<Evaluation> eval = new ArrayList<Evaluation>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		
+		map.put("email", email);
+		
+		eval = sqlSession.selectList(NAMESPACE+"evalList2",map);
+		
+		
+		
+		map.put("evaluation", eval);
+		return map;
+	}
 	
 	
 	//프리랜서 정보 입력(추가로 입력 Update)
@@ -445,4 +492,11 @@ public class FreelancerDAO{
 
 	/************************** Authentic *******************************/
 
+	
+	
+	//index에 뿌려질 프리랜서 리스트
+	public List<FreelancerDTO> indexFreelancerList() throws Exception{
+		return sqlSession.selectList(NAMESPACE+"indexFreelancerList");
+		
+	}
 }

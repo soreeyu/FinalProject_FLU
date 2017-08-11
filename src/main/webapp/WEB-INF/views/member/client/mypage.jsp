@@ -104,12 +104,44 @@
 	background-color: #fff;
     border-radius: 3px;
 }
+.profile_title{
+	border-bottom: 1px dashed #dedede;
+	padding-bottom: 25px;
+}
+.profile_title > p:FIRST-CHILD > a{
+	float: right;
+	margin-top: 7px;
+	padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #446eab;
+    border-radius: .2em;
+    color: white;
+    line-height: 1.5;
+}
 
+.profile_title > p:FIRST-CHILD{
+	margin-top: 20px;
+}
+.profile_title > p > span {
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.profile_wrap{
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+.profile_wrap > p:FIRST-CHILD{
+	margin-top: 20px;
+	font-size: 18px;
+	font-weight: 700;
+}
 
 
 .no_data_wrap{
 	width: 100%;
-    height: 170px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -127,10 +159,8 @@
 .no_img p span{
 	font-weight: bold;
 }
-
-
 #a{
-	background-color: #66b3ff;
+	background-color: #446eab;
 	color: white;
 }
 </style>
@@ -150,8 +180,21 @@
 			<div class="contents">
 				<div class="contents_inner">
 					
+					<section class="profile_title">
+						<p><span>${member.nickName }의 자기소개</span>
+						<c:if test="${email eq member.email }">
+						<c:choose>
+						<c:when test="${empty dto.intro }">
+						<a href="clientInsert" style="margin-top: -5px;">등록 하기</a>
+						</c:when>
+						<c:otherwise>
+						<a href="clientUpdate" style="margin-top: -5px;">업데이트 하기</a>
+						</c:otherwise>
+						</c:choose>
+						</c:if>
+						</p>
+					</section>
 					<section class="profile_wrap">
-						<p><span>클라이언트 정보</span></p>
 						
 						<div class="no_data_wrap">
 							<c:if test="${empty dto.intro }">
@@ -166,12 +209,6 @@
 								<div>
 									${dto.intro }
 								</div>
-							</c:if>
-							<c:if test="${empty dto.intro }">
-							<a href="clientInsert">입력</a>
-							</c:if>
-							<c:if test="${not empty dto.intro }">
-							<a href="clientUpdate">수정</a>
 							</c:if>
 						</div>
 						

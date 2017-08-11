@@ -5,11 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <title>Insert title here</title>
 <style type="text/css">
+a{
+	text-decoration: none;
+}
 .main_section{
 	min-width: 1460px;
 	width: 100%;
@@ -112,7 +117,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -161,7 +166,7 @@
 }
 
 #a{
-	background-color: #66b3ff;
+	background-color: #446eab;
 	color: white;
 }
 p span{
@@ -171,7 +176,34 @@ p span{
     display: inline-block;
    	text-align: right;
    	padding-right: 30px;
+   	font-weight: bold;
 }	
+
+#btn1{
+	
+	border: 0;
+	color: white;
+	background-color: blue;
+
+}
+
+#btn2{
+
+	border: 0;
+	color: white;
+	background-color: blue;
+
+
+}
+
+.uuid{
+
+	width: 100px;
+	height : 70px;
+	float: left;
+
+}
+
 
 </style>
 </head>
@@ -204,7 +236,7 @@ p span{
 									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/profile/${dto.fProfileImage}">
 									</c:if>
 									<c:if test="${empty dto.fProfileImage }">
-									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/img/FLU.png">
+									<img style="border-radius: 10%; width: 200px; height: 200px; border: 1px solid #dedede;" src="${pageContext.request.contextPath}/resources/img//mypage/avatar.jpg">
 									</c:if>
 								</div>
 								<p><span>프리랜서 형태</span>
@@ -254,26 +286,25 @@ p span{
 								정보가 없습니다.
 								</c:if></p>
 								
-								<c:if test="${member.type=='admin'}">
-									<p>신원 인증 자료: 
+								<c:if test="${member.kind=='admin'}">
+									<p><span id="identity">신원 인증 자료:</span> 
 										<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
-									</p>
-									
-									
-									<c:if test="${dto.authenticState=='1'}">
+								<div class="uuid">
+								<c:if test="${dto.authenticState=='1'}">			
 									<form action="../checkMember/checkMemberUpdate" id="frm1">
 										<input type="hidden" name="email" value="${dto.email}">
 										<input type="button" name="check" value="신원확인 완료" id="btn1">
 									</form>
-									</c:if>
+								</c:if>
 									
-									<c:if test="${dto.authenticState=='2'}">
+								<c:if test="${dto.authenticState=='2'}">
 									<form action="../checkMember/checkMemberDelete" id="frm2">
 										<input type="hidden" name="email" value="${dto.email}">
 										<input type="button" name="check" value="신원확인 취소하기" id="btn2">
 									</form>
-									</c:if>
-									
+								</c:if>
+								</div>
+								</p>
 								</c:if>
 								
 							</div>

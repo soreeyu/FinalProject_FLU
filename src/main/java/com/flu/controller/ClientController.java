@@ -4,6 +4,7 @@ package com.flu.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -96,9 +97,15 @@ public class ClientController {
 	}
 	//클라이언트 정보 수정
 		@RequestMapping(value="clientUpdate", method=RequestMethod.POST)
-		public String clientUpdate(ClientDTO clientDTO){
-			
-			clientService.clientUpdate(clientDTO);
+		public String clientUpdate(ClientDTO clientDTO) throws Exception{
+			int result = clientService.clientUpdate(clientDTO);
+			if(result>0){
+				alarmDTO = new AlarmDTO();
+				alarmDTO.setEmail(clientDTO.getEmail());
+				alarmDTO.setContents("정보를 수정하셨습니다.");
+				alarmService.alarmInsert(alarmDTO);
+				
+			}
 			
 			
 			return "redirect:/member/client/mypage";
@@ -106,13 +113,15 @@ public class ClientController {
 	
 	//클라이언트 정보 뷰
 	@RequestMapping(value="client/mypage")
-	public String mypage(Model model, HttpSession session) throws Exception{
+	public String mypage(Model model, HttpSession session, HttpServletRequest request) throws Exception{
+		String email = (String)request.getAttribute("email");
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(this.getEmail(session));
 		
 		model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 		model.addAttribute("active1", "a");
 		model.addAttribute("dto",clientService.clientView(this.getEmail(session)));
+		model.addAttribute("email", this.getEmail(session));
 		
 		return "/member/client/mypage";
 	}
@@ -159,7 +168,9 @@ public class ClientController {
 	         listInfo.makeRow();
 	         
 	         List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO, projectDTO);
-	         
+	         if(projectDTO.getState().equals("done") || projectDTO.getState().equals("recruit")){
+	         model.addAttribute("applicantList", projectService.applicantList(listInfo, memberDTO, projectDTO));
+	         }
 	         for(int i=0;i<ar.size();i++){
 	        	 
 	         System.out.println("ar의 Num=="+ar.get(i).getProjectNum());

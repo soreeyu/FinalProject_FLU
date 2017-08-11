@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
@@ -165,7 +167,7 @@
 }
 
 #a{
-	background-color: #66b3ff;
+	background-color: #446eab;
 	color: white;
 }
 
@@ -181,14 +183,14 @@
 }
 #address{
 	font-size: 14px;
-	height:30px;
+	height:32px;
 	display: inline-block;
 	border: 1px solid #dedede;
 	margin-bottom: 10px;
 	line-height: 30px;
 }
 #btn11{
-	width: 100px;
+	width: 120px;
 	height:30px;
 	display: inline-block;
 	border: 1px solid black;
@@ -197,7 +199,7 @@
 }
 #sample6_address2{
 	width: 305px;
-	height:18px;
+	height:30px;
 	display: inline-block;
 	border: 1px solid #dedede;
 	font-size: 14px;
@@ -282,9 +284,10 @@ form > p {
 
 p input[type=text]{
 	width: 100%;
-	height: 16px;
+	height: 30px;
 	padding: 5px;
 	padding-left: 10px;
+	
 }
 p label{
 	line-height: 30px;
@@ -297,7 +300,7 @@ p input[type=radio]{
 }
 p input[type=date]{
 	width: 100%;
-	height: 16px;
+	height: 30px;
 	padding: 5px;
 	padding-left: 10px;
 }
@@ -309,11 +312,11 @@ p input[type=date]{
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
-    width: 70px;
+    width: 94px;
     margin-top: 20px;
 }
 .img1{

@@ -1,18 +1,20 @@
 @CHARSET "UTF-8";
 
+a{
+	text-decoration: none;
+}
 /************************** 헤더 시작 **********************/
 header{
 	min-width: 1460px;
 	width: 100%;
 	height: 50px;
-	background-color: gray;
+	background-color: #262626;
 }
 .header{
 	min-width: 1152px;
 	margin: 0 auto;
 	width: 60%;
 	height: 50px;
-	background-color: yellow;
 }
 .header_wrap{
 	height: 50px;
@@ -45,9 +47,14 @@ header{
 	position: relative;
 }
 .header_menu ul li a{
-	padding: 15px 20px 15px 20px;
+	padding: 20px 20px 16px 20px;
 	display: block;
 	font-size: 14px;
+	color: white;
+}
+.header_menu ul li a:hover{
+	color: white;
+	background-color:#339bff;
 }
 .header_right{
 	float: right; 
@@ -63,17 +70,25 @@ header{
 	color: white;
 }
 .header_login a{
-	background-color: #797f86;
-	padding: 5px 10px 5px 10px;
 	height: 30px;
 	line-height: 20px;
+	background-color: #94a2af;
+    border-color: #8595a4;
+    color: white;
+    border-radius: 4px;
+    line-height: 25px;
+        width: 60px;
+    text-align: center
 }
 
 .header_sign_up a{
-	background-color: #0073ff;
-	padding: 5px 10px 5px 10px;
+	background-color: #94a2af;
 	height: 30px;
-	line-height: 20px;
+	line-height: 25px;
+	border-radius: 4px;
+	    width: 70px;
+    text-align: center
+	
 }
 
 /********** 로그인 전 ************/
@@ -82,7 +97,8 @@ header{
 	min-width: 1460px;
 	width: 100%;
 	height: 50px;
-	background-color: #bdc4cc;
+	background-color: #595959;
+
 }
 .profile_div{
 	min-width: 1152px;
@@ -99,11 +115,15 @@ header{
 }
 
 .profile_div ul li a{
-	padding: 15px 20px 15px 20px;
+	padding: 15px 20px 21px 20px;
 	display: block;
 	font-size: 14px;
+	color: white;
 }
-
+.profile_div ul li a:hover{
+	background-color: #00b386;
+	
+}
 
 /********** 로그인 후 ************/
 
@@ -112,14 +132,44 @@ header{
 /******************************* 바디 시작 **********************************/
 body{
 	background-color: #f2f2f2;
-	
 }
+
 .advertising{
-	width: 1152px;
 	height: 480px;
-	background-color: green;
 	margin: 0 auto;
-	
+}
+.invitation-text-md {
+    padding-top: 70px;
+    font-size: 20px;
+    color: #454545;
+    line-height: 22px;
+    margin-bottom: 0 !important;
+    text-align: center;
+    margin: 0 0 10px;
+}
+.invitation-heading {
+    font-weight: bold;
+    font-size: 46px;
+    color: #454545 !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    line-height: 45px;
+    text-align: center;
+}
+.invitation-text-sm {
+    border-top: 1px solid rgba(172,172,172,0.3);
+    border-top: 1px solid #dedede;
+    width: 594px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    color: #454545;
+    padding: 20px 0 15px;
+    margin-bottom: 0;
+    line-height: 18px;
+    text-align: center;
 }
 .advertising_div{
 	width: 100%;
@@ -127,24 +177,61 @@ body{
 	background-color: #e1e1e1;
 }
 .project_quantity_div{
+	border-top: 1px solid rgba(172,172,172,0.3);
+    border-bottom: 1px solid #d4d5d6;
+    height: 92px;
+    background-color: #fff;
 	width: 100%;
-	height: 100px;
-	background-color: #a6a6a6;
+}
+.projectCount{
+	width: 1060px;
+    margin: 0 auto;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    height: 92px;	
+}
+.projectCount div{
+	border-left: 1px solid rgba(136,136,136,0.2);
+}
+.projectCount div+div+div {
+    border-right: 1px solid rgba(136,136,136,0.2);
 }
 .project{
-	width: 1152px;
+
 	height: 480px;
-	background-color: #d9d9d9;
 	margin: 0 auto;
 }
 .project_div{
-	width: 1060px;
+	width : 1250px;
 	height: 100%;
-	background-color: white;
-	margin: 50px 46px 50px 46px;
-		
+	background-color: f2f2f2;
+	margin: 49px auto;
 }
-
+.status-box {
+	text-align: center;
+    float: left;
+    width: 352px;
+}
+.status-box p {
+    line-height: 18px;
+    font-size: 16px;
+    color: #2d3a45;
+    margin-bottom: 10px;
+}
+.status-box span {
+    line-height: 26px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #2d3a45;
+    margin-bottom: 18px;
+}
+.status-box span+span {
+    padding-left: 8px;
+    line-height: 26px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #2d3a45;
+}
 .freelancer{
 	width: 1152px;
 	height: 480px;
@@ -158,24 +245,22 @@ body{
 	margin: 50px 46px 50px 46px;
 }
 .process{
-	width: 1152px;
-	height: 750px;
-	background-color: white;
-	margin: 0 auto;
+	margin-top: 50px;
+    margin-bottom: 0\0;
+    background-color: #fff;
+    border-top: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
 }
 .process_div{
-	width: 1060px;
-	height: 200px;
-	background-color: #e6e6e6;
-	margin: 50px 46px 50px 46px;
+	margin: 0 auto;
+    width: 1060px;
 }
-
-
 .advantage_div{
-	width: 1060px;
-	height: 500px;
-	background-color: #c9c9c9;
-	margin: 50px 46px 50px 46px;
+	margin-left: auto;
+    margin-right: auto;
+    width: 1060px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 /************************************ 여기까지 바디 *************************************/
 

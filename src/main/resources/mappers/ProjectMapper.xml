@@ -49,6 +49,9 @@
       
       where state='done' and
       (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+      <if test="Cate == 1">
+      and category=#{project.category}
+      </if>
       <if test="result == 1">
        and detailCategory IN 
        <foreach collection="array" item="c" open="(" close=")" separator=",">
@@ -84,7 +87,9 @@
      
      <!-- List에서 뿌려주는 총 recruit 프로젝트 갯수 -->
      <select id="projectcount" parameterType="com.flu.project.ProjectDTO" resultType="int">
-     select count(nvl(projectNum, 0)) from project where state='recruit'
+
+     	select count(nvl(projectNum, 0)) from project where state='done'
+
      </select>
      
      
@@ -95,7 +100,7 @@
 	
 	<!-- List에서 뿌려주는 급구 리스트 카운트 -->
 	<select id="quickCount" parameterType="com.flu.util.ListInfo" resultType="int">
-		select count(nvl(projectNum,0)) from project where quick=1 and state='recruit'
+		select count(nvl(projectNum,0)) from project where quick=1 and state='done'
 	</select>
 
 
@@ -112,6 +117,48 @@
      (select * from project where email=#{member.email} and state=#{project.state} order by projectNum desc ) P) 
      where R between #{listInfo.startRow} and #{listInfo.lastRow}
      </select>
+
+	<!-- 지원자 리스트 -->
+	<select id="applicantList" parameterType="java.util.HashMap" resultType="com.flu.applicant.ApplicantDTO">
+		select a.* from applicant a inner join project p on a.projectnum = p.projectnum 
+			<where>
+  			a.projectnum in 
+  			<foreach collection="projectNumList" item="item" open="(" separator="," close=")">
+  			#{item.projectNum}
+  			</foreach>
+  			</where>
+	</select>
+	
+	<!-- 선택한 지원자의 지원한 프로젝트에서 이메일 리스트가져오기 -->
+	<select id="applicantEmailList" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select email from applicant where projectnum = #{projectNum}
+	</select>
+	
+	<!-- 선택받은 놈 업데이트 시켜주기 -->
+	<update id="applicantUpdateMeet" parameterType="java.util.Map">
+		update applicant set state='meet' where projectnum=#{projectNum} and email in 
+		<foreach collection="emailList" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!-- 선택한 프로젝트 상태 업데이트 -->
+	<update id="projectUpdateRecruit" parameterType="java.lang.Integer">
+		update project set state='recruit' where projectnum =#{projectNum}
+	</update>
+	
+	<!-- 지원자 계약금과 상태 업데이트 -->
+	<update id="applicantUpdateIng" parameterType="java.util.Map">
+		update applicant set state='ing' , pay = #{pay} where projectnum=#{dto.projectNum} and email =#{email}
+		
+	</update>
+	<!-- 계약완료된 프로젝트 업데이트 -->
+	<update id="projectUpdateIng" parameterType="com.flu.project.ProjectDTO">
+		update project set state='ing' , startdate=#{startDate} , finishdate =#{finishDate} , budget=${budget} where projectnum=#{projectNum}
+	</update>
+	<!-- meet인 지원자 리스트 -->
+	<select id="meetList" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select email from applicant where projectNum = #{projectNum}
+	</select>
 
 
 <!-- View에서 뿌려질 해당 프로젝트를 등록한 클라이언트에 대한 갯수들 -->
@@ -146,9 +193,9 @@
   
   <insert id="insert" parameterType="com.flu.project.ProjectDTO">
      insert into project (projectNum, category, detailCategory, name, period, startDate, budget, planState, contents, skill, finishDate, 
-     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date, del_Check) 
+     meetKind, exp, state, email, quick, fName, oName, addr_num, addr_main, addr_detail, reg_date, del_check) 
      values (project_seq.nextval, #{category}, #{detailCategory}, #{name}, #{period}, #{startDate}, #{budget}, #{planState}, #{contents}, #{skill}, 
-     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate, #{del_Check})
+     #{finishDate}, #{meetKind}, #{exp}, #{state}, #{email}, #{quick}, #{fName}, #{oName}, #{addr_num}, #{addr_main}, #{addr_detail}, sysdate, #{del_check})
   </insert>
   
   
@@ -169,9 +216,12 @@
   <delete id="delete" parameterType="java.lang.Integer">
      delete project where projectNum=#{projectNum}
   </delete>
- 
   
+  <update id="moreDateUpdate" parameterType="com.flu.project.ProjectDTO">
+  		update project set startDate=#{startDate}, finishDate=#{finishDate},state='done' where projectNum=#{projectNum}
+  </update>
   
+
   <!-- 프로젝트 판매를 등록 -->
   <insert id="insertSellProject" parameterType="com.flu.project.sell.PjSellDTO">
    	insert into pjsell (projectNum, name, price, contents, email) 
@@ -199,10 +249,44 @@
 	update project set state='finish' where projectNum=#{projectNum}
 </update>
 
+
+<!-- cancel Update -->
+
 <!-- 프로젝트 판매 pjsell에서 Num으로 데이터 가져오기 -->
 <select id="pjsellInfo" parameterType="int" resultType="com.flu.project.sell.PjSellDTO">
 	select * from pjsell where projectNum=#{projectNum}
 </select>
+
   
+
+  <!-- index에 뿌려질 등록된 프로젝트의 금액 -->
+  <select id="totalBudget" resultType="java.lang.Integer">
+  	select nvl(sum(budget), 0) from project
+  </select>
   
+  <!-- index에 뿌려질 등록된 프로젝트 리스트 ( 높은 금액순 ) 6개-->
+  <select id="indexProjectList" resultType="com.flu.project.ProjectDTO"> 
+  	select * from project order by budget desc
+  </select>
+
+  
+  <!-- 클라이언트가 완료 눌렀을 때, 프로젝트 state를 finish로 변환  -->
+  <update id="updateState" parameterType="com.flu.project.ProjectDTO">
+  	update project set state='finish' where projectNum=#{projectNum}
+  </update>
+  
+
+
+<!-- cancel Update -->
+
+<update id="projectCancelUpdate" parameterType="com.flu.project.ProjectDTO" >
+	update project set del_check=1 where projectNum=#{projectNum}
+</update>
+
+<!-- 채팅방 형성을 위한 ing방 갯수 구해오기 -->
+ <select id="roomCount" resultType="com.flu.project.ProjectDTO">
+ 	select * from project where state='ing' and del_check in(0,1)
+ </select>
+
+
   </mapper>

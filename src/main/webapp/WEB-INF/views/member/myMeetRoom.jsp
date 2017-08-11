@@ -49,100 +49,15 @@
 .page {
 	margin-left: auto;
     margin-right: auto;
-    width: 1080px;
+    width: 1152px;
+    margin-top: 30px;
 }
-.side-bar {
-	display: inline;
-    float: left;
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 250px;
-    margin-top: 50px;
-}
-.user-name-tag {
-	width: 250px;
-	height : 120px;
-    padding: 15px 15px 19px;
-    background-color: #ffffff;
-    border: solid 1px #dedede;
-    border-bottom-width: 2px;
-    border-radius: 2px;
-    margin-bottom: 15px;
-}
-.user-name-tag-heading {
-	margin: 0 auto 9px;
-    padding-left: 3px;
-    padding-bottom: 11px;
-    border-bottom: 1px solid #dedede;
-    text-align: left;
-    font-size: 16px;
-    color: #454545;
-    line-height: 19px;
-}
-.user-name-tag-body {
-	padding-left: 3px;
-    border-top: none;
-    background-color: #fff;
-}
-.user-img {
-	height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    float: left;
-    border: 1px solid #dedede;
-}
-.username {
-	display: block;
-    float: left;
-    margin: 0;
-    padding-left: 10px;
-    width: 165px;
-    font-weight: bold;
-    line-height: 25px;
-    font-size: 15px;
-}
-.profile-setting {
-	display: block;
-    float: left;
-    width: 165px;
-    margin: 0;
-    padding-left: 10px;
-    line-height: 25px;
-    font-size: 12px;
-    color: #2099bb;
-    text-decoration: none;
-}
-.side-bar .side-bar-nav ul {
-    list-style: none;
-    border: 1px solid #dedede;
-    border-radius: 3px;
-    border-bottom-width: 2px;
-    padding: 4px 8px;
-    background-color: #fff;
-}
-.side-bar .side-bar-nav ul li {
-    height: 48px;
-    padding: 4px 0;
-}
-.side-bar .side-bar-nav ul a:hover {
-    background-color: #66b3ff;
-    color: #fff;
-}
-.side-bar .side-bar-nav ul li a {
-    border-radius: 2px;
-    display: block;
-    padding: 10px 15px;
-    font-size: 14px;
-    color: #999;
-    width: 100%;
-    cursor: pointer;
-}
+
 .contents{
 	display: inline;
     float: left;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top : 50px;
     width: 790px;
 }
 .contents-header {
@@ -218,6 +133,69 @@
     margin: 10px 0;
     vertical-align: top;
 }
+/******************************** 왼쪽 메뉴 *******************************/
+.side{
+	float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 250px;
+}
+
+.freelancer_name{
+	background-color:white;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.freelancer_name > span:FIRST-CHILD{
+	font-size: 16px;
+	display: block;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #dedede;
+	font-weight: 700;
+	margin-bottom: 9px;
+	color: #454545;
+}
+.free_img_div{
+	width: 220px;
+	font-size: 17px;
+    color: #333333;
+    font-weight: bold;
+    text-align: center;
+    
+}
+.free_img_div img{
+	width: 216px;
+    height: 216px;
+    border: 1px solid #dedede;
+    border-radius: 10%;
+    
+}
+.free_img_div span{
+	margin-top: 20px;
+}
+
+.sidebar_menu ul{
+	border: 1px solid #dedede;
+    border-radius: 3px;
+    padding: 4px 8px;
+    background-color: white;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.sidebar_menu ul li{
+	height: 40px;
+    padding: 4px 0;
+}
+.sidebar_menu ul li a{
+	border-radius: 2px;
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #999;
+    line-height: 1.4;
+    
+}
+/******************************** 왼쪽 메뉴 *******************************/
 </style>
 </head>
 <body>
@@ -225,38 +203,25 @@
 	<section class="main_section">
 	<div class="page">
 		<div class="page_inner">
-			<div class="side-bar">
-					<div class="user-name-tag">
-							<c:choose>
-								<c:when test="${member.kind eq 'client'}">
-								<h3 class="user-name-tag-heading">클라이언트</h3>
-								</c:when>
-								<c:when test="${member.kind eq 'freelancer'}">
-								<h3 class="user-name-tag-heading">프리랜서</h3>
-								</c:when>
-							</c:choose>					
-						<div class="user-name-tag-body">
-						<c:choose>
-							<c:when test="${empty member.fProfileImage}">
-							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg">							
-							</c:when>
-							<c:when test="${not empty memeber.fProfileImage}">
-							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}">
-							</c:when>
-						</c:choose>	
-							<h4 class="username">${member.email}</h4>
-							<c:if test="${member.kind ne 'admin' }">
-							<a class="profile-setting"href="./member/personaldataView">기본 정보 수정</a>					
-							</c:if>
-						</div>
+			<div class="side">
+				<div class="freelancer_name">
+					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
+					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
+					<div class="free_img_div">
+						<c:if test="${empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
+						</c:if>
+						<c:if test="${not empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
+						</c:if>
+						<label style="display: block;"><span>${member.nickName}</span></label>
 					</div>
-
-					<div class="side-bar-nav">
-						<ul>
-							<li><a>예약현황</a></li>
-						</ul>
-					</div>
-				
+				</div>
+				<div class="sidebar_menu">
+					<ul>
+						<li><a class="menu" href="${pageContext.request.contextPath}/member/myMeetRoom" style="background-color: #446eab; color: white;">예약현황</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="contents">
 				<div class="contents-header">
@@ -271,7 +236,7 @@
 					</h3>
 				</div>
 				<div class="contents-inner">
-					<table class="reserve_list">
+					<table class="reserve_list" style="text-align: center;">
 						<tr class="reserve_header">
 							<td>예약자</td>
 							<td>방이름</td>

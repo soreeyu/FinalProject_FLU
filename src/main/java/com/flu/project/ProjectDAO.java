@@ -2,12 +2,14 @@ package com.flu.project;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.member.MemberDTO;
 import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
@@ -44,12 +46,26 @@ public class ProjectDAO {
 		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
 
 			System.out.println("projectDAO-projectList들어옴");
+			System.out.println("dao-category="+projectDTO.getCategory());
 			System.out.println("dao-list- arrange=="+listInfo.getArrange());
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("project", projectDTO);
 			map.put("arrange", listInfo.getArrange());
 			map.put("array", array);
+			
+			if(projectDTO.getCategory()==null){
+				System.out.println("==================");
+				System.out.println("category는 Null");
+				map.put("Cate", 0);
+			}else{
+				System.out.println("==================");
+				System.out.println("category는" + projectDTO.getCategory());
+				map.put("Cate", 1);
+			}
+			
+			
+			
 			if(array.size() == 0){
 				map.put("result", 0);
 				System.out.println("zz"+array.size());
@@ -115,6 +131,68 @@ public class ProjectDAO {
 			
 		}
 		
+		//지원자 목록
+		public List<ApplicantDTO> applicantList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
+			System.out.println("어플리켄트리스트 들어옴");
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("listInfo", listInfo);
+			map.put("member", memberDTO);
+			map.put("project", projectDTO);
+			
+			List<ProjectDTO> ar2 = sqlSession.selectList(NAMESPACE+"clientpjlist", map);
+			for(int i =0; i< ar2.size(); i++){
+				System.out.println("프로젝트 넘이 뭐야 :"+ar2.get(i).getProjectNum());
+			}
+			map.put("projectNumList", ar2);
+			List<ApplicantDTO> ar = sqlSession.selectList(NAMESPACE+"applicantList", map);
+			for(int i =0; i< ar.size(); i++){
+			System.out.println("프로젝트 넘: "+ar.get(i).getProjectNum());
+			System.out.println("지원자 이메일 : "+ar.get(i).getEmail());
+			}
+			return ar;
+		}
+		
+		//지원자 프로젝트의 이메일 리스트
+		public List<String> applicantEmailList(Integer projectNum){
+			
+			return sqlSession.selectList(NAMESPACE+"applicantEmailList", projectNum);
+		}
+		//선택한 지원자 업데이트
+		public int applicantUpdateMeet(Map<String, Object> map){
+			
+			return sqlSession.update(NAMESPACE+"applicantUpdateMeet", map);
+		}
+		//지원자 업데이트후 프로젝트 상태 업데이트
+		public int projectUpdateRecruit(Integer projectNum){
+			
+			return sqlSession.update(NAMESPACE+"projectUpdateRecruit", projectNum);
+		}
+		
+		
+		
+		//지원자 업데이트
+		public int applicantUpdateIng(Map<String, Object> map){
+			List<String> ar = (List<String>)map.get("pay");
+			List<String> ar2 = (List<String>)map.get("emailList");
+			for(int i = 0; i < ar.size(); i++){
+				System.out.println("DAO에서 페이 :"+ar.get(i));
+				map.put("pay", ar.get(i));
+				map.put("email", ar2.get(i));
+				sqlSession.update(NAMESPACE+"applicantUpdateIng", map);
+			}
+			
+			return 0;
+		}
+		//계약완료후 프로젝트 업데이트
+		public int projectUpdateIng(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"projectUpdateIng",projectDTO);
+		}
+		
+		public List<String> meetList(Integer projectNum){
+			return sqlSession.selectList(NAMESPACE+"meetList", projectNum);
+		}
+		
+		
 		public int sellingCount(ProjectDTO projectDTO){
 			System.out.println("sellingCount dao 들어옴");
 			
@@ -158,16 +236,27 @@ public class ProjectDAO {
 			
 			return sqlSession.selectList(NAMESPACE+"sellList", map);
 		}
+
+		//기간연장
+		public int moreDateUpdate(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"moreDateUpdate", projectDTO);
+		}
 		
+		//중단 요청
+		public int projectCancelUpdate(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"projectCancelUpdate", projectDTO);
+		}
+
 		//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
 		public MemberDTO projectClient(ProjectDTO projectDTO){
 			return sqlSession.selectOne(NAMESPACE+"projectClient", projectDTO);
 		}
 		
-		//프로젝트 리스트에서 뿌려주는 recruit상태의 프로젝트 갯수
+		//프로젝트 리스트에서 뿌려주는 done상태의 프로젝트 갯수
 		public int projectListcount(ProjectDTO projectDTO){
 			return sqlSession.selectOne(NAMESPACE+"projectcount", projectDTO);
 		}
+
 	
 		//프로젝트 리스트에서 뿌려주는 급구리스트
 		public List<ProjectDTO> quickList(ProjectDTO projectDTO, ListInfo listInfo){
@@ -189,6 +278,25 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
+		//index에 뿌려질 등록된 프로젝트 금액
+		public int totalBudget() throws Exception{
+			return sqlSession.selectOne(NAMESPACE+"totalBudget");
+		}
+		//index에 뿌려질 등록된 프로젝트 (금액 높은순으로 6개)
+		public List<ProjectDTO> indexProjectList() throws Exception{
+			return sqlSession.selectList(NAMESPACE+"indexProjectList");
+		}
+
 		
-		
+		//클라이언트가 완료 눌렀을 때, project상태 finish로 update하기
+		public int updateState(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"updateState", projectDTO);
+		}
+
+
+		//채팅방을 만들기 위하여 ing delcheck 0 인놈 불러오기
+		public List<ProjectDTO> roomCount(){
+			return sqlSession.selectList(NAMESPACE+"roomCount");
+		}
+
 }

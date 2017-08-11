@@ -5,15 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <style type="text/css">
 .main_section {
 	min-width: 1160px;
-	width: 1160px;
+	width: 1152px;
 	height: auto;
 	min-height: 2300px;
 	max-height: 2600px;
@@ -30,7 +30,7 @@
 }
 
 .right {
-	width: 900px;
+	width: 880px;
 	height: 100%;
 	float: right;
 }
@@ -59,11 +59,10 @@
 }
 
 .user_name>img {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	float: left;
-	border: 1px solid #dedede;
+	width: 216px;
+    height: 216px;
+    border: 1px solid #dedede;
+    border-radius: 10%
 }
 
 .user_name>span {
@@ -277,23 +276,116 @@
 #nextview{
 	cursor: pointer;
 }
+/******************************** 왼쪽 메뉴 *******************************/
+.side{
+	float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 250px;
+}
 
+.freelancer_name{
+	background-color:white;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+.freelancer_name > span:FIRST-CHILD{
+	font-size: 16px;
+	display: block;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #dedede;
+	font-weight: 700;
+	margin-bottom: 9px;
+	color: #454545;
+}
+.free_img_div{
+	width: 220px;
+	font-size: 17px;
+    color: #333333;
+    font-weight: bold;
+    text-align: center;
+    
+}
+.free_img_div img{
+	width: 216px;
+    height: 216px;
+    border: 1px solid #dedede;
+    border-radius: 10%;
+    
+}
+.free_img_div span{
+	margin-top: 20px;
+}
+
+.sidebar_menu ul{
+	border: 1px solid #dedede;
+    border-radius: 3px;
+    padding: 4px 8px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+.sidebar_menu ul li{
+	height: 40px;
+    padding: 4px 0;
+}
+.sidebar_menu ul li a{
+	border-radius: 2px;
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #999;
+    line-height: 1.4;
+    
+}
+/******************************** 왼쪽 메뉴 *******************************/
 </style>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp" />
 
 <section class="main_section">
-			<div class="left">
+
+			<div class="side">
+				<div class="freelancer_name">
+					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
+					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
+					<div class="free_img_div">
+						<c:if test="${empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
+						</c:if>
+						<c:if test="${not empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
+						</c:if>
+						<label style="display: block;"><span>${member.nickName}</span></label>
+					</div>
+				</div>
+				<div class="sidebar_menu">
+					<ul>
+						<li id="checkBTN"><a id="check">검수중인 프로젝트</a></li>
+						<li id="doneBTN"><a id="done">모집중인 프로젝트</a></li>
+						<li id="recruitBTN"><a id="recruit">모집 완료된 프로젝트</a></li>
+						<li id="ingBTN"><a id="ing">진행중인 프로젝트</a></li>
+						<li id="finishBTN"><a id="finish">완료된 프로젝트</a></li>
+						<li id="sellBTN"><a id="sell">판매중인 프로젝트</a></li>
+						<li id="failBTN"><a id="fail">실패된 프로젝트</a></li>
+						
+					</ul>
+				</div>
+			</div>
+			
+	<%-- 		<div class="left">
 				<div class="user">
 					<span>클라이언트</span>
 					<div class="user_name">
-						<img alt="프로필 사진"
-							src="${pageContext.request.contextPath}/resources/img/FLU.png">
-						<span>닉네임</span> <a><span>기본 정보 수정</span></a>
+						<c:if test="${empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
+						</c:if>
+						<c:if test="${not empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
+						</c:if>
+						<label style="display: block;"><span>${member.nickName}</span></label>
 					</div>
 				</div>
 				<div class="history">
-					
 						<p id="checkBTN">
 							<a id="check">검수중인 프로젝트</a>
 						</p>
@@ -309,18 +401,16 @@
 						<p id="finishBTN">
 							<a id="finish">완료된 프로젝트</a>
 						</p>
-					
 						<p id="sellBTN">
 							<a id="sell">판매중인 프로젝트</a>
 						</p>
 						<p id="failBTN">
 							<a id="fail">실패된 프로젝트</a>
-						</p>
-				
+						</p>			
 				</div>
 
 			</div>
-			
+			 --%>
 			
 			<div class="right">
 				<div class="title">
@@ -359,6 +449,8 @@ if(conState=='finish'){
 }
 /* project 첫화면 프로젝트 리스트 띄우기  */
 $.get("projectCheck?state=${conState}&curPage=1", function(data){
+	$("#check").css("background-color", "#446eab");
+	$("#check").css("color", "white");
 	$(".contents").html(data);
 }); 
 
@@ -366,9 +458,12 @@ $.get("projectCheck?state=${conState}&curPage=1", function(data){
 /* 검수중인 프로젝트 리스트 */
 $("#check").click(function() {
 	$.get("projectCheck?state=check&curPage=1", function(data){
+		
 		alert("검수중");
 		$("#t1").text("검수중인 프로젝트");
 		$("#t2").text("관리자의 승인을 기다리는 곳입니다.");
+		$(this).css("background-color", "#446eab");
+		$(this).css("color", "white");
 		$(".contents").html(data);
 	});
 
@@ -379,9 +474,13 @@ $("#done").click(function() {
 
 	$.get("projectCheck?state=done&curPage=1", function(data){
 		alert("모집중");
+		$("#check").css("background-color", "white");
+		$("#check").css("color", "#999");
 		$("#t1").text("모집중인 프로젝트");
 		$("#t2").text("프리랜서를 모집중인 프로젝트입니다.");
 		$(".contents").html(data); 
+		$("#done").css("background-color", "#446eab");
+		$("#done").css("color", "white");
 	});
 
 });
@@ -442,6 +541,8 @@ $("#fail").click(function() {
 	});
 
 });
+
+
 
 </script>
 <c:import url="/WEB-INF/views/temp/footer.jsp" />

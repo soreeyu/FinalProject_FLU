@@ -144,7 +144,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
+    background-color: #446eab;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -255,7 +255,7 @@
 
 
 #a{
-	background-color: #66b3ff;
+	background-color: #446eab;
 	color: white;
 }
 
@@ -374,6 +374,15 @@
 .eval_star{
 	margin-bottom: 10px;
 	text-align: center;
+}
+.no{
+	background-color: #dedede;
+}
+.notno{
+	background-color: #339bff;
+}
+.nono{
+	background-color: green;
 }
 
 
@@ -637,6 +646,7 @@ $(function(){
 	   var chart = new google.visualization.PieChart(document.getElementById('chart2'));
 	   chart.draw(data, options);
 	}
+    
     if(chart1 == 0 && chart2 ==0){
   		google.charts.setOnLoadCallback(drawChart2);
     }else{
@@ -659,14 +669,22 @@ $(function(){
 				<div class="contents_inner">
 					<section class="profile_title">
 						
-						<p><span>${memberDTO.nickName }</span><span class="availability">
+						<p><span>${memberDTO.nickName }</span>
 						<c:if test="${not empty freelancer.possibility }">
-						${freelancer.possibility }
+							<c:if test="${freelancer.possibility eq '활동가능' }">
+							<span  class="availability no">${freelancer.possibility }</span>
+							</c:if>
+							<c:if test="${freelancer.possibility eq '활동불가' }">
+							<span class="availability notno">${freelancer.possibility }</span>
+							</c:if>
+							<c:if test="${freelancer.possibility eq '협의필요' }">
+							<span class="availability nono">${freelancer.possibility }</span>
+							</c:if>
 						</c:if>
 						<c:if test="${empty freelancer.possibility }">
-						활동가능
+						<span class="availability">활동가능</span>
 						</c:if>
-						</span>
+						
 						<c:if test="${member.email eq email }">
 						<a href="myinfoView" >업데이트 하기</a>
 						</c:if>

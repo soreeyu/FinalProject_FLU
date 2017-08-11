@@ -24,7 +24,7 @@ import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
-import com.flu.util.AES256Util;
+//import com.flu.util.AES256Util;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -172,7 +172,7 @@ public class MemberController {
 				System.out.println("회원");
 				//관리자 로그인시 리턴하는 주소는 인덱스 myflu가 아님
 				if(memberDTO.getKind().equals("admin")){
-					return "index";
+					return "redirect:/";
 				}
 				return "redirect:/member/myflu";
 				
@@ -190,6 +190,25 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
+		//회원 탈퇴 비번확인
+		@RequestMapping(value="pwCheck")
+		@ResponseBody
+		public String pwCheck(MemberDTO memberDTO) throws Exception{
+			
+			return memberService.pwcheck(memberDTO);
+		}
+		
+		//회원 탈퇴
+		@RequestMapping(value="memberDelete")
+		public String memberDelte(MemberDTO memberDTO, HttpSession session) throws Exception{
+			int result =memberService.memberDelete(memberDTO);
+			
+			if(result > 0){
+				session.invalidate();
+			}
+			
+			return "redirect:/";
+		}
 		
 		//MY FLU
 		@RequestMapping(value="myflu")
@@ -207,10 +226,10 @@ public class MemberController {
 				List<ProjectDTO> far2 = memberService.memberProjectList_APP(((MemberDTO)session.getAttribute("member")).getEmail());
 				//완료한 프로젝트 List
 				List<ProjectDTO> far3 = memberService.memberProjectList_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
-				//진행중인 프로젝트 Count
-				int count1 = memberService.memberProjectCount_ING(((MemberDTO)session.getAttribute("member")).getEmail());
 				//지원한 프로젝트 Count
 				int count2 = memberService.memberProjectCount_APP(((MemberDTO)session.getAttribute("member")).getEmail());
+				//진행중인 프로젝트 Count
+				int count1 = memberService.memberProjectCount_ING(((MemberDTO)session.getAttribute("member")).getEmail());
 				//완료한 프로젝트 Count
 				int count3 = memberService.memberProjectCount_FIN(((MemberDTO)session.getAttribute("member")).getEmail());
 				//누적 완료 금액
@@ -260,7 +279,7 @@ public class MemberController {
 			MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
 			System.out.println("마이페이지 이메일 : "+email);
 			if(memberDTO.getKind().equals("client")){
-				model.setView(new RedirectView("/flu/member/clientmypage?email="+email));
+				model.setView(new RedirectView("/flu/member/client/mypage?email="+email));
 				return model;
 			}else{
 				model.setView(new RedirectView("/flu/member/freelancermypage?email="+email));
@@ -472,12 +491,15 @@ public class MemberController {
 				}
 				//계좌 등록/수정
 				@RequestMapping(value="accountInsert", method=RequestMethod.POST)
-				public String accountInsert(Model model, MemberDTO memberDTO, HttpSession session){
-					
+				public String accountInsert(Model model, MemberDTO memberDTO, HttpSession session) throws Exception{
+					alarmDTO = new AlarmDTO();
 					int result = memberService.accountInsert(memberDTO);
 					
 					if(result > 0){
 						session.setAttribute("member", memberService.memberView2(this.getEmail(session)));
+						alarmDTO.setEmail(memberDTO.getEmail());
+						alarmDTO.setContents("계좌 정보를 수정했습니다.");
+						alarmService.alarmInsert(alarmDTO);
 					}
 					
 					return "redirect:/member/accountView";

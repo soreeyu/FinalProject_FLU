@@ -2,6 +2,8 @@ package com.flu.client;
 
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -45,6 +47,7 @@ public class ClientDAO{
 	public Evaluation evaluationView(String email){
 		return sqlsession.selectOne(NAMESPACE+"evaluationView",email);
 	}
+	
 	
 	
 	

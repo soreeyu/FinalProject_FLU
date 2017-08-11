@@ -58,7 +58,7 @@
 						for(var i=0;i<count;i++){
 	        				$(".time").each(function(index) {
 	        					if(reserve_in[i]<=index && reserve_out[i]>=index){
-		        					$(this).css("background-color", "gray");       					
+		        					$(this).css("background-color", "black");       					
 	        					} 
 						})
 							
@@ -216,7 +216,7 @@
 section {
 	min-width : 1152px;
 	width : 60%;
-	height: 2000px;
+	height: 1700px;
 	margin : 0 auto;
 }
 
@@ -231,7 +231,7 @@ height : 380px;
 background-color : white;
 border:0px solid #555;
 color:#333;
-margin: 0 auto;
+padding: 40px;
 }
 
 div.ui-datepicker-header{
@@ -248,6 +248,7 @@ font-size:14px;
     text-align: center;
     font-size : 2.0em;
     height: 50px;;
+    color: #339bff;
 }
 .ui-datepicker-calendar > thead th {
 	color: #949494;
@@ -262,6 +263,12 @@ font-size:14px;
 
 .ui-datepicker-calendar > tbody td:last-child a { 
     COLOR: green; 
+}
+.ui-datepicker td span, .ui-datepicker td a {
+    display: block;
+    padding: 0.5em;
+    text-align: right;
+    text-decoration: none;
 }
 #reserve_time {
 	width : 100%;
@@ -278,12 +285,13 @@ font-size:14px;
     width: 100%;
     padding-bottom: 15px;
     padding-top: 2px;
-    border-bottom: 3px solid #704de4;
+    border-bottom: 3px solid #339bff;
 }
 .reserve_space{
 	display: table-cell;
     font-size: 18px;
     line-height: 18px;
+    text-align: center;
 }
 .option{
 	position: absolute;
@@ -298,7 +306,7 @@ font-size:14px;
 }
 .price_tit {
 	font-size: 18px;
-	color: #6d3afb;
+	color: #339bff;
 }
 .tit_unit {
 	font-size:12px;
@@ -386,6 +394,7 @@ font-size:14px;
 	left: 0;
 	top: 170;
 	background-color: "white";
+	border-radius: 10px;
 }
 .scroll_box{
 	background-color: #fff;
@@ -529,7 +538,7 @@ font-size:14px;
 
 	<!-- DB에 들어갈 내용은 아니고 업체의 간단한 정보확인용 뷰  -->
 	
-	<!-- 예약 주의사항 및 환불 규정 뷰-->
+	<!-- <!-- 예약 주의사항 및 환불 규정 뷰
 	 <div class="heading">
 		<h3>예약시 주의사항</h3>
 	</div>
@@ -541,7 +550,7 @@ font-size:14px;
 			<li><span class="num">4</span> 당일 예약을 원하시는 분은 카톡 및 전화주시면 이용가능하신 룸이 있는지 확인 가능하십니다.</li>
 			<li><span class="num">5</span> 중복 예약으로 인해 부득이하게 취소되어야 할 경우 바로연락드리며&#44; 100% 환불해 드립니다. (저녁 9시 이후 결제 시 중복 예약이 확인 될 경우 다음날 아침에연락드립니다.)</li>
 		</ol>
-	</div>
+	</div> --> 
 		
 		
 		

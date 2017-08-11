@@ -1,13 +1,15 @@
 package com.flu.project;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
+import com.flu.applicant.ApplicantDTO;
 import com.flu.member.MemberDTO;
 import com.flu.project.sell.PjSellDTO;
 import com.flu.util.ListInfo;
@@ -30,6 +32,10 @@ public class ProjectService {
 		return projectDAO.projectUpdate(projectDTO);
 	}
 	
+	public int projectCancelUpdate(ProjectDTO projectDTO){
+		return projectDAO.projectCancelUpdate(projectDTO);
+	}
+	
 	//project delete
 	public int projectDelete(int num){
 		return projectDAO.projectDelete(num);
@@ -41,8 +47,7 @@ public class ProjectService {
 		System.out.println("num=="+projectDTO.getProjectNum());
 		
 		projectDTO = projectDAO.projectView(projectDTO.getProjectNum());
-		
-		
+
 		projectDTO.setSkills(projectDTO.getSkill().split(","));
 				
 		return projectDTO;
@@ -51,10 +56,11 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
 		
-		System.out.println("projectSkillparsing");
+		
 		
 		System.out.println("service-list-search==="+listInfo.getSearch());
 		System.out.println("projectService-projectList");
+		System.out.println("service-category="+projectDTO.getCategory());
 		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
 
 		
@@ -92,11 +98,15 @@ public class ProjectService {
 			}
 			System.out.println(ar.get(i).getSkills());
 		}
-		
 
-	
 		return ar;
 	}
+	
+	public List<ApplicantDTO> applicantList(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
+			
+		return projectDAO.applicantList(listInfo, memberDTO, projectDTO);
+	}
+	
 	
 	//Client ProjectList의 Count
 	public int clientPjCount(ListInfo listInfo, MemberDTO memberDTO, ProjectDTO projectDTO){
@@ -145,6 +155,12 @@ public class ProjectService {
 	}
 	
 
+	//기간연장
+	public int moreDateUpdate(ProjectDTO projectDTO){
+		return projectDAO.moreDateUpdate(projectDTO);
+	}
+
+
 	//View에서 해당프로젝트에서 뿌려주는 프로젝트등록자 img
 	public MemberDTO projectClient(ProjectDTO projectDTO){
 		return projectDAO.projectClient(projectDTO);
@@ -191,6 +207,69 @@ public class ProjectService {
 	public int cancleProjectState(PjSellDTO pjSellDTO){
 		return projectDAO.cancleProjectState(pjSellDTO);
 	}
+
+	//채팅방 만들기 위한 
+	public List<ProjectDTO> roomCount(){
+		return projectDAO.roomCount();
+	}
+
 	
+
 	
+	//지원자 선택 서비스
+	public int applicantCheck(String paycheck, Integer projectNum){
+		List<String> ar = projectDAO.applicantEmailList(projectNum);
+		projectDAO.projectUpdateRecruit(projectNum);
+		List<String> emailList = new ArrayList<String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(ar.size() > 0){
+		for(int i=0; i<ar.size(); i++){
+			System.out.println("이메일 목록 :"+ar.get(i));
+			if(paycheck.contains(ar.get(i))){
+				emailList.add(ar.get(i));
+			}
+		}
+		}
+		System.out.println("선택받은 놈수:"+emailList.size());
+		map.put("emailList", emailList);
+		map.put("projectNum", projectNum);
+		return projectDAO.applicantUpdateMeet(map);
+	}
+	//계약 완료 서비스(모집완료에서 금액,시작일 입력)
+	public int applicantMeet(String pay , ProjectDTO projectDTO){
+		List<String> ar = projectDAO.meetList(projectDTO.getProjectNum());
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> payList2 = new ArrayList<String>();
+		String [] payList = pay.split(",");
+		int budget = 0;
+		for(String pay1 : payList){
+			System.out.println("페이 :"+pay1);
+			payList2.add(pay1);
+			budget = budget+Integer.parseInt(pay1);
+		}
+		projectDTO.setBudget(budget);
+		projectDAO.projectUpdateIng(projectDTO);
+		map.put("pay", payList2);
+		map.put("emailList", ar);
+		map.put("dto", projectDTO);
+		
+		
+		return projectDAO.applicantUpdateIng(map);
+	}
+	
+
+	//index에 뿌려질 등록된 프로젝트 금액
+	public int totalBudget() throws Exception{
+		return projectDAO.totalBudget();
+	}
+	//index에 뿌려질 등록된 프로젝트리스트( 높은 금액순)
+	public List<ProjectDTO> indexProjectList () throws Exception{
+		return projectDAO.indexProjectList();
+	}
+
+	//클라이언트가 완료 눌렀을 때, project상태 finish로 update하기
+	public int updateState(ProjectDTO projectDTO){
+		return projectDAO.updateState(projectDTO);
+	}
+
 }

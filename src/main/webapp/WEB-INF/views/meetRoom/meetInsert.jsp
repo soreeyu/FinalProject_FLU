@@ -57,7 +57,7 @@
 	      var output = document.getElementById('output');
 	      output.src = dataURL;
 	    };
-	    reader.readAsDataURL(input.files[0]);
+
 		
 	})
 	
@@ -431,6 +431,7 @@ input[type=text]{
 	</c:if>
 	<c:if test="${not empty dto.num }">
 	<form action="meetUpdate" method="post" enctype="multipart/form-data" id="frm">
+	<input type="hidden" value="${dto.num}" name="num">
 	</c:if>
 	<div class="meetRoom_name">
 		
@@ -527,7 +528,7 @@ input[type=text]{
 				<div class="btn_box " >
 					<label class="btn">
 						<div>파일첨부</div>
-						<input type="file" name="file"  class="meetRoomInfo"style="display: none;" id="imfile" accept='image/*'>
+						<input type="file" name="file" class="meetRoomInfo"style="display: none;" id="imfile" accept='image/*'>
 					</label>	
 				</div>	
 			</div>

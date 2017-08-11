@@ -16,7 +16,7 @@
 
        select * from 
        (select rownum R, P.* from
-       (select * from reply where projectNum=#{project.projectNum} order by num desc) P)
+       (select * from reply where projectNum=#{project.projectNum} order by ref desc, step asc) P)
         where R between #{listInfo.startRow} and #{listInfo.lastRow}
 
   	</select>
@@ -33,11 +33,21 @@ values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, #{ref
 <select id="checkReply" parameterType="com.flu.reply.ReplyDTO" resultType="com.flu.reply.ReplyDTO">
 	select * from reply where num=#{num}
 </select>
-<!-- 우선 ref에 부모의 num이 들어가게하자 -->
-<insert id="insertRef" parameterType="com.flu.reply.ReplyDTO">
+
+<!-- 조건있으면 댓글 업데이트하기 -->
+<!-- #{ref}랑 #{step}은 부모의 ref와 step -->
+<update id="updateReply" parameterType="com.flu.reply.ReplyDTO">
+	update reply set step=step+1 where ref=#{ref} and step>#{step}
+</update>
+
+<!-- 새 답글 등록하기 -->
+<insert id="insertReply" parameterType="java.util.HashMap">
 	insert into reply (num, writer, contents, reg_date, projectNum, ref, step, depth, replyChk)
-	values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, #{ref}, 0,0, 'false')
-</insert>
+	values (reply_seq.nextval, #{reply.writer}, #{reply.contents}, sysdate, #{reply.projectNum}, #{parentreply.ref}, #{parentreply.step}+1, #{parentreply.depth}+1, #{reply.replyChk} )
+</insert> 
+
+
+ 
  
   <update id="update" parameterType="com.flu.reply.ReplyDTO">
   	update reply set contents=#{contents}, reg_date=sysdate where num=#{num}
@@ -48,9 +58,4 @@ values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, #{ref
   	delete reply where num=#{num}
   </delete>
  
- <insert id="replyinsert" parameterType="com.flu.reply.ReplyDTO">
- 	insert into reply (num, writer,contents,reg_date,projectNum,ref,step,depth,replyChk) 
-	values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum} , #{ref},#{step},#{depth},#{replyChk})
- </insert>
-  
   </mapper>
