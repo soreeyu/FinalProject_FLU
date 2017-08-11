@@ -249,6 +249,10 @@
 	box-shadow: 3px 3px 3px #aaaaaa;
 }
 
+.project-unit:hover{
+	box-shadow: box-shadow: 2px 2px 2px #00b386;
+}
+
 .project-head {
 	height: 27px;
 	margin-bottom: 5px;
@@ -489,6 +493,7 @@
     text-align: center;
     line-height: 20px;
 }
+
 #design-btn{
 	color: #666;
     font-size: 13px;
@@ -497,6 +502,19 @@
     text-align: center;
     line-height: 20px;
 }
+#searchBtn{
+	background-color: rgb(68, 110, 171);
+    color: white;
+    font-size: 14px;
+    width: 80px;
+    height: 28px;
+    border: none;
+}
+#searchBtn:hover{
+	box-shadow: 2px 2px 2px #aaaaaa;
+}
+	
+
 </style>
 
 </head>

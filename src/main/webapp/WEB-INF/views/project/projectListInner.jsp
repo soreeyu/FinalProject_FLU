@@ -8,6 +8,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<style type="text/css">
+.project-unit:hover{
+	box-shadow: box-shadow: 2px 2px 2px #00b386;
+}
+</style>
 
 </head>
 <body>

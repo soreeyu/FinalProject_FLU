@@ -192,6 +192,7 @@ label{
    display: block;
    float: left;
    margin-right: 5px;
+   font-size: 14px;
 }
 .category-wrapper{
    width: 530px;
@@ -768,7 +769,7 @@ alert(finishYear); */
 
 if(type=='update'){
 
-<<<<<<< HEAD
+
 	/* 기술 Check해놓는거  */
 	var dtoSkill='${dto.skill}';
 	var skillSize = '${skillSize}';
@@ -787,7 +788,8 @@ if(type=='update'){
 		
 	}  /* for문 끝 */
 		
-}
+}/* update끝 */
+
 	if(type=='update'){
 		
 	var dtoState = '${dto.planState}';
@@ -849,162 +851,80 @@ if(type=='update'){
 		 
 		 $("#finishDate").val('20'+finishYear+"-"+finishMonth+"-"+finishDay);
 	 
-	  	 
+	}
 
-	  else if(document.frm.fileName.value==""){
-		alert("File을 선택해주세요");
-	}else if(document.frm.finishDate.value==""){
-		alert("마감일을 선택해주세요");
-	}else if(document.frm.addr_main.value==""){
-		alert("주소를 입력해주세요");
-	}else if(document.frm.startDate.value==""){
-		alert("시작일을 선택해주세요");
-	}else if(document.frm.exp.value==""){
-		alert("매니징 경험을 선택해주세요");
-	}else if(document.frm.quick.value==""){
-		alert("급구 여부를 선택해주세요");
-	} else if(document.frm.finishDate.value!=""){
-		var finishDate = $("#finishDate").val();
-		 alert("finishDate="+finishDate); 
-		 var finish = new Date(finishDate);
-		 var today = new Date();
-		 alert("today="+today);
-		 var left = finish.getTime()-today.getTime();
-		 alert(left);
-		 var leftDate = Math.ceil(left/(24*60*60*1000));
-		 alert("leftDate="+leftDate);
-		 if(leftDate<7){
-			 alert("마감일은 최소 1주일입니다.");
-			 
-			 
-		 }else{
-			 alert("마감일 괜춘");
-			 if(document.frm.startDate.value!=""){
-				 var startDate = $("#startDate").val();
-				 alert("startDate="+startDate);
-				 var start = new Date(startDate);
+
+		 function check_submit() {
+			
+
+			
+			alert("btn");
+			if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
+				alert("옵션 선택좀");
+			} else if(document.frm.name.value==""){
+				alert("제목을 입력하세요");
+			}else if(document.frm.period.value==""){
+				alert("기간을 입력하세요");
+			}else if(document.frm.budget.value==""){
+				alert("예상금액을 입력하세요");
+			}else if(document.frm.planState.value==""){
+				alert("기획상태를 입력하세요");
+			}else if(document.frm.contents.value==""){
+				alert("내용을 입력하세요");
+			} 
+			  else if(document.frm.fileName.value==""){
+				alert("File을 선택해주세요");
+			}else if(document.frm.finishDate.value==""){
+				alert("마감일을 선택해주세요");
+			}else if(document.frm.addr_main.value==""){
+				alert("주소를 입력해주세요");
+			}else if(document.frm.startDate.value==""){
+				alert("시작일을 선택해주세요");
+			}else if(document.frm.exp.value==""){
+				alert("매니징 경험을 선택해주세요");
+			}else if(document.frm.quick.value==""){
+				alert("급구 여부를 선택해주세요");
+			} else if(document.frm.finishDate.value!=""){
+				var finishDate = $("#finishDate").val();
+				 alert("finishDate="+finishDate); 
+				 var finish = new Date(finishDate);
+				 var today = new Date();
 				 alert("today="+today);
-				 var lef = start.getTime()-finish.getTime();
-				 alert(lef);
-				 var lefDate = Math.ceil(lef/(24*60*60*1000));
-				 alert("시작일-마감일="+lefDate);
-				 if(lefDate<7){
-					 alert("시작일은 마감일 이후 최소 1주일입니다.");
+				 var left = finish.getTime()-today.getTime();
+				 alert(left);
+				 var leftDate = Math.ceil(left/(24*60*60*1000));
+				 alert("leftDate="+leftDate);
+				 if(leftDate<7){
+					 alert("마감일은 최소 1주일입니다.");
+					 
+					 
 				 }else{
-					 alert("시작일 적당");
-					 document.frm.submit();
+					 alert("마감일 괜춘");
+					 if(document.frm.startDate.value!=""){
+						 var startDate = $("#startDate").val();
+						 alert("startDate="+startDate);
+						 var start = new Date(startDate);
+						 alert("today="+today);
+						 var lef = start.getTime()-finish.getTime();
+						 alert(lef);
+						 var lefDate = Math.ceil(lef/(24*60*60*1000));
+						 alert("시작일-마감일="+lefDate);
+						 if(lefDate<7){
+							 alert("시작일은 마감일 이후 최소 1주일입니다.");
+						 }else{
+							 alert("시작일 적당");
+							 document.frm.submit();
+						 }
+					 }
 				 }
-			 }
-		 }
 
 
 	}
 	
-	
-	
-=======
-   /* 기술 Check해놓는거  */
-   var dtoSkill='${dto.skill}';
-   var skillSize = '${skillSize}';
-   alert("skillSize="+skillSize);
-   var skills = '${skills}';
-    skillSize = skillSize*1+1;
-
-     for(var i=1;i<skillSize;i++){
-      var skil = dtoSkill.split(",");
-      
-      $(".chk").each(function() {
-         if(skil[i-1]==$(this).val()){
-            $(this).prop("checked", true);
-         }
-      });
-      
-   }  /* for문 끝 */
-      
-}
-   if(type=='update'){
-      
-   var dtoState = '${dto.planState}';
-   alert("dtoState="+dtoState);
-   
-   $(".planState").each(function() {
-      if(dtoState == $(this).val()){
-         
-      $(this).prop("checked", true);
-      }
-   });
-   
-   var dtoMeet = '${dto.meetKind}';
-   alert("dtoMeet="+dtoMeet);
-   
-   $(".meetKind").prop("selected", dtoMeet);
-   /* check인가?... */
-         
-         
-   var dtoExp = '${dto.exp}';
-   alert("dtoExp="+dtoExp);
-   
-   $(".exp").each(function() {
-      if(dtoExp==$(this).val()){
-         $(this).prop("checked", true);
-      }
-   });
-   
-   var dtoQuick = '${dto.quick}';
-   alert("dtoQuick="+dtoQuick);
-   
-   $(".quick").each(function() {
-      if(dtoQuick==$(this).val()){
-         $(this).prop("checked", true);
-      }
-   });
-
-   var dtoStart = '${dto.startDate}';
-   alert("dtoStart="+dtoStart);
-
-    var startYear = dtoStart.substr(2, 2);
-    var startMonth = dtoStart.substr(5,2);
-    var startDay = dtoStart.substr(8,2);
-
-    
-    $("#startDate").val('20'+startYear+"-"+startMonth+"-"+startDay);
-    
-    
-    var dtoFinish = '${dto.finishDate}';
-      alert("dtoFinish="+dtoFinish);
-
-       var finishYear = dtoFinish.substr(2, 2);
-       var finishMonth = dtoFinish.substr(5,2);
-       var finishDay = dtoFinish.substr(8,2);
-       alert(startDay);
-       alert(startMonth);
-       alert(startYear);    
-       
-       $("#finishDate").val('20'+finishYear+"-"+finishMonth+"-"+finishDay);
-    
-         
-    
-   }
-   
-   
-   
->>>>>>> ParkJunHo3
 
 
 
 
-/*  //전송버튼 클릭이벤트
- $("#savebutton").click(function(){
-     //id가 smarteditor인 textarea에 에디터에서 대입
-     editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-      
-     // 이부분에 에디터 validation 검증
-      
-     //폼 submit
-     $("#frm").submit();
- })
-
- */
 
 
 /* 옵션 처리하는 부분 */
