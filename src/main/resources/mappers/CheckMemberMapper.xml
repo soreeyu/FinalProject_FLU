@@ -13,7 +13,29 @@
   	</insert>
   	
   	<select id="clientList" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.util.ListInfo">
-  		select * from checkmember A, member B where A.email=B.email and B.kind='client' order by reg_date asc
+  		select * from (select C.*,rownum R from 
+  		(select A.email,B.type,B.name,B.authenticstate,B.kind from checkmember A, member B 
+ 	
+ 	<choose>
+ 		<when test="search!=null">
+ 			<trim prefix="where" prefixOverrides="and || or">
+  			 <if test="kind=='name'">
+	  		   B.name like '%' || #{search} || '%'
+	  		 </if>
+	  		 <if test="kind=='email'">
+	  		   B.email like '%' || #{search} || '%'
+	  		 </if>
+  			 </trim>
+  			 and B.type like '%' || #{type} || '%'
+  			 and A.email=B.email and B.kind='client' order by A.reg_date asc) C)
+  			 where R between #{startRow} and #{lastRow}  			 
+ 		</when>
+ 		<otherwise>
+ 			where A.email=B.email and B.kind='client' order by A.reg_date asc) C)
+  			where R between #{startRow} and #{lastRow} 
+ 		</otherwise>
+ 	</choose>
+ 
   	</select>
   	
   	<select id="freelancerList" resultType="com.flu.checkMember.CheckMemberViewDTO" parameterType="com.flu.util.ListInfo">
@@ -32,6 +54,27 @@
   	<delete id="delete" parameterType="java.lang.String">
   		delete from checkmember where email=#{email}
   	</delete>
+  	
+  	<select id="clientCount" parameterType="com.flu.util.ListInfo" resultType="java.lang.Integer">
+		select count(A.email) count from checkmember A, member B 
+ 	<choose>
+ 		<when test="search!=null">
+ 			<trim prefix="where" prefixOverrides="and || or">
+  			 <if test="kind=='name'">
+	  		   B.name like '%' || #{search} || '%'
+	  		 </if>
+	  		 <if test="kind=='email'">
+	  		   B.email like '%' || #{search} || '%'
+	  		 </if>
+  			 </trim>
+  			 and B.type like '%' || #{type} || '%'
+  			 and A.email=B.email and B.kind='client' order by A.reg_date asc
+ 		</when>
+ 		<otherwise>
+ 			where A.email=B.email and B.kind='client' order by A.reg_date asc
+ 		</otherwise>
+ 	</choose>
+  	</select>
 
  
   </mapper>

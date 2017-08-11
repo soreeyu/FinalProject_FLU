@@ -20,6 +20,7 @@ import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.checkMember.CheckMemberDTO;
 import com.flu.checkMember.CheckMemberService;
+import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
@@ -87,8 +88,16 @@ public class CheckMemberController {
 	//클라이언트 리스트 뿌려오기
 	@RequestMapping(value="checkMemberClientList")
 	public String clientlist(ListInfo listInfo, Model model){
-		model.addAttribute("list",checkMemberService.clientList(listInfo)).addAttribute("board", "Client");
+		System.out.println(listInfo.getType());
+		System.out.println(listInfo.getSearch());
+		System.out.println(listInfo.getKind());
 		
+		List<CheckMemberViewDTO> list = checkMemberService.clientList(listInfo);
+		
+		model.addAttribute("list",list).addAttribute("board", "Client").addAttribute("listInfo", listInfo);
+		
+		
+
 		return "checkMember/checkMemberList";
 	}
 	

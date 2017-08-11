@@ -152,6 +152,155 @@
 #detail {
 	width: 120px;
 }
+
+
+.tavle{
+
+	width: 750px;
+	height: 100%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+table{
+
+width: 100%;
+
+}
+
+thead tr td{
+	
+	height: 30px;
+	font-size: 1.0em;
+	font-weight: bold;
+	color: gb(85, 85, 85);
+	text-align:  center;
+	line-height: 25px;
+	border-bottom: 2px solid #005580;
+	
+}
+
+
+.yui .tbody_td1{
+	
+	width: 15%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+	
+}
+
+.yui .tbody_td2{
+	
+	width: 35%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td3{
+	
+	width: 25%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+.yui .tbody_td4{
+	
+	width: 25%;
+	font-size: 0.8em;
+	height: 30px;
+	line-height: 25px;
+	text-align:  center;
+	border-bottom: 0.5px solid #d0e2e2;
+
+}
+
+
+.label{
+    display: inline;
+    padding: .2em .6em .2em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .2em;
+    background-color: #00b8e6;
+}
+
+.select_kind{
+
+    width: 70px;
+    height: 30px;
+    border: 1px solid rgb(203, 203, 180);
+    background-color: rgb(245, 245, 240);
+    border-radius: 0.1px;
+
+}
+
+#search{
+
+    width: 200px;
+    height: 27px;
+    border: 1px solid rgb(203, 203, 180);
+    background-color: rgb(245, 245, 240);
+    border-radius: 0.1px;
+
+}
+
+#btn{
+
+width: 80px;
+height: 30px;
+border: 1px solid #2099bb;
+background-color: #339bff;
+color: white;
+border-radius: 3px;
+
+}
+
+.search_form{
+
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #dedede;
+	
+}
+
+
+.search_form1{
+	
+	width: 280px;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	
+}
+
+.search_form2{
+
+	width: 370px;
+	height: 30px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+
 </style>
 <script type="text/javascript">
 
@@ -172,23 +321,39 @@
 		 	$('#clientBTN').children("#client").css('color', 'black');
 		}
 		
+	$('#btn').click(function() {
 		
-	$('select[name=category]').change(function() {
-		
-		var i = $(this).val();
-		
-		if(i=='개발'){
-			$('#result').html('<select id="detail" name="detailCategory"><option value="">전체</option><option value="웹">웹</option><option value="어플리케이션">어플리케이션</option><option value="워드프레스">워드프레스</option><option value="퍼블리싱">퍼블리싱</option><option value="일반소프트웨어">일반소프트웨어</option><option value="쇼핑몰">쇼핑몰</option><option value="게임">게임</option><option value="임베디드">임베디드</option><option value="기타">기타</option></select>');
+		if(board=='Client'){
+			
+			$('#frm').attr('action',"./checkMemberClientList");
+			$('#frm').submit();
+			
 		}else{
-			$('#result').html('<select id="detail" name="detailCategory"><option value="">전체</option><option value="웹">웹</option><option value="어플리케이션">어플리케이션</option><option value="제품">제품</option><option value="프레젠테이션">프레젠테이션</option><option value="인쇄물">인쇄물</option><option value="쇼핑몰">쇼핑몰</option><option value="로고">로고</option><option value="그래픽">그래픽</option><option value="영상">영상</option><option value="게임">게임</option><option value="기타">기타</option></select>');
+			
+			$('#frm').attr('action',"./checkMemberFreelancerList");
+			$('#frm').submit();
+			
 		}
 		
 		
 	});
 	
+	
+	//검색 결과
+	
+		$("select[name=kind] option").each(function() {
+			if ($(this).val() == "${listInfo.kind}") {
+				$(this).attr("selected", "selected"); // attr적용안될경우 prop으로 
+			}
+		});
 
-
-
+		
+		$("input[name=type]").each(function() {
+			if ($(this).val() == "${listInfo.type}") {
+				$(this).attr("checked", "checked");
+			}
+		}); 
+		
 });
 	
 	
@@ -236,61 +401,50 @@
 
 				<div class="contents">
 					<form id="frm" action="">
-						<div>
-							<select name="category" id="detail">
-								<option value="">전체</option>
-								<option value="개발">개발</option>
-								<option value="디자인">디자인</option>
-							</select>
-
-							<div id="result">
-								<select name="detailCategory" id="detail"><option
-										value="">전체</option>
-									<option value="웹">웹</option>
-									<option value="어플리케이션">어플리케이션</option>
-									<option value="워드프레스">워드프레스</option>
-									<option value="퍼블리싱">퍼블리싱</option>
-									<option value="일반소프트웨어">일반소프트웨어</option>
-									<option value="쇼핑몰">쇼핑몰</option>
-									<option value="게임">게임</option>
-									<option value="임베디드">임베디드</option>
-									<option value="기타">기타</option></select>
+						<div class="search_form">
+							<div class="search_form1">
+								<span class="label">전체</span><input type="radio" value="" name="type" checked="checked">
+								<span class="label">개인</span><input type="radio" value="개인" name="type">
+								<span class="label">팀</span><input type="radio" value="팀" name="type" >
+								<span class="label">사업자</span><input type="radio" value="사업자" name="type" >
 							</div>
-
+							<div class="search_form2">
+								<select name="kind" class="select_kind">
+									<option value="name">이름</option>
+									<option value="email">이메일</option>
+								</select>
+								<input type="text" name="search" id="search" value="${listInfo.search}">
+								<input type="button" value="검색" id="btn">
+							</div>
 						</div>
-
-						<div>
-							<select name="kind">
-								<option value="name">제목</option>
-								<option value="email">담당자</option>
-								<option value="contents">내용</option>
-							</select> <input type="text" name="search" id="search"
-								value="${listInfo.search}"><input type="button"
-								value="검색" id="btn">
-						</div>
-
 					</form>
 
-					<table>
+			<div class="tavle">
+					<table class="yui">
+					<thead>
 						<tr>
-							<td>name</td>
-							<td>email</td>
-							<td>state</td>
+							<td class="td1">형태</td>
+							<td class="td3">E-mail</td>
+							<td class="td2">이름</td>
+							<td class="td4">상태</td>
 						</tr>
-
-
+					</thead>
+					<tbody>
 						<c:forEach items="${list}" var="i">
 							<tr>
-								<td>${i.name }</td>
-								<td><a href="../member/personaldataView?email=${i.email}">${i.email }</a></td>
-								<td>
+								<td class="tbody_td1">${i.type }</td>
+								<td class="tbody_td2"><a href="../member/personaldataView?email=${i.email}">${i.email }</a></td>
+								<td class="tbody_td3"><a href="../member/personaldataView?email=${i.email}">${i.name }</a></td>
+								<td class="tbody_td4">
 								<c:if test="${i.authenticState=='1'}">신원미상</c:if>
 								<c:if test="${i.authenticState=='2'}">신원확인완료</c:if>
 								</td>
 							</tr>
 						</c:forEach>
-
+					</tbody>
 					</table>
+			</div>
+
 				</div>
 
 			</article>
