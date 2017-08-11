@@ -30,8 +30,8 @@ public class ApplicantService {
 	}
 	
 
-	public Integer checkApp(String email){
-		return applicantDAO.checkApp(email);
+	public Integer checkApp(ApplicantDTO applicantDTO){
+		return applicantDAO.checkApp(applicantDTO);
 	}
 	
 

@@ -909,7 +909,8 @@ background-color: white;
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
             <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
-          </c:if>
+            <div class="schedule-btn" id="">프로젝트 완료</div>
+          	</c:if>
          
              </div>
             </c:if>
@@ -1314,7 +1315,7 @@ var testId = "";
    				
    				var scheduleNum = data.scheduleMainDTO.scheduleNum;
    				alert("ajax 성공시 scheduleNum(있을경우) = "+scheduleNum);
-   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum;
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+scheduleNum+"&projectNum="+projectNum;
    			}else{
    				alert("스케줄 생성 오류");
    				location.href = $(location).attr('href');

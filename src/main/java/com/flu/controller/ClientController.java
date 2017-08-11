@@ -96,9 +96,15 @@ public class ClientController {
 	}
 	//클라이언트 정보 수정
 		@RequestMapping(value="clientUpdate", method=RequestMethod.POST)
-		public String clientUpdate(ClientDTO clientDTO){
-			
-			clientService.clientUpdate(clientDTO);
+		public String clientUpdate(ClientDTO clientDTO) throws Exception{
+			int result = clientService.clientUpdate(clientDTO);
+			if(result>0){
+				alarmDTO = new AlarmDTO();
+				alarmDTO.setEmail(clientDTO.getEmail());
+				alarmDTO.setContents("정보를 수정하셨습니다.");
+				alarmService.alarmInsert(alarmDTO);
+				
+			}
 			
 			
 			return "redirect:/member/client/mypage";

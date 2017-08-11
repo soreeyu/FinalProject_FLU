@@ -6,6 +6,7 @@ public class ApplicantDTO {
 	private String email;
 	private String state;
 	private Integer pay;
+	
 	public Integer getProjectNum() {
 		return projectNum;
 	}

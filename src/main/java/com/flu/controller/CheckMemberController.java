@@ -72,7 +72,7 @@ public class CheckMemberController {
 			
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
-			alarmDTO.setContents("신원확인 신청 하셨습니다. 관리자의 승인을 기다려 주세요.");
+			alarmDTO.setContents("신원확인 신청 성공 관리자의 승인을 기다려 주세요.");
 			alarmService.alarmInsert(alarmDTO);
 			
 			model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -118,7 +118,7 @@ public class CheckMemberController {
 		checkMemberService.update(email);
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(email);
-		alarmDTO.setContents("신원확인이 완료 되었습니다. 프로젝트 등록 및 지원이 가능합니다.");
+		alarmDTO.setContents("신원확인이 완료 되었습니다.");
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 

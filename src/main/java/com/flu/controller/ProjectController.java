@@ -325,7 +325,7 @@ public class ProjectController {
          System.out.println("update success");
          alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(projectDTO.getEmail());
-			alarmDTO.setContents("프로젝트의 정보를 성공적으로 수정하였습니다.");
+			alarmDTO.setContents("프로젝트의 정보를 수정하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
       }
@@ -451,7 +451,7 @@ public class ProjectController {
    
    //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
    @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)
-   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd, ProjectDTO projectDTO){
+   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd, ProjectDTO projectDTO) throws Exception{
    		System.out.println("pjsellInsert-controller");
    		
 
@@ -466,6 +466,10 @@ public class ProjectController {
    			updateResult = projectService.updateProjectState(pjSellDTO);
    			if(updateResult==1){
    				System.out.println("프로젝트 상태 수정 성공");
+   				alarmDTO = new AlarmDTO();
+   				alarmDTO.setEmail(projectDTO.getEmail());
+   				alarmDTO.setContents("판매등록 완료");
+   				alarmService.alarmInsert(alarmDTO);
    			}else{
    				System.out.println("프로젝트 상태 수정 실패");
    			}
@@ -485,7 +489,7 @@ public class ProjectController {
    	}
    
    @RequestMapping(value="cancleProjectState")
-   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd){
+   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd) throws Exception{
 	   System.out.println("cancleProjectState-controller");
 	   
 	   int num = pjSellDTO.getProjectNum();
@@ -495,11 +499,14 @@ public class ProjectController {
 	   int cancleResult = pjSellService.deleteSellProject(num);
 	   //project state를 sell->finish로 바꿧는지 알아보는 result
 	   int result = projectService.cancleProjectState(pjSellDTO);
-	   
+	   alarmDTO = new AlarmDTO();
 	   if(cancleResult==1){
 		   System.out.println("pjsell DB에서 삭제 성공");
 		   if(result==1){
 			   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
+			   alarmDTO.setEmail(pjSellDTO.getEmail());
+			   alarmDTO.setContents("판매등록 취소");
+			   alarmService.alarmInsert(alarmDTO);
 		   }else{
 			   System.out.println("상태 finish 바꾸기 실패");
 		   }
@@ -524,7 +531,7 @@ public class ProjectController {
    
    //계약완료 컨트롤러
    @RequestMapping(value="applicantMeet", method=RequestMethod.POST)
-   public String applicantMeet(String pay, ProjectDTO projectDTO){
+   public String applicantMeet(String pay, ProjectDTO projectDTO) throws Exception{
 	   System.out.println("계약완료 컨트롤러 들어옴");
 	   
 	   System.out.println("스타트데이트 :"+projectDTO.getStartDate());
@@ -532,7 +539,13 @@ public class ProjectController {
 	   System.out.println("프로젝트 번호 :"+projectDTO.getProjectNum());
 	   System.out.println("금액리스트"+pay);
 	   
-	   projectService.applicantMeet(pay, projectDTO);
+	   int result = projectService.applicantMeet(pay, projectDTO);
+	   alarmDTO = new AlarmDTO();
+	   if(result>0){
+		   alarmDTO.setEmail(projectDTO.getEmail());
+		   alarmDTO.setContents("프로젝트가 시작되었습니다.");
+		   alarmService.alarmInsert(alarmDTO);
+	   }
 	   
 	   return "redirect:/member/client/clientproject?state=ing";
    }

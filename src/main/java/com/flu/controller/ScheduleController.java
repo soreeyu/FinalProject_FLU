@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.applicant.ApplicantDAO;
+import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.file.FileService;
 import com.flu.member.MemberDTO;
@@ -58,9 +59,11 @@ public class ScheduleController {
 
 
 	@RequestMapping(value="test" , method= {RequestMethod.GET,RequestMethod.POST})
-	public String test(@RequestParam(defaultValue="0") Integer scheduleNum, String currentTab, Model model, RedirectAttributes rd, HttpSession session) throws Exception{
+	public String test(@RequestParam(defaultValue="0") Integer scheduleNum, String currentTab, Model model, RedirectAttributes rd, HttpSession session, ApplicantDTO applicantDTO) throws Exception{
+		
+		applicantDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 		System.out.println("test 링크로 오는 애임 Controller = "+scheduleNum);
-		Integer result = applicantService.checkApp(((MemberDTO)session.getAttribute("member")).getEmail());
+		Integer result = applicantService.checkApp(applicantDTO);
 		ScheduleMainDTO scheduleMainDTO = scheduleService.mainScheduleOne(scheduleNum);
 
 	
