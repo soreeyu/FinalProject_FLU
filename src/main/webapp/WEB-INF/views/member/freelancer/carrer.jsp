@@ -200,7 +200,7 @@
 
 thead{
 	color: white;
-	background-color: #446eab;
+	background-color: #1a8cff;
 	font-weight: bold;
 	font-size: 15px;
 }

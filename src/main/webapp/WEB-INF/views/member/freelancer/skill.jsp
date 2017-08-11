@@ -157,7 +157,7 @@
 }
 
 thead{
-	background-color: #446eab;
+	background-color: #005580;
 	font-weight: bold;
 	font-size: 15px;
 }
