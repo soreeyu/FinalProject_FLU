@@ -6,6 +6,8 @@ public class ApplicantDTO {
 	private String email;
 	private String state;
 	private Integer pay;
+	private Integer finishCheck;
+
 	public Integer getProjectNum() {
 		return projectNum;
 	}
@@ -30,6 +32,13 @@ public class ApplicantDTO {
 	public void setPay(Integer pay) {
 		this.pay = pay;
 	}
+	public Integer getFinishCheck() {
+		return finishCheck;
+	}
+	public void setFinishCheck(Integer finishCheck) {
+		this.finishCheck = finishCheck;
+	}
+
 	
 
 

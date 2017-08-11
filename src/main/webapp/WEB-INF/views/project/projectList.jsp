@@ -27,6 +27,7 @@
 	border: 1px solid #e6e6e6;
 	margin-bottom: 30px;
 	background-color: white;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 #header_ttt {
@@ -64,12 +65,13 @@
 	margin-right: 5px;
 	margin-left: 3px;
 	margin-bottom: 10px;
-	border: 1px dotted black;
-	background-color: gray;
+	background-color: white;
+	border: 1px solid #e6e6e6;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .clean {
-	background-color: #f2f2f2;
+
 	height: 15px;
 	width: 100%;
 }
@@ -101,6 +103,7 @@
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .project-sort-text {
@@ -144,6 +147,7 @@
 	border-radius: 3px;
 	border-bottom-width: 2px;
 	background-color: white;
+	box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .category-select-both {
@@ -208,7 +212,7 @@
 }
 
 .place-sort-box {
-	height: 65px;
+	height: 45px;
 	width: 250px;
 }
 
@@ -242,6 +246,7 @@
 	height: 200px;
 	margin-bottom: 5px;
 	background-color: white;
+	box-shadow: 3px 3px 3px #aaaaaa;
 }
 
 .project-head {
@@ -250,7 +255,7 @@
 }
 
 .project-title {
-	color: #3385ff;
+	color: #2099bb;
 	font-size: 18px;
 	font-weight: bold;
 	cursor: pointer;
@@ -261,6 +266,7 @@
 	height: 120px;
 	/*    background-color: green; */
 }
+
 
 .project-info {
 	width: 100%;
@@ -377,6 +383,7 @@
 	text-align: center;
 	font-weight: bold;
 	cursor: pointer;
+	color: #2099bb;
 }
 
 .quick_regdate {
@@ -393,7 +400,7 @@
 	float: right;
 	font-size: 14px;
 	font-weight: bold;
-	color: red;
+	color: #ff6666;
 	display: block;
 	width:100%;
 	text-align: right;
@@ -474,6 +481,22 @@
 	width: 3000px;
 	background-color: blue;
 }
+#dev-btn{
+	color: #666;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 20px;
+}
+#design-btn{
+	color: #666;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 20px;
+}
 </style>
 
 </head>
@@ -485,7 +508,7 @@
       <div class="project_header">
          <div class="header_text">
             <p id="header_ttt">프로젝트 찾기</p>
-            <p id="header_tt">${pjcount}개의 프로젝트가 있습니다.</p>
+            <p id="header_tt"><span style="color: #ff6666; font-weight: bolder;">${pjcount}</span>개의 프로젝트가 있습니다.</p>
             
             <div class="search-part">
             
@@ -545,7 +568,7 @@
                
                <!-- 클릭시 trigger 적용하자 -->
                   <div class="cate-skipper">
-                     <input id="dev" class="cate-chk" name="category" type="checkbox" onclick="devClick()">
+                     <input id="dev" class="cate-chk" name="category" type="checkbox" value="개발">
                      <label for="dev" class="cate-label">개발</label>
                      <ul class="cate-list">
                         <li>
@@ -590,7 +613,7 @@
                </div>
                <div class="category-select-list">
                   <div class="cate-skipper">
-                     <input id="design" class="cate-chk" name="category" type="checkbox" onclick="designClick()">
+                     <input id="design" class="cate-chk" name="category" type="checkbox" onclick="designClick()" value="디자인">
                      <label for="design" class="cate-label">디자인</label>
                      <ul class="cate-list">
                         <li>
@@ -647,12 +670,16 @@
          <div class="clean"></div>
          
          
-         <div class="project-sort-box">
+         <div class="project-sort-box" style="height: 100px;">
 
             <div class="project-sort-text">판매중인 프로젝트</div>
             <div class="place-sort-box">
-               <button id="dev-btn">개발</button>
-               <button id="design-btn">디자인</button>
+            <div class="left-sort-box" style="height: 45px;">
+               <div id="dev-btn">개발</div>
+            </div>
+            <div class="right-sort-box" style="height: 45px;">
+               <div id="design-btn">디자인</div>
+            </div>
             </div>
          </div>
    
@@ -856,17 +883,78 @@ $("#by-date-finish").click(function() {
 
 /* =================프로젝트 카테고리 체크박스 설정================= */
  
- /* 개발자 */
+ 
+ $(".cate-chk").click(function() {
+	
+	var CateVal = "";
+	alert("category="+CateVal);
+	if($(this).prop("checked")==true){
+		alert("check-category="+CateVal);
+		CateVal = $(this).val();
+		alert("CateVal=="+CateVal);
+		
+	}else{
+		alert("check-category=null처리");
+		CateVal = null;
+		alert("CateVal=="+CateVal);
+	}
+	
+	if(CateVal == "개발"){
+		var devCheck = $("input[class='dev-chk']:checked").length;
+	      if(($(".dev-chk").length)==devCheck){
+	         $(".dev-chk").prop("checked", false);
+	      }else{
+	         $(".dev-chk").prop("checked", true);
+	      }
+	      var devVal = $(this).val();
+	      alert(devVal);
+	      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+CateVal,function(data){
+	          alert("dd");
+	          $(".contents_main").html(data);
+	      });
+	      
+	      
+	}
+	else{
+		
+		alert("category="+CateVal);
+		var designCheck = $("input[class='design-chk']:checked").length;
+	      alert(designCheck); 
+	      if(($(".design-chk").length)==designCheck){
+	         $(".design-chk").prop("checked", false);
+	      }else{
+	         $(".design-chk").prop("checked", true);
+	      }
+	      
+	     
+	      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+CateVal,function(data){
+	          alert("dd");
+	          $(".contents_main").html(data);
+	      });
+	}
+});
+ 
+ 
+ /* 개발자 Category 부분 */
+ 
+   /*
 function devClick() {
    var devCheck = $("input[class='dev-chk']:checked").length;
-      alert("check된거=="+devCheck);
       if(($(".dev-chk").length)==devCheck){
          $(".dev-chk").prop("checked", false);
       }else{
          $(".dev-chk").prop("checked", true);
       }
-   
+      var devVal = $(this).val();
+      alert(devVal);
+      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
+          alert("dd");
+          $(".contents_main").html(data);
+      }); 
 }
+      */
+
+/* 개발자 DetailCategory부분 */
  $(".dev-chk").click(function() {
     
     var de_id = $(this).val();
@@ -882,6 +970,7 @@ function devClick() {
       array[index] = $(this).val();
          
    });
+    
     alert(array);
     
     var devCheck = $("input[class='dev-chk']:checked").length;
@@ -897,16 +986,18 @@ function devClick() {
    }else{
       $("#dev").prop("checked", false);
    }
-   alert("클릭한 프로젝트종류="+de_id);
-    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
-       alert("웹들어옴");
+   
+   var devVal = $("#dev").val();
+   alert("dev=="+devVal);
+   
+    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
        $(".contents_main").html(data);
    }); 
 });
 
  
- /* 디자인 */
-  function designClick() {
+ /* 디자인 category부분 */
+ /*  function designClick() {
       
    var designCheck = $("input[class='design-chk']:checked").length;
       alert(designCheck); 
@@ -915,7 +1006,14 @@ function devClick() {
       }else{
          $(".design-chk").prop("checked", true);
       }
-   }
+      
+     
+      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
+          alert("dd");
+          $(".contents_main").html(data);
+      });
+      
+   } */
 
 
 $(".design-chk").click(function() { 

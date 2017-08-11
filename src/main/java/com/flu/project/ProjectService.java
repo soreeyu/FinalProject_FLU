@@ -56,10 +56,11 @@ public class ProjectService {
 	//project List
 	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
 		
-		System.out.println("projectSkillparsing");
+		
 		
 		System.out.println("service-list-search==="+listInfo.getSearch());
 		System.out.println("projectService-projectList");
+		System.out.println("service-category="+projectDTO.getCategory());
 		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
 
 		
@@ -264,6 +265,11 @@ public class ProjectService {
 	//index에 뿌려질 등록된 프로젝트리스트( 높은 금액순)
 	public List<ProjectDTO> indexProjectList () throws Exception{
 		return projectDAO.indexProjectList();
+	}
+
+	//클라이언트가 완료 눌렀을 때, project상태 finish로 update하기
+	public int updateState(ProjectDTO projectDTO){
+		return projectDAO.updateState(projectDTO);
 	}
 
 }

@@ -657,6 +657,29 @@ $(document).ready(function(){
 <section class="main_section">
 		<section class="page_wrap">
 			<c:import url="/WEB-INF/views/temp/personaldatasidbar.jsp"></c:import>
+			<article class="left">
+				<div class="user">
+					<c:if test="${member.kind eq 'client' }"><span>클라이언트</span></c:if>
+					<c:if test="${member.kind eq 'freelancer' }"><span>프리랜서</span></c:if>
+					<div class="user_name">
+						<c:choose>
+							<c:when test="${empty member.fProfileImage}">
+							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg">							
+							</c:when>
+							<c:when test="${not empty member.fProfileImage}">
+							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}">
+							</c:when>
+						</c:choose>
+						<span>닉네임</span> <a><span>기본 정보 수정</span></a>
+					</div>
+				</div>
+				<div class="history">
+
+				<!-- 여기가 왔다갔다 하는 곳이야 재식아 왼쪽에 클릭하는거 그거 -->
+
+				</div>
+
+			</article>
 			<article class="right">
 				<div class="title">
 						<p id="t1">신원인증</p>

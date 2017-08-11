@@ -315,15 +315,15 @@
 				<h4>닉네임 : ${freelancer[f].nickName }</h4>
 				<h5 class="project-element-list">
 					<span>
-						<i class="fa fa-won"></i>
+						<i class="fa fa-pencil"></i>
 						<strong>진행중 ${count1} 건</strong>
 					</span>
 					<span class="day">
-						<i class="fa fa-clock-o"></i>
-						<strong>완료한 ${count2} 건</strong>
+						<i class="fa fa-pencil"></i>
+						<strong>완료 ${count2} 건</strong>
 					</span>
 					<span>
-						<i class="fa fa-pencil"></i>
+						<i class="fa fa-won"></i>
 						<strong>누적 ${pay}원</strong>
 					</span>
 				</h5>

@@ -23,6 +23,7 @@ import com.flu.project.ProjectService;
 import com.flu.tproject.EchoHandler;
 
 
+
 import com.flu.applicant.ApplicantService;
 import com.flu.freelancer.FreelancerDTO;
 import com.flu.freelancer.FreelancerService;
@@ -39,9 +40,13 @@ import com.flu.util.ListInfo;
 @Controller
 public class HomeController {
 
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@Inject
+	private EchoHandler echoHandler; 
+	@Inject
+
 	private ProjectService projectService;
 	@Inject
 	private MemberService memberService;
@@ -99,9 +104,12 @@ public class HomeController {
 			budget=0;
 			ar=null;
 			ar2=null;
-			
+
 		}
-		
+
+		List<ProjectDTO> countList = projectService.roomCount();
+		echoHandler.roomCount(countList);
+
 		model.addAttribute("pjcount", pjcount);
 		model.addAttribute("mcount", mcount);
 		model.addAttribute("budget", budget);
@@ -113,8 +121,9 @@ public class HomeController {
 		model.addAttribute("pay", pay);
 	
 		
+		
 		return "index";
-
+		
 	}
 	@RequestMapping(value="/home")
 	public String test(){

@@ -220,7 +220,7 @@ section {
 							<c:when test="${empty member.fProfileImage}">
 							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/img/mypage/avatar.jpg">							
 							</c:when>
-							<c:when test="${not empty memeber.fProfileImage}">
+							<c:when test="${not empty member.fProfileImage}">
 							<img class="user-img" alt="" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}">
 							</c:when>
 						</c:choose>	

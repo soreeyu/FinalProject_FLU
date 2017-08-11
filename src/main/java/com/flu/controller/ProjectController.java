@@ -123,6 +123,7 @@ public class ProjectController {
    public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
       System.out.println("projectListInner요");
    
+      System.out.println("controller-category="+projectDTO.getCategory());
        MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
       
        System.out.println("controller-search==="+listInfo.getSearch());
@@ -181,24 +182,34 @@ public class ProjectController {
       //project를 등록한 사람의 정보를 가져오기
       MemberDTO mem = projectService.projectClient(projectDTO);
    
-      System.out.println("phone="+memberDTO.getPhone());
-      System.out.println("형태="+memberDTO.getKind());
-
-      
+ 
       int sellResult = projectService.sellingCount(projectDTO);
-      System.out.println("판매중인 프로젝트 갯수="+sellResult);
       int ingResult = projectService.ingCount(projectDTO);
-      System.out.println("진행중 프로젝트갯수="+ingResult);
       int finishResult = projectService.finishCount(projectDTO);
-      System.out.println("완료된 프로젝트=="+finishResult);
       int totalResult = projectService.pjCount(projectDTO);
-      System.out.println("해당클라이언트 프로젝트토탈="+totalResult);
       
        System.out.println("포폴--"+freelancerService.portfolioList(memberDTO.getEmail()));
       
       PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
-
-       
+      
+      System.out.println("session-kind=="+memberDTO.getKind());
+      if(memberDTO.getKind().equals("freelancer")){
+    	  applicantDTO = applicantService.checkFinish(applicantDTO);
+    	 model.addAttribute("finishCheck", applicantDTO.getFinishCheck());
+      }else{
+    	  int countCheck = applicantService.countCheck(applicantDTO);
+    	  int countFinish = applicantService.countFinish(applicantDTO);
+    	  System.out.println("countCheck="+countCheck);
+    	  System.out.println("countFinish="+countFinish);
+    	  if(countCheck==countFinish){
+    		  model.addAttribute("clientFinish", 1);
+    	  }else{
+    		  model.addAttribute("clientFinish", 0);
+    	  }
+      }
+     
+          	  
+      
       model.addAttribute("dto", projectDTO);
       model.addAttribute("member", memberDTO);
       model.addAttribute("conCount", sellResult);
@@ -215,8 +226,22 @@ public class ProjectController {
       model.addAttribute("portfolio", freelancerService.portfolioList(memberDTO.getEmail()));
       model.addAttribute("skills", freelancerService.skillList(memberDTO.getEmail()));
       model.addAttribute("freelancer", freelancerService.freelancerView(memberDTO.getEmail()));
-         
+      
+      //프로젝트를 완료를 눌렀는지 체크
+  
    }
+   @RequestMapping(value="updateState")
+   public String updateState(ProjectDTO projectDTO){
+	   System.out.println("updateStAte");
+	   
+	   int pjupdate = projectService.updateState(projectDTO);
+	   if(pjupdate==1){
+		   int appupdate = applicantService.updateState(projectDTO);		   
+	   }
+	   
+	   return "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+   }
+   
    
    
    
@@ -325,7 +350,7 @@ public class ProjectController {
          System.out.println("update success");
          alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(projectDTO.getEmail());
-			alarmDTO.setContents("프로젝트의 정보를 성공적으로 수정하였습니다.");
+			alarmDTO.setContents("프로젝트의 정보를 수정하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			rd.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
       }
@@ -451,7 +476,7 @@ public class ProjectController {
    
    //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
    @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)
-   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd, ProjectDTO projectDTO){
+   	public String pjsellInsert(PjSellDTO pjSellDTO, RedirectAttributes rd, ProjectDTO projectDTO) throws Exception{
    		System.out.println("pjsellInsert-controller");
    		
 
@@ -466,6 +491,10 @@ public class ProjectController {
    			updateResult = projectService.updateProjectState(pjSellDTO);
    			if(updateResult==1){
    				System.out.println("프로젝트 상태 수정 성공");
+   				alarmDTO = new AlarmDTO();
+   				alarmDTO.setEmail(projectDTO.getEmail());
+   				alarmDTO.setContents("판매등록 완료");
+   				alarmService.alarmInsert(alarmDTO);
    			}else{
    				System.out.println("프로젝트 상태 수정 실패");
    			}
@@ -485,7 +514,7 @@ public class ProjectController {
    	}
    
    @RequestMapping(value="cancleProjectState")
-   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd){
+   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd) throws Exception{
 	   System.out.println("cancleProjectState-controller");
 	   
 	   int num = pjSellDTO.getProjectNum();
@@ -495,11 +524,14 @@ public class ProjectController {
 	   int cancleResult = pjSellService.deleteSellProject(num);
 	   //project state를 sell->finish로 바꿧는지 알아보는 result
 	   int result = projectService.cancleProjectState(pjSellDTO);
-	   
+	   alarmDTO = new AlarmDTO();
 	   if(cancleResult==1){
 		   System.out.println("pjsell DB에서 삭제 성공");
 		   if(result==1){
 			   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
+			   alarmDTO.setEmail(pjSellDTO.getEmail());
+			   alarmDTO.setContents("판매등록 취소");
+			   alarmService.alarmInsert(alarmDTO);
 		   }else{
 			   System.out.println("상태 finish 바꾸기 실패");
 		   }
@@ -524,7 +556,7 @@ public class ProjectController {
    
    //계약완료 컨트롤러
    @RequestMapping(value="applicantMeet", method=RequestMethod.POST)
-   public String applicantMeet(String pay, ProjectDTO projectDTO){
+   public String applicantMeet(String pay, ProjectDTO projectDTO) throws Exception{
 	   System.out.println("계약완료 컨트롤러 들어옴");
 	   
 	   System.out.println("스타트데이트 :"+projectDTO.getStartDate());
@@ -532,7 +564,13 @@ public class ProjectController {
 	   System.out.println("프로젝트 번호 :"+projectDTO.getProjectNum());
 	   System.out.println("금액리스트"+pay);
 	   
-	   projectService.applicantMeet(pay, projectDTO);
+	   int result = projectService.applicantMeet(pay, projectDTO);
+	   alarmDTO = new AlarmDTO();
+	   if(result>0){
+		   alarmDTO.setEmail(projectDTO.getEmail());
+		   alarmDTO.setContents("프로젝트가 시작되었습니다.");
+		   alarmService.alarmInsert(alarmDTO);
+	   }
 	   
 	   return "redirect:/member/client/clientproject?state=ing";
    }

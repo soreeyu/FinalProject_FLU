@@ -158,10 +158,10 @@ public class ReservationController {
 		alarmDTO.setEmail(reservationDTO.getEmail());
 		if(result>0){
 			System.out.println("예약성공");
-			alarmDTO.setContents("미팅룸 예약이 성공적으로 이루어졌습니다. 변경사항이 있거나 취소를 원할 경우 관리자에게 요청하세요");
+			alarmDTO.setContents("미팅룸 예약이 성공적으로 이루어졌습니다.");
 		}else {
 			System.out.println("예약실패");
-			alarmDTO.setContents("예약에 실패하였습니다. 관리자에게 문의 하세요.");
+			alarmDTO.setContents("예약에 실패하였습니다.");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));

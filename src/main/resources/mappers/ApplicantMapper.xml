@@ -11,6 +11,10 @@
 
   	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
   		select * from applicant where projectNum=#{projectNum} and state in('ing')
+	</select>
+	
+  	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
+  		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
   	</select>
   
   	<update id="update" parameterType="java.lang.String">
@@ -18,14 +22,23 @@
   	</update>
   	
   	<!-- 스케줄화면에 진행중인 지원자만 접근 가능하도록 체크 -->
-  	<select id="checkApp" parameterType="string" resultType="java.lang.Integer">
-  		select * from applicant where email=#{email}
+  	<select id="checkApp" parameterType="com.flu.applicant.ApplicantDTO" resultType="java.lang.Integer">
+  		select * from applicant where email=#{email} and projectnum=#{projectNum}
   	</select>
   
+  <!-- 프로젝트 완료를 프리랜서가 눌렀을 때, applicant의 state-ing인 상태의 finishCheck를 0->1로 업데이트 -->
+  <update id="updateFinish" parameterType="com.flu.applicant.ApplicantDTO">
+  	update applicant set finishCheck=1 where projectNum=#{projectNum} and email=#{email}
+  </update>
+  <!-- 프로젝트 view로 넘어올 때, 이미 완료버튼을 누른 applicant인지 보기 -->
+  <select id="checkFinish" parameterType="com.flu.applicant.ApplicantDTO" resultType="com.flu.applicant.ApplicantDTO">
+  	select * from applicant where projectNum=#{projectNum} and email=#{email}
+  </select>
+
   
   <!-- 지원하기 눌렀을 때, 지원자 추가하기 -->
   <insert id="insertApplicant" parameterType="com.flu.applicant.ApplicantDTO">
-  insert into applicant (projectNum, email, state, pay) values (#{projectNum}, #{email}, 'app', #{pay})
+  insert into applicant (projectNum, email, state, pay, finishCheck) values (#{projectNum}, #{email}, 'app', #{pay}, 0)
   </insert>
   
   <select id="checkApplicant" parameterType="com.flu.applicant.ApplicantDTO" resultType="int">	
@@ -37,5 +50,23 @@
   <delete id="deleteApplicant" parameterType="com.flu.applicant.ApplicantDTO" >
   	delete from applicant where email=#{email} and projectNum=#{projectNum}
   </delete>
+
   
+  
+    
+  
+  <!-- 프로젝트를 진행하는 applicant의 수 -->
+  <select id="countfinish" parameterType="com.flu.applicant.ApplicantDTO" resultType="int">
+  	select count(nvl(email,0)) from applicant where projectNum=#{projectNum} and state='ing'
+  </select>
+  <!-- finishCheck가 1인 지원자들 수 -->
+  <select id="countCheck" parameterType="com.flu.applicant.ApplicantDTO" resultType="int">
+  	select count(nvl(email,0)) from applicant where projectNum=#{projectNum} and finishCheck=1
+  </select>
+  
+  <!-- 클라이언트가 완료 눌렀을 때, applicant 상태를 finish로 바꿈 -->
+  <update id="updateState" parameterType="com.flu.project.ProjectDTO">
+  	update applicant set state='finish' where projectNum=#{projectNum}
+  </update>
+
   </mapper>

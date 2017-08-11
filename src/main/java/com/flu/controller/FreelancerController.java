@@ -292,7 +292,8 @@ public class FreelancerController {
 		if(result > 0){
 			freelancerDTO = freelancerService.freelancerView(freelancerDTO.getEmail());
 			redirectAttributes.addFlashAttribute("free", freelancerDTO);
-
+			alarmDTO = new AlarmDTO();
+			alarmDTO.setEmail(freelancerDTO.getEmail());
 			alarmDTO.setContents("자기소개를 성공적으로 등록하였습니다.");
 			alarmService.alarmInsert(alarmDTO);		
 			redirectAttributes.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -341,6 +342,7 @@ public class FreelancerController {
 
 		int result = freelancerService.introUpdate(freelancerDTO);
 		if(result > 0){
+			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(freelancerDTO.getEmail());
 			alarmDTO.setContents("등록된 자기소개를 성공적으로 수정 하였습니다.");
 			alarmService.alarmInsert(alarmDTO);
@@ -568,9 +570,9 @@ public class FreelancerController {
 	}
 	//보유기술 등록
 	@RequestMapping(value="skillInsert", method=RequestMethod.POST)
+	public String skillInsert(Skill skill, RedirectAttributes ra) throws Exception{
 
-	public String skillInsert(Skill skill, RedirectAttributes ra, HttpSession session) throws Exception{
-		alarmDTO = new AlarmDTO();
+
 		System.out.println(skill.getEmail());
 		System.out.println(skill.getKind());
 		System.out.println(skill.getSlevel());
@@ -579,8 +581,13 @@ public class FreelancerController {
 		System.out.println(skill.getExp().length());
 		
 		List<Skill> ar = new ArrayList<Skill>();
+
 		
-		alarmDTO.setEmail(this.getEmail(session));
+		
+
+		alarmDTO = new AlarmDTO();
+		alarmDTO.setEmail(skill.getEmail());
+
 		if(skill.getExp().length() > 1){
 			String [] sk1 = skill.getExp().split(",");
 			String [] sk2 = skill.getKind().split(",");
@@ -599,7 +606,7 @@ public class FreelancerController {
 			if(result>0){
 				alarmDTO.setContents("당신이 등록한 보유기술들은 훌륭합니다.");
 			}else {
-				alarmDTO.setContents("무언가 실패했군요 ㅜㅜ 다시 등록하세요 ");
+				alarmDTO.setContents("다시 등록하세요. ");
 			}
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -614,7 +621,7 @@ public class FreelancerController {
 			if(result>0){
 				alarmDTO.setContents("당신이 등록한 보유기술들은 훌륭합니다.");
 			}else {
-				alarmDTO.setContents("무언가 실패했군요 ㅜㅜ 다시 등록하세요 ");
+				alarmDTO.setContents("다시 등록하세요. ");
 			}
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -682,7 +689,8 @@ public class FreelancerController {
 	
 	//보유기술 수정
 	@RequestMapping(value="skillUpdate", method=RequestMethod.POST)
-	public String skillUpdate(Skill skill){
+	public String skillUpdate(Skill skill) throws Exception{
+		alarmDTO = new AlarmDTO();
 		System.out.println(skill.getEmail());
 		System.out.println(skill.getKind());
 		System.out.println(skill.getSlevel());
@@ -707,7 +715,15 @@ public class FreelancerController {
 			}
 			
 			
-			freelancerService.skillUpdate(ar);
+			int result = freelancerService.skillUpdate(ar);
+			alarmDTO.setEmail(skill.getEmail());
+			if(result>0){
+				alarmDTO.setContents("보유기술을 수정했습니다.");
+			}else {
+				alarmDTO.setContents("보유기술 수정실패");				
+			}
+			alarmService.alarmInsert(alarmDTO);
+			
 		}else if(skill.getExp().equals("0")){
 			freelancerService.skillDelete(skill.getEmail());
 		}else{
@@ -772,7 +788,7 @@ public class FreelancerController {
 		if(result>0){
 			alarmDTO.setContents("당신의 경력이 등록되었습니다.");
 		}else {
-			alarmDTO.setContents("경력등록에 실패하였습니다. 다시 확인해 주세요");
+			alarmDTO.setContents("경력등록에 실패, 다시 확인해 주세요.");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -805,9 +821,9 @@ public class FreelancerController {
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(carrer.getEmail());
 		if(result>0){
-			alarmDTO.setContents("당신의 경력을 수정하였습니다.");
+			alarmDTO.setContents("경력을 수정하였습니다.");
 		}else {
-			alarmDTO.setContents("당신의 경력을 수정하는데 실패하였습니다. 다시 확인해 주세요.");
+			alarmDTO.setContents("경력을 수정 실패, 다시 확인해 주세요.");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -822,9 +838,9 @@ public class FreelancerController {
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(carrer.getEmail());
 		if(result>0){
-			alarmDTO.setContents("당신의 경력을 삭제 했습니다. 다시 등록해주실꺼죠?");
+			alarmDTO.setContents("경력을 삭제 했습니다.");
 		}else {
-			alarmDTO.setContents("삭제에 실패했습니다. 가만히 놔두 세요");
+			alarmDTO.setContents("경력 삭제에 실패했습니다.");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -847,9 +863,9 @@ public class FreelancerController {
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(academic.getEmail());
 		if(result>0){
-			alarmDTO.setContents("학력을 등록해주셨군요!!!!");
+			alarmDTO.setContents("학력 등록");
 		}else {
-			alarmDTO.setContents("학력 등록에 실패했어요 ㅜㅜㅜ 다시 등록해주세요 ㅜㅜ");
+			alarmDTO.setContents("학력 등록 실패");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -882,9 +898,9 @@ public class FreelancerController {
 		alarmDTO.setEmail(academic.getEmail());
 		
 		if(result>0){
-			alarmDTO.setContents("당신의 학력을 수정했어요!!!");
+			alarmDTO.setContents("학력을 수정");
 		}else {
-			alarmDTO.setContents("이런 ㅜㅜ 당신의 학력을 수정하는데 실패 했네요 ㅜㅜ");
+			alarmDTO.setContents("학력 수정 실패");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -900,9 +916,9 @@ public class FreelancerController {
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(academic.getEmail());
 		if(result>0){
-			alarmDTO.setContents("당신의 학력은 삭제 됬네요. 다시 등록해야 할껄요??");
+			alarmDTO.setContents("학력 삭제");
 		}else {
-			alarmDTO.setContents("다행이네요 삭제가 안됬어요 학력이!!!");
+			alarmDTO.setContents("학력 삭제 실패");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -925,7 +941,7 @@ public class FreelancerController {
 		if(result>0){
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(license.getEmail());
-			alarmDTO.setContents("자격증을 등록하셨습니다.");
+			alarmDTO.setContents("자격증 등록");
 			alarmService.alarmInsert(alarmDTO);
 		}
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -958,9 +974,9 @@ public class FreelancerController {
 		alarmDTO = new AlarmDTO();
 		alarmDTO.setEmail(license.getEmail());
 		if(result>0){
-			alarmDTO.setContents("당신의 자격증 정보가 수정 되었어요!!");
+			alarmDTO.setContents("자격증 정보");
 		}else {
-			alarmDTO.setContents("당신의 자격증 정보가 뭔가 이상하네요 ㅜㅜ 수정이 안되었어요 ㅜ");
+			alarmDTO.setContents("자격증 정보 수정 실패");
 		}
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));

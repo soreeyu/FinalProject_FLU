@@ -21,7 +21,7 @@
 						</c:when>
 						<c:otherwise>
 							<td class="timeCss">
-								<div id="${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: gray; margin-left: 10px;" ></div>
+								<div id="${r.count}"  class="time" title="${r.index}" style="min-width: 86px; min-height: 76px; background-color: black; margin-left: 10px;" ></div>
 							</td>
 						</c:otherwise>
 					</c:choose>			

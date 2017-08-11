@@ -46,12 +46,26 @@ public class ProjectDAO {
 		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
 
 			System.out.println("projectDAO-projectList들어옴");
+			System.out.println("dao-category="+projectDTO.getCategory());
 			System.out.println("dao-list- arrange=="+listInfo.getArrange());
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("listInfo", listInfo);
 			map.put("project", projectDTO);
 			map.put("arrange", listInfo.getArrange());
 			map.put("array", array);
+			
+			if(projectDTO.getCategory()==null){
+				System.out.println("==================");
+				System.out.println("category는 Null");
+				map.put("Cate", 0);
+			}else{
+				System.out.println("==================");
+				System.out.println("category는" + projectDTO.getCategory());
+				map.put("Cate", 1);
+			}
+			
+			
+			
 			if(array.size() == 0){
 				map.put("result", 0);
 				System.out.println("zz"+array.size());
@@ -264,9 +278,6 @@ public class ProjectDAO {
 		public int cancleProjectState(PjSellDTO pjSellDTO){
 			return sqlSession.update(NAMESPACE+"cancleProjectState", pjSellDTO);
 		}
-		
-
-
 		//index에 뿌려질 등록된 프로젝트 금액
 		public int totalBudget() throws Exception{
 			return sqlSession.selectOne(NAMESPACE+"totalBudget");
@@ -276,11 +287,16 @@ public class ProjectDAO {
 			return sqlSession.selectList(NAMESPACE+"indexProjectList");
 		}
 
+		
+		//클라이언트가 완료 눌렀을 때, project상태 finish로 update하기
+		public int updateState(ProjectDTO projectDTO){
+			return sqlSession.update(NAMESPACE+"updateState", projectDTO);
+		}
+
 
 		//채팅방을 만들기 위하여 ing delcheck 0 인놈 불러오기
 		public List<ProjectDTO> roomCount(){
 			return sqlSession.selectList(NAMESPACE+"roomCount");
 		}
-		
 
 }

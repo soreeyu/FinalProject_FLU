@@ -49,6 +49,9 @@
       
       where state='done' and
       (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
+      <if test="Cate == 1">
+      and category=#{project.category}
+      </if>
       <if test="result == 1">
        and detailCategory IN 
        <foreach collection="array" item="c" open="(" close=")" separator=",">
@@ -246,11 +249,16 @@
 	update project set state='finish' where projectNum=#{projectNum}
 </update>
 
+
+<!-- cancel Update -->
+
 <!-- 프로젝트 판매 pjsell에서 Num으로 데이터 가져오기 -->
 <select id="pjsellInfo" parameterType="int" resultType="com.flu.project.sell.PjSellDTO">
 	select * from pjsell where projectNum=#{projectNum}
 </select>
+
   
+
   <!-- index에 뿌려질 등록된 프로젝트의 금액 -->
   <select id="totalBudget" resultType="java.lang.Integer">
   	select nvl(sum(budget), 0) from project
@@ -260,8 +268,17 @@
   <select id="indexProjectList" resultType="com.flu.project.ProjectDTO"> 
   	select * from project order by budget desc
   </select>
-<!-- cancel Update -->
+
   
+  <!-- 클라이언트가 완료 눌렀을 때, 프로젝트 state를 finish로 변환  -->
+  <update id="updateState" parameterType="com.flu.project.ProjectDTO">
+  	update project set state='finish' where projectNum=#{projectNum}
+  </update>
+  
+
+
+<!-- cancel Update -->
+
 <update id="projectCancelUpdate" parameterType="com.flu.project.ProjectDTO" >
 	update project set del_check=1 where projectNum=#{projectNum}
 </update>
@@ -270,5 +287,6 @@
  <select id="roomCount" resultType="com.flu.project.ProjectDTO">
  	select * from project where state='ing' and del_check in(0,1)
  </select>
-  
+
+
   </mapper>

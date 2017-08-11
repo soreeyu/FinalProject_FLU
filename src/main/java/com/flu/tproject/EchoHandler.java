@@ -63,6 +63,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
+
 		System.out.println("방들어오는 메소드");
 		System.out.println("방번호:"+this.projectNum);
 		Map<String, Object> mapSession = session.getAttributes();
@@ -74,6 +75,9 @@ public class EchoHandler extends TextWebSocketHandler{
 		this.roomList.get(this.projectNum).add(session);
 		System.out.println("지금 아이디: "+this.email);
 	
+
+		
+		
 	}
 
 	
@@ -84,15 +88,24 @@ public class EchoHandler extends TextWebSocketHandler{
 		System.out.println("메세지 전송 전");
 		System.out.println("주어진 세션아이디로 꺼낸 프로젝트 번호: "+session.getAttributes().get(session.getId()));
 		
+
 			for(WebSocketSession sess : roomList.get(session.getAttributes().get(session.getId()))){
+
 				sess.sendMessage(new TextMessage(session.getRemoteAddress().getHostName()+":"+message.getPayload()));
 				logger.info("{}로부터 {} 받음", session.getId(),message.getPayload());
 				System.out.println("메세지 전송 확인");
 			}
+
 	
 			System.out.println(session.getId()+"가 메세지보냄");
 
-	}
+
+		}
+			
+			
+		
+
+
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
