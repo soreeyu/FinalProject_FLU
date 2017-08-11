@@ -17,6 +17,13 @@ public class ApplicantService {
 		return applicantDAO.list(projectNum);
 	}
 
+	
+	//chat List
+	public List<ApplicantDTO> chatList(int projectNum){
+		return applicantDAO.chatList(projectNum);
+	}
+	
+
 	// state update
 	public int appUpdate(String email){
 		return applicantDAO.appUpdate(email);

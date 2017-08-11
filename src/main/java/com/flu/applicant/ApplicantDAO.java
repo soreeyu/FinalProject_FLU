@@ -24,10 +24,16 @@ public class ApplicantDAO {
 		return sqlSession.selectList(NAMESPACE+"list", projectNum);
 	}
 	
+
 	//지원자 List 불러오기
 	public int ingCount(int projectNum){
 			
 		return sqlSession.selectOne(NAMESPACE+"ingCount", projectNum);
+	}
+
+	//chat List
+	public List<ApplicantDTO> chatList(int projectNum){
+		return sqlSession.selectList(NAMESPACE+"chatList", projectNum);
 	}
 	
 	//지원자 update

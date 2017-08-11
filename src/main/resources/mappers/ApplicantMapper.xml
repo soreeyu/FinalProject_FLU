@@ -8,8 +8,9 @@
   		select * from applicant where projectNum=#{projectNum} and state in('finish','payFinish')
   	</select>
   	
-  	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
-  		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
+
+  	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
+  		select * from applicant where projectNum=#{projectNum} and state in('ing')
   	</select>
   
   	<update id="update" parameterType="java.lang.String">

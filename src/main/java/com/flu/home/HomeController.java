@@ -16,6 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.socket.WebSocketSession;
+
+import com.flu.project.ProjectDTO;
+import com.flu.project.ProjectService;
+import com.flu.tproject.EchoHandler;
+
 
 import com.flu.applicant.ApplicantService;
 import com.flu.freelancer.FreelancerDTO;
@@ -29,9 +35,10 @@ import com.flu.util.ListInfo;
 /**
  * Handles requests for the application home page.
  */
+
 @Controller
 public class HomeController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Inject
@@ -65,7 +72,7 @@ public class HomeController {
 		int count2=1;
 		int pay=1;
 		
-		/*if(ar!=null && freelancer!=null){	
+		if(ar!=null && freelancer!=null){	
 			
 		for(int i=0;i<6;i++){	
 			projectDTO = new ProjectDTO();
@@ -93,7 +100,7 @@ public class HomeController {
 			ar=null;
 			ar2=null;
 			
-		}*/
+		}
 		
 		model.addAttribute("pjcount", pjcount);
 		model.addAttribute("mcount", mcount);
@@ -104,6 +111,7 @@ public class HomeController {
 		model.addAttribute("count1", count1);
 		model.addAttribute("count2", count2);
 		model.addAttribute("pay", pay);
+	
 		
 		return "index";
 

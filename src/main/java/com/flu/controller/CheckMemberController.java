@@ -22,6 +22,7 @@ import com.flu.checkMember.CheckMemberDTO;
 import com.flu.checkMember.CheckMemberService;
 import com.flu.file.FileSaver;
 import com.flu.member.MemberDTO;
+import com.flu.member.MemberService;
 import com.flu.util.ListInfo;
 
 @Controller
@@ -32,7 +33,10 @@ public class CheckMemberController {
 	private CheckMemberService checkMemberService;
 	@Inject
 	private AlarmService alarmService;
+	@Inject
+	private MemberService memberService;
 	private AlarmDTO alarmDTO;
+	
 	
 	//신원확인 insert FORM으로 가기 
 	@RequestMapping(value="memberCheckInsert", method=RequestMethod.GET)
@@ -61,11 +65,14 @@ public class CheckMemberController {
 		String message = "실패";
 		if(result>0){	
 			message = "신청 완료되었습니다";
-			String path = "../";
+			String path = "./memberCheckInsert";
 
+			MemberDTO memberDTO = memberService.memberView2(checkMemberDTO.getEmail());
+			session.setAttribute("member", memberDTO);
+			
 			alarmDTO = new AlarmDTO();
 			alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
-			alarmDTO.setContents("신원확인 신청 하셨습니다. 관리자가 승인을 기다려 주세요.");
+			alarmDTO.setContents("신원확인 신청 하셨습니다. 관리자의 승인을 기다려 주세요.");
 			alarmService.alarmInsert(alarmDTO);
 			
 			model.addAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
@@ -99,7 +106,7 @@ public class CheckMemberController {
 	@RequestMapping(value="checkMemberView")
 	public String checkView(String email,Model model){
 		 model.addAttribute("checkMember",checkMemberService.checkView(email));
-		 
+		 model.addAttribute("active2", "a");
 		 return "checkMember/checkMemberView";
 	}
 	
@@ -115,10 +122,10 @@ public class CheckMemberController {
 		alarmService.alarmInsert(alarmDTO);
 		ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
 
-		return "redirect:/checkMember/checkMemberList";
+		return "redirect:/checkMember/checkMemberClientList";
 	}
 	
-	//신원확인에서 삭제하기
+	//관리자가 신원확인에서 삭제하기
 	@RequestMapping(value="checkMemberDelete")
 	public String delete(String email){
 		
@@ -127,7 +134,16 @@ public class CheckMemberController {
 		return "redirect:/checkMember/checkMemberList";
 	}
 	
-	
+	//본인이 직접 신원확인요청 취소하기
+	@RequestMapping(value="memberCheckCancel")
+	public String cancel(String email,HttpSession session){
+		
+		checkMemberService.deleteTran(email);
+		MemberDTO memberDTO = memberService.memberView2(email);
+		session.setAttribute("member", memberDTO);
+		
+		return "redirect:/checkMember/memberCheckInsert";
+	}
 	
 	
 }

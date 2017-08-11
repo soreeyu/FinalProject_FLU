@@ -213,9 +213,12 @@
   <delete id="delete" parameterType="java.lang.Integer">
      delete project where projectNum=#{projectNum}
   </delete>
- 
   
+  <update id="moreDateUpdate" parameterType="com.flu.project.ProjectDTO">
+  		update project set startDate=#{startDate}, finishDate=#{finishDate},state='done' where projectNum=#{projectNum}
+  </update>
   
+
   <!-- 프로젝트 판매를 등록 -->
   <insert id="insertSellProject" parameterType="com.flu.project.sell.PjSellDTO">
    	insert into pjsell (projectNum, name, price, contents, email) 
@@ -257,5 +260,15 @@
   <select id="indexProjectList" resultType="com.flu.project.ProjectDTO"> 
   	select * from project order by budget desc
   </select>
+<!-- cancel Update -->
+  
+<update id="projectCancelUpdate" parameterType="com.flu.project.ProjectDTO" >
+	update project set del_check=1 where projectNum=#{projectNum}
+</update>
+
+<!-- 채팅방 형성을 위한 ing방 갯수 구해오기 -->
+ <select id="roomCount" resultType="com.flu.project.ProjectDTO">
+ 	select * from project where state='ing' and del_check in(0,1)
+ </select>
   
   </mapper>

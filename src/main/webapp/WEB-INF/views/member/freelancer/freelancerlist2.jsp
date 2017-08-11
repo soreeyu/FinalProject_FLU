@@ -165,6 +165,34 @@
 	padding: 2px;
 }
 
+
+#search{
+	padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #dedede;
+    box-shadow: 1px 1px #e6e6e6;
+}
+#ok{
+	padding: 5px;
+	border-radius: 5px;
+	border: 0;
+	background-color: #339bff;
+	color: white;
+	
+}
+.mypp{
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.access span{
+	font-size: 14px;
+}
+.access .act{
+	font-weight: bold;
+	color: red;
+}
 </style>
 
 <script type="text/javascript">
@@ -268,10 +296,10 @@ var project = $("")
 						<a href="/flu/member/freelancermypage?email=${o.email }">
 						<c:choose>
 						<c:when test="${not empty o.intro }">
-						<span class="intro">${o.email } : ${map.skills[i.count].email}${o.intro }</span>
+						<span class="intro">${o.intro }</span>
 						</c:when>
 						<c:otherwise>
-						<span class="intro">자기소개가 없습니다.${o.email } : ${map.skills[i.count].email}</span>
+						<span class="intro">자기소개가 없습니다.</span>
 						</c:otherwise>
 						</c:choose>
 						</a>
@@ -291,32 +319,36 @@ var project = $("")
 				<div class="freelancerstar">
 					<div class="starpoint">
 						<p>
+						<c:forEach items="${map.evaluation2 }" var="eval">
+						<c:if test="${eval.toEmail eq o.email }">
 						<span>
-						<c:if test="${eval.eval[i.count] eq 0 }">
+						<c:if test="${eval.satisfy eq 0 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/0.png">
 						</c:if>
-						<c:if test="${eval.eval[i.count] eq 1 }">
+						<c:if test="${eval.satisfy eq 1 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/1.png">
 						</c:if>
-						<c:if test="${eval.eval[i.count] eq 2 }">
+						<c:if test="${eval.satisfy eq 2 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/2.png">
 						</c:if>
-						<c:if test="${eval.eval[i.count] eq 3 }">
+						<c:if test="${eval.satisfy eq 3 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/3.png">
 						</c:if>
-						<c:if test="${eval.eval[i.count] eq 4 }">
+						<c:if test="${eval.satisfy eq 4 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/4.png">
 						</c:if>
-						<c:if test="${eval.eval[i.count] eq 5 }">
+						<c:if test="${eval.satisfy eq 5 }">
 						<img alt="1점" src="${pageContext.request.contextPath}/resources/img/starpoint/5.png">
 						</c:if>
 						</span>
 						<span style="line-height: 30px; vertical-align: top; float: right; margin-right: 10px;">
-							${eval.eval[i.count] }점/평가 ${eval.evaluationLength[i.count] }개
+							<span style=" font-weight: bold;">${eval.satisfy }</span>점/평가 <span style=" font-weight: bold;">${eval.passion }</span>개
 						</span>
+							</c:if>
+							</c:forEach>
 						</p>
 						<hr>
-						<p><span>계약한 프로젝트</span><span style="float: right; margin-right: 10px;">
+						<p><span class="mypp">계약한 프로젝트</span><span style="float: right; margin-right: 10px;">
 						<c:forEach items="${map.myproject}" var="t">
 						<c:if test="${t.email eq o.email }">
 						
@@ -327,7 +359,7 @@ var project = $("")
 						건
 						</span></p>
 						<hr>
-						<p><span>포트폴리오</span><span style="float: right; margin-right: 10px;">
+						<p><span class="mypp">포트폴리오</span><span style="float: right; margin-right: 10px;">
 						<c:forEach items="${map.portfolio }" var="p">
 						<c:if test="${p.email eq o.email }">
 						${p.pfNum }
@@ -340,16 +372,16 @@ var project = $("")
 					<div class="access">
 						<p>
 						<c:if test="${o.authenticState eq 2 }">
-						<span>신원 인증</span>
+						<span>신원 <span class="">인증</span></span>
 						</c:if>
 						<c:if test="${o.authenticState ne 2 }">
-						<span>신원 미인증</span>
+						<span>신원 <span class="act">미인증</span></span>
 						</c:if>
 						<c:if test="${not empty o.phone }">
-						<span>연락처 등록</span>
+						<span>연락처 <span class="act">등록</span></span>
 						</c:if>
 						<c:if test="${empty o.phone }">
-						<span>연락처 미등록</span>
+						<span>연락처 <span class="act">미등록</span></span>
 						</c:if>
 						</p>
 					</div>
@@ -382,12 +414,6 @@ var project = $("")
 				<c:if test="${listInfo.curBlock<listInfo.totalBlock }">
 				<span id="nextview">[다음]</span>			
 				</c:if>
-				</div>
-				<div>
-					<p>curPage : ${listInfo.curPage }         search : ${listInfo.search}     kind : ${listInfo.kind }</p>
-					<p>startNum : ${listInfo.startNum}   lastNum : ${listInfo.lastNum}</p>
-					<p>startRow : ${listInfo.startRow}   lastRow : ${listInfo.lastRow}</p>
-					<p>curBlock : ${listInfo.curBlock }      perPage : ${listInfo.perPage}</p>
 				</div>
 		</div>
 	</section>

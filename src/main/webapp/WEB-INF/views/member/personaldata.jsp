@@ -173,7 +173,34 @@ p span{
     display: inline-block;
    	text-align: right;
    	padding-right: 30px;
+   	font-weight: bold;
 }	
+
+#btn1{
+	
+	border: 0;
+	color: white;
+	background-color: blue;
+
+}
+
+#btn2{
+
+	border: 0;
+	color: white;
+	background-color: blue;
+
+
+}
+
+.uuid{
+
+	width: 100px;
+	height : 70px;
+	float: left;
+
+}
+
 
 </style>
 </head>
@@ -256,26 +283,25 @@ p span{
 								정보가 없습니다.
 								</c:if></p>
 								
-								<c:if test="${member.type=='admin'}">
-									<p>신원 인증 자료: 
+								<c:if test="${member.kind=='admin'}">
+									<p><span id="identity">신원 인증 자료:</span> 
 										<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
-									</p>
-									
-									
-									<c:if test="${dto.authenticState=='1'}">
+								<div class="uuid">
+								<c:if test="${dto.authenticState=='1'}">			
 									<form action="../checkMember/checkMemberUpdate" id="frm1">
 										<input type="hidden" name="email" value="${dto.email}">
 										<input type="button" name="check" value="신원확인 완료" id="btn1">
 									</form>
-									</c:if>
+								</c:if>
 									
-									<c:if test="${dto.authenticState=='2'}">
+								<c:if test="${dto.authenticState=='2'}">
 									<form action="../checkMember/checkMemberDelete" id="frm2">
 										<input type="hidden" name="email" value="${dto.email}">
 										<input type="button" name="check" value="신원확인 취소하기" id="btn2">
 									</form>
-									</c:if>
-									
+								</c:if>
+								</div>
+								</p>
 								</c:if>
 								
 							</div>

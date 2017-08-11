@@ -49,6 +49,14 @@ public class FreelancerService{
 
 	//프리랜서 리스트
 	public Map<String, Object> freelancerList(ListInfo listInfo){
+		Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
+
+		
+		
+		return map;
+	}
+	//프리랜서 리스트 2
+	public Map<String, Object> freelancerList2(ListInfo listInfo){
 		//Map<String, Object> map = freelancerDAO.freelancerList(listInfo);
 
 		
@@ -105,24 +113,43 @@ public class FreelancerService{
 		Map<String, Object> map2 = freelancerDAO.freelancerListEval2(listInfo);
 		List<Evaluation> eval = (List<Evaluation>)map2.get("evaluation");
 		
-		int total =0;
+		List<Evaluation> eval2 = new ArrayList<Evaluation>();
+		System.out.println("평가 갯수:"+eval.size());
 		for(int j = 0; j< aa.size(); j++){
+			int total =0;
+			int count =0;
 			Evaluation evaluation = new Evaluation();
 			evaluation.setToEmail(aa.get(j).getEmail());
 				for(int i =0; i<eval.size(); i++){
-					if(aa.get(j).equals(eval.get(i).getToEmail())){
+					System.out.println("평가당한 이메일:"+eval.get(i).getToEmail()+":멤버이메일:"+aa.get(j).getEmail()+":점수:"+eval.get(i).getCommunication());
+					System.out.println(aa.get(j).getEmail().equals(eval.get(i).getToEmail()));
+					if(aa.get(j).getEmail().equals(eval.get(i).getToEmail())){
+						
 						total = total + (eval.get(i).getProfessional()+eval.get(i).getSatisfy()+eval.get(i).getCommunication()+eval.get(i).getPassion()+eval.get(i).getSchedule())/5;
-					}else{
-						total = total;
+						count++;
+						System.out.println("값의 평균:"+total);
 					}
+					
+					
 				}
-			
+				if(count != 0){
+				total = total/count;
+				}
+				evaluation.setSatisfy(total); //평점
+				evaluation.setPassion(count); //평가 갯수
+				
+				eval2.add(evaluation);
+				
+		}
+		for(int i=0; i< eval2.size(); i++){
+			System.out.println("평가당한 이메일:"+eval2.get(i).getToEmail()+":평균:"+eval2.get(i).getSatisfy());
 		}
 		
 		
+		map.put("evaluation2", eval2);
+		
 		return map;
 	}
-	
 	
 	//프리랜서리스트 평가리스트
 	public Map<String, Object> freelancerListEval(ListInfo listInfo){
