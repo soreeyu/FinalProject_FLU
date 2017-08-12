@@ -77,7 +77,7 @@ public class HomeController {
 		int count2=1;
 		int pay=1;
 		
-		if(ar!=null && freelancer!=null){	
+		/*if(ar!=null && freelancer!=null){	
 			
 		for(int i=0;i<6;i++){	
 			projectDTO = new ProjectDTO();
@@ -108,7 +108,7 @@ public class HomeController {
 		}
 
 		List<ProjectDTO> countList = projectService.roomCount();
-		echoHandler.roomCount(countList);
+		echoHandler.roomCount(countList);*/
 
 		model.addAttribute("pjcount", pjcount);
 		model.addAttribute("mcount", mcount);

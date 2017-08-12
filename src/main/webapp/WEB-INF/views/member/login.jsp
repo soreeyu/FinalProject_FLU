@@ -6,7 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
 .header_wrap{
@@ -22,6 +24,10 @@
 	width: 1152px;
 	height: 600px;
 	margin: 0 auto;
+}
+input[type=text], input[type=password]{
+	height: 34px;
+	width: 50%;
 }
 .margin{
 	width: 100%;
@@ -90,7 +96,7 @@
 	padding-left: 160px;
     margin-left: 10px;
     margin-right: 10px;
-    width: 280px;
+    width: 440px;
     
 }
 #btn{
