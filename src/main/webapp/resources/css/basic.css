@@ -77,7 +77,8 @@ header{
     border-radius: 4px;
     line-height: 25px;
         width: 60px;
-    text-align: center
+    text-align: center;
+    font-size: 14px;
 }
 
 .header_sign_up a{
@@ -86,7 +87,8 @@ header{
 	line-height: 25px;
 	border-radius: 4px;
 	    width: 70px;
-    text-align: center
+    text-align: center;
+    font-size: 14px;
 	
 }
 

@@ -27,7 +27,8 @@
 <style type="text/css">
 .main_section {
     width: 1160px;
-    height: 1000px;
+    min-height: 1000px;
+    height: 1300px;
     margin: 0 auto;
     margin-top: 30px;
 }
