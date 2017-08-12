@@ -22,8 +22,10 @@ public class MyPageEmailInterceptor extends HandlerInterceptorAdapter{
 		if(!paramEmail.equals(email)){
 			System.out.println("파라미터 이메일 넘어감");
 			if(paramEmail.equals("")){
+				System.out.println("세션이메일 임");
 				request.setAttribute("email", email);
 			}else{
+				System.out.println("파라미터 이메일임");
 			request.setAttribute("email", paramEmail);
 			}
 		}else{

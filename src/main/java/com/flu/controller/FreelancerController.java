@@ -170,8 +170,8 @@ public class FreelancerController {
 	
 	//프리랜서 정보 등록
 	@RequestMapping(value="infoInsert", method=RequestMethod.GET)
-	public String freelancerinfoInsert(Model model, HttpRequest request){
-		
+	public String freelancerinfoInsert(Model model, HttpServletRequest request){
+		System.out.println("프래랜서 정보 등록폼");
 		model.addAttribute("active8", "a");
 		model.addAttribute("path", "infoInsert");
 		return "/member/freelancer/freelancerinfo";
@@ -279,6 +279,7 @@ public class FreelancerController {
 	//자기소개 등록 폼
 	@RequestMapping(value="introInsert", method=RequestMethod.GET)
 	public String introInsert(Model model){
+		System.out.println("자기소개 등록 폼 ");
 		model.addAttribute("active2", "a");
 		model.addAttribute("path", "introInsert");
 		return "/member/freelancer/introform";
@@ -328,7 +329,7 @@ public class FreelancerController {
 	//자기소개 수정 폼
 	@RequestMapping(value="introUpdate", method=RequestMethod.GET)
 	public String introUpdate(HttpSession session, Model model){
-		
+		System.out.println("자기소개 등록 폼 ");
 		model.addAttribute("active2", "a");
 		model.addAttribute("path", "introUpdate");
 		model.addAttribute("free", this.freelancerview(session));
