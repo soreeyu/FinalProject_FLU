@@ -38,6 +38,14 @@ public class CheckMemberService {
 	
 	
 	public List<CheckMemberViewDTO> clientList(ListInfo listInfo){
+		
+		int totalCount = checkMemberDAO.clientCount(listInfo);
+		listInfo.makePage(totalCount);
+		listInfo.makeRow();
+		
+		System.out.println(listInfo.getStartRow());
+		System.out.println(listInfo.getLastRow());
+		
 		return checkMemberDAO.clientList(listInfo);
 	}
 	

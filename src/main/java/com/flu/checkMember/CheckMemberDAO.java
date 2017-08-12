@@ -55,6 +55,10 @@ public class CheckMemberDAO {
 		return sqlSession.delete(NAMESPACE+"delete", email);
 	}
 	
+	//토탈카운트
+	public int clientCount(ListInfo listInfo){
+		return sqlSession.selectOne(NAMESPACE+"clientCount", listInfo);
+	}
 
 
 	

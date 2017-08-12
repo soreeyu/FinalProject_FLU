@@ -16,6 +16,7 @@
   	<select id="ingCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer">
   		select count(projectnum) from applicant where projectNum=#{projectNum} and state in('ing')
   	</select>
+  	
   
   	<update id="update" parameterType="java.lang.String">
   		update applicant set state = 'payFinish' where email=#{email}

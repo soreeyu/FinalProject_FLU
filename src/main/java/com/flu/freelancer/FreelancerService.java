@@ -20,7 +20,6 @@ import com.flu.profile.License;
 import com.flu.profile.PortFolio;
 import com.flu.profile.PortFolioImg;
 import com.flu.profile.Skill;
-import com.flu.profile.TypeInfo;
 import com.flu.project.ProjectDTO;
 import com.flu.util.ListInfo;
 

@@ -179,31 +179,28 @@ p span{
    	font-weight: bold;
 }	
 
-#btn1{
-	
-	border: 0;
-	color: white;
-	background-color: blue;
-
-}
-
-#btn2{
-
-	border: 0;
-	color: white;
-	background-color: blue;
-
-
-}
-
 .uuid{
 
-	width: 100px;
-	height : 70px;
+	display: inline-block;
 	float: left;
 
 }
 
+#btn{
+	
+	width: 120px;
+	height: 30px;
+	border: 0;
+	color: white;
+	background-color: #66b3ff;
+	border-radius: 4px;
+}
+
+#uniqueSpan{
+
+	width: 130px;
+
+}
 
 </style>
 </head>
@@ -289,22 +286,19 @@ p span{
 								<c:if test="${member.kind=='admin'}">
 									<p><span id="identity">신원 인증 자료:</span> 
 										<a href="../file/fileDown?fname=${dto.fname}">${dto.oname}</a>
-								<div class="uuid">
-								<c:if test="${dto.authenticState=='1'}">			
-									<form action="../checkMember/checkMemberUpdate" id="frm1">
-										<input type="hidden" name="email" value="${dto.email}">
-										<input type="button" name="check" value="신원확인 완료" id="btn1">
-									</form>
+
+								
+								<c:if test="${dto.authenticState=='1'}">	
+									<span id="uniqueSpan"><input type="button" name="check" value="신원확인 완료" id="btn" title="${dto.authenticState}" lang="${dto.email}"></span>
+
 								</c:if>
-									
+								
 								<c:if test="${dto.authenticState=='2'}">
-									<form action="../checkMember/checkMemberDelete" id="frm2">
-										<input type="hidden" name="email" value="${dto.email}">
-										<input type="button" name="check" value="신원확인 취소하기" id="btn2">
-									</form>
+									<span id="uniqueSpan"><input type="button" name="check" value="신원확인 취소" id="btn" title="${dto.authenticState}" lang="${dto.email}"></span>
 								</c:if>
-								</div>
+
 								</p>
+
 								</c:if>
 								
 							</div>
@@ -322,22 +316,22 @@ p span{
 </body>
 <script type="text/javascript">
 
-	$("#btn1").click(function() {
-		if(confirm("신원확인을 완료 하시겠습니까?")){
-			$('#frm1').submit();
+	$('#btn').click(function() {
+		
+		var authenticState = $(this).val('title');
+		var email = $(this).val('lang');
+		
+		if(authenticState==1){
+			if(confirm("신원확인을 완료 하시겠습니까?")){
+				location.href = "../checkMember/checkMemberUpdate?email="+email;
+			}
+		}else{
+			if(confirm("삭제하시면 신원확인이 취소됩니다. 정말 삭제하시겠습니까?")){
+				location.href = "../checkMember/checkMemberDelete?email="+email;
+			}
 		}
-		else{
-			alert("no"); 
-		}
-	});
-	
-	$("#btn2").click(function() {
-		if(confirm("삭제하시면 신원확인이 취소됩니다. 정말 삭제하시겠습니까?")){
-			$('#frm2').submit();
-		}
-		else{
-			alert("no"); 
-		}
+		
+		
 	});
 	
 </script>

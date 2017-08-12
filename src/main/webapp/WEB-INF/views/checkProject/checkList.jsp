@@ -186,8 +186,8 @@ margin-top: 30px;
 	
 	width: 160px;
 	height: 25px;
-	border: 1px solid rgb(203, 203, 180);
-	background-color: rgb(245, 245, 240);	
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;	
 	border-radius: 0.1px;
 	
 }
@@ -196,8 +196,8 @@ margin-top: 30px;
 	
 	width: 170px;
 	height: 25px;
-	border: 1px solid rgb(203, 203, 180);
-	background-color: rgb(245, 245, 240);
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;
 	
 }
 
@@ -267,7 +267,6 @@ thead tr td{
 	
 }
 
-
 .yui .tbody_td1{
 	
 	width: 5%;
@@ -276,7 +275,7 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
-
+	vertical-align: middle;
 	
 }
 
@@ -288,6 +287,7 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
+	vertical-align: middle;
 
 }
 .yui .tbody_td3{
@@ -298,6 +298,7 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
+	vertical-align: middle;
 
 }
 .yui .tbody_td4{
@@ -308,6 +309,7 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
+	vertical-align: middle;
 
 }
 .yui .tbody_td5{
@@ -317,6 +319,7 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
+	vertical-align: middle;
 
 }
 .yui .tbody_td6{
@@ -326,6 +329,7 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
+	vertical-align: middle;
 
 }
 
@@ -337,13 +341,15 @@ thead tr td{
 	line-height: 25px;
 	text-align:  center;
 	border-bottom: 0.5px solid #d0e2e2;
+	vertical-align: middle;
 
 }
+
 
 .label{
     display: inline;
     padding: .2em .6em .2em;
-    font-size: 75%;
+    font-size: 65%;
     font-weight: bold;
     line-height: 1;
     color: #fff;
@@ -351,7 +357,8 @@ thead tr td{
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .2em;
-    background-color: #f33d12;
+    background-color: #00b386;
+  
 }
 
 .check_wait_tr{
@@ -359,14 +366,35 @@ thead tr td{
 }
 
 .stop{
-
-color:red;
-
+	color:red;
 }
 
 .hello{
 	border-bottom: 0.5px solid #d0e2e2;
+}
 
+.btn2{
+
+	width: 100px;
+	height: 30px;
+	border: 0;
+	background-color: #2099bb;
+	color: white;
+	font-weight: bold;
+
+}
+
+.btn2:HOVER {
+	
+	cursor: pointer;
+	background-color: #25b3da;
+	
+}
+
+.x:HOVER {
+	
+	cursor: pointer;
+	
 }
 
 </style>
@@ -530,7 +558,8 @@ color:red;
 					data: {projectNum:num},
 					success:function(data){
 						data = data.trim();
-						$('#'+num).html(data);
+						$('#append'+num).after(data);
+						
 					}
 					
 				}) 
@@ -568,28 +597,21 @@ color:red;
 					var projectNum = $(this).attr('title');
 					
 					if(confirm("입급여부를 확정하고 프로젝트를 시작하시겠습니까?")){
-						
-						
-						alert(email);
-						alert(projectNum);
-						alert(state);
-						
 							
 						location.href="./checkProjectUpdate?email="+email+"&projectNum="+projectNum+"&state="+state;
 						
 					}else{
-						alert("NO");
+						
 					}
 					
 
 				}) 
 				
-/* 				$('#'+num).on("click",".x", function() {
+ 				$('#'+num).on("click",".x", function() {
 
-					$("#"+num).remove();
+					$('.del'+num).remove();
 					
-
-				})  */
+				})  
 				
 
 			}else{//중단하기
@@ -847,7 +869,7 @@ color:red;
 						</thead>
 						<tbody>
 						<c:forEach items="${list}" var="i" varStatus="e">
-							<tr>
+							<tr id="append${i.projectNum }">
 								<td class="tbody_td1">${i.category}</td>
 								<td class="tbody_td2">${i.detailCategory}</td>
 								<td class="tbody_td3">
@@ -879,13 +901,10 @@ color:red;
 								 </c:if>
 								 </td>
 							</tr>
-							<tr class="check_wait_tr">
-								<td colspan="7">
-									<div id="${i.projectNum}">
-									
-									</div>
-								</td>
-							</tr>
+							
+							<!-- 여기 -->
+							
+
 						</c:forEach>
 						</tbody>
 					</table>
