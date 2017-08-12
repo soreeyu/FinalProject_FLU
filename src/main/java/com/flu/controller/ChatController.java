@@ -33,10 +33,6 @@ public class ChatController {
 
 
 
-
-
-	
-
 	@RequestMapping(value="chatDo")
 	public ModelAndView chatDo(ModelAndView mv,HttpSession session,HttpServletRequest request,Integer projectNum){
 		

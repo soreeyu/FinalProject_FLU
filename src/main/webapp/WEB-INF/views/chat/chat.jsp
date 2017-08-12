@@ -9,6 +9,16 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sockjs-1.0.3.min.js" ></script>
 <style type="text/css">
 
+
+
+.wrap{
+
+width: 400px;
+height: 460px;
+border: 1px solid gray;
+
+}
+
 #fileForm{
 
 	visibility: hidden;
@@ -16,11 +26,23 @@
 
 #data{
 
-width: 500px;
-height: 500px;
+width: 360px;
+height: 360px;
 background-color: yellow;
+border: 1px solid black;
+margin: 0 auto;
+margin-top: 20px;
 overflow-y: auto;
 
+
+}
+
+.insert{
+
+	width: 360px;
+	height: 100px;
+	margin: 0 auto;
+	margin-top: 10px;
 
 }
 
@@ -182,15 +204,33 @@ overflow-y: auto;
 </head>
 <body>
 <input type="hidden" value="${member.name}" id="sessionID">
-<input type="text" id="message" value=""/>
-<input type="button" id="sendBtn" value="전송"/><input type="button" value="파일을 첨부하실 경우 클릭하세요" id="fileStart">
-<form id="frm" method="post" enctype="multipart/form-data">
-<div id="fileForm">
-<input type="file" name="file2" id="file2"/><span id="x">X</span>
-</div>
-</form>
-<div id="data">
 
+<div class="wrap">
+	<div id="data">
+
+	</div>
+	
+	<div class="insert">
+		
+		<textarea rows="" cols="" id="message" style="width: 300px; height: 50px; resize: none;">
+		
+		
+		</textarea>
+		
+		<input type="button" id="sendBtn" value="전송"/><input type="button" value="파일을 첨부하실 경우 클릭하세요" id="fileStart">
+		
+	
+		<form id="frm" method="post" enctype="multipart/form-data">
+			<div id="fileForm">
+				<input type="file" name="file2" id="file2"/><span id="x">X</span>
+			</div>
+		</form>
+	</div>
+	
 </div>
+
+
+
+
 </body>
 </html>

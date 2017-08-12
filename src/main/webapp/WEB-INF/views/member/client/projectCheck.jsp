@@ -140,7 +140,8 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	        <c:if test="${i.projectNum eq dto.projectNum }">
 	        <tr>
 	          <td><label for="${o.index }">${i.email }</label></td>
-	          <td style="text-align: center;"><input title="${i.projectNum }" style="vertical-align:bottom;height: 20px;width: 30px;" class="paybox" id="${o.index }" type="checkbox" name="paycheck" value="${i.email }"></td>
+	          <td style="text-align: center;">
+	          <input title="${i.projectNum }" style="vertical-align:bottom;height: 20px;width: 30px;" class="paybox" id="${o.index }" type="checkbox" name="paycheck" value="${i.email }"></td>
 	        </tr>
 	          <p style="vertical-align:top; font-size: 20px;font-weight: bold;">
 	          <span style="margin-left: 30px;"></span></p>

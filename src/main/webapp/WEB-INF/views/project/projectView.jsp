@@ -594,7 +594,7 @@ background-color: white;
       <div class="project_header">
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
-            <span>${dto.name}</span>
+            <span>${dto.name}</span>&emsp;<span id="chat">채팅하기</span>	s
             <c:choose>
             	<c:when test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' }">
 		            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>
@@ -651,7 +651,8 @@ background-color: white;
             
             <p>
             <c:if test="${dto.state eq 'check' or dto.state eq 'done'}">
-            	삭제 신중하게 하셈 [프로젝트 넘: ${dto.projectNum }] 
+            	삭제 신중하게 하셈 [프로젝트 넘: ${dto.projectNum }]
+            	
             </c:if>
             <c:if test="${dto.del_check == 0}">
             	 중단 요청 후 중단이 완료되면 복구가 불가능합니다. 신중하게 결정해 주세요[프로젝트 넘: ${dto.projectNum }] 
@@ -762,10 +763,6 @@ background-color: white;
             </div>
          </c:if>
          
-         
-         
-            
-            
             <div class="project-detail-box">
                <div class="project-detail-top">
                   <div class="detail-title">기획상태</div>
@@ -1457,7 +1454,7 @@ var testId = "";
 
 
 	   
-	   $('#dateBTN').click(function name() {
+	   $('#dateBTN').click(function () {
 
 		   var url="./moreDate";
 		   var option = "width=440,height=340,top=100,left=300";
@@ -1466,6 +1463,16 @@ var testId = "";
 		   
 		   
 		});
+	   
+	   $('#chat').click(function() {
+		   
+		   var url="../chat/chatDo?projectNum=${dto.projectNum }";
+		   var option = "width=440,height=500,top=100,left=300";
+		  
+		   window.open(url,'chat',option);
+		   
+	   });
+	   
 
 
 </script>
