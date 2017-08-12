@@ -559,22 +559,19 @@ thead tr td{
 					success:function(data){
 						data = data.trim();
 						$('#append'+num).after(data);
-						
 					}
-					
 				}) 
 				
-
 				
-				$('#'+num).on("click",".btn2", function() {
+				$('.yui').on("click",".btn2", function() {
 					var email = $(this).attr('title');
 					var name = $(this).attr('lang');
-					
-					if(confirm(name+"님의 대금처리를 완료하시겠습니까?")){
+
+ 					if(confirm(name+"님의 대금처리를 완료하시겠습니까?")){
 						location.href = "../applicant/applicantPayFinish?email="+email;
 					}else{
-						alert("잘생각하셨습니다.");
-					}
+						
+					} 
 				}) 
 			
 				
@@ -587,12 +584,12 @@ thead tr td{
 					type: "GET",
 					data: {email:email,projectNum:num,state:state},
 					success:function(data){
-						$('#'+num).html(data);
+						$('#append'+num).after(data);
 					}
 					
 				})
 				
-				$('#'+num).on("click",".btn2", function() {
+				$('.yui').on("click",".btn2", function() {
 
 					var projectNum = $(this).attr('title');
 					
@@ -607,7 +604,7 @@ thead tr td{
 
 				}) 
 				
- 				$('#'+num).on("click",".x", function() {
+ 				$('.yui').on("click",".x", function() {
 
 					$('.del'+num).remove();
 					
