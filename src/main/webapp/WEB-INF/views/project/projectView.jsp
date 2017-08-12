@@ -552,7 +552,7 @@ background-color: white;
    padding: 10px 20px 10px 20px;
    width: 100%;
    height: 250px;
-   background-color: blue;
+
 }
 .dto_profile{
    background-color: yellow;
@@ -579,6 +579,34 @@ background-color: white;
 
 .pjsellContents{
 	margin-top: 30px;
+}
+.dto_profile_detail{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid #ccc;
+
+}
+.profile_left{
+	float: left;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 13px;
+    
+}
+.profile_right{
+    margin-left: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    float: right;
+    margin-bottom: 13px;
+}
+.profile_count{
+	color: #f1720c;
+	font-weight: bold;
+	font-size: 14px;
+}
+#pj-delete{
+	background-color: rgb(68, 110, 171);
 }
 
 
@@ -1037,12 +1065,24 @@ background-color: white;
                   	<img style="width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/profile/${mem.fProfileImage}">
                   </div>
                </div>
+               <div style="padding: 10px 20px 20px 20px;">
                <div class="dto_profile_detail">
-                  <div>프로젝트 등록자 : ${dto.email}</div>
-                  <div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
-                  <div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
-                  <div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
-                  <div><span>판매중인 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
+                  <div>
+        			<div class="profile_left" style="line-height: 20px;">
+				                  프로젝트 등록자
+				                 
+	                   ${dto.email}
+        			</div>	         
+	               </div>
+                  <div><span class="profile_left">프로젝트 등록</span>
+                  <span class="profile_right" id="total_pjcount"><span class="profile_count">${totalCount}</span>건 </span></div>
+                  <div><span class="profile_left">진행중인 프로젝트</span>
+                  <span class="profile_right" id="ing_pjcount"><span class="profile_count">${ingCount }</span> 건</span></div>
+                  <div><span class="profile_left">완료한 프로젝트</span>
+                  <span class="profile_right" id="finish_pjcount"><span class="profile_count">${finishCount }</span> 건</span></div>
+                  <div><span class="profile_left">판매중인 프로젝트</span>
+                  <span class="profile_right" id="recurit_pjcount"><span class="profile_count">${conCount }</span> 건</span></div>
+               </div>
                </div>
                </div>
             </div>
