@@ -40,6 +40,7 @@
 							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
 						</div>
 						<div class="project-contents">${dto.contents }</div>
+							<c:if test="${dto.state ne 'sell'}">
 						<div class="project-contents-right">
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
@@ -50,6 +51,7 @@
 							
 							
 							<input type="hidden" class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></div>
+							</c:if>
 							 
 							 
 						</div>

@@ -50,7 +50,7 @@ public class ProjectController {
 
    //@ResponseBody
    @RequestMapping(value="projectMap", method=RequestMethod.GET)
-   public Map<String, Object> projectMap(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
+   public Map<String, Object> projectMap(ListInfo listInfo, ProjectDTO projectDTO,List<String> array, List<String> aray){
       
       System.out.println("controller-projectMap");
       
@@ -62,7 +62,7 @@ public class ProjectController {
       
       Map<String, Object> map = new HashMap<String, Object>();
 
-        List<ProjectDTO> pjlist = projectService.projectList(listInfo, projectDTO, array);
+        List<ProjectDTO> pjlist = projectService.projectList(listInfo, projectDTO, array, aray);
         
         map.put("pjlist", pjlist);
         
@@ -120,7 +120,7 @@ public class ProjectController {
    
    //project 리스트 AJAX
    @RequestMapping(value="projectListInner", method=RequestMethod.GET)
-   public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
+   public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array, @RequestParam(value="aray", required=true) List<String> aray ){
       System.out.println("projectListInner요");
    
       System.out.println("controller-category="+projectDTO.getCategory());
@@ -134,7 +134,7 @@ public class ProjectController {
       listInfo.makePage(totalCount);
       listInfo.makeRow();
             
-      List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
+      List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array, aray);
             
       for(int i=0;i<ar.size();i++){
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
@@ -193,7 +193,7 @@ public class ProjectController {
       PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
       
       System.out.println("session-kind=="+memberDTO.getKind());
-      if(memberDTO.getKind().equals("freelancer")){
+      if(memberDTO.getKind().equals("freelancer")&&projectDTO.getState().equals("ing")){
     	  applicantDTO = applicantService.checkFinish(applicantDTO);
     	 model.addAttribute("finishCheck", applicantDTO.getFinishCheck());
       }else{

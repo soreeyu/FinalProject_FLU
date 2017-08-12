@@ -9,13 +9,14 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/project/projectInsert.css">
 <title>Insert title here</title>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 $(function(){
     //전역변수선언
     var editor_object = [];
-     
+    
     nhn.husky.EZCreator.createInIFrame({
         oAppRef: editor_object,
         elPlaceHolder: "smart",
@@ -98,305 +99,8 @@ $(function(){
        }
     });
  
-})
+});
 </script>
-<style type="text/css">
-
-*{
-font-family: -webkit-body;
-}
-.main_section{
-   min-width: 1160px;
-   width: 1160px;
-   height: 2700px;
-   margin: 0 auto;
-   margin-top: 30px;
-}
-.project_header{
-   width: 1100px;
-   padding: 30px;
-   height: 60px;
-   margin-bottom: 20px;
-   border: 1px solid #e6e6e6;
-   margin-bottom: 30px;
-   background-color: white;
-}
-#header_ttt{
-   font-size: x-large;
-   font-weight: bolder;
-   margin-bottom: 10px;
-}
-#header_tt{
-   font-size: small;
-   font-weight: lighter;
-   color: #999;
-}
-.contents{
-   width: 1260;
-   height: 2700px;
-   border: 1px solid #e6e6e6;
-   background-color: white;
-}
-.contents_main{
-   width: 750px;
-   height: 100%;
-   display: block;
-   float: left;
-   padding: 30px 20px 30px 30px;
-}
-.contents_sub{
-   width: 350px;
-   height: 100%;
-   display: block;
-   background-color: red;
-   float: right;
-}
-.main-wrapper{
-   display: block;
-   float: left;
-   margin-right: 20px;
-   margin-bottom: 5px;
-}
-.sub-wrapper{
-   display:block;
-   float: left;
-   margin-bottom: 5px;
-}
-
-.cate-select{
-   background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center;
-   width: 250px;
-   height: 36px;
-   border: 1px solid #ccc;
-}
-span{
-   color: #f48023;
-   font-weight: bold
-}
-input[type="text"]{
-   border: 1px solid #dedede;
-   border-radius: 2px;
-   height: 30px;
-   float: left;
-   
-}
-input[type="date"]{
-	border: 1px solid #dedede;
-   border-radius: 2px;
-   height: 30px;
-   width:150px;
-   float: left;
-
-   background: #F9F9F9 url(/static/libs/img/jquery.fs.selecter-arrow.png?2cb14a8c1816) no-repeat right center;
-}
-input[type="number"]{
-	border: 1px solid #dedede;
-   border-radius: 2px;
-   height: 30px;
-   float: left;
-   border-right: none;
-}
-.control-wrapper{
-   width: 100%;
-   height: 65px;
-}
-.detail{
-   font-size: 12px;
-   color: #959595;
-   margin-top: 5px;
-   display: block;
-   line-height: 18px;
-   font-weight: 200;
-}
-
-label{
-   width: 150px;
-   height: 100%;
-   text-align: right;
-   display: block;
-   float: left;
-   margin-right: 20px;
-   font-size: 14px;
-   line-height: 35px;
-}
-.category-wrapper{
-   width: 530px;
-   display: block;
-   float: left;
-   height: 100%;
-}
-.plan-wrapper{
-   width: 100%;
-   height: 150px;
-}
-.plan-radio{
-   height: 130px;
-   width: 170px;
-   display: block;
-   float: left;
-   margin-right: 10px;
-   font-size: 12px;
-   font-weight: lighter;
-   text-align: center;
-}
-#plan-radio1{
-   background-image: url("${pageContext.request.contextPath}/resources/img/project/idea.png");
-   height: 134px;
-}
-#plan-radio2{
-   background-image: url("${pageContext.request.contextPath}/resources/img/project/simple.png");
-   height: 134px;
-}
-#plan-radio3{
-   background-image: url("${pageContext.request.contextPath}/resources/img/project/detail.png");
-   height: 134px;
-}
-
-.radio-text{
-    margin-top: 90px;
-    padding: 0px;
-    width: 160px;
-    line-height: 34px; 
-}
-.ttttt1{
-	margin-top: 5px;
-	color: #999;
-	font-size: 12px;
-}
-.textarea{
-	float: left;
-	width: 580px;
-}
-.control-wrapper-skill{
-   width: 100%;
-   height: 270px;
-}
-.skill-wrapper{
-   width: 100%;
-   height: 270px;
-   
-}
-.skill-li{
-   width: 140px;
-   display: inline;
-   float: left;
-   line-height: 30px;
-   margin-right: 30px;
-   font-weight: bold;
-   font-size: 14px;
-}
-.long-text{
-   font-size: small;
-}
-.btn{
-   margin: 0 auto;
-   text-align: ce
-}
-.progress-bar{
-   height: 1em !important;
-    margin-bottom: 8px;
-    border: none;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    /* background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; */
-}
-.progress-bar-in{
-   margin-left: -1px !important;
-    margin: 0 !important;
-    height: 100% !important;
-    /* border: none; */
-    /* background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; */
-}
-.project-add-helper-bottom{
-   float: right;
-}
-.project-add-info-box{
-   background-color: yellow;
-   margin-top: 20px;
-}
-.info-data-img{
-   margin-top: 20px;
-   width: 40px;
-   height: 40px;
-/*    float: left; */
-}
-
-.project-info-text{
-   margin-top: 20px;
-    margin-left: 7px;
-    display: block;
-    float: right;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 14px;
-    width: 250px;
-    color: #666;
-    font-size: 12px;
-}
-.input-end{
-	padding: 6px 12px;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.5;
-    color: #666;
-    text-align: center;
-    background-color: #eee;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    float: left;
-    height: 20px;
-    border-left: none;
-}
-#meetKind{
-    background: #F9F9F9 url(/static/libs/img/jquery.fs.selecter-arrow.png?2cb14a8c1816) no-repeat right center;
-    height: 34px;
-    border: 1px solid #dedede;
-    border-radius: 3px;
-    width: 150px;
-}
-.meetKind{
-    background: #fff;
-    border-bottom: 1px solid #e3e3e3;
-    color: #333;
-    cursor: pointer;
-    display: block;
-    font-size: 13px;
-    margin: 0;
-    overflow: hidden;
-    padding: 8px 10px;
-    text-overflow: ellipsis;
-    width: 100%;
-}
-#addr_btn{
-    color: #fff;
-    background-color: #00b386;
-    height: 34px;
-    box-shadow: 1px 1px 1px #49bd9f;
-}
-.exp_text{
-	font-size: 14px;
-	color: black;
-	font-weight: 200;
-	vertical-align: middle;
-}
-.btn_Box{
-	width: 750px;
-}
-#submitBTN{
-	color: #fff;
-    background-color: rgb(68, 110, 171);
-    border-color: #357ebd;
-    height: 34px;
-    margin: 0 auto;
-    height: 46px;
-    width: 100px;
-    width: 220px;
-    text-align: center;
-}
-
-</style>
 
 
 </head>
@@ -862,8 +566,10 @@ label{
                </div>
             </div>
 
-			<div class="btn_Box">            
+			<div class="btn_Box">     
+			<div style="margin: 0 auto;">
             <input type="button" class="btn btn-default" id="submitBTN" value="등록">
+			</div>       
 			</div>
             </form>
             
@@ -872,6 +578,12 @@ label{
          <section class="contents_sub">
             
             <!-- 옆구리 CSS껴넣기 사진들 -->
+            <div class="right_first">
+            	<div style="border-left: 1px #dedede solid; border-bottom: 1px #dedede solid;">
+            <img id="right_first_img" src="${pageContext.request.contextPath}/resources/img/project/project-process.png">
+            	</div>
+            
+            </div>
          </section>
       </div>
 
@@ -984,9 +696,7 @@ if(type=='update'){
 
 
 		 function check_submit() {
-			
-
-			
+		
 			alert("btn");
 			if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
 				alert("옵션 선택좀");
@@ -1049,6 +759,7 @@ if(type=='update'){
 
 
 	}
+}
 	
 
 
@@ -1121,7 +832,6 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
-
 </script>
 
 </body>

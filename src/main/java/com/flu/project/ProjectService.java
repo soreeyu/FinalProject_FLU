@@ -54,14 +54,14 @@ public class ProjectService {
 	}
 	
 	//project List
-	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array){
+	public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO, List<String> array, List<String> aray){
 		
 		
 		
 		System.out.println("service-list-search==="+listInfo.getSearch());
 		System.out.println("projectService-projectList");
 		System.out.println("service-category="+projectDTO.getCategory());
-		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array);
+		List<ProjectDTO> list = projectDAO.projectList(listInfo, projectDTO, array, aray);
 
 		
 		for(int i=0;i<list.size();i++){

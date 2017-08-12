@@ -50,7 +50,10 @@
       where state='done' and
       (name like '%' || #{listInfo.search} || '%' or  contents like '%' || #{listInfo.search} || '%')
       <if test="Cate == 1">
-      and category=#{project.category}
+      and category IN
+      <foreach collection="aray" item="a" open="(" close=")" separator=",">
+      	#{a}
+      </foreach>
       </if>
       <if test="result == 1">
        and detailCategory IN 
