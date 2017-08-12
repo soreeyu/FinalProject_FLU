@@ -122,7 +122,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	          <h4 class="modal-title">계약을 진행 할 사람을 선택 하세요.</h4>
 	        </div>
 	        <div class="modal-body">
-	        <form id="appform" action="/flu/project/applicantCheck" method="post">
+	     <form id="appform" action="/flu/project/applicantCheck" method="post">
 	        <input id="hiddenNum" type="hidden" name="projectNum">
 	        <table style="display:block; margin:0 auto; width: 70%; text-align: center;">
 	        <colgroup>
@@ -435,11 +435,13 @@ $(".okbtn").click(function() {
 	var checkbox = $("input[name='paycheck']:checked");
 	var count =0;
 	$(checkbox).each(function() {
+		alert($(this).val());
 		count++;
 	});
 	if(count == 0){
-		alert("지원자를 선택해 주세요")
+		alert("지원자를 선택해 주세요");
 	}else{
+		
 		$("#appform").submit();
 	}
 	
