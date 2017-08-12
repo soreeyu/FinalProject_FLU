@@ -676,9 +676,6 @@ alert(finishMonth);
 alert(finishYear);
 
 
-
-
-
  function check_submit() {
 	
 	alert("btn");

@@ -2,8 +2,6 @@ package com.flu.checkMember;
 
 import java.sql.Date;
 
-import com.flu.profile.TypeInfo;
-
 public class CheckMemberViewDTO{
 	
 	private String kind;
@@ -29,11 +27,17 @@ public class CheckMemberViewDTO{
 	private String namegender;
 	private Date birth;
 	
-	private TypeInfo typeInfo;
-	
+
 	private String fname;
 	private String oname;
-
+	private Date reg_date;
+	
+	public Date getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
 	public String getAlarmstate() {
 		return alarmstate;
 	}
@@ -159,12 +163,6 @@ public class CheckMemberViewDTO{
 	}
 	public void setAuthenticState(String authenticState) {
 		this.authenticState = authenticState;
-	}
-	public TypeInfo getTypeInfo() {
-		return typeInfo;
-	}
-	public void setTypeInfo(TypeInfo typeInfo) {
-		this.typeInfo = typeInfo;
 	}
 	public String getFname() {
 		return fname;

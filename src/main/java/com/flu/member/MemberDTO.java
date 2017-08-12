@@ -4,8 +4,6 @@ import java.sql.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.flu.profile.TypeInfo;
-
 public class MemberDTO {
 	
 	private String kind;

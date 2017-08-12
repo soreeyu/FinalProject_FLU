@@ -35,16 +35,22 @@ public class ApplicantController {
 	//해당 프로젝트를 완료한 Applicant 리스트와 그들의 memberInfo 들고오기
 	@RequestMapping(value="applicantListCheck")
 	public String viewCash(Integer projectNum,Model model){
-
-		List<ApplicantDTO> applicantList = applicantService.list(projectNum);
-
-		List<CheckMemberViewDTO> memberList = new ArrayList<CheckMemberViewDTO>();
+		
+		//해당 프로젝트의 지원자 들고오기
+		List<ApplicantDTO> applicantList = applicantService.list(projectNum); 
+		//그 지원자의 정보 들고오기
+		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
+		
 		
 		for(int i=0;i<applicantList.size();i++){
-			memberList.add(memberService.memberView(applicantList.get(i).getEmail()));
+			
+			MemberDTO memberDTO = memberService.memberView2(applicantList.get(i).getEmail());
+			memberList.add(memberDTO);
+			
 		}
 		
 		model.addAttribute("memberList", memberList).addAttribute("applicantList", applicantList);
+	
 		
 		return "applicant/checkApplicantInfo";
 	}
