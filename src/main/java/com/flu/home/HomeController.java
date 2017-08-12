@@ -77,7 +77,7 @@ public class HomeController {
 		int count2=1;
 		int pay=1;
 		
-		if(ar!=null && freelancer!=null){	
+		/*if(ar!=null && freelancer!=null){	
 			
 		for(int i=0;i<6;i++){	
 			projectDTO = new ProjectDTO();
@@ -118,7 +118,7 @@ public class HomeController {
 		model.addAttribute("freelancer", freelancer);
 		model.addAttribute("count1", count1);
 		model.addAttribute("count2", count2);
-		model.addAttribute("pay", pay);
+		model.addAttribute("pay", pay);*/
 	
 		
 		

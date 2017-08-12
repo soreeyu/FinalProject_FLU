@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"></c:import>
-
 <title>Insert title here</title>
 <style type="text/css">
 .main_section {
@@ -25,6 +24,32 @@
 	width: 1160px;
 	display: inline-block;
 	margin-top: 30px;
+}
+.title {
+	width: 100%;
+	height: 100px;
+	background-color: white;
+	border: 1px solid #dedede;
+}
+
+#t1{
+
+	font-size: x-large;
+	margin-top: 20px;
+	margin-left: 30px;
+	font-weight: bolder;
+	color: rgb(85, 85, 85);
+	
+}
+
+#t2{
+
+	font-size: medium;
+	margin-top: 15px;
+	margin-left: 30px;
+	font-weight: normal;
+	color: #999;
+
 }
 
 /******************************** 왼쪽 메뉴 *******************************/
@@ -76,11 +101,13 @@
 	padding: 4px 8px;
 	background-color: white;
 	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .sidebar_menu ul li {
 	height: 40px;
 	padding: 4px 0;
+	
 }
 
 .sidebar_menu ul li a {
@@ -90,6 +117,7 @@
 	font-size: 14px;
 	color: #999;
 	line-height: 1.4;
+	cursor: pointer;
 }
 /******************************** 왼쪽 메뉴 *******************************/
 .right_main {
@@ -259,22 +287,17 @@
 						<span>프리랜서</span>
 						<div class="free_img_div">
 							<c:if test="${empty member.fProfileImage }">
-								<img alt="프로필사진"
-									src="${pageContext.request.contextPath }/resources/img/FLU.png">
-							</c:if>
-							<c:if test="${not empty member.fProfileImage }">
-								<img alt="프로필사진"
-									src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
-							</c:if>
-							<p>
-								<span>닉네임</span>
-							</p>
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
+						</c:if>
+						<c:if test="${not empty member.fProfileImage }">
+						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
+						</c:if>
+						<label style="display: block;"><span>${member.nickName}</span></label>
 						</div>
 
 					</div>
 					<div class="sidebar_menu">
-						<ul>
-					
+						<ul>				
 							<li><a class="menu" id="project_app">지원한 프로젝트</a></li>
 							<li><a class="menu" id="project_ing">진행중인 프로젝트</a></li>
 							<li><a class="menu" id="project_finish">완료된 프로젝트</a></li>
@@ -292,7 +315,7 @@
 						<div class="title">
 
 							<p id="t1"></p>
-							<!-- <p id="t2">나의 전체 프로젝트</p> -->
+							<!-- <p id="t2">내가 지원한 프로젝트</p> -->
 
 						</div>
 					</div>
@@ -319,7 +342,8 @@
 /* 기본적인 세팅 */
 
 $.get("myprojectInner?curPage=1&state=app", function(data){
-	 alert(data);
+		$("#project_app").css("background-color", "#446eab");
+		$("#project_app").css("color", "white");
 		$(".contents").html(data);
 		$("#t1").text("지원한 프로젝트");
 }); 
@@ -334,35 +358,65 @@ $.get("myprojectInner?curPage=1&state=app", function(data){
 $("#project_app").click(function() {
 	alert("지원한 프로젝트");
 	$.get("myprojectInner?curPage=1&state=app", function(data){
-		 alert(data);
+			$("#project_app").css("background-color", "#446eab");
+			$("#project_app").css("color", "white");
 			$(".contents").html(data);
 			$("#t1").text("지원한 프로젝트");
+			$("#project_ing").css("background-color", "white");
+			$("#project_ing").css("color", "#999");
+			$("#project_finish").css("background-color", "white");
+			$("#project_finish").css("color", "#999");
+			$("#project_end").css("background-color", "white");
+			$("#project_end").css("color", "#999");
 		}); 
 });
 $("#project_ing").click(function() {
 	alert("진행중인 내 프로젝트");
 	$.get("myprojectInner?curPage=1&state=ing", function(data){
-		 alert(data);
+			$("#project_ing").css("background-color", "#446eab");
+			$("#project_ing").css("color", "white");
 			$(".contents").html(data);
 			$("#t1").text("진행중인 프로젝트");
+			$("#project_app").css("background-color", "white");
+			$("#project_app").css("color", "#999");
+			$("#project_finish").css("background-color", "white");
+			$("#project_finish").css("color", "#999");
+			$("#project_end").css("background-color", "white");
+			$("#project_end").css("color", "#999");
+			
 		}); 
 });
 
 $("#project_finish").click(function() {
 	alert("완료된 내 프로젝트");
 	$.get("myprojectInner?curPage=1&state=finish", function(data){
-		 alert(data);
+			$("#project_finish").css("background-color", "#446eab");
+			$("#project_finish").css("color", "white");
 			$(".contents").html(data);
 			$("#t1").text("완료된 프로젝트");
+			$("#project_app").css("background-color", "white");
+			$("#project_app").css("color", "#999");
+			$("#project_ing").css("background-color", "white");
+			$("#project_ing").css("color", "#999");
+			$("#project_end").css("background-color", "white");
+			$("#project_end").css("color", "#999");
+			
 		}); 
 });
 
 $("#project_end").click(function() {
 	alert("종료된 내 프로젝트");
 	$.get("myprojectInner?curPage=1&state=payFinish", function(data){
-		 alert(data);
+		$("#project_end").css("background-color", "#446eab");
+		$("#project_end").css("color", "white");
 			$(".contents").html(data);
 			$("#t1").text("종료된 프로젝트");
+			$("#project_app").css("background-color", "white");
+			$("#project_app").css("color", "#999");
+			$("#project_ing").css("background-color", "white");
+			$("#project_ing").css("color", "#999");
+			$("#project_finish").css("background-color", "white");
+			$("#project_finish").css("color", "#999");
 		}); 
 });
 

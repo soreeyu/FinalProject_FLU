@@ -327,6 +327,7 @@
 .sidebar_menu ul li{
 	height: 40px;
     padding: 4px 0;
+    
 }
 .sidebar_menu ul li a{
 	border-radius: 2px;
@@ -335,6 +336,7 @@
     font-size: 14px;
     color: #999;
     line-height: 1.4;
+    cursor: pointer;
     
 }
 /******************************** 왼쪽 메뉴 *******************************/
@@ -371,46 +373,6 @@
 					</ul>
 				</div>
 			</div>
-			
-	<%-- 		<div class="left">
-				<div class="user">
-					<span>클라이언트</span>
-					<div class="user_name">
-						<c:if test="${empty member.fProfileImage }">
-						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/img/mypage/avatar.jpg">
-						</c:if>
-						<c:if test="${not empty member.fProfileImage }">
-						<img alt="프로필사진" src="${pageContext.request.contextPath }/resources/profile/${member.fProfileImage}">
-						</c:if>
-						<label style="display: block;"><span>${member.nickName}</span></label>
-					</div>
-				</div>
-				<div class="history">
-						<p id="checkBTN">
-							<a id="check">검수중인 프로젝트</a>
-						</p>
-						<p id="doneBTN">
-							<a id="done">모집중인 프로젝트</a>
-						</p>
-						<p id="recruitBTN">
-							<a id="recruit">모집 완료된 프로젝트</a>
-						</p>
-						<p id="ingBTN">
-							<a id="ing">진행중인 프로젝트</a>
-						</p>
-						<p id="finishBTN">
-							<a id="finish">완료된 프로젝트</a>
-						</p>
-						<p id="sellBTN">
-							<a id="sell">판매중인 프로젝트</a>
-						</p>
-						<p id="failBTN">
-							<a id="fail">실패된 프로젝트</a>
-						</p>			
-				</div>
-
-			</div>
-			 --%>
 			
 			<div class="right">
 				<div class="title">
@@ -457,9 +419,9 @@ $.get("projectCheck?state=${conState}&curPage=1", function(data){
 
 /* 검수중인 프로젝트 리스트 */
 $("#check").click(function() {
+	$.get("projectCheck?state=check&curPage=1", function(data){
 		$("#check").css("background-color", "#446eab");
 		$("#check").css("color", "white");
-	$.get("projectCheck?state=check&curPage=1", function(data){
 		
 		alert("검수중");
 		$("#t1").text("검수중인 프로젝트");
@@ -509,8 +471,22 @@ $("#done").click(function() {
 /* 모집완료된 프로젝트 리스트 */
 $("#recruit").click(function() {
 
-	$.get("projectCheck?state=recruit&curPage=1", function(data){	
+	$.get("projectCheck?state=recruit&curPage=1", function(data){
+		$("#recruit").css("background-color", "#446eab");
+		$("#recruit").css("color", "white");
 		alert("모집완료");
+		$("#check").css("background-color", "white");
+		$("#check").css("color", "#999");
+		$("#done").css("background-color", "white");
+		$("#done").css("color", "#999");
+		$("#ing").css("background-color", "white");
+		$("#ing").css("color", "#999");
+		$("#finish").css("background-color", "white");
+		$("#finish").css("color", "#999");
+		$("#sell").css("background-color", "white");
+		$("#sell").css("color", "#999");
+		$("#fail").css("background-color", "white");
+		$("#fail").css("color", "#999");
 		$("#t1").text("모집완료된 프로젝트");
 		$("#t2").text("프리랜서와 미팅을 준비중인 프로젝트입니다.");
 		$(".contents").html(data); 
@@ -522,9 +498,23 @@ $("#recruit").click(function() {
 $("#ing").click(function() {
 
 	$.get("projectCheck?state=ing&curPage=1", function(data){
+		$("#ing").css("background-color", "#446eab");
+		$("#ing").css("color", "white");
 		alert("진행중");
 		$("#t1").text("진행중인 프로젝트");
 		$("#t2").text("진행중인 프로젝트입니다.");
+		$("#check").css("background-color", "white");
+		$("#check").css("color", "#999");
+		$("#done").css("background-color", "white");
+		$("#done").css("color", "#999");
+		$("#recruit").css("background-color", "white");
+		$("#recruit").css("color", "#999");
+		$("#finish").css("background-color", "white");
+		$("#finish").css("color", "#999");
+		$("#sell").css("background-color", "white");
+		$("#sell").css("color", "#999");
+		$("#fail").css("background-color", "white");
+		$("#fail").css("color", "#999");
 		$(".contents").html(data); 
 	});
 
@@ -533,20 +523,48 @@ $("#ing").click(function() {
 $("#finish").click(function() {
 
 	$.get("projectCheck?state=finish&curPage=1", function(data){
+		$("#finish").css("background-color", "#446eab");
+		$("#finish").css("color", "white");
 		alert("완료");
 		$("#t1").text("완료된 프로젝트");
 		$("#t2").text("완료된 프로젝트입니다.");
+		$("#check").css("background-color", "white");
+		$("#check").css("color", "#999");
+		$("#done").css("background-color", "white");
+		$("#done").css("color", "#999");
+		$("#recruit").css("background-color", "white");
+		$("#recruit").css("color", "#999");
+		$("#ing").css("background-color", "white");
+		$("#ing").css("color", "#999");
+		$("#sell").css("background-color", "white");
+		$("#sell").css("color", "#999");
+		$("#fail").css("background-color", "white");
+		$("#fail").css("color", "#999");
 		$(".contents").html(data); 
 	});
 
 });
 /* 판매중인 프로젝트 리스트 */
 $("#sell").click(function() {
-
 	$.get("projectCheck?state=sell&curPage=1", function(data){
+
+		$("#sell").css("background-color", "#446eab");
+		$("#sell").css("color", "white");
 		alert("판매중");
 		$("#t1").text("판매중인 프로젝트");
 		$("#t2").text("다른 클라이언트에게 제공되는 프로젝트입니다.");
+		$("#check").css("background-color", "white");
+		$("#check").css("color", "#999");
+		$("#done").css("background-color", "white");
+		$("#done").css("color", "#999");
+		$("#recruit").css("background-color", "white");
+		$("#recruit").css("color", "#999");
+		$("#ing").css("background-color", "white");
+		$("#ing").css("color", "#999");
+		$("#finish").css("background-color", "white");
+		$("#finish").css("color", "#999");
+		$("#fail").css("background-color", "white");
+		$("#fail").css("color", "#999");
 		$(".contents").html(data); 
 	});
 
@@ -555,9 +573,23 @@ $("#sell").click(function() {
 $("#fail").click(function() {
 
 	$.get("projectCheck?state=fail&curPage=1", function(data){
+		$("#fail").css("background-color", "#446eab");
+		$("#fail").css("color", "white");
 		alert("실패함");
 		$("#t1").text("실패한 프로젝트");
 		$("#t2").text("클라이언트 모집에 실패한 프로젝트입니다.");
+		$("#check").css("background-color", "white");
+		$("#check").css("color", "#999");
+		$("#done").css("background-color", "white");
+		$("#done").css("color", "#999");
+		$("#recruit").css("background-color", "white");
+		$("#recruit").css("color", "#999");
+		$("#ing").css("background-color", "white");
+		$("#ing").css("color", "#999");
+		$("#finish").css("background-color", "white");
+		$("#finish").css("color", "#999");
+		$("#sell").css("background-color", "white");
+		$("#sell").css("color", "#999");
 		$(".contents").html(data); 
 	});
 
