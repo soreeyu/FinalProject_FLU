@@ -43,9 +43,10 @@ public class ProjectDAO {
 		}
 		
 		//project List
-		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
+		public List<ProjectDTO> projectList(ListInfo listInfo, ProjectDTO projectDTO,List<String> array, List<String> aray){
 
 			System.out.println("projectDAO-projectList들어옴");
+			
 			System.out.println("dao-category="+projectDTO.getCategory());
 			System.out.println("dao-list- arrange=="+listInfo.getArrange());
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -53,18 +54,29 @@ public class ProjectDAO {
 			map.put("project", projectDTO);
 			map.put("arrange", listInfo.getArrange());
 			map.put("array", array);
+			map.put("aray", aray);
 			
-			if(projectDTO.getCategory()==null){
+			/*if(projectDTO.getCategory()==null){
 				System.out.println("==================");
 				System.out.println("category는 Null");
 				map.put("Cate", 0);
-			}else{
+			}else if(projectDTO.getCategory()==""){
+				System.out.println("==================");
+				System.out.println("category는 Null");
+				map.put("Cate", 0);	
+			}
+			else{
 				System.out.println("==================");
 				System.out.println("category는" + projectDTO.getCategory());
 				map.put("Cate", 1);
+			}*/
+			
+			
+			
+			
+			for(int a=0;a<aray.size();a++){
+				System.out.println("aray===="+aray.get(a));
 			}
-			
-			
 			
 			if(array.size() == 0){
 				map.put("result", 0);
@@ -74,6 +86,21 @@ public class ProjectDAO {
 				System.out.println("zz"+array.size());
 			}
 			System.out.println("dao-list-search==="+listInfo.getSearch());
+			
+			
+			if(aray.size() == 0){
+				map.put("Cate", 0);
+				System.out.println("cate=="+aray.size());
+	
+			}else{
+				map.put("Cate", 1);
+				System.out.println("cate=="+aray.size());
+
+			}
+			
+			
+			
+			
 			if(listInfo.getSearch() == null){
 				map.put("sech", 0);
 				System.out.println("sech==="+listInfo.getSearch());

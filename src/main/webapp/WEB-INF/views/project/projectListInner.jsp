@@ -8,6 +8,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp" />
+<style type="text/css">
+.project-unit:hover{
+	box-shadow: box-shadow: 2px 2px 2px #00b386;
+}
+</style>
 
 </head>
 <body>
@@ -35,6 +40,7 @@
 							<div class="fa-reg_date">등록일자 ${dto.reg_date}</div>
 						</div>
 						<div class="project-contents">${dto.contents }</div>
+							<c:if test="${dto.state ne 'sell'}">
 						<div class="project-contents-right">
 							<div class="right-contents-sub">
 							<img src="${pageContext.request.contextPath}/resources/img/project/clock-closed.png">
@@ -44,10 +50,8 @@
 							총지원 <strong>${dto.appCount}명</strong></div>
 							
 							
-							
-							<div class="right-contents-sub">
-							
 							<input type="hidden" class="quick" id="${dto.quick}" data-id="${dto.projectNum}"></div>
+							</c:if>
 							 
 							 
 						</div>

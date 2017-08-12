@@ -69,9 +69,12 @@
 	border: 1px solid #e6e6e6;
 	box-shadow: 2px 2px 2px #aaaaaa;
 }
+.quick_contents:hover{
+background-color:black;	
+	box-shadow: 2px 2px 2px #00b386;
+}
 
 .clean {
-
 	height: 15px;
 	width: 100%;
 }
@@ -249,6 +252,10 @@
 	box-shadow: 3px 3px 3px #aaaaaa;
 }
 
+.project-unit:hover{
+	box-shadow: box-shadow: 2px 2px 2px #00b386;
+}
+
 .project-head {
 	height: 27px;
 	margin-bottom: 5px;
@@ -263,8 +270,7 @@
 
 .project-body {
 	width: 100%;
-	height: 120px;
-	/*    background-color: green; */
+	/* height: 120px; */
 }
 
 
@@ -479,7 +485,8 @@
 }
 .real_quick{
 	width: 3000px;
-	background-color: blue;
+	height:100%;
+	/* background-color: blue; */
 }
 #dev-btn{
 	color: #666;
@@ -489,6 +496,7 @@
     text-align: center;
     line-height: 20px;
 }
+
 #design-btn{
 	color: #666;
     font-size: 13px;
@@ -497,6 +505,21 @@
     text-align: center;
     line-height: 20px;
 }
+#searchBtn{
+	background-color: rgb(68, 110, 171);
+    color: white;
+    font-size: 14px;
+    width: 80px;
+    height: 28px;
+    border: none;
+    box-shadow: 2px 2px 2px #aaaaaa;	
+}
+#searchBtn:hover{
+	box-shadow: 2px 2px 2px #aaaaaa;
+	background-color: #00b386;
+}
+	
+
 </style>
 
 </head>
@@ -568,7 +591,7 @@
                
                <!-- 클릭시 trigger 적용하자 -->
                   <div class="cate-skipper">
-                     <input id="dev" class="cate-chk" name="category" type="checkbox" value="개발">
+                     <input id="dev" class="cate-chk" name="category" type="checkbox" data-on="off" value="개발">
                      <label for="dev" class="cate-label">개발</label>
                      <ul class="cate-list">
                         <li>
@@ -613,7 +636,7 @@
                </div>
                <div class="category-select-list">
                   <div class="cate-skipper">
-                     <input id="design" class="cate-chk" name="category" type="checkbox" onclick="designClick()" value="디자인">
+                     <input id="design" class="cate-chk" name="category" type="checkbox" data-on="off" onclick="designClick()" value="디자인">
                      <label for="design" class="cate-label">디자인</label>
                      <ul class="cate-list">
                         <li>
@@ -701,15 +724,15 @@
 <script type="text/javascript">
 
  var array = new Array();
+ var aray = new Array();
 var did = 0;
 var cc=1;
 
 alert("cc="+cc);
 $.get("quickListInner?curPage=1", function(data) {
-	alert(data);
 	$(".quick_contents_list").html(data);
 });
-$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array,function(data){
+$.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&array="+array+"&aray="+aray,function(data){
    $(".contents_main").html(data);
 });
 
@@ -739,12 +762,24 @@ $("#searchBtn").click(function() {
    var checkList = $("input[class='dev-chk']:checked");
    var array = new Array();
    var i=0;
-   alert("checkList="+checkList);
 
     checkList.each(function(index) {
       array[index] = checkList.val(); 
    });
    alert(array); 
+   
+   
+   var CateList = $("input[class='cate-chk']:checked");
+   alert("val은 ="+$("input[class='cate-chk']:checked").val());
+
+   alert("CateList="+CateList);
+   
+   CateList.each(function(index) {
+     aray[index] = $(this).val();
+      
+  });
+   
+   alert("aray="+aray);
 
     
    var searchCon = $("#search").val();
@@ -753,7 +788,7 @@ $("#searchBtn").click(function() {
    var arrangeVal = $("#arrange").val();
    alert(arrangeVal);
    
-    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array,function(data){
+    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&aray="+aray,function(data){
       $(".contents_main").html(data);
    });
    $("#search").val(searchCon);
@@ -783,7 +818,22 @@ $("#by-price-desc").click(function() {
    });
    alert(array); 
     
-   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money&array="+array,function(data){
+   var CateList = $("input[class='cate-chk']:checked");
+   alert("val은 ="+$("input[class='cate-chk']:checked").val());
+
+   alert("CateList="+CateList);
+   
+   CateList.each(function(index) {
+     aray[index] = $(this).val();
+      
+  });
+   
+   alert(" aray="+aray);
+
+   
+   
+   
+   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=money&array="+array+"&aray="+aray,function(data){
       alert("금액높은순 들어옴");
       $(".contents_main").html(data);
    });
@@ -811,8 +861,21 @@ $("#by-price-asc").click(function() {
       array[index] = checkList.val(); 
    });
    alert(array); 
+   
+   var CateList = $("input[class='cate-chk']:checked");
+   alert("val은 ="+$("input[class='cate-chk']:checked").val());
+
+   alert("CateList="+CateList);
+   
+   CateList.each(function(index) {
+     aray[index] = $(this).val();
+      
+  });
+   
+   alert("aray="+aray);
+
     
-   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney&array="+array,function(data){
+   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=lowmoney&array="+array+"&aray="+aray,function(data){
       $(".contents_main").html(data);
    });
    
@@ -840,7 +903,21 @@ $("#by-date-curr").click(function() {
    });
    alert(array); 
     
-   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current&array="+array,function(data){
+   var CateList = $("input[class='cate-chk']:checked");
+   alert("val은 ="+$("input[class='cate-chk']:checked").val());
+
+   alert("CateList="+CateList);
+   
+   CateList.each(function(index) {
+     aray[index] = $(this).val();
+      
+  });
+   
+   alert(" aray="+aray);
+
+   
+   
+   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=current&array="+array+"&aray="+aray,function(data){
       $(".contents_main").html(data);
    });
    
@@ -867,7 +944,23 @@ $("#by-date-finish").click(function() {
    });
    alert(array); 
     
-   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last&array="+array,function(data){
+   
+   var CateList = $("input[class='cate-chk']:checked");
+   alert("val은 ="+$("input[class='cate-chk']:checked").val());
+
+   alert("CateList="+CateList);
+   
+   CateList.each(function(index) {
+     aray[index] = $(this).val();
+      
+  });
+   
+   alert(" aray="+aray);
+
+   
+   
+   
+   $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange=last&array="+array+"&aray="+aray,function(data){
       $(".contents_main").html(data);
    });
    $("#arrange").val("last");
@@ -893,45 +986,154 @@ $("#by-date-finish").click(function() {
 		CateVal = $(this).val();
 		alert("CateVal=="+CateVal);
 		
+		var devData = $("#dev").attr("data-on");
+		alert(devData);
+		var designData = $("#design").attr("data-on");
+		alert(designData);
+		
+		
+		
+		if(CateVal == "개발" && devData=='off'){
+			var devCheck = $("input[class='dev-chk']:checked").length;
+		      if(($(".dev-chk").length)==devCheck){
+		         $(".dev-chk").prop("checked", false);
+		      }else{
+		         $(".dev-chk").prop("checked", true);
+		      }
+		            
+		      
+		      var CateList = $("input[class='cate-chk']:checked");
+		         alert("val은 ="+$("input[class='cate-chk']:checked").val());
+		      
+		         alert("CateList="+CateList);
+		         
+		         CateList.each(function(index) {
+		           aray[index] = $(this).val();
+		              
+		        });
+		         
+		         alert(aray);
+		      
+		      
+		      
+		      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&aray="+aray,function(data){
+		          alert("dd");
+		          $(".contents_main").html(data);
+		      });
+		      
+		      devData = $("#dev").attr("data-on", "on");
+		      alert("바뀌었나="+$("#dev").attr("data-on"));
+		}
+		
+		if(CateVal=="디자인" && designData=='off'){
+			
+			alert("디자인을 눌렀어");
+			var designCheck = $("input[class='design-chk']:checked").length;
+		      alert(designCheck); 
+		      if(($(".design-chk").length)==designCheck){
+		         $(".design-chk").prop("checked", false);
+		      }else{
+		         $(".design-chk").prop("checked", true);
+		      }
+
+		      var CateList = $("input[class='cate-chk']:checked");
+		         alert("val은 ="+$("input[class='cate-chk']:checked").val());
+		      
+		         alert("CateList="+CateList);
+		         
+		         CateList.each(function(index) {
+		           aray[index] = $(this).val();
+		              
+		        });
+		         
+		         alert(aray);
+		      
+		     
+		      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&aray="+aray,function(data){
+		          alert("dd");
+		          $(".contents_main").html(data);
+		      });
+		      designData = $("#design").attr("data-on", "on");
+		      alert("바뀌었나="+$("#design").attr("data-on"));
+			}
+		
 	}else{
-		alert("check-category=null처리");
-		CateVal = null;
-		alert("CateVal=="+CateVal);
+	alert("dsdsd");
+		alert("cateval=="+CateVal);
+		alert("devon"+$("#dev").attr("data-on"));
+		alert("design-on="+$("#design").attr("data-on"));
+		var devData=$("#dev").attr("data-on");
+		var designData = $("#design").attr("data-on");
+		if(devData=='on'){
+			
+			alert("개발을 안눌렀어");
+			alert(devData);
+			var devCheck = $("input[class='dev-chk']:checked").length;
+		      if(($(".dev-chk").length)==devCheck){
+		         $(".dev-chk").prop("checked", false);
+		      }else{
+		         $(".dev-chk").prop("checked", true);
+		      }
+
+
+		      var CateList = $("input[class='cate-chk']:checked");
+		         alert("val은 ="+$("input[class='cate-chk']:checked").val());
+		      
+		         alert("CateList="+CateList);
+		         
+		         CateList.each(function(index) {
+		           aray[index] = $(this).val();
+		            
+		        });
+		         
+		         alert("개발체크해제시 aray="+aray);
+		      
+		      
+		      
+		      $.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&category=&array=&aray=",function(data){
+		    	  alert("dfsdf");
+		    	   $(".contents_main").html(data);
+		    	});
+		      devData = $("#dev").attr("data-on", "off");
+		}
+		
+		if(designData=='on'){
+			alert("디자인을 안눌렀어");
+			var designCheck = $("input[class='design-chk']:checked").length;
+
+		      if(($(".design-chk").length)==designCheck){
+		         $(".design-chk").prop("checked", false);
+		      }else{
+		         $(".design-chk").prop("checked", true);
+		      }
+
+
+		      var CateList = $("input[class='cate-chk']:checked");
+		         alert("val은 ="+$("input[class='cate-chk']:checked").val());
+		      
+		         alert("CateList="+CateList);
+		         
+		         CateList.each(function(index) {
+		           aray[index] = $(this).val();
+		            
+		        });
+		         
+		         alert("디자인체크해제시 aray="+aray);
+		      
+		      
+		      $.get("projectListInner?curPage=1&search=${listInfo.search}&kind=${listInfo.kind}&arrange=${listInfo.arrange}&category=&array=&aray",function(data){
+		    	  alert("디자인의 get");
+		    	   $(".contents_main").html(data);
+		    	});
+		      designData = $("#dev").attr("data-on", "off");
+		} 
 	}
 	
-	if(CateVal == "개발"){
-		var devCheck = $("input[class='dev-chk']:checked").length;
-	      if(($(".dev-chk").length)==devCheck){
-	         $(".dev-chk").prop("checked", false);
-	      }else{
-	         $(".dev-chk").prop("checked", true);
-	      }
-	      var devVal = $(this).val();
-	      alert(devVal);
-	      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+CateVal,function(data){
-	          alert("dd");
-	          $(".contents_main").html(data);
-	      });
-	      
-	      
-	}
-	else{
+
+
 		
-		alert("category="+CateVal);
-		var designCheck = $("input[class='design-chk']:checked").length;
-	      alert(designCheck); 
-	      if(($(".design-chk").length)==designCheck){
-	         $(".design-chk").prop("checked", false);
-	      }else{
-	         $(".design-chk").prop("checked", true);
-	      }
-	      
-	     
-	      $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+CateVal,function(data){
-	          alert("dd");
-	          $(".contents_main").html(data);
-	      });
-	}
+	 	
+
 });
  
  
@@ -973,6 +1175,20 @@ function devClick() {
     
     alert(array);
     
+
+    var CateList = $("input[class='cate-chk']:checked");
+       alert("val은 ="+$("input[class='cate-chk']:checked").val());
+    
+       alert("CateList="+CateList);
+       
+       CateList.each(function(index) {
+         aray[index] = $(this).val();
+          
+      });
+       
+       alert("개발디테일눌렀을때 aray="+aray);
+    
+    
     var devCheck = $("input[class='dev-chk']:checked").length;
     
     
@@ -990,12 +1206,56 @@ function devClick() {
    var devVal = $("#dev").val();
    alert("dev=="+devVal);
    
-    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+devVal,function(data){
+    $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&aray="+aray,function(data){
        $(".contents_main").html(data);
    }); 
 });
 
- 
+ /* 디자인  DetailCategory부분 */
+      $(".design-chk").click(function() {
+         
+         var de_id = $(this).val();
+         var checkList = $("input[class='design-chk']:checked");
+         alert("val은 ="+$("input[class='design-chk']:checked").val());
+         
+         var array = new Array();
+         var category = "";
+         var i=0;
+         alert("checkList="+checkList);
+         
+         checkList.each(function(index) {
+           array[index] = $(this).val();
+              
+        });
+         
+         alert(array);
+         
+         var designCheck = $("input[class='design-chk']:checked").length;
+         
+         
+         var arrangeVal = $("#arrange").val();
+         var searchCon = $("#search").val();
+        alert("arrangeValue="+arrangeVal);
+        alert("클릭한 프로젝트종류="+de_id);
+        
+        if(($(".design-chk").length)==designCheck){
+           $("#design").prop("checked", true);
+        }else{
+           $("#design").prop("checked", false);
+        }
+        
+        var designVal = $("#design").val();
+        alert("design=="+designVal);
+        
+         $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+designVal,function(data){
+        	 alert("ddsfdsdfsdf");
+            $(".contents_main").html(data);
+        }); 
+     });
+
+      
+      
+      
  /* 디자인 category부분 */
  /*  function designClick() {
       
@@ -1015,7 +1275,7 @@ function devClick() {
       
    } */
 
-
+/* 
 $(".design-chk").click(function() { 
     var de_id = $(this).val();
     var designCheck = $("input[class='design-chk']:checked").length;
@@ -1026,6 +1286,10 @@ $(".design-chk").click(function() {
    }
 }); 
 
+    */
+   
+   
+   
 /* 판매중인 개발카테고리 */
  
  $("#dev-btn").click(function() {

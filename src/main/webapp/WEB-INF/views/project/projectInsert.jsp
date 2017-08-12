@@ -9,13 +9,14 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/project/projectInsert.css">
 <title>Insert title here</title>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 $(function(){
     //전역변수선언
     var editor_object = [];
-     
+    
     nhn.husky.EZCreator.createInIFrame({
         oAppRef: editor_object,
         elPlaceHolder: "smart",
@@ -98,209 +99,8 @@ $(function(){
        }
     });
  
-})
+});
 </script>
-<style type="text/css">
-
-*{
-font-family: -webkit-body;
-}
-.main_section{
-   min-width: 1160px;
-   width: 1160px;
-   height: 2700px;
-   margin: 0 auto;
-   margin-top: 30px;
-}
-.project_header{
-   width: 1100px;
-   padding: 30px;
-   height: 60px;
-   margin-bottom: 20px;
-   border: 1px solid #e6e6e6;
-   margin-bottom: 30px;
-   background-color: white;
-}
-#header_ttt{
-   font-size: x-large;
-   font-weight: bolder;
-   margin-bottom: 10px;
-}
-#header_tt{
-   font-size: small;
-   font-weight: lighter;
-}
-.contents{
-   width: 1260;
-   height: 2700px;
-   border: 1px solid #e6e6e6;
-   background-color: white;
-}
-.contents_main{
-   width: 700px;
-   height: 100%;
-   display: block;
-   float: left;
-   padding: 30px;
-}
-.contents_sub{
-   width: 350px;
-   height: 100%;
-   display: block;
-   background-color: red;
-   float: right;
-}
-.main-wrapper{
-   display: block;
-   background-color: blue;
-   float: left;
-   margin-right: 20px;
-}
-.sub-wrapper{
-   display:block;
-   background-color: yellow;
-   float: left;
-}
-
-.cate-select{
-   /* background: #F9F9F9 url("/static/libs/img/jquery.fs.selecter-arrow.png?cf737c1eb5b0") no-repeat right center; */
-   width: 250px;
-   height: 30px;
-}
-span{
-   color: #f48023;
-    font-weight: bold
-}
-input{
-   border: 1px solid #e6e6e6;
-}
-.control-wrapper{
-   width: 100%;
-   height: 55px;
-}
-#detail{
-   font-size: small;
-   color: black;
-   margin-top: 5px;
-   display: block;
-}
-
-label{
-   width: 160px;
-   height: 100%;
-   text-align: right;
-   display: block;
-   float: left;
-   margin-right: 5px;
-}
-.category-wrapper{
-   width: 530px;
-   display: block;
-   float: left;
-   height: 100%;
-}
-.plan-wrapper{
-   width: 100%;
-   height: 150px;
-}
-.plan-radio{
-   height: 130px;
-   width: 160px;
-   border: 1px dotted black;
-   display: block;
-   float: left;
-   margin-right: 10px;
-   font-size: 12px;
-   font-weight: lighter;
-   color: #999;
-   text-align: center;
-}
-#plan-radio1{
-   background-image: url("${pageContext.request.contextPath}/resources/img/project/idea.png");
-}
-#plan-radio2{
-   background-image: url("${pageContext.request.contextPath}/resources/img/project/simple.png");
-}
-#plan-radio3{
-   background-image: url("${pageContext.request.contextPath}/resources/img/project/detail.png");
-}
-
-.radio-text{
-    margin-top: 90px;
-    padding: 0px;
-    width: 160px;
-    line-height: 34px;
-}
-.control-wrapper-skill{
-   width: 100%;
-   height: 270px;
-}
-.skill-wrapper{
-   width: 100%;
-   height: 270px;
-   
-}
-.skill-li{
-   width: 140px;
-   display: inline;
-   float: left;
-   line-height: 30px;
-   margin-right: 30px;
-   font-weight: bold;
-   font-size: medium;
-}
-.long-text{
-   font-size: small;
-}
-.btn{
-   margin: 0 auto;
-   text-align: ce
-}
-.progress-bar{
-   height: 1em !important;
-    margin-bottom: 8px;
-    border: none;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    /* background: #446eab url(/static/libs/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; */
-}
-.progress-bar-in{
-   margin-left: -1px !important;
-    margin: 0 !important;
-    height: 100% !important;
-    /* border: none; */
-    /* background: #dedede url(/static/libs/css/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; */
-}
-.project-add-helper-bottom{
-   float: right;
-}
-.project-add-info-box{
-   background-color: yellow;
-   margin-top: 20px;
-}
-.info-data-img{
-   margin-top: 20px;
-   width: 40px;
-   height: 40px;
-/*    float: left; */
-}
-
-.project-info-text{
-   margin-top: 20px;
-    margin-left: 7px;
-    display: block;
-    float: right;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 14px;
-    width: 250px;
-    color: #666;
-    font-size: 12px;
-}
-
-</style>
 
 
 </head>
@@ -348,7 +148,7 @@ label{
                <label><span>*</span>카테고리</label>
                <div class="category-wrapper">
                   <div class="main-wrapper">
-                        <select class="cate-select" id="category" name="category" onChange="changeSelect(value)" required="required">
+                        <select class="cate-select" id="category" name="category" onChange="changeSelect(value)">
                             <option>카테고리</option>
                             <option class="main_opt category" value="개발">개발</option>
                             <option class="main_opt category" value="디자인">디자인</option>
@@ -364,7 +164,7 @@ label{
 
                </div>
                <br>
-               <span id="detail">프로젝트를 선택해 주세요</span>
+               <span class="detail">프로젝트 카테고리를 선택해 주세요.</span>
                </div>
             </div>
             
@@ -373,24 +173,33 @@ label{
             <div class="control-wrapper">
                <label><span>*</span>프로젝트 제목</label>
                <div class="category-wrapper">
+               <div>
                   <input id="name" type="text" name="name" style="width: 100%;" value="${dto.name }">
-               <span id="detail">프로젝트 이름을 선택해 주세요</span>
+               <span class="detail" style="margin-top: 5px;">프로젝트 이름을 선택해 주세요</span>
+               </div>
                </div>
             </div>
 
             <div class="control-wrapper">
                <label><span>*</span>예상 기간</label>
                <div class="category-wrapper">
-                  <input id="period" type="text" name="period" value="${dto.period }">일
-                  <span id="detail">프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
+               <div style="display: inline-block;">
+                  <input id="period" type="text" name="period" value="${dto.period }" style="border-right: none;">
+                  	<span class="input-end">일</span>
+               </div>
+               
+                  <span class="detail">프로젝트를 진행할 기간을 일 단위로 입력해 주세요. (최대 3자리)</span>
                </div>
             </div>
 
             <div class="control-wrapper">
                <label><span>*</span>지출 가능 예산</label>
                <div class="category-wrapper">
-                  <input id="budget" type="number" name="budget" value="${dto.budget }">원
-                  <span id="detail">지출 가능한 예산을 입력해 주세요. ( 부가세 별도, 예 : 1,000,000)</span>
+                <div style="display: inline-block;">
+                  <input id="budget" type="number" name="budget" value="${dto.budget }">
+                  	<span class="input-end">원</span>
+                  </div>
+                  <span class="detail">지출 가능한 예산을 입력해 주세요. ( 부가세 별도, 예 : 1,000,000)</span>
                </div>
             </div>
 
@@ -400,34 +209,42 @@ label{
                   <div class="plan-radio">
                   <div id="plan-radio1">
                      <input class="radio-text planState" type="radio" name="planState" value="idea">
-                     아이디어만 있습니다.                      
+                     <span class="ttttt1">
+                    	 아이디어만 있습니다.                      
+                     </span>
                   </div>
                   </div>
                   
                   <div class="plan-radio">
                   <div id="plan-radio2">
                      <input class="radio-text planState" type="radio" name="planState" value="simple">
-                     필요한 내용들을 <br> 간단히 정리해두었습니다.                      
+                     <span class="ttttt1">
+				                     필요한 내용들을 <br> 간단히 정리해두었습니다.                      
+                     </span>
                   </div>
                   </div>
                   
                   <div class="plan-radio">
                   <div id="plan-radio3">
                      <input class="radio-text planState" type="radio" name="planState" value="detail">
-                     상세한 기획문서가 <br> 존재합니다.                  
+                     <span class="ttttt1">
+				                     상세한 기획문서가 <br> 존재합니다.                  
+                     </span>
                   </div>
                   </div>
 
                </div>
             </div>
 
-            <div>
-               <label><span>*</span>프로젝트 내용</label>
-               <div>
-                  <textarea rows="30" cols="80" name="contents" id="smart">${dto.contents}</textarea>
+            <div class="control-wrapper" style="height: 600px;">
+               <label style="height: 600px;"><span>*</span>프로젝트 내용</label>
+               <div class="textarea">
+                  <textarea rows="30" cols="30" name="contents" id="smart">${dto.contents}</textarea>
                </div>
             </div>
+            <div class="clean"></div>
             
+            <div>
             
             <div class="control-wrapper" style="height: 40px; margin-top: 10px;">
                <label><span>*</span>관심 기술</label>
@@ -666,13 +483,15 @@ label{
                      </div>
                   </div>
                   <hr>
-
+				</div>
 
             <div class="control-wrapper" style="margin-top: 20px;">
-               <label><span>*</span>기획 관련 파일</label>
-               <div class="category-wrapper">
+               <label style="height: 70px;"><span>*</span>기획 관련 파일</label>
+               <div class="category-wrapper" style="height: 70px;">
                   <input type="file" name="fileName" value="${dto.fileName }">
-                  <span id="detail">프로젝트 등록시 참고문서가 될 수 있습니다.</span>
+              
+                  <span class="detail">첨부 파일은 파트너들에게 공개되지 않습니다.<br>
+					첨부 파일은 프로젝트 금액 및 기간 산정을 위한 검수 자료로만 사용됩니다.</span>
                </div>
             </div>
 
@@ -680,33 +499,48 @@ label{
             <div class="control-wrapper">
                <label><span>*</span>모집 마감일자</label>
                <div class="category-wrapper">
-
+               <div style="display: inline-block;">
                   <input type="date" name="finishDate" id="finishDate" value="${dto.finishDate }">
+               </div>
+                  <span class="detail">
+                  		지원자를 모집하는 기간입니다. 등록후 최소 7일이후에 가능합니다.
+                  </span>
                </div>
             </div>
 
-            <div class="control-wrapper">
+            <div class="control-wrapper" style="height: 85px;">
                <label><span>*</span>사전 미팅</label>
                <div class="category-wrapper">
-                  <select name="meetKind" required="required">
+                  <select name="meetKind" id="meetKind" required="required">
                      <option class="meetKind" value="오프라인">오프라인</option>
                      <option class="meetKind" value="온라인">온라인</option>
                   </select>
+                  <span class="detail">
+					               사전 미팅 방식을 선택해주세요.<br>
+					마음에 드는 지원자와의 미팅을 FLU가 주선해드립니다.
+               </span>
                </div>
+               
+               
             </div>
 
-            <div class="control-wrapper">
+            <div class="control-wrapper" style="height: 100px;">
                <label><span>*</span>클라이언트 위치</label>
                <div class="category-wrapper">
+               <div style="display: inline-block;">
                   <input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" value="${dto.addr_num}">
-                  <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                  <input type="button" id="addr_btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
                   <input type="text" name="addr_main" id="sample6_address" placeholder="주소" required="required" value="${dto.addr_main}">
                   <input type="text" name="addr_detail" id="sample6_address2" placeholder="상세주소" required="required" value="${dto.addr_detail}">
                </div>
+                  <span class="detail">
+                  	클라이언트님이 계신 지역을 선택해 주세요.
+                  </span>
+               </div>
             </div>
 
             <div class="control-wrapper">
-               <label><span>*</span>프로젝트 <br> 예상 시작일</label>
+               <label style="line-height: 15px;"><span>*</span>프로젝트 <br> 예상 시작일</label>
                <div class="category-wrapper">
 
                   <input type="date" name="startDate" id="startDate" value="">
@@ -715,10 +549,10 @@ label{
             </div>
 
             <div class="control-wrapper">
-               <label><span>*</span>프로젝트 <br>매니징 경험</label>
+               <label style="line-height: 15px;"><span>*</span>프로젝트 <br>매니징 경험</label>
                <div class="category-wrapper">
-                  <input class="exp" type="radio" name="exp" value="y">예 
-                  <input class="exp" type="radio" name="exp" value="n">아니오
+                  <input class="exp" type="radio" name="exp" value="y"><span class="exp_text">예, 매니징 경험이 있습니다.</span> 
+                  <input class="exp" type="radio" name="exp" value="n"><span class="exp_text">아니오, 없습니다.</span>
                </div>
             </div>
 
@@ -727,14 +561,16 @@ label{
             <div class="control-wrapper">
                <label><span>*</span>급구 여부</label>
                <div class="category-wrapper">
-                  <input class="quick" type="radio" name="quick" value="1">예 
-                  <input class="quick" type="radio" name="quick" value="0">아니오
+                  <input class="quick" type="radio" name="quick" value="1"><span class="exp_text">예 , 급구 공고를 올립니다.</span>
+                  <input class="quick" type="radio" name="quick" value="0"><span class="exp_text">아니오, 여유가 있습니다.</span>
                </div>
             </div>
 
-
-            
+			<div class="btn_Box">     
+			<div style="margin: 0 auto;">
             <input type="button" class="btn btn-default" id="submitBTN" value="등록">
+			</div>       
+			</div>
             </form>
             
             
@@ -742,6 +578,12 @@ label{
          <section class="contents_sub">
             
             <!-- 옆구리 CSS껴넣기 사진들 -->
+            <div class="right_first">
+            	<div style="border-left: 1px #dedede solid; border-bottom: 1px #dedede solid;">
+            <img id="right_first_img" src="${pageContext.request.contextPath}/resources/img/project/project-process.png">
+            	</div>
+            
+            </div>
          </section>
       </div>
 
@@ -785,7 +627,8 @@ if(type=='update'){
 		
 	}  /* for문 끝 */
 		
-}
+}/* update끝 */
+
 	if(type=='update'){
 		
 	var dtoState = '${dto.planState}';
@@ -846,6 +689,7 @@ if(type=='update'){
 		 alert(startYear);	 
 		 
 		 $("#finishDate").val('20'+finishYear+"-"+finishMonth+"-"+finishDay);
+
 	}
 	
 	  	 
@@ -920,9 +764,77 @@ if(type=='update'){
 	}
 
    
-   
+
+	 
+	}/* 2번째 update 끝 */
 
 
+		 function check_submit() {
+		
+			alert("btn");
+			if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
+				alert("옵션 선택좀");
+			} else if(document.frm.name.value==""){
+				alert("제목을 입력하세요");
+			}else if(document.frm.period.value==""){
+				alert("기간을 입력하세요");
+			}else if(document.frm.budget.value==""){
+				alert("예상금액을 입력하세요");
+			}else if(document.frm.planState.value==""){
+				alert("기획상태를 입력하세요");
+			}else if(document.frm.contents.value==""){
+				alert("내용을 입력하세요");
+			} 
+			  else if(document.frm.fileName.value==""){
+				alert("File을 선택해주세요");
+			}else if(document.frm.finishDate.value==""){
+				alert("마감일을 선택해주세요");
+			}else if(document.frm.addr_main.value==""){
+				alert("주소를 입력해주세요");
+			}else if(document.frm.startDate.value==""){
+				alert("시작일을 선택해주세요");
+			}else if(document.frm.exp.value==""){
+				alert("매니징 경험을 선택해주세요");
+			}else if(document.frm.quick.value==""){
+				alert("급구 여부를 선택해주세요");
+			} else if(document.frm.finishDate.value!=""){
+				var finishDate = $("#finishDate").val();
+				 alert("finishDate="+finishDate); 
+				 var finish = new Date(finishDate);
+				 var today = new Date();
+				 alert("today="+today);
+				 var left = finish.getTime()-today.getTime();
+				 alert(left);
+				 var leftDate = Math.ceil(left/(24*60*60*1000));
+				 alert("leftDate="+leftDate);
+				 if(leftDate<7){
+					 alert("마감일은 최소 1주일입니다.");
+					 
+					 
+				 }else{
+					 alert("마감일 괜춘");
+					 if(document.frm.startDate.value!=""){
+						 var startDate = $("#startDate").val();
+						 alert("startDate="+startDate);
+						 var start = new Date(startDate);
+						 alert("today="+today);
+						 var lef = start.getTime()-finish.getTime();
+						 alert(lef);
+						 var lefDate = Math.ceil(lef/(24*60*60*1000));
+						 alert("시작일-마감일="+lefDate);
+						 if(lefDate<7){
+							 alert("시작일은 마감일 이후 최소 1주일입니다.");
+						 }else{
+							 alert("시작일 적당");
+							 document.frm.submit();
+						 }
+					 }
+				 }
+
+
+	}
+}
+	
 /* 옵션 처리하는 부분 */
 
 pArray = new Array("웹","애플리케이션", "워드프레스", "퍼블리싱", "일반소프트웨어", "쇼핑몰", "게임", "임베디드", "기타");
@@ -943,7 +855,6 @@ document.all.detailCategory.length=1;
   }
  }
 }
-
 
 
 
@@ -988,8 +899,10 @@ function sample6_execDaumPostcode() {
             document.getElementById('sample6_address2').focus();
         }
     }).open();
-};
+
+}
 
 </script>
+
 </body>
 </html>
