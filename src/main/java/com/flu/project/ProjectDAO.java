@@ -144,6 +144,7 @@ public class ProjectDAO {
 				System.out.println("프로젝트 넘이 뭐야 :"+ar2.get(i).getProjectNum());
 			}
 			map.put("projectNumList", ar2);
+			map.put("length", ar2.size());
 			List<ApplicantDTO> ar = sqlSession.selectList(NAMESPACE+"applicantList", map);
 			for(int i =0; i< ar.size(); i++){
 			System.out.println("프로젝트 넘: "+ar.get(i).getProjectNum());

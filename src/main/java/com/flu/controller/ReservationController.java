@@ -56,7 +56,7 @@ public class ReservationController {
 		Date da = new Date(ca.getTimeInMillis());
 		reservationDTO.setReserve_date(da.toString());
 		List<ReservationDTO> ar = reservationService.reservedTime(reservationDTO);//방 이름과 업체 번호를 가지고와서 해당 업체의 선택한 방의 예약된 정보를 가져온다.
-		
+		System.out.println(" ar = "+ ar);
 		String [] reserved_time = null;
 		ArrayList<String> in = new ArrayList<String>();
 		ArrayList<String> out = new ArrayList<String>();
@@ -65,6 +65,7 @@ public class ReservationController {
 		
 		if(ar!=null){
 			for(int i=0; i<ar.size();i++){
+				System.out.println("예약리스트:"+ar.get(i).getName());
 				reserved_time = ar.get(i).getTime().split(",");//예약되어있는 시간을 가져와서 파싱
 				in.add(reserved_time[0]);
 				out.add(reserved_time[1]);

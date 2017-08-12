@@ -31,7 +31,7 @@
         var check=0;
     	var index1=0;
     	var index2=0;
-    	var name= $("#reserved_name").val();
+    	var name= $("#name").val();
     	var snum = '${map.each.snum}';
     	var reserve_date = "";
     	var num = '${map.each.num}';
@@ -461,9 +461,7 @@ font-size:14px;
 		<input type="button" value="예약하기" id="reserve_btn" style="margin-top: 50px;  margin-bottom:50px; width: 100%; background-color:#339bff; height: 50px; border: none; color: #fff; font-size: 1.5em; ">	
 		</div>
 	<div class="detail_form">
-	<c:forEach items="${map.reserved}" var="r">
-	<input type="hidden" id="reserved_name" value="${r.name}">
-	</c:forEach>
+	
 	<input type="hidden" id="num" value="${map.each.num}">
 	<input type="hidden" name="name" value="${map.each.name}" id="name">
 	<input type="hidden" name="reserve_date" id="day" class="reserve_Info"> 

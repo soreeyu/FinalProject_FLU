@@ -121,12 +121,21 @@
 	<!-- 지원자 리스트 -->
 	<select id="applicantList" parameterType="java.util.HashMap" resultType="com.flu.applicant.ApplicantDTO">
 		select a.* from applicant a inner join project p on a.projectnum = p.projectnum 
+			
+			<if test="length != 0">
 			<where>
-  			a.projectnum in 
-  			<foreach collection="projectNumList" item="item" open="(" separator="," close=")">
-  			#{item.projectNum}
-  			</foreach>
-  			</where>
+	  			a.projectnum in 
+	  			<foreach collection="projectNumList" item="item" open="(" separator="," close=")">
+	  			#{item.projectNum}
+	  			</foreach>
+	  		</where>
+			</if>
+			<if test="length == 0">
+				where a.projectnum = 0
+			</if>
+			
+			
+  			
 	</select>
 	
 	<!-- 선택한 지원자의 지원한 프로젝트에서 이메일 리스트가져오기 -->

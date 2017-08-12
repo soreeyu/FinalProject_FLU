@@ -1,16 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style type="text/css">
-	a:hover{
-		text-decoration: none;
-	}
-</style>
+
     <header>
 	<div class ="header">
 		<div class="header_wrap">
 			<div class="header_logo">
-				<a href="${pageContext.request.contextPath}"><img alt="FLU로고" src="${pageContext.request.contextPath}/resources/img/FLU.png"></a>
+				<a href="${pageContext.request.contextPath}"><img alt="FLU로고" src="${pageContext.request.contextPath}/resources/img/logo.png"></a>
 			</div>
 			<div class="header_menu">
 				<ul>

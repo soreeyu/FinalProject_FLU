@@ -42,6 +42,7 @@ public class ReservationDAO {
 	}
 	//예약되어있는 시간 불러오기
 	public List<ReservationDTO> reservedTime(ReservationDTO reservationDTO) throws Exception{
+		System.out.println("방 이름"+reservationDTO.getName());
 		return sqlSession.selectList(NAMESPACE+"Reserved_time", reservationDTO);
 	}
 	//날짜와 방 이름가지고 시간 가져오기

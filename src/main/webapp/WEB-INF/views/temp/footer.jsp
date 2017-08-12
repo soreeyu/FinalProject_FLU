@@ -27,7 +27,15 @@
     <footer>
 	<div class="footer">
 		<div class="footer_wrap">
-		
+			<div class="footer_contents" style="color: white;">
+				<div class="img_div"><img src="${pageContext.request.contextPath}/resources/img/logo.png"></div>
+				<div class="img_div2"><img src="${pageContext.request.contextPath}/resources/img/logo2.png"></div>
+				<div class="contents_div">
+				<div><span><span><i class="fa fa-map-marker"></i></span> 서울특별시 강남구 테헤란로 14길 6 남도빌딩 2F, 3F, 4F</span></div>
+				<div><span><span><i class="fa fa-envelope"></i></span> flu3793@gmail.com</span></div>
+				<div><span><span><i class="fa fa-user"></i></span> 한형선 박준호 김보배 박미현 김재식</span></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </footer>

@@ -193,7 +193,7 @@ public class ProjectController {
       PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
       
       System.out.println("session-kind=="+memberDTO.getKind());
-      if(memberDTO.getKind().equals("freelancer")){
+      if(memberDTO.getKind().equals("freelancer") && projectDTO.getState().equals("ing")){
     	  applicantDTO = applicantService.checkFinish(applicantDTO);
     	 model.addAttribute("finishCheck", applicantDTO.getFinishCheck());
       }else{

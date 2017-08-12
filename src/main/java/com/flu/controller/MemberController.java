@@ -127,7 +127,7 @@ public class MemberController {
 		
 		//Email 인증 확인
 		@RequestMapping(value="EmailAccessCk")
-		public String EmailAccessCk(String num, String email){	
+		public String EmailAccessCk(String num, String email, HttpSession session){	
 			System.out.println(memberService.memberView2(email).getEmail());
 			System.out.println(memberService.memberView2(email).getEmailcheck());
 
@@ -138,6 +138,7 @@ public class MemberController {
 				memberDTO.setEmailcheck("1");
 				if(!num.equals("1")){
 					memberService.emailck(memberDTO);
+					session.setAttribute("member", memberDTO);
 				}
 				return "redirect:/";
 			}else{

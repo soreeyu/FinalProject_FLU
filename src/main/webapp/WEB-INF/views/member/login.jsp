@@ -150,7 +150,7 @@ input[type=text], input[type=password]{
 		<p class="p_label" id="p_pw"></p>
 		<div class="login_btn_div">
 		<p><input id="btn" type="button" value="로그인"></p>
-		<p class="find_pw"><span>비밀번호를 잊으셨나요?</span><a href="#">비밀번호 찾기</a></p>
+		<p class="find_pw"><span>비밀번호를 잊으셨나요?</span><span >비밀번호 찾기</span></p>
 		</div>
 		</div>
 		<div class="sign_up">
@@ -161,6 +161,58 @@ input[type=text], input[type=password]{
 	</div>
 	</div>
 	</section>
+	
+	<!-- 모달 -->
+	<div class="modal fade" id="rList-Modal2${dto.projectNum }" role="dialog">
+		<div class="modal-dialog">
+    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">계약금과 프로젝트 시작일을 설정해 주세요</h4>
+	        </div>
+	        <div class="modal-body">
+	        <form id="appformMeet" action="/flu/project/applicantMeet" method="post">
+	        <input id="hiddenNum" type="hidden" name="projectNum" value="${dto.projectNum }">
+	        <table style="display:block; margin:0 auto; width: 100%; text-align: center;">
+	        <colgroup>
+	        	<col width="100px">
+	        	<col width="180px">
+	        	<col width="100px">
+	        	<col width="180px">
+	        </colgroup>
+	        <thead>
+	        </thead>
+	        <tbody>
+	        <c:forEach items="${applicantList }" var="i" varStatus="o">
+	        <c:if test="${i.state eq 'meet' && i.projectNum eq dto.projectNum }">
+	        <tr>
+	        	<th style="text-align: center;">지원자 </th>
+	        	<td style="text-align: center;">${i.email }</td>
+	        	<th style="text-align: center;">계약금 </th>
+	        	<td style="text-align: center;"><input type="text" name="pay"class="form-control"></td>
+	        </tr>
+	        </c:if>
+	        </c:forEach>
+	        <tr style="border-bottom: 2px solid #3377ff;">
+	        	<th style="text-align: center;border-top: 1px solid #ccccff">시작일</th>
+	        	<td><input type="date"class="form-control" name="startDate"></td>
+	        	<th style="text-align: center;border-top: 1px solid #ccccff">종료일</th>
+	        	<td><input type="date"class="form-control" name="finishDate"></td>
+	        </tr>
+	        </tbody>
+	        </table>
+	        </form>
+	        </div>
+	        <div class="modal-footer">
+	        	<button class="okbtn2 btn btn-default" type="button" class="btn btn-default">확인</button>
+	          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        </div>
+	      </div>
+      
+    	</div>
+	</div>
 	
 <c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 

@@ -374,7 +374,7 @@
 			<div class="benefit-item">
 				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/benefit_first.png">
 				<h3 class="benefit-item-title">프로젝트를 무료로 등록 할수 있어요!</h3>
-				<p>
+				<p style="color: #454545; margin: 0 0 10px;line-height: 20px;">
 					원하는 프로젝트를
 					<br>
 					쉽고 빠르게 진행할 수 있습니다.
@@ -387,27 +387,25 @@
 			<div class="benefit-item">
 				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/benefit_second.png">
 				<h3 class="benefit-item-title">원하는 지원자를 쉽게 찾아볼까요?</h3>
-				<p style="color: #454545; margin: 0 0 10px;">
-					원하는 프로젝트를
+				<p style="color: #454545; margin: 0 0 10px;line-height: 20px;">
+					다양한 지원자들의 포트폴리오와
 					<br>
-					쉽고 빠르게 진행할 수 있습니다.
+					클라이언트의 평가를
 					<br>
-					수많은 FLU 프리랜서들에게
+					비교할 수 있습니다.
 					<br>
-					당신의 프로젝트를 소개해 보세요.
+					FLU의 전문가들을 만나보세요.
 				</p>
 			</div>
 			<div class="benefit-item">
 				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/index/benefit_third.png">
 				<h3 class="benefit-item-title">대금은 우리가 지켜줄게요!</h3>
-				<p>
-					원하는 프로젝트를
+				<p style="color: #454545; margin: 0 0 10px;line-height: 20px;">
+					프로젝트 대금을 보호합니다.
 					<br>
-					쉽고 빠르게 진행할 수 있습니다.
+					계약서 작성 문제도
 					<br>
-					수많은 FLU 프리랜서들에게
-					<br>
-					당신의 프로젝트를 소개해 보세요.
+					더 이상 고민하지 마세요.
 				</p>
 			</div>
 		</div>

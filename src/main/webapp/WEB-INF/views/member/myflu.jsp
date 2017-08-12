@@ -324,7 +324,7 @@ body{
 					<div class="notice_title"><label>공지사항</label></div>
 					<div class="notice_list">
 						<ul>
-							<li><span>날짜</span><p><a href="#">공지사항 제목1</a></p></li>
+							<li>공지사항1</li>
 							<li>공지사항2</li>
 							<li>공지사항3</li>
 						</ul>
