@@ -80,6 +80,7 @@
 			<exclude-mapping path="/member/myflu"/>
 			<exclude-mapping path="/project/quickListInner"/>
 			<exclude-mapping path="/*/sellList"/>
+			<exclude-mapping path="/member/pwguide"/>
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		
@@ -101,6 +102,7 @@
 			<exclude-mapping path="/member/re_email"/>
 			<exclude-mapping path="/member/jungbokCK"/>
 			<exclude-mapping path="/member/freelancerList"/>
+			<exclude-mapping path="/member/pwguide"/>
 			<beans:ref bean="myPageEmailInterceptor"/>
 		</interceptor>
 		

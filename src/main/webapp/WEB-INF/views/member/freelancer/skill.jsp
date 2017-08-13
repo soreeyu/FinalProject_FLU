@@ -111,7 +111,7 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #446eab;
+    background-color: #339bff;
     border-radius: .2em;
     color: white;
     line-height: 1.5;
@@ -157,7 +157,7 @@
 }
 
 thead{
-	background-color: #005580;
+	background-color: #6d90c5;
 	font-weight: bold;
 	font-size: 15px;
 }
@@ -175,6 +175,9 @@ th{
 }
 th:FIRST-CHILD,td:FIRST-CHILD{
 	border-left: 0;
+}
+td{
+	border-bottom: 1px solid #595959;
 }
 #a{
 	background-color: #446eab;

@@ -220,5 +220,61 @@ public class MemberService {
 	public int memberDelete(MemberDTO memberDTO) throws Exception{
 		return memberDAO.memberDelete(memberDTO);
 	}
-	
+	//이메일 확인
+	public String pwguide(String email){
+		return memberDAO.pwguide(email);
+	}
+	//비번 바꾸기
+	public int pwchange(MemberDTO memberDTO){
+		return memberDAO.pwchange(memberDTO);
+	}
+	//바뀐 비번 이메일로 보내기
+	public void pwEmail(String email , String num){
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setEmail(email);
+		memberDTO.setEmailcheck(num);
+
+		String host = "smtp.gmail.com";
+		String subject ="FLU 임시비밀번호";
+		String fromName ="이메일 테스트 관리자임";
+		String from = "flu3793@gmail.com";
+		String to1 = email;
+		System.out.println("이메일 : "+to1);
+		System.out.println(num);
+		String content = 
+				"<p style=\"margin-bottom:20px;\">임시 비밀번호 입니다</p><p style=\" font-weight:bold;\">"+num+"</p>";
+
+		try{
+			Properties props = new Properties();
+			//G-Mail SMTP 사용시
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mai.transport.protocol", "smtp");
+			props.put("mail.smtp.host", host);
+			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.user", from);
+			props.put("mail.smtp.auth", "true");
+
+			Session mailSession = Session.getInstance(props,
+					new javax.mail.Authenticator(){
+				protected PasswordAuthentication getPasswordAuthentication(){
+					return new PasswordAuthentication("flu3793@gmail.com", "1q2w3e4r!");
+				}
+			});
+
+			Message msg = new MimeMessage(mailSession);
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
+
+			InternetAddress[] address1 = { new InternetAddress(to1) };
+			msg.setRecipients(Message.RecipientType.TO, address1);
+			msg.setSubject(subject);
+			msg.setSentDate(new java.util.Date());
+			msg.setContent(content, "text/html;charset=euc-kr");
+
+			Transport.send(msg);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

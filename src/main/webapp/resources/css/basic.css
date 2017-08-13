@@ -319,6 +319,8 @@ footer{
 
 .footer .footer_contents .contents_div div span:FIRST-CHILD{
 	margin-left: 50px;
+	color: white;
+	font-weight: inherit;
 }
 .footer .footer_contents .contents_div div{
 	margin-bottom: 10px;

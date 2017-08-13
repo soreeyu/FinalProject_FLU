@@ -144,10 +144,11 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #446eab;
-    border-radius: .2em;
+    background-color: #339bff;
     color: white;
     line-height: 1.5;
+    border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
 }
 .profile_title > p:LAST-CHILD {
 	margin-bottom: 20px;
@@ -233,9 +234,10 @@
 
 /**** 스킬 ****/
 .skill thead{
-	background-color: #ccddff;
+	background-color: #6d90c5;
 	font-weight: bold;
 	font-size: 15px;
+	color: white;
 }
 .skill tbody{
 	font-size: 15px;
@@ -385,7 +387,25 @@
 	background-color: green;
 }
 
-
+.pofol{
+	border: 1px solid #dededd;
+}
+.pofol img{
+	width: 198px;
+	height: 150px;
+}
+#titi{
+	display: block;
+	width: 200px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	border-top: 1px solid #dededd;
+	cursor: pointer;
+}
+.img_a{
+	display: inline-block;
+}
 </style>
 <script type="text/javascript">
 
@@ -828,32 +848,47 @@ $(function(){
 						
 					</section>
 					<section class="profile_wrap">
-						<p><span>포트폴리오</span>
+						<p style="margin-bottom: 10px;"><span>포트폴리오</span>
 						<c:if test="${member.email eq memberDTO.email }">
 						<a href="portfolioList" style="margin-top: -5px;">업데이트 하기</a>
 						</c:if></p>
 						
-						<div class="no_data_wrap">
 							<c:if test="${empty portfolio }">
+						<div class="no_data_wrap">
 							<div class="no_data">
 								<div class="no_img">
 									<img alt="포트폴리오" src="${pageContext.request.contextPath }/resources/img/mypage/portfolio.png">
 									<p>입력된 <span>'포트폴리오'</span>가 없습니다.</p>
 								</div>
 							</div>
+						</div>
 							</c:if>
 							<c:if test="${not empty portfolio }">
+						<div class="no_date_wrap" style="text-align: left;">
 							<c:forEach items="${portfolio }" var="i">
 							<div style="display: inline-block;">
-								<div style="display:inline-block; height: 200px; width: 200px; margin-right: 30px;">
-									${i.title }
-									<a href="portfolioView?pfNum=${i.pfNum }">${i.title }</a>
+								<div class="pofol" style="display:inline-block; height: 200px; width: 200px; margin-right: 30px;">
+									<c:if test="${not empty i.pfFname }">
+									<a class="img_a" href="portfolioView?pfNum=${i.pfNum }">
+									<img src="${pageContext.request.contextPath}/resources/portfolio/${i.pfFname}">
+									</a>
+									</c:if>
 									
+									<c:if test="${empty i.pfFname }">
+									<a class="img_a" href="portfolioView?pfNum=${i.pfNum }">
+									<img src="${pageContext.request.contextPath}/resources/img/FLU.png">
+									</a>
+									</c:if>
+									<a id="titi" href="portfolioView?pfNum=${i.pfNum }">
+									<label class="view">
+										${i.title }
+									</label>
+									</a>
 								</div>
 							</div>
 							</c:forEach>
-						</c:if>
 						</div>
+							</c:if>
 					</section>
 					<section class="profile_wrap">
 						<p><span>보유기술</span>

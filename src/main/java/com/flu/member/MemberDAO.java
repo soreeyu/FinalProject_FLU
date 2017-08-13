@@ -242,4 +242,11 @@ public class MemberDAO {
 	public int memberCountTotal() throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"memberCountTotal");
 	}
+	//비번찾기용 이메일 확인
+	public String pwguide(String email){
+		return sqlSession.selectOne(NAMESPACE+"pwguide",email);
+	}
+	public int pwchange(MemberDTO memberDTO){
+		return sqlSession.update(NAMESPACE+"pwchange", memberDTO);
+	}
 }

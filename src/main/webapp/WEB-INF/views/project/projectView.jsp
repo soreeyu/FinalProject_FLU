@@ -647,13 +647,13 @@ background-color: white;
          </div>
       </div>
       
+            <c:if test="${member.kind=='admin' }">
+               <p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
+            </c:if>
       <c:if test="${member.kind eq 'freelancer' && dto.state eq 'done' && (member.phone eq null || freelancer.intro eq null || portfolio[0] eq null || skills[0] eq null)}">
       <div class="contents-register">
             <div class="contents-register-inner" style="text-align: center;">
             
-            <c:if test="${member.kind=='admin' }">
-               <p><a href="../file/fileDown?fname=${dto.fName }">${dto.oName }</a></p>
-            </c:if>
             <c:if test="${member.kind=='freelancer'}">
                <p>프로젝트 지원을 위해
                <c:if test="${member.phone eq null }">
@@ -1332,8 +1332,6 @@ var testId = "";
 	})(jQuery);
 
 
-   var projectNum = '${dto.projectNum}';
-      
    $('#deleteBTN').click(function() {
       
       if(confirm("정말로 프로젝트를 삭제하시겠습니까?")){
@@ -1346,16 +1344,6 @@ var testId = "";
    });
  
    
-   $('#doneBTN').click(function() {
-      if(confirm("프로젝트 검수를 완료하시겠습니까?")){
-         $('#frmm').attr('action','../checkProject/checkProjectUpdate');
-         $('#frmm').submit();
-      }
-      else{
-
-      }
-      
-   });
    
    
 
@@ -1468,21 +1456,6 @@ var testId = "";
 						+ "&email=" + email;
 			});
 
-	$('#' + state).click(function() {
-
-		var projectNum = '${dto.projectNum}';
-
-		$('#deleteBTN').click(function() {
-
-			if (confirm("정말로 프로젝트를 삭제하시겠습니까?")) {
-				$('#frmm').attr('action', './projectDelete');
-				$('#frmm').submit();
-			} else {
-
-			}
-
-		});
-	});
 
 	$('#doneBTN').click(function() {
 		if (confirm("프로젝트 검수를 완료하시겠습니까?")) {

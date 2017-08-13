@@ -118,9 +118,10 @@
 	text-align: center;
 	vertical-align: middle;
 	background-color: #66b3ff;
-	border-radius: .2em;
 	color: white;
 	line-height: 1.5;
+	border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
 }
 
 .profile_title>p:FIRST-CHILD {
@@ -144,7 +145,7 @@
 }
 
 #a {
-	background-color: #66b3ff;
+	background-color: rgb(68, 110, 171);
 	color: white;
 }
 
@@ -232,24 +233,28 @@ th {
 	width: 70px;
 	height: 30px;
 	display: inline-block;
-	background-color: #6d6d6d;
+	background-color: #339bff;
 	line-height: 30px;
 	text-align: center;
 	float: right;
 	margin-right: 20px;
 	cursor: pointer;
+	border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
 }
 
 #cencel {
 	width: 70px;
 	height: 30px;
 	display: inline-block;
-	background-color: #6d6d6d;
+	background-color: #94a2af;
 	line-height: 30px;
 	text-align: center;
 	float: right;
 	margin-right: 20px;
 	cursor: pointer;
+	border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
 }
 
 .button_div {

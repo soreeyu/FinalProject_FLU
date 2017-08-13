@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
+import com.flu.applicant.AppCheckDTO;
 import com.flu.applicant.ApplicantDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.file.FileSaver;
@@ -545,9 +546,10 @@ public class ProjectController {
    @RequestMapping(value="applicantCheck", method=RequestMethod.POST)
    public String applicantCheck(String paycheck, Integer projectNum){
 	   System.out.println("지원자 선택 컨트롤러 들어옴");
+	   System.out.println("프로젝트 번호 :"+paycheck);
+	   System.out.println("선택한 지원자 :"+projectNum);
 	   
-	   System.out.println("프로젝트 번호 :"+projectNum);
-	   System.out.println("선택한 지원자 :"+paycheck);
+	   
 	   
 	   projectService.applicantCheck(paycheck, projectNum);
 	   

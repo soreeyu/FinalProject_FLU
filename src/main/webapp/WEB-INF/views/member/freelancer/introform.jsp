@@ -170,6 +170,12 @@
 	background-color: #446eab;
 	color: white;
 }
+
+textarea {
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+}
 </style>
 </head>
 <body>

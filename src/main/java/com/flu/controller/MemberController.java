@@ -138,6 +138,7 @@ public class MemberController {
 				memberDTO.setEmailcheck("1");
 				if(!num.equals("1")){
 					memberService.emailck(memberDTO);
+					memberDTO = memberService.memberView2(email);
 					session.setAttribute("member", memberDTO);
 				}
 				return "redirect:/";
@@ -360,7 +361,7 @@ public class MemberController {
 		//계정 정보 뷰
 		@RequestMapping(value="personaldataView", method=RequestMethod.GET)
 		public String personaldataView(Model model, HttpSession session,String email){
-			
+			System.out.println("로그인 카인드 :"+((MemberDTO)session.getAttribute("member")).getKind());
 			if(((MemberDTO)session.getAttribute("member")).getKind().equals("admin")){
 				model.addAttribute("active1", "a");
 				model.addAttribute("dto", checkMemberService.checkView(email));
@@ -505,5 +506,23 @@ public class MemberController {
 					
 					return "redirect:/member/accountView";
 				}
+		
+		@RequestMapping(value="pwguide", method=RequestMethod.POST)
+		@ResponseBody
+		public String pwguide(String email){
+			System.out.println("여기들오지?");
+			StringBuffer buffer = new StringBuffer();
+			for(int i = 0; i<= 10; i++){
+				int n = (int) (Math.random()*10);
+				buffer.append(n);
+			}
+			MemberDTO memberDTO = new MemberDTO();
+			memberDTO.setEmail(email);
+			memberDTO.setPw(buffer.toString());
+			memberService.pwchange(memberDTO);
+			memberService.pwEmail(email, buffer.toString());
+			
+			return memberService.pwguide(email);
+		}
 		
 }
