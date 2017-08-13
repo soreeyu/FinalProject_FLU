@@ -122,7 +122,7 @@ public class CheckMemberController {
 	//신원확인을 완료시켜주는 것 
 	@RequestMapping(value="checkMemberUpdate")
 
-	public String update(String email, RedirectAttributes ra) throws Exception{
+	public String update(String email,String type, RedirectAttributes ra) throws Exception{
 		
 		checkMemberService.update(email);
 		alarmDTO = new AlarmDTO();
@@ -136,11 +136,17 @@ public class CheckMemberController {
 	
 	//관리자가 신원확인에서 삭제하기
 	@RequestMapping(value="checkMemberDelete")
-	public String delete(String email){
+	public String delete(String email,String type){
 		
 		checkMemberService.deleteTran(email);
 		
-		return "redirect:/checkMember/checkMemberList";
+		String path = "redirect:/checkMember/checkMemberFreelancerList";
+		
+		if(type.equals("client")){
+			path = "redirect:/checkMember/checkMemberClientList";
+		}
+		
+		return path;
 	}
 	
 	//본인이 직접 신원확인요청 취소하기

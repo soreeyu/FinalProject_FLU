@@ -289,12 +289,12 @@ p span{
 
 								
 								<c:if test="${dto.authenticState=='1'}">	
-									<span id="uniqueSpan"><input type="button" name="check" value="신원확인 완료" id="btn" title="${dto.authenticState}" lang="${dto.email}"></span>
+									<span id="uniqueSpan"><input type="button" name="check" value="신원확인 완료" class="btn" title="${dto.authenticState}" lang="${dto.email}" id="${dto.type }"></span>
 
 								</c:if>
 								
 								<c:if test="${dto.authenticState=='2'}">
-									<span id="uniqueSpan"><input type="button" name="check" value="신원확인 취소" id="btn" title="${dto.authenticState}" lang="${dto.email}"></span>
+									<span id="uniqueSpan"><input type="button" name="check" value="신원확인 취소" class="btn" title="${dto.authenticState}" lang="${dto.email}" id="${dto.type }"></span>
 								</c:if>
 
 								</p>
@@ -316,18 +316,23 @@ p span{
 </body>
 <script type="text/javascript">
 
-	$('#btn').click(function() {
+	$('.btn').click(function() {
 		
-		var authenticState = $(this).val('title');
-		var email = $(this).val('lang');
+		var authenticState = $(this).attr('title');
+		var email = $(this).attr('lang');
+		var type = $(this).attr('id');
 		
-		if(authenticState==1){
+		if(authenticState=='1'){
 			if(confirm("신원확인을 완료 하시겠습니까?")){
-				location.href = "../checkMember/checkMemberUpdate?email="+email;
+				location.href = "../checkMember/checkMemberUpdate?email="+email+"&type="+type;
+			}else{
+				
 			}
 		}else{
 			if(confirm("삭제하시면 신원확인이 취소됩니다. 정말 삭제하시겠습니까?")){
-				location.href = "../checkMember/checkMemberDelete?email="+email;
+				location.href = "../checkMember/checkMemberDelete?email="+email+"&type="+type;
+			}else{
+				
 			}
 		}
 		

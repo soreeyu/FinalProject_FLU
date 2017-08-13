@@ -594,7 +594,7 @@ background-color: white;
       <div class="project_header">
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
-            <span>${dto.name}</span>&emsp;<span id="chat">채팅하기</span>	s
+            <span>${dto.name}</span><!-- &emsp;<span id="chat">채팅하기</span> -->
             <c:choose>
             	<c:when test="${dto.state eq 'check' || dto.state eq 'done' || dto.state eq 'recruit' }">
 		            <span class="DateMius"><span class="regDate"></span> - <span class="finishDate"></span></span>

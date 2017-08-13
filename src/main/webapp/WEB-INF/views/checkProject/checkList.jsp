@@ -93,8 +93,9 @@
 	width: 248px;
 	padding: 15px 30px;
 	background-color: white;
-	margin-bottom: 20px
+	margin-bottom: 20px;
 	border: 1px solid #dedede;
+	
 }
 
 .history>span:first-child {
@@ -102,7 +103,6 @@
 	font-size: 18px;
 	font-weight: bold;
 	padding-bottom: 11px;
-	border-bottom: 1px solid #dedede;
 	margin-bottom: 9px;
 }
 
@@ -656,11 +656,11 @@ thead tr td{
 		<section class="page_wrap">
 			<article class="left">
 				<div class="user">
-					<span>프리랜서</span>
+					<span></span>
 					<div class="user_name">
 						<img alt="프로필 사진"
 							src="${pageContext.request.contextPath}/resources/img/FLU.png">
-						<span>닉네임</span> <a><span>기본 정보 수정</span></a>
+						<span>관리자</span> <a><span>기본 정보 수정</span></a>
 					</div>
 				</div>
 				<div class="history">
