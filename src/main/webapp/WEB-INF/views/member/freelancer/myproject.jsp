@@ -108,23 +108,11 @@
 
 .title {
 	width: 100%;
-	height: 100px;
+	height: 60px;
 	background-color: white;
 	
 }
 
-.title>p:FIRST-CHILD {
-/* 	float: right;
-	margin-top: 7px;
-	padding: 6px 12px;
-	font-size: 14px;
-	text-align: center;
-	vertical-align: middle;
-	background-color: #66b3ff;
-	border-radius: .2em;
-	color: white;
-	line-height: 1.5; */
-}
 
 .title>p:FIRST-CHILD {
 	margin-top: 20px;
@@ -291,8 +279,8 @@
 					<div class="contents_inner">
 						<div class="title">
 
-							<p id="t1"></p>
-							<!-- <p id="t2">나의 전체 프로젝트</p> -->
+							<p id="t1" style="font-size: 18px; font-weight: bold; margin-bottom: 10px;"></p>
+							<p id="t2" style="color: #666; font-size: 14px;"></p>
 
 						</div>
 					</div>
@@ -322,21 +310,17 @@ $.get("myprojectInner?curPage=1&state=app", function(data){
 	 alert(data);
 		$(".contents").html(data);
 		$("#t1").text("지원한 프로젝트");
+		$("#t2").text("내가 지원한 프로젝트입니다.");
 }); 
 	
-/* $("#project_list").click(function() {
-	 $.get("myprojectInner?curPage=1", function(data){
-		 alert(data);
-			$(".contents").html(data);
-			
-		}); 
-}); */
+
 $("#project_app").click(function() {
 	alert("지원한 프로젝트");
 	$.get("myprojectInner?curPage=1&state=app", function(data){
 		 alert(data);
 			$(".contents").html(data);
 			$("#t1").text("지원한 프로젝트");
+			$("#t2").text("내가 지원한 프로젝트입니다.");
 		}); 
 });
 $("#project_ing").click(function() {
@@ -345,6 +329,7 @@ $("#project_ing").click(function() {
 		 alert(data);
 			$(".contents").html(data);
 			$("#t1").text("진행중인 프로젝트");
+			$("#t2").text("현재 진행중인 프로젝트입니다.");
 		}); 
 });
 
@@ -354,6 +339,7 @@ $("#project_finish").click(function() {
 		 alert(data);
 			$(".contents").html(data);
 			$("#t1").text("완료된 프로젝트");
+			$("#t2").text("프로젝트 완료 후, 지급을 기다리는 프로젝트입니다.");
 		}); 
 });
 
@@ -363,6 +349,7 @@ $("#project_end").click(function() {
 		 alert(data);
 			$(".contents").html(data);
 			$("#t1").text("종료된 프로젝트");
+			$("#t2").text("완전히 끝난 프로젝트입니다.");
 		}); 
 });
 

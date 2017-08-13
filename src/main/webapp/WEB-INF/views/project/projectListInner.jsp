@@ -12,6 +12,17 @@
 .project-unit:hover{
 	box-shadow: box-shadow: 2px 2px 2px #00b386;
 }
+.quickcheck{
+	background-color: red;
+	color: white;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 5px;
+	border-radius: 5px;
+}
+.quickcheck:hover{
+	background-color: blue;
+}
 </style>
 
 </head>
@@ -31,7 +42,8 @@
 			
 				<div class="project-unit ${dto.projectNum}">
 					<div class="project-head">
-						<div class="project-title" id="${dto.projectNum}">${dto.name}</div>
+						<div class="project-title" id="${dto.projectNum}">${dto.name} 
+						<label class="qc${dto.projectNum } quickcheck" data-id="${dto.projectNum}">급구</label></div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -130,10 +142,9 @@ $(".quick").each(function() {
 	var q = $(this).attr("id");
 	var qdata = $(this).attr("data-id");	//projectNum이 들어가있음
 	if(q==1){
-		$(this).html("급구");
-		$("."+qdata).css("background", "#ffcccc");
+		$(".qc"+qdata).css("visibility", "visible");
 	}else{
-		$(this).html("급구x");
+		$(".qc"+qdata).css("visibility", "hidden");
 	}
 });
 

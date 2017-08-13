@@ -145,7 +145,7 @@ $(function(){
             
             
             <div class="control-wrapper">
-               <label><span>*</span>카테고리</label>
+               <label><span class="sp">*</span>카테고리</label>
                <div class="category-wrapper">
                   <div class="main-wrapper">
                         <select class="cate-select" id="category" name="category" onChange="changeSelect(value)">
@@ -171,7 +171,7 @@ $(function(){
             
             
             <div class="control-wrapper">
-               <label><span>*</span>프로젝트 제목</label>
+               <label><span class="sp">*</span>프로젝트 제목</label>
                <div class="category-wrapper">
                <div>
                   <input id="name" type="text" name="name" style="width: 100%;" value="${dto.name }">
@@ -181,7 +181,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper">
-               <label><span>*</span>예상 기간</label>
+               <label><span class="sp">*</span>예상 기간</label>
                <div class="category-wrapper">
                <div style="display: inline-block;">
                   <input id="period" type="text" name="period" value="${dto.period }" style="border-right: none;">
@@ -193,7 +193,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper">
-               <label><span>*</span>지출 가능 예산</label>
+               <label><span class="sp">*</span>지출 가능 예산</label>
                <div class="category-wrapper">
                 <div style="display: inline-block;">
                   <input id="budget" type="number" name="budget" value="${dto.budget }">
@@ -204,7 +204,7 @@ $(function(){
             </div>
 
             <div class="plan-wrapper">
-               <label><span>*</span>기획 상태</label>
+               <label><span class="sp">*</span>기획 상태</label>
                <div>
                   <div class="plan-radio">
                   <div id="plan-radio1">
@@ -237,7 +237,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper" style="height: 600px;">
-               <label style="height: 600px;"><span>*</span>프로젝트 내용</label>
+               <label style="height: 600px;"><span class="sp">*</span>프로젝트 내용</label>
                <div class="textarea">
                   <textarea rows="30" cols="30" name="contents" id="smart">${dto.contents}</textarea>
                </div>
@@ -247,7 +247,7 @@ $(function(){
             <div>
             
             <div class="control-wrapper" style="height: 40px; margin-top: 10px;">
-               <label><span>*</span>관심 기술</label>
+               <label><span class="sp">*</span>관심 기술</label>
             </div>
             <hr>
             <div class="control-wrapper-skill" style="height: 250px;">
@@ -486,7 +486,7 @@ $(function(){
 				</div>
 
             <div class="control-wrapper" style="margin-top: 20px;">
-               <label style="height: 70px;"><span>*</span>기획 관련 파일</label>
+               <label style="height: 70px;"><span class="sp">*</span>기획 관련 파일</label>
                <div class="category-wrapper" style="height: 70px;">
                   <input type="file" name="fileName" value="${dto.fileName }">
               
@@ -497,7 +497,7 @@ $(function(){
 
 
             <div class="control-wrapper">
-               <label><span>*</span>모집 마감일자</label>
+               <label><span class="sp">*</span>모집 마감일자</label>
                <div class="category-wrapper">
                <div style="display: inline-block;">
                   <input type="date" name="finishDate" id="finishDate" value="${dto.finishDate }">
@@ -509,7 +509,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper" style="height: 85px;">
-               <label><span>*</span>사전 미팅</label>
+               <label><span class="sp">*</span>사전 미팅</label>
                <div class="category-wrapper">
                   <select name="meetKind" id="meetKind" required="required">
                      <option class="meetKind" value="오프라인">오프라인</option>
@@ -525,7 +525,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper" style="height: 100px;">
-               <label><span>*</span>클라이언트 위치</label>
+               <label><span class="sp">*</span>클라이언트 위치</label>
                <div class="category-wrapper">
                <div style="display: inline-block;">
                   <input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" value="${dto.addr_num}">
@@ -540,7 +540,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper">
-               <label style="line-height: 15px;"><span>*</span>프로젝트 <br> 예상 시작일</label>
+               <label style="line-height: 15px;"><span class="sp">*</span>프로젝트 <br> 예상 시작일</label>
                <div class="category-wrapper">
 
                   <input type="date" name="startDate" id="startDate" value="">
@@ -549,7 +549,7 @@ $(function(){
             </div>
 
             <div class="control-wrapper">
-               <label style="line-height: 15px;"><span>*</span>프로젝트 <br>매니징 경험</label>
+               <label style="line-height: 15px;"><span class="sp">*</span>프로젝트 <br>매니징 경험</label>
                <div class="category-wrapper">
                   <input class="exp" type="radio" name="exp" value="y"><span class="exp_text">예, 매니징 경험이 있습니다.</span> 
                   <input class="exp" type="radio" name="exp" value="n"><span class="exp_text">아니오, 없습니다.</span>
@@ -559,7 +559,7 @@ $(function(){
             
 
             <div class="control-wrapper">
-               <label><span>*</span>급구 여부</label>
+               <label><span class="sp">*</span>급구 여부</label>
                <div class="category-wrapper">
                   <input class="quick" type="radio" name="quick" value="1"><span class="exp_text">예 , 급구 공고를 올립니다.</span>
                   <input class="quick" type="radio" name="quick" value="0"><span class="exp_text">아니오, 여유가 있습니다.</span>
@@ -567,7 +567,7 @@ $(function(){
             </div>
 
 			<div class="btn_Box">     
-			<div style="margin: 0 auto;">
+			<div style="text-align: center;">
             <input type="button" class="btn btn-default" id="submitBTN" value="등록">
 			</div>       
 			</div>
@@ -603,9 +603,7 @@ var finishDate = new Date(fdate);
 var finishDay = finishDate.getDate();
 var finishMonth = finishDate.getMonth()+1;
 var finishYear = finishDate.getFullYear();
-/* alert(finishDay);
-alert(finishMonth);
-alert(finishYear); */
+
 
 
 if(type=='update'){
@@ -760,10 +758,29 @@ if(type=='update'){
 
 	}
 }
+
+
+/* 	
 	
 
-
-
+$(".planState").click(function() {
+	var state = $(this).val();
+	alert("st="+state);
+	if(state == 'idea'){
+		$("#plan-radio1").css("background", "url(../../img/project/idea2.png)");
+		$("#plan-radio2").css("background", "url(../../img/project/simple.png)");
+		$("#plan-radio3").css("background", "url(../../img/project/detail.png)");
+	}else if(state == 'simple'){
+		$("#plan-radio1").css("background", "url(../../img/project/idea.png)");
+		$("#plan-radio2").css("background", "url(../../img/project/simple2.png)");
+		$("#plan-radio3").css("background", "url(../../img/project/detail.png)");
+	}else{
+		$("#plan-radio1").css("background", "url(../../img/project/idea.png)");
+		$("#plan-radio2").css("background", "url(../../img/project/simple.png)");
+		$("#plan-radio3").css("background", "url(../../img/project/detail2.png)");
+	}
+});
+  */
 
 
 

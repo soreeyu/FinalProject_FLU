@@ -25,7 +25,7 @@
   
   <insert id="insert" parameterType="com.flu.reply.ReplyDTO">
 insert into reply (num, writer,contents,reg_date,projectNum,ref,step,depth,replyChk) 
-values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, #{ref},0,0,#{replyChk})
+values (reply_seq.nextval, #{writer}, #{contents}, sysdate, #{projectNum}, reply_seq.nextval,0,0,#{replyChk})
   </insert>
 
 <!-- 대댓글 넣기 -->

@@ -35,6 +35,11 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	background-color: #e6f5ff;
 	font-weight: bold;
 }
+.btn-success{
+	background-color: rgb(68, 110, 171);
+	border-color: rgb(68, 110, 171);
+
+}
 </style>
 </head>
 <body>
@@ -56,7 +61,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 			
 				<div class="project-unit">
 					<div class="project-head">
-						<div class="project-title" id=${dto.projectNum}>${dto.name} ${dto.projectNum}</div>
+						<div class="project-title" id=${dto.projectNum}>${dto.name}</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">
@@ -220,9 +225,9 @@ th:FIRST-CHILD,td:FIRST-CHILD{
     
       <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
+        <div class="modal-header" style="padding:35px 50px; text-align: center;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-edit"></span>  프로젝트 판매를 위해 작성해주세요</h4>
+          <div><span class="glyphicon glyphicon-edit"></span><span style="font-size: 18px;">프로젝트 판매를 위해 작성해주세요</span></div>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
           <form role="form" action="../../project/pjsellInsert" method="post">
@@ -230,16 +235,15 @@ th:FIRST-CHILD,td:FIRST-CHILD{
             <input type="hidden" name="projectNum" class="modal_Num">
             <input type="hidden" name="email" value="${member.email}">
             <input type="hidden" name="state" value="finish">
-            <div>프로젝트 Num : <span class="modal_Num"></span></div>
-              <label><span class="glyphicon glyphicon-user"></span>판매할 프로젝트 이름</label>
-              <input type="text" name="name" value="">
+              <label style="margin-bottom: 10px;"><span class="glyphicon glyphicon-user"></span>판매할 프로젝트 이름</label>
+              <input type="text" class="form-control" name="name" value="">
             </div>
             <div class="form-group">
-              <label><span class="glyphicon glyphicon-eye-open"></span> 판매 가격</label>
+              <i class="fa fa-krw" style="padding-left: 0px; border-right: none;"></i><label style="margin-bottom: 10px;"> 판매 가격</label>
               <input type="number" class="form-control" name="price">
             </div>
              <div class="form-group">
-              <label><span class="glyphicon glyphicon-eye-open"></span> 프로젝트 설명</label>
+              <label style="margin-bottom: 10px;"><span class="glyphicon glyphicon-eye-open"></span> 프로젝트 설명</label>
               <input type="text" class="form-control" name="contents">
             </div>
          
@@ -249,7 +253,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       
-          <p>프로젝트 판매 정보는 수정이 불가하니 신중해주세요.</p> 
+          <p style="line-height: 30px;">프로젝트 판매 정보는 수정이 불가하니 신중해주세요.</p> 
          
         </div>
       </div>

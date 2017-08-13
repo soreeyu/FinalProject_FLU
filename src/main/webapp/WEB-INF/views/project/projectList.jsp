@@ -321,7 +321,7 @@ background-color:black;
 }
 
 .project-bottom {
-	margin-top: 10px;
+	margin-top: 20px;
 	line-height: 18px;
 	background-color: white;
 }
