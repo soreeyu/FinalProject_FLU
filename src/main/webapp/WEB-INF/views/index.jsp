@@ -290,7 +290,9 @@
 						<strong>${indexList[i].appCount}명 지원</strong>
 					</span>
 				</h5>
-				<p class="List_contents">${indexList[i].contents}</p>
+				<div class="List_contents" style="white-space: nowrap; text-overflow : ellipsis; overflow: hidden; height: 50px;">
+				<p  >${indexList[i].contents}</p>
+				</div>
 				<p class="project-sill-list" >
 					<c:forEach items="${skills}" var="s">
 					<c:forEach items="${s.skills}" var="s2" end="3">

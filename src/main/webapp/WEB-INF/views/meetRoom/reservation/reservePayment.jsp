@@ -66,7 +66,7 @@
 					success: function(data) {
 						var result = data;
 						alert(result.trim());
-						$(".list").html(result);
+						$(".list").html(result.trim());
 						if(result!='조건에 충족하지 못하여 10% 할인 받을 수 없습니다.'){
 							$("#price").val(($("#price").val()*1)*0.9);
 							$(".disCount_Price").html($("#price").val());
@@ -208,7 +208,7 @@
 	<br>
 	<div class="discount_btn_box">
 		<label class="btn">
-			<span><h1 id="discount">할인(누르면 할인 조건을 검사한 후에 자동으로 할인된 금액이 입력됩니다.)</h1></span>
+			<span><h1 id="discount">할인받기</h1></span>
 		</label>
 		<div class="list">
 			
