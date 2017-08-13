@@ -179,9 +179,16 @@
 	font-size: 17px;
 }
 
-.job_info label{
+.job_info th{
 	font-size: 20px;
 	font-weight: 700;
+	width: 200px;
+	padding-bottom: 20px;
+}
+.job_info td{
+	padding: 8px 0;
+	text-align: center;
+	padding-bottom: 20px;
 }
 .job_info p{
 	padding-left: 40px;
@@ -232,7 +239,7 @@
 						<div class="info_body">
 							<div class="info1 info_div">
 								<label>직종</label>
-								<label>
+								<label style="font-weight: 700; font-size: 17px; width: 200px; text-align: center; padding: 0;">
 								<c:if test="${not empty free.dto.jobKind }">
 								${free.dto.jobKind }
 								</c:if>
@@ -244,29 +251,56 @@
 							<div class="info2 info_div">
 								<label>관심분야</label>
 								<div class="job_info">
-									<label>개발</label>
-									<c:if test="${not empty free.interesting }">
-									<c:forEach items="${free.interesting }" var="i" varStatus="s">
-									<p>${s.count}.${i }</p>
-									</c:forEach>
-									</c:if>
-									<c:if test="${empty free.interesting }">
-									<p>아직 관심분야를 선택하지 않았습니다.</p>
-									</c:if>
-									<label>디자인</label>
-									<c:if test="${not empty free.interesting2 }">
-									<c:forEach items="${free.interesting2 }" var="i" varStatus="s">
-									<p>${s.count}.${i }</p>
-									</c:forEach>
-									</c:if>
-									<c:if test="${empty free.interesting2 }">
-									<p>아직 관심분야를 선택하지 않았습니다.</p>
-									</c:if>
+									<table>
+										<thead>
+											<tr>
+												<th>개발</th>
+											</tr>
+										</thead>
+										<tbody>
+										<c:if test="${not empty free.interesting }">
+										<c:forEach items="${free.interesting }" var="i" varStatus="s">	
+											<tr>
+												<td>
+												${s.count}.${i }
+												</td>
+											</tr>
+										</c:forEach>
+										</c:if>
+										<c:if test="${empty free.interesting }">
+										<tr>
+											<td>아직 관심분야를 선택하지 않았습니다.</td>
+										</tr>
+										</c:if>
+										</tbody>
+									</table>
+									<table>
+										<thead>
+											<tr>
+												<th>디자인</th>
+											</tr>
+										</thead>
+									
+										<tbody>
+											<c:if test="${not empty free.interesting2 }">
+										<c:forEach items="${free.interesting2 }" var="i" varStatus="s">
+										<tr>
+											<td>${s.count}.${i }</td>
+										</tr>
+										</c:forEach>
+										</c:if>
+										<c:if test="${empty free.interesting2 }">
+										<tr>
+											<td>아직 관심분야를 선택하지 않았습니다.</td>
+										</tr>
+										</c:if>
+										</tbody>
+									</table>
 								</div>
 							</div>
 							<div class="info3 info_div">
 								<label>활동가능성</label>
-								<label>
+								<label style="font-weight: 700; font-size: 17px; width: 200px; text-align: center; padding: 0;">
 								<c:if test="${not empty free.dto.possibility }">
 								${free.dto.possibility }
 								</c:if>

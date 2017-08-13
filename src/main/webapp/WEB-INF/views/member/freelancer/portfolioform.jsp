@@ -203,6 +203,20 @@
 	color: white;
 	background-color: #446eab;
 }
+
+input[type=text],input[type=date],input[type=number]{
+	padding: 5px;
+	padding-left: 10px;
+	border-radius: 10px;
+	border : 1px solid #595959;
+}
+
+textarea {
+	padding-left: 10px;
+	border-radius: 10px;
+	border : 1px solid #595959;
+}
+
 </style>
 </head>
 <body>
@@ -250,9 +264,9 @@
 									</c:when>
 									<c:otherwise>
 									<p><label>이미지</label><input name="f1" type="file" accept=".jpg, .png, .gif"></p>
-									<p><input type="text" name="contents1"></p>
+									<p><label>설명</label><input type="text" name="contents1"></p>
 									<p><label>이미지</label><input name="f1" type="file" accept=".jpg, .png, .gif"></p>
-									<p><input type="text" name="contents2"></p>
+									<p><label>설명</label><input type="text" name="contents2"></p>
 									</c:otherwise>
 									</c:choose>
 									<p><input id="ok" type="button" value="등록"><input id="cencel" type="button" value="취소"></p>

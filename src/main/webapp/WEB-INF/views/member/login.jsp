@@ -17,7 +17,7 @@
 .main_section{
 	min-width: 1460px;
 	width: 100%;
-	height: 700px;
+	height: 760px;
 	background-color: #f2f2f2;
 }
 .login_wrap{
@@ -90,6 +90,7 @@ input[type=text], input[type=password]{
 }
 .p_label label{
 	float: inherit;
+	display: inline;
 }
 
 .login_btn_div{
@@ -119,8 +120,43 @@ input[type=text], input[type=password]{
 
 .sign_up{
 	float: right;
+	width: 500px;
 }
-
+.sign_up img{
+	width: 100%;
+	margin-top: 30px;
+}
+.sign_up p{
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 18px;
+}
+.sign_up p span{
+	padding-left: 90px;
+}
+.sign_up p a{
+	padding-left: 20px;
+	color: rgb(68, 110, 171);
+}
+.pwguidebtn{
+	background-color: #339bff;
+	color: white;
+	border: 0;
+	border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
+}
+.pwcencelbtn{
+	background-color: #94a2af;
+	color: white;
+	border: 0;
+	border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
+}
+#ppp{
+	cursor: pointer;
+	color: red;
+	margin-left: 7px;
+}
 </style>
 </head>
 <body>
@@ -138,7 +174,12 @@ input[type=text], input[type=password]{
 	</div>
 	
 	<c:if test="${message eq 0 }">
-		올바른 이메일과 비밀번호를 입력하십시오.
+		<div class="login_div">
+			<div class="login_title">
+				<p><span>올바른 이메일과 비밀번호를 입력하십시오.</span></p>
+			</div>
+		</div>
+		
 	</c:if>
 	
 	<div class="login_form_wrap">
@@ -150,11 +191,16 @@ input[type=text], input[type=password]{
 		<p class="p_label" id="p_pw"></p>
 		<div class="login_btn_div">
 		<p><input id="btn" type="button" value="로그인"></p>
-		<p class="find_pw"><span>비밀번호를 잊으셨나요?</span><span >비밀번호 찾기</span></p>
+		<p class="find_pw"><span>비밀번호를 잊으셨나요?</span><span id="ppp" data-toggle="modal"data-target="#pwguide">비밀번호 찾기</span></p>
 		</div>
 		</div>
 		<div class="sign_up">
-		<p><span>아직 회원이 아니신가요?</span><a href="MemberJoin">회원 가입</a></p>
+			<div>
+				<div>
+					<img src="${pageContext.request.contextPath}/resources/img/logo3.png">
+				</div>
+				<p><span>아직 회원이 아니신가요?</span><a href="MemberJoin">회원 가입</a></p>
+			</div>
 		</div>
 	</form>
 	</div>
@@ -163,51 +209,22 @@ input[type=text], input[type=password]{
 	</section>
 	
 	<!-- 모달 -->
-	<div class="modal fade" id="rList-Modal2${dto.projectNum }" role="dialog">
+	<div class="modal fade" id="pwguide" role="dialog">
 		<div class="modal-dialog">
     
 	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
+	      <div class="modal-content" style="border-radius: 10px;">
+	        <div class="modal-header" style="color: white; background-color: rgb(68, 110, 171); border-top-left-radius: 10px; border-top-right-radius: 10px;">
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title">계약금과 프로젝트 시작일을 설정해 주세요</h4>
+	          <h4 class="modal-title" style="font-weight:bold;">비밀번호를 찾으실 아이디를 입력해주세요</h4>
 	        </div>
 	        <div class="modal-body">
-	        <form id="appformMeet" action="/flu/project/applicantMeet" method="post">
-	        <input id="hiddenNum" type="hidden" name="projectNum" value="${dto.projectNum }">
-	        <table style="display:block; margin:0 auto; width: 100%; text-align: center;">
-	        <colgroup>
-	        	<col width="100px">
-	        	<col width="180px">
-	        	<col width="100px">
-	        	<col width="180px">
-	        </colgroup>
-	        <thead>
-	        </thead>
-	        <tbody>
-	        <c:forEach items="${applicantList }" var="i" varStatus="o">
-	        <c:if test="${i.state eq 'meet' && i.projectNum eq dto.projectNum }">
-	        <tr>
-	        	<th style="text-align: center;">지원자 </th>
-	        	<td style="text-align: center;">${i.email }</td>
-	        	<th style="text-align: center;">계약금 </th>
-	        	<td style="text-align: center;"><input type="text" name="pay"class="form-control"></td>
-	        </tr>
-	        </c:if>
-	        </c:forEach>
-	        <tr style="border-bottom: 2px solid #3377ff;">
-	        	<th style="text-align: center;border-top: 1px solid #ccccff">시작일</th>
-	        	<td><input type="date"class="form-control" name="startDate"></td>
-	        	<th style="text-align: center;border-top: 1px solid #ccccff">종료일</th>
-	        	<td><input type="date"class="form-control" name="finishDate"></td>
-	        </tr>
-	        </tbody>
-	        </table>
-	        </form>
+	        <p><input type="text" id="email2" class="form-control delete_input"></p>
 	        </div>
 	        <div class="modal-footer">
-	        	<button class="okbtn2 btn btn-default" type="button" class="btn btn-default">확인</button>
-	          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        	<label id="wait" style="float: left; font-weight: bold; font-size: 20px;display: none;">잠시만 기다려주세요.</label>
+	        	<button class="pwguidebtn btn btn-default" type="button" class="btn btn-default">확인</button>
+	          <button type="button" class="pwcencelbtn btn btn-default" data-dismiss="modal">취소</button>
 	        </div>
 	      </div>
       
@@ -242,7 +259,38 @@ $("#pw").keydown(function() {
 			$("#form").submit();
 		}
 	});
+	//이메일 인풋텍스트 초기화
+	$("#ppp").click(function() {
+		$("#email2").val("");
+	});
 	
+	$(".pwguidebtn").click(function() {
+		var email = $("#email2").val();
+		
+		$("#wait").css("display", "inline-block");
+		if(email != ""){
+			$.ajax({
+				url:"/flu/member/pwguide",
+				type:"post",
+				data:{
+					email:email
+				},
+				success:function(data){
+					if(data == email){
+						$("#wait").css("display", "none");
+						alert("입력하신 이메일로 임시 비밀번호를 보내드렸습니다.");
+						location.href="/flu/member/login";
+					}else{
+						$("#wait").css("display", "none");
+						alert("입력하신 이메일이 없습니다.");
+					}
+				}
+			});
+		}else{
+			$("#wait").css("display", "none");
+			alert("이메일을 입력해 주세요");
+		}
+	});
 
 </script>
 </html>

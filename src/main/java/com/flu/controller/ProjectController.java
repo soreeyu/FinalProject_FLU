@@ -544,14 +544,14 @@ public class ProjectController {
    
    //지원자 선택 컨트롤러
    @RequestMapping(value="applicantCheck", method=RequestMethod.POST)
-   public String applicantCheck(AppCheckDTO appCheckDTO){
+   public String applicantCheck(String paycheck, Integer projectNum){
 	   System.out.println("지원자 선택 컨트롤러 들어옴");
-	   System.out.println("프로젝트 번호 :"+appCheckDTO.getProjectNum());
-	   System.out.println("선택한 지원자 :"+appCheckDTO.getPaycheck());
+	   System.out.println("프로젝트 번호 :"+paycheck);
+	   System.out.println("선택한 지원자 :"+projectNum);
 	   
 	   
 	   
-	   //projectService.applicantCheck(paycheck, projectNum);
+	   projectService.applicantCheck(paycheck, projectNum);
 	   
 	   return "redirect:/member/client/clientproject?state=recruit";
    }

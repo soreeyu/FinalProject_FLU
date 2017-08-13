@@ -111,11 +111,12 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #66b3ff;
-    border-radius: .2em;
+    background-color: #339bff;
     color: white;
     line-height: 1.5;
     cursor: pointer;
+    border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
 }
 
 .profile_title > p{
@@ -177,13 +178,17 @@
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-    background-color: #446eab;
-    border-radius: .2em;
+    background-color: #339bff;
     color: white;
     line-height: 1.5;
     border: 0;
     margin-left: 10px;
     cursor: pointer;
+    border-radius: 10px;
+	box-shadow: 2px 1px 0 0 #dedede;
+}
+#carrer_cencel, #academic_cencel, #license_cencel{
+	background-color: #94a2af;
 }
 
 .carrerform_div p,.academicform_div p , .licenseform_div p{
@@ -200,7 +205,7 @@
 
 thead{
 	color: white;
-	background-color: #1a8cff;
+	background-color: #6d90c5;
 	font-weight: bold;
 	font-size: 15px;
 }
@@ -221,6 +226,9 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 }
 table {
 	width: 100%;
+}
+td{
+	border-bottom: 1px solid #595959;
 }
 
 </style>

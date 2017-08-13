@@ -35,6 +35,9 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 	background-color: #e6f5ff;
 	font-weight: bold;
 }
+.modal-content2{
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -52,7 +55,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 
 
 		<!-- 프로젝트 각각 -->	
-			<c:forEach items="${list}"  var="dto">
+			<c:forEach items="${list}"  var="dto" varStatus="app1">
 			
 				<div class="project-unit">
 					<div class="project-head">
@@ -78,10 +81,10 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 							총 
 							<c:choose>
 							<c:when test="${dto.state eq 'done' }">
-								<span style="cursor: pointer;" data-toggle="modal" data-target="#rList-Modal${dto.projectNum}">${dto.appCount}명</span>
+								<span style="cursor: pointer;" class="appListbtn" title="${app1.index }" >${dto.appCount}명</span>
 							</c:when>
 							<c:when test="${dto.state eq 'recruit' }">
-								<span style="cursor: pointer;" data-toggle="modal" data-target="#rList-Modal2${dto.projectNum }">${dto.appCount}명</span>
+								<span style="cursor: pointer;"class="appList2btn" data-toggle="modal"data-target="#rList-Modal2${dto.projectNum }">${dto.appCount}명</span>
 							</c:when>
 							<c:otherwise>
 								<strong>${dto.appCount}명</strong>
@@ -111,53 +114,7 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 						
 		   <!----------------------- Modal ---------------------------------->
 	   
-  <!-- 지원자 목록 모달 -->      
-	<div class="modal fade" id="rList-Modal${dto.projectNum }" role="dialog">
-		<div class="modal-dialog">
-    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title">계약을 진행 할 사람을 선택 하세요.</h4>
-	        </div>
-	        <div class="modal-body">
-	     <form id="appform" action="/flu/project/applicantCheck" method="post">
-	        <input id="hiddenNum" type="hidden" name="projectNum">
-	        <table style="display:block; margin:0 auto; width: 70%; text-align: center;">
-	        <colgroup>
-	        	<col width="317px">
-	        	<col width="100px">
-	        </colgroup>
-	        <thead>
-	        <tr>
-	        	<th style="text-align: center;">지원자 목록</th>
-	        	<th style="text-align: center;">선택 여부</th>
-	        </tr>
-	        </thead>
-	        <tbody>
-	        <c:forEach items="${applicantList }" var="i" varStatus="o">
-	        <c:if test="${i.projectNum eq dto.projectNum }">
-	        <tr>
-	          <td><label for="${o.index }">${i.email }</label></td>
-	          <td style="text-align: center;"><input title="${i.projectNum }" style="vertical-align:bottom;height: 20px;width: 30px;" class="paybox" id="${o.index }" type="checkbox" name="paycheck" value="${i.email }"></td>
-	        </tr>
-	          <p style="vertical-align:top; font-size: 20px;font-weight: bold;">
-	          <span style="margin-left: 30px;"></span></p>
-	          </c:if>
-	        </c:forEach>
-	        </tbody>
-	        </table>
-	        </form>
-	        </div>
-	        <div class="modal-footer">
-	        	<button class="okbtn btn btn-default" type="button" class="btn btn-default">확인</button>
-	          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-	        </div>
-	      </div>
-      
-    	</div>
-	</div>
+ 
 	
 	<!-- 모집완료 모달 -->
 	<div class="modal fade" id="rList-Modal2${dto.projectNum }" role="dialog">
@@ -284,6 +241,59 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 							
 							</div>
 						</div>
+					</div>
+				<div class="appList">
+					<div class="modal-content2" id="app2${app1.index }">
+						<div class="modal-header">
+							<h4 class="modal-title">계약을 진행 할 사람을 선택 하세요.</h4>
+						</div>
+						<div class="modal-body">
+							<form id="appform${app1.index }" action=""
+								method="post">
+								<input id="hiddenNum" type="hidden" name="projectNum" value="${dto.projectNum }">
+								<table
+									style="display: block; margin: 0 auto; width: 70%; text-align: center;">
+									<colgroup>
+										<col width="317px">
+										<col width="100px">
+									</colgroup>
+									<thead>
+										<tr>
+											<th style="text-align: center;">지원자 목록</th>
+											<th style="text-align: center;">선택 여부</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${applicantList }" var="i" varStatus="o">
+											<c:if test="${i.projectNum eq dto.projectNum }">
+												<tr>
+													<td><label for="${o.index }">${i.email }</label></td>
+													<td style="text-align: center;"><input
+														title="${i.projectNum }"
+														style="vertical-align: bottom; height: 20px; width: 30px;"
+														class="paybox" type="checkbox"
+														name="paycheck" value="${i.email }"></td>
+												</tr>
+												<p
+													style="vertical-align: top; font-size: 20px; font-weight: bold;">
+													<span style="margin-left: 30px;"></span>
+												</p>
+											</c:if>
+										</c:forEach>
+									</tbody>
+								</table>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button"
+								class="btn btn-default ok1">확인</button>
+							<button type="button" class="btn btn-default cencel1"
+								 >취소</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
 					</div>
 				</div>	
 			</c:forEach>
@@ -426,9 +436,23 @@ $(".CancleSellBTN").click(function() {
 	}
 });
 
+
+//지원자 리스트
+var alltitle = 0;
+$(".appListbtn").click(function() {
+	var title =$(this).attr("title");
+	alltitle = title;
+	alert(title);
+	$("#app2"+title).css("display", "block");
+});
+$(".cencel1").click(function() {
+	alert(alltitle);
+	$("#app2"+alltitle).css("display", "none");
+});
+
 // 지원자 선택버튼
 
-$(".okbtn").click(function() {
+$(".ok1").click(function() {
 	var pronum =$(".paybox").attr("title");
 	$("#hiddenNum").val(pronum);
 	
@@ -441,8 +465,10 @@ $(".okbtn").click(function() {
 	if(count == 0){
 		alert("지원자를 선택해 주세요");
 	}else{
-		
-		$("#appform").submit();
+		var path = "/flu/project/applicantCheck"
+		$("#appform"+alltitle).attr("action", path);
+		alert(path);
+		$("#appform"+alltitle).submit();
 	}
 	
 });
