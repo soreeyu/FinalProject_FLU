@@ -1011,11 +1011,7 @@ background-color: white;
             <c:if test="${dto.state eq 'check'}">
             <input type="button" class="register-btn" value="프로젝트 검수 완료" id="doneBTN">
             </c:if>
-            
-            <c:if test="${dto.state eq 'fail'}">
-            <input type="button" class="register-btn" value="프로젝트 기간변경" id="dateBTN">
-            </c:if>
-            
+
             <input type="button" class="register-btn" value="프로젝트 삭제" id="deleteBTN">
             
             </form>
@@ -1451,18 +1447,6 @@ var testId = "";
 		}
 
 	});
-
-
-	   
-	   $('#dateBTN').click(function () {
-
-		   var url="./moreDate";
-		   var option = "width=440,height=340,top=100,left=300";
-		  
-		   window.open(url,'moreDate',option);
-		   
-		   
-		});
 	   
 	   $('#chat').click(function() {
 		   

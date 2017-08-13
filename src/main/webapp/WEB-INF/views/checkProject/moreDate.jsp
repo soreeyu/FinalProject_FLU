@@ -84,7 +84,7 @@ $(function() {
 		
 		var startDate = $('input[name=startDate]').val();
 		var finishDate = $('input[name=finishDate]').val();
-		var projectNum = opener.document.getElementById("opener").value;
+		var projectNum = opener.document.getElementById("opener").lang;
 		
 		if(check==0){
 			alert("날짜를 입력하세요");

@@ -9,31 +9,27 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sockjs-1.0.3.min.js" ></script>
 <style type="text/css">
 
+html{
 
-
-.wrap{
-
-width: 400px;
-height: 460px;
-border: 1px solid gray;
+background-color: #f2f2f2;
 
 }
 
-#fileForm{
+.wrap{
 
-	visibility: hidden;
+width: 420px;
+height: 460px;
+border-radius: 15px;
+
 }
 
 #data{
 
 width: 360px;
-height: 360px;
-background-color: yellow;
-border: 1px solid black;
+height: 300px;
 margin: 0 auto;
 margin-top: 20px;
 overflow-y: auto;
-
 
 }
 
@@ -43,10 +39,96 @@ overflow-y: auto;
 	height: 100px;
 	margin: 0 auto;
 	margin-top: 10px;
+	
+}
+
+.loon_wrap{
+	
+	width: 80%;
 
 }
 
+.loon_title{
+	
+	width: 20%;
+	height: 20px;
+	background-color: #737373;
+	color: #f1f1f1;
+	font-size: 0.8em;
+	font-weight: bold;
+	border-radius: 5px;
+	text-align: center;
+	margin-top: 20px;
+	
+}
 
+.loon_contents{
+	
+	font-size: 0.8em;
+	background-color: white;
+	color: black;
+	border: 1px solid gray;
+	border-radius: 10px;
+}	
+
+span{
+
+	padding: 7px;
+
+}
+
+.entrance{
+
+	font-size: 0.8em;
+	font-weight: bold;
+
+}
+.filebox input[type="file"] { 
+	position: absolute; 
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px;
+	overflow: hidden; 
+	clip:rect(0,0,0,0); border: 0;
+	 } 
+	 
+.filebox label {
+ display: inline-block; 
+ padding: .5em .75em;
+ color: white;
+ font-size: 1.0em;
+ font-weight: normal;
+ line-height: normal; 
+ vertical-align: middle; 
+ background-color: #2099bb;
+ cursor: pointer; 
+ border: 1px solid #ebebeb; 
+ border-bottom-color: #e2e2e2; 
+ border-radius: .25em; 
+ } 
+ 
+ .filebox .upload-name { 
+ display: inline-block; 
+ padding: .5em .75em; /* label의 패딩값과 일치 */ 
+ font-size: inherit; 
+ font-family: inherit; 
+ line-height: normal; 
+ vertical-align: middle; 
+ background-color: #f5f5f5; 
+ border: 1px solid #ebebeb; 
+ border-bottom-color: #e2e2e2; 
+ border-radius: .25em; 
+ -webkit-appearance: none; /* 네이티브 외형 감추기 */
+ -moz-appearance: none;
+  appearance: none;
+}
+
+.filebox{
+
+	visibility: hidden;
+	
+}
 
 </style>
 <script type="text/javascript">
@@ -101,13 +183,15 @@ overflow-y: auto;
 					curID = messageID;
 				}
 				
+				
 				if(message==null){
-					var print = "<div>";
+					var print = "<div class='entrance'>";
 			    	    print += messageID+"</p>";
 			  		    print += "</div>";
 				}else if(messageFile==null){
-		     	   var print = "<div>";
-		    	   print += "<p>["+curID+"]:"+message+"</p>";
+		     	   var print = "<div class='loon_wrap'>";
+		     	   print += "<p class='loon_title'>"+curID+"</p>";
+		      	   print += "<span class='loon_contents'>"+message+"</span>";
 		  		   print += "</div>";
 		      	}else{
 		     	   var print = "<div>";
@@ -182,7 +266,7 @@ overflow-y: auto;
 	     $('#fileStart').click(function() {
 	        	
 	        	alert("check=1");
-	        	$('#fileForm').css("visibility","visible");
+	        	$('.filebox').css("visibility","visible");
 		    	check = 1;
 	        	
 			});
@@ -190,11 +274,24 @@ overflow-y: auto;
 	        $('#x').click(function() {
 				
 	        	alert("check=0");
-	        	$('#fileForm').css("visibility","hidden");
+	        	$('.filebox').css("visibility","hidden");
 	        	check = 0;
 	        	
 			});
 	        
+	        	var fileTarget = $('.filebox .upload-hidden'); 
+	        	
+	        	fileTarget.on('change', function(){
+	        		// 값이 변경되면
+	        		
+	        		if(window.FileReader){ // modern browser 
+	        			var filename = $(this)[0].files[0].name; 
+	        		}else { // old IE 
+	        			var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출 
+	        		} // 추출한 파일명 삽입
+	        			$(this).siblings('.upload-name').val(filename); }); 
+	        	
+	        	
     
 	});  
 
@@ -207,23 +304,24 @@ overflow-y: auto;
 
 <div class="wrap">
 	<div id="data">
+		
 
+		
 	</div>
 	
 	<div class="insert">
 		
-		<textarea rows="" cols="" id="message" style="width: 300px; height: 50px; resize: none;">
-		
-		
-		</textarea>
+		<input type="text" id="message" style="width: 250px; height: 30px;">
 		
 		<input type="button" id="sendBtn" value="전송"/><input type="button" value="파일을 첨부하실 경우 클릭하세요" id="fileStart">
 		
 	
 		<form id="frm" method="post" enctype="multipart/form-data">
-			<div id="fileForm">
-				<input type="file" name="file2" id="file2"/><span id="x">X</span>
-			</div>
+			<div class="filebox">
+			<input class="upload-name" value="제출된 '이미지가'가 없습니다." disabled="disabled" style="width: 100px;">
+			<label for="ex_filename">+ 이미지 등록</label> 
+			<input type="file" name="file2" id="ex_filename" class="upload-hidden">
+			</div>	
 		</form>
 	</div>
 	

@@ -557,14 +557,14 @@ thead tr td{
  				
 			}else if('${board}'=='Fail'){
 				
-				
+					   var url="./moreDate";
+					   var option = "width=440,height=340,top=100,left=300";
+					  
+					   window.open(url,'moreDate',option);
 				
 			}else{
 				
 			}
-			
-			
-			
 			
 		});
 	    
@@ -589,7 +589,6 @@ thead tr td{
 	    	}else if('${board}'=='Wait'){//프로젝트 대금관리
 	    		
 
-		    	
 				if(confirm("입급여부를 확정하고 프로젝트를 시작하시겠습니까?")){
 					
 					location.href="./checkProjectUpdate?projectNum="+projectNum+"&state="+state+"&email="+email;
@@ -884,7 +883,7 @@ thead tr td{
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="cancel">중단하기</span>
 								 </c:if>
 								 <c:if test="${board=='Fail'}">
-								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="fail">기간연장</span>
+								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="fail" id="opener">기간연장</span>
 								 </c:if>
 								 </td>
 							</tr>

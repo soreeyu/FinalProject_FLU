@@ -210,7 +210,22 @@ public class CheckProjectController {
 	
 	}
 	
-	
+	@RequestMapping(value="moreDate")
+	public void moreDate(Model model){
+		
+		model.addAttribute("result",0);
+		
+	}
+   
+   //프로젝트 기간연장하는 관리자의 고유 권한
+	@RequestMapping(value="moreDateUpdate")
+	public String moreDateUpdate(ProjectDTO projectDTO,Model model){
+		System.out.println("여기에도달");
+		projectService.moreDateUpdate(projectDTO);
+		model.addAttribute("result",1);
+		
+		return "./checkProject/moreDate";
+	}
 
 	
 	
