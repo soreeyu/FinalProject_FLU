@@ -70,14 +70,14 @@ public class HomeController {
 		int budget = projectService.totalBudget();
 		List<ProjectDTO> ar = projectService.indexProjectList();
 		List<ProjectDTO> ar2 = new ArrayList<ProjectDTO>();
-
+		System.out.println(ar.size());
 		//프리랜서
 		List<FreelancerDTO> freelancer = freelancerService.indexFreelancerList();
 		int count1=1;
 		int count2=1;
 		int pay=1;
 		
-		/*if(ar!=null && freelancer!=null){	
+		if(ar!=null && freelancer!=null){	
 			
 		for(int i=0;i<6;i++){	
 			projectDTO = new ProjectDTO();
@@ -89,11 +89,11 @@ public class HomeController {
 		
 		for(int j=0; j<6;j++){
 			//진행중인 프로젝트 Count
-			//count1 = memberService.memberProjectCount_ING(freelancer.get(j).getEmail());
+			count1 = memberService.memberProjectCount_ING(freelancer.get(j).getEmail());
 			//완료한 프로젝트 Count
-			//count2 = memberService.memberProjectCount_FIN(freelancer.get(j).getEmail());
+			count2 = memberService.memberProjectCount_FIN(freelancer.get(j).getEmail());
 			//누적 완료 금액
-			//pay = memberService.memberProjectSumPay(freelancer.get(j).getEmail());
+			pay = memberService.memberProjectSumPay(freelancer.get(j).getEmail());
 			
 		}
 		
@@ -108,7 +108,7 @@ public class HomeController {
 		}
 
 		List<ProjectDTO> countList = projectService.roomCount();
-		echoHandler.roomCount(countList);*/
+		echoHandler.roomCount(countList);
 
 		model.addAttribute("pjcount", pjcount);
 		model.addAttribute("mcount", mcount);
