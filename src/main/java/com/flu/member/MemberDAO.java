@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantMemberDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
@@ -71,11 +72,13 @@ public class MemberDAO {
 
 	//회원 정보
 	public CheckMemberViewDTO memberView(String email) {
-		System.out.println("view를 하러 왔음");
 		return sqlSession.selectOne(NAMESPACE+"memberView", email);
 	}
 	public MemberDTO memberView2(String email){
 		return sqlSession.selectOne(NAMESPACE+"memberView2", email);
+	}
+	public ApplicantMemberDTO memberView3(String email){
+		return sqlSession.selectOne(NAMESPACE+"memberView3", email);
 	}
 
 	//이메일 인증 시 난수 저장 , 인증 성공시 값이 1로 변경

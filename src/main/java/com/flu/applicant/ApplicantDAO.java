@@ -22,6 +22,12 @@ public class ApplicantDAO {
 	public List<ApplicantDTO> list(int projectNum){	
 		return sqlSession.selectList(NAMESPACE+"list", projectNum);
 	}
+	
+	//APPLICANT 정보 + MEMBER 정보
+	public List<ApplicantMemberDTO> applicantList(int projectNum){	
+		return sqlSession.selectList(NAMESPACE+"applicantList", projectNum);
+	}
+	
 	//지원자 List 불러오기
 	public int ingCount(int projectNum){
 			

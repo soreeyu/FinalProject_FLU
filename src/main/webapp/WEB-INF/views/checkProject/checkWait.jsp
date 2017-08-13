@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <c:if test="${state=='wait'}">
 <tr class="check_wait_tr">
 	<td class="tbody_td1 del${projectNum}"><span class="label">${client.type}</span></td>

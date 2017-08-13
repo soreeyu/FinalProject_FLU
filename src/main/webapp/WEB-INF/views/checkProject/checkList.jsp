@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -529,6 +530,7 @@ thead tr td{
 			if($(this).val()=='${searchDate}'){
 				$(this).attr("selected", "selected");
 			}
+		})
 	    	
 		$("select[name=type] option").each(function() {
 			
@@ -537,100 +539,85 @@ thead tr td{
 			}
 		})	
 			
-			
-		})
-		
-		//Ajax---------------------------------------------------
-		
 		
 		$('.bbttnn').click(function() {
 			
 			var email = $(this).attr('title');
-			var num = $(this).attr('lang');
 			var state = $(this).attr('role');
-
-			if('${board}'=='Finish'){
+			var projectNum = $(this).attr('lang');
+			
+			if('${board}'=='Finish' || '${board}'=='Wait'){
+				$(".visible"+projectNum).show();
+			}
+			else if('${board}'=='Cancel'){
 				
-			 	$.ajax({
-					
-					url: "../applicant/applicantListCheck",
-					type: "GET",
-					data: {projectNum:num},
-					success:function(data){
-						data = data.trim();
-						$('#append'+num).after(data);
-					}
-				}) 
+ 				if(confirm("프로젝트를 중단하시겠습니까?")){	
+					location.href="./checkProjectUpdate?email="+email+"&projectNum="+projectNum+"&state="+state;	
+				} 
+ 				
+			}else if('${board}'=='Fail'){
 				
 				
-				$('.yui').on("click",".btn2", function() {
-					var email = $(this).attr('title');
-					var name = $(this).attr('lang');
-
- 					if(confirm(name+"님의 대금처리를 완료하시겠습니까?")){
-						location.href = "../applicant/applicantPayFinish?email="+email;
+				
+			}else{
+				
+			}
+			
+			
+			
+			
+		});
+	    
+	    
+	    
+	    $(".btn2").click(function() {
+	    	
+	    	var email = $(this).attr('title');
+	    	var state = $(this).attr('lang');
+	    	var projectNum = $(this).attr('role');
+	    	var name = $(this).attr('accesskey');
+	    	
+	    	${app.name}
+	    	if('${board}'=='Finish'){ //프리랜서 대금 관리
+		    	
+					if(confirm(name+"님의 대금처리를 완료하시겠습니까?")){
+						location.href = "../applicant/applicantPayFinish?email="+email+"&projectNum="+projectNum;
 					}else{
 						
 					} 
-				}) 
+	    		
+	    	}else if('${board}'=='Wait'){//프로젝트 대금관리
+	    		
+
+		    	
+				if(confirm("입급여부를 확정하고 프로젝트를 시작하시겠습니까?")){
+					
+					location.href="./checkProjectUpdate?projectNum="+projectNum+"&state="+state+"&email="+email;
+					
+				}else{
+					
+				}
+	    		
+	    	} 
+	    	
+		});
+	    
+	    
+
+	    $('.x').click(function() {
 			
-				
-				
-			}else if('${board}'=='Wait'){
-			
-				$.ajax({
-					
-					url: "./checkWait",
-					type: "GET",
-					data: {email:email,projectNum:num,state:state},
-					success:function(data){
-						$('#append'+num).after(data);
-					}
-					
-				})
-				
-				$('.yui').on("click",".btn2", function() {
-
-					var projectNum = $(this).attr('title');
-					
-					if(confirm("입급여부를 확정하고 프로젝트를 시작하시겠습니까?")){
-							
-						location.href="./checkProjectUpdate?email="+email+"&projectNum="+projectNum+"&state="+state;
-						
-					}else{
-						
-					}
-					
-
-				}) 
-				
- 				$('.yui').on("click",".x", function() {
-
-					$('.del'+num).remove();
-					
-				})  
-				
-
-			}else{//중단하기
-				
-				alert(num);
-				alert(state);
-				
- 				if(confirm("프로젝트를 중단하시겠습니까?")){
-				
-					location.href="./checkProjectUpdate?projectNum="+num+"&state="+state;
-					
-					
-				} 
-				
-					
-				
-			}			
-			
+	    	var visible = $(this).attr('title');
+	    	
+	    	$("."+visible).hide();
+	    	
 		});
 		
+			
+	    $(".check_wait_tr").hide();
+	    
+		
 	
-	    //paging
+	    //----------paging-----------------------
 	    
 	    $('.page').click(function() {
 	    	
@@ -896,11 +883,83 @@ thead tr td{
 								 <c:if test="${board=='Cancel' and i.del_check=='1'}">
 								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="cancel">중단하기</span>
 								 </c:if>
+								 <c:if test="${board=='Fail'}">
+								 	<span class="bbttnn" title="${i.email}" lang="${i.projectNum}" role="fail">기간연장</span>
+								 </c:if>
 								 </td>
 							</tr>
-							
-							<!-- 여기 -->
-							
+
+<c:if test="${board=='Wait'}">
+	<c:if test="${i.state=='wait'}">
+		<tr class="check_wait_tr visible${i.projectNum }">
+			<td class="tbody_td1"><span class="label">${memberList[e.index].type}</span></td>
+			<td class="tbody_td2"><span class="name">${memberList[e.index].account}</span></td>
+			<td class="tbody_td3">
+			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/checkProject/phone.png" style="width: 20px; height: 20px; vertical-align: text-top;">
+			${memberList[e.index].phone}
+			</td>
+			<td class="tbody_td4"><p>${memberList[e.index].accountNumber}</p>
+			<p><fmt:formatNumber type="currency">${i.budget}</fmt:formatNumber></p>
+			</td>
+			<td class="tbody_td5">${memberList[e.index].bank}</td>
+			<td class="tbody_td6"><input type="button" title="${i.email}" lang="${i.state}" role="${i.projectNum}" class="btn2" value="입금확인 완료"></td>
+			<td class="tbody_td7"><span class="x" title="visible${i.projectNum}">닫기</span></td>
+		</tr>
+		</c:if>
+		
+		<c:if test="${i.state=='ing'}">
+		<tr class="check_wait_tr visible${i.projectNum}">
+			<td class="tbody_td1"><span class="label">${memberList[e.index].type}</span></td>
+			<td class="tbody_td2"><span class="name">${memberList[e.index].account}</span></td>
+			<td class="tbody_td3">
+			<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/checkProject/phone.png" style="width: 20px; height: 20px;">
+			${memberList[e.index].phone}
+			</td>
+			<td class="tbody_td4"><p>${memberList[e.index].accountNumber}</p>
+			<p><fmt:formatNumber type="currency">${i.budget}</fmt:formatNumber></p>
+			</td>
+			<td class="tbody_td5">${memberList[e.index].bank}</td>
+			<td class="tbody_td6">입금완료</td>
+			<td class="tbody_td7"><span class="x" title="visible${i.projectNum}">닫기</span></td>
+		</tr>
+	</c:if>
+</c:if>
+
+<c:if test="${board=='Finish' }">
+	<c:forEach items="${applicantList[e.index] }" var="app" varStatus="i">
+		<tr class="check_wait_tr visible${app.projectNum }">
+			<td class="tbody_td1">
+				<span class="label">${app.type}</span>
+			</td>
+			<td class="tbody_td2">
+				<span class="name">${app.account}</span>
+			</td>
+			<td class="tbody_td3">
+				<img alt="" src="${pageContext.servletContext.contextPath}/resources/img/checkProject/phone.png" style="width: 20px; height: 20px; vertical-align: text-top;">
+				${app.phone}
+			</td>
+			<td class="tbody_td4">
+				<p>${app.accountNumber }</p>
+				<p><fmt:formatNumber type="currency">${app.pay*0.9}</fmt:formatNumber></p>
+			</td>
+			<td class="tbody_td5">
+				${app.bank }
+			</td>
+			<td class="tbody_td6">
+				<c:if test="${app.state=='finish'}">
+					<p><input type="button" title="${app.email}" role="${app.projectNum}" accesskey="${app.name}" class="btn2" value="지급확인"></p>
+				</c:if>
+				<c:if test="${app.state=='payFinish'}">
+					지급완료
+				</c:if>
+			</td>
+			<td class="tbody_td7">
+				<span class="x" title="visible${app.projectNum}">닫기</span>
+			</td>
+		</tr>
+	</c:forEach>
+</c:if>						
+
 
 						</c:forEach>
 						</tbody>

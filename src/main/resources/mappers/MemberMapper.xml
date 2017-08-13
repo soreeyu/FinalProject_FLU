@@ -29,6 +29,11 @@
   			select * from member where email = #{email}
   		</select>
   		
+   		<select id="memberView3" resultType="com.flu.applicant.ApplicantMemberDTO" parameterType="java.lang.String">
+  			select * from member M,applicant A where A.email = M.email and A.email = #{email}
+  		</select>
+  		
+  		
   		<!-- 이메일 중복확인 -->
   		<select id="memberEmail" resultType="java.lang.String" parameterType="java.lang.String">
   			select email from member where email = #{email}

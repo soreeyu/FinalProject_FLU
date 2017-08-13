@@ -18,7 +18,11 @@ public class ApplicantService {
 	public List<ApplicantDTO> list(int projectNum){
 		return applicantDAO.list(projectNum);
 	}
-
+	
+	//applicant + member
+	public List<ApplicantMemberDTO> applicantList(int projectNum){
+		return applicantDAO.applicantList(projectNum);
+	}
 	
 	//chat List
 	public List<ApplicantDTO> chatList(int projectNum){

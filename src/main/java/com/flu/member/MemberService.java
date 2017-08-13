@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.flu.alarm.AlarmDTO;
 import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantMemberDTO;
 import com.flu.checkMember.CheckMemberViewDTO;
 import com.flu.project.ProjectDTO;
 import com.flu.reservation.ReservationDTO;
@@ -115,6 +116,11 @@ public class MemberService {
 	public MemberDTO memberView2(String email){
 		return memberDAO.memberView2(email);
 	}
+	
+	public ApplicantMemberDTO memberView3(String email){
+		return memberDAO.memberView3(email);
+	}
+	
 	//회원 리스트(회원가입폼에 뿌려줌)
 	public Map<String, Object> memberList(){
 		return memberDAO.memberList();

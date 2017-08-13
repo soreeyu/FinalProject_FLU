@@ -1,6 +1,7 @@
 package com.flu.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDAO;
 import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantMemberDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.checkProject.CheckProjectService;
 import com.flu.client.ClientDTO;
@@ -37,6 +39,8 @@ public class CheckProjectController {
 	private CheckProjectService checkProjectService;
 	@Inject
 	private ProjectService projectService;
+	@Inject
+	private ApplicantService applicantService;
 
 	@Inject
 	private ClientService clientService;
@@ -66,7 +70,6 @@ public class CheckProjectController {
 	//모집 실패한 프로젝트 들고오기
 	@RequestMapping(value="checkProjectFailList", method=RequestMethod.GET)
 	public String checkProjectFailList(ProjectDTO projectDTO, ListInfo listInfo,String searchDate,Model model){
-		
 		String [] ar = {"fail"};
 		listInfo.setProject(ar);
 		
@@ -85,7 +88,20 @@ public class CheckProjectController {
 	
 		List<ProjectDTO> list = checkProjectService.waitList(projectDTO,listInfo,searchDate);
 
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Wait").addAttribute("searchDate", searchDate);
+		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
+		
+		for(int i=0;i<list.size();i++){
+			
+			MemberDTO memberDTO = clientService.memberView(list.get(i).getEmail());
+			memberList.add(memberDTO);
+		}
+		
+		model.addAttribute("memberList",memberList);
+		model.addAttribute("list", list);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("board", "Wait");
+		model.addAttribute("searchDate", searchDate);
+		
 		return "checkProject/checkList";
 	}
 
@@ -110,12 +126,30 @@ public class CheckProjectController {
 		
 		List<String> projectList = checkProjectService.supportList(listInfo);
 		
-		String [] ar = {"finish"};
+		String [] ar = {"finish","payFinish"};
 		listInfo.setProject(ar);
 		
+		//검색에 해당되는 프로젝트를 들고오고
 		List<ProjectDTO> list = checkProjectService.finishList(projectDTO,listInfo,searchDate,projectList);
+	
+		List<List<ApplicantMemberDTO>> applicantList = new ArrayList<List<ApplicantMemberDTO>>();
 		
-		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Finish").addAttribute("searchDate", searchDate);
+		
+		for(int j=0;j<list.size();j++){
+	
+			//하나의 프로젝트 당 Applicant + Member 정보 불러와서
+			List<ApplicantMemberDTO> applicantMemberList = applicantService.applicantList(list.get(j).getProjectNum());
+			
+			//그 덩어리를 또 배열에 넣고
+			applicantList.add(applicantMemberList);
+			
+		}
+		
+		model.addAttribute("list", list); //프로젝트 리스트 
+		model.addAttribute("listInfo", listInfo); //페이징 및 검색 정보
+		model.addAttribute("board", "Finish"); //jsp 페이지 구분용
+		model.addAttribute("searchDate", searchDate); //기간검색
+		model.addAttribute("applicantList",applicantList); //지원자들 덩어리
 		return "checkProject/checkList";
 	}
 
@@ -132,22 +166,7 @@ public class CheckProjectController {
 		model.addAttribute("list", list).addAttribute("listInfo", listInfo).addAttribute("board", "Cancel").addAttribute("searchDate", searchDate);
 		return "checkProject/checkList";
 	}
-	
-	
-	
-	//입금대기중 프로젝트의 클라이언트 정보 AJAX로 불러오기
-	@RequestMapping(value="checkWait")
-	public String checkWait(ProjectDTO projectDTO,Model model){
-		
-		MemberDTO memberDTO = clientService.memberView(projectDTO.getEmail());
-		ProjectDTO projectDTO2 = projectService.projectView(projectDTO);
-		
-		model.addAttribute("client", memberDTO).addAttribute("projectNum", projectDTO.getProjectNum()).addAttribute("state",projectDTO.getState()).addAttribute("budget", projectDTO2.getBudget());
-		
-		
-		return "checkProject/checkWait";
-	}
-	
+
 	
 	//프로젝트 검수완료 및 진행하기
 	@RequestMapping(value="checkProjectUpdate",method=RequestMethod.GET)
@@ -155,10 +174,14 @@ public class CheckProjectController {
 		
 		int result = checkProjectService.update(projectDTO);
 		
-		String path = "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		String path = null;
 		
 		if(projectDTO.getState().equals("cancel")){
 			path = "redirect:/checkProject/checkProjectCancelList";
+		}else if(projectDTO.getState().equals("check")){
+			path = "redirect:/project/projectView?projectNum="+projectDTO.getProjectNum();
+		}else if(projectDTO.getState().equals("wait")){
+			path = "redirect:/checkProject/checkProjectWaitList";
 		}
 		
 		if(result>0){

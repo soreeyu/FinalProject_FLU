@@ -8,7 +8,10 @@
   		select * from applicant where projectNum=#{projectNum} and state in('finish','payFinish')
   	</select>
   	
-
+  	<select id="applicantList" resultType="com.flu.applicant.ApplicantMemberDTO" parameterType="java.lang.Integer">
+  		select * from applicant A, member M where A.email=M.email and A.projectNum=#{projectNum}
+  	</select>
+  	
   	<select id="chatList" resultType="com.flu.applicant.ApplicantDTO" parameterType="java.lang.Integer">
   		select * from applicant where projectNum=#{projectNum} and state in('ing')
 	</select>

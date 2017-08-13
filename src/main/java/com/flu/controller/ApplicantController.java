@@ -15,8 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.flu.alarm.AlarmDTO;
 import com.flu.alarm.AlarmService;
 import com.flu.applicant.ApplicantDTO;
+import com.flu.applicant.ApplicantMemberDTO;
 import com.flu.applicant.ApplicantService;
 import com.flu.checkMember.CheckMemberViewDTO;
+import com.flu.checkProject.CheckProjectService;
 import com.flu.member.MemberDTO;
 import com.flu.member.MemberService;
 import com.flu.project.ProjectDTO;
@@ -31,42 +33,48 @@ public class ApplicantController {
 	private MemberService memberService;
 	@Inject
 	private AlarmService alarmService;
+	@Inject
+	private CheckProjectService checkProjectService;
 	
 	private AlarmDTO alarmDTO;
-	
-	//해당 프로젝트를 완료한 Applicant 리스트와 그들의 memberInfo 들고오기
-	@RequestMapping(value="applicantListCheck")
-	public String viewCash(Integer projectNum,Model model){
-		
-		//해당 프로젝트의 지원자 들고오기
-		List<ApplicantDTO> applicantList = applicantService.list(projectNum); 
-		//그 지원자의 정보 들고오기
-		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
-		
-		
-		for(int i=0;i<applicantList.size();i++){
-			
-			MemberDTO memberDTO = memberService.memberView2(applicantList.get(i).getEmail());
-			memberList.add(memberDTO);
-			
-		}
-		
-		model.addAttribute("memberList", memberList).addAttribute("applicantList", applicantList);
-	
-		
-		return "applicant/checkApplicantInfo";
-	}
-	
 	
 	
 	//지원자의 상태 업데이트 (돈을 지급했다고 payFinish로 변경)
 	@RequestMapping(value="applicantPayFinish")
-	public String checkApplicantUpdate(String email, RedirectAttributes ra) throws Exception{
+	public String checkApplicantUpdate(ApplicantDTO applicantDTO, RedirectAttributes ra) throws Exception{
 		
-		int result = applicantService.appUpdate(email);
+		//먼저 업데이트를하고
+		int result = applicantService.appUpdate(applicantDTO.getEmail());
+		
+		//applicant 테이블에서 projectNum이 요놈인 놈의 애들을 델꾸와서 state가 전부 payFinish인지 비교
+		
+		List<ApplicantMemberDTO> applicantMemberDTO = applicantService.applicantList(applicantDTO.getProjectNum());
+		
+		boolean check = true;
+		
+		for(int i=0;i<applicantMemberDTO.size();i++){
+			
+			if(applicantMemberDTO.get(i).getState().equals("finish")){ //하나로도 Finish를 만나면 false로 바꾸고 나가버려
+				check = false;
+				break;
+			}
+			
+		}
+		
+		if(check==true){ //check가 안바뀌었다면 finish가 하나도 없는거니까
+			ProjectDTO projectDTO = new ProjectDTO();
+			projectDTO.setState("finish");
+			projectDTO.setProjectNum(applicantDTO.getProjectNum());
+			
+			checkProjectService.update(projectDTO);
+			
+		}
+		
+		
+		
 		if(result>0){
 			alarmDTO = new AlarmDTO();
-			alarmDTO.setEmail(email);
+			alarmDTO.setEmail(applicantDTO.getEmail());
 			alarmDTO.setContents("금액 지급이 완료 되었습니다.");
 			alarmService.alarmInsert(alarmDTO);
 			ra.addFlashAttribute("alarmCount", alarmService.alarmCount(alarmDTO));
