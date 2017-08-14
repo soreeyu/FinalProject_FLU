@@ -1167,6 +1167,7 @@ function devClick() {
  $(".dev-chk").click(function() {
     
     var de_id = $(this).val();
+    alert("de--"+de_id);
     var checkList = $("input[class='dev-chk']:checked");
     alert("val은 ="+$("input[class='dev-chk']:checked").val());
     
@@ -1218,6 +1219,8 @@ function devClick() {
    }); 
 });
 
+      
+      
  /* 디자인  DetailCategory부분 */
       $(".design-chk").click(function() {
          
@@ -1251,10 +1254,24 @@ function devClick() {
            $("#design").prop("checked", false);
         }
         
+        
+
+        var CateList = $("input[class='cate-chk']:checked");
+           alert("val은 ="+$("input[class='cate-chk']:checked").val());
+        
+           alert("CateList="+CateList);
+           
+           CateList.each(function(index) {
+             aray[index] = $(this).val();
+              
+          });
+           
+           alert("개발디테일눌렀을때 aray="+aray);
+        
         var designVal = $("#design").val();
         alert("design=="+designVal);
         
-         $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&category="+designVal,function(data){
+         $.get("projectListInner?curPage=1&search="+searchCon+"&kind=total&arrange="+arrangeVal+"&array="+array+"&aray="+aray,function(data){
         	 alert("ddsfdsdfsdf");
             $(".contents_main").html(data);
         }); 
