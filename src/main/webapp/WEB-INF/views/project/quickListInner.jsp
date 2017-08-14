@@ -60,7 +60,7 @@
 	if(maxCount%5==0){
 		pageCount=(maxCount/5).toFixed();		
 	}else{
-		pageCount=((maxCount/5)).toFixed();
+		pageCount=((maxCount/5)+1).toFixed();
 	}
 	alert("pageCount=="+pageCount);
 	//cc는 기본1로 셋팅

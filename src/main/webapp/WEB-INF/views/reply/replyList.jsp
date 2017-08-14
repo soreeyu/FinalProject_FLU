@@ -39,7 +39,7 @@
 			<br>
 			<p>
 			
-			<div class="${reply.num} rere" data-id="${reply.num}">
+			<div class="${reply.num} rere" style="float:left; "data-id="${reply.num}">
 			
 			</div>
 			</p>

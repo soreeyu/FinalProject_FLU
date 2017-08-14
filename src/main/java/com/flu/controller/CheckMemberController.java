@@ -134,14 +134,20 @@ public class CheckMemberController {
 		return "redirect:/checkMember/checkMemberClientList";
 	}
 	
-	//관리자가 신원확인에서 삭제하기
-	@RequestMapping(value="checkMemberDelete")
-	public String delete(String email){
-		
-		checkMemberService.deleteTran(email);
-		
-		return "redirect:/checkMember/checkMemberList";
-	}
+	  //관리자가 신원확인에서 삭제하기
+	   @RequestMapping(value="checkMemberDelete")
+	   public String delete(String email,String type){
+	      
+	      checkMemberService.deleteTran(email);
+	      
+	      String path = "redirect:/checkMember/checkMemberFreelancerList";
+	      
+	      if(type.equals("client")){
+	         path = "redirect:/checkMember/checkMemberClientList";
+	      }
+	      
+	      return path;
+	   }
 	
 	//본인이 직접 신원확인요청 취소하기
 	@RequestMapping(value="memberCheckCancel")

@@ -133,12 +133,7 @@
 	margin-bottom: 20px;
 }
 
-.title {
-	width: 100%;
-	height: 60px;
-	background-color: white;
-	
-}
+
 
 
 .title>p:FIRST-CHILD {

@@ -390,6 +390,9 @@ background-color:black;
 	font-weight: bold;
 	cursor: pointer;
 	color: #2099bb;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .quick_regdate {
@@ -446,6 +449,10 @@ background-color:black;
 }
 .skill_box{
 	margin-top: 15px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px;
 }
 .quick_box{
 	width: 1300px;
@@ -456,10 +463,10 @@ background-color:black;
 .preview{
   cursor: pointer;
   position: absolute;
-  top: 70%;
+  top: 50%;
   width: auto;
   padding: 16px;
-  margin-top: -290px;
+  margin-top: -175px;
   color: red;
   font-weight: bold;
   font-size: 18px;

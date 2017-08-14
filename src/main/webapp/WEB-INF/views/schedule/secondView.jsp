@@ -64,6 +64,7 @@ $('#schcalendar').fullCalendar({
 		//epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate()); 
 		//writeModal.show(); 
 		alert("빈칸클릭");
+		$("#myModal").modal({backdrop:'static'});
 		
     }
 });

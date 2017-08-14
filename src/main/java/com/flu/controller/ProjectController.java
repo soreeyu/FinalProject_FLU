@@ -495,7 +495,7 @@ public class ProjectController {
    	}
    
    @RequestMapping(value="cancleProjectState")
-   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd) throws Exception{
+   public String cancleProjectState(PjSellDTO pjSellDTO, RedirectAttributes rd, HttpSession session) throws Exception{
 	   System.out.println("cancleProjectState-controller");
 	   
 	   int num = pjSellDTO.getProjectNum();
@@ -510,7 +510,8 @@ public class ProjectController {
 		   System.out.println("pjsell DB에서 삭제 성공");
 		   if(result==1){
 			   System.out.println("프로젝트 상태 finish로 바꾸기 성공");
-			   alarmDTO.setEmail(pjSellDTO.getEmail());
+			   System.out.println("pjsell이메일:"+pjSellDTO.getEmail());
+			   alarmDTO.setEmail(((MemberDTO)session.getAttribute("member")).getEmail());
 			   alarmDTO.setContents("판매등록 취소");
 			   alarmService.alarmInsert(alarmDTO);
 		   }else{

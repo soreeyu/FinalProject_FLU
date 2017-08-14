@@ -1069,7 +1069,8 @@ input[type=checkbox], input[type=radio]{
 .unit3{
 	height: 40px;
     margin: 2px;
-    background: orange;
+   /*  background: orange; */
+   border-bottom:1px solid gray;
 }
 
 .unitTitle{
@@ -1152,10 +1153,25 @@ th:FIRST-CHILD,td:FIRST-CHILD{
 
 <script type="text/javascript">
 
+
+
 function getContextPath(){
-	alert('${pageContext.request.contextPath}');
+	//alert('${pageContext.request.contextPath}');
 	var context = '${pageContext.request.contextPath}';
 	return context;
+}
+
+function setDetailView(scheduleNum){
+
+	//전체일정을 표로 보여주고 //엑셀 변환하기 기능을 제공한다 
+	$.ajax({
+		url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
+		type:"GET",
+		success:function(data){
+			$("#tab5").html(data);
+		}
+	});
+	
 }
 
 var currentTab = '${currentTab}';
@@ -1171,7 +1187,7 @@ var scheduleNum = '${scheduleNum}';
 		getUnitList(scheduleNum,-1,'','',''); //scheduleNum,partNum,email,unitState,kind
 		loadTabContent("${pageContext.request.contextPath}/schedule/firstView?scheduleNum="+scheduleNum,'tab1'); //1번탭 로드
 		if(currentTab != ''){
-			alert("");
+			//alert("");
 			$('ul.tab li[data-tab="${currentTab}"]').trigger('click');
 		}//안되넹..
 		
@@ -1211,7 +1227,7 @@ var scheduleNum = '${scheduleNum}';
 			if(activeTab == 'tab1'){
 				//아싸리 여기서 비워버리는게 좋겠다
 				$.ajax({
-					url:"/flu/schedule/test?scheduleNum="+scheduleNum,
+					url:"/flu/schedule/test?scheduleNum="+scheduleNum+"&projectNum=${projectNum}",
 					type:"GET",
 					success: function(data){
 						$("#tab1").html(data);
@@ -1304,7 +1320,7 @@ var scheduleNum = '${scheduleNum}';
 				
 				
 			}else if(activeTab == 'tab3'){
-				alert("표보기");
+				//alert("표보기");
 				//url = "/flu/schedule/thirdView?scheduleNum="+scheduleNum;
 				
 				
@@ -1351,7 +1367,7 @@ var scheduleNum = '${scheduleNum}';
 				
 				
 			}else if(activeTab == 'tab4'){
-				alert("체크리스트");
+				//alert("체크리스트");
 				loadCheckList(scheduleNum,'${member.email}',-1);
 				/* $.ajax({
 					url:"/flu/schedule/checkListForFreelancer",
@@ -1365,8 +1381,8 @@ var scheduleNum = '${scheduleNum}';
 				}); */
 				
 			}else if(activeTab == 'tab5'){
-				alert("파트일정추가");
-				
+				//alert("파트일정추가");
+				/* 
 				//전체일정을 표로 보여주고 //엑셀 변환하기 기능을 제공한다 
 				$.ajax({
 					url:"/flu/schedule/detailView?scheduleNum="+scheduleNum,
@@ -1375,12 +1391,14 @@ var scheduleNum = '${scheduleNum}';
 						$("#tab5").html(data);
 					}
 				});
+				 */
+				setDetailView(scheduleNum);
 				
 			}else if(activeTab == 'tab6'){
-				alert("간트");
+				//alert("간트");
 				//location.href="/flu/schedule/sixthView";
 			}else if(activeTab == 'tab7'){
-				alert("간트2");
+				//alert("간트2");
 				location.href="/flu/schedule/dhxTest?scheduleNum="+scheduleNum;
 				//url = "";
 				/* $.ajax({
@@ -1392,7 +1410,7 @@ var scheduleNum = '${scheduleNum}';
 				}); */
 				
 			}else if(activeTab == 'tab8'){
-				alert("구글차트 연습용");
+				//alert("구글차트 연습용");
 				$.ajax({
 					url:"/flu/schedule/test8?scheduleNum="+scheduleNum,
 					type:"GET",
@@ -1481,13 +1499,13 @@ var scheduleNum = '${scheduleNum}';
 		
 		
 		$(document).on("click", ".unit", function(index){
-			alert("unit클릭"+$(this).attr("data-unitnum"));
-			alert("unit 클릭 스케줄 넘"+$("#scheduleNum").val());
+			//alert("unit클릭"+$(this).attr("data-unitnum"));
+			//alert("unit 클릭 스케줄 넘"+$("#scheduleNum").val());
 			
 			var unitNum = $(this).attr("data-unitnum");
 			
 			if(unitNum == -1){
-				alert("추가해야징");
+				//alert("추가해야징");
 			}else{
 				var scheduleNum = $("#scheduleNum").val();
 				 $.ajax({
@@ -1499,7 +1517,7 @@ var scheduleNum = '${scheduleNum}';
 					},
 					success: function(data){
 						//모달 내용 채워주기
-						alert(JSON.stringify(data));
+						//alert(JSON.stringify(data));
 						var finishdate = new Date( data.unitFinishDate );
 						var startdate  = new Date( data.unitStartDate );
 	
@@ -1516,7 +1534,7 @@ var scheduleNum = '${scheduleNum}';
 						$("#unitDescribe").html(data.unitDescribe);
 						$("#unitPart").html(data.partNum);
 						$("#unitEmail").html(data.email);
-						unitModal.show(); 
+						//unitModal.show(); 
 					}
 			
 				});
@@ -1561,7 +1579,7 @@ var scheduleNum = '${scheduleNum}';
 				type:"GET",
 				async:false,
 				success:function(data){
-					alert(data);
+					//alert(data);
 					$("#"+activeTab).html(data);
 				}
 			});
@@ -1584,7 +1602,7 @@ var scheduleNum = '${scheduleNum}';
 			type: "GET",
 			async:false,
 			success:function(data){ //json 넘어옴 
-				alert("파트가져우기");
+				//alert("파트가져우기");
 				partsJSONArray = data;
 				for(var i=0;i<partsJSONArray.length;i++){
 					partsJSONArray[i].color = colors[((i+1)%7)-1]; //7개설정해놔서그렇습니다
@@ -1632,7 +1650,7 @@ var scheduleNum = '${scheduleNum}';
 			}
 		}); //success끝
 		
-		alert("ajax아래 함수안에 data "+JSON.stringify(partsJSONArray)); // 오류남
+		//alert("ajax아래 함수안에 data "+JSON.stringify(partsJSONArray)); // 오류남
 		return partsJSONArray;
 		
 		
@@ -1647,7 +1665,7 @@ var scheduleNum = '${scheduleNum}';
 			async:false,
 			success: function(data){
 				//alert(JSON.stringify(data));
-				alert("유저유닛가져우기");
+				//alert("유저유닛가져우기");
 				var result="<table>";
 				$(data).each(function(){
 					result = result + "<tr>";
@@ -1695,7 +1713,7 @@ var scheduleNum = '${scheduleNum}';
 			success: function(data){
 				
 				
-			alert("unit들"+JSON.stringify(data));
+			//alert("unit들"+JSON.stringify(data));
 	
 						var result="<table>";
 						$(data).each(function(){
@@ -1741,7 +1759,7 @@ var scheduleNum = '${scheduleNum}';
 						makeUnitList(data,email); //카드뷰에 집어넣을겨
 					}else{
 						
-						alert("지금은 전체 내용이 아래에 있지");
+						//alert("지금은 전체 내용이 아래에 있지");
 						
 					}
 	
@@ -1846,7 +1864,7 @@ var scheduleNum = '${scheduleNum}';
          <div class="header_text">
             <p id="header_ttt" style="margin-bottom: 20px;">
             <span>[스케줄] ${projectDTO.name} </span>
-            <span class="DateMius"><span class="startDate">${mainScheduleDTO.startDate}</span> - <span class="finishDate">${mainScheduleDTO.finishDate}</span></span>
+            <span class="DateMius"><span class="startDate">${pStartDate}</span> - <span class="finishDate">${pFinishDate}</span></span>
             </p>
             <p id="header_t">
             <span>${projectDTO.category}&gt; ${projectDTO.detailCategory}</span>
@@ -1951,6 +1969,7 @@ var scheduleNum = '${scheduleNum}';
 					<form id="partAddForm" action="${pageContext.request.contextPath}/schedule/addPart" method="POST"  enctype="multipart/form-data">
 						<input type="hidden" id="scheduleNum" name="scheduleNum" value="${scheduleNum}">
 						<input type="hidden" id="currentTab" name="currentTab" value="tab5">
+						<input type="hidden" id="projectNum" name="projectNum" value="${projectNum}">
 						<!-- <div>
 							프로젝트 시작일:<input type="date" name="startDate" value=""> 
 							프로젝트 마감일:<input type="date" name="finishDate"> 
@@ -2137,7 +2156,7 @@ var scheduleNum = '${scheduleNum}';
 
 				var unitEmailS = $("#unitEmailS").val();
 				var unitDescribeS = $("#unitDescribeS").val();
-				alert(scheduleNum+"확인용 이름 "+unitNameS + " 시작 "+unitStartDate + " 마감"+ unitFinishDate+ " 메일  "+ unitEmailS + " 설명  " +unitDescribeS);
+				//alert(scheduleNum+"확인용 이름 "+unitNameS + " 시작 "+unitStartDate + " 마감"+ unitFinishDate+ " 메일  "+ unitEmailS + " 설명  " +unitDescribeS);
 				$.ajax({
 					url: "${pageContext.request.contextPath}/schedule/addUnit",
 					type: "POST",
@@ -2154,9 +2173,10 @@ var scheduleNum = '${scheduleNum}';
 						if(data == 1){
 							
 						}else{
-							alert("업무등록오류");
+							//alert("업무등록오류");
 						}
 						$("#myModal2").modal('hide');
+						setDetailView(scheduleNum);
 					}
 					
 				});
@@ -2218,12 +2238,12 @@ var scheduleNum = '${scheduleNum}';
 		
 	<script type="text/javascript">
 		$('.mainInsertBtn').click(function(){
-			alert("main insert 하기 "); // 사실이미 DB 에는 저장되어있음 
+			//alert("main insert 하기 "); // 사실이미 DB 에는 저장되어있음 
 			var scheduleNum = $("#scheduleNumSC").val()*1;
 			var projectNum = $("#projectNumSC").val()*1;
 			var startDate = $("#startDateSC").val();
 			var finishDate = $("#finishDateSC").val();
-			alert(scheduleNum + " " +projectNum+ " " + startDate+ " " +finishDate );
+			//alert(scheduleNum + " " +projectNum+ " " + startDate+ " " +finishDate );
 			
 			$.ajax({
 				url: "/flu/schedule/mainInsert",
@@ -2236,7 +2256,7 @@ var scheduleNum = '${scheduleNum}';
 					finishDate:finishDate
 				},
 				success: function(data){
-					alert("mainINsert 결과 "+data);
+					//alert("mainINsert 결과 "+data);
 					if(data==1){
 						alert("성공");
 						
@@ -2256,7 +2276,7 @@ var scheduleNum = '${scheduleNum}';
 
 
 		<div class="clear"></div>
-	<div class="" style="display:block;">
+	<div class="" style="display:none;">
 			전체개요
 			<span class="totalWill">${summary.stateCount[0]}</span>
 			<span class="totalIng">${summary.stateCount[1]}</span>

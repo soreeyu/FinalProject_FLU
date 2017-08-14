@@ -35,11 +35,7 @@
 * {
 	box-sizing: border-box;
 }
-*:before{
-	content: " ";
-    display: table;
-    line-height: 0;
-}
+
 .main_section {
 	min-width : 1460px;
 	width : 100%;
@@ -70,11 +66,7 @@
     border: 1px solid #dedede;
   
 }
-.contents-header:before, .contents-header:after {
-    content: " ";
-    display: table;
-    line-height: 0;
-}
+
 .contents-header .header-text {
     margin: 0;
     font-family: inherit;
@@ -195,6 +187,130 @@
     line-height: 1.4;
     
 }
+
+thead tr td{
+   
+   height: 30px;
+   font-size: 1.0em;
+   font-weight: bold;
+   color: gb(85, 85, 85);
+   text-align:  center;
+   line-height: 25px;
+   border-bottom: 2px solid #005580;
+   
+}
+
+
+
+/* .t1{
+   width: 8%;
+
+}
+
+/* .t2{
+   width: 28%;
+
+}
+
+.t3{
+   width: 13%;
+
+}
+
+.t4{
+   width: 8%;
+
+}
+
+.t5{
+
+   width: 10%;
+}
+
+.t6{
+   width: 12%;
+
+}
+
+.t7{
+   width: 11%;
+
+} */ 
+
+
+
+.yui .tbody_td1{
+   
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align: center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+   
+}
+
+.yui .tbody_td2{
+   
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align:  center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+
+}
+.yui .tbody_td3{
+   
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align:  center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+
+}
+.yui .tbody_td4{
+   
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align:  center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+
+}
+.yui .tbody_td5{
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align:  center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+
+}
+.yui .tbody_td6{
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align:  center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+
+}
+
+.yui .tbody_td7{
+   
+   font-size: 0.8em;
+   height: 30px;
+   line-height: 25px;
+   text-align:  center;
+   border-bottom: 0.5px solid #d0e2e2;
+   vertical-align: middle;
+
+}
+
+
 /******************************** 왼쪽 메뉴 *******************************/
 </style>
 </head>
@@ -236,43 +352,56 @@
 					</h3>
 				</div>
 				<div class="contents-inner">
-					<table class="reserve_list" style="text-align: center;">
+					<table class="yui" style="text-align: center;">
+					<colgroup>
+						<col width="8%">
+						<col width="24%">
+						<col width="13%">
+						<col width="12%">
+						<col width="10%">
+						<col width="12%">
+						<col width="*%">
+					</colgroup>
+						<thead>
 						<tr class="reserve_header">
-							<td>예약자</td>
-							<td>방이름</td>
-							<td>예약날짜</td>
-							<td>예약인원</td>
-							<td>예약시간</td>
-							<td>가격</td>
-							<td>비고</td>		
+							<td class="t1">예약자</td>
+							<td class="t2">방이름</td>
+							<td class="t3">예약날짜</td>
+							<td class="t4">예약인원</td>
+							<td class="t5">예약시간</td>
+							<td class="t6">가격</td>
+							<td class="t7">비고</td>		
 						</tr>
+						</thead>
+						<tbody>
 					<c:forEach items="${list}" var="i">
-						<tr class="reserve_body">
-						<td>${i.reserve_name}</td>
-						<td><a href="../meetRoom/meetView?num=${i.snum}">${i.name}</a></td>
-						<td>${i.reserve_date}</td>
-						<td>${i.human}</td>
-						<td>${i.time}</td>
-						<td><fmt:formatNumber value="${i.price}" type="currency"/></td>
+						<tr>
+						<td class="tbody_td1">${i.reserve_name}</td>
+						<td class="tbody_td2"><a href="../meetRoom/meetView?num=${i.snum}">${i.name}</a></td>
+						<td class="tbody_td3">${i.reserve_date}</td>
+						<td class="tbody_td4">${i.human}</td>
+						<td class="tbody_td5">${i.time}</td>
+						<td class="tbody_td6"><fmt:formatNumber value="${i.price}" type="currency"/></td>
 						<c:if test="${i.state eq 'finish'}">
 						<c:if test="${member.kind ne 'admin' }">
-						<td><input type="button" value="예약취소" class="btn" title="${i.num}"></td>										
+						<td class="tbody_td7"><input type="button" value="예약취소" class="btn" title="${i.num}"></td>										
 						</c:if>
 						<c:if test="${member.kind eq 'admin' }">
-						<td>결제완료</td>
+						<td class="tbody_td7">결제완료</td>
 						</c:if>
 						</c:if>
 						
 						<c:if test="${i.state eq 'del'}">
 						<c:if test="${member.kind eq 'admin'}">
-						<td><input type="button" value="취소확인" class="del_btn" title="${i.num}" lang="${i.email}"></td>
+						<td class="tbody_td7"><input type="button" value="취소확인" class="del_btn" title="${i.num}" lang="${i.email}"></td>
 						</c:if>
 						<c:if test="${member.kind ne 'admin'}">
-						<td>예약취소대기중</td>
+						<td class="tbody_td7">예약취소대기중</td>
 						</c:if>
 						</c:if>
 						</tr>					
 					</c:forEach>
+					</tbody>
 					</table>
 				</div>
 				

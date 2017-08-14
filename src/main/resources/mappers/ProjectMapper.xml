@@ -165,7 +165,7 @@
 	</update>
 	<!-- 계약완료된 프로젝트 업데이트 -->
 	<update id="projectUpdateIng" parameterType="com.flu.project.ProjectDTO">
-		update project set state='ing' , startdate=#{startDate} , finishdate =#{finishDate} , budget=${budget} where projectnum=#{projectNum}
+		update project set state='wait' , startdate=#{startDate} , finishdate =#{finishDate} , budget=${budget} where projectnum=#{projectNum}
 	</update>
 	<!-- meet인 지원자 리스트 -->
 	<select id="meetList" parameterType="java.lang.Integer" resultType="java.lang.String">

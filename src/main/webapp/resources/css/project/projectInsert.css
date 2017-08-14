@@ -31,7 +31,7 @@ font-family: -webkit-body;
 }
 .contents{
    width: 1260;
-   height: 2700px;
+   height: 2500px;
    border: 1px solid #e6e6e6;
    background-color: white;
 }
@@ -46,7 +46,7 @@ font-family: -webkit-body;
    width: 320px;
    height: 100%;
    display: block;
-	border-left: 1px solid #ccc;
+   border-left: 1px solid #ccc;
    float: right;
 }
 .main-wrapper{
@@ -79,7 +79,7 @@ input[type="text"]{
    
 }
 input[type="date"]{
-	border: 1px solid #dedede;
+   border: 1px solid #dedede;
    border-radius: 2px;
    height: 30px;
    width:150px;
@@ -88,7 +88,7 @@ input[type="date"]{
    background: #F9F9F9 url(/static/libs/img/jquery.fs.selecter-arrow.png?2cb14a8c1816) no-repeat right center;
 }
 input[type="number"]{
-	border: 1px solid #dedede;
+   border: 1px solid #dedede;
    border-radius: 2px;
    height: 30px;
    float: left;
@@ -157,13 +157,13 @@ label{
     line-height: 34px; 
 }
 .ttttt1{
-	margin-top: 5px;
-	color: #999;
-	font-size: 12px;
+   margin-top: 5px;
+   color: #999;
+   font-size: 12px;
 }
 .textarea{
-	float: left;
-	width: 610px;
+   float: left;
+   width: 610px;
 }
 .control-wrapper-skill{
    width: 100%;
@@ -210,31 +210,8 @@ label{
 .project-add-helper-bottom{
    float: right;
 }
-.project-add-info-box{
-   background-color: yellow;
-   margin-top: 20px;
-}
-.info-data-img{
-   margin-top: 20px;
-   width: 40px;
-   height: 40px;
-/*    float: left; */
-}
-
-.project-info-text{
-   margin-top: 20px;
-    margin-left: 7px;
-    display: block;
-    float: right;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 14px;
-    width: 250px;
-    color: #666;
-    font-size: 12px;
-}
 .input-end{
-	padding: 6px 12px;
+   padding: 6px 12px;
     font-size: 14px;
     font-weight: normal;
     line-height: 1.5;
@@ -274,16 +251,16 @@ label{
     box-shadow: 1px 1px 1px #357ebd;
 }
 .exp_text{
-	font-size: 14px;
-	color: black;
-	font-weight: 200;
-	vertical-align: middle;
+   font-size: 14px;
+   color: black;
+   font-weight: 200;
+   vertical-align: middle;
 }
 .btn_Box{
-	width: 750px;
+   width: 750px;
 }
 #submitBTN{
-	color: #fff;
+   color: #fff;
     background-color: rgb(68, 110, 171);
     border-color: #357ebd;
     height: 34px;
@@ -295,20 +272,52 @@ label{
 }
 
 #smart{
-	width: 600px;
+   width: 600px;
 }
 .right_first{
-	padding-top: 10px;
+   padding-top: 10px;
     padding-bottom: 20px;
     margin-bottom: 20px;
-     border-bottom: 1px #dedede solid;
+    
 }
 .right_first_box{
-	 border-left: 1px #dedede solid; 
-	 border-bottom: 1px #dedede solid;
-	 text-align: center;
-	 margin: 0 auto;
+    border-left: 1px #dedede solid; 
+
+    text-align: center;
+    margin: 0 auto;
 }
 #right_first_img{
-	vertical-align: middle;
+   vertical-align: middle;
+}
+.right_second{
+   
+   width: 100%;
+}
+strong{
+   font-weight: bold;
+}
+
+.project-add-info-box{
+
+   margin-top: 20px;
+   height: 40px;
+}
+.info-data-img{
+   margin-top: 10px;
+   width: 40px;
+   height: 40px;
+   float: left;
+}
+
+.project-info-text{
+   margin-top: 20px;
+    margin-left: 7px;
+    display: block;
+    float: right;
+    white-space: normal;
+    word-break: break-all;
+
+    width: 250px;
+    color: #666;
+    font-size: 12px;
 }

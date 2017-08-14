@@ -13,6 +13,7 @@
 <script type="text/javascript">
 	var currentTab = '${currentTab}';
 	var scheduleNum = '${scheduleNum}';
+	var projectNum = '${projectNum}';
 	var message ='${message}';
 	
 	$(function(){
@@ -25,7 +26,8 @@
 </script>
 	<form id="frm" action="${pageContext.request.contextPath}/schedule/test" method="POST">
 		<input type="hidden"  name="currentTab" id="currentTab" value="${currentTab}">
-		<input type="hidden"  name="scheduleNum" id="scheduleNum" value="${scheduleNum}">		
+		<input type="hidden"  name="scheduleNum" id="scheduleNum" value="${scheduleNum}">
+		<input type="hidden"  name="projectNum" id="projectNum" value="${projectNum}">		
 	</form>
 
 </body>

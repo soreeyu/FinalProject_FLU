@@ -1434,7 +1434,7 @@ var recheck = "";
 				alert(data);
 				$("#pjFinish-client").text("프로젝트 최종완료");
 			});
-			location.href="../member/client/myproject?email"+email;
+			location.href="../member/client/clientproject?email="+email;
 		}else{
 			alert("취소되었습니다.")
 		}
@@ -1535,7 +1535,7 @@ var recheck = "";
    			//alert("스케줄 생성해야됨"+data);
    			if(data.result == 'y'){
    				alert("생성된 scheduleNum = "+data.scheduleNum);
-   				location.href = getContextPath()+"/schedule/test?scheduleNum="+data.scheduleNum;
+   				location.href = getContextPath()+"/schedule/test?scheduleNum="+data.scheduleNum+"&projectNum="+projectNum;
    			}else{
    				alert("스케줄생성오류");
    			}

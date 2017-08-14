@@ -43,7 +43,10 @@
 				<div class="project-unit ${dto.projectNum}">
 					<div class="project-head">
 						<div class="project-title" id="${dto.projectNum}">${dto.name} 
-						<label class="qc${dto.projectNum } quickcheck" data-id="${dto.projectNum}">급구</label></div>
+						<c:if test="${dto.state eq 'done' }">
+						<label class="qc${dto.projectNum } quickcheck" data-id="${dto.projectNum}">급구</label>
+						</c:if>
+						</div>
 					</div>
 					<div class="project-body">
 						<div class="project-info">

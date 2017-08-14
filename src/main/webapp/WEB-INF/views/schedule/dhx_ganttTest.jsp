@@ -39,10 +39,10 @@ html, body {
 <script type="text/javascript">
   var member = '${member.email}';
   var memberKind = '${member.kind}';
-  alert("memberKind = " + memberKind);
+  //alert("memberKind = " + memberKind);
   
   var scheduleNum = ${scheduleNum};
-  alert("scheduleNum = "+scheduleNum);
+  //alert("scheduleNum = "+scheduleNum);
   
   var curTaskId = 0;
   var lastPartNum = 0;
@@ -110,18 +110,18 @@ html, body {
 		
 		 
 		gantt.attachEvent("onBeforeLightbox", function(task_id) {
-			gantt.alert("라잇박스 열리기직전에 발생하는 이벤트");
+			//gantt.alert("라잇박스 열리기직전에 발생하는 이벤트");
 		    gantt.resetLightbox(); //lightbox를 리셋해줌
 			
 		    var task = gantt.getTask(task_id);  
 		    if (task.type == 1){ //unit
 		        gantt.config.lightbox.sections = restricted_lightbox;
-		    	gantt.alert("unit을 원한다");
+		    	//gantt.alert("unit을 원한다");
 		    } else if(task.type == 0){ //part
 		        gantt.config.lightbox.sections = full_lightbox;
-		        gantt.alert("part를 원한다");
+		        //gantt.alert("part를 원한다");
 		    }else{
-		    	 gantt.alert("도대체 뭐요"+task.type);
+		    	// gantt.alert("도대체 뭐요"+task.type);
 		    }
 		    return true;
 		});
@@ -134,7 +134,7 @@ html, body {
 	
 	//member의 kind에 따른 간트차트 옵션 설정
 	if(memberKind == 'freelancer'){
-		alert("프리랜서입장");
+		//alert("프리랜서입장");
 		gantt.config.readonly = true; //true 면 전체가 수정은 불가 
 
 		/* 
@@ -148,12 +148,13 @@ html, body {
  		*/
 					
 	}else if(memberKind == 'client'){
-		alert("클라이언트입장");
-		gantt.config.readonly = false;
+		//alert("클라이언트입장");
+		//gantt.config.readonly = false;
+		gantt.config.readonly = true; //true 면 전체가 수정은 불가 
 	}else if(memberKind == 'admin'){
-		alert("관리자입장");
+		//alert("관리자입장");
 	}else{//아무것도 아닐때
-		alert("접근불가합니다");
+		//alert("접근불가합니다");
 		location.href="/flu";
 	}
 
@@ -326,7 +327,7 @@ html, body {
 	});
 	
 	$("#backBtnGantt").click(function(){
-		location.href="${pageContext.request.contextPath}/schedule/test?scheduleNum="+scheduleNum;
+		location.href="${pageContext.request.contextPath}/schedule/test?scheduleNum="+scheduleNum+"&projectNum=${projectNum}";
 	});
 
 	
@@ -344,7 +345,7 @@ function setUnits(json){
 		},
 		type: "POST",
 		success: function(data){ //void로 하면 안넘어오고 int로 하면 숫자만 넘어오고
-			alert("데이터 넘기기 성공"+data);
+			//alert("데이터 넘기기 성공"+data);
 		}
 	});
 }
@@ -416,7 +417,7 @@ function getPartListGantt(scheduleNum) {
 		}
 	}); //success끝
 
-	alert("ajax아래 함수안에 data part //동기로 했음 "+ JSON.stringify(partsJSONArrayGantt));
+	//alert("ajax아래 함수안에 data part //동기로 했음 "+ JSON.stringify(partsJSONArrayGantt));
 	return partsJSONArrayGantt;
 
 } // getPartListGantt() 끝
@@ -450,7 +451,7 @@ function getUnitListGantt(scheduleNum, partNum, email, unitState, kind) {
 				} else if (partsJSONArrayGantt[i].unitState == '마감일 지남') {
 					partsJSONArrayGantt[i].color = "rgb(233, 94, 81)";
 				} else {
-					alert("니상태는 뭐니");
+					//alert("니상태는 뭐니");
 				}
 
 				//partsJSONArrayGantt[i].textColor = 'white';
