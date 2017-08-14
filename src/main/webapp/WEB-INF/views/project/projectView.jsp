@@ -14,11 +14,14 @@
 <title>Insert title here</title>
 <style type="text/css">
   
+ .contents{
+ height: 1800px;
+ }
 .main_section {
    min-width: 1160px;
    width: 1160px;
    height: auto;
-   min-height: 2300px;
+   max-height: 1800px;
    margin: 0 auto;
    margin-top: 30px;
 }
@@ -60,7 +63,7 @@
 }
 
 .header_category{
-	font-size: 20px;
+	font-size: 18px;
    vertical-align: middle;
    margin-top: 5px;
    margin-right:50px;
@@ -282,8 +285,8 @@ cursor: pointer;
    width:230px;
    height:40px;
    color: white;
-   background-color: #f1720c;
-   border-color: #f48023;
+   background-color: #00b386;
+   border-color: #00b386;
    border-radius: 2px;
    display: inline-block;
    text-align: center;
@@ -367,7 +370,6 @@ cursor: pointer;
 .category-select-list{
    height: 230px;
    display: block;
-   /* background-color: yellow;  */
 }
 .cate-skipper{
    height: 17px;
@@ -454,7 +456,6 @@ background-color: white;
 .project-body{
    width: 100%;
    height: 120px;
-   background-color: green;
 }
 .project-info{
    width: 100%;
@@ -532,14 +533,13 @@ background-color: white;
    color: #2099bb;
 }
 .project-reply-box{
-   background-color: aqua;
    width: 100%;
-   height: 300px;
+   height: auto;
 }
 .project-reply-box-inner{
-   background-color: yellow;
+
    min-height: 200px;
-   max-height: 300px;
+   max-height: 700px;
    height: auto;
 }
 .owner_option{
@@ -552,10 +552,9 @@ background-color: white;
    padding: 10px 20px 10px 20px;
    width: 100%;
    height: 250px;
-   background-color: blue;
+
 }
 .dto_profile{
-   background-color: yellow;
    height: 100%;
    width: 100%;
 }
@@ -580,8 +579,146 @@ background-color: white;
 .pjsellContents{
 	margin-top: 30px;
 }
+.dto_profile_detail{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid #ccc;
 
+}
+.profile_left{
+	float: left;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 13px;
+    
+}
+.profile_right{
+    margin-left: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    float: right;
+    margin-bottom: 13px;
+}
+.profile_count{
+	color: #f1720c;
+	font-weight: bold;
+	font-size: 14px;
+}
+#pj-delete{
+	background-color: rgb(68, 110, 171);
+}
+.skill-name{
+	background-color: #a1a7ad;
+	padding: 2px 3px;
+}
+input[type="text"]{
+   border: 1px solid #dedede;	
+   border-radius: 2px;
+   height: 40px;
+   width: 600px;
+   float: left;
+   font-size: 12px;
+   margin-right: 10px;
+}
+input[type="checkbox"]{
+   border-radius: 2px;
+   height: 40px;
+   float: left;
+   font-size: 12px;
+}
+.checkbox_text{
+	line-height: 40px;
+	margin-left: 10px;
+	font-size: 14px;
+	float: left;
+}
+.img_reply{
+	height: 40px; 
+	width: 40px; 
+	border-radius: 3px; 
+	margin-right: 10px;
+	float: left;
+}
+#btn{
+	background-color: rgb(68, 110, 171);
+    color: white;
+    font-size: 14px;
+    width: 60px;
+    height: 30px;
+    border: none;
+    box-shadow: 2px 2px 2px #aaaaaa;
+    margin-left: 10px;	
 
+}
+.reply_img_box{
+	margin-top: 20px;
+}
+.listReply{
+	background-color: #00b386;
+	height: 25px;
+	vertical-align: middle;	
+	float:left;
+	margin-left: 25px;
+	width: 45px;
+	text-align: center;
+	box-shadow: 2px 2px 2px #aaaaaa;
+	border-radius: 2px;
+	cursor: pointer;
+}
+.reply_text{
+	vertical-align: middle;
+	color: white;	
+	line-height: 25px;
+	font-size: 12px;
+}
+.cancle_text{
+	vertical-align: middle;
+	color: white;	
+	line-height: 25px;
+	font-size: 12px;
+}
+.replybtn{
+	background-color: #00b386;
+	height: 25px;
+	vertical-align: middle;	
+	float:left;
+	margin-left: 25px;
+	width: 55px;
+	text-align: center;
+	box-shadow: 2px 2px 2px #aaaaaa;
+	border-radius: 2px;
+	cursor: pointer;
+	margin-top: 7.5px;
+}
+.cancle{
+	background-color: #94a2af;
+	height: 25px;
+	vertical-align: middle;	
+	float:left;
+	margin-left: 25px;
+	width: 45px;
+	text-align: center;
+	box-shadow: 2px 2px 2px #aaaaaa;
+	border-radius: 2px;
+	cursor: pointer;
+	margin-top: 7.5px;
+}
+.listDelete{
+	background-color: red;
+	height: 25px;
+	vertical-align: middle;	
+	float:left;
+	margin-left: 25px;
+	width: 45px;
+	text-align: center;
+	box-shadow: 2px 2px 2px #aaaaaa;
+	border-radius: 2px;
+	cursor: pointer;
+}
+.btn-success{
+	background-color: rgb(68, 110, 171);
+	border-color: rgb(68, 110, 171);
+}
 </style>
 
 </head>
@@ -825,7 +962,7 @@ background-color: white;
                <span class="project-skill">
                
                <c:forEach items="${dto.skills}" var="sk">
-					<span class="skill-name">${sk}</span>
+					<span class="skill-name" style="color: white; font-size: 14px;">${sk}</span>
 							
 							</c:forEach>
                
@@ -847,7 +984,7 @@ background-color: white;
             <div class="project-detail-title">프로젝트 문의 </div>
             <div style="border-bottom: 1px dotted #dedede;"></div>
             
-            <div style="margin-top: 30px;" class="project-reply-box">
+            <div style="margin-top: 20px;" class="project-reply-box">
 
             <div class="project-reply-box-inner">
                <div class="project-reply-box-top">
@@ -859,16 +996,18 @@ background-color: white;
             
             
             <form action="../reply/replyInsert" id="frm" method="post">
-            <div class="project-reply-box-bottom" style="margin-top: 50px; background-color: blue;">
+            <div class="project-reply-box-bottom">
                <input type="hidden" name="projectNum" value="${dto.projectNum}">
                
                <!-- member의 img를 넣자 -->
             
-               <div class="reply_img_box"><img style="height: 30px; width: 30px; border-radius: 3px; margin-right: 10px;" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}"></div>
+               <div class="reply_img_box">
+               <img class="img_reply" src="${pageContext.request.contextPath}/resources/profile/${member.fProfileImage}">
                <input type="text" name="contents">
-               <input type="checkbox" id="reply_check">비공개 설정
+               <input type="checkbox" id="reply_check"><span class="checkbox_text">비공개 설정</span>
                <input type="hidden" name="replyChk" id="replyChk" value="true">
                <input type="button" id="btn" value="작성">
+               </div>
             </div>
             </form>
             
@@ -896,7 +1035,7 @@ background-color: white;
             <c:if test="${dto.state eq 'done'}">
             <div class="register-btn" id="btn_apply" data-toggle="modal" >
             <img src="${pageContext.request.contextPath}/resources/img/project/register-popol.png">
-            <span id="span_apply">
+            <span id="span_apply" style="cursor: pointer;">
             <c:if test="${check eq 0 && checkCount eq 0 && member.phone ne null && freelancer.intro ne null && portfolio[0] ne null && skills[0] ne null}">
             	프로젝트 지원하기
             </c:if>
@@ -911,10 +1050,10 @@ background-color: white;
             </div>
           </c:if>
             <c:if test="${dto.state eq 'ing'}">
-            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+            <div class="schedule-btn" style="color: white;">미팅룸 예약하기</div>
+            <div id="scheduleBtn" class="schedule-btn" style="background-color: #ff7733;">프로젝트 스케줄 </div>
 
-            <div class="schedule-btn">미팅룸 예약하기</div>
-             <div class="schedule-btn" id="pjFinish-free">프로젝트 완료</div>
+             <div class="schedule-btn" id="pjFinish-free" style="background-color: #94a2af;">프로젝트 완료</div>
           </c:if>
 
        
@@ -933,31 +1072,30 @@ background-color: white;
     
       <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
+        <div class="modal-header" style="padding:35px 50px; text-align: center;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-edit"></span>  Application</h4>
+          <h4><span class="glyphicon glyphicon-edit"></span>  프로젝트 지원하기</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
           <form role="form" action="../applicant/insertApplicant">
             <div class="form-group">
             <input type="hidden" name="projectNum" value="${dto.projectNum }">
             <input type="hidden" name="email" value="${member.email}">
-            <div>프로젝트Num : ${dto.projectNum }</div>
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Applicant email</label>
-              <div>${member.email}</div>
+              <label style="margin-bottom: 10px;"><span class="glyphicon glyphicon-user"></span> Applicant email</label>
+              <input type="text" class="form-control" readonly="readonly" style="width: 100%;" value="${member.email}">
             </div>
             <div class="form-group">
-              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> pay</label>
+               <i class="fa fa-krw" style="padding-left: 0px; border-right: none;"></i><label style="margin-bottom: 10px; margin-top: 10px;">pay</label>
               <input type="number" class="form-control" name="pay" placeholder="Enter pay">
             </div>
          
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Apply</button>
+              <button type="submit" class="btn btn-success btn-block"> Apply</button>
           </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       
-          <p>프로젝트 미팅시 조율이 있을 수 있습니다.</p>
+          <p style="line-height: 30px;">프로젝트 미팅시 조율이 있을 수 있습니다.</p>
          
         </div>
       </div>
@@ -972,16 +1110,16 @@ background-color: white;
           <div class="project-apply-box">
           
           <c:if test="${dto.state eq 'recruit' || dto.state eq 'ing' }">
-            <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList">미팅룸 예약하기 </a></div>
+            <div class="schedule-btn"><a href="${pageContext.servletContext.contextPath }/meetRoom/meetList" style="color: white;">미팅룸 예약하기 </a></div>
           </c:if>
           	<c:if test="${dto.state eq 'check'}">
                 <div class="owner-btn" id="pj-update">Update</div>
             </c:if>
                 <div class="owner-btn" id="pj-delete">Delete</div>
 			<c:if test="${dto.state eq 'ing'}">
-            <div id="scheduleBtn" class="schedule-btn">프로젝트 스케줄 </div>
+            <div id="scheduleBtn" class="schedule-btn" style="background-color: #ff7733;">프로젝트 스케줄 </div>
             <c:if test="${clientFinish eq 1}">
-            <div class="schedule-btn" id="pjFinish-client">프로젝트 완료</div>
+            <div class="schedule-btn" id="pjFinish-client" style="background-color: #94a2af;">프로젝트 완료</div>
             </c:if>
           </c:if>
           </div>
@@ -1037,12 +1175,24 @@ background-color: white;
                   	<img style="width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/profile/${mem.fProfileImage}">
                   </div>
                </div>
+               <div style="padding: 10px 20px 20px 20px;">
                <div class="dto_profile_detail">
-                  <div>프로젝트 등록자 : ${dto.email}</div>
-                  <div><span>프로젝트 등록</span><span id="total_pjcount">${totalCount}건 </span></div>
-                  <div><span>진행중인 프로젝트</span><span id="ing_pjcount">${ingCount } 건</span></div>
-                  <div><span>완료한 프로젝트</span><span id="finish_pjcount">${finishCount } 건</span></div>
-                  <div><span>판매중인 프로젝트</span><span id="recurit_pjcount">${conCount } 건</span></div>
+                  <div>
+        			<div class="profile_left" style="line-height: 20px;">
+				                  프로젝트 등록자
+				                 
+	                   ${dto.email}
+        			</div>	         
+	               </div>
+                  <div><span class="profile_left">프로젝트 등록</span>
+                  <span class="profile_right" id="total_pjcount"><span class="profile_count">${totalCount}</span>건 </span></div>
+                  <div><span class="profile_left">진행중인 프로젝트</span>
+                  <span class="profile_right" id="ing_pjcount"><span class="profile_count">${ingCount }</span> 건</span></div>
+                  <div><span class="profile_left">완료한 프로젝트</span>
+                  <span class="profile_right" id="finish_pjcount"><span class="profile_count">${finishCount }</span> 건</span></div>
+                  <div><span class="profile_left">판매중인 프로젝트</span>
+                  <span class="profile_right" id="recurit_pjcount"><span class="profile_count">${conCount }</span> 건</span></div>
+               </div>
                </div>
                </div>
             </div>
@@ -1153,21 +1303,32 @@ var meetKind = "${dto.meetKind}";
 });
 
 var testId = "";
+var recheck = "";
 /* 답글버튼 */
  $(".project-reply-box-top").on("click",".listReply",function() {
 
       alert($(this).attr("id"));
       testId = $(this).attr("id");
+      alert($(this).attr("data-id"));
+      recheck = $(this).attr("data-id");
+ 
 
          $(".rere").html("");
-         $("."+testId).html('<input type="text" id="recontents" name="contents"><input type="checkbox" id="reply_check">비공개'
-        		 +'<input type="button" class="replybtn" value="댓글달기">'
-        		 +'<input type="button"class="cancle" id="'+testId+'" value="취소">');
-         $(".listReply").attr("data-on", "off");
-         $(this).attr("data-on", "on");
-       
+         $("."+testId).html('<div style="height:40px; width="100%;"><input type="text" id="recontents" name="contents"><input type="checkbox" id="reply_check"><span class="checkbox_text">비공개</span>'
+        		 +'<div class="replybtn"><span class="reply_text">댓글달기</span></div>'
+        		 +'<div class="cancle" id="'+testId+'"><span class="cancle_text">취소</span></div></div>');
          
+        
+         if(recheck=="true"){
+        	 $("#reply_check").prop("checked", true);      	 
+         }else{
+        	 $("#reply_check").prop("checked", false);
+         }
+       
    });
+
+   
+   
    
  /* 댓글 취소 */
  $(".project-reply-box-top").on("click",".cancle",function() {

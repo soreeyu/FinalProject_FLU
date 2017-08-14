@@ -339,7 +339,32 @@
     cursor: pointer;
     
 }
-/******************************** 왼쪽 메뉴 *******************************/
+.projectSellBTN{
+   width:80px;
+   height:30px;
+   color: white;
+   background-color: #00b386;
+   border-radius: 2px;
+   display: inline-block;
+   text-align: center;
+   vertical-align: middle;
+   padding: 10px 12px;
+   text-decoration: none;
+   line-height: 10px;
+}
+.CancleSellBTN{
+    width: 80px;
+    height: 30px;
+    color: white;
+    background-color: #94a2af;
+    border-radius: 2px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 12px;
+    text-decoration: none;
+    line-height: 10px;
+}
 </style>
 <body>
 <c:import url="/WEB-INF/views/temp/header.jsp" />
@@ -362,13 +387,13 @@
 				</div>
 				<div class="sidebar_menu">
 					<ul>
-						<li id="checkBTN"><a id="check">검수중인 프로젝트</a></li>
-						<li id="doneBTN"><a id="done">모집중인 프로젝트</a></li>
-						<li id="recruitBTN"><a id="recruit">모집 완료된 프로젝트</a></li>
-						<li id="ingBTN"><a id="ing">진행중인 프로젝트</a></li>
-						<li id="finishBTN"><a id="finish">완료된 프로젝트</a></li>
-						<li id="sellBTN"><a id="sell">판매중인 프로젝트</a></li>
-						<li id="failBTN"><a id="fail">실패된 프로젝트</a></li>
+						<li id="checkBTN"><a class="btns"  id="check">검수중인 프로젝트</a></li>
+						<li id="doneBTN"><a class="btns" id="done">모집중인 프로젝트</a></li>
+						<li id="recruitBTN"><a class="btns" id="recruit">모집 완료된 프로젝트</a></li>
+						<li id="ingBTN"><a class="btns" id="ing">진행중인 프로젝트</a></li>
+						<li id="finishBTN"><a class="btns" id="finish">완료된 프로젝트</a></li>
+						<li id="sellBTN"><a class="btns" id="sell">판매중인 프로젝트</a></li>
+						<li id="failBTN"><a class="btns" id="fail">실패된 프로젝트</a></li>
 						
 					</ul>
 				</div>
@@ -402,196 +427,128 @@ alert("state==${conState}");
 var conState='${conState}';
 
 if(conState=='finish'){
-	alert("dd");
-	$("#t1").text("완료된 프로젝트");
-	$("#t2").text("완료된 프로젝트입니다.");
+   alert("dd");
+   $("#t1").text("완료된 프로젝트");
+   $("#t2").text("완료된 프로젝트입니다.");
 }else if(conState=='check'){
-	$("#t1").text("검수중인 프로젝트");
-	$("#t2").text("관리자의 승인을 기다리는 곳입니다.");
+   $("#t1").text("검수중인 프로젝트");
+   $("#t2").text("관리자의 승인을 기다리는 곳입니다.");
 }
 /* project 첫화면 프로젝트 리스트 띄우기  */
 $.get("projectCheck?state=${conState}&curPage=1", function(data){
-	$("#check").css("background-color", "#446eab");
-	$("#check").css("color", "white");
-	$(".contents").html(data);
+   $("#check").css("background-color", "#446eab");
+   $("#check").css("color", "white");
+   $(".contents").html(data);
 }); 
 
 
 /* 검수중인 프로젝트 리스트 */
 $("#check").click(function() {
-	$.get("projectCheck?state=check&curPage=1", function(data){
-		$("#check").css("background-color", "#446eab");
-		$("#check").css("color", "white");
-		
-		alert("검수중");
-		$("#t1").text("검수중인 프로젝트");
-		$("#t2").text("관리자의 승인을 기다리는 곳입니다.");
-		$("#done").css("background-color", "white");
-		$("#done").css("color", "#999");
-		$("#recruit").css("background-color", "white");
-		$("#recruit").css("color", "#999");
-		$("#ing").css("background-color", "white");
-		$("#ing").css("color", "#999");
-		$("#finish").css("background-color", "white");
-		$("#finish").css("color", "#999");
-		$("#sell").css("background-color", "white");
-		$("#sell").css("color", "#999");
-		$("#fail").css("background-color", "white");
-		$("#fail").css("color", "#999");	
-		$(".contents").html(data);
-	});
+   $.get("projectCheck?state=check&curPage=1", function(data){
+      
+      alert("검수중");
+      $("#t1").text("검수중인 프로젝트");
+      $("#t2").text("관리자의 승인을 기다리는 곳입니다.");
+      $(".contents").html(data);
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#check").css("background-color", "#446eab");
+      $("#check").css("color", "white");
+   });
 
 });
 
 /* 모집중인 프로젝트 리스트 */
 $("#done").click(function() {
-	$.get("projectCheck?state=done&curPage=1", function(data){
-		$("#done").css("background-color", "#446eab");
-		$("#done").css("color", "white");
-		alert("모집중");
-		$("#check").css("background-color", "white");
-		$("#check").css("color", "#999");
-		$("#recruit").css("background-color", "white");
-		$("#recruit").css("color", "#999");
-		$("#ing").css("background-color", "white");
-		$("#ing").css("color", "#999");
-		$("#finish").css("background-color", "white");
-		$("#finish").css("color", "#999");
-		$("#sell").css("background-color", "white");
-		$("#sell").css("color", "#999");
-		$("#fail").css("background-color", "white");
-		$("#fail").css("color", "#999");
-		$("#t1").text("모집중인 프로젝트");
-		$("#t2").text("프리랜서를 모집중인 프로젝트입니다.");
-		$(".contents").html(data); 
-	});
+
+   $.get("projectCheck?state=done&curPage=1", function(data){
+      alert("모집중");
+ 
+      $("#t1").text("모집중인 프로젝트");
+      $("#t2").text("프리랜서를 모집중인 프로젝트입니다.");
+      $(".contents").html(data); 
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#done").css("background-color", "#446eab");
+      $("#done").css("color", "white");
+   });
 
 });
 
 /* 모집완료된 프로젝트 리스트 */
 $("#recruit").click(function() {
 
-	$.get("projectCheck?state=recruit&curPage=1", function(data){
-		$("#recruit").css("background-color", "#446eab");
-		$("#recruit").css("color", "white");
-		alert("모집완료");
-		$("#check").css("background-color", "white");
-		$("#check").css("color", "#999");
-		$("#done").css("background-color", "white");
-		$("#done").css("color", "#999");
-		$("#ing").css("background-color", "white");
-		$("#ing").css("color", "#999");
-		$("#finish").css("background-color", "white");
-		$("#finish").css("color", "#999");
-		$("#sell").css("background-color", "white");
-		$("#sell").css("color", "#999");
-		$("#fail").css("background-color", "white");
-		$("#fail").css("color", "#999");
-		$("#t1").text("모집완료된 프로젝트");
-		$("#t2").text("프리랜서와 미팅을 준비중인 프로젝트입니다.");
-		$(".contents").html(data); 
-	});
+   $.get("projectCheck?state=recruit&curPage=1", function(data){   
+      alert("모집완료");
+      $("#t1").text("모집완료된 프로젝트");
+      $("#t2").text("프리랜서와 미팅을 준비중인 프로젝트입니다.");
+      $(".contents").html(data); 
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#recruit").css("background-color", "#446eab");
+      $("#recruit").css("color", "white");
+   });
 
 });
 
 /* 진행중인 프로젝트 리스트 */
 $("#ing").click(function() {
 
-	$.get("projectCheck?state=ing&curPage=1", function(data){
-		$("#ing").css("background-color", "#446eab");
-		$("#ing").css("color", "white");
-		alert("진행중");
-		$("#t1").text("진행중인 프로젝트");
-		$("#t2").text("진행중인 프로젝트입니다.");
-		$("#check").css("background-color", "white");
-		$("#check").css("color", "#999");
-		$("#done").css("background-color", "white");
-		$("#done").css("color", "#999");
-		$("#recruit").css("background-color", "white");
-		$("#recruit").css("color", "#999");
-		$("#finish").css("background-color", "white");
-		$("#finish").css("color", "#999");
-		$("#sell").css("background-color", "white");
-		$("#sell").css("color", "#999");
-		$("#fail").css("background-color", "white");
-		$("#fail").css("color", "#999");
-		$(".contents").html(data); 
-	});
+   $.get("projectCheck?state=ing&curPage=1", function(data){
+      alert("진행중");
+      $("#t1").text("진행중인 프로젝트");
+      $("#t2").text("진행중인 프로젝트입니다.");
+      $(".contents").html(data); 
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#ing").css("background-color", "#446eab");
+      $("#ing").css("color", "white");
+   });
 
 });
 /* 완료된 프로젝트 리스트 */
 $("#finish").click(function() {
 
-	$.get("projectCheck?state=finish&curPage=1", function(data){
-		$("#finish").css("background-color", "#446eab");
-		$("#finish").css("color", "white");
-		alert("완료");
-		$("#t1").text("완료된 프로젝트");
-		$("#t2").text("완료된 프로젝트입니다.");
-		$("#check").css("background-color", "white");
-		$("#check").css("color", "#999");
-		$("#done").css("background-color", "white");
-		$("#done").css("color", "#999");
-		$("#recruit").css("background-color", "white");
-		$("#recruit").css("color", "#999");
-		$("#ing").css("background-color", "white");
-		$("#ing").css("color", "#999");
-		$("#sell").css("background-color", "white");
-		$("#sell").css("color", "#999");
-		$("#fail").css("background-color", "white");
-		$("#fail").css("color", "#999");
-		$(".contents").html(data); 
-	});
+   $.get("projectCheck?state=finish&curPage=1", function(data){
+      alert("완료");
+      $("#t1").text("완료된 프로젝트");
+      $("#t2").text("완료된 프로젝트입니다.");
+      $(".contents").html(data); 
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#finish").css("background-color", "#446eab");
+      $("#finish").css("color", "white");
+   });
 
 });
 /* 판매중인 프로젝트 리스트 */
 $("#sell").click(function() {
-	$.get("projectCheck?state=sell&curPage=1", function(data){
 
-		$("#sell").css("background-color", "#446eab");
-		$("#sell").css("color", "white");
-		alert("판매중");
-		$("#t1").text("판매중인 프로젝트");
-		$("#t2").text("다른 클라이언트에게 제공되는 프로젝트입니다.");
-		$("#check").css("background-color", "white");
-		$("#check").css("color", "#999");
-		$("#done").css("background-color", "white");
-		$("#done").css("color", "#999");
-		$("#recruit").css("background-color", "white");
-		$("#recruit").css("color", "#999");
-		$("#ing").css("background-color", "white");
-		$("#ing").css("color", "#999");
-		$("#finish").css("background-color", "white");
-		$("#finish").css("color", "#999");
-		$("#fail").css("background-color", "white");
-		$("#fail").css("color", "#999");
-		$(".contents").html(data); 
-	});
+   $.get("projectCheck?state=sell&curPage=1", function(data){
+      alert("판매중");
+      $("#t1").text("판매중인 프로젝트");
+      $("#t2").text("다른 클라이언트에게 제공되는 프로젝트입니다.");
+      $(".contents").html(data); 
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#sell").css("background-color", "#446eab");
+      $("#sell").css("color", "white");
+   });
 
 });
 /* 실패한 프로젝트 리스트 */
 $("#fail").click(function() {
 
-	$.get("projectCheck?state=fail&curPage=1", function(data){
-		$("#fail").css("background-color", "#446eab");
-		$("#fail").css("color", "white");
-		alert("실패함");
-		$("#t1").text("실패한 프로젝트");
-		$("#t2").text("클라이언트 모집에 실패한 프로젝트입니다.");
-		$("#check").css("background-color", "white");
-		$("#check").css("color", "#999");
-		$("#done").css("background-color", "white");
-		$("#done").css("color", "#999");
-		$("#recruit").css("background-color", "white");
-		$("#recruit").css("color", "#999");
-		$("#ing").css("background-color", "white");
-		$("#ing").css("color", "#999");
-		$("#finish").css("background-color", "white");
-		$("#finish").css("color", "#999");
-		$("#sell").css("background-color", "white");
-		$("#sell").css("color", "#999");
-		$(".contents").html(data); 
-	});
+   $.get("projectCheck?state=fail&curPage=1", function(data){
+      alert("실패함");
+      $("#t1").text("실패한 프로젝트");
+      $("#t2").text("클라이언트 모집에 실패한 프로젝트입니다.");
+      $(".contents").html(data); 
+      $(".btns").css("background-color", "white");
+      $(".btns").css("color", "#999");
+      $("#fail").css("background-color", "#446eab");
+      $("#fail").css("color", "white");
+   });
 
 });
 

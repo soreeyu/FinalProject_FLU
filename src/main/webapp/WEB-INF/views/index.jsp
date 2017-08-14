@@ -291,9 +291,9 @@
 					</span>
 				</h5>
 				<p class="List_contents">${indexList[i].contents}</p>
-				<p class="project-sill-list">
+				<p class="project-sill-list" >
 					<c:forEach items="${skills}" var="s">
-					<c:forEach items="${s.skills}" var="s2">
+					<c:forEach items="${s.skills}" var="s2" end="3">
 					<c:if test="${s.projectNum eq indexList[i].projectNum}">
 					<span class="project-skill">${s2}</span>
 					</c:if>

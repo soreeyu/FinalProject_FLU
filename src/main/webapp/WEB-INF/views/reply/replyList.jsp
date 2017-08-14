@@ -14,26 +14,29 @@
 <div class="reply-contents">
  
 		<c:forEach items="${replyList}" var="reply">
-		<div>
-			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
-			<span>${reply.writer}</span>
-			<span>${reply.contents}</span>
-			<span>${reply.reg_date}</span>
-			<span>${reply.replyChk}</span>
+		<div style="height: 40px;">
+			<c:if test="${reply.depth!=0 }">
+			<span style="width: 40px; float: left;">└</span>
 			</c:if>
-			<c:if test="${reply.replyChk=='true'}">
+			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
+			<span style="width: 150px; font-size: 14px; float: left; vertical-align: middle;">${reply.writer}</span>
+			<span style="width: auto; max-width:400px; height: auto; font-size: 14px; float: left; margin-left: 10px;">${reply.contents}</span>
+			<span style="color: #ccc; font-size: 12px; float: left; margin-left: 10px;">${reply.reg_date}</span>
+
+			</c:if>
+			<c:if test="${reply.replyChk eq true &&(member.email ne project.email && reply.writer ne member.email)}">
 			<span>비공개 댓글입니다.</span>
-			<span>${reply.replyChk}</span>
 			</c:if> 
 			
-			<c:if test="${reply.writer==member.email}">
-			<span class="listDelete" id="${reply.num}">X</span>
-			</c:if>
 			
 			<!-- 비공개일때는 client에게만 답글보여주기 -->
 			<c:if test="${member.email==project.email}">
-			<input type="button" class="listReply" id="${reply.num}" data-on="off" style="height: 22px; width: 55px;" value="답글">
+			<div class="listReply" id="${reply.num}" data-id="${reply.replyChk }"><span class="reply_text">답글</span></div>
 			</c:if>
+			<c:if test="${reply.writer==member.email}">
+			<span class="listDelete" id="${reply.num}"><span class="reply_text" style="color: white;">삭제</span></span>
+			</c:if>
+			<br>
 			<p>
 			
 			<div class="${reply.num} rere" data-id="${reply.num}">
@@ -92,6 +95,9 @@ $(".rereply").css("display", "none");
 		/* 페이징처리 */
 		$("#preview").click(function() { 
 			alert("preview");
+			 $.get("../reply/replyList?projectNum="+projectNum+"&curPage="+pageNum, function(data) {
+					$(".project-reply-box-top").html(data);
+				});  
 			
 		});
 		 $(".num").click(function() {
@@ -104,6 +110,9 @@ $(".rereply").css("display", "none");
 		});
 		 $("#nextview").click(function() {
 				alert("nextview")
+				 $.get("../reply/replyList?projectNum="+projectNum+"&curPage="+pageNum, function(data) {
+						$(".project-reply-box-top").html(data);
+					});  
 				
 			});
 		

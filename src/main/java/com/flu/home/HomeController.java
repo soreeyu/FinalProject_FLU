@@ -81,10 +81,10 @@ public class HomeController {
 			
 		for(int i=0;i<6;i++){	
 			projectDTO = new ProjectDTO();
-			projectDTO.setSkills(ar.get(i).getSkill().split(","));
-			projectDTO.setProjectNum(ar.get(i).getProjectNum());
-			ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
-			ar2.add(projectDTO);	
+			//projectDTO.setSkills(ar.get(i).getSkill().split(","));
+			//projectDTO.setProjectNum(ar.get(i).getProjectNum());
+			//ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
+			//ar2.add(projectDTO);	
 		}
 		
 		for(int j=0; j<6;j++){

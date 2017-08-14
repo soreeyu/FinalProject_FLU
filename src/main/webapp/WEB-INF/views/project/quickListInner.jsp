@@ -35,7 +35,7 @@
 				
 				<br>
 				<div class="skill_box">
-					<c:forEach items="${quick.skills}" end="4" var="sk">
+					<c:forEach items="${quick.skills}" end="2" var="sk">
 						<span class="skill-name" style="color: white; font-size: 14px;">${sk}</span>
 					</c:forEach>
 				</div>

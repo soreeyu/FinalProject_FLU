@@ -6,16 +6,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script> -->
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
-<title>Insert title here</title>
+<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/project/projectInsert.css">
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<title>Insert title here</title>
 <script type="text/javascript">
 $(function(){
     //전역변수선언
     var editor_object = [];
-     
+    
     nhn.husky.EZCreator.createInIFrame({
         oAppRef: editor_object,
         elPlaceHolder: "smart",
@@ -35,8 +36,7 @@ $(function(){
 
 
     $("#submitBTN").click(function() {
-       alert("btn");
-       
+      alert("곧끝");
         
         alert("vvv");
        if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
@@ -98,8 +98,9 @@ $(function(){
        }
     });
  
-})
+});
 </script>
+
 <style type="text/css">
 
 *{
@@ -399,6 +400,7 @@ label{
 </style>
 
 
+
 </head>
 
 
@@ -441,7 +443,7 @@ label{
             
             
             <div class="control-wrapper">
-               <label><span>*</span>카테고리</label>
+               <label><span class="sp">*</span>카테고리</label>
                <div class="category-wrapper">
                   <div class="main-wrapper">
                         <select class="cate-select" id="category" name="category" onChange="changeSelect(value)">
@@ -467,7 +469,7 @@ label{
             
             
             <div class="control-wrapper">
-               <label><span>*</span>프로젝트 제목</label>
+               <label><span class="sp">*</span>프로젝트 제목</label>
                <div class="category-wrapper">
                <div>
                   <input id="name" type="text" name="name" style="width: 100%;" value="${dto.name }">
@@ -477,7 +479,7 @@ label{
             </div>
 
             <div class="control-wrapper">
-               <label><span>*</span>예상 기간</label>
+               <label><span class="sp">*</span>예상 기간</label>
                <div class="category-wrapper">
                <div style="display: inline-block;">
                   <input id="period" type="text" name="period" value="${dto.period }" style="border-right: none;">
@@ -489,7 +491,7 @@ label{
             </div>
 
             <div class="control-wrapper">
-               <label><span>*</span>지출 가능 예산</label>
+               <label><span class="sp">*</span>지출 가능 예산</label>
                <div class="category-wrapper">
                 <div style="display: inline-block;">
                   <input id="budget" type="number" name="budget" value="${dto.budget }">
@@ -500,7 +502,7 @@ label{
             </div>
 
             <div class="plan-wrapper">
-               <label><span>*</span>기획 상태</label>
+               <label><span class="sp">*</span>기획 상태</label>
                <div>
                   <div class="plan-radio">
                   <div id="plan-radio1">
@@ -533,7 +535,7 @@ label{
             </div>
 
             <div class="control-wrapper" style="height: 600px;">
-               <label style="height: 600px;"><span>*</span>프로젝트 내용</label>
+               <label style="height: 600px;"><span class="sp">*</span>프로젝트 내용</label>
                <div class="textarea">
                   <textarea rows="30" cols="30" name="contents" id="smart">${dto.contents}</textarea>
                </div>
@@ -543,7 +545,7 @@ label{
             <div>
             
             <div class="control-wrapper" style="height: 40px; margin-top: 10px;">
-               <label><span>*</span>관심 기술</label>
+               <label><span class="sp">*</span>관심 기술</label>
             </div>
             <hr>
             <div class="control-wrapper-skill" style="height: 250px;">
@@ -782,7 +784,7 @@ label{
 				</div>
 
             <div class="control-wrapper" style="margin-top: 20px;">
-               <label style="height: 70px;"><span>*</span>기획 관련 파일</label>
+               <label style="height: 70px;"><span class="sp">*</span>기획 관련 파일</label>
                <div class="category-wrapper" style="height: 70px;">
                   <input type="file" name="fileName" value="${dto.fileName }">
               
@@ -793,7 +795,7 @@ label{
 
 
             <div class="control-wrapper">
-               <label><span>*</span>모집 마감일자</label>
+               <label><span class="sp">*</span>모집 마감일자</label>
                <div class="category-wrapper">
                <div style="display: inline-block;">
                   <input type="date" name="finishDate" id="finishDate" value="${dto.finishDate }">
@@ -805,7 +807,7 @@ label{
             </div>
 
             <div class="control-wrapper" style="height: 85px;">
-               <label><span>*</span>사전 미팅</label>
+               <label><span class="sp">*</span>사전 미팅</label>
                <div class="category-wrapper">
                   <select name="meetKind" id="meetKind" required="required">
                      <option class="meetKind" value="오프라인">오프라인</option>
@@ -821,7 +823,7 @@ label{
             </div>
 
             <div class="control-wrapper" style="height: 100px;">
-               <label><span>*</span>클라이언트 위치</label>
+               <label><span class="sp">*</span>클라이언트 위치</label>
                <div class="category-wrapper">
                <div style="display: inline-block;">
                   <input type="text" name="addr_num" id="sample6_postcode" placeholder="우편번호" value="${dto.addr_num}">
@@ -836,7 +838,7 @@ label{
             </div>
 
             <div class="control-wrapper">
-               <label style="line-height: 15px;"><span>*</span>프로젝트 <br> 예상 시작일</label>
+               <label style="line-height: 15px;"><span class="sp">*</span>프로젝트 <br> 예상 시작일</label>
                <div class="category-wrapper">
 
                   <input type="date" name="startDate" id="startDate" value="">
@@ -845,7 +847,7 @@ label{
             </div>
 
             <div class="control-wrapper">
-               <label style="line-height: 15px;"><span>*</span>프로젝트 <br>매니징 경험</label>
+               <label style="line-height: 15px;"><span class="sp">*</span>프로젝트 <br>매니징 경험</label>
                <div class="category-wrapper">
                   <input class="exp" type="radio" name="exp" value="y"><span class="exp_text">예, 매니징 경험이 있습니다.</span> 
                   <input class="exp" type="radio" name="exp" value="n"><span class="exp_text">아니오, 없습니다.</span>
@@ -855,15 +857,17 @@ label{
             
 
             <div class="control-wrapper">
-               <label><span>*</span>급구 여부</label>
+               <label><span class="sp">*</span>급구 여부</label>
                <div class="category-wrapper">
                   <input class="quick" type="radio" name="quick" value="1"><span class="exp_text">예 , 급구 공고를 올립니다.</span>
                   <input class="quick" type="radio" name="quick" value="0"><span class="exp_text">아니오, 여유가 있습니다.</span>
                </div>
             </div>
 
-			<div class="btn_Box">            
+			<div class="btn_Box">     
+			<div style="text-align: center;">
             <input type="button" class="btn btn-default" id="submitBTN" value="등록">
+			</div>       
 			</div>
             </form>
             
@@ -872,6 +876,13 @@ label{
          <section class="contents_sub">
             
             <!-- 옆구리 CSS껴넣기 사진들 -->
+            <div class="right_first" style="border-bottom:1px #dedede solid;">
+            	<div class="right_first_box" style="text-align: center; margin-top: 10px;border-left: 1px #dedede solid; 
+	 text-align: center; margin: 0 auto;">
+            	<img id="right_first_img" src="${pageContext.request.contextPath}/resources/img/project/project-process.png">
+            	</div>
+            
+            </div>
          </section>
       </div>
 
@@ -891,9 +902,7 @@ var finishDate = new Date(fdate);
 var finishDay = finishDate.getDate();
 var finishMonth = finishDate.getMonth()+1;
 var finishYear = finishDate.getFullYear();
-/* alert(finishDay);
-alert(finishMonth);
-alert(finishYear); */
+
 
 
 if(type=='update'){
@@ -976,78 +985,32 @@ if(type=='update'){
 		 alert(startYear);	 
 		 
 		 $("#finishDate").val('20'+finishYear+"-"+finishMonth+"-"+finishDay);
-	}
-	
-	  	 
 
-	 function check_submit() {
-		
-		alert("btn");
-		if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
-			alert("옵션 선택좀");
-		} else if(document.frm.name.value==""){
-			alert("제목을 입력하세요");
-		}else if(document.frm.period.value==""){
-			alert("기간을 입력하세요");
-		}else if(document.frm.budget.value==""){
-			alert("예상금액을 입력하세요");
-		}else if(document.frm.planState.value==""){
-			alert("기획상태를 입력하세요");
-		}else if(document.frm.contents.value==""){
-			alert("내용을 입력하세요");
-		} 
-		
-		/* else if($(".chk").prop("checked")==false){
-			alert("skill을 입력하세요");
-		}  */
-		
-		  else if(document.frm.fileName.value==""){
-			alert("File을 선택해주세요");
-		}else if(document.frm.finishDate.value==""){
-			alert("마감일을 선택해주세요");
-		}else if(document.frm.addr_main.value==""){
-			alert("주소를 입력해주세요");
-		}else if(document.frm.startDate.value==""){
-			alert("시작일을 선택해주세요");
-		}else if(document.frm.exp.value==""){
-			alert("매니징 경험을 선택해주세요");
-		}else if(document.frm.quick.value==""){
-			alert("급구 여부를 선택해주세요");
-		} else if(document.frm.finishDate.value!=""){
-			var finishDate = $("#finishDate").val();
-			 alert("finishDate="+finishDate); 
-			 var finish = new Date(finishDate);
-			 var today = new Date();
-			 alert("today="+today);
-			 var left = finish.getTime()-today.getTime();
-			 alert(left);
-			 var leftDate = Math.ceil(left/(24*60*60*1000));
-			 alert("leftDate="+leftDate);
-			 if(leftDate<7){
-				 alert("마감일은 최소 1주일입니다.");
-				 
-				 
-			 }else{
-				 alert("마감일 괜춘");
-				 if(document.frm.startDate.value!=""){
-					 var startDate = $("#startDate").val();
-					 alert("startDate="+startDate);
-					 var start = new Date(startDate);
-					 alert("today="+today);
-					 var lef = start.getTime()-finish.getTime();
-					 alert(lef);
-					 var lefDate = Math.ceil(lef/(24*60*60*1000));
-					 alert("시작일-마감일="+lefDate);
-					 if(lefDate<7){
-						 alert("시작일은 마감일 이후 최소 1주일입니다.");
-					 }else{
-						 alert("시작일 적당");
-						 document.frm.submit();
-					 }
-				 }
-			 }
-		}
+	}/* 2번째 update 끝 */
+
+
+
+
+	
+
+$(".planState").click(function() {
+	var state = $(this).val();
+	alert("st="+state);
+	if(state == 'idea'){
+		$("#plan-radio1").css("background", "url(${pageContext.request.contextPath}/resources/img/project/idea2.png)");
+		$("#plan-radio2").css("background", "url(${pageContext.request.contextPath}/resources/img/project/simple.png)");
+		$("#plan-radio3").css("background", "url(${pageContext.request.contextPath}/resources/img/project/detail.png)");
+	}else if(state == 'simple'){
+		$("#plan-radio1").css("background", "url(${pageContext.request.contextPath}/resources/img/project/idea.png)");
+		$("#plan-radio2").css("background", "url(${pageContext.request.contextPath}/resources/img/project/simple2.png)");
+		$("#plan-radio3").css("background", "url(${pageContext.request.contextPath}/resources/img/project/detail.png)");
+	}else{
+		$("#plan-radio1").css("background", "url(${pageContext.request.contextPath}/resources/img/project/idea.png)");
+		$("#plan-radio2").css("background", "url(${pageContext.request.contextPath}/resources/img/project/simple.png)");
+		$("#plan-radio3").css("background", "url(${pageContext.request.contextPath}/resources/img/project/detail2.png)");
 	}
+});
+
 
    
    
@@ -1118,8 +1081,8 @@ function sample6_execDaumPostcode() {
             document.getElementById('sample6_address2').focus();
         }
     }).open();
-};
 
+}
 </script>
 
 </body>

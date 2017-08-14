@@ -51,7 +51,7 @@ public class ProjectController {
 
    //@ResponseBody
    @RequestMapping(value="projectMap", method=RequestMethod.GET)
-   public Map<String, Object> projectMap(ListInfo listInfo, ProjectDTO projectDTO,List<String> array){
+   public Map<String, Object> projectMap(ListInfo listInfo, ProjectDTO projectDTO,List<String> array, List<String> aray){
       
       System.out.println("controller-projectMap");
       
@@ -63,7 +63,7 @@ public class ProjectController {
       
       Map<String, Object> map = new HashMap<String, Object>();
 
-        List<ProjectDTO> pjlist = projectService.projectList(listInfo, projectDTO, array);
+        List<ProjectDTO> pjlist = projectService.projectList(listInfo, projectDTO, array, aray);
         
         map.put("pjlist", pjlist);
         
@@ -121,7 +121,7 @@ public class ProjectController {
    
    //project 리스트 AJAX
    @RequestMapping(value="projectListInner", method=RequestMethod.GET)
-   public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array ){
+   public void projectListInner(Model model, ListInfo listInfo, HttpSession session, ProjectDTO projectDTO,@RequestParam(value="array", required=true) List<String> array, @RequestParam(value="aray", required=true) List<String> aray ){
       System.out.println("projectListInner요");
    
       System.out.println("controller-category="+projectDTO.getCategory());
@@ -135,7 +135,7 @@ public class ProjectController {
       listInfo.makePage(totalCount);
       listInfo.makeRow();
             
-      List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array);
+      List<ProjectDTO> ar = projectService.projectList(listInfo, projectDTO, array, aray);
             
       for(int i=0;i<ar.size();i++){
 	         ar.get(i).setAppCount(applicantService.countApplicant(ar.get(i).getProjectNum()));
@@ -194,7 +194,9 @@ public class ProjectController {
       PjSellDTO pjSellDTO = pjSellService.pjsellInfo(projectDTO);
       
       System.out.println("session-kind=="+memberDTO.getKind());
+
       if(memberDTO.getKind().equals("freelancer") && projectDTO.getState().equals("ing")){
+
     	  applicantDTO = applicantService.checkFinish(applicantDTO);
     	 model.addAttribute("finishCheck", applicantDTO.getFinishCheck());
       }else{
@@ -451,29 +453,7 @@ public class ProjectController {
    
    
    
-   //Test
-   //Client가 mypage에서 확인하는 myprojectList
-   //@RequestMapping(value="projectView")
-   /*public String clientPjList(ListInfo listInfo, Model model, ProjectDTO projectDTO, HttpSession session){
-      System.out.println("Client ProjectList");
-      
-      MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-      int totalCount = projectService.clientPjCount(listInfo, memberDTO);
-      listInfo.makePage(totalCount);
-      listInfo.makeRow();
-      List<ProjectDTO> ar = projectService.clientPjList(listInfo, memberDTO);
-      
-      System.out.println("totalCount="+totalCount);
-      System.out.println("arsize="+ar.size());
-   
-      model.addAttribute("list", ar);
-      model.addAttribute("type", "list");
-      model.addAttribute("pjcount", totalCount);
-      model.addAttribute("listInfo", listInfo);
-      model.addAttribute("member", memberDTO);
-      
-      return "project/clientProjectList";
-   }*/
+
    
    //클라이언트의 프로젝트 완료 리스트에서 판매 Insert
    @RequestMapping(value="pjsellInsert", method=RequestMethod.POST)
