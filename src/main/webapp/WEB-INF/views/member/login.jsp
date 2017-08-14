@@ -17,7 +17,7 @@
 .main_section{
 	min-width: 1460px;
 	width: 100%;
-	height: 760px;
+	height: 900px;
 	background-color: #f2f2f2;
 }
 .login_wrap{
@@ -120,7 +120,7 @@ input[type=text], input[type=password]{
 
 .sign_up{
 	float: right;
-	width: 500px;
+	width: 490px;
 }
 .sign_up img{
 	width: 100%;

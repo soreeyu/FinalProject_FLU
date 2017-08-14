@@ -85,32 +85,32 @@
 
   		<!-- 진행중인 프로젝트 리스트 가져오기   -->
  		<select id="memberProjectList_ING" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
- 			select P.name, P.budget, P.period, P.finishdate, P.projectnum from project P, applicant A where P.projectnum=A.projectnum and A.state='ing' and A.email=#{email}
+ 			select P.name, P.budget, P.period, to_char(P.finishdate, 'yyyy/MM/dd') finishdate, P.projectnum from project P, applicant A where P.projectnum=A.projectnum and A.state='ing' and A.email=#{email}
  		</select>
  		
 		<!-- 지원한 프로젝트 리스트 가져오기 -->
 		<select id="memberProjectList_APP" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
-			select P.name, P.budget, P.period, P.finishdate, P.projectnum from project P, applicant A where A.state='app' and A.email=#{email}  and P.projectNum=A.projectnum
+			select P.name, P.budget, P.period, to_char(P.finishdate, 'yyyy/MM/dd') finishdate, P.projectnum from project P, applicant A where A.state='app' and A.email=#{email}  and P.projectNum=A.projectnum
 		</select>
 
 		<!-- 완료한 프로젝트 리스트 가져오기 -->
 		<select id="memberProjectList_FIN" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
-			select P.name, P.budget, P.period, P.finishdate, P.projectnum from project P, applicant A where A.state='payFinish' and A.email=#{email} and P.projectNum=A.projectnum
+			select P.name, P.budget, P.period, to_char(P.finishdate, 'yyyy/MM/dd') finishdate, P.projectnum from project P, applicant A where A.state='payFinish' and A.email=#{email} and P.projectNum=A.projectnum
 		</select>
 		
 		<!-- 검수중인 프로젝트 리스트 가져오기 -->
 		<select id="memberProjecttList_CHK" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
-			select P.name, P.budget, P.period, P.finishdate, P.projectnum from project P, member M where P.state='check' and P.email=#{email} and P.email=M.email
+			select P.name, P.budget, P.period, to_char(P.finishdate, 'yyyy/MM/dd') finishdate, P.projectnum from project P, member M where P.state='check' and P.email=#{email} and P.email=M.email
 		</select>
 		
 		<!-- 모집 중인 프로젝트 리스트 가져오기 -->
 		<select id="memberProjectList_REC" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
-			select P.name, P.budget, P.period, P.finishdate, P.projectnum from project P, member M where P.state='recruit' and P.email=#{email} and P.email=M.email
+			select P.name, P.budget, P.period, to_char(P.finishdate, 'yyyy/MM/dd') finishdate, P.projectnum from project P, member M where P.state='recruit' and P.email=#{email} and P.email=M.email
 		</select>
 		
 		<!-- 진행중인 프로젝트 리스트 가져오기 (클라이언트)  -->
 		<select id="memberProjectList_INGC" resultType="com.flu.project.ProjectDTO" parameterType="java.lang.String">
-			select P.name, P.budget, P.period, P.finishdate, P.projectnum from project P, member M where P.state='ing' and P.email=#{email} and P.email=M.email
+			select P.name, P.budget, P.period, to_char(P.finishdate, 'yyyy/MM/dd') finishdate, P.projectnum from project P, member M where P.state='ing' and P.email=#{email} and P.email=M.email
 		</select>
 		
 		<!-- 지원한 프로젝트 카운트 가져오기(프리랜서)  -->

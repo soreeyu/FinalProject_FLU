@@ -211,7 +211,8 @@ body{
 .status-box {
 	text-align: center;
     float: left;
-    width: 352px;
+    width: 350px;
+    
 }
 .status-box p {
     line-height: 18px;

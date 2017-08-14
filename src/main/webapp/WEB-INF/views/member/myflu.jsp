@@ -48,14 +48,14 @@ body{
 	float: left;
 }
 .contents_header{
-	width: 760px;
+	width: 750px;
 	padding: 30px;
 	background-color: white;
 	margin-bottom: 10px;
 	border: 1px solid #dedede;
 }
 .contents_inner{
-	width: 760px;
+	width: 750px;
 	padding: 30px;
 	background-color: white;
 	margin-bottom: 10px;

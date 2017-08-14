@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script>
-  window.channelPluginSettings = {
+<script type="text/javascript">
+   window.channelPluginSettings = {
     "plugin_id": "ef582c73-3a40-4525-bb41-a68efc7f806b"
   };
   (function() {
@@ -22,7 +22,7 @@
     } else {
       window.addEventListener('load', async_load, false);
     }
-  })();
+  })(); 
 </script>
     <footer>
 	<div class="footer">
