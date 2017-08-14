@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script> -->
 <c:import url="/WEB-INF/views/temp/bootstrap.jsp"/>
+<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/project/projectInsert.css">
-<title>Insert title here</title>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<title>Insert title here</title>
 <script type="text/javascript">
 $(function(){
     //전역변수선언
@@ -36,8 +36,7 @@ $(function(){
 
 
     $("#submitBTN").click(function() {
-       alert("btn");
-       
+      alert("곧끝");
         
         alert("vvv");
        if(document.frm.detailCategory.value=="카테고리를 선택하세요"){
@@ -578,9 +577,10 @@ $(function(){
          <section class="contents_sub">
             
             <!-- 옆구리 CSS껴넣기 사진들 -->
-            <div class="right_first">
-            	<div style="border-left: 1px #dedede solid; border-bottom: 1px #dedede solid;">
-            <img id="right_first_img" src="${pageContext.request.contextPath}/resources/img/project/project-process.png">
+            <div class="right_first" style="border-bottom:1px #dedede solid;">
+            	<div class="right_first_box" style="text-align: center; margin-top: 10px;border-left: 1px #dedede solid; 
+	 text-align: center; margin: 0 auto;">
+            	<img id="right_first_img" src="${pageContext.request.contextPath}/resources/img/project/project-process.png">
             	</div>
             
             </div>
@@ -760,27 +760,27 @@ if(type=='update'){
 }
 
 
-/* 	
+
 	
 
 $(".planState").click(function() {
 	var state = $(this).val();
 	alert("st="+state);
 	if(state == 'idea'){
-		$("#plan-radio1").css("background", "url(../../img/project/idea2.png)");
-		$("#plan-radio2").css("background", "url(../../img/project/simple.png)");
-		$("#plan-radio3").css("background", "url(../../img/project/detail.png)");
+		$("#plan-radio1").css("background", "url(${pageContext.request.contextPath}/resources/img/project/idea2.png)");
+		$("#plan-radio2").css("background", "url(${pageContext.request.contextPath}/resources/img/project/simple.png)");
+		$("#plan-radio3").css("background", "url(${pageContext.request.contextPath}/resources/img/project/detail.png)");
 	}else if(state == 'simple'){
-		$("#plan-radio1").css("background", "url(../../img/project/idea.png)");
-		$("#plan-radio2").css("background", "url(../../img/project/simple2.png)");
-		$("#plan-radio3").css("background", "url(../../img/project/detail.png)");
+		$("#plan-radio1").css("background", "url(${pageContext.request.contextPath}/resources/img/project/idea.png)");
+		$("#plan-radio2").css("background", "url(${pageContext.request.contextPath}/resources/img/project/simple2.png)");
+		$("#plan-radio3").css("background", "url(${pageContext.request.contextPath}/resources/img/project/detail.png)");
 	}else{
-		$("#plan-radio1").css("background", "url(../../img/project/idea.png)");
-		$("#plan-radio2").css("background", "url(../../img/project/simple.png)");
-		$("#plan-radio3").css("background", "url(../../img/project/detail2.png)");
+		$("#plan-radio1").css("background", "url(${pageContext.request.contextPath}/resources/img/project/idea.png)");
+		$("#plan-radio2").css("background", "url(${pageContext.request.contextPath}/resources/img/project/simple.png)");
+		$("#plan-radio3").css("background", "url(${pageContext.request.contextPath}/resources/img/project/detail2.png)");
 	}
 });
-  */
+
 
 
 

@@ -370,7 +370,6 @@ cursor: pointer;
 .category-select-list{
    height: 230px;
    display: block;
-   /* background-color: yellow;  */
 }
 .cate-skipper{
    height: 17px;
@@ -556,7 +555,6 @@ background-color: white;
 
 }
 .dto_profile{
-   background-color: yellow;
    height: 100%;
    width: 100%;
 }

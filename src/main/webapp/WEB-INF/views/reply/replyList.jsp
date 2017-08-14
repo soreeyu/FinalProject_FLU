@@ -15,10 +15,10 @@
  
 		<c:forEach items="${replyList}" var="reply">
 		<div style="height: 40px;">
-			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
 			<c:if test="${reply.depth!=0 }">
 			<span style="width: 40px; float: left;">└</span>
 			</c:if>
+			<c:if test="${reply.replyChk=='false' || member.email==project.email || reply.writer==member.email}">
 			<span style="width: 150px; font-size: 14px; float: left; vertical-align: middle;">${reply.writer}</span>
 			<span style="width: auto; max-width:400px; height: auto; font-size: 14px; float: left; margin-left: 10px;">${reply.contents}</span>
 			<span style="color: #ccc; font-size: 12px; float: left; margin-left: 10px;">${reply.reg_date}</span>

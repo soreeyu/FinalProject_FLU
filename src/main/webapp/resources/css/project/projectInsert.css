@@ -300,8 +300,14 @@ label{
 .right_first{
 	padding-top: 10px;
     padding-bottom: 20px;
-/*     border-bottom: 1px #dedede solid; */
     margin-bottom: 20px;
+     border-bottom: 1px #dedede solid;
+}
+.right_first_box{
+	 border-left: 1px #dedede solid; 
+	 border-bottom: 1px #dedede solid;
+	 text-align: center;
+	 margin: 0 auto;
 }
 #right_first_img{
 	vertical-align: middle;

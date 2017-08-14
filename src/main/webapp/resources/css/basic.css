@@ -266,18 +266,67 @@ body{
 
 /************************************ 푸터시작 *****************************************/
 footer{
-	min-width: 1460px;
-	width: 100%;
-	height: 200px;
-	background-color: black;
+   min-width: 1460px;
+   width: 100%;
+   height: 150px;
+   background-color: black;
 }
-.footer .footer_wrap{
-	width: 1080px;
-    margin-left: auto;
-    margin-right: auto;
-	
+.footer{
+   width: 100%;
+   height: 100%;
+   
 }
 
+.footer .footer_wrap{
+   width: 1152px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 15px;
+   
+}
+.footer .footer_contents{
+   color: white;
+}
+
+.footer .footer_contents .img_div{
+   width: 100px;
+   height: 84px;
+   display: inline-block;
+   float: left;
+   padding: 17px 0;
+}
+.footer .footer_contents .img_div2{
+   width: 450px;
+   height: 84px;
+   display: inline-block;
+   float: left;
+   padding: 10px 0 0 0;
+}
+.footer .footer_contents .img_div img , .footer .footer_contents .img_div2 img{
+   width: 100%;
+   height: 100%;
+}
+
+
+.footer .footer_contents .contents_div{
+   display: inline-block;
+   float: right;
+   padding: 17px 0;
+   margin-right: 50px;
+   
+}
+
+.footer .footer_contents .contents_div div span:FIRST-CHILD{
+   margin-left: 50px;
+   color: white;
+   font-weight: inherit;
+}
+.footer .footer_contents .contents_div div{
+   margin-bottom: 10px;
+}
+.footer .footer_contents .contents_div div span:FIRST-CHILD span:FIRST-CHILD{
+   margin-right: 10px;
+}
 
 /************************************* 여기까지 푸터 ************************************/
 
